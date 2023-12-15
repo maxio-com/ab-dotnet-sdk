@@ -24,22 +24,26 @@ namespace AdvancedBilling.Standard.Models
     {
         private double? amount;
         private int? amountInCents;
+        private string productFamilyName;
         private string endDate;
         private double? percentage;
         private int? durationPeriodCount;
         private int? durationInterval;
         private string durationIntervalUnit;
+        private string durationIntervalSpan;
         private string archivedAt;
         private string conversionLimit;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "amount", false },
             { "amount_in_cents", false },
+            { "product_family_name", false },
             { "end_date", false },
             { "percentage", false },
             { "duration_period_count", false },
             { "duration_interval", false },
             { "duration_interval_unit", false },
+            { "duration_interval_span", false },
             { "archived_at", false },
             { "conversion_limit", false },
         };
@@ -129,7 +133,11 @@ namespace AdvancedBilling.Standard.Models
             }
 
             this.ProductFamilyId = productFamilyId;
-            this.ProductFamilyName = productFamilyName;
+            if (productFamilyName != null)
+            {
+                this.ProductFamilyName = productFamilyName;
+            }
+
             this.StartDate = startDate;
             if (endDate != null)
             {
@@ -158,7 +166,11 @@ namespace AdvancedBilling.Standard.Models
                 this.DurationIntervalUnit = durationIntervalUnit;
             }
 
-            this.DurationIntervalSpan = durationIntervalSpan;
+            if (durationIntervalSpan != null)
+            {
+                this.DurationIntervalSpan = durationIntervalSpan;
+            }
+
             this.AllowNegativeBalance = allowNegativeBalance;
             if (archivedAt != null)
             {
@@ -250,8 +262,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets ProductFamilyName.
         /// </summary>
-        [JsonProperty("product_family_name", NullValueHandling = NullValueHandling.Ignore)]
-        public string ProductFamilyName { get; set; }
+        [JsonProperty("product_family_name")]
+        public string ProductFamilyName
+        {
+            get
+            {
+                return this.productFamilyName;
+            }
+
+            set
+            {
+                this.shouldSerialize["product_family_name"] = true;
+                this.productFamilyName = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets StartDate.
@@ -364,8 +388,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets DurationIntervalSpan.
         /// </summary>
-        [JsonProperty("duration_interval_span", NullValueHandling = NullValueHandling.Ignore)]
-        public string DurationIntervalSpan { get; set; }
+        [JsonProperty("duration_interval_span")]
+        public string DurationIntervalSpan
+        {
+            get
+            {
+                return this.durationIntervalSpan;
+            }
+
+            set
+            {
+                this.shouldSerialize["duration_interval_span"] = true;
+                this.durationIntervalSpan = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets AllowNegativeBalance.
@@ -492,6 +528,14 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serailized.
         /// </summary>
+        public void UnsetProductFamilyName()
+        {
+            this.shouldSerialize["product_family_name"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
         public void UnsetEndDate()
         {
             this.shouldSerialize["end_date"] = false;
@@ -532,6 +576,14 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serailized.
         /// </summary>
+        public void UnsetDurationIntervalSpan()
+        {
+            this.shouldSerialize["duration_interval_span"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
         public void UnsetArchivedAt()
         {
             this.shouldSerialize["archived_at"] = false;
@@ -561,6 +613,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeAmountInCents()
         {
             return this.shouldSerialize["amount_in_cents"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeProductFamilyName()
+        {
+            return this.shouldSerialize["product_family_name"];
         }
 
         /// <summary>
@@ -606,6 +667,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeDurationIntervalUnit()
         {
             return this.shouldSerialize["duration_interval_unit"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeDurationIntervalSpan()
+        {
+            return this.shouldSerialize["duration_interval_span"];
         }
 
         /// <summary>

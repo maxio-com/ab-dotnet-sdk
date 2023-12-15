@@ -19,10 +19,10 @@
 | `TransactionTime` | `DateTimeOffset?` | Optional | - |
 | `CreatedAt` | `DateTimeOffset?` | Optional | - |
 | `UpdatedAt` | `DateTimeOffset?` | Optional | - |
-| `IssueDate` | `string` | Optional | Date the invoice was issued to the customer.  This is the date that the invoice was made available for payment.<br><br>The format is `"YYYY-MM-DD"`. |
-| `DueDate` | `string` | Optional | Date the invoice is due.<br><br>The format is `"YYYY-MM-DD"`. |
-| `PaidDate` | `string` | Optional | Date the invoice became fully paid.<br><br>If partial payments are applied to the invoice, this date will not be present until payment has been made in full.<br><br>The format is `"YYYY-MM-DD"`. |
-| `Status` | [`Status?`](../../doc/models/status.md) | Optional | The current status of the invoice. See [Invoice Statuses](https://chargify.zendesk.com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more. |
+| `IssueDate` | `DateTime?` | Optional | Date the invoice was issued to the customer.  This is the date that the invoice was made available for payment.<br><br>The format is `"YYYY-MM-DD"`. |
+| `DueDate` | `DateTime?` | Optional | Date the invoice is due.<br><br>The format is `"YYYY-MM-DD"`. |
+| `PaidDate` | `DateTime?` | Optional | Date the invoice became fully paid.<br><br>If partial payments are applied to the invoice, this date will not be present until payment has been made in full.<br><br>The format is `"YYYY-MM-DD"`. |
+| `Status` | [`InvoiceStatus?`](../../doc/models/invoice-status.md) | Optional | The current status of the invoice. See [Invoice Statuses](https://chargify.zendesk.com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more. |
 | `Role` | `string` | Optional | - |
 | `ParentInvoiceId` | `int?` | Optional | - |
 | `CollectionMethod` | `string` | Optional | The collection method of the invoice, which is either "automatic" (tried and retried on an existing payment method by Chargify) or "remittance" (payment must be remitted by the customer or keyed in by the merchant). |
@@ -66,6 +66,9 @@
 
 ```json
 {
+  "issue_date": "2024-01-01",
+  "due_date": "2024-01-01",
+  "paid_date": "2024-01-01",
   "id": 252,
   "uid": "uid0",
   "site_id": 178,

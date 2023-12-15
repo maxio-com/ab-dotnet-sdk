@@ -43,7 +43,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="status">status.</param>
         public CreateInvoice(
             List<Models.CreateInvoiceItem> lineItems = null,
-            string issueDate = null,
+            DateTime? issueDate = null,
             int? netTerms = null,
             string paymentInstructions = null,
             string memo = null,
@@ -51,7 +51,7 @@ namespace AdvancedBilling.Standard.Models
             Models.CreateInvoiceAddress billingAddress = null,
             Models.CreateInvoiceAddress shippingAddress = null,
             List<Models.CreateInvoiceCoupon> coupons = null,
-            Models.Status1? status = Models.Status1.Open)
+            Models.CreateInvoiceStatus? status = Models.CreateInvoiceStatus.Open)
         {
             this.LineItems = lineItems;
             this.IssueDate = issueDate;
@@ -74,8 +74,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets IssueDate.
         /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("issue_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string IssueDate { get; set; }
+        public DateTime? IssueDate { get; set; }
 
         /// <summary>
         /// By default, invoices will be created with a due date matching the date of invoice creation. If a different due date is desired, the net_terms parameter can be sent indicating the number of days in advance the due date should be.
@@ -123,7 +124,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Status.
         /// </summary>
         [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.Status1? Status { get; set; }
+        public Models.CreateInvoiceStatus? Status { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -166,7 +167,7 @@ namespace AdvancedBilling.Standard.Models
         protected void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.LineItems = {(this.LineItems == null ? "null" : $"[{string.Join(", ", this.LineItems)} ]")}");
-            toStringOutput.Add($"this.IssueDate = {(this.IssueDate == null ? "null" : this.IssueDate)}");
+            toStringOutput.Add($"this.IssueDate = {(this.IssueDate == null ? "null" : this.IssueDate.ToString())}");
             toStringOutput.Add($"this.NetTerms = {(this.NetTerms == null ? "null" : this.NetTerms.ToString())}");
             toStringOutput.Add($"this.PaymentInstructions = {(this.PaymentInstructions == null ? "null" : this.PaymentInstructions)}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");

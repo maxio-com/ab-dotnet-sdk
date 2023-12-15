@@ -170,7 +170,7 @@ catch (ApiException e)
       "allocated_quantity": 0,
       "pricing_scheme": "per_unit",
       "name": "string",
-      "kind": "string",
+      "kind": "quantity_based_component",
       "unit_name": "string",
       "price_point_id": 0,
       "price_point_handle": "string",
@@ -179,8 +179,8 @@ catch (ApiException e)
       "enabled": true,
       "unit_balance": 0,
       "id": 0,
-      "created_at": "string",
-      "updated_at": "string",
+      "created_at": "2022-02-22T14:07:00-05:00",
+      "updated_at": "2022-02-22T14:07:00-05:00",
       "component_handle": "string",
       "archived_at": "string"
     }
@@ -1145,7 +1145,7 @@ A. No. Usage should be reported as one API call per component on a single subscr
 ```csharp
 CreateUsageAsync(
     int subscriptionId,
-    int componentId,
+    CreateUsageComponentId componentId,
     Models.CreateUsageRequest body = null)
 ```
 
@@ -1154,7 +1154,7 @@ CreateUsageAsync(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `componentId` | `int` | Template, Required | Either the Chargify id for the component or the component's handle prefixed by `handle:` |
+| `componentId` | [`CreateUsageComponentId`](../../doc/models/containers/create-usage-component-id.md) | Template, Required | This is a container for one-of cases. |
 | `body` | [`CreateUsageRequest`](../../doc/models/create-usage-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -1165,7 +1165,8 @@ CreateUsageAsync(
 
 ```csharp
 int subscriptionId = 222;
-int componentId = 222;
+CreateUsageComponentId componentId = CreateUsageComponentId.FromNumber(144);
+
 CreateUsageRequest body = new CreateUsageRequest
 {
     Usage = new CreateUsage
@@ -1243,11 +1244,11 @@ ListUsagesAsync(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `componentId` | `int` | Template, Required | Either the Chargify id for the component or the component's handle prefixed by `handle:` |
+| `componentId` | [`ListUsagesInputComponentId`](../../doc/models/containers/list-usages-input-component-id.md) | Template, Required | This is a container for one-of cases. |
 | `sinceId` | `int?` | Query, Optional | Returns usages with an id greater than or equal to the one specified |
 | `maxId` | `int?` | Query, Optional | Returns usages with an id less than or equal to the one specified |
-| `sinceDate` | `string` | Query, Optional | Returns usages with a created_at date greater than or equal to midnight (12:00 AM) on the date specified. |
-| `untilDate` | `string` | Query, Optional | Returns usages with a created_at date less than or equal to midnight (12:00 AM) on the date specified. |
+| `sinceDate` | `DateTime?` | Query, Optional | Returns usages with a created_at date greater than or equal to midnight (12:00 AM) on the date specified. |
+| `untilDate` | `DateTime?` | Query, Optional | Returns usages with a created_at date less than or equal to midnight (12:00 AM) on the date specified. |
 | `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
 | `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br>**Default**: `20`<br>**Constraints**: `<= 200` |
 
@@ -1261,7 +1262,7 @@ ListUsagesAsync(
 ListUsagesInput listUsagesInput = new ListUsagesInput
 {
     SubscriptionId = 222,
-    ComponentId = 222,
+    ComponentId = ListUsagesInputComponentId.FromNumber(144),
     Page = 2,
     PerPage = 50,
 };

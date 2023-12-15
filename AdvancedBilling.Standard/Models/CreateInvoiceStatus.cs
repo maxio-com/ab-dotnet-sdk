@@ -1,4 +1,4 @@
-// <copyright file="Status1.cs" company="APIMatic">
+// <copyright file="CreateInvoiceStatus.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
 namespace AdvancedBilling.Standard.Models
@@ -13,11 +13,11 @@ namespace AdvancedBilling.Standard.Models
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Status1.
+    /// CreateInvoiceStatus.
     /// </summary>
 
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum Status1
+    public enum CreateInvoiceStatus
     {
         /// <summary>
         /// Draft.

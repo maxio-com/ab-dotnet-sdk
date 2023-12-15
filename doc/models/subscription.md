@@ -70,6 +70,7 @@
 | `CreditBalanceInCents` | `long?` | Optional | - |
 | `PrepaymentBalanceInCents` | `long?` | Optional | - |
 | `PrepaidConfiguration` | [`PrepaidConfiguration`](../../doc/models/prepaid-configuration.md) | Optional | - |
+| `SelfServicePageToken` | `string` | Optional | Returned only for list/read Subscription operation when `include[]=self_service_page_token` parameter is provided. |
 
 ## Example (as JSON)
 

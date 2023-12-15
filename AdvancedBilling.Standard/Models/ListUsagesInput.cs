@@ -12,6 +12,7 @@ namespace AdvancedBilling.Standard.Models
     using System.Threading.Tasks;
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
+    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
@@ -41,11 +42,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="perPage">per_page.</param>
         public ListUsagesInput(
             int subscriptionId,
-            int componentId,
+            ListUsagesInputComponentId componentId,
             int? sinceId = null,
             int? maxId = null,
-            string sinceDate = null,
-            string untilDate = null,
+            DateTime? sinceDate = null,
+            DateTime? untilDate = null,
             int? page = 1,
             int? perPage = 20)
         {
@@ -69,7 +70,7 @@ namespace AdvancedBilling.Standard.Models
         /// Either the Chargify id for the component or the component's handle prefixed by `handle:`
         /// </summary>
         [JsonProperty("component_id")]
-        public int ComponentId { get; set; }
+        public ListUsagesInputComponentId ComponentId { get; set; }
 
         /// <summary>
         /// Returns usages with an id greater than or equal to the one specified
@@ -86,14 +87,16 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Returns usages with a created_at date greater than or equal to midnight (12:00 AM) on the date specified.
         /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("since_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string SinceDate { get; set; }
+        public DateTime? SinceDate { get; set; }
 
         /// <summary>
         /// Returns usages with a created_at date less than or equal to midnight (12:00 AM) on the date specified.
         /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("until_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string UntilDate { get; set; }
+        public DateTime? UntilDate { get; set; }
 
         /// <summary>
         /// Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.
@@ -132,7 +135,7 @@ namespace AdvancedBilling.Standard.Models
                 return true;
             }
             return obj is ListUsagesInput other &&                this.SubscriptionId.Equals(other.SubscriptionId) &&
-                this.ComponentId.Equals(other.ComponentId) &&
+                ((this.ComponentId == null && other.ComponentId == null) || (this.ComponentId?.Equals(other.ComponentId) == true)) &&
                 ((this.SinceId == null && other.SinceId == null) || (this.SinceId?.Equals(other.SinceId) == true)) &&
                 ((this.MaxId == null && other.MaxId == null) || (this.MaxId?.Equals(other.MaxId) == true)) &&
                 ((this.SinceDate == null && other.SinceDate == null) || (this.SinceDate?.Equals(other.SinceDate) == true)) &&
@@ -148,11 +151,11 @@ namespace AdvancedBilling.Standard.Models
         protected void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.SubscriptionId = {this.SubscriptionId}");
-            toStringOutput.Add($"this.ComponentId = {this.ComponentId}");
+            toStringOutput.Add($"ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"this.SinceId = {(this.SinceId == null ? "null" : this.SinceId.ToString())}");
             toStringOutput.Add($"this.MaxId = {(this.MaxId == null ? "null" : this.MaxId.ToString())}");
-            toStringOutput.Add($"this.SinceDate = {(this.SinceDate == null ? "null" : this.SinceDate)}");
-            toStringOutput.Add($"this.UntilDate = {(this.UntilDate == null ? "null" : this.UntilDate)}");
+            toStringOutput.Add($"this.SinceDate = {(this.SinceDate == null ? "null" : this.SinceDate.ToString())}");
+            toStringOutput.Add($"this.UntilDate = {(this.UntilDate == null ? "null" : this.UntilDate.ToString())}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
         }

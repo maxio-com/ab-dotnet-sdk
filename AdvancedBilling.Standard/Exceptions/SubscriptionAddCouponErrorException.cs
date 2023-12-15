@@ -40,6 +40,12 @@ namespace AdvancedBilling.Standard.Exceptions
         public List<string> Codes { get; set; }
 
         /// <summary>
+        /// Gets or sets CouponCode.
+        /// </summary>
+        [JsonProperty("coupon_code", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> CouponCode { get; set; }
+
+        /// <summary>
         /// Gets or sets CouponCodes.
         /// </summary>
         [JsonProperty("coupon_codes", NullValueHandling = NullValueHandling.Ignore)]

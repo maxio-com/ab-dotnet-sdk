@@ -45,6 +45,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="metadata">metadata.</param>
         /// <param name="direction">direction.</param>
         /// <param name="sort">sort.</param>
+        /// <param name="include">include[].</param>
         public ListSubscriptionsInput(
             int? page = 1,
             int? perPage = 20,
@@ -59,7 +60,8 @@ namespace AdvancedBilling.Standard.Models
             DateTimeOffset? endDatetime = null,
             Dictionary<string, string> metadata = null,
             Models.SortingDirection? direction = null,
-            Models.SubscriptionSort? sort = Models.SubscriptionSort.SignupDate)
+            Models.SubscriptionSort? sort = Models.SubscriptionSort.SignupDate,
+            List<Models.SubscriptionListInclude> include = null)
         {
             this.Page = page;
             this.PerPage = perPage;
@@ -75,6 +77,7 @@ namespace AdvancedBilling.Standard.Models
             this.Metadata = metadata;
             this.Direction = direction;
             this.Sort = sort;
+            this.Include = include;
         }
 
         /// <summary>
@@ -168,6 +171,12 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("sort", NullValueHandling = NullValueHandling.Ignore)]
         public Models.SubscriptionSort? Sort { get; set; }
 
+        /// <summary>
+        /// Allows including additional data in the response. Use in query: `include[]=self_service_page_token`.
+        /// </summary>
+        [JsonProperty("include[]", NullValueHandling = NullValueHandling.Ignore)]
+        public List<Models.SubscriptionListInclude> Include { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -203,7 +212,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.EndDatetime == null && other.EndDatetime == null) || (this.EndDatetime?.Equals(other.EndDatetime) == true)) &&
                 ((this.Metadata == null && other.Metadata == null) || (this.Metadata?.Equals(other.Metadata) == true)) &&
                 ((this.Direction == null && other.Direction == null) || (this.Direction?.Equals(other.Direction) == true)) &&
-                ((this.Sort == null && other.Sort == null) || (this.Sort?.Equals(other.Sort) == true));
+                ((this.Sort == null && other.Sort == null) || (this.Sort?.Equals(other.Sort) == true)) &&
+                ((this.Include == null && other.Include == null) || (this.Include?.Equals(other.Include) == true));
         }
         
         /// <summary>
@@ -226,6 +236,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Metadata = {(this.Metadata == null ? "null" : this.Metadata.ToString())}");
             toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
             toStringOutput.Add($"this.Sort = {(this.Sort == null ? "null" : this.Sort.ToString())}");
+            toStringOutput.Add($"this.Include = {(this.Include == null ? "null" : $"[{string.Join(", ", this.Include)} ]")}");
         }
     }
 }

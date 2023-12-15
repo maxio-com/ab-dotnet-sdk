@@ -885,6 +885,7 @@ ListSubscriptionsAsync(
 | `metadata` | `Dictionary<string, string>` | Query, Optional | The value of the metadata field specified in the parameter. Use in query `metadata[my-field]=value&metadata[other-field]=another_value`. |
 | `direction` | [`SortingDirection?`](../../doc/models/sorting-direction.md) | Query, Optional | Controls the order in which results are returned.<br>Use in query `direction=asc`. |
 | `sort` | [`SubscriptionSort?`](../../doc/models/subscription-sort.md) | Query, Optional | The attribute by which to sort<br>**Default**: `SubscriptionSort.signup_date` |
+| `include` | [`List<SubscriptionListInclude>`](../../doc/models/subscription-list-include.md) | Query, Optional | Allows including additional data in the response. Use in query: `include[]=self_service_page_token`. |
 
 ## Response Type
 
@@ -906,7 +907,7 @@ ListSubscriptionsInput listSubscriptionsInput = new ListSubscriptionsInput
         provider: CultureInfo.InvariantCulture,
         DateTimeStyles.RoundtripKind),
     Sort = SubscriptionSort.SignupDate,
-};
+Liquid error: Value cannot be null. (Parameter 'key')};
 
 try
 {
@@ -1357,10 +1358,16 @@ OverrideSubscriptionRequest body = new OverrideSubscriptionRequest
 {
     Subscription = new OverrideSubscription
     {
-        ActivatedAt = "1999-12-01",
-        CanceledAt = "2000-12-31",
+        ActivatedAt = DateTime.ParseExact("1999-12-01T10:28:34-05:00", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
+        CanceledAt = DateTime.ParseExact("2000-12-31T10:28:34-05:00", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
         CancellationMessage = "Original cancellation in 2000",
-        ExpiresAt = "2001-07-15",
+        ExpiresAt = DateTime.ParseExact("2001-07-15T10:28:34-05:00", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
     },
 };
 
@@ -1383,7 +1390,7 @@ catch (ApiException e)
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 400 | Bad Request | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`SingleErrorResponseErrorException`](../../doc/models/single-error-response-error-exception.md) |
 
 
 # Read Subscription by Reference

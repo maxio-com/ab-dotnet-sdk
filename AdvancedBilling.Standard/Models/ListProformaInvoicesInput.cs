@@ -48,7 +48,7 @@ namespace AdvancedBilling.Standard.Models
             int subscriptionId,
             string startDate = null,
             string endDate = null,
-            Models.Status? status = null,
+            Models.InvoiceStatus? status = null,
             int? page = 1,
             int? perPage = 20,
             Models.Direction? direction = Models.Direction.Desc,
@@ -96,7 +96,7 @@ namespace AdvancedBilling.Standard.Models
         /// The current status of the invoice.  Allowed Values: draft, open, paid, pending, voided
         /// </summary>
         [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.Status? Status { get; set; }
+        public Models.InvoiceStatus? Status { get; set; }
 
         /// <summary>
         /// Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.

@@ -1460,7 +1460,9 @@ catch (ApiException e)
         "taxable_amount_in_cents": 0,
         "product_id": 1,
         "product_handle": "gold-product",
-        "product_name": "Gold Product"
+        "product_name": "Gold Product",
+        "period_range_start": "01/10/2024",
+        "period_range_end": "02/10/2024"
       },
       {
         "transaction_type": "charge",
@@ -1471,10 +1473,18 @@ catch (ApiException e)
         "taxable_amount_in_cents": 0,
         "component_id": 104,
         "component_handle": "quantity-component",
-        "component_name": "Quantity Component"
+        "component_name": "Quantity Component",
+        "period_range_start": "01/10/2024",
+        "period_range_end": "02/10/2024"
       }
     ]
   }
 }
 ```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 

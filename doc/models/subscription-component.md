@@ -11,12 +11,12 @@
 |  --- | --- | --- | --- |
 | `Id` | `int?` | Optional | - |
 | `Name` | `string` | Optional | - |
-| `Kind` | `string` | Optional | - |
+| `Kind` | [`ComponentKind?`](../../doc/models/component-kind.md) | Optional | A handle for the component type |
 | `UnitName` | `string` | Optional | - |
 | `Enabled` | `bool?` | Optional | (for on/off components) indicates if the component is enabled for the subscription |
 | `UnitBalance` | `int?` | Optional | - |
 | `Currency` | `string` | Optional | - |
-| `AllocatedQuantity` | `int?` | Optional | For Quantity-based components: The current allocation for the component on the given subscription. For On/Off components: Use 1 for on. Use 0 for off. |
+| `AllocatedQuantity` | [`SubscriptionComponentAllocatedQuantity`](../../doc/models/containers/subscription-component-allocated-quantity.md) | Optional | This is a container for one-of cases. |
 | `PricingScheme` | [`SubscriptionComponentPricingScheme`](../../doc/models/containers/subscription-component-pricing-scheme.md) | Optional | This is a container for one-of cases. |
 | `ComponentId` | `int?` | Optional | - |
 | `ComponentHandle` | `string` | Optional | - |
@@ -31,8 +31,8 @@
 | `PricePointName` | `string` | Optional | - |
 | `ProductFamilyId` | `int?` | Optional | - |
 | `ProductFamilyHandle` | `string` | Optional | - |
-| `CreatedAt` | `string` | Optional | - |
-| `UpdatedAt` | `string` | Optional | - |
+| `CreatedAt` | `DateTimeOffset?` | Optional | - |
+| `UpdatedAt` | `DateTimeOffset?` | Optional | - |
 | `UseSiteExchangeRate` | `bool?` | Optional | - |
 | `Description` | `string` | Optional | - |
 | `AllowFractionalQuantities` | `bool?` | Optional | - |
@@ -45,7 +45,7 @@
 {
   "id": 20,
   "name": "name8",
-  "kind": "kind6",
+  "kind": "quantity_based_component",
   "unit_name": "unit_name0",
   "enabled": false
 }

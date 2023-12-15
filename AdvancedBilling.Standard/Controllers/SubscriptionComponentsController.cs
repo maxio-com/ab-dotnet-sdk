@@ -16,6 +16,7 @@ namespace AdvancedBilling.Standard.Controllers
     using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
+    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
     using APIMatic.Core;
     using APIMatic.Core.Types;
@@ -578,7 +579,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <returns>Returns the Models.UsageResponse response from the API call.</returns>
         public Models.UsageResponse CreateUsage(
                 int subscriptionId,
-                int componentId,
+                CreateUsageComponentId componentId,
                 Models.CreateUsageRequest body = null)
             => CoreHelper.RunTask(CreateUsageAsync(subscriptionId, componentId, body));
 
@@ -627,7 +628,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <returns>Returns the Models.UsageResponse response from the API call.</returns>
         public async Task<Models.UsageResponse> CreateUsageAsync(
                 int subscriptionId,
-                int componentId,
+                CreateUsageComponentId componentId,
                 Models.CreateUsageRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.UsageResponse>()
@@ -637,7 +638,7 @@ namespace AdvancedBilling.Standard.Controllers
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("component_id", componentId))
+                      .Template(_template => _template.Setup("component_id", componentId).Required())
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
@@ -683,11 +684,11 @@ namespace AdvancedBilling.Standard.Controllers
                   .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("subscription_id", input.SubscriptionId))
-                      .Template(_template => _template.Setup("component_id", input.ComponentId))
+                      .Template(_template => _template.Setup("component_id", input.ComponentId).Required())
                       .Query(_query => _query.Setup("since_id", input.SinceId))
                       .Query(_query => _query.Setup("max_id", input.MaxId))
-                      .Query(_query => _query.Setup("since_date", input.SinceDate))
-                      .Query(_query => _query.Setup("until_date", input.UntilDate))
+                      .Query(_query => _query.Setup("since_date", input.SinceDate.HasValue ? input.SinceDate.Value.ToString("yyyy'-'MM'-'dd") : null))
+                      .Query(_query => _query.Setup("until_date", input.UntilDate.HasValue ? input.UntilDate.Value.ToString("yyyy'-'MM'-'dd") : null))
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))))
               .ExecuteAsync(cancellationToken);
