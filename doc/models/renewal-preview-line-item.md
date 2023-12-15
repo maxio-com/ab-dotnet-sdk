@@ -21,6 +21,8 @@
 | `ComponentHandle` | `string` | Optional | - |
 | `ComponentName` | `string` | Optional | - |
 | `ProductHandle` | `string` | Optional | - |
+| `PeriodRangeStart` | `string` | Optional | - |
+| `PeriodRangeEnd` | `string` | Optional | - |
 
 ## Example (as JSON)
 

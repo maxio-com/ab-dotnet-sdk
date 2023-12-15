@@ -37,7 +37,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="paidAmount">paid_amount.</param>
         public Payment(
             string invoiceUid = null,
-            Models.Status? status = null,
+            Models.InvoiceStatus? status = null,
             string dueAmount = null,
             string paidAmount = null)
         {
@@ -57,7 +57,7 @@ namespace AdvancedBilling.Standard.Models
         /// The current status of the invoice. See [Invoice Statuses](https://chargify.zendesk.com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
         /// </summary>
         [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.Status? Status { get; set; }
+        public Models.InvoiceStatus? Status { get; set; }
 
         /// <summary>
         /// The remaining due amount on the invoice

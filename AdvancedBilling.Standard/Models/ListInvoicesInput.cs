@@ -56,7 +56,7 @@ namespace AdvancedBilling.Standard.Models
         public ListInvoicesInput(
             string startDate = null,
             string endDate = null,
-            Models.Status? status = null,
+            Models.InvoiceStatus? status = null,
             int? subscriptionId = null,
             string subscriptionGroupUid = null,
             int? page = 1,
@@ -117,7 +117,7 @@ namespace AdvancedBilling.Standard.Models
         /// The current status of the invoice.  Allowed Values: draft, open, paid, pending, voided
         /// </summary>
         [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.Status? Status { get; set; }
+        public Models.InvoiceStatus? Status { get; set; }
 
         /// <summary>
         /// The subscription's ID.

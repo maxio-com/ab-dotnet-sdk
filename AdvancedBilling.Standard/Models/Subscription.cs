@@ -157,6 +157,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="creditBalanceInCents">credit_balance_in_cents.</param>
         /// <param name="prepaymentBalanceInCents">prepayment_balance_in_cents.</param>
         /// <param name="prepaidConfiguration">prepaid_configuration.</param>
+        /// <param name="selfServicePageToken">self_service_page_token.</param>
         public Subscription(
             int? id = null,
             Models.SubscriptionState? state = null,
@@ -218,7 +219,8 @@ namespace AdvancedBilling.Standard.Models
             DateTimeOffset? scheduledCancellationAt = null,
             long? creditBalanceInCents = null,
             long? prepaymentBalanceInCents = null,
-            Models.PrepaidConfiguration prepaidConfiguration = null)
+            Models.PrepaidConfiguration prepaidConfiguration = null,
+            string selfServicePageToken = null)
         {
             this.Id = id;
             this.State = state;
@@ -401,6 +403,7 @@ namespace AdvancedBilling.Standard.Models
             this.CreditBalanceInCents = creditBalanceInCents;
             this.PrepaymentBalanceInCents = prepaymentBalanceInCents;
             this.PrepaidConfiguration = prepaidConfiguration;
+            this.SelfServicePageToken = selfServicePageToken;
         }
 
         /// <summary>
@@ -1166,6 +1169,12 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("prepaid_configuration", NullValueHandling = NullValueHandling.Ignore)]
         public Models.PrepaidConfiguration PrepaidConfiguration { get; set; }
 
+        /// <summary>
+        /// Returned only for list/read Subscription operation when `include[]=self_service_page_token` parameter is provided.
+        /// </summary>
+        [JsonProperty("self_service_page_token", NullValueHandling = NullValueHandling.Ignore)]
+        public string SelfServicePageToken { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -1758,7 +1767,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.ScheduledCancellationAt == null && other.ScheduledCancellationAt == null) || (this.ScheduledCancellationAt?.Equals(other.ScheduledCancellationAt) == true)) &&
                 ((this.CreditBalanceInCents == null && other.CreditBalanceInCents == null) || (this.CreditBalanceInCents?.Equals(other.CreditBalanceInCents) == true)) &&
                 ((this.PrepaymentBalanceInCents == null && other.PrepaymentBalanceInCents == null) || (this.PrepaymentBalanceInCents?.Equals(other.PrepaymentBalanceInCents) == true)) &&
-                ((this.PrepaidConfiguration == null && other.PrepaidConfiguration == null) || (this.PrepaidConfiguration?.Equals(other.PrepaidConfiguration) == true));
+                ((this.PrepaidConfiguration == null && other.PrepaidConfiguration == null) || (this.PrepaidConfiguration?.Equals(other.PrepaidConfiguration) == true)) &&
+                ((this.SelfServicePageToken == null && other.SelfServicePageToken == null) || (this.SelfServicePageToken?.Equals(other.SelfServicePageToken) == true));
         }
         
         /// <summary>
@@ -1828,6 +1838,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.CreditBalanceInCents = {(this.CreditBalanceInCents == null ? "null" : this.CreditBalanceInCents.ToString())}");
             toStringOutput.Add($"this.PrepaymentBalanceInCents = {(this.PrepaymentBalanceInCents == null ? "null" : this.PrepaymentBalanceInCents.ToString())}");
             toStringOutput.Add($"this.PrepaidConfiguration = {(this.PrepaidConfiguration == null ? "null" : this.PrepaidConfiguration.ToString())}");
+            toStringOutput.Add($"this.SelfServicePageToken = {(this.SelfServicePageToken == null ? "null" : this.SelfServicePageToken)}");
         }
     }
 }

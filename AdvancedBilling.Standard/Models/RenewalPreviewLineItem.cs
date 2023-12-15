@@ -43,6 +43,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="componentHandle">component_handle.</param>
         /// <param name="componentName">component_name.</param>
         /// <param name="productHandle">product_handle.</param>
+        /// <param name="periodRangeStart">period_range_start.</param>
+        /// <param name="periodRangeEnd">period_range_end.</param>
         public RenewalPreviewLineItem(
             string transactionType = null,
             string kind = null,
@@ -55,7 +57,9 @@ namespace AdvancedBilling.Standard.Models
             int? componentId = null,
             string componentHandle = null,
             string componentName = null,
-            string productHandle = null)
+            string productHandle = null,
+            string periodRangeStart = null,
+            string periodRangeEnd = null)
         {
             this.TransactionType = transactionType;
             this.Kind = kind;
@@ -69,6 +73,8 @@ namespace AdvancedBilling.Standard.Models
             this.ComponentHandle = componentHandle;
             this.ComponentName = componentName;
             this.ProductHandle = productHandle;
+            this.PeriodRangeStart = periodRangeStart;
+            this.PeriodRangeEnd = periodRangeEnd;
         }
 
         /// <summary>
@@ -143,6 +149,18 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("product_handle", NullValueHandling = NullValueHandling.Ignore)]
         public string ProductHandle { get; set; }
 
+        /// <summary>
+        /// Gets or sets PeriodRangeStart.
+        /// </summary>
+        [JsonProperty("period_range_start", NullValueHandling = NullValueHandling.Ignore)]
+        public string PeriodRangeStart { get; set; }
+
+        /// <summary>
+        /// Gets or sets PeriodRangeEnd.
+        /// </summary>
+        [JsonProperty("period_range_end", NullValueHandling = NullValueHandling.Ignore)]
+        public string PeriodRangeEnd { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -176,7 +194,9 @@ namespace AdvancedBilling.Standard.Models
                 ((this.ComponentId == null && other.ComponentId == null) || (this.ComponentId?.Equals(other.ComponentId) == true)) &&
                 ((this.ComponentHandle == null && other.ComponentHandle == null) || (this.ComponentHandle?.Equals(other.ComponentHandle) == true)) &&
                 ((this.ComponentName == null && other.ComponentName == null) || (this.ComponentName?.Equals(other.ComponentName) == true)) &&
-                ((this.ProductHandle == null && other.ProductHandle == null) || (this.ProductHandle?.Equals(other.ProductHandle) == true));
+                ((this.ProductHandle == null && other.ProductHandle == null) || (this.ProductHandle?.Equals(other.ProductHandle) == true)) &&
+                ((this.PeriodRangeStart == null && other.PeriodRangeStart == null) || (this.PeriodRangeStart?.Equals(other.PeriodRangeStart) == true)) &&
+                ((this.PeriodRangeEnd == null && other.PeriodRangeEnd == null) || (this.PeriodRangeEnd?.Equals(other.PeriodRangeEnd) == true));
         }
         
         /// <summary>
@@ -197,6 +217,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ComponentHandle = {(this.ComponentHandle == null ? "null" : this.ComponentHandle)}");
             toStringOutput.Add($"this.ComponentName = {(this.ComponentName == null ? "null" : this.ComponentName)}");
             toStringOutput.Add($"this.ProductHandle = {(this.ProductHandle == null ? "null" : this.ProductHandle)}");
+            toStringOutput.Add($"this.PeriodRangeStart = {(this.PeriodRangeStart == null ? "null" : this.PeriodRangeStart)}");
+            toStringOutput.Add($"this.PeriodRangeEnd = {(this.PeriodRangeEnd == null ? "null" : this.PeriodRangeEnd)}");
         }
     }
 }

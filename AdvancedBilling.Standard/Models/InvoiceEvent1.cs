@@ -78,8 +78,8 @@ namespace AdvancedBilling.Standard.Models
             string fromCollectionMethod = null,
             string toCollectionMethod = null,
             Models.InvoiceConsolidationLevel? consolidationLevel = null,
-            Models.Status? fromStatus = null,
-            Models.Status? toStatus = null,
+            Models.InvoiceStatus? fromStatus = null,
+            Models.InvoiceStatus? toStatus = null,
             string dueAmount = null,
             string totalAmount = null,
             bool? applyCredit = null,
@@ -232,13 +232,13 @@ namespace AdvancedBilling.Standard.Models
         /// The status of the invoice before event occurence. See [Invoice Statuses](https://chargify.zendesk.com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
         /// </summary>
         [JsonProperty("from_status", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.Status? FromStatus { get; set; }
+        public Models.InvoiceStatus? FromStatus { get; set; }
 
         /// <summary>
         /// The status of the invoice after event occurence. See [Invoice Statuses](https://chargify.zendesk.com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
         /// </summary>
         [JsonProperty("to_status", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.Status? ToStatus { get; set; }
+        public Models.InvoiceStatus? ToStatus { get; set; }
 
         /// <summary>
         /// Amount due on the invoice, which is `total_amount - credit_amount - paid_amount`.

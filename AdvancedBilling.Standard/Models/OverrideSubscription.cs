@@ -37,11 +37,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="expiresAt">expires_at.</param>
         /// <param name="currentPeriodStartsAt">current_period_starts_at.</param>
         public OverrideSubscription(
-            string activatedAt = null,
-            string canceledAt = null,
+            DateTimeOffset? activatedAt = null,
+            DateTimeOffset? canceledAt = null,
             string cancellationMessage = null,
-            string expiresAt = null,
-            string currentPeriodStartsAt = null)
+            DateTimeOffset? expiresAt = null,
+            DateTimeOffset? currentPeriodStartsAt = null)
         {
             this.ActivatedAt = activatedAt;
             this.CanceledAt = canceledAt;
@@ -51,16 +51,18 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Can be used to record an external signup date. Chargify uses this field to record when a subscription first goes active (either at signup or at trial end)
+        /// Can be used to record an external signup date. Chargify uses this field to record when a subscription first goes active (either at signup or at trial end). Only ISO8601 format is supported.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("activated_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string ActivatedAt { get; set; }
+        public DateTimeOffset? ActivatedAt { get; set; }
 
         /// <summary>
-        /// Can be used to record an external cancellation date. Chargify sets this field automatically when a subscription is canceled, whether by request or via dunning.
+        /// Can be used to record an external cancellation date. Chargify sets this field automatically when a subscription is canceled, whether by request or via dunning. Only ISO8601 format is supported.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("canceled_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CanceledAt { get; set; }
+        public DateTimeOffset? CanceledAt { get; set; }
 
         /// <summary>
         /// Can be used to record a reason for the original cancellation.
@@ -69,16 +71,18 @@ namespace AdvancedBilling.Standard.Models
         public string CancellationMessage { get; set; }
 
         /// <summary>
-        /// Can be used to record an external expiration date. Chargify sets this field automatically when a subscription expires (ceases billing) after a prescribed amount of time.
+        /// Can be used to record an external expiration date. Chargify sets this field automatically when a subscription expires (ceases billing) after a prescribed amount of time. Only ISO8601 format is supported.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("expires_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string ExpiresAt { get; set; }
+        public DateTimeOffset? ExpiresAt { get; set; }
 
         /// <summary>
-        /// Can only be used when a subscription is unbilled, which happens when a future initial billing date is passed at subscription creation. The value passed must be before the current date and time. Allows you to set when the period started so mid period component allocations have the correct proration.
+        /// Can only be used when a subscription is unbilled, which happens when a future initial billing date is passed at subscription creation. The value passed must be before the current date and time. Allows you to set when the period started so mid period component allocations have the correct proration. Only ISO8601 format is supported.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("current_period_starts_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CurrentPeriodStartsAt { get; set; }
+        public DateTimeOffset? CurrentPeriodStartsAt { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -115,11 +119,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ActivatedAt = {(this.ActivatedAt == null ? "null" : this.ActivatedAt)}");
-            toStringOutput.Add($"this.CanceledAt = {(this.CanceledAt == null ? "null" : this.CanceledAt)}");
+            toStringOutput.Add($"this.ActivatedAt = {(this.ActivatedAt == null ? "null" : this.ActivatedAt.ToString())}");
+            toStringOutput.Add($"this.CanceledAt = {(this.CanceledAt == null ? "null" : this.CanceledAt.ToString())}");
             toStringOutput.Add($"this.CancellationMessage = {(this.CancellationMessage == null ? "null" : this.CancellationMessage)}");
-            toStringOutput.Add($"this.ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt)}");
-            toStringOutput.Add($"this.CurrentPeriodStartsAt = {(this.CurrentPeriodStartsAt == null ? "null" : this.CurrentPeriodStartsAt)}");
+            toStringOutput.Add($"this.ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt.ToString())}");
+            toStringOutput.Add($"this.CurrentPeriodStartsAt = {(this.CurrentPeriodStartsAt == null ? "null" : this.CurrentPeriodStartsAt.ToString())}");
         }
     }
 }

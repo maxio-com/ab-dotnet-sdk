@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class Invoice
     {
-        private string paidDate;
+        private DateTime? paidDate;
         private int? parentInvoiceId;
         private string parentInvoiceUid;
         private int? subscriptionGroupId;
@@ -110,10 +110,10 @@ namespace AdvancedBilling.Standard.Models
             DateTimeOffset? transactionTime = null,
             DateTimeOffset? createdAt = null,
             DateTimeOffset? updatedAt = null,
-            string issueDate = null,
-            string dueDate = null,
-            string paidDate = null,
-            Models.Status? status = null,
+            DateTime? issueDate = null,
+            DateTime? dueDate = null,
+            DateTime? paidDate = null,
+            Models.InvoiceStatus? status = null,
             string role = null,
             int? parentInvoiceId = null,
             string collectionMethod = null,
@@ -299,23 +299,26 @@ namespace AdvancedBilling.Standard.Models
         /// Date the invoice was issued to the customer.  This is the date that the invoice was made available for payment.
         /// The format is `"YYYY-MM-DD"`.
         /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("issue_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string IssueDate { get; set; }
+        public DateTime? IssueDate { get; set; }
 
         /// <summary>
         /// Date the invoice is due.
         /// The format is `"YYYY-MM-DD"`.
         /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("due_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string DueDate { get; set; }
+        public DateTime? DueDate { get; set; }
 
         /// <summary>
         /// Date the invoice became fully paid.
         /// If partial payments are applied to the invoice, this date will not be present until payment has been made in full.
         /// The format is `"YYYY-MM-DD"`.
         /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("paid_date")]
-        public string PaidDate
+        public DateTime? PaidDate
         {
             get
             {
@@ -333,7 +336,7 @@ namespace AdvancedBilling.Standard.Models
         /// The current status of the invoice. See [Invoice Statuses](https://chargify.zendesk.com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
         /// </summary>
         [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.Status? Status { get; set; }
+        public Models.InvoiceStatus? Status { get; set; }
 
         /// <summary>
         /// Gets or sets Role.
@@ -823,9 +826,9 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.TransactionTime = {(this.TransactionTime == null ? "null" : this.TransactionTime.ToString())}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
             toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
-            toStringOutput.Add($"this.IssueDate = {(this.IssueDate == null ? "null" : this.IssueDate)}");
-            toStringOutput.Add($"this.DueDate = {(this.DueDate == null ? "null" : this.DueDate)}");
-            toStringOutput.Add($"this.PaidDate = {(this.PaidDate == null ? "null" : this.PaidDate)}");
+            toStringOutput.Add($"this.IssueDate = {(this.IssueDate == null ? "null" : this.IssueDate.ToString())}");
+            toStringOutput.Add($"this.DueDate = {(this.DueDate == null ? "null" : this.DueDate.ToString())}");
+            toStringOutput.Add($"this.PaidDate = {(this.PaidDate == null ? "null" : this.PaidDate.ToString())}");
             toStringOutput.Add($"this.Status = {(this.Status == null ? "null" : this.Status.ToString())}");
             toStringOutput.Add($"this.Role = {(this.Role == null ? "null" : this.Role)}");
             toStringOutput.Add($"this.ParentInvoiceId = {(this.ParentInvoiceId == null ? "null" : this.ParentInvoiceId.ToString())}");

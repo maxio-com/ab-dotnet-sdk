@@ -12,6 +12,7 @@ namespace AdvancedBilling.Standard.Models
     using System.Threading.Tasks;
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
+    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
@@ -45,7 +46,7 @@ namespace AdvancedBilling.Standard.Models
             string componentHandle,
             string memo,
             int allocationId,
-            int? allocatedQuantity = null)
+            ComponentAllocationChangeAllocatedQuantity allocatedQuantity = null)
         {
             this.PreviousAllocation = previousAllocation;
             this.NewAllocation = newAllocation;
@@ -104,7 +105,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets AllocatedQuantity.
         /// </summary>
         [JsonProperty("allocated_quantity", NullValueHandling = NullValueHandling.Ignore)]
-        public int? AllocatedQuantity { get; set; }
+        public ComponentAllocationChangeAllocatedQuantity AllocatedQuantity { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -149,7 +150,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ComponentHandle = {(this.ComponentHandle == null ? "null" : this.ComponentHandle)}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.AllocationId = {this.AllocationId}");
-            toStringOutput.Add($"this.AllocatedQuantity = {(this.AllocatedQuantity == null ? "null" : this.AllocatedQuantity.ToString())}");
+            toStringOutput.Add($"AllocatedQuantity = {(this.AllocatedQuantity == null ? "null" : this.AllocatedQuantity.ToString())}");
         }
     }
 }

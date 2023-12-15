@@ -8,22 +8,32 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>AdvancedBillingStandard</AssemblyName>
-    <Version>1.0.0.0</Version>
-
+    <AssemblyName>Maxio.AdvancedBillingSdk</AssemblyName>
+    <Version>0.0.3.0</Version>
+    <Authors>MaxioSdk</Authors>
     <Owners></Owners>
     <Product>AdvancedBilling.Standard</Product>
     <Copyright>Copyright ©  2019</Copyright>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
-    <Description>.NET client library for the Maxio Advanced Billing API</Description>
+    <AssemblyVersion>0.0.3.0</AssemblyVersion>
+    <FileVersion>0.0.3.0</FileVersion>
+    <Description>Ultimate billing and pricing flexibility for B2B SaaS.
+Maxio integrates directly into your product, so you can seamlessly manage your product catalog, bill customers, and collect payments.</Description>
     <LangVersion>7.3</LangVersion>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <PackageId>Maxio.AdvancedBillingSdk</PackageId>
+    <PackageTags>Maxio;Advanced Billing;Subscription;Payments</PackageTags>
+    <RepositoryUrl>https://github.com/maxio-com/ab-dotnet-sdk.git</RepositoryUrl>
+    <PackRepositoryTypeageId>git</PackRepositoryTypeageId>
+    <PackageProjectUrl>https://www.maxio.com/product/advanced-billing</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include= "APIMatic.Core" Version= "0.3.*" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <None Include="..\README.md" Pack="true" PackagePath="\"/>
+    <None Include="..\LICENSE" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
 </Project>

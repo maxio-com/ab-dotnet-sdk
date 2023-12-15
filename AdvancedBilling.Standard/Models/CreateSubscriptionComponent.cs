@@ -43,7 +43,7 @@ namespace AdvancedBilling.Standard.Models
             CreateSubscriptionComponentComponentId componentId = null,
             bool? enabled = null,
             int? unitBalance = null,
-            int? allocatedQuantity = null,
+            CreateSubscriptionComponentAllocatedQuantity allocatedQuantity = null,
             int? quantity = null,
             CreateSubscriptionComponentPricePointId pricePointId = null,
             Models.ComponentCustomPrice customPrice = null)
@@ -79,7 +79,7 @@ namespace AdvancedBilling.Standard.Models
         /// Used for quantity based components.
         /// </summary>
         [JsonProperty("allocated_quantity", NullValueHandling = NullValueHandling.Ignore)]
-        public int? AllocatedQuantity { get; set; }
+        public CreateSubscriptionComponentAllocatedQuantity AllocatedQuantity { get; set; }
 
         /// <summary>
         /// Deprecated. Use `allocated_quantity` instead.
@@ -139,7 +139,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"this.Enabled = {(this.Enabled == null ? "null" : this.Enabled.ToString())}");
             toStringOutput.Add($"this.UnitBalance = {(this.UnitBalance == null ? "null" : this.UnitBalance.ToString())}");
-            toStringOutput.Add($"this.AllocatedQuantity = {(this.AllocatedQuantity == null ? "null" : this.AllocatedQuantity.ToString())}");
+            toStringOutput.Add($"AllocatedQuantity = {(this.AllocatedQuantity == null ? "null" : this.AllocatedQuantity.ToString())}");
             toStringOutput.Add($"this.Quantity = {(this.Quantity == null ? "null" : this.Quantity.ToString())}");
             toStringOutput.Add($"PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
             toStringOutput.Add($"this.CustomPrice = {(this.CustomPrice == null ? "null" : this.CustomPrice.ToString())}");

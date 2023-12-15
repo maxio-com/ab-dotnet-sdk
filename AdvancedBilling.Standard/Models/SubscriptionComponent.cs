@@ -88,12 +88,12 @@ namespace AdvancedBilling.Standard.Models
         public SubscriptionComponent(
             int? id = null,
             string name = null,
-            string kind = null,
+            Models.ComponentKind? kind = null,
             string unitName = null,
             bool? enabled = null,
             int? unitBalance = null,
             string currency = null,
-            int? allocatedQuantity = null,
+            SubscriptionComponentAllocatedQuantity allocatedQuantity = null,
             SubscriptionComponentPricingScheme pricingScheme = null,
             int? componentId = null,
             string componentHandle = null,
@@ -108,8 +108,8 @@ namespace AdvancedBilling.Standard.Models
             string pricePointName = null,
             int? productFamilyId = null,
             string productFamilyHandle = null,
-            string createdAt = null,
-            string updatedAt = null,
+            DateTimeOffset? createdAt = null,
+            DateTimeOffset? updatedAt = null,
             bool? useSiteExchangeRate = null,
             string description = null,
             bool? allowFractionalQuantities = null,
@@ -200,10 +200,10 @@ namespace AdvancedBilling.Standard.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets Kind.
+        /// A handle for the component type
         /// </summary>
         [JsonProperty("kind", NullValueHandling = NullValueHandling.Ignore)]
-        public string Kind { get; set; }
+        public Models.ComponentKind? Kind { get; set; }
 
         /// <summary>
         /// Gets or sets UnitName.
@@ -233,7 +233,7 @@ namespace AdvancedBilling.Standard.Models
         /// For Quantity-based components: The current allocation for the component on the given subscription. For On/Off components: Use 1 for on. Use 0 for off.
         /// </summary>
         [JsonProperty("allocated_quantity", NullValueHandling = NullValueHandling.Ignore)]
-        public int? AllocatedQuantity { get; set; }
+        public SubscriptionComponentAllocatedQuantity AllocatedQuantity { get; set; }
 
         /// <summary>
         /// Gets or sets PricingScheme.
@@ -420,14 +420,16 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CreatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets UpdatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("updated_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string UpdatedAt { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets UseSiteExchangeRate.
@@ -714,12 +716,12 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
-            toStringOutput.Add($"this.Kind = {(this.Kind == null ? "null" : this.Kind)}");
+            toStringOutput.Add($"this.Kind = {(this.Kind == null ? "null" : this.Kind.ToString())}");
             toStringOutput.Add($"this.UnitName = {(this.UnitName == null ? "null" : this.UnitName)}");
             toStringOutput.Add($"this.Enabled = {(this.Enabled == null ? "null" : this.Enabled.ToString())}");
             toStringOutput.Add($"this.UnitBalance = {(this.UnitBalance == null ? "null" : this.UnitBalance.ToString())}");
             toStringOutput.Add($"this.Currency = {(this.Currency == null ? "null" : this.Currency)}");
-            toStringOutput.Add($"this.AllocatedQuantity = {(this.AllocatedQuantity == null ? "null" : this.AllocatedQuantity.ToString())}");
+            toStringOutput.Add($"AllocatedQuantity = {(this.AllocatedQuantity == null ? "null" : this.AllocatedQuantity.ToString())}");
             toStringOutput.Add($"PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"this.ComponentHandle = {(this.ComponentHandle == null ? "null" : this.ComponentHandle)}");
@@ -734,8 +736,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PricePointName = {(this.PricePointName == null ? "null" : this.PricePointName)}");
             toStringOutput.Add($"this.ProductFamilyId = {(this.ProductFamilyId == null ? "null" : this.ProductFamilyId.ToString())}");
             toStringOutput.Add($"this.ProductFamilyHandle = {(this.ProductFamilyHandle == null ? "null" : this.ProductFamilyHandle)}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
-            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt)}");
+            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
             toStringOutput.Add($"this.UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
             toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
             toStringOutput.Add($"this.AllowFractionalQuantities = {(this.AllowFractionalQuantities == null ? "null" : this.AllowFractionalQuantities.ToString())}");

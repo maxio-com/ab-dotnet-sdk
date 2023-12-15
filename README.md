@@ -266,53 +266,16 @@ It is up to API consumers to parse the string into a decimal number representati
   + [Invoices: Charges](./b3A6MTQxMTA0MTM-create-charge)
   + [Invoices: Credits](./b3A6MTQxMTA0MTQ-create-invoice-credit)
 
-## Building
+## Install the Package
 
-The generated code uses the Newtonsoft Json.NET NuGet Package. If the automatic NuGet package restore is enabled, these dependencies will be installed automatically. Therefore, you will need internet access for build.
+If you are building with .NET CLI tools then you can also use the following command:
 
-* Open the solution (AdvancedBilling.sln) file.
+```bash
+dotnet add package Maxio.AdvancedBillingSdk --version 0.0.3
+```
 
-Invoke the build process using Ctrl + Shift + B shortcut key or using the Build menu as shown below.
-
-The build process generates a portable class library, which can be used like a normal class library. More information on how to use can be found at the MSDN Portable Class Libraries documentation.
-
-The supported version is **.NET Standard 2.0**. For checking compatibility of your .NET implementation with the generated library, [click here](https://dotnet.microsoft.com/en-us/platform/dotnet-standard#versions).
-
-## Installation
-
-The following section explains how to use the AdvancedBilling.Standard library in a new project.
-
-### 1. Starting a new project
-
-For starting a new project, right click on the current solution from the solution explorer and choose `Add -> New Project`.
-
-![Add a new project in Visual Studio](https://apidocs.io/illustration/cs?workspaceFolder=AdvancedBilling-CSharp&workspaceName=AdvancedBilling&projectName=AdvancedBilling.Standard&rootNamespace=AdvancedBilling.Standard&step=addProject)
-
-Next, choose `Console Application`, provide `TestConsoleProject` as the project name and click OK.
-
-![Create a new Console Application in Visual Studio](https://apidocs.io/illustration/cs?workspaceFolder=AdvancedBilling-CSharp&workspaceName=AdvancedBilling&projectName=AdvancedBilling.Standard&rootNamespace=AdvancedBilling.Standard&step=createProject)
-
-### 2. Set as startup project
-
-The new console project is the entry point for the eventual execution. This requires us to set the `TestConsoleProject` as the start-up project. To do this, right-click on the `TestConsoleProject` and choose `Set as StartUp Project` form the context menu.
-
-![Adding a project reference](https://apidocs.io/illustration/cs?workspaceFolder=AdvancedBilling-CSharp&workspaceName=AdvancedBilling&projectName=AdvancedBilling.Standard&rootNamespace=AdvancedBilling.Standard&step=setStartup)
-
-### 3. Add reference of the library project
-
-In order to use the `AdvancedBilling.Standard` library in the new project, first we must add a project reference to the `TestConsoleProject`. First, right click on the `References` node in the solution explorer and click `Add Reference...`
-
-![Adding a project reference](https://apidocs.io/illustration/cs?workspaceFolder=AdvancedBilling-CSharp&workspaceName=AdvancedBilling&projectName=AdvancedBilling.Standard&rootNamespace=AdvancedBilling.Standard&step=addReference)
-
-Next, a window will be displayed where we must set the `checkbox` on `AdvancedBilling.Standard` and click `OK`. By doing this, we have added a reference of the `AdvancedBilling.Standard` project into the new `TestConsoleProject`.
-
-![Creating a project reference](https://apidocs.io/illustration/cs?workspaceFolder=AdvancedBilling-CSharp&workspaceName=AdvancedBilling&projectName=AdvancedBilling.Standard&rootNamespace=AdvancedBilling.Standard&step=createReference)
-
-### 4. Write sample code
-
-Once the `TestConsoleProject` is created, a file named `Program.cs` will be visible in the solution explorer with an empty `Main` method. This is the entry point for the execution of the entire solution. Here, you can add code to initialize the client library and acquire the instance of a Controller class. Sample code to initialize the client library and using Controller methods is given in the subsequent sections.
-
-![Adding a project reference](https://apidocs.io/illustration/cs?workspaceFolder=AdvancedBilling-CSharp&workspaceName=AdvancedBilling&projectName=AdvancedBilling.Standard&rootNamespace=AdvancedBilling.Standard&step=addCode)
+You can also view the package at:
+https://www.nuget.org/packages/Maxio.AdvancedBillingSdk/0.0.3
 
 ## Initialize the API Client
 
