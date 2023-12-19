@@ -11,8 +11,10 @@ namespace AdvancedBillingTests
 
         public SiteTests()
         {
+            var accessToken = System.Environment.GetEnvironmentVariable("TEST_ACCESS_TOKEN");
+            var username = System.Environment.GetEnvironmentVariable("TEST_USERNAME");
             _builder = new AdvancedBillingClient.Builder();
-            _builder.BasicAuthCredentials("dkyqT6BldXNYtw3DgLwfRCUOJPDoYoeTO7oUJcadhk", "X");
+            _builder.BasicAuthCredentials(username, accessToken);
             _builder.Environment(Environment.Production);
             _builder.Domain("staging-chargify.com");
             _builder.Subdomain("dotnet-sdk");

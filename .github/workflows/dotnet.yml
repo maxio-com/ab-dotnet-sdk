@@ -14,6 +14,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      TEST_ACCESS_TOKEN: ${{ secrets.TEST_ACCESS_TOKEN }}
+      TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -26,3 +30,6 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+        env:
+          TEST_ACCESS_TOKEN: ${{ env.TEST_ACCESS_TOKEN }}
+          TEST_USERNAME: ${{ env.TEST_USERNAME }}
