@@ -28,8 +28,7 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+    - run: export TEST_ACCESS_TOKEN=${{ env.TEST_ACCESS_TOKEN }}
+    - run: export TEST_USERNAME=${{ env.TEST_USERNAME }}
     - name: Test
-      run: | 
-      export TEST_ACCESS_TOKEN=${{ env.TEST_ACCESS_TOKEN }}
-      export TEST_USERNAME=${{ env.TEST_USERNAME }}
-      dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal
