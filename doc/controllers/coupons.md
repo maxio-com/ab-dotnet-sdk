@@ -860,7 +860,7 @@ UpdateCouponCurrencyPricesAsync(
 
 ## Response Type
 
-[`Task<List<Models.CouponCurrency>>`](../../doc/models/coupon-currency.md)
+[`Task<Models.CouponCurrencyResponse>`](../../doc/models/coupon-currency-response.md)
 
 ## Example Usage
 
@@ -885,7 +885,7 @@ CouponCurrencyRequest body = new CouponCurrencyRequest
 
 try
 {
-    List<CouponCurrency> result = await couponsController.UpdateCouponCurrencyPricesAsync(
+    CouponCurrencyResponse result = await couponsController.UpdateCouponCurrencyPricesAsync(
         couponId,
         body
     );

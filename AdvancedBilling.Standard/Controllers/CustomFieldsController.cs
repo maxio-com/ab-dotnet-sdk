@@ -88,7 +88,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(resourceType).Trim('\"')))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This endpoint lists metafields associated with a site. The metafield description and usage is contained in the response.
@@ -118,7 +118,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))
                       .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Use the following method to update metafields for your Site. Metafields can be populated with metadata after the fact.
@@ -160,7 +160,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("name", name).Required())
                       .Header(_header => _header.Setup("Content-Type", "application/json"))
                       .Query(_query => _query.Setup("current_name", currentName))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Use the following method to delete a metafield. This will remove the metafield from the Site.
@@ -194,7 +194,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("name", name))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// ## Custom Fields: Metadata Intro.
@@ -258,7 +258,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("resource_id", resourceId).Required())
                       .Header(_header => _header.Setup("Content-Type", "application/json"))
                       .Query(_query => _query.Setup("value", mValue))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This request will list all of the metadata belonging to a particular resource (ie. subscription, customer) that is specified.
@@ -291,7 +291,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("resource_id", input.ResourceId).Required())
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This method allows you to update the existing metadata associated with a subscription or customer.
@@ -333,7 +333,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("resource_id", resourceId).Required())
                       .Header(_header => _header.Setup("Content-Type", "application/json"))
                       .Query(_query => _query.Setup("value", mValue))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This method removes the metadata from the subscriber/customer cited.
@@ -401,7 +401,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("names[]", names))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This method will provide you information on usage of metadata across your selected resource (ie. subscriptions, customers).
@@ -449,6 +449,6 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("with_deleted", input.WithDeleted))
                       .Query(_query => _query.Setup("resource_ids[]", input.ResourceIds))
                       .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

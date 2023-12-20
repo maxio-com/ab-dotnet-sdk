@@ -36,18 +36,24 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="prices">prices.</param>
         /// <param name="handle">handle.</param>
         /// <param name="useSiteExchangeRate">use_site_exchange_rate.</param>
+        /// <param name="interval">interval.</param>
+        /// <param name="intervalUnit">interval_unit.</param>
         public CreateComponentPricePoint(
             string name,
             Models.PricingScheme pricingScheme,
             List<Models.Price> prices,
             string handle = null,
-            bool? useSiteExchangeRate = true)
+            bool? useSiteExchangeRate = true,
+            int? interval = null,
+            Models.IntervalUnit? intervalUnit = null)
         {
             this.Name = name;
             this.Handle = handle;
             this.PricingScheme = pricingScheme;
             this.Prices = prices;
             this.UseSiteExchangeRate = useSiteExchangeRate;
+            this.Interval = interval;
+            this.IntervalUnit = intervalUnit;
         }
 
         /// <summary>
@@ -85,6 +91,18 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("use_site_exchange_rate", NullValueHandling = NullValueHandling.Ignore)]
         public bool? UseSiteExchangeRate { get; set; }
 
+        /// <summary>
+        /// The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Interval { get; set; }
+
+        /// <summary>
+        /// A string representing the interval unit for this price point, either month or day. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval_unit", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.IntervalUnit? IntervalUnit { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -111,7 +129,9 @@ namespace AdvancedBilling.Standard.Models
                 ((this.Handle == null && other.Handle == null) || (this.Handle?.Equals(other.Handle) == true)) &&
                 this.PricingScheme.Equals(other.PricingScheme) &&
                 ((this.Prices == null && other.Prices == null) || (this.Prices?.Equals(other.Prices) == true)) &&
-                ((this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null) || (this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true));
+                ((this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null) || (this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true)) &&
+                ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
+                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true));
         }
         
         /// <summary>
@@ -125,6 +145,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PricingScheme = {this.PricingScheme}");
             toStringOutput.Add($"this.Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
             toStringOutput.Add($"this.UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
+            toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
+            toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
         }
     }
 }

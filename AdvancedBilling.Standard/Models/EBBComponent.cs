@@ -55,6 +55,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="taxCode">tax_code.</param>
         /// <param name="hideDateRangeOnInvoice">hide_date_range_on_invoice.</param>
         /// <param name="priceInCents">price_in_cents.</param>
+        /// <param name="interval">interval.</param>
+        /// <param name="intervalUnit">interval_unit.</param>
         public EBBComponent(
             string name,
             string unitName,
@@ -70,7 +72,9 @@ namespace AdvancedBilling.Standard.Models
             EBBComponentUnitPrice unitPrice = null,
             string taxCode = null,
             bool? hideDateRangeOnInvoice = null,
-            string priceInCents = null)
+            string priceInCents = null,
+            int? interval = null,
+            Models.IntervalUnit? intervalUnit = null)
         {
             this.Name = name;
             this.UnitName = unitName;
@@ -95,6 +99,8 @@ namespace AdvancedBilling.Standard.Models
             this.HideDateRangeOnInvoice = hideDateRangeOnInvoice;
             this.PriceInCents = priceInCents;
             this.EventBasedBillingMetricId = eventBasedBillingMetricId;
+            this.Interval = interval;
+            this.IntervalUnit = intervalUnit;
         }
 
         /// <summary>
@@ -213,6 +219,18 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("event_based_billing_metric_id")]
         public int EventBasedBillingMetricId { get; set; }
 
+        /// <summary>
+        /// The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this component's default price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Interval { get; set; }
+
+        /// <summary>
+        /// A string representing the interval unit for this component's default price point, either month or day. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval_unit", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.IntervalUnit? IntervalUnit { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -283,7 +301,9 @@ namespace AdvancedBilling.Standard.Models
                 ((this.TaxCode == null && other.TaxCode == null) || (this.TaxCode?.Equals(other.TaxCode) == true)) &&
                 ((this.HideDateRangeOnInvoice == null && other.HideDateRangeOnInvoice == null) || (this.HideDateRangeOnInvoice?.Equals(other.HideDateRangeOnInvoice) == true)) &&
                 ((this.PriceInCents == null && other.PriceInCents == null) || (this.PriceInCents?.Equals(other.PriceInCents) == true)) &&
-                this.EventBasedBillingMetricId.Equals(other.EventBasedBillingMetricId);
+                this.EventBasedBillingMetricId.Equals(other.EventBasedBillingMetricId) &&
+                ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
+                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true));
         }
         
         /// <summary>
@@ -307,6 +327,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.HideDateRangeOnInvoice = {(this.HideDateRangeOnInvoice == null ? "null" : this.HideDateRangeOnInvoice.ToString())}");
             toStringOutput.Add($"this.PriceInCents = {(this.PriceInCents == null ? "null" : this.PriceInCents)}");
             toStringOutput.Add($"this.EventBasedBillingMetricId = {this.EventBasedBillingMetricId}");
+            toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
+            toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
         }
     }
 }

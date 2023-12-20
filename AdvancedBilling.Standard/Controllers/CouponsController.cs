@@ -80,7 +80,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// List coupons for a specific Product Family in a Site.
@@ -119,7 +119,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("filter[codes]", input.FilterCodes))
                       .Query(_query => _query.Setup("currency_prices", input.CurrencyPrices))
                       .Query(_query => _query.Setup("filter[use_site_exchange_rate]", input.FilterUseSiteExchangeRate))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// You can search for a coupon via the API with the find method. By passing a code parameter, the find will attempt to locate a coupon that matches that code. If no coupon is found, a 404 is returned.
@@ -152,7 +152,7 @@ namespace AdvancedBilling.Standard.Controllers
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("product_family_id", productFamilyId))
                       .Query(_query => _query.Setup("code", code))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// You can retrieve the Coupon via the API with the Show method. You must identify the Coupon in this call by the ID parameter that Chargify assigns.
@@ -189,7 +189,7 @@ namespace AdvancedBilling.Standard.Controllers
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
                       .Template(_template => _template.Setup("coupon_id", couponId))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// ## Update Coupon.
@@ -232,7 +232,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
                       .Template(_template => _template.Setup("coupon_id", couponId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// You can archive a Coupon via the API with the archive method.
@@ -267,7 +267,7 @@ namespace AdvancedBilling.Standard.Controllers
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
                       .Template(_template => _template.Setup("coupon_id", couponId))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// You can retrieve a list of coupons.
@@ -310,7 +310,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("filter[start_datetime]", input.FilterStartDatetime.HasValue ? input.FilterStartDatetime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))
                       .Query(_query => _query.Setup("filter[date_field]", (input.FilterDateField.HasValue) ? ApiHelper.JsonSerialize(input.FilterDateField.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("filter[use_site_exchange_rate]", input.FilterUseSiteExchangeRate))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This request will provide details about the coupon usage as an array of data hashes, one per product.
@@ -341,7 +341,7 @@ namespace AdvancedBilling.Standard.Controllers
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
                       .Template(_template => _template.Setup("coupon_id", couponId))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// You can verify if a specific coupon code is valid using the `validate` method. This method is useful for validating coupon codes that are entered by a customer. If the coupon is found and is valid, the coupon will be returned with a 200 status code.
@@ -400,7 +400,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("product_family_id", productFamilyId))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new SingleStringErrorResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This endpoint allows you to create and/or update currency prices for an existing coupon. Multiple prices can be created or updated in a single request but each of the currencies must be defined on the site level already and the coupon must be an amount-based coupon, not percentage.
@@ -408,8 +408,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="couponId">Required parameter: The Chargify id of the coupon.</param>
         /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the List of Models.CouponCurrency response from the API call.</returns>
-        public List<Models.CouponCurrency> UpdateCouponCurrencyPrices(
+        /// <returns>Returns the Models.CouponCurrencyResponse response from the API call.</returns>
+        public Models.CouponCurrencyResponse UpdateCouponCurrencyPrices(
                 int couponId,
                 Models.CouponCurrencyRequest body = null)
             => CoreHelper.RunTask(UpdateCouponCurrencyPricesAsync(couponId, body));
@@ -421,20 +421,20 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="couponId">Required parameter: The Chargify id of the coupon.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the List of Models.CouponCurrency response from the API call.</returns>
-        public async Task<List<Models.CouponCurrency>> UpdateCouponCurrencyPricesAsync(
+        /// <returns>Returns the Models.CouponCurrencyResponse response from the API call.</returns>
+        public async Task<Models.CouponCurrencyResponse> UpdateCouponCurrencyPricesAsync(
                 int couponId,
                 Models.CouponCurrencyRequest body = null,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<List<Models.CouponCurrency>>()
+            => await CreateApiCall<Models.CouponCurrencyResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/coupon/{coupon_id}/currency_prices.json")
+                  .Setup(HttpMethod.Put, "/coupons/{coupon_id}/currency_prices.json")
                   .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("coupon_id", couponId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// ## Coupon Subcodes Intro.
@@ -512,7 +512,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("coupon_id", couponId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This request allows you to request the subcodes that are attached to a coupon.
@@ -540,7 +540,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("coupon_id", input.CouponId))
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// You can update the subcodes for the given Coupon via the API with a PUT request to the resource endpoint.
@@ -584,7 +584,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("coupon_id", couponId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// ## Example.
@@ -646,6 +646,6 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("subcode", subcode).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

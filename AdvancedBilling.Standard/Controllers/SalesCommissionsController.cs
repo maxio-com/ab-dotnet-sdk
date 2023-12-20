@@ -69,7 +69,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("live_mode", input.LiveMode))
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Endpoint returns sales rep list with details.
@@ -107,7 +107,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("live_mode", input.LiveMode))
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Endpoint returns sales rep and attached subscriptions details.
@@ -162,10 +162,10 @@ namespace AdvancedBilling.Standard.Controllers
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("seller_id", sellerId).Required())
                       .Template(_template => _template.Setup("sales_rep_id", salesRepId).Required())
-                      .Header(_header => _header.Setup("Authorization", (authorization != null) ? authorization : "Bearer <<apiKey>>"))
+                      .Header(_header => _header.Setup("Authorization", (authorization != null) ? authorization.ToString() : "Bearer <<apiKey>>"))
                       .Query(_query => _query.Setup("live_mode", liveMode))
-                      .Query(_query => _query.Setup("page", (page != null) ? page : 1))
-                      .Query(_query => _query.Setup("per_page", (perPage != null) ? perPage : 100))))
-              .ExecuteAsync(cancellationToken);
+                      .Query(_query => _query.Setup("page", (page != null) ? page.ToString() : 1))
+                      .Query(_query => _query.Setup("per_page", (perPage != null) ? perPage.ToString() : 100))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

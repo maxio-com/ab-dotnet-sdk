@@ -69,7 +69,7 @@ namespace AdvancedBilling.Standard.Controllers
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/site.json")
                   .WithAuth("global"))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This call is asynchronous and there may be a delay before the site data is fully deleted. If you are clearing site data for an automated test, you will need to build in a delay and/or check that there are no products, etc., in the site before proceeding.
@@ -98,7 +98,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("cleanup_scope", (cleanupScope.HasValue) ? ApiHelper.JsonSerialize(cleanupScope.Value).Trim('\"') : "all"))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("403", CreateErrorCase("Forbidden", (_reason, _context) => new ApiException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This endpoint returns public keys used for Chargify.js.
@@ -125,6 +125,6 @@ namespace AdvancedBilling.Standard.Controllers
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

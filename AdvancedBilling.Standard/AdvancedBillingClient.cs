@@ -39,7 +39,7 @@ namespace AdvancedBilling.Standard
         };
 
         private readonly GlobalConfiguration globalConfiguration;
-        private const string userAgent = "AB SDK DotNet:0.0.3 on OS {os-info}";
+        private const string userAgent = "AB SDK DotNet:0.0.4 on OS {os-info}";
         private readonly BasicAuthManager basicAuthManager;
         private readonly Lazy<APIExportsController> aPIExports;
         private readonly Lazy<AdvanceInvoiceController> advanceInvoice;

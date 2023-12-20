@@ -51,6 +51,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="useSiteExchangeRate">use_site_exchange_rate.</param>
         /// <param name="subscriptionId">subscription_id.</param>
         /// <param name="taxIncluded">tax_included.</param>
+        /// <param name="interval">interval.</param>
+        /// <param name="intervalUnit">interval_unit.</param>
         public ComponentPricePoint(
             int? id = null,
             Models.PricePointType? type = null,
@@ -65,7 +67,9 @@ namespace AdvancedBilling.Standard.Models
             List<Models.ComponentPricePointPrice> prices = null,
             bool? useSiteExchangeRate = true,
             int? subscriptionId = null,
-            bool? taxIncluded = null)
+            bool? taxIncluded = null,
+            int? interval = null,
+            Models.IntervalUnit? intervalUnit = null)
         {
             this.Id = id;
             this.Type = type;
@@ -85,6 +89,8 @@ namespace AdvancedBilling.Standard.Models
             this.UseSiteExchangeRate = useSiteExchangeRate;
             this.SubscriptionId = subscriptionId;
             this.TaxIncluded = taxIncluded;
+            this.Interval = interval;
+            this.IntervalUnit = intervalUnit;
         }
 
         /// <summary>
@@ -186,6 +192,18 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("tax_included", NullValueHandling = NullValueHandling.Ignore)]
         public bool? TaxIncluded { get; set; }
 
+        /// <summary>
+        /// The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Interval { get; set; }
+
+        /// <summary>
+        /// A string representing the interval unit for this component price point, either month or day. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval_unit", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.IntervalUnit? IntervalUnit { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -238,7 +256,9 @@ namespace AdvancedBilling.Standard.Models
                 ((this.Prices == null && other.Prices == null) || (this.Prices?.Equals(other.Prices) == true)) &&
                 ((this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null) || (this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true)) &&
                 ((this.SubscriptionId == null && other.SubscriptionId == null) || (this.SubscriptionId?.Equals(other.SubscriptionId) == true)) &&
-                ((this.TaxIncluded == null && other.TaxIncluded == null) || (this.TaxIncluded?.Equals(other.TaxIncluded) == true));
+                ((this.TaxIncluded == null && other.TaxIncluded == null) || (this.TaxIncluded?.Equals(other.TaxIncluded) == true)) &&
+                ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
+                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true));
         }
         
         /// <summary>
@@ -261,6 +281,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
             toStringOutput.Add($"this.TaxIncluded = {(this.TaxIncluded == null ? "null" : this.TaxIncluded.ToString())}");
+            toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
+            toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
         }
     }
 }
