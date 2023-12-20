@@ -11,6 +11,8 @@ namespace AdvancedBillingTests
 
         public SiteTests()
         {
+            System.Environment.SetEnvironmentVariable("TEST_ACCESS_TOKEN", "X");
+            System.Environment.SetEnvironmentVariable("TEST_USERNAME", "dkyqT6BldXNYtw3DgLwfRCUOJPDoYoeTO7oUJcadhk");
             var accessToken = System.Environment.GetEnvironmentVariable("TEST_ACCESS_TOKEN");
             var username = System.Environment.GetEnvironmentVariable("TEST_USERNAME");
             _builder = new AdvancedBillingClient.Builder();
