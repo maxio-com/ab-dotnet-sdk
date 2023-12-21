@@ -67,7 +67,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This endpoint will schedule all subscriptions within the specified group to be canceled at the end of their billing period. The group is identified by it's uid passed in the URL.
@@ -96,7 +96,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("uid", uid).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Removing the delayed cancellation on a subscription group will ensure that the subscriptions do not get canceled at the end of the period. The request will reset the `cancel_at_end_of_period` flag to false on each member in the group.
@@ -123,7 +123,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("uid", uid).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This endpoint will attempt to reactivate or resume a cancelled subscription group. Upon reactivation, any canceled invoices created after the beginning of the primary subscription's billing period will be reopened and payment will be attempted on them. If the subscription group is being reactivated (as opposed to resumed), new charges will also be assessed for the new billing period.
@@ -175,6 +175,6 @@ namespace AdvancedBilling.Standard.Controllers
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

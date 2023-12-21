@@ -41,6 +41,12 @@ namespace AdvancedBilling.Standard.Models
         /// BillingPortal.
         /// </summary>
         [EnumMember(Value = "billing_portal")]
-        BillingPortal
+        BillingPortal,
+
+        /// <summary>
+        /// Unknown.
+        /// </summary>
+        [EnumMember(Value = "unknown")]
+        Unknown
     }
 }

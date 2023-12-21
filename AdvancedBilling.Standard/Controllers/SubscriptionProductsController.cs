@@ -35,6 +35,44 @@ namespace AdvancedBilling.Standard.Controllers
         internal SubscriptionProductsController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
+        /// ## Previewing a future date.
+        /// It is also possible to preview the migration for a date in the future, as long as it's still within the subscription's current billing period, by passing a `proration_date` along with the request (eg: `"proration_date": "2020-12-18T18:25:43.511Z"`).
+        /// This will calculate the prorated adjustment, charge, payment and credit applied values assuming the migration is done at that date in the future as opposed to right now.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.SubscriptionMigrationPreviewResponse response from the API call.</returns>
+        public Models.SubscriptionMigrationPreviewResponse PreviewSubscriptionProductMigration(
+                int subscriptionId,
+                Models.SubscriptionMigrationPreviewRequest body = null)
+            => CoreHelper.RunTask(PreviewSubscriptionProductMigrationAsync(subscriptionId, body));
+
+        /// <summary>
+        /// ## Previewing a future date.
+        /// It is also possible to preview the migration for a date in the future, as long as it's still within the subscription's current billing period, by passing a `proration_date` along with the request (eg: `"proration_date": "2020-12-18T18:25:43.511Z"`).
+        /// This will calculate the prorated adjustment, charge, payment and credit applied values assuming the migration is done at that date in the future as opposed to right now.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.SubscriptionMigrationPreviewResponse response from the API call.</returns>
+        public async Task<Models.SubscriptionMigrationPreviewResponse> PreviewSubscriptionProductMigrationAsync(
+                int subscriptionId,
+                Models.SubscriptionMigrationPreviewRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.SubscriptionMigrationPreviewResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/migrations/preview.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// In order to create a migration, you must pass the `product_id` or `product_handle` in the object when you send a POST request. You may also pass either a `product_price_point_id` or `product_price_point_handle` to choose which price point the subscription is moved to. If no price point identifier is passed the subscription will be moved to the products default price point. The response will be the updated subscription.
         /// ## Valid Subscriptions.
         /// Subscriptions should be in the `active` or `trialing` state in order to be migrated.
@@ -140,44 +178,6 @@ namespace AdvancedBilling.Standard.Controllers
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
-
-        /// <summary>
-        /// ## Previewing a future date.
-        /// It is also possible to preview the migration for a date in the future, as long as it's still within the subscription's current billing period, by passing a `proration_date` along with the request (eg: `"proration_date": "2020-12-18T18:25:43.511Z"`).
-        /// This will calculate the prorated adjustment, charge, payment and credit applied values assuming the migration is done at that date in the future as opposed to right now.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.SubscriptionMigrationPreviewResponse response from the API call.</returns>
-        public Models.SubscriptionMigrationPreviewResponse PreviewSubscriptionProductMigration(
-                int subscriptionId,
-                Models.SubscriptionMigrationPreviewRequest body = null)
-            => CoreHelper.RunTask(PreviewSubscriptionProductMigrationAsync(subscriptionId, body));
-
-        /// <summary>
-        /// ## Previewing a future date.
-        /// It is also possible to preview the migration for a date in the future, as long as it's still within the subscription's current billing period, by passing a `proration_date` along with the request (eg: `"proration_date": "2020-12-18T18:25:43.511Z"`).
-        /// This will calculate the prorated adjustment, charge, payment and credit applied values assuming the migration is done at that date in the future as opposed to right now.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.SubscriptionMigrationPreviewResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionMigrationPreviewResponse> PreviewSubscriptionProductMigrationAsync(
-                int subscriptionId,
-                Models.SubscriptionMigrationPreviewRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SubscriptionMigrationPreviewResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/migrations/preview.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

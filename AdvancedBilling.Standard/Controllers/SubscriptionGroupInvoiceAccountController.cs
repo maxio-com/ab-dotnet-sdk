@@ -66,7 +66,75 @@ namespace AdvancedBilling.Standard.Controllers
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
+        /// </summary>
+        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.ServiceCredit response from the API call.</returns>
+        public Models.ServiceCredit DeductSubscriptionGroupServiceCredits(
+                string uid,
+                Models.DeductServiceCreditRequest body = null)
+            => CoreHelper.RunTask(DeductSubscriptionGroupServiceCreditsAsync(uid, body));
+
+        /// <summary>
+        /// Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
+        /// </summary>
+        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ServiceCredit response from the API call.</returns>
+        public async Task<Models.ServiceCredit> DeductSubscriptionGroupServiceCreditsAsync(
+                string uid,
+                Models.DeductServiceCreditRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ServiceCredit>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/subscription_groups/{uid}/service_credit_deductions.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("uid", uid).Required())
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Credit can be issued for a subscription group identified by the group's `uid`. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
+        /// </summary>
+        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.ServiceCreditResponse response from the API call.</returns>
+        public Models.ServiceCreditResponse IssueSubscriptionGroupServiceCredits(
+                string uid,
+                Models.IssueServiceCreditRequest body = null)
+            => CoreHelper.RunTask(IssueSubscriptionGroupServiceCreditsAsync(uid, body));
+
+        /// <summary>
+        /// Credit can be issued for a subscription group identified by the group's `uid`. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
+        /// </summary>
+        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ServiceCreditResponse response from the API call.</returns>
+        public async Task<Models.ServiceCreditResponse> IssueSubscriptionGroupServiceCreditsAsync(
+                string uid,
+                Models.IssueServiceCreditRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ServiceCreditResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/subscription_groups/{uid}/service_credits.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("uid", uid).Required())
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This request will list a subscription group's prepayments.
@@ -101,74 +169,6 @@ namespace AdvancedBilling.Standard.Controllers
                   .ErrorCase("401", CreateErrorCase("Unauthorized", (_reason, _context) => new ApiException(_reason, _context)))
                   .ErrorCase("403", CreateErrorCase("Forbidden", (_reason, _context) => new ApiException(_reason, _context)))
                   .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
-
-        /// <summary>
-        /// Credit can be issued for a subscription group identified by the group's `uid`. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
-        /// </summary>
-        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.ServiceCreditResponse response from the API call.</returns>
-        public Models.ServiceCreditResponse IssueSubscriptionGroupServiceCredits(
-                string uid,
-                Models.IssueServiceCreditRequest body = null)
-            => CoreHelper.RunTask(IssueSubscriptionGroupServiceCreditsAsync(uid, body));
-
-        /// <summary>
-        /// Credit can be issued for a subscription group identified by the group's `uid`. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
-        /// </summary>
-        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ServiceCreditResponse response from the API call.</returns>
-        public async Task<Models.ServiceCreditResponse> IssueSubscriptionGroupServiceCreditsAsync(
-                string uid,
-                Models.IssueServiceCreditRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ServiceCreditResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscription_groups/{uid}/service_credits.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("uid", uid).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
-
-        /// <summary>
-        /// Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
-        /// </summary>
-        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.ServiceCredit response from the API call.</returns>
-        public Models.ServiceCredit DeductSubscriptionGroupServiceCredits(
-                string uid,
-                Models.DeductServiceCreditRequest body = null)
-            => CoreHelper.RunTask(DeductSubscriptionGroupServiceCreditsAsync(uid, body));
-
-        /// <summary>
-        /// Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
-        /// </summary>
-        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ServiceCredit response from the API call.</returns>
-        public async Task<Models.ServiceCredit> DeductSubscriptionGroupServiceCreditsAsync(
-                string uid,
-                Models.DeductServiceCreditRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ServiceCredit>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscription_groups/{uid}/service_credit_deductions.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("uid", uid).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

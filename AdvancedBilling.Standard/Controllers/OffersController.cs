@@ -73,7 +73,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorMapResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This endpoint will list offers for a site.
@@ -101,7 +101,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))
                       .Query(_query => _query.Setup("include_archived", input.IncludeArchived))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This method allows you to list a specific offer's attributes. This is different than list all offers for a site, as it requires an `offer_id`.
@@ -129,7 +129,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("offer_id", offerId))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("401", CreateErrorCase("Unauthorized", (_reason, _context) => new ApiException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Archive an existing offer. Please provide an `offer_id` in order to archive the correct item.
@@ -156,7 +156,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("offer_id", offerId))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("401", CreateErrorCase("Unauthorized", (_reason, _context) => new ApiException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Unarchive a previously archived offer. Please provide an `offer_id` in order to un-archive the correct item.
@@ -183,6 +183,6 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("offer_id", offerId))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("401", CreateErrorCase("Unauthorized", (_reason, _context) => new ApiException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }
