@@ -10,11 +10,120 @@ SubscriptionNotesController subscriptionNotesController = client.SubscriptionNot
 
 ## Methods
 
-* [Create Subscription Note](../../doc/controllers/subscription-notes.md#create-subscription-note)
-* [List Subscription Notes](../../doc/controllers/subscription-notes.md#list-subscription-notes)
 * [Read Subscription Note](../../doc/controllers/subscription-notes.md#read-subscription-note)
 * [Update Subscription Note](../../doc/controllers/subscription-notes.md#update-subscription-note)
+* [Create Subscription Note](../../doc/controllers/subscription-notes.md#create-subscription-note)
+* [List Subscription Notes](../../doc/controllers/subscription-notes.md#list-subscription-notes)
 * [Delete Subscription Note](../../doc/controllers/subscription-notes.md#delete-subscription-note)
+
+
+# Read Subscription Note
+
+Once you have obtained the ID of the note you wish to read, use this method to show a particular note attached to a subscription.
+
+```csharp
+ReadSubscriptionNoteAsync(
+    int subscriptionId,
+    int noteId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `noteId` | `int` | Template, Required | The Chargify id of the note |
+
+## Response Type
+
+[`Task<Models.SubscriptionNoteResponse>`](../../doc/models/subscription-note-response.md)
+
+## Example Usage
+
+```csharp
+int subscriptionId = 222;
+int noteId = 66;
+try
+{
+    SubscriptionNoteResponse result = await subscriptionNotesController.ReadSubscriptionNoteAsync(
+        subscriptionId,
+        noteId
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "note": {
+    "body": "Test note.",
+    "created_at": "2015-06-15T13:26:47-04:00",
+    "id": 5,
+    "sticky": false,
+    "subscription_id": 100046,
+    "updated_at": "2015-06-15T13:28:12-04:00"
+  }
+}
+```
+
+
+# Update Subscription Note
+
+Use the following method to update a note for a Subscription.
+
+```csharp
+UpdateSubscriptionNoteAsync(
+    int subscriptionId,
+    int noteId,
+    Models.UpdateSubscriptionNoteRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `noteId` | `int` | Template, Required | The Chargify id of the note |
+| `body` | [`UpdateSubscriptionNoteRequest`](../../doc/models/update-subscription-note-request.md) | Body, Optional | Updatable fields for Subscription Note |
+
+## Response Type
+
+[`Task<Models.SubscriptionNoteResponse>`](../../doc/models/subscription-note-response.md)
+
+## Example Usage
+
+```csharp
+int subscriptionId = 222;
+int noteId = 66;
+UpdateSubscriptionNoteRequest body = new UpdateSubscriptionNoteRequest
+{
+    Note = new UpdateSubscriptionNote
+    {
+        Body = "Modified test note.",
+        Sticky = true,
+    },
+};
+
+try
+{
+    SubscriptionNoteResponse result = await subscriptionNotesController.UpdateSubscriptionNoteAsync(
+        subscriptionId,
+        noteId,
+        body
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
 
 
 # Create Subscription Note
@@ -141,115 +250,6 @@ catch (ApiException e)
     }
   }
 ]
-```
-
-
-# Read Subscription Note
-
-Once you have obtained the ID of the note you wish to read, use this method to show a particular note attached to a subscription.
-
-```csharp
-ReadSubscriptionNoteAsync(
-    int subscriptionId,
-    int noteId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `noteId` | `int` | Template, Required | The Chargify id of the note |
-
-## Response Type
-
-[`Task<Models.SubscriptionNoteResponse>`](../../doc/models/subscription-note-response.md)
-
-## Example Usage
-
-```csharp
-int subscriptionId = 222;
-int noteId = 66;
-try
-{
-    SubscriptionNoteResponse result = await subscriptionNotesController.ReadSubscriptionNoteAsync(
-        subscriptionId,
-        noteId
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "note": {
-    "body": "Test note.",
-    "created_at": "2015-06-15T13:26:47-04:00",
-    "id": 5,
-    "sticky": false,
-    "subscription_id": 100046,
-    "updated_at": "2015-06-15T13:28:12-04:00"
-  }
-}
-```
-
-
-# Update Subscription Note
-
-Use the following method to update a note for a Subscription.
-
-```csharp
-UpdateSubscriptionNoteAsync(
-    int subscriptionId,
-    int noteId,
-    Models.UpdateSubscriptionNoteRequest body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `noteId` | `int` | Template, Required | The Chargify id of the note |
-| `body` | [`UpdateSubscriptionNoteRequest`](../../doc/models/update-subscription-note-request.md) | Body, Optional | Updatable fields for Subscription Note |
-
-## Response Type
-
-[`Task<Models.SubscriptionNoteResponse>`](../../doc/models/subscription-note-response.md)
-
-## Example Usage
-
-```csharp
-int subscriptionId = 222;
-int noteId = 66;
-UpdateSubscriptionNoteRequest body = new UpdateSubscriptionNoteRequest
-{
-    Note = new UpdateSubscriptionNote
-    {
-        Body = "Modified test note.",
-        Sticky = true,
-    },
-};
-
-try
-{
-    SubscriptionNoteResponse result = await subscriptionNotesController.UpdateSubscriptionNoteAsync(
-        subscriptionId,
-        noteId,
-        body
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
 ```
 
 

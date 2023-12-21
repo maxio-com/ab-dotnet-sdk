@@ -35,6 +35,33 @@ namespace AdvancedBilling.Standard.Controllers
         internal WebhooksController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
+        /// This method allows you to enable webhooks via API for your site.
+        /// </summary>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.EnableWebhooksResponse response from the API call.</returns>
+        public Models.EnableWebhooksResponse EnableWebhooks(
+                Models.EnableWebhooksRequest body = null)
+            => CoreHelper.RunTask(EnableWebhooksAsync(body));
+
+        /// <summary>
+        /// This method allows you to enable webhooks via API for your site.
+        /// </summary>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.EnableWebhooksResponse response from the API call.</returns>
+        public async Task<Models.EnableWebhooksResponse> EnableWebhooksAsync(
+                Models.EnableWebhooksRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.EnableWebhooksResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Put, "/webhooks/settings.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// ## Webhooks Intro.
         /// The Webhooks API allows you to view a list of all webhooks and to selectively resend individual or groups of webhooks. Webhooks will be sent on endpoints specified by you. Endpoints can be added via API or Web UI. There is also an option to enable / disable webhooks via API request.
         /// We recommend that you review Chargify's webhook documentation located in our help site. The following resources will help guide you on how to use webhooks in Chargify, in addition to these webhook endpoints:.
@@ -80,33 +107,6 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("per_page", input.PerPage))
                       .Query(_query => _query.Setup("order", (input.Order.HasValue) ? ApiHelper.JsonSerialize(input.Order.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("subscription", input.Subscription))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This method allows you to enable webhooks via API for your site.
-        /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.EnableWebhooksResponse response from the API call.</returns>
-        public Models.EnableWebhooksResponse EnableWebhooks(
-                Models.EnableWebhooksRequest body = null)
-            => CoreHelper.RunTask(EnableWebhooksAsync(body));
-
-        /// <summary>
-        /// This method allows you to enable webhooks via API for your site.
-        /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.EnableWebhooksResponse response from the API call.</returns>
-        public async Task<Models.EnableWebhooksResponse> EnableWebhooksAsync(
-                Models.EnableWebhooksRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.EnableWebhooksResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/webhooks/settings.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>

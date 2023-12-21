@@ -36,6 +36,191 @@ namespace AdvancedBilling.Standard.Controllers
         internal ProductPricePointsController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
+        /// Use this endpoint to update a product price point.
+        /// Note: Custom product price points are not able to be updated.
+        /// </summary>
+        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
+        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
+        public Models.ProductPricePointResponse UpdateProductPricePoint(
+                UpdateProductPricePointProductId productId,
+                UpdateProductPricePointPricePointId pricePointId,
+                Models.UpdateProductPricePointRequest body = null)
+            => CoreHelper.RunTask(UpdateProductPricePointAsync(productId, pricePointId, body));
+
+        /// <summary>
+        /// Use this endpoint to update a product price point.
+        /// Note: Custom product price points are not able to be updated.
+        /// </summary>
+        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
+        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
+        public async Task<Models.ProductPricePointResponse> UpdateProductPricePointAsync(
+                UpdateProductPricePointProductId productId,
+                UpdateProductPricePointPricePointId pricePointId,
+                Models.UpdateProductPricePointRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ProductPricePointResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Put, "/products/{product_id}/price_points/{price_point_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("product_id", productId).Required())
+                      .Template(_template => _template.Setup("price_point_id", pricePointId).Required())
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Use this endpoint to archive a product price point.
+        /// </summary>
+        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
+        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`.</param>
+        /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
+        public Models.ProductPricePointResponse ArchiveProductPricePoint(
+                ArchiveProductPricePointProductId productId,
+                ArchiveProductPricePointPricePointId pricePointId)
+            => CoreHelper.RunTask(ArchiveProductPricePointAsync(productId, pricePointId));
+
+        /// <summary>
+        /// Use this endpoint to archive a product price point.
+        /// </summary>
+        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
+        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
+        public async Task<Models.ProductPricePointResponse> ArchiveProductPricePointAsync(
+                ArchiveProductPricePointProductId productId,
+                ArchiveProductPricePointPricePointId pricePointId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ProductPricePointResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Delete, "/products/{product_id}/price_points/{price_point_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("product_id", productId).Required())
+                      .Template(_template => _template.Setup("price_point_id", pricePointId).Required())))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Use this endpoint to retrieve details for a specific product price point.
+        /// </summary>
+        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
+        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`.</param>
+        /// <param name="currencyPrices">Optional parameter: When fetching a product's price points, if you have defined multiple currencies at the site level, you can optionally pass the ?currency_prices=true query param to include an array of currency price data in the response. If the product price point is set to use_site_exchange_rate: true, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency..</param>
+        /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
+        public Models.ProductPricePointResponse ReadProductPricePoint(
+                ReadProductPricePointProductId productId,
+                ReadProductPricePointPricePointId pricePointId,
+                bool? currencyPrices = null)
+            => CoreHelper.RunTask(ReadProductPricePointAsync(productId, pricePointId, currencyPrices));
+
+        /// <summary>
+        /// Use this endpoint to retrieve details for a specific product price point.
+        /// </summary>
+        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
+        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`.</param>
+        /// <param name="currencyPrices">Optional parameter: When fetching a product's price points, if you have defined multiple currencies at the site level, you can optionally pass the ?currency_prices=true query param to include an array of currency price data in the response. If the product price point is set to use_site_exchange_rate: true, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency..</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
+        public async Task<Models.ProductPricePointResponse> ReadProductPricePointAsync(
+                ReadProductPricePointProductId productId,
+                ReadProductPricePointPricePointId pricePointId,
+                bool? currencyPrices = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ProductPricePointResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/products/{product_id}/price_points/{price_point_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("product_id", productId).Required())
+                      .Template(_template => _template.Setup("price_point_id", pricePointId).Required())
+                      .Query(_query => _query.Setup("currency_prices", currencyPrices))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This endpoint allows you to create currency prices for a given currency that has been defined on the site level in your settings.
+        /// When creating currency prices, they need to mirror the structure of your primary pricing. If the product price point defines a trial and/or setup fee, each currency must also define a trial and/or setup fee.
+        /// Note: Currency Prices are not able to be created for custom product price points.
+        /// </summary>
+        /// <param name="productPricePointId">Required parameter: The Chargify id of the product price point.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.ProductPricePointCurrencyPrice response from the API call.</returns>
+        public Models.ProductPricePointCurrencyPrice CreateProductCurrencyPrices(
+                int productPricePointId,
+                Models.CreateProductCurrencyPricesRequest body = null)
+            => CoreHelper.RunTask(CreateProductCurrencyPricesAsync(productPricePointId, body));
+
+        /// <summary>
+        /// This endpoint allows you to create currency prices for a given currency that has been defined on the site level in your settings.
+        /// When creating currency prices, they need to mirror the structure of your primary pricing. If the product price point defines a trial and/or setup fee, each currency must also define a trial and/or setup fee.
+        /// Note: Currency Prices are not able to be created for custom product price points.
+        /// </summary>
+        /// <param name="productPricePointId">Required parameter: The Chargify id of the product price point.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ProductPricePointCurrencyPrice response from the API call.</returns>
+        public async Task<Models.ProductPricePointCurrencyPrice> CreateProductCurrencyPricesAsync(
+                int productPricePointId,
+                Models.CreateProductCurrencyPricesRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ProductPricePointCurrencyPrice>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/product_price_points/{product_price_point_id}/currency_prices.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("product_price_point_id", productPricePointId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorMapResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This method allows retrieval of a list of Products Price Points belonging to a Site.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the Models.ListProductPricePointsResponse response from the API call.</returns>
+        public Models.ListProductPricePointsResponse ListAllProductPricePoints(
+                Models.ListAllProductPricePointsInput input)
+            => CoreHelper.RunTask(ListAllProductPricePointsAsync(input));
+
+        /// <summary>
+        /// This method allows retrieval of a list of Products Price Points belonging to a Site.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ListProductPricePointsResponse response from the API call.</returns>
+        public async Task<Models.ListProductPricePointsResponse> ListAllProductPricePointsAsync(
+                Models.ListAllProductPricePointsInput input,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ListProductPricePointsResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/products_price_points.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("filter[archived_at]", (input.FilterArchivedAt.HasValue) ? ApiHelper.JsonSerialize(input.FilterArchivedAt.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("filter[date_field]", (input.FilterDateField.HasValue) ? ApiHelper.JsonSerialize(input.FilterDateField.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("filter[end_date]", input.FilterEndDate.HasValue ? input.FilterEndDate.Value.ToString("yyyy'-'MM'-'dd") : null))
+                      .Query(_query => _query.Setup("filter[end_datetime]", input.FilterEndDatetime.HasValue ? input.FilterEndDatetime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))
+                      .Query(_query => _query.Setup("filter[ids]", input.FilterIds))
+                      .Query(_query => _query.Setup("filter[start_date]", input.FilterStartDate.HasValue ? input.FilterStartDate.Value.ToString("yyyy'-'MM'-'dd") : null))
+                      .Query(_query => _query.Setup("filter[start_datetime]", input.FilterStartDatetime.HasValue ? input.FilterStartDatetime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))
+                      .Query(_query => _query.Setup("filter[type]", input.FilterType?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))
+                      .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("page", input.Page))
+                      .Query(_query => _query.Setup("per_page", input.PerPage))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// [Product Price Point Documentation](https://chargify.zendesk.com/hc/en-us/articles/4407755824155).
         /// </summary>
         /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
@@ -97,114 +282,6 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("per_page", input.PerPage))
                       .Query(_query => _query.Setup("currency_prices", input.CurrencyPrices))
                       .Query(_query => _query.Setup("filter[type]", input.FilterType?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Use this endpoint to update a product price point.
-        /// Note: Custom product price points are not able to be updated.
-        /// </summary>
-        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
-        public Models.ProductPricePointResponse UpdateProductPricePoint(
-                UpdateProductPricePointProductId productId,
-                UpdateProductPricePointPricePointId pricePointId,
-                Models.UpdateProductPricePointRequest body = null)
-            => CoreHelper.RunTask(UpdateProductPricePointAsync(productId, pricePointId, body));
-
-        /// <summary>
-        /// Use this endpoint to update a product price point.
-        /// Note: Custom product price points are not able to be updated.
-        /// </summary>
-        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
-        public async Task<Models.ProductPricePointResponse> UpdateProductPricePointAsync(
-                UpdateProductPricePointProductId productId,
-                UpdateProductPricePointPricePointId pricePointId,
-                Models.UpdateProductPricePointRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ProductPricePointResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/products/{product_id}/price_points/{price_point_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("product_id", productId).Required())
-                      .Template(_template => _template.Setup("price_point_id", pricePointId).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Use this endpoint to retrieve details for a specific product price point.
-        /// </summary>
-        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <param name="currencyPrices">Optional parameter: When fetching a product's price points, if you have defined multiple currencies at the site level, you can optionally pass the ?currency_prices=true query param to include an array of currency price data in the response. If the product price point is set to use_site_exchange_rate: true, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency..</param>
-        /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
-        public Models.ProductPricePointResponse ReadProductPricePoint(
-                ReadProductPricePointProductId productId,
-                ReadProductPricePointPricePointId pricePointId,
-                bool? currencyPrices = null)
-            => CoreHelper.RunTask(ReadProductPricePointAsync(productId, pricePointId, currencyPrices));
-
-        /// <summary>
-        /// Use this endpoint to retrieve details for a specific product price point.
-        /// </summary>
-        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <param name="currencyPrices">Optional parameter: When fetching a product's price points, if you have defined multiple currencies at the site level, you can optionally pass the ?currency_prices=true query param to include an array of currency price data in the response. If the product price point is set to use_site_exchange_rate: true, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency..</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
-        public async Task<Models.ProductPricePointResponse> ReadProductPricePointAsync(
-                ReadProductPricePointProductId productId,
-                ReadProductPricePointPricePointId pricePointId,
-                bool? currencyPrices = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ProductPricePointResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/products/{product_id}/price_points/{price_point_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("product_id", productId).Required())
-                      .Template(_template => _template.Setup("price_point_id", pricePointId).Required())
-                      .Query(_query => _query.Setup("currency_prices", currencyPrices))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Use this endpoint to archive a product price point.
-        /// </summary>
-        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
-        public Models.ProductPricePointResponse ArchiveProductPricePoint(
-                ArchiveProductPricePointProductId productId,
-                ArchiveProductPricePointPricePointId pricePointId)
-            => CoreHelper.RunTask(ArchiveProductPricePointAsync(productId, pricePointId));
-
-        /// <summary>
-        /// Use this endpoint to archive a product price point.
-        /// </summary>
-        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
-        public async Task<Models.ProductPricePointResponse> ArchiveProductPricePointAsync(
-                ArchiveProductPricePointProductId productId,
-                ArchiveProductPricePointPricePointId pricePointId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ProductPricePointResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Delete, "/products/{product_id}/price_points/{price_point_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("product_id", productId).Required())
-                      .Template(_template => _template.Setup("price_point_id", pricePointId).Required())))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -272,78 +349,6 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this endpoint to create multiple product price points in one request.
-        /// </summary>
-        /// <param name="productId">Required parameter: The Chargify id of the product to which the price points belong.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.BulkCreateProductPricePointsResponse response from the API call.</returns>
-        public Models.BulkCreateProductPricePointsResponse CreateProductPricePoints(
-                int productId,
-                Models.BulkCreateProductPricePointsRequest body = null)
-            => CoreHelper.RunTask(CreateProductPricePointsAsync(productId, body));
-
-        /// <summary>
-        /// Use this endpoint to create multiple product price points in one request.
-        /// </summary>
-        /// <param name="productId">Required parameter: The Chargify id of the product to which the price points belong.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.BulkCreateProductPricePointsResponse response from the API call.</returns>
-        public async Task<Models.BulkCreateProductPricePointsResponse> CreateProductPricePointsAsync(
-                int productId,
-                Models.BulkCreateProductPricePointsRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.BulkCreateProductPricePointsResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/products/{product_id}/price_points/bulk.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("product_id", productId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ApiException(_reason, _context))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This endpoint allows you to create currency prices for a given currency that has been defined on the site level in your settings.
-        /// When creating currency prices, they need to mirror the structure of your primary pricing. If the product price point defines a trial and/or setup fee, each currency must also define a trial and/or setup fee.
-        /// Note: Currency Prices are not able to be created for custom product price points.
-        /// </summary>
-        /// <param name="productPricePointId">Required parameter: The Chargify id of the product price point.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.ProductPricePointCurrencyPrice response from the API call.</returns>
-        public Models.ProductPricePointCurrencyPrice CreateProductCurrencyPrices(
-                int productPricePointId,
-                Models.CreateProductCurrencyPricesRequest body = null)
-            => CoreHelper.RunTask(CreateProductCurrencyPricesAsync(productPricePointId, body));
-
-        /// <summary>
-        /// This endpoint allows you to create currency prices for a given currency that has been defined on the site level in your settings.
-        /// When creating currency prices, they need to mirror the structure of your primary pricing. If the product price point defines a trial and/or setup fee, each currency must also define a trial and/or setup fee.
-        /// Note: Currency Prices are not able to be created for custom product price points.
-        /// </summary>
-        /// <param name="productPricePointId">Required parameter: The Chargify id of the product price point.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ProductPricePointCurrencyPrice response from the API call.</returns>
-        public async Task<Models.ProductPricePointCurrencyPrice> CreateProductCurrencyPricesAsync(
-                int productPricePointId,
-                Models.CreateProductCurrencyPricesRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ProductPricePointCurrencyPrice>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/product_price_points/{product_price_point_id}/currency_prices.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("product_price_point_id", productPricePointId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorMapResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// This endpoint allows you to update the `price`s of currency prices for a given currency that exists on the product price point.
         /// When updating the pricing, it needs to mirror the structure of your primary pricing. If the product price point defines a trial and/or setup fee, each currency must also define a trial and/or setup fee.
         /// Note: Currency Prices are not able to be updated for custom product price points.
@@ -382,42 +387,37 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This method allows retrieval of a list of Products Price Points belonging to a Site.
+        /// Use this endpoint to create multiple product price points in one request.
         /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the Models.ListProductPricePointsResponse response from the API call.</returns>
-        public Models.ListProductPricePointsResponse ListAllProductPricePoints(
-                Models.ListAllProductPricePointsInput input)
-            => CoreHelper.RunTask(ListAllProductPricePointsAsync(input));
+        /// <param name="productId">Required parameter: The Chargify id of the product to which the price points belong.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.BulkCreateProductPricePointsResponse response from the API call.</returns>
+        public Models.BulkCreateProductPricePointsResponse CreateProductPricePoints(
+                int productId,
+                Models.BulkCreateProductPricePointsRequest body = null)
+            => CoreHelper.RunTask(CreateProductPricePointsAsync(productId, body));
 
         /// <summary>
-        /// This method allows retrieval of a list of Products Price Points belonging to a Site.
+        /// Use this endpoint to create multiple product price points in one request.
         /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="productId">Required parameter: The Chargify id of the product to which the price points belong.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ListProductPricePointsResponse response from the API call.</returns>
-        public async Task<Models.ListProductPricePointsResponse> ListAllProductPricePointsAsync(
-                Models.ListAllProductPricePointsInput input,
+        /// <returns>Returns the Models.BulkCreateProductPricePointsResponse response from the API call.</returns>
+        public async Task<Models.BulkCreateProductPricePointsResponse> CreateProductPricePointsAsync(
+                int productId,
+                Models.BulkCreateProductPricePointsRequest body = null,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ListProductPricePointsResponse>()
+            => await CreateApiCall<Models.BulkCreateProductPricePointsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/products_price_points.json")
+                  .Setup(HttpMethod.Post, "/products/{product_id}/price_points/bulk.json")
                   .WithAuth("global")
                   .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("filter[archived_at]", (input.FilterArchivedAt.HasValue) ? ApiHelper.JsonSerialize(input.FilterArchivedAt.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("filter[date_field]", (input.FilterDateField.HasValue) ? ApiHelper.JsonSerialize(input.FilterDateField.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("filter[end_date]", input.FilterEndDate.HasValue ? input.FilterEndDate.Value.ToString("yyyy'-'MM'-'dd") : null))
-                      .Query(_query => _query.Setup("filter[end_datetime]", input.FilterEndDatetime.HasValue ? input.FilterEndDatetime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))
-                      .Query(_query => _query.Setup("filter[ids]", input.FilterIds))
-                      .Query(_query => _query.Setup("filter[start_date]", input.FilterStartDate.HasValue ? input.FilterStartDate.Value.ToString("yyyy'-'MM'-'dd") : null))
-                      .Query(_query => _query.Setup("filter[start_datetime]", input.FilterStartDatetime.HasValue ? input.FilterStartDatetime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))
-                      .Query(_query => _query.Setup("filter[type]", input.FilterType?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))
-                      .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))))
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("product_id", productId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ApiException(_reason, _context))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

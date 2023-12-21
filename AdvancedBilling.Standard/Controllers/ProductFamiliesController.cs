@@ -35,6 +35,64 @@ namespace AdvancedBilling.Standard.Controllers
         internal ProductFamiliesController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
+        /// This method allows to retrieve a Product Family via the `product_family_id`. The response will contain a Product Family object.
+        /// The product family can be specified either with the id number, or with the `handle:my-family` format.
+        /// </summary>
+        /// <param name="id">Required parameter: The Chargify id of the product family.</param>
+        /// <returns>Returns the Models.ProductFamilyResponse response from the API call.</returns>
+        public Models.ProductFamilyResponse ReadProductFamily(
+                int id)
+            => CoreHelper.RunTask(ReadProductFamilyAsync(id));
+
+        /// <summary>
+        /// This method allows to retrieve a Product Family via the `product_family_id`. The response will contain a Product Family object.
+        /// The product family can be specified either with the id number, or with the `handle:my-family` format.
+        /// </summary>
+        /// <param name="id">Required parameter: The Chargify id of the product family.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ProductFamilyResponse response from the API call.</returns>
+        public async Task<Models.ProductFamilyResponse> ReadProductFamilyAsync(
+                int id,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ProductFamilyResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/product_families/{id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("id", id))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This method allows to retrieve a list of Product Families for a site.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the List of Models.ProductFamilyResponse response from the API call.</returns>
+        public List<Models.ProductFamilyResponse> ListProductFamilies(
+                Models.ListProductFamiliesInput input)
+            => CoreHelper.RunTask(ListProductFamiliesAsync(input));
+
+        /// <summary>
+        /// This method allows to retrieve a list of Product Families for a site.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the List of Models.ProductFamilyResponse response from the API call.</returns>
+        public async Task<List<Models.ProductFamilyResponse>> ListProductFamiliesAsync(
+                Models.ListProductFamiliesInput input,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<List<Models.ProductFamilyResponse>>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/product_families.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("start_date", input.StartDate))
+                      .Query(_query => _query.Setup("end_date", input.EndDate))
+                      .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
+                      .Query(_query => _query.Setup("end_datetime", input.EndDatetime))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// This method allows to retrieve a list of Products belonging to a Product Family.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
@@ -100,64 +158,6 @@ namespace AdvancedBilling.Standard.Controllers
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This method allows to retrieve a list of Product Families for a site.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the List of Models.ProductFamilyResponse response from the API call.</returns>
-        public List<Models.ProductFamilyResponse> ListProductFamilies(
-                Models.ListProductFamiliesInput input)
-            => CoreHelper.RunTask(ListProductFamiliesAsync(input));
-
-        /// <summary>
-        /// This method allows to retrieve a list of Product Families for a site.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the List of Models.ProductFamilyResponse response from the API call.</returns>
-        public async Task<List<Models.ProductFamilyResponse>> ListProductFamiliesAsync(
-                Models.ListProductFamiliesInput input,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<List<Models.ProductFamilyResponse>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/product_families.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("start_date", input.StartDate))
-                      .Query(_query => _query.Setup("end_date", input.EndDate))
-                      .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
-                      .Query(_query => _query.Setup("end_datetime", input.EndDatetime))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This method allows to retrieve a Product Family via the `product_family_id`. The response will contain a Product Family object.
-        /// The product family can be specified either with the id number, or with the `handle:my-family` format.
-        /// </summary>
-        /// <param name="id">Required parameter: The Chargify id of the product family.</param>
-        /// <returns>Returns the Models.ProductFamilyResponse response from the API call.</returns>
-        public Models.ProductFamilyResponse ReadProductFamily(
-                int id)
-            => CoreHelper.RunTask(ReadProductFamilyAsync(id));
-
-        /// <summary>
-        /// This method allows to retrieve a Product Family via the `product_family_id`. The response will contain a Product Family object.
-        /// The product family can be specified either with the id number, or with the `handle:my-family` format.
-        /// </summary>
-        /// <param name="id">Required parameter: The Chargify id of the product family.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ProductFamilyResponse response from the API call.</returns>
-        public async Task<Models.ProductFamilyResponse> ReadProductFamilyAsync(
-                int id,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ProductFamilyResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/product_families/{id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("id", id))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

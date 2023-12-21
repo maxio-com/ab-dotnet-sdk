@@ -35,6 +35,304 @@ namespace AdvancedBilling.Standard.Controllers
         internal SubscriptionsController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
+        /// Use this endpoint to find a subscription by its reference.
+        /// </summary>
+        /// <param name="reference">Optional parameter: Subscription reference.</param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public Models.SubscriptionResponse ReadSubscriptionByReference(
+                string reference = null)
+            => CoreHelper.RunTask(ReadSubscriptionByReferenceAsync(reference));
+
+        /// <summary>
+        /// Use this endpoint to find a subscription by its reference.
+        /// </summary>
+        /// <param name="reference">Optional parameter: Subscription reference.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public async Task<Models.SubscriptionResponse> ReadSubscriptionByReferenceAsync(
+                string reference = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.SubscriptionResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/subscriptions/lookup.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Query(_query => _query.Setup("reference", reference))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The Chargify API allows you to preview a subscription by POSTing the same JSON or XML as for a subscription creation.
+        /// The "Next Billing" amount and "Next Billing" date are represented in each Subscriber's Summary. For more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#next-billing).
+        /// ## Side effects.
+        /// A subscription will not be created by sending a POST to this endpoint. It is meant to serve as a prediction.
+        /// ## Taxable Subscriptions.
+        /// This endpoint will preview taxes applicable to a purchase. In order for taxes to be previewed, the following conditions must be met:.
+        /// + Taxes must be configured on the subscription.
+        /// + The preview must be for the purchase of a taxable product or component, or combination of the two.
+        /// + The subscription payload must contain a full billing or shipping address in order to calculate tax.
+        /// For more information about creating taxable previews, please see our documentation guide on how to create [taxable subscriptions.](https://chargify.zendesk.com/hc/en-us/articles/4407904217755#creating-taxable-subscriptions).
+        /// You do **not** need to include a card number to generate tax information when you are previewing a subscription. However, please note that when you actually want to create the subscription, you must include the credit card information if you want the billing address to be stored in Chargify. The billing address and the credit card information are stored together within the payment profile object. Also, you may not send a billing address to Chargify without payment profile information, as the address is stored on the card.
+        /// You can pass shipping and billing addresses and still decide not to calculate taxes. To do that, pass `skip_billing_manifest_taxes: true` attribute.
+        /// ## Non-taxable Subscriptions.
+        /// If you'd like to calculate subscriptions that do not include tax, please feel free to leave off the billing information.
+        /// </summary>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.SubscriptionPreviewResponse response from the API call.</returns>
+        public Models.SubscriptionPreviewResponse PreviewSubscription(
+                Models.CreateSubscriptionRequest body = null)
+            => CoreHelper.RunTask(PreviewSubscriptionAsync(body));
+
+        /// <summary>
+        /// The Chargify API allows you to preview a subscription by POSTing the same JSON or XML as for a subscription creation.
+        /// The "Next Billing" amount and "Next Billing" date are represented in each Subscriber's Summary. For more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#next-billing).
+        /// ## Side effects.
+        /// A subscription will not be created by sending a POST to this endpoint. It is meant to serve as a prediction.
+        /// ## Taxable Subscriptions.
+        /// This endpoint will preview taxes applicable to a purchase. In order for taxes to be previewed, the following conditions must be met:.
+        /// + Taxes must be configured on the subscription.
+        /// + The preview must be for the purchase of a taxable product or component, or combination of the two.
+        /// + The subscription payload must contain a full billing or shipping address in order to calculate tax.
+        /// For more information about creating taxable previews, please see our documentation guide on how to create [taxable subscriptions.](https://chargify.zendesk.com/hc/en-us/articles/4407904217755#creating-taxable-subscriptions).
+        /// You do **not** need to include a card number to generate tax information when you are previewing a subscription. However, please note that when you actually want to create the subscription, you must include the credit card information if you want the billing address to be stored in Chargify. The billing address and the credit card information are stored together within the payment profile object. Also, you may not send a billing address to Chargify without payment profile information, as the address is stored on the card.
+        /// You can pass shipping and billing addresses and still decide not to calculate taxes. To do that, pass `skip_billing_manifest_taxes: true` attribute.
+        /// ## Non-taxable Subscriptions.
+        /// If you'd like to calculate subscriptions that do not include tax, please feel free to leave off the billing information.
+        /// </summary>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.SubscriptionPreviewResponse response from the API call.</returns>
+        public async Task<Models.SubscriptionPreviewResponse> PreviewSubscriptionAsync(
+                Models.CreateSubscriptionRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.SubscriptionPreviewResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/subscriptions/preview.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Use this endpoint to find subscription details.
+        /// ## Self-Service Page token.
+        /// Self-Service Page token for the subscription is not returned by default. If this information is desired, the include[]=self_service_page_token parameter must be provided with the request.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="include">Optional parameter: Allows including additional data in the response. Use in query: `include[]=coupons&include[]=self_service_page_token`..</param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public Models.SubscriptionResponse ReadSubscription(
+                int subscriptionId,
+                List<Models.SubscriptionInclude> include = null)
+            => CoreHelper.RunTask(ReadSubscriptionAsync(subscriptionId, include));
+
+        /// <summary>
+        /// Use this endpoint to find subscription details.
+        /// ## Self-Service Page token.
+        /// Self-Service Page token for the subscription is not returned by default. If this information is desired, the include[]=self_service_page_token parameter must be provided with the request.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="include">Optional parameter: Allows including additional data in the response. Use in query: `include[]=coupons&include[]=self_service_page_token`..</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public async Task<Models.SubscriptionResponse> ReadSubscriptionAsync(
+                int subscriptionId,
+                List<Models.SubscriptionInclude> include = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.SubscriptionResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Query(_query => _query.Setup("include[]", include?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// For sites in test mode, you may purge individual subscriptions.
+        /// Provide the subscription ID in the url.  To confirm, supply the customer ID in the query string `ack` parameter. You may also delete the customer record and/or payment profiles by passing `cascade` parameters. For example, to delete just the customer record, the query params would be: `?ack={customer_id}&cascade[]=customer`.
+        /// If you need to remove subscriptions from a live site, please contact support to discuss your use case.
+        /// ### Delete customer and payment profile.
+        /// The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="ack">Required parameter: id of the customer..</param>
+        /// <param name="cascade">Optional parameter: Options are "customer" or "payment_profile". Use in query: `cascade[]=customer&cascade[]=payment_profile`..</param>
+        public void PurgeSubscription(
+                int subscriptionId,
+                int ack,
+                List<Models.SubscriptionPurgeType> cascade = null)
+            => CoreHelper.RunVoidTask(PurgeSubscriptionAsync(subscriptionId, ack, cascade));
+
+        /// <summary>
+        /// For sites in test mode, you may purge individual subscriptions.
+        /// Provide the subscription ID in the url.  To confirm, supply the customer ID in the query string `ack` parameter. You may also delete the customer record and/or payment profiles by passing `cascade` parameters. For example, to delete just the customer record, the query params would be: `?ack={customer_id}&cascade[]=customer`.
+        /// If you need to remove subscriptions from a live site, please contact support to discuss your use case.
+        /// ### Delete customer and payment profile.
+        /// The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="ack">Required parameter: id of the customer..</param>
+        /// <param name="cascade">Optional parameter: Options are "customer" or "payment_profile". Use in query: `cascade[]=customer&cascade[]=payment_profile`..</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task PurgeSubscriptionAsync(
+                int subscriptionId,
+                int ack,
+                List<Models.SubscriptionPurgeType> cascade = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/purge.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Query(_query => _query.Setup("ack", ack))
+                      .Query(_query => _query.Setup("cascade[]", cascade?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("400", CreateErrorCase("Bad Request", (_reason, _context) => new ApiException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// An existing subscription can accommodate multiple discounts/coupon codes. This is only applicable if each coupon is stackable. For more information on stackable coupons, we recommend reviewing our [coupon documentation.](https://chargify.zendesk.com/hc/en-us/articles/4407755909531#stackable-coupons).
+        /// ## Query Parameters vs Request Body Parameters.
+        /// Passing in a coupon code as a query parameter will add the code to the subscription, completely replacing all existing coupon codes on the subscription.
+        /// For this reason, using this query parameter on this endpoint has been deprecated in favor of using the request body parameters as described below. When passing in request body parameters, the list of coupon codes will simply be added to any existing list of codes on the subscription.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="code">Optional parameter: A code for the coupon that would be applied to a subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public Models.SubscriptionResponse ApplyCouponToSubscription(
+                int subscriptionId,
+                string code = null,
+                Models.AddCouponsRequest body = null)
+            => CoreHelper.RunTask(ApplyCouponToSubscriptionAsync(subscriptionId, code, body));
+
+        /// <summary>
+        /// An existing subscription can accommodate multiple discounts/coupon codes. This is only applicable if each coupon is stackable. For more information on stackable coupons, we recommend reviewing our [coupon documentation.](https://chargify.zendesk.com/hc/en-us/articles/4407755909531#stackable-coupons).
+        /// ## Query Parameters vs Request Body Parameters.
+        /// Passing in a coupon code as a query parameter will add the code to the subscription, completely replacing all existing coupon codes on the subscription.
+        /// For this reason, using this query parameter on this endpoint has been deprecated in favor of using the request body parameters as described below. When passing in request body parameters, the list of coupon codes will simply be added to any existing list of codes on the subscription.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="code">Optional parameter: A code for the coupon that would be applied to a subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public async Task<Models.SubscriptionResponse> ApplyCouponToSubscriptionAsync(
+                int subscriptionId,
+                string code = null,
+                Models.AddCouponsRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.SubscriptionResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/add_coupon.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))
+                      .Query(_query => _query.Setup("code", code))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new SubscriptionAddCouponErrorException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Chargify offers the ability to activate awaiting signup and trialing subscriptions. This feature is only available on the Relationship Invoicing architecture. Subscriptions in a group may not be activated immediately.
+        /// For details on how the activation works, and how to activate subscriptions through the application, see [activation](#).
+        /// The `revert_on_failure` parameter controls the behavior upon activation failure.
+        /// - If set to `true` and something goes wrong i.e. payment fails, then Chargify will not change the subscription's state. The subscription’s billing period will also remain the same.
+        /// - If set to `false` and something goes wrong i.e. payment fails, then Chargify will continue through with the activation and enter an end of life state. For trialing subscriptions, that will either be trial ended (if the trial is no obligation), past due (if the trial has an obligation), or canceled (if the site has no dunning strategy, or has a strategy that says to cancel immediately). For awaiting signup subscriptions, that will always be canceled.
+        /// The default activation failure behavior can be configured per activation attempt, or you may set a default value under Config > Settings > Subscription Activation Settings.
+        /// ## Activation Scenarios.
+        /// ### Activate Awaiting Signup subscription.
+        /// - Given you have a product without trial.
+        /// - Given you have a site without dunning strategy.
+        /// ```mermaid.
+        ///   flowchart LR.
+        ///     AS[Awaiting Signup] --> A{Activate}.
+        ///     A -->|Success| Active.
+        ///     A -->|Failure| ROF{revert_on_failure}.
+        ///     ROF -->|true| AS.
+        ///     ROF -->|false| Canceled.
+        /// ```.
+        /// - Given you have a product with trial.
+        /// - Given you have a site with dunning strategy.
+        /// ```mermaid.
+        ///   flowchart LR.
+        ///     AS[Awaiting Signup] --> A{Activate}.
+        ///     A -->|Success| Trialing.
+        ///     A -->|Failure| ROF{revert_on_failure}.
+        ///     ROF -->|true| AS.
+        ///     ROF -->|false| PD[Past Due].
+        /// ```.
+        /// ### Activate Trialing subscription.
+        /// You can read more about the behavior of trialing subscriptions [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404494617357#trialing-subscriptions-0-0).
+        /// When the `revert_on_failure` parameter is set to `true`, the subscription's state will remain as Trialing, we will void the invoice from activation and return any prepayments and credits applied to the invoice back to the subscription.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public Models.SubscriptionResponse ActivateSubscription(
+                int subscriptionId,
+                Models.ActivateSubscriptionRequest body = null)
+            => CoreHelper.RunTask(ActivateSubscriptionAsync(subscriptionId, body));
+
+        /// <summary>
+        /// Chargify offers the ability to activate awaiting signup and trialing subscriptions. This feature is only available on the Relationship Invoicing architecture. Subscriptions in a group may not be activated immediately.
+        /// For details on how the activation works, and how to activate subscriptions through the application, see [activation](#).
+        /// The `revert_on_failure` parameter controls the behavior upon activation failure.
+        /// - If set to `true` and something goes wrong i.e. payment fails, then Chargify will not change the subscription's state. The subscription’s billing period will also remain the same.
+        /// - If set to `false` and something goes wrong i.e. payment fails, then Chargify will continue through with the activation and enter an end of life state. For trialing subscriptions, that will either be trial ended (if the trial is no obligation), past due (if the trial has an obligation), or canceled (if the site has no dunning strategy, or has a strategy that says to cancel immediately). For awaiting signup subscriptions, that will always be canceled.
+        /// The default activation failure behavior can be configured per activation attempt, or you may set a default value under Config > Settings > Subscription Activation Settings.
+        /// ## Activation Scenarios.
+        /// ### Activate Awaiting Signup subscription.
+        /// - Given you have a product without trial.
+        /// - Given you have a site without dunning strategy.
+        /// ```mermaid.
+        ///   flowchart LR.
+        ///     AS[Awaiting Signup] --> A{Activate}.
+        ///     A -->|Success| Active.
+        ///     A -->|Failure| ROF{revert_on_failure}.
+        ///     ROF -->|true| AS.
+        ///     ROF -->|false| Canceled.
+        /// ```.
+        /// - Given you have a product with trial.
+        /// - Given you have a site with dunning strategy.
+        /// ```mermaid.
+        ///   flowchart LR.
+        ///     AS[Awaiting Signup] --> A{Activate}.
+        ///     A -->|Success| Trialing.
+        ///     A -->|Failure| ROF{revert_on_failure}.
+        ///     ROF -->|true| AS.
+        ///     ROF -->|false| PD[Past Due].
+        /// ```.
+        /// ### Activate Trialing subscription.
+        /// You can read more about the behavior of trialing subscriptions [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404494617357#trialing-subscriptions-0-0).
+        /// When the `revert_on_failure` parameter is set to `true`, the subscription's state will remain as Trialing, we will void the invoice from activation and return any prepayments and credits applied to the invoice back to the subscription.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public async Task<Models.SubscriptionResponse> ActivateSubscriptionAsync(
+                int subscriptionId,
+                Models.ActivateSubscriptionRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.SubscriptionResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/activate.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("400", CreateErrorCase("Bad Request", (_reason, _context) => new NestedErrorResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// Full documentation on how subscriptions operate within Chargify can be located under the following topics:.
         /// + [Subscriptions Reference](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405577172749-Subscription-Introduction).
         /// + [Subscriptions Actions](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405510556557-Actions).
@@ -1102,41 +1400,6 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this endpoint to find subscription details.
-        /// ## Self-Service Page token.
-        /// Self-Service Page token for the subscription is not returned by default. If this information is desired, the include[]=self_service_page_token parameter must be provided with the request.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="include">Optional parameter: Allows including additional data in the response. Use in query: `include[]=coupons&include[]=self_service_page_token`..</param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public Models.SubscriptionResponse ReadSubscription(
-                int subscriptionId,
-                List<Models.SubscriptionInclude> include = null)
-            => CoreHelper.RunTask(ReadSubscriptionAsync(subscriptionId, include));
-
-        /// <summary>
-        /// Use this endpoint to find subscription details.
-        /// ## Self-Service Page token.
-        /// Self-Service Page token for the subscription is not returned by default. If this information is desired, the include[]=self_service_page_token parameter must be provided with the request.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="include">Optional parameter: Allows including additional data in the response. Use in query: `include[]=coupons&include[]=self_service_page_token`..</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionResponse> ReadSubscriptionAsync(
-                int subscriptionId,
-                List<Models.SubscriptionInclude> include = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Query(_query => _query.Setup("include[]", include?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// This API endpoint allows you to set certain subscription fields that are usually managed for you automatically. Some of the fields can be set via the normal Subscriptions Update API, but others can only be set using this endpoint.
         /// This endpoint is provided for cases where you need to “align” Chargify data with data that happened in your system, perhaps before you started using Chargify. For example, you may choose to import your historical subscription data, and would like the activation and cancellation dates in Chargify to match your existing historical dates. Chargify does not backfill historical events (i.e. from the Events API), but some static data can be changed via this API.
         /// Why are some fields only settable from this endpoint, and not the normal subscription create and update endpoints? Because we want users of this endpoint to be aware that these fields are usually managed by Chargify, and using this API means **you are stepping out on your own.**.
@@ -1191,77 +1454,6 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this endpoint to find a subscription by its reference.
-        /// </summary>
-        /// <param name="reference">Optional parameter: Subscription reference.</param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public Models.SubscriptionResponse ReadSubscriptionByReference(
-                string reference = null)
-            => CoreHelper.RunTask(ReadSubscriptionByReferenceAsync(reference));
-
-        /// <summary>
-        /// Use this endpoint to find a subscription by its reference.
-        /// </summary>
-        /// <param name="reference">Optional parameter: Subscription reference.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionResponse> ReadSubscriptionByReferenceAsync(
-                string reference = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/subscriptions/lookup.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("reference", reference))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// For sites in test mode, you may purge individual subscriptions.
-        /// Provide the subscription ID in the url.  To confirm, supply the customer ID in the query string `ack` parameter. You may also delete the customer record and/or payment profiles by passing `cascade` parameters. For example, to delete just the customer record, the query params would be: `?ack={customer_id}&cascade[]=customer`.
-        /// If you need to remove subscriptions from a live site, please contact support to discuss your use case.
-        /// ### Delete customer and payment profile.
-        /// The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="ack">Required parameter: id of the customer..</param>
-        /// <param name="cascade">Optional parameter: Options are "customer" or "payment_profile". Use in query: `cascade[]=customer&cascade[]=payment_profile`..</param>
-        public void PurgeSubscription(
-                int subscriptionId,
-                int ack,
-                List<Models.SubscriptionPurgeType> cascade = null)
-            => CoreHelper.RunVoidTask(PurgeSubscriptionAsync(subscriptionId, ack, cascade));
-
-        /// <summary>
-        /// For sites in test mode, you may purge individual subscriptions.
-        /// Provide the subscription ID in the url.  To confirm, supply the customer ID in the query string `ack` parameter. You may also delete the customer record and/or payment profiles by passing `cascade` parameters. For example, to delete just the customer record, the query params would be: `?ack={customer_id}&cascade[]=customer`.
-        /// If you need to remove subscriptions from a live site, please contact support to discuss your use case.
-        /// ### Delete customer and payment profile.
-        /// The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="ack">Required parameter: id of the customer..</param>
-        /// <param name="cascade">Optional parameter: Options are "customer" or "payment_profile". Use in query: `cascade[]=customer&cascade[]=payment_profile`..</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task PurgeSubscriptionAsync(
-                int subscriptionId,
-                int ack,
-                List<Models.SubscriptionPurgeType> cascade = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/purge.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Query(_query => _query.Setup("ack", ack))
-                      .Query(_query => _query.Setup("cascade[]", cascade?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("400", CreateErrorCase("Bad Request", (_reason, _context) => new ApiException(_reason, _context))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// Use this endpoint to update a subscription's prepaid configuration.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
@@ -1291,104 +1483,6 @@ namespace AdvancedBilling.Standard.Controllers
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// The Chargify API allows you to preview a subscription by POSTing the same JSON or XML as for a subscription creation.
-        /// The "Next Billing" amount and "Next Billing" date are represented in each Subscriber's Summary. For more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#next-billing).
-        /// ## Side effects.
-        /// A subscription will not be created by sending a POST to this endpoint. It is meant to serve as a prediction.
-        /// ## Taxable Subscriptions.
-        /// This endpoint will preview taxes applicable to a purchase. In order for taxes to be previewed, the following conditions must be met:.
-        /// + Taxes must be configured on the subscription.
-        /// + The preview must be for the purchase of a taxable product or component, or combination of the two.
-        /// + The subscription payload must contain a full billing or shipping address in order to calculate tax.
-        /// For more information about creating taxable previews, please see our documentation guide on how to create [taxable subscriptions.](https://chargify.zendesk.com/hc/en-us/articles/4407904217755#creating-taxable-subscriptions).
-        /// You do **not** need to include a card number to generate tax information when you are previewing a subscription. However, please note that when you actually want to create the subscription, you must include the credit card information if you want the billing address to be stored in Chargify. The billing address and the credit card information are stored together within the payment profile object. Also, you may not send a billing address to Chargify without payment profile information, as the address is stored on the card.
-        /// You can pass shipping and billing addresses and still decide not to calculate taxes. To do that, pass `skip_billing_manifest_taxes: true` attribute.
-        /// ## Non-taxable Subscriptions.
-        /// If you'd like to calculate subscriptions that do not include tax, please feel free to leave off the billing information.
-        /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.SubscriptionPreviewResponse response from the API call.</returns>
-        public Models.SubscriptionPreviewResponse PreviewSubscription(
-                Models.CreateSubscriptionRequest body = null)
-            => CoreHelper.RunTask(PreviewSubscriptionAsync(body));
-
-        /// <summary>
-        /// The Chargify API allows you to preview a subscription by POSTing the same JSON or XML as for a subscription creation.
-        /// The "Next Billing" amount and "Next Billing" date are represented in each Subscriber's Summary. For more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#next-billing).
-        /// ## Side effects.
-        /// A subscription will not be created by sending a POST to this endpoint. It is meant to serve as a prediction.
-        /// ## Taxable Subscriptions.
-        /// This endpoint will preview taxes applicable to a purchase. In order for taxes to be previewed, the following conditions must be met:.
-        /// + Taxes must be configured on the subscription.
-        /// + The preview must be for the purchase of a taxable product or component, or combination of the two.
-        /// + The subscription payload must contain a full billing or shipping address in order to calculate tax.
-        /// For more information about creating taxable previews, please see our documentation guide on how to create [taxable subscriptions.](https://chargify.zendesk.com/hc/en-us/articles/4407904217755#creating-taxable-subscriptions).
-        /// You do **not** need to include a card number to generate tax information when you are previewing a subscription. However, please note that when you actually want to create the subscription, you must include the credit card information if you want the billing address to be stored in Chargify. The billing address and the credit card information are stored together within the payment profile object. Also, you may not send a billing address to Chargify without payment profile information, as the address is stored on the card.
-        /// You can pass shipping and billing addresses and still decide not to calculate taxes. To do that, pass `skip_billing_manifest_taxes: true` attribute.
-        /// ## Non-taxable Subscriptions.
-        /// If you'd like to calculate subscriptions that do not include tax, please feel free to leave off the billing information.
-        /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.SubscriptionPreviewResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionPreviewResponse> PreviewSubscriptionAsync(
-                Models.CreateSubscriptionRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SubscriptionPreviewResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscriptions/preview.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// An existing subscription can accommodate multiple discounts/coupon codes. This is only applicable if each coupon is stackable. For more information on stackable coupons, we recommend reviewing our [coupon documentation.](https://chargify.zendesk.com/hc/en-us/articles/4407755909531#stackable-coupons).
-        /// ## Query Parameters vs Request Body Parameters.
-        /// Passing in a coupon code as a query parameter will add the code to the subscription, completely replacing all existing coupon codes on the subscription.
-        /// For this reason, using this query parameter on this endpoint has been deprecated in favor of using the request body parameters as described below. When passing in request body parameters, the list of coupon codes will simply be added to any existing list of codes on the subscription.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="code">Optional parameter: A code for the coupon that would be applied to a subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public Models.SubscriptionResponse ApplyCouponToSubscription(
-                int subscriptionId,
-                string code = null,
-                Models.AddCouponsRequest body = null)
-            => CoreHelper.RunTask(ApplyCouponToSubscriptionAsync(subscriptionId, code, body));
-
-        /// <summary>
-        /// An existing subscription can accommodate multiple discounts/coupon codes. This is only applicable if each coupon is stackable. For more information on stackable coupons, we recommend reviewing our [coupon documentation.](https://chargify.zendesk.com/hc/en-us/articles/4407755909531#stackable-coupons).
-        /// ## Query Parameters vs Request Body Parameters.
-        /// Passing in a coupon code as a query parameter will add the code to the subscription, completely replacing all existing coupon codes on the subscription.
-        /// For this reason, using this query parameter on this endpoint has been deprecated in favor of using the request body parameters as described below. When passing in request body parameters, the list of coupon codes will simply be added to any existing list of codes on the subscription.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="code">Optional parameter: A code for the coupon that would be applied to a subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionResponse> ApplyCouponToSubscriptionAsync(
-                int subscriptionId,
-                string code = null,
-                Models.AddCouponsRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/add_coupon.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))
-                      .Query(_query => _query.Setup("code", code))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new SubscriptionAddCouponErrorException(_reason, _context))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -1424,100 +1518,6 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("coupon_code", couponCode))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new SubscriptionRemoveCouponErrorsException(_reason, _context))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Chargify offers the ability to activate awaiting signup and trialing subscriptions. This feature is only available on the Relationship Invoicing architecture. Subscriptions in a group may not be activated immediately.
-        /// For details on how the activation works, and how to activate subscriptions through the application, see [activation](#).
-        /// The `revert_on_failure` parameter controls the behavior upon activation failure.
-        /// - If set to `true` and something goes wrong i.e. payment fails, then Chargify will not change the subscription's state. The subscription’s billing period will also remain the same.
-        /// - If set to `false` and something goes wrong i.e. payment fails, then Chargify will continue through with the activation and enter an end of life state. For trialing subscriptions, that will either be trial ended (if the trial is no obligation), past due (if the trial has an obligation), or canceled (if the site has no dunning strategy, or has a strategy that says to cancel immediately). For awaiting signup subscriptions, that will always be canceled.
-        /// The default activation failure behavior can be configured per activation attempt, or you may set a default value under Config > Settings > Subscription Activation Settings.
-        /// ## Activation Scenarios.
-        /// ### Activate Awaiting Signup subscription.
-        /// - Given you have a product without trial.
-        /// - Given you have a site without dunning strategy.
-        /// ```mermaid.
-        ///   flowchart LR.
-        ///     AS[Awaiting Signup] --> A{Activate}.
-        ///     A -->|Success| Active.
-        ///     A -->|Failure| ROF{revert_on_failure}.
-        ///     ROF -->|true| AS.
-        ///     ROF -->|false| Canceled.
-        /// ```.
-        /// - Given you have a product with trial.
-        /// - Given you have a site with dunning strategy.
-        /// ```mermaid.
-        ///   flowchart LR.
-        ///     AS[Awaiting Signup] --> A{Activate}.
-        ///     A -->|Success| Trialing.
-        ///     A -->|Failure| ROF{revert_on_failure}.
-        ///     ROF -->|true| AS.
-        ///     ROF -->|false| PD[Past Due].
-        /// ```.
-        /// ### Activate Trialing subscription.
-        /// You can read more about the behavior of trialing subscriptions [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404494617357#trialing-subscriptions-0-0).
-        /// When the `revert_on_failure` parameter is set to `true`, the subscription's state will remain as Trialing, we will void the invoice from activation and return any prepayments and credits applied to the invoice back to the subscription.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public Models.SubscriptionResponse ActivateSubscription(
-                int subscriptionId,
-                Models.ActivateSubscriptionRequest body = null)
-            => CoreHelper.RunTask(ActivateSubscriptionAsync(subscriptionId, body));
-
-        /// <summary>
-        /// Chargify offers the ability to activate awaiting signup and trialing subscriptions. This feature is only available on the Relationship Invoicing architecture. Subscriptions in a group may not be activated immediately.
-        /// For details on how the activation works, and how to activate subscriptions through the application, see [activation](#).
-        /// The `revert_on_failure` parameter controls the behavior upon activation failure.
-        /// - If set to `true` and something goes wrong i.e. payment fails, then Chargify will not change the subscription's state. The subscription’s billing period will also remain the same.
-        /// - If set to `false` and something goes wrong i.e. payment fails, then Chargify will continue through with the activation and enter an end of life state. For trialing subscriptions, that will either be trial ended (if the trial is no obligation), past due (if the trial has an obligation), or canceled (if the site has no dunning strategy, or has a strategy that says to cancel immediately). For awaiting signup subscriptions, that will always be canceled.
-        /// The default activation failure behavior can be configured per activation attempt, or you may set a default value under Config > Settings > Subscription Activation Settings.
-        /// ## Activation Scenarios.
-        /// ### Activate Awaiting Signup subscription.
-        /// - Given you have a product without trial.
-        /// - Given you have a site without dunning strategy.
-        /// ```mermaid.
-        ///   flowchart LR.
-        ///     AS[Awaiting Signup] --> A{Activate}.
-        ///     A -->|Success| Active.
-        ///     A -->|Failure| ROF{revert_on_failure}.
-        ///     ROF -->|true| AS.
-        ///     ROF -->|false| Canceled.
-        /// ```.
-        /// - Given you have a product with trial.
-        /// - Given you have a site with dunning strategy.
-        /// ```mermaid.
-        ///   flowchart LR.
-        ///     AS[Awaiting Signup] --> A{Activate}.
-        ///     A -->|Success| Trialing.
-        ///     A -->|Failure| ROF{revert_on_failure}.
-        ///     ROF -->|true| AS.
-        ///     ROF -->|false| PD[Past Due].
-        /// ```.
-        /// ### Activate Trialing subscription.
-        /// You can read more about the behavior of trialing subscriptions [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404494617357#trialing-subscriptions-0-0).
-        /// When the `revert_on_failure` parameter is set to `true`, the subscription's state will remain as Trialing, we will void the invoice from activation and return any prepayments and credits applied to the invoice back to the subscription.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionResponse> ActivateSubscriptionAsync(
-                int subscriptionId,
-                Models.ActivateSubscriptionRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/activate.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("400", CreateErrorCase("Bad Request", (_reason, _context) => new NestedErrorResponseException(_reason, _context))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

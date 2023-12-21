@@ -11,9 +11,9 @@ ProductsController productsController = client.ProductsController;
 ## Methods
 
 * [Create Product](../../doc/controllers/products.md#create-product)
-* [Read Product](../../doc/controllers/products.md#read-product)
-* [Update Product](../../doc/controllers/products.md#update-product)
 * [Archive Product](../../doc/controllers/products.md#archive-product)
+* [Update Product](../../doc/controllers/products.md#update-product)
+* [Read Product](../../doc/controllers/products.md#read-product)
 * [Read Product by Handle](../../doc/controllers/products.md#read-product-by-handle)
 * [List Products](../../doc/controllers/products.md#list-products)
 
@@ -133,12 +133,14 @@ catch (ApiException e)
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
-# Read Product
+# Archive Product
 
-This endpoint allows you to read the current details of a product that you've created in Chargify.
+Sending a DELETE request to this endpoint will archive the product. All current subscribers will be unffected; their subscription/purchase will continue to be charged monthly.
+
+This will restrict the option to chose the product for purchase via the Billing Portal, as well as disable Public Signup Pages for the product.
 
 ```csharp
-ReadProductAsync(
+ArchiveProductAsync(
     int productId)
 ```
 
@@ -158,7 +160,7 @@ ReadProductAsync(
 int productId = 202;
 try
 {
-    ProductResponse result = await productsController.ReadProductAsync(productId);
+    ProductResponse result = await productsController.ArchiveProductAsync(productId);
 }
 catch (ApiException e)
 {
@@ -172,32 +174,32 @@ catch (ApiException e)
 ```json
 {
   "product": {
-    "id": 4535635,
-    "name": "Paid Annual Seats",
-    "handle": "paid-annual-seats",
-    "description": "Paid annual seats for our commercial enterprise product",
-    "accounting_code": "paid-annual-seats",
+    "id": 4535638,
+    "name": "Business Monthly",
+    "handle": null,
+    "description": "Business Monthly",
+    "accounting_code": "",
     "request_credit_card": true,
-    "expiration_interval": 1,
-    "expiration_interval_unit": "day",
+    "expiration_interval": null,
+    "expiration_interval_unit": "never",
     "created_at": "2017-08-25T10:25:31-05:00",
-    "updated_at": "2018-01-16T12:58:04-06:00",
-    "price_in_cents": 10000,
-    "interval": 12,
+    "updated_at": "2018-01-16T13:02:44-06:00",
+    "price_in_cents": 4900,
+    "interval": 1,
     "interval_unit": "month",
-    "initial_charge_in_cents": 4900,
-    "trial_price_in_cents": 1000,
-    "trial_interval": 14,
+    "initial_charge_in_cents": null,
+    "trial_price_in_cents": 0,
+    "trial_interval": 1,
     "trial_interval_unit": "day",
-    "archived_at": null,
-    "require_credit_card": true,
-    "return_params": "id={subscription_id}&ref={customer_reference}",
-    "taxable": true,
-    "update_return_url": "http://www.example.com",
-    "tax_code": "D0000000",
+    "archived_at": "2018-01-16T13:02:44-06:00",
+    "require_credit_card": false,
+    "return_params": "",
+    "taxable": false,
+    "update_return_url": "",
+    "tax_code": "",
     "initial_charge_after_trial": false,
-    "version_number": 4,
-    "update_return_params": "id={subscription_id}&ref={customer_reference}",
+    "version_number": 1,
+    "update_return_params": "",
     "product_family": {
       "id": 1025627,
       "name": "Acme Products",
@@ -210,6 +212,12 @@ catch (ApiException e)
   }
 }
 ```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # Update Product
@@ -311,14 +319,12 @@ catch (ApiException e)
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
-# Archive Product
+# Read Product
 
-Sending a DELETE request to this endpoint will archive the product. All current subscribers will be unffected; their subscription/purchase will continue to be charged monthly.
-
-This will restrict the option to chose the product for purchase via the Billing Portal, as well as disable Public Signup Pages for the product.
+This endpoint allows you to read the current details of a product that you've created in Chargify.
 
 ```csharp
-ArchiveProductAsync(
+ReadProductAsync(
     int productId)
 ```
 
@@ -338,7 +344,7 @@ ArchiveProductAsync(
 int productId = 202;
 try
 {
-    ProductResponse result = await productsController.ArchiveProductAsync(productId);
+    ProductResponse result = await productsController.ReadProductAsync(productId);
 }
 catch (ApiException e)
 {
@@ -352,32 +358,32 @@ catch (ApiException e)
 ```json
 {
   "product": {
-    "id": 4535638,
-    "name": "Business Monthly",
-    "handle": null,
-    "description": "Business Monthly",
-    "accounting_code": "",
+    "id": 4535635,
+    "name": "Paid Annual Seats",
+    "handle": "paid-annual-seats",
+    "description": "Paid annual seats for our commercial enterprise product",
+    "accounting_code": "paid-annual-seats",
     "request_credit_card": true,
-    "expiration_interval": null,
-    "expiration_interval_unit": "never",
+    "expiration_interval": 1,
+    "expiration_interval_unit": "day",
     "created_at": "2017-08-25T10:25:31-05:00",
-    "updated_at": "2018-01-16T13:02:44-06:00",
-    "price_in_cents": 4900,
-    "interval": 1,
+    "updated_at": "2018-01-16T12:58:04-06:00",
+    "price_in_cents": 10000,
+    "interval": 12,
     "interval_unit": "month",
-    "initial_charge_in_cents": null,
-    "trial_price_in_cents": 0,
-    "trial_interval": 1,
+    "initial_charge_in_cents": 4900,
+    "trial_price_in_cents": 1000,
+    "trial_interval": 14,
     "trial_interval_unit": "day",
-    "archived_at": "2018-01-16T13:02:44-06:00",
-    "require_credit_card": false,
-    "return_params": "",
-    "taxable": false,
-    "update_return_url": "",
-    "tax_code": "",
+    "archived_at": null,
+    "require_credit_card": true,
+    "return_params": "id={subscription_id}&ref={customer_reference}",
+    "taxable": true,
+    "update_return_url": "http://www.example.com",
+    "tax_code": "D0000000",
     "initial_charge_after_trial": false,
-    "version_number": 1,
-    "update_return_params": "",
+    "version_number": 4,
+    "update_return_params": "id={subscription_id}&ref={customer_reference}",
     "product_family": {
       "id": 1025627,
       "name": "Acme Products",
@@ -390,12 +396,6 @@ catch (ApiException e)
   }
 }
 ```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # Read Product by Handle

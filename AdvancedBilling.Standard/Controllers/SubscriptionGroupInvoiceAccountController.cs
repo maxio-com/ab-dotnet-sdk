@@ -69,38 +69,37 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This request will list a subscription group's prepayments.
+        /// Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
         /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the Models.ListSubscriptionGroupPrepaymentResponse response from the API call.</returns>
-        public Models.ListSubscriptionGroupPrepaymentResponse ListPrepaymentsForSubscriptionGroup(
-                Models.ListPrepaymentsForSubscriptionGroupInput input)
-            => CoreHelper.RunTask(ListPrepaymentsForSubscriptionGroupAsync(input));
+        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.ServiceCredit response from the API call.</returns>
+        public Models.ServiceCredit DeductSubscriptionGroupServiceCredits(
+                string uid,
+                Models.DeductServiceCreditRequest body = null)
+            => CoreHelper.RunTask(DeductSubscriptionGroupServiceCreditsAsync(uid, body));
 
         /// <summary>
-        /// This request will list a subscription group's prepayments.
+        /// Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
         /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ListSubscriptionGroupPrepaymentResponse response from the API call.</returns>
-        public async Task<Models.ListSubscriptionGroupPrepaymentResponse> ListPrepaymentsForSubscriptionGroupAsync(
-                Models.ListPrepaymentsForSubscriptionGroupInput input,
+        /// <returns>Returns the Models.ServiceCredit response from the API call.</returns>
+        public async Task<Models.ServiceCredit> DeductSubscriptionGroupServiceCreditsAsync(
+                string uid,
+                Models.DeductServiceCreditRequest body = null,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ListSubscriptionGroupPrepaymentResponse>()
+            => await CreateApiCall<Models.ServiceCredit>()
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/subscription_groups/{uid}/prepayments.json")
+                  .Setup(HttpMethod.Post, "/subscription_groups/{uid}/service_credit_deductions.json")
                   .WithAuth("global")
                   .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("uid", input.Uid).Required())
-                      .Query(_query => _query.Setup("filter[date_field]", (input.FilterDateField.HasValue) ? ApiHelper.JsonSerialize(input.FilterDateField.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("filter[end_date]", input.FilterEndDate.HasValue ? input.FilterEndDate.Value.ToString("yyyy'-'MM'-'dd") : null))
-                      .Query(_query => _query.Setup("filter[start_date]", input.FilterStartDate.HasValue ? input.FilterStartDate.Value.ToString("yyyy'-'MM'-'dd") : null))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))))
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("uid", uid).Required())
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("401", CreateErrorCase("Unauthorized", (_reason, _context) => new ApiException(_reason, _context)))
-                  .ErrorCase("403", CreateErrorCase("Forbidden", (_reason, _context) => new ApiException(_reason, _context)))
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -138,37 +137,38 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
+        /// This request will list a subscription group's prepayments.
         /// </summary>
-        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.ServiceCredit response from the API call.</returns>
-        public Models.ServiceCredit DeductSubscriptionGroupServiceCredits(
-                string uid,
-                Models.DeductServiceCreditRequest body = null)
-            => CoreHelper.RunTask(DeductSubscriptionGroupServiceCreditsAsync(uid, body));
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the Models.ListSubscriptionGroupPrepaymentResponse response from the API call.</returns>
+        public Models.ListSubscriptionGroupPrepaymentResponse ListPrepaymentsForSubscriptionGroup(
+                Models.ListPrepaymentsForSubscriptionGroupInput input)
+            => CoreHelper.RunTask(ListPrepaymentsForSubscriptionGroupAsync(input));
 
         /// <summary>
-        /// Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
+        /// This request will list a subscription group's prepayments.
         /// </summary>
-        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ServiceCredit response from the API call.</returns>
-        public async Task<Models.ServiceCredit> DeductSubscriptionGroupServiceCreditsAsync(
-                string uid,
-                Models.DeductServiceCreditRequest body = null,
+        /// <returns>Returns the Models.ListSubscriptionGroupPrepaymentResponse response from the API call.</returns>
+        public async Task<Models.ListSubscriptionGroupPrepaymentResponse> ListPrepaymentsForSubscriptionGroupAsync(
+                Models.ListPrepaymentsForSubscriptionGroupInput input,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ServiceCredit>()
+            => await CreateApiCall<Models.ListSubscriptionGroupPrepaymentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscription_groups/{uid}/service_credit_deductions.json")
+                  .Setup(HttpMethod.Get, "/subscription_groups/{uid}/prepayments.json")
                   .WithAuth("global")
                   .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("uid", uid).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+                      .Template(_template => _template.Setup("uid", input.Uid).Required())
+                      .Query(_query => _query.Setup("filter[date_field]", (input.FilterDateField.HasValue) ? ApiHelper.JsonSerialize(input.FilterDateField.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("filter[end_date]", input.FilterEndDate.HasValue ? input.FilterEndDate.Value.ToString("yyyy'-'MM'-'dd") : null))
+                      .Query(_query => _query.Setup("filter[start_date]", input.FilterStartDate.HasValue ? input.FilterStartDate.Value.ToString("yyyy'-'MM'-'dd") : null))
+                      .Query(_query => _query.Setup("page", input.Page))
+                      .Query(_query => _query.Setup("per_page", input.PerPage))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+                  .ErrorCase("401", CreateErrorCase("Unauthorized", (_reason, _context) => new ApiException(_reason, _context)))
+                  .ErrorCase("403", CreateErrorCase("Forbidden", (_reason, _context) => new ApiException(_reason, _context)))
+                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

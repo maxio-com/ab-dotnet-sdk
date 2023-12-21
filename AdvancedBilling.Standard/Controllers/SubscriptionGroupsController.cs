@@ -35,6 +35,123 @@ namespace AdvancedBilling.Standard.Controllers
         internal SubscriptionGroupsController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
+        /// Creates a subscription group with given members.
+        /// </summary>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.SubscriptionGroupResponse response from the API call.</returns>
+        public Models.SubscriptionGroupResponse CreateSubscriptionGroup(
+                Models.CreateSubscriptionGroupRequest body = null)
+            => CoreHelper.RunTask(CreateSubscriptionGroupAsync(body));
+
+        /// <summary>
+        /// Creates a subscription group with given members.
+        /// </summary>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.SubscriptionGroupResponse response from the API call.</returns>
+        public async Task<Models.SubscriptionGroupResponse> CreateSubscriptionGroupAsync(
+                Models.CreateSubscriptionGroupRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.SubscriptionGroupResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/subscription_groups.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new SingleStringErrorResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Use this endpoint to find subscription group details.
+        /// #### Current Billing Amount in Cents.
+        /// Current billing amount for the subscription group is not returned by default. If this information is desired, the `include[]=current_billing_amount_in_cents` parameter must be provided with the request.
+        /// </summary>
+        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
+        /// <returns>Returns the Models.FullSubscriptionGroupResponse response from the API call.</returns>
+        public Models.FullSubscriptionGroupResponse ReadSubscriptionGroup(
+                string uid)
+            => CoreHelper.RunTask(ReadSubscriptionGroupAsync(uid));
+
+        /// <summary>
+        /// Use this endpoint to find subscription group details.
+        /// #### Current Billing Amount in Cents.
+        /// Current billing amount for the subscription group is not returned by default. If this information is desired, the `include[]=current_billing_amount_in_cents` parameter must be provided with the request.
+        /// </summary>
+        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.FullSubscriptionGroupResponse response from the API call.</returns>
+        public async Task<Models.FullSubscriptionGroupResponse> ReadSubscriptionGroupAsync(
+                string uid,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.FullSubscriptionGroupResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/subscription_groups/{uid}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("uid", uid).Required())))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Use this endpoint to find subscription group associated with subscription.
+        /// If the subscription is not in a group endpoint will return 404 code.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription associated with the subscription group.</param>
+        /// <returns>Returns the Models.FullSubscriptionGroupResponse response from the API call.</returns>
+        public Models.FullSubscriptionGroupResponse ReadSubscriptionGroupBySubscriptionId(
+                string subscriptionId)
+            => CoreHelper.RunTask(ReadSubscriptionGroupBySubscriptionIdAsync(subscriptionId));
+
+        /// <summary>
+        /// Use this endpoint to find subscription group associated with subscription.
+        /// If the subscription is not in a group endpoint will return 404 code.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription associated with the subscription group.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.FullSubscriptionGroupResponse response from the API call.</returns>
+        public async Task<Models.FullSubscriptionGroupResponse> ReadSubscriptionGroupBySubscriptionIdAsync(
+                string subscriptionId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.FullSubscriptionGroupResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/subscription_groups/lookup.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Query(_query => _query.Setup("subscription_id", subscriptionId).Required())))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// For sites making use of the [Relationship Billing](https://chargify.zendesk.com/hc/en-us/articles/4407737494171) and [Customer Hierarchy](https://chargify.zendesk.com/hc/en-us/articles/4407746683291) features, it is possible to remove existing subscription from subscription group.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        public void RemoveSubscriptionFromGroup(
+                int subscriptionId)
+            => CoreHelper.RunVoidTask(RemoveSubscriptionFromGroupAsync(subscriptionId));
+
+        /// <summary>
+        /// For sites making use of the [Relationship Billing](https://chargify.zendesk.com/hc/en-us/articles/4407737494171) and [Customer Hierarchy](https://chargify.zendesk.com/hc/en-us/articles/4407746683291) features, it is possible to remove existing subscription from subscription group.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task RemoveSubscriptionFromGroupAsync(
+                int subscriptionId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/group.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context)))
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// Create multiple subscriptions at once under the same customer and consolidate them into a subscription group.
         /// You must provide one and only one of the `payer_id`/`payer_reference`/`payer_attributes` for the customer attached to the group.
         /// You must provide one and only one of the `payment_profile_id`/`credit_card_attributes`/`bank_account_attributes` for the payment profile attached to the group.
@@ -72,35 +189,6 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Creates a subscription group with given members.
-        /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.SubscriptionGroupResponse response from the API call.</returns>
-        public Models.SubscriptionGroupResponse CreateSubscriptionGroup(
-                Models.CreateSubscriptionGroupRequest body = null)
-            => CoreHelper.RunTask(CreateSubscriptionGroupAsync(body));
-
-        /// <summary>
-        /// Creates a subscription group with given members.
-        /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.SubscriptionGroupResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionGroupResponse> CreateSubscriptionGroupAsync(
-                Models.CreateSubscriptionGroupRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SubscriptionGroupResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscription_groups.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new SingleStringErrorResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// Returns an array of subscription groups for the site. The response is paginated and will return a `meta` key with pagination information.
         /// #### Account Balance Information.
         /// Account balance information for the subscription groups is not returned by default. If this information is desired, the `include[]=account_balances` parameter must be provided with the request.
@@ -130,36 +218,6 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))
                       .Query(_query => _query.Setup("include", input.Include))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Use this endpoint to find subscription group details.
-        /// #### Current Billing Amount in Cents.
-        /// Current billing amount for the subscription group is not returned by default. If this information is desired, the `include[]=current_billing_amount_in_cents` parameter must be provided with the request.
-        /// </summary>
-        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <returns>Returns the Models.FullSubscriptionGroupResponse response from the API call.</returns>
-        public Models.FullSubscriptionGroupResponse ReadSubscriptionGroup(
-                string uid)
-            => CoreHelper.RunTask(ReadSubscriptionGroupAsync(uid));
-
-        /// <summary>
-        /// Use this endpoint to find subscription group details.
-        /// #### Current Billing Amount in Cents.
-        /// Current billing amount for the subscription group is not returned by default. If this information is desired, the `include[]=current_billing_amount_in_cents` parameter must be provided with the request.
-        /// </summary>
-        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.FullSubscriptionGroupResponse response from the API call.</returns>
-        public async Task<Models.FullSubscriptionGroupResponse> ReadSubscriptionGroupAsync(
-                string uid,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.FullSubscriptionGroupResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/subscription_groups/{uid}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("uid", uid).Required())))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -229,36 +287,6 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this endpoint to find subscription group associated with subscription.
-        /// If the subscription is not in a group endpoint will return 404 code.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription associated with the subscription group.</param>
-        /// <returns>Returns the Models.FullSubscriptionGroupResponse response from the API call.</returns>
-        public Models.FullSubscriptionGroupResponse ReadSubscriptionGroupBySubscriptionId(
-                string subscriptionId)
-            => CoreHelper.RunTask(ReadSubscriptionGroupBySubscriptionIdAsync(subscriptionId));
-
-        /// <summary>
-        /// Use this endpoint to find subscription group associated with subscription.
-        /// If the subscription is not in a group endpoint will return 404 code.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription associated with the subscription group.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.FullSubscriptionGroupResponse response from the API call.</returns>
-        public async Task<Models.FullSubscriptionGroupResponse> ReadSubscriptionGroupBySubscriptionIdAsync(
-                string subscriptionId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.FullSubscriptionGroupResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/subscription_groups/lookup.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("subscription_id", subscriptionId).Required())))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// For sites making use of the [Relationship Billing](https://chargify.zendesk.com/hc/en-us/articles/4407737494171) and [Customer Hierarchy](https://chargify.zendesk.com/hc/en-us/articles/4407746683291) features, it is possible to add existing subscriptions to subscription groups.
         /// Passing `group` parameters with a `target` containing a `type` and optional `id` is all that's needed. When the `target` parameter specifies a `"customer"` or `"subscription"` that is already part of a hierarchy, the subscription will become a member of the customer's subscription group.  If the target customer or subscription is not part of a subscription group, a new group will be created and the subscription will become part of the group with the specified target customer set as the responsible payer for the group's subscriptions.
         /// **Please Note:** In order to add an existing subscription to a subscription group, it must belong to either the same customer record as the target, or be within the same customer hierarchy.
@@ -304,34 +332,6 @@ namespace AdvancedBilling.Standard.Controllers
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// For sites making use of the [Relationship Billing](https://chargify.zendesk.com/hc/en-us/articles/4407737494171) and [Customer Hierarchy](https://chargify.zendesk.com/hc/en-us/articles/4407746683291) features, it is possible to remove existing subscription from subscription group.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        public void RemoveSubscriptionFromGroup(
-                int subscriptionId)
-            => CoreHelper.RunVoidTask(RemoveSubscriptionFromGroupAsync(subscriptionId));
-
-        /// <summary>
-        /// For sites making use of the [Relationship Billing](https://chargify.zendesk.com/hc/en-us/articles/4407737494171) and [Customer Hierarchy](https://chargify.zendesk.com/hc/en-us/articles/4407746683291) features, it is possible to remove existing subscription from subscription group.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task RemoveSubscriptionFromGroupAsync(
-                int subscriptionId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/group.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context)))
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

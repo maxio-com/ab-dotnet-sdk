@@ -35,6 +35,38 @@ namespace AdvancedBilling.Standard.Controllers
         internal APIExportsController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
+        /// This API returns an array of exported subscriptions for a provided `batch_id`. Pay close attention to pagination in order to control responses from the server.
+        /// Example: `GET https://{subdomain}.chargify.com/api_exports/subscriptions/123/rows?per_page=200&page=1`.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the List of Models.Subscription response from the API call.</returns>
+        public List<Models.Subscription> ListExportedSubscriptions(
+                Models.ListExportedSubscriptionsInput input)
+            => CoreHelper.RunTask(ListExportedSubscriptionsAsync(input));
+
+        /// <summary>
+        /// This API returns an array of exported subscriptions for a provided `batch_id`. Pay close attention to pagination in order to control responses from the server.
+        /// Example: `GET https://{subdomain}.chargify.com/api_exports/subscriptions/123/rows?per_page=200&page=1`.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the List of Models.Subscription response from the API call.</returns>
+        public async Task<List<Models.Subscription>> ListExportedSubscriptionsAsync(
+                Models.ListExportedSubscriptionsInput input,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<List<Models.Subscription>>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/api_exports/subscriptions/{batch_id}/rows.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("batch_id", input.BatchId).Required())
+                      .Query(_query => _query.Setup("per_page", input.PerPage))
+                      .Query(_query => _query.Setup("page", input.Page))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// This API returns an array of exported proforma invoices for a provided `batch_id`. Pay close attention to pagination in order to control responses from the server.
         /// Example: `GET https://{subdomain}.chargify.com/api_exports/proforma_invoices/123/rows?per_page=10000&page=1`.
         /// </summary>
@@ -99,62 +131,6 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This API returns an array of exported subscriptions for a provided `batch_id`. Pay close attention to pagination in order to control responses from the server.
-        /// Example: `GET https://{subdomain}.chargify.com/api_exports/subscriptions/123/rows?per_page=200&page=1`.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the List of Models.Subscription response from the API call.</returns>
-        public List<Models.Subscription> ListExportedSubscriptions(
-                Models.ListExportedSubscriptionsInput input)
-            => CoreHelper.RunTask(ListExportedSubscriptionsAsync(input));
-
-        /// <summary>
-        /// This API returns an array of exported subscriptions for a provided `batch_id`. Pay close attention to pagination in order to control responses from the server.
-        /// Example: `GET https://{subdomain}.chargify.com/api_exports/subscriptions/123/rows?per_page=200&page=1`.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the List of Models.Subscription response from the API call.</returns>
-        public async Task<List<Models.Subscription>> ListExportedSubscriptionsAsync(
-                Models.ListExportedSubscriptionsInput input,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<List<Models.Subscription>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/api_exports/subscriptions/{batch_id}/rows.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("batch_id", input.BatchId).Required())
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("page", input.Page))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This API creates a proforma invoices export and returns a batchjob object.
-        /// It is only available for Relationship Invoicing architecture.
-        /// </summary>
-        /// <returns>Returns the Models.BatchJobResponse response from the API call.</returns>
-        public Models.BatchJobResponse ExportProformaInvoices()
-            => CoreHelper.RunTask(ExportProformaInvoicesAsync());
-
-        /// <summary>
-        /// This API creates a proforma invoices export and returns a batchjob object.
-        /// It is only available for Relationship Invoicing architecture.
-        /// </summary>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.BatchJobResponse response from the API call.</returns>
-        public async Task<Models.BatchJobResponse> ExportProformaInvoicesAsync(CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.BatchJobResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/api_exports/proforma_invoices.json")
-                  .WithAuth("global"))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context)))
-                  .ErrorCase("409", CreateErrorCase("Conflict", (_reason, _context) => new SingleErrorResponseErrorException(_reason, _context))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// This API creates an invoices export and returns a batchjob object.
         /// </summary>
         /// <returns>Returns the Models.BatchJobResponse response from the API call.</returns>
@@ -198,31 +174,55 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This API returns a batchjob object for proforma invoices export.
+        /// This API returns a batchjob object for subscriptions export.
         /// </summary>
         /// <param name="batchId">Required parameter: Id of a Batch Job..</param>
         /// <returns>Returns the Models.BatchJobResponse response from the API call.</returns>
-        public Models.BatchJobResponse ReadProformaInvoicesExport(
+        public Models.BatchJobResponse ReadSubscriptionsExport(
                 string batchId)
-            => CoreHelper.RunTask(ReadProformaInvoicesExportAsync(batchId));
+            => CoreHelper.RunTask(ReadSubscriptionsExportAsync(batchId));
 
         /// <summary>
-        /// This API returns a batchjob object for proforma invoices export.
+        /// This API returns a batchjob object for subscriptions export.
         /// </summary>
         /// <param name="batchId">Required parameter: Id of a Batch Job..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.BatchJobResponse response from the API call.</returns>
-        public async Task<Models.BatchJobResponse> ReadProformaInvoicesExportAsync(
+        public async Task<Models.BatchJobResponse> ReadSubscriptionsExportAsync(
                 string batchId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.BatchJobResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/api_exports/proforma_invoices/{batch_id}.json")
+                  .Setup(HttpMethod.Get, "/api_exports/subscriptions/{batch_id}.json")
                   .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("batch_id", batchId).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This API creates a proforma invoices export and returns a batchjob object.
+        /// It is only available for Relationship Invoicing architecture.
+        /// </summary>
+        /// <returns>Returns the Models.BatchJobResponse response from the API call.</returns>
+        public Models.BatchJobResponse ExportProformaInvoices()
+            => CoreHelper.RunTask(ExportProformaInvoicesAsync());
+
+        /// <summary>
+        /// This API creates a proforma invoices export and returns a batchjob object.
+        /// It is only available for Relationship Invoicing architecture.
+        /// </summary>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.BatchJobResponse response from the API call.</returns>
+        public async Task<Models.BatchJobResponse> ExportProformaInvoicesAsync(CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.BatchJobResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/api_exports/proforma_invoices.json")
+                  .WithAuth("global"))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context)))
+                  .ErrorCase("409", CreateErrorCase("Conflict", (_reason, _context) => new SingleErrorResponseErrorException(_reason, _context))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -254,26 +254,26 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This API returns a batchjob object for subscriptions export.
+        /// This API returns a batchjob object for proforma invoices export.
         /// </summary>
         /// <param name="batchId">Required parameter: Id of a Batch Job..</param>
         /// <returns>Returns the Models.BatchJobResponse response from the API call.</returns>
-        public Models.BatchJobResponse ReadSubscriptionsExport(
+        public Models.BatchJobResponse ReadProformaInvoicesExport(
                 string batchId)
-            => CoreHelper.RunTask(ReadSubscriptionsExportAsync(batchId));
+            => CoreHelper.RunTask(ReadProformaInvoicesExportAsync(batchId));
 
         /// <summary>
-        /// This API returns a batchjob object for subscriptions export.
+        /// This API returns a batchjob object for proforma invoices export.
         /// </summary>
         /// <param name="batchId">Required parameter: Id of a Batch Job..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.BatchJobResponse response from the API call.</returns>
-        public async Task<Models.BatchJobResponse> ReadSubscriptionsExportAsync(
+        public async Task<Models.BatchJobResponse> ReadProformaInvoicesExportAsync(
                 string batchId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.BatchJobResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/api_exports/subscriptions/{batch_id}.json")
+                  .Setup(HttpMethod.Get, "/api_exports/proforma_invoices/{batch_id}.json")
                   .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("batch_id", batchId).Required())))

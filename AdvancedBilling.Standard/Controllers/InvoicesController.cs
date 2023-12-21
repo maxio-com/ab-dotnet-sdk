@@ -73,419 +73,6 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// By default, invoices returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, `custom_fields`, or `refunds`. To include breakdowns, pass the specific field as a key in the query with a value set to `true`.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the Models.ListInvoicesResponse response from the API call.</returns>
-        public Models.ListInvoicesResponse ListInvoices(
-                Models.ListInvoicesInput input)
-            => CoreHelper.RunTask(ListInvoicesAsync(input));
-
-        /// <summary>
-        /// By default, invoices returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, `custom_fields`, or `refunds`. To include breakdowns, pass the specific field as a key in the query with a value set to `true`.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ListInvoicesResponse response from the API call.</returns>
-        public async Task<Models.ListInvoicesResponse> ListInvoicesAsync(
-                Models.ListInvoicesInput input,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ListInvoicesResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/invoices.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("start_date", input.StartDate))
-                      .Query(_query => _query.Setup("end_date", input.EndDate))
-                      .Query(_query => _query.Setup("status", (input.Status.HasValue) ? ApiHelper.JsonSerialize(input.Status.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("subscription_id", input.SubscriptionId))
-                      .Query(_query => _query.Setup("subscription_group_uid", input.SubscriptionGroupUid))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "desc"))
-                      .Query(_query => _query.Setup("line_items", input.LineItems))
-                      .Query(_query => _query.Setup("discounts", input.Discounts))
-                      .Query(_query => _query.Setup("taxes", input.Taxes))
-                      .Query(_query => _query.Setup("credits", input.Credits))
-                      .Query(_query => _query.Setup("payments", input.Payments))
-                      .Query(_query => _query.Setup("custom_fields", input.CustomFields))
-                      .Query(_query => _query.Setup("refunds", input.Refunds))
-                      .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : "due_date"))
-                      .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
-                      .Query(_query => _query.Setup("end_datetime", input.EndDatetime))
-                      .Query(_query => _query.Setup("customer_ids", input.CustomerIds))
-                      .Query(_query => _query.Setup("number", input.Number))
-                      .Query(_query => _query.Setup("product_ids", input.ProductIds))
-                      .Query(_query => _query.Setup("sort", (input.Sort.HasValue) ? ApiHelper.JsonSerialize(input.Sort.Value).Trim('\"') : "number"))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Use this endpoint to retrieve the details for an invoice.
-        /// </summary>
-        /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
-        /// <returns>Returns the Models.Invoice response from the API call.</returns>
-        public Models.Invoice ReadInvoice(
-                string uid)
-            => CoreHelper.RunTask(ReadInvoiceAsync(uid));
-
-        /// <summary>
-        /// Use this endpoint to retrieve the details for an invoice.
-        /// </summary>
-        /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.Invoice response from the API call.</returns>
-        public async Task<Models.Invoice> ReadInvoiceAsync(
-                string uid,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.Invoice>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/invoices/{uid}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("uid", uid).Required())))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This endpoint returns a list of invoice events. Each event contains event "data" (such as an applied payment) as well as a snapshot of the `invoice` at the time of event completion.
-        /// Exposed event types are:.
-        /// + issue_invoice.
-        /// + apply_credit_note.
-        /// + apply_payment.
-        /// + refund_invoice.
-        /// + void_invoice.
-        /// + void_remainder.
-        /// + backport_invoice.
-        /// + change_invoice_status.
-        /// + change_invoice_collection_method.
-        /// + remove_payment.
-        /// + failed_payment.
-        /// + apply_debit_note.
-        /// + create_debit_note.
-        /// + change_chargeback_status.
-        /// Invoice events are returned in ascending order.
-        /// If both a `since_date` and `since_id` are provided in request parameters, the `since_date` will be used.
-        /// Note - invoice events that occurred prior to 09/05/2018 __will not__ contain an `invoice` snapshot.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the Models.ListInvoiceEventsResponse response from the API call.</returns>
-        public Models.ListInvoiceEventsResponse ListInvoiceEvents(
-                Models.ListInvoiceEventsInput input)
-            => CoreHelper.RunTask(ListInvoiceEventsAsync(input));
-
-        /// <summary>
-        /// This endpoint returns a list of invoice events. Each event contains event "data" (such as an applied payment) as well as a snapshot of the `invoice` at the time of event completion.
-        /// Exposed event types are:.
-        /// + issue_invoice.
-        /// + apply_credit_note.
-        /// + apply_payment.
-        /// + refund_invoice.
-        /// + void_invoice.
-        /// + void_remainder.
-        /// + backport_invoice.
-        /// + change_invoice_status.
-        /// + change_invoice_collection_method.
-        /// + remove_payment.
-        /// + failed_payment.
-        /// + apply_debit_note.
-        /// + create_debit_note.
-        /// + change_chargeback_status.
-        /// Invoice events are returned in ascending order.
-        /// If both a `since_date` and `since_id` are provided in request parameters, the `since_date` will be used.
-        /// Note - invoice events that occurred prior to 09/05/2018 __will not__ contain an `invoice` snapshot.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ListInvoiceEventsResponse response from the API call.</returns>
-        public async Task<Models.ListInvoiceEventsResponse> ListInvoiceEventsAsync(
-                Models.ListInvoiceEventsInput input,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ListInvoiceEventsResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/invoices/events.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("since_date", input.SinceDate))
-                      .Query(_query => _query.Setup("since_id", input.SinceId))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("invoice_uid", input.InvoiceUid))
-                      .Query(_query => _query.Setup("with_change_invoice_status", input.WithChangeInvoiceStatus))
-                      .Query(_query => _query.Setup("event_types", input.EventTypes?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This API call should be used when you want to record a payment of a given type against a specific invoice. If you would like to apply a payment across multiple invoices, you can use the Bulk Payment endpoint.
-        /// ## Create a Payment from the existing payment profile.
-        /// In order to apply a payment to an invoice using an existing payment profile, specify `type` as `payment`, the amount less than the invoice total, and the customer's `payment_profile_id`. The ID of a payment profile might be retrieved via the Payment Profiles API endpoint.
-        /// ```.
-        /// {.
-        ///   "type": "payment",.
-        ///   "payment": {.
-        ///     "amount": 10.00,.
-        ///     "payment_profile_id": 123.
-        ///   }.
-        /// }.
-        /// ```.
-        /// ## Create a Payment from the Subscription's Prepayment Account.
-        /// In order apply a prepayment to an invoice, specify the `type` as `prepayment`, and also the `amount`.
-        /// ```.
-        /// {.
-        ///   "type": "prepayment",.
-        ///   "payment": {.
-        ///     "amount": 10.00.
-        ///   }.
-        /// }.
-        /// ```.
-        /// Note that the `amount` must be less than or equal to the Subscription's Prepayment account balance.
-        /// ## Create a Payment from the Subscription's Service Credit Account.
-        /// In order to apply a service credit to an invoice, specify the `type` as `service_credit`, and also the `amount`:.
-        /// ```.
-        /// {.
-        ///   "type": "service_credit",.
-        ///   "payment": {.
-        ///     "amount": 10.00.
-        ///   }.
-        /// }.
-        /// ```.
-        /// Note that Chargify will attempt to fully pay the invoice's `due_amount` from the Subscription's Service Credit account. At this time, partial payments from a Service Credit Account are only allowed for consolidated invoices (subscription groups). Therefore, for normal invoices the Service Credit account balance must be greater than or equal to the invoice's `due_amount`.
-        /// </summary>
-        /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.Invoice response from the API call.</returns>
-        public Models.Invoice RecordPaymentForInvoice(
-                string uid,
-                Models.CreateInvoicePaymentRequest body = null)
-            => CoreHelper.RunTask(RecordPaymentForInvoiceAsync(uid, body));
-
-        /// <summary>
-        /// This API call should be used when you want to record a payment of a given type against a specific invoice. If you would like to apply a payment across multiple invoices, you can use the Bulk Payment endpoint.
-        /// ## Create a Payment from the existing payment profile.
-        /// In order to apply a payment to an invoice using an existing payment profile, specify `type` as `payment`, the amount less than the invoice total, and the customer's `payment_profile_id`. The ID of a payment profile might be retrieved via the Payment Profiles API endpoint.
-        /// ```.
-        /// {.
-        ///   "type": "payment",.
-        ///   "payment": {.
-        ///     "amount": 10.00,.
-        ///     "payment_profile_id": 123.
-        ///   }.
-        /// }.
-        /// ```.
-        /// ## Create a Payment from the Subscription's Prepayment Account.
-        /// In order apply a prepayment to an invoice, specify the `type` as `prepayment`, and also the `amount`.
-        /// ```.
-        /// {.
-        ///   "type": "prepayment",.
-        ///   "payment": {.
-        ///     "amount": 10.00.
-        ///   }.
-        /// }.
-        /// ```.
-        /// Note that the `amount` must be less than or equal to the Subscription's Prepayment account balance.
-        /// ## Create a Payment from the Subscription's Service Credit Account.
-        /// In order to apply a service credit to an invoice, specify the `type` as `service_credit`, and also the `amount`:.
-        /// ```.
-        /// {.
-        ///   "type": "service_credit",.
-        ///   "payment": {.
-        ///     "amount": 10.00.
-        ///   }.
-        /// }.
-        /// ```.
-        /// Note that Chargify will attempt to fully pay the invoice's `due_amount` from the Subscription's Service Credit account. At this time, partial payments from a Service Credit Account are only allowed for consolidated invoices (subscription groups). Therefore, for normal invoices the Service Credit account balance must be greater than or equal to the invoice's `due_amount`.
-        /// </summary>
-        /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.Invoice response from the API call.</returns>
-        public async Task<Models.Invoice> RecordPaymentForInvoiceAsync(
-                string uid,
-                Models.CreateInvoicePaymentRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.Invoice>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/invoices/{uid}/payments.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("uid", uid).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This API call should be used when you want to record an external payment against multiple invoices.
-        ///  In order apply a payment to multiple invoices, at minimum, specify the `amount` and `applications` (i.e., `invoice_uid` and `amount`) details.
-        /// ```.
-        /// {.
-        ///   "payment": {.
-        ///     "memo": "to pay the bills",.
-        ///     "details": "check number 8675309",.
-        ///     "method": "check",.
-        ///     "amount": "250.00",.
-        ///     "applications": [.
-        ///       {.
-        ///         "invoice_uid": "inv_8gk5bwkct3gqt",.
-        ///         "amount": "100.00".
-        ///       },.
-        ///       {.
-        ///         "invoice_uid": "inv_7bc6bwkct3lyt",.
-        ///         "amount": "150.00".
-        ///       }.
-        ///     ].
-        ///   }.
-        /// }.
-        /// ```.
-        /// Note that the invoice payment amounts must be greater than 0. Total amount must be greater or equal to invoices payment amount sum.
-        /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.MultiInvoicePaymentResponse response from the API call.</returns>
-        public Models.MultiInvoicePaymentResponse RecordExternalPaymentForInvoices(
-                Models.CreateMultiInvoicePaymentRequest body = null)
-            => CoreHelper.RunTask(RecordExternalPaymentForInvoicesAsync(body));
-
-        /// <summary>
-        /// This API call should be used when you want to record an external payment against multiple invoices.
-        ///  In order apply a payment to multiple invoices, at minimum, specify the `amount` and `applications` (i.e., `invoice_uid` and `amount`) details.
-        /// ```.
-        /// {.
-        ///   "payment": {.
-        ///     "memo": "to pay the bills",.
-        ///     "details": "check number 8675309",.
-        ///     "method": "check",.
-        ///     "amount": "250.00",.
-        ///     "applications": [.
-        ///       {.
-        ///         "invoice_uid": "inv_8gk5bwkct3gqt",.
-        ///         "amount": "100.00".
-        ///       },.
-        ///       {.
-        ///         "invoice_uid": "inv_7bc6bwkct3lyt",.
-        ///         "amount": "150.00".
-        ///       }.
-        ///     ].
-        ///   }.
-        /// }.
-        /// ```.
-        /// Note that the invoice payment amounts must be greater than 0. Total amount must be greater or equal to invoices payment amount sum.
-        /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.MultiInvoicePaymentResponse response from the API call.</returns>
-        public async Task<Models.MultiInvoicePaymentResponse> RecordExternalPaymentForInvoicesAsync(
-                Models.CreateMultiInvoicePaymentRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.MultiInvoicePaymentResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/invoices/payments.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Credit Notes are like inverse invoices. They reduce the amount a customer owes.
-        /// By default, the credit notes returned by this endpoint will exclude the arrays of `line_items`, `discounts`, `taxes`, `applications`, or `refunds`. To include these arrays, pass the specific field as a key in the query with a value set to `true`.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the Models.ListCreditNotesResponse response from the API call.</returns>
-        public Models.ListCreditNotesResponse ListCreditNotes(
-                Models.ListCreditNotesInput input)
-            => CoreHelper.RunTask(ListCreditNotesAsync(input));
-
-        /// <summary>
-        /// Credit Notes are like inverse invoices. They reduce the amount a customer owes.
-        /// By default, the credit notes returned by this endpoint will exclude the arrays of `line_items`, `discounts`, `taxes`, `applications`, or `refunds`. To include these arrays, pass the specific field as a key in the query with a value set to `true`.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ListCreditNotesResponse response from the API call.</returns>
-        public async Task<Models.ListCreditNotesResponse> ListCreditNotesAsync(
-                Models.ListCreditNotesInput input,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ListCreditNotesResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/credit_notes.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("subscription_id", input.SubscriptionId))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("line_items", input.LineItems))
-                      .Query(_query => _query.Setup("discounts", input.Discounts))
-                      .Query(_query => _query.Setup("taxes", input.Taxes))
-                      .Query(_query => _query.Setup("refunds", input.Refunds))
-                      .Query(_query => _query.Setup("applications", input.Applications))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Use this endpoint to retrieve the details for a credit note.
-        /// </summary>
-        /// <param name="uid">Required parameter: The unique identifier of the credit note.</param>
-        /// <returns>Returns the Models.CreditNote response from the API call.</returns>
-        public Models.CreditNote ReadCreditNote(
-                string uid)
-            => CoreHelper.RunTask(ReadCreditNoteAsync(uid));
-
-        /// <summary>
-        /// Use this endpoint to retrieve the details for a credit note.
-        /// </summary>
-        /// <param name="uid">Required parameter: The unique identifier of the credit note.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.CreditNote response from the API call.</returns>
-        public async Task<Models.CreditNote> ReadCreditNoteAsync(
-                string uid,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.CreditNote>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/credit_notes/{uid}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("uid", uid).Required())))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Record an external payment made against a subscription that will pay partially or in full one or more invoices.
-        /// Payment will be applied starting with the oldest open invoice and then next oldest, and so on until the amount of the payment is fully consumed.
-        /// Excess payment will result in the creation of a prepayment on the Invoice Account.
-        /// Only ungrouped or primary subscriptions may be paid using the "bulk" payment request.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.PaymentResponse response from the API call.</returns>
-        public Models.PaymentResponse RecordPaymentForSubscription(
-                int subscriptionId,
-                Models.RecordPaymentRequest body = null)
-            => CoreHelper.RunTask(RecordPaymentForSubscriptionAsync(subscriptionId, body));
-
-        /// <summary>
-        /// Record an external payment made against a subscription that will pay partially or in full one or more invoices.
-        /// Payment will be applied starting with the oldest open invoice and then next oldest, and so on until the amount of the payment is fully consumed.
-        /// Excess payment will result in the creation of a prepayment on the Invoice Account.
-        /// Only ungrouped or primary subscriptions may be paid using the "bulk" payment request.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.PaymentResponse response from the API call.</returns>
-        public async Task<Models.PaymentResponse> RecordPaymentForSubscriptionAsync(
-                int subscriptionId,
-                Models.RecordPaymentRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.PaymentResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/payments.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// This endpoint allows you to reopen any invoice with the "canceled" status. Invoices enter "canceled" status if they were open at the time the subscription was canceled (whether through dunning or an intentional cancellation).
         /// Invoices with "canceled" status are no longer considered to be due. Once reopened, they are considered due for payment. Payment may then be captured in one of the following ways:.
         /// - Reactivating the subscription, which will capture all open invoices (See note below about automatic reopening of invoices.).
@@ -559,35 +146,6 @@ namespace AdvancedBilling.Standard.Controllers
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context)))
                   .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Invoice segments returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, or `custom_fields`.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the Models.ConsolidatedInvoice response from the API call.</returns>
-        public Models.ConsolidatedInvoice ListInvoiceSegments(
-                Models.ListInvoiceSegmentsInput input)
-            => CoreHelper.RunTask(ListInvoiceSegmentsAsync(input));
-
-        /// <summary>
-        /// Invoice segments returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, or `custom_fields`.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ConsolidatedInvoice response from the API call.</returns>
-        public async Task<Models.ConsolidatedInvoice> ListInvoiceSegmentsAsync(
-                Models.ListInvoiceSegmentsInput input,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ConsolidatedInvoice>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/invoices/{invoice_uid}/segments.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("invoice_uid", input.InvoiceUid).Required())
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "asc"))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -846,43 +404,6 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This endpoint allows for invoices to be programmatically delivered via email. This endpoint supports the delivery of both ad-hoc and automatically generated invoices. Additionally, this endpoint supports email delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
-        /// Please note that if no recipient email addresses are specified in the request, then the subscription's default email configuration will be used. For example, if `recipient_emails` is left blank, then the invoice will be delivered to the subscription's customer email address.
-        /// On success, a 204 no-content response will be returned. Please note that this does not indicate that email(s) have been delivered, but instead indicates that emails have been successfully queued for delivery. If _any_ invalid or malformed email address is found in the request body, the entire request will be rejected and a 422 response will be returned.
-        /// </summary>
-        /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        public void SendInvoice(
-                string uid,
-                Models.SendInvoiceRequest body = null)
-            => CoreHelper.RunVoidTask(SendInvoiceAsync(uid, body));
-
-        /// <summary>
-        /// This endpoint allows for invoices to be programmatically delivered via email. This endpoint supports the delivery of both ad-hoc and automatically generated invoices. Additionally, this endpoint supports email delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
-        /// Please note that if no recipient email addresses are specified in the request, then the subscription's default email configuration will be used. For example, if `recipient_emails` is left blank, then the invoice will be delivered to the subscription's customer email address.
-        /// On success, a 204 no-content response will be returned. Please note that this does not indicate that email(s) have been delivered, but instead indicates that emails have been successfully queued for delivery. If _any_ invalid or malformed email address is found in the request body, the entire request will be rejected and a 422 response will be returned.
-        /// </summary>
-        /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task SendInvoiceAsync(
-                string uid,
-                Models.SendInvoiceRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/invoices/{uid}/deliveries.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("uid", uid).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// Customer information may change after an invoice is issued which may lead to a mismatch between customer information that are present on an open invoice and actual customer information. This endpoint allows to preview these differences, if any.
         /// The endpoint doesn't accept a request body. Customer information differences are calculated on the application side.
         /// </summary>
@@ -945,6 +466,352 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
+        /// Use this endpoint to retrieve the details for an invoice.
+        /// </summary>
+        /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
+        /// <returns>Returns the Models.Invoice response from the API call.</returns>
+        public Models.Invoice ReadInvoice(
+                string uid)
+            => CoreHelper.RunTask(ReadInvoiceAsync(uid));
+
+        /// <summary>
+        /// Use this endpoint to retrieve the details for an invoice.
+        /// </summary>
+        /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.Invoice response from the API call.</returns>
+        public async Task<Models.Invoice> ReadInvoiceAsync(
+                string uid,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.Invoice>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/invoices/{uid}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("uid", uid).Required())))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This endpoint returns a list of invoice events. Each event contains event "data" (such as an applied payment) as well as a snapshot of the `invoice` at the time of event completion.
+        /// Exposed event types are:.
+        /// + issue_invoice.
+        /// + apply_credit_note.
+        /// + apply_payment.
+        /// + refund_invoice.
+        /// + void_invoice.
+        /// + void_remainder.
+        /// + backport_invoice.
+        /// + change_invoice_status.
+        /// + change_invoice_collection_method.
+        /// + remove_payment.
+        /// + failed_payment.
+        /// + apply_debit_note.
+        /// + create_debit_note.
+        /// + change_chargeback_status.
+        /// Invoice events are returned in ascending order.
+        /// If both a `since_date` and `since_id` are provided in request parameters, the `since_date` will be used.
+        /// Note - invoice events that occurred prior to 09/05/2018 __will not__ contain an `invoice` snapshot.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the Models.ListInvoiceEventsResponse response from the API call.</returns>
+        public Models.ListInvoiceEventsResponse ListInvoiceEvents(
+                Models.ListInvoiceEventsInput input)
+            => CoreHelper.RunTask(ListInvoiceEventsAsync(input));
+
+        /// <summary>
+        /// This endpoint returns a list of invoice events. Each event contains event "data" (such as an applied payment) as well as a snapshot of the `invoice` at the time of event completion.
+        /// Exposed event types are:.
+        /// + issue_invoice.
+        /// + apply_credit_note.
+        /// + apply_payment.
+        /// + refund_invoice.
+        /// + void_invoice.
+        /// + void_remainder.
+        /// + backport_invoice.
+        /// + change_invoice_status.
+        /// + change_invoice_collection_method.
+        /// + remove_payment.
+        /// + failed_payment.
+        /// + apply_debit_note.
+        /// + create_debit_note.
+        /// + change_chargeback_status.
+        /// Invoice events are returned in ascending order.
+        /// If both a `since_date` and `since_id` are provided in request parameters, the `since_date` will be used.
+        /// Note - invoice events that occurred prior to 09/05/2018 __will not__ contain an `invoice` snapshot.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ListInvoiceEventsResponse response from the API call.</returns>
+        public async Task<Models.ListInvoiceEventsResponse> ListInvoiceEventsAsync(
+                Models.ListInvoiceEventsInput input,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ListInvoiceEventsResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/invoices/events.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Query(_query => _query.Setup("since_date", input.SinceDate))
+                      .Query(_query => _query.Setup("since_id", input.SinceId))
+                      .Query(_query => _query.Setup("page", input.Page))
+                      .Query(_query => _query.Setup("per_page", input.PerPage))
+                      .Query(_query => _query.Setup("invoice_uid", input.InvoiceUid))
+                      .Query(_query => _query.Setup("with_change_invoice_status", input.WithChangeInvoiceStatus))
+                      .Query(_query => _query.Setup("event_types", input.EventTypes?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This API call should be used when you want to record an external payment against multiple invoices.
+        ///  In order apply a payment to multiple invoices, at minimum, specify the `amount` and `applications` (i.e., `invoice_uid` and `amount`) details.
+        /// ```.
+        /// {.
+        ///   "payment": {.
+        ///     "memo": "to pay the bills",.
+        ///     "details": "check number 8675309",.
+        ///     "method": "check",.
+        ///     "amount": "250.00",.
+        ///     "applications": [.
+        ///       {.
+        ///         "invoice_uid": "inv_8gk5bwkct3gqt",.
+        ///         "amount": "100.00".
+        ///       },.
+        ///       {.
+        ///         "invoice_uid": "inv_7bc6bwkct3lyt",.
+        ///         "amount": "150.00".
+        ///       }.
+        ///     ].
+        ///   }.
+        /// }.
+        /// ```.
+        /// Note that the invoice payment amounts must be greater than 0. Total amount must be greater or equal to invoices payment amount sum.
+        /// </summary>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.MultiInvoicePaymentResponse response from the API call.</returns>
+        public Models.MultiInvoicePaymentResponse RecordExternalPaymentForInvoices(
+                Models.CreateMultiInvoicePaymentRequest body = null)
+            => CoreHelper.RunTask(RecordExternalPaymentForInvoicesAsync(body));
+
+        /// <summary>
+        /// This API call should be used when you want to record an external payment against multiple invoices.
+        ///  In order apply a payment to multiple invoices, at minimum, specify the `amount` and `applications` (i.e., `invoice_uid` and `amount`) details.
+        /// ```.
+        /// {.
+        ///   "payment": {.
+        ///     "memo": "to pay the bills",.
+        ///     "details": "check number 8675309",.
+        ///     "method": "check",.
+        ///     "amount": "250.00",.
+        ///     "applications": [.
+        ///       {.
+        ///         "invoice_uid": "inv_8gk5bwkct3gqt",.
+        ///         "amount": "100.00".
+        ///       },.
+        ///       {.
+        ///         "invoice_uid": "inv_7bc6bwkct3lyt",.
+        ///         "amount": "150.00".
+        ///       }.
+        ///     ].
+        ///   }.
+        /// }.
+        /// ```.
+        /// Note that the invoice payment amounts must be greater than 0. Total amount must be greater or equal to invoices payment amount sum.
+        /// </summary>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.MultiInvoicePaymentResponse response from the API call.</returns>
+        public async Task<Models.MultiInvoicePaymentResponse> RecordExternalPaymentForInvoicesAsync(
+                Models.CreateMultiInvoicePaymentRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.MultiInvoicePaymentResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/invoices/payments.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Record an external payment made against a subscription that will pay partially or in full one or more invoices.
+        /// Payment will be applied starting with the oldest open invoice and then next oldest, and so on until the amount of the payment is fully consumed.
+        /// Excess payment will result in the creation of a prepayment on the Invoice Account.
+        /// Only ungrouped or primary subscriptions may be paid using the "bulk" payment request.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.PaymentResponse response from the API call.</returns>
+        public Models.PaymentResponse RecordPaymentForSubscription(
+                int subscriptionId,
+                Models.RecordPaymentRequest body = null)
+            => CoreHelper.RunTask(RecordPaymentForSubscriptionAsync(subscriptionId, body));
+
+        /// <summary>
+        /// Record an external payment made against a subscription that will pay partially or in full one or more invoices.
+        /// Payment will be applied starting with the oldest open invoice and then next oldest, and so on until the amount of the payment is fully consumed.
+        /// Excess payment will result in the creation of a prepayment on the Invoice Account.
+        /// Only ungrouped or primary subscriptions may be paid using the "bulk" payment request.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.PaymentResponse response from the API call.</returns>
+        public async Task<Models.PaymentResponse> RecordPaymentForSubscriptionAsync(
+                int subscriptionId,
+                Models.RecordPaymentRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.PaymentResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/payments.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// By default, invoices returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, `custom_fields`, or `refunds`. To include breakdowns, pass the specific field as a key in the query with a value set to `true`.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the Models.ListInvoicesResponse response from the API call.</returns>
+        public Models.ListInvoicesResponse ListInvoices(
+                Models.ListInvoicesInput input)
+            => CoreHelper.RunTask(ListInvoicesAsync(input));
+
+        /// <summary>
+        /// By default, invoices returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, `custom_fields`, or `refunds`. To include breakdowns, pass the specific field as a key in the query with a value set to `true`.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ListInvoicesResponse response from the API call.</returns>
+        public async Task<Models.ListInvoicesResponse> ListInvoicesAsync(
+                Models.ListInvoicesInput input,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ListInvoicesResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/invoices.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Query(_query => _query.Setup("start_date", input.StartDate))
+                      .Query(_query => _query.Setup("end_date", input.EndDate))
+                      .Query(_query => _query.Setup("status", (input.Status.HasValue) ? ApiHelper.JsonSerialize(input.Status.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("subscription_id", input.SubscriptionId))
+                      .Query(_query => _query.Setup("subscription_group_uid", input.SubscriptionGroupUid))
+                      .Query(_query => _query.Setup("page", input.Page))
+                      .Query(_query => _query.Setup("per_page", input.PerPage))
+                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "desc"))
+                      .Query(_query => _query.Setup("line_items", input.LineItems))
+                      .Query(_query => _query.Setup("discounts", input.Discounts))
+                      .Query(_query => _query.Setup("taxes", input.Taxes))
+                      .Query(_query => _query.Setup("credits", input.Credits))
+                      .Query(_query => _query.Setup("payments", input.Payments))
+                      .Query(_query => _query.Setup("custom_fields", input.CustomFields))
+                      .Query(_query => _query.Setup("refunds", input.Refunds))
+                      .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : "due_date"))
+                      .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
+                      .Query(_query => _query.Setup("end_datetime", input.EndDatetime))
+                      .Query(_query => _query.Setup("customer_ids", input.CustomerIds))
+                      .Query(_query => _query.Setup("number", input.Number))
+                      .Query(_query => _query.Setup("product_ids", input.ProductIds))
+                      .Query(_query => _query.Setup("sort", (input.Sort.HasValue) ? ApiHelper.JsonSerialize(input.Sort.Value).Trim('\"') : "number"))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Use this endpoint to retrieve the details for a credit note.
+        /// </summary>
+        /// <param name="uid">Required parameter: The unique identifier of the credit note.</param>
+        /// <returns>Returns the Models.CreditNote response from the API call.</returns>
+        public Models.CreditNote ReadCreditNote(
+                string uid)
+            => CoreHelper.RunTask(ReadCreditNoteAsync(uid));
+
+        /// <summary>
+        /// Use this endpoint to retrieve the details for a credit note.
+        /// </summary>
+        /// <param name="uid">Required parameter: The unique identifier of the credit note.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.CreditNote response from the API call.</returns>
+        public async Task<Models.CreditNote> ReadCreditNoteAsync(
+                string uid,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.CreditNote>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/credit_notes/{uid}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("uid", uid).Required())))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Invoice segments returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, or `custom_fields`.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the Models.ConsolidatedInvoice response from the API call.</returns>
+        public Models.ConsolidatedInvoice ListInvoiceSegments(
+                Models.ListInvoiceSegmentsInput input)
+            => CoreHelper.RunTask(ListInvoiceSegmentsAsync(input));
+
+        /// <summary>
+        /// Invoice segments returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, or `custom_fields`.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ConsolidatedInvoice response from the API call.</returns>
+        public async Task<Models.ConsolidatedInvoice> ListInvoiceSegmentsAsync(
+                Models.ListInvoiceSegmentsInput input,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ConsolidatedInvoice>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/invoices/{invoice_uid}/segments.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("invoice_uid", input.InvoiceUid).Required())
+                      .Query(_query => _query.Setup("page", input.Page))
+                      .Query(_query => _query.Setup("per_page", input.PerPage))
+                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "asc"))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This endpoint allows for invoices to be programmatically delivered via email. This endpoint supports the delivery of both ad-hoc and automatically generated invoices. Additionally, this endpoint supports email delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
+        /// Please note that if no recipient email addresses are specified in the request, then the subscription's default email configuration will be used. For example, if `recipient_emails` is left blank, then the invoice will be delivered to the subscription's customer email address.
+        /// On success, a 204 no-content response will be returned. Please note that this does not indicate that email(s) have been delivered, but instead indicates that emails have been successfully queued for delivery. If _any_ invalid or malformed email address is found in the request body, the entire request will be rejected and a 422 response will be returned.
+        /// </summary>
+        /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        public void SendInvoice(
+                string uid,
+                Models.SendInvoiceRequest body = null)
+            => CoreHelper.RunVoidTask(SendInvoiceAsync(uid, body));
+
+        /// <summary>
+        /// This endpoint allows for invoices to be programmatically delivered via email. This endpoint supports the delivery of both ad-hoc and automatically generated invoices. Additionally, this endpoint supports email delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
+        /// Please note that if no recipient email addresses are specified in the request, then the subscription's default email configuration will be used. For example, if `recipient_emails` is left blank, then the invoice will be delivered to the subscription's customer email address.
+        /// On success, a 204 no-content response will be returned. Please note that this does not indicate that email(s) have been delivered, but instead indicates that emails have been successfully queued for delivery. If _any_ invalid or malformed email address is found in the request body, the entire request will be rejected and a 422 response will be returned.
+        /// </summary>
+        /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task SendInvoiceAsync(
+                string uid,
+                Models.SendInvoiceRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/invoices/{uid}/deliveries.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("uid", uid).Required())
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// This endpoint allows you to issue an invoice that is in "pending" status. For example, you can issue an invoice that was created when allocating new quantity on a component and using "accrue charges" option.
         /// You cannot issue a pending child invoice that was created for a member subscription in a group.
         /// For Remittance subscriptions, the invoice will go into "open" status and payment won't be attempted. The value for `on_failed_payment` would be rejected if sent. Any prepayments or service credits that exist on subscription will be automatically applied. Additionally, if setting is on, an email will be sent for issued invoice.
@@ -990,6 +857,139 @@ namespace AdvancedBilling.Standard.Controllers
                   .ErrorCase("401", CreateErrorCase("Unauthorized", (_reason, _context) => new ApiException(_reason, _context)))
                   .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context)))
                   .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This API call should be used when you want to record a payment of a given type against a specific invoice. If you would like to apply a payment across multiple invoices, you can use the Bulk Payment endpoint.
+        /// ## Create a Payment from the existing payment profile.
+        /// In order to apply a payment to an invoice using an existing payment profile, specify `type` as `payment`, the amount less than the invoice total, and the customer's `payment_profile_id`. The ID of a payment profile might be retrieved via the Payment Profiles API endpoint.
+        /// ```.
+        /// {.
+        ///   "type": "payment",.
+        ///   "payment": {.
+        ///     "amount": 10.00,.
+        ///     "payment_profile_id": 123.
+        ///   }.
+        /// }.
+        /// ```.
+        /// ## Create a Payment from the Subscription's Prepayment Account.
+        /// In order apply a prepayment to an invoice, specify the `type` as `prepayment`, and also the `amount`.
+        /// ```.
+        /// {.
+        ///   "type": "prepayment",.
+        ///   "payment": {.
+        ///     "amount": 10.00.
+        ///   }.
+        /// }.
+        /// ```.
+        /// Note that the `amount` must be less than or equal to the Subscription's Prepayment account balance.
+        /// ## Create a Payment from the Subscription's Service Credit Account.
+        /// In order to apply a service credit to an invoice, specify the `type` as `service_credit`, and also the `amount`:.
+        /// ```.
+        /// {.
+        ///   "type": "service_credit",.
+        ///   "payment": {.
+        ///     "amount": 10.00.
+        ///   }.
+        /// }.
+        /// ```.
+        /// Note that Chargify will attempt to fully pay the invoice's `due_amount` from the Subscription's Service Credit account. At this time, partial payments from a Service Credit Account are only allowed for consolidated invoices (subscription groups). Therefore, for normal invoices the Service Credit account balance must be greater than or equal to the invoice's `due_amount`.
+        /// </summary>
+        /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.Invoice response from the API call.</returns>
+        public Models.Invoice RecordPaymentForInvoice(
+                string uid,
+                Models.CreateInvoicePaymentRequest body = null)
+            => CoreHelper.RunTask(RecordPaymentForInvoiceAsync(uid, body));
+
+        /// <summary>
+        /// This API call should be used when you want to record a payment of a given type against a specific invoice. If you would like to apply a payment across multiple invoices, you can use the Bulk Payment endpoint.
+        /// ## Create a Payment from the existing payment profile.
+        /// In order to apply a payment to an invoice using an existing payment profile, specify `type` as `payment`, the amount less than the invoice total, and the customer's `payment_profile_id`. The ID of a payment profile might be retrieved via the Payment Profiles API endpoint.
+        /// ```.
+        /// {.
+        ///   "type": "payment",.
+        ///   "payment": {.
+        ///     "amount": 10.00,.
+        ///     "payment_profile_id": 123.
+        ///   }.
+        /// }.
+        /// ```.
+        /// ## Create a Payment from the Subscription's Prepayment Account.
+        /// In order apply a prepayment to an invoice, specify the `type` as `prepayment`, and also the `amount`.
+        /// ```.
+        /// {.
+        ///   "type": "prepayment",.
+        ///   "payment": {.
+        ///     "amount": 10.00.
+        ///   }.
+        /// }.
+        /// ```.
+        /// Note that the `amount` must be less than or equal to the Subscription's Prepayment account balance.
+        /// ## Create a Payment from the Subscription's Service Credit Account.
+        /// In order to apply a service credit to an invoice, specify the `type` as `service_credit`, and also the `amount`:.
+        /// ```.
+        /// {.
+        ///   "type": "service_credit",.
+        ///   "payment": {.
+        ///     "amount": 10.00.
+        ///   }.
+        /// }.
+        /// ```.
+        /// Note that Chargify will attempt to fully pay the invoice's `due_amount` from the Subscription's Service Credit account. At this time, partial payments from a Service Credit Account are only allowed for consolidated invoices (subscription groups). Therefore, for normal invoices the Service Credit account balance must be greater than or equal to the invoice's `due_amount`.
+        /// </summary>
+        /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.Invoice response from the API call.</returns>
+        public async Task<Models.Invoice> RecordPaymentForInvoiceAsync(
+                string uid,
+                Models.CreateInvoicePaymentRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.Invoice>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/invoices/{uid}/payments.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("uid", uid).Required())
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Credit Notes are like inverse invoices. They reduce the amount a customer owes.
+        /// By default, the credit notes returned by this endpoint will exclude the arrays of `line_items`, `discounts`, `taxes`, `applications`, or `refunds`. To include these arrays, pass the specific field as a key in the query with a value set to `true`.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the Models.ListCreditNotesResponse response from the API call.</returns>
+        public Models.ListCreditNotesResponse ListCreditNotes(
+                Models.ListCreditNotesInput input)
+            => CoreHelper.RunTask(ListCreditNotesAsync(input));
+
+        /// <summary>
+        /// Credit Notes are like inverse invoices. They reduce the amount a customer owes.
+        /// By default, the credit notes returned by this endpoint will exclude the arrays of `line_items`, `discounts`, `taxes`, `applications`, or `refunds`. To include these arrays, pass the specific field as a key in the query with a value set to `true`.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ListCreditNotesResponse response from the API call.</returns>
+        public async Task<Models.ListCreditNotesResponse> ListCreditNotesAsync(
+                Models.ListCreditNotesInput input,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ListCreditNotesResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/credit_notes.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Query(_query => _query.Setup("subscription_id", input.SubscriptionId))
+                      .Query(_query => _query.Setup("page", input.Page))
+                      .Query(_query => _query.Setup("per_page", input.PerPage))
+                      .Query(_query => _query.Setup("line_items", input.LineItems))
+                      .Query(_query => _query.Setup("discounts", input.Discounts))
+                      .Query(_query => _query.Setup("taxes", input.Taxes))
+                      .Query(_query => _query.Setup("refunds", input.Refunds))
+                      .Query(_query => _query.Setup("applications", input.Applications))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }
