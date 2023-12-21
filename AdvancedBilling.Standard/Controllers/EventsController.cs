@@ -161,7 +161,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("end_date", input.EndDate))
                       .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
                       .Query(_query => _query.Setup("end_datetime", input.EndDatetime))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// The following request will return a list of events for a subscription.
@@ -195,7 +195,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("max_id", input.MaxId))
                       .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "desc"))
                       .Query(_query => _query.Setup("filter", input.Filter?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Get a count of all the events for a given site by using this method.
@@ -226,6 +226,6 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("max_id", input.MaxId))
                       .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "desc"))
                       .Query(_query => _query.Setup("filter", input.Filter?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

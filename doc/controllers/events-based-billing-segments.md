@@ -10,12 +10,126 @@ EventsBasedBillingSegmentsController eventsBasedBillingSegmentsController = clie
 
 ## Methods
 
+* [Update Segments](../../doc/controllers/events-based-billing-segments.md#update-segments)
+* [Update Segment](../../doc/controllers/events-based-billing-segments.md#update-segment)
 * [Create Segment](../../doc/controllers/events-based-billing-segments.md#create-segment)
 * [List Segments for Price Point](../../doc/controllers/events-based-billing-segments.md#list-segments-for-price-point)
-* [Update Segment](../../doc/controllers/events-based-billing-segments.md#update-segment)
 * [Delete Segment](../../doc/controllers/events-based-billing-segments.md#delete-segment)
 * [Create Segments](../../doc/controllers/events-based-billing-segments.md#create-segments)
-* [Update Segments](../../doc/controllers/events-based-billing-segments.md#update-segments)
+
+
+# Update Segments
+
+This endpoint allows you to update multiple segments in one request. The array of segments can contain up to `1000` records.
+
+If any of the records contain an error the whole request would fail and none of the requested segments get updated. The error response contains a message for only the one segment that failed validation, with the corresponding index in the array.
+
+You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
+
+```csharp
+UpdateSegmentsAsync(
+    string componentId,
+    string pricePointId,
+    Models.BulkUpdateSegments body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `componentId` | `string` | Template, Required | ID or Handle for the Component |
+| `pricePointId` | `string` | Template, Required | ID or Handle for the Price Point belonging to the Component |
+| `body` | [`BulkUpdateSegments`](../../doc/models/bulk-update-segments.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.ListSegmentsResponse>`](../../doc/models/list-segments-response.md)
+
+## Example Usage
+
+```csharp
+string componentId = "component_id8";
+string pricePointId = "price_point_id8";
+try
+{
+    ListSegmentsResponse result = await eventsBasedBillingSegmentsController.UpdateSegmentsAsync(
+        componentId,
+        pricePointId
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 401 | Unauthorized | `ApiException` |
+| 403 | Forbidden | `ApiException` |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`EventBasedBillingSegmentException`](../../doc/models/event-based-billing-segment-exception.md) |
+
+
+# Update Segment
+
+This endpoint updates a single Segment for a Component with a segmented Metric. It allows you to update the pricing for the segment.
+
+You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
+
+```csharp
+UpdateSegmentAsync(
+    string componentId,
+    string pricePointId,
+    double id,
+    Models.UpdateSegmentRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `componentId` | `string` | Template, Required | ID or Handle of the Component |
+| `pricePointId` | `string` | Template, Required | ID or Handle of the Price Point belonging to the Component |
+| `id` | `double` | Template, Required | The ID of the Segment |
+| `body` | [`UpdateSegmentRequest`](../../doc/models/update-segment-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.SegmentResponse>`](../../doc/models/segment-response.md)
+
+## Example Usage
+
+```csharp
+string componentId = "component_id8";
+string pricePointId = "price_point_id8";
+double id = 60;
+try
+{
+    SegmentResponse result = await eventsBasedBillingSegmentsController.UpdateSegmentAsync(
+        componentId,
+        pricePointId,
+        id
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 401 | Unauthorized | `ApiException` |
+| 403 | Forbidden | `ApiException` |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`EventBasedBillingSegmentErrorsException`](../../doc/models/event-based-billing-segment-errors-exception.md) |
 
 
 # Create Segment
@@ -159,64 +273,6 @@ catch (ApiException e)
 | 422 | Unprocessable Entity (WebDAV) | [`EventBasedBillingListSegmentsErrorsException`](../../doc/models/event-based-billing-list-segments-errors-exception.md) |
 
 
-# Update Segment
-
-This endpoint updates a single Segment for a Component with a segmented Metric. It allows you to update the pricing for the segment.
-
-You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
-
-```csharp
-UpdateSegmentAsync(
-    string componentId,
-    string pricePointId,
-    double id,
-    Models.UpdateSegmentRequest body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `componentId` | `string` | Template, Required | ID or Handle of the Component |
-| `pricePointId` | `string` | Template, Required | ID or Handle of the Price Point belonging to the Component |
-| `id` | `double` | Template, Required | The ID of the Segment |
-| `body` | [`UpdateSegmentRequest`](../../doc/models/update-segment-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`Task<Models.SegmentResponse>`](../../doc/models/segment-response.md)
-
-## Example Usage
-
-```csharp
-string componentId = "component_id8";
-string pricePointId = "price_point_id8";
-double id = 60;
-try
-{
-    SegmentResponse result = await eventsBasedBillingSegmentsController.UpdateSegmentAsync(
-        componentId,
-        pricePointId,
-        id
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 401 | Unauthorized | `ApiException` |
-| 403 | Forbidden | `ApiException` |
-| 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | [`EventBasedBillingSegmentErrorsException`](../../doc/models/event-based-billing-segment-errors-exception.md) |
-
-
 # Delete Segment
 
 This endpoint allows you to delete a Segment with specified ID.
@@ -308,62 +364,6 @@ string pricePointId = "price_point_id8";
 try
 {
     ListSegmentsResponse result = await eventsBasedBillingSegmentsController.CreateSegmentsAsync(
-        componentId,
-        pricePointId
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 401 | Unauthorized | `ApiException` |
-| 403 | Forbidden | `ApiException` |
-| 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | [`EventBasedBillingSegmentException`](../../doc/models/event-based-billing-segment-exception.md) |
-
-
-# Update Segments
-
-This endpoint allows you to update multiple segments in one request. The array of segments can contain up to `1000` records.
-
-If any of the records contain an error the whole request would fail and none of the requested segments get updated. The error response contains a message for only the one segment that failed validation, with the corresponding index in the array.
-
-You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
-
-```csharp
-UpdateSegmentsAsync(
-    string componentId,
-    string pricePointId,
-    Models.BulkUpdateSegments body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `componentId` | `string` | Template, Required | ID or Handle for the Component |
-| `pricePointId` | `string` | Template, Required | ID or Handle for the Price Point belonging to the Component |
-| `body` | [`BulkUpdateSegments`](../../doc/models/bulk-update-segments.md) | Body, Optional | - |
-
-## Response Type
-
-[`Task<Models.ListSegmentsResponse>`](../../doc/models/list-segments-response.md)
-
-## Example Usage
-
-```csharp
-string componentId = "component_id8";
-string pricePointId = "price_point_id8";
-try
-{
-    ListSegmentsResponse result = await eventsBasedBillingSegmentsController.UpdateSegmentsAsync(
         componentId,
         pricePointId
     );

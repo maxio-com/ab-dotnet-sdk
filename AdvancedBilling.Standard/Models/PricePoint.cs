@@ -36,6 +36,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="pricingScheme">pricing_scheme.</param>
         /// <param name="prices">prices.</param>
         /// <param name="useSiteExchangeRate">use_site_exchange_rate.</param>
+        /// <param name="interval">interval.</param>
+        /// <param name="intervalUnit">interval_unit.</param>
         /// <param name="overagePricing">overage_pricing.</param>
         /// <param name="rolloverPrepaidRemainder">rollover_prepaid_remainder.</param>
         /// <param name="renewPrepaidAllocation">renew_prepaid_allocation.</param>
@@ -47,6 +49,8 @@ namespace AdvancedBilling.Standard.Models
             Models.PricingScheme? pricingScheme = null,
             List<Models.Price> prices = null,
             bool? useSiteExchangeRate = true,
+            int? interval = null,
+            Models.IntervalUnit? intervalUnit = null,
             Models.OveragePricing overagePricing = null,
             bool? rolloverPrepaidRemainder = null,
             bool? renewPrepaidAllocation = null,
@@ -58,6 +62,8 @@ namespace AdvancedBilling.Standard.Models
             this.PricingScheme = pricingScheme;
             this.Prices = prices;
             this.UseSiteExchangeRate = useSiteExchangeRate;
+            this.Interval = interval;
+            this.IntervalUnit = intervalUnit;
             this.OveragePricing = overagePricing;
             this.RolloverPrepaidRemainder = rolloverPrepaidRemainder;
             this.RenewPrepaidAllocation = renewPrepaidAllocation;
@@ -94,6 +100,18 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("use_site_exchange_rate", NullValueHandling = NullValueHandling.Ignore)]
         public bool? UseSiteExchangeRate { get; set; }
+
+        /// <summary>
+        /// The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Interval { get; set; }
+
+        /// <summary>
+        /// A string representing the interval unit for this price point, either month or day. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval_unit", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.IntervalUnit? IntervalUnit { get; set; }
 
         /// <summary>
         /// Gets or sets OveragePricing.
@@ -152,6 +170,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.PricingScheme == null && other.PricingScheme == null) || (this.PricingScheme?.Equals(other.PricingScheme) == true)) &&
                 ((this.Prices == null && other.Prices == null) || (this.Prices?.Equals(other.Prices) == true)) &&
                 ((this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null) || (this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true)) &&
+                ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
+                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true)) &&
                 ((this.OveragePricing == null && other.OveragePricing == null) || (this.OveragePricing?.Equals(other.OveragePricing) == true)) &&
                 ((this.RolloverPrepaidRemainder == null && other.RolloverPrepaidRemainder == null) || (this.RolloverPrepaidRemainder?.Equals(other.RolloverPrepaidRemainder) == true)) &&
                 ((this.RenewPrepaidAllocation == null && other.RenewPrepaidAllocation == null) || (this.RenewPrepaidAllocation?.Equals(other.RenewPrepaidAllocation) == true)) &&
@@ -170,6 +190,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
             toStringOutput.Add($"this.Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
             toStringOutput.Add($"this.UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
+            toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
+            toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
             toStringOutput.Add($"this.OveragePricing = {(this.OveragePricing == null ? "null" : this.OveragePricing.ToString())}");
             toStringOutput.Add($"this.RolloverPrepaidRemainder = {(this.RolloverPrepaidRemainder == null ? "null" : this.RolloverPrepaidRemainder.ToString())}");
             toStringOutput.Add($"this.RenewPrepaidAllocation = {(this.RenewPrepaidAllocation == null ? "null" : this.RenewPrepaidAllocation.ToString())}");

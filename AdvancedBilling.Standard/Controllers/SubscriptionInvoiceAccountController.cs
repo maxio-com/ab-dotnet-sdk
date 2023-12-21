@@ -58,7 +58,39 @@ namespace AdvancedBilling.Standard.Controllers
                   .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Credit will be added to the subscription in the amount specified in the request body. The credit is subsequently applied to the next generated invoice.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.ServiceCredit response from the API call.</returns>
+        public Models.ServiceCredit IssueServiceCredit(
+                int subscriptionId,
+                Models.IssueServiceCreditRequest body = null)
+            => CoreHelper.RunTask(IssueServiceCreditAsync(subscriptionId, body));
+
+        /// <summary>
+        /// Credit will be added to the subscription in the amount specified in the request body. The credit is subsequently applied to the next generated invoice.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ServiceCredit response from the API call.</returns>
+        public async Task<Models.ServiceCredit> IssueServiceCreditAsync(
+                int subscriptionId,
+                Models.IssueServiceCreditRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ServiceCredit>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/service_credits.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// ## Create Prepayment.
@@ -96,7 +128,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This request will list a subscription's prepayments.
@@ -131,72 +163,7 @@ namespace AdvancedBilling.Standard.Controllers
                   .ErrorCase("401", CreateErrorCase("Unauthorized", (_reason, _context) => new ApiException(_reason, _context)))
                   .ErrorCase("403", CreateErrorCase("Forbidden", (_reason, _context) => new ApiException(_reason, _context)))
                   .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
-
-        /// <summary>
-        /// Credit will be added to the subscription in the amount specified in the request body. The credit is subsequently applied to the next generated invoice.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.ServiceCredit response from the API call.</returns>
-        public Models.ServiceCredit IssueServiceCredit(
-                int subscriptionId,
-                Models.IssueServiceCreditRequest body = null)
-            => CoreHelper.RunTask(IssueServiceCreditAsync(subscriptionId, body));
-
-        /// <summary>
-        /// Credit will be added to the subscription in the amount specified in the request body. The credit is subsequently applied to the next generated invoice.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ServiceCredit response from the API call.</returns>
-        public async Task<Models.ServiceCredit> IssueServiceCreditAsync(
-                int subscriptionId,
-                Models.IssueServiceCreditRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ServiceCredit>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/service_credits.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken);
-
-        /// <summary>
-        /// Credit will be removed from the subscription in the amount specified in the request body. The credit amount being deducted must be equal to or less than the current credit balance.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        public void DeductServiceCredit(
-                int subscriptionId,
-                Models.DeductServiceCreditRequest body = null)
-            => CoreHelper.RunVoidTask(DeductServiceCreditAsync(subscriptionId, body));
-
-        /// <summary>
-        /// Credit will be removed from the subscription in the amount specified in the request body. The credit amount being deducted must be equal to or less than the current credit balance.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task DeductServiceCreditAsync(
-                int subscriptionId,
-                Models.DeductServiceCreditRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/service_credit_deductions.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This endpoint will refund, completely or partially, a particular prepayment applied to a subscription. The `prepayment_id` will be the account transaction ID of the original payment. The prepayment must have some amount remaining in order to be refunded.
@@ -239,6 +206,39 @@ namespace AdvancedBilling.Standard.Controllers
                   .ErrorCase("400", CreateErrorCase("Bad Request", (_reason, _context) => new RefundPrepaymentBaseErrorsResponseException(_reason, _context)))
                   .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context)))
                   .ErrorCase("422", CreateErrorCase("Unprocessable Entity", (_reason, _context) => new RefundPrepaymentAggregatedErrorsResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Credit will be removed from the subscription in the amount specified in the request body. The credit amount being deducted must be equal to or less than the current credit balance.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        public void DeductServiceCredit(
+                int subscriptionId,
+                Models.DeductServiceCreditRequest body = null)
+            => CoreHelper.RunVoidTask(DeductServiceCreditAsync(subscriptionId, body));
+
+        /// <summary>
+        /// Credit will be removed from the subscription in the amount specified in the request body. The credit amount being deducted must be equal to or less than the current credit balance.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task DeductServiceCreditAsync(
+                int subscriptionId,
+                Models.DeductServiceCreditRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/service_credit_deductions.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

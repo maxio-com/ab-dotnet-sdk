@@ -32,12 +32,18 @@ namespace AdvancedBilling.Standard.Models
         /// Initializes a new instance of the <see cref="ComponentCustomPrice"/> class.
         /// </summary>
         /// <param name="pricingScheme">pricing_scheme.</param>
+        /// <param name="interval">interval.</param>
+        /// <param name="intervalUnit">interval_unit.</param>
         /// <param name="prices">prices.</param>
         public ComponentCustomPrice(
             Models.PricingScheme? pricingScheme = null,
+            int? interval = null,
+            Models.IntervalUnit? intervalUnit = null,
             List<Models.Price> prices = null)
         {
             this.PricingScheme = pricingScheme;
+            this.Interval = interval;
+            this.IntervalUnit = intervalUnit;
             this.Prices = prices;
         }
 
@@ -46,6 +52,18 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("pricing_scheme", NullValueHandling = NullValueHandling.Ignore)]
         public Models.PricingScheme? PricingScheme { get; set; }
+
+        /// <summary>
+        /// The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Interval { get; set; }
+
+        /// <summary>
+        /// A string representing the interval unit for this component price point, either month or day. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval_unit", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.IntervalUnit? IntervalUnit { get; set; }
 
         /// <summary>
         /// On/off components only need one price bracket starting at 1
@@ -76,6 +94,8 @@ namespace AdvancedBilling.Standard.Models
                 return true;
             }
             return obj is ComponentCustomPrice other &&                ((this.PricingScheme == null && other.PricingScheme == null) || (this.PricingScheme?.Equals(other.PricingScheme) == true)) &&
+                ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
+                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true)) &&
                 ((this.Prices == null && other.Prices == null) || (this.Prices?.Equals(other.Prices) == true));
         }
         
@@ -86,6 +106,8 @@ namespace AdvancedBilling.Standard.Models
         protected void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
+            toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
+            toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
             toStringOutput.Add($"this.Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
         }
     }

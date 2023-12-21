@@ -36,6 +36,73 @@ namespace AdvancedBilling.Standard.Controllers
         internal ComponentsController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
+        /// This request will return information regarding a component having the handle you provide. You can identify your components with a handle so you don't have to save or reference the IDs we generate.
+        /// </summary>
+        /// <param name="handle">Required parameter: The handle of the component to find.</param>
+        /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
+        public Models.ComponentResponse ReadComponentByHandle(
+                string handle)
+            => CoreHelper.RunTask(ReadComponentByHandleAsync(handle));
+
+        /// <summary>
+        /// This request will return information regarding a component having the handle you provide. You can identify your components with a handle so you don't have to save or reference the IDs we generate.
+        /// </summary>
+        /// <param name="handle">Required parameter: The handle of the component to find.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
+        public async Task<Models.ComponentResponse> ReadComponentByHandleAsync(
+                string handle,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ComponentResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/components/lookup.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Query(_query => _query.Setup("handle", handle).Required())))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This request will update a component from a specific product family.
+        /// You may read the component by either the component's id or handle. When using the handle, it must be prefixed with `handle:`.
+        /// </summary>
+        /// <param name="productFamilyId">Required parameter: The Chargify id of the product family to which the component belongs.</param>
+        /// <param name="componentId">Required parameter: Either the Chargify id of the component or the handle for the component prefixed with `handle:`.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
+        public Models.ComponentResponse UpdateProductFamilyComponent(
+                int productFamilyId,
+                string componentId,
+                Models.UpdateComponentRequest body = null)
+            => CoreHelper.RunTask(UpdateProductFamilyComponentAsync(productFamilyId, componentId, body));
+
+        /// <summary>
+        /// This request will update a component from a specific product family.
+        /// You may read the component by either the component's id or handle. When using the handle, it must be prefixed with `handle:`.
+        /// </summary>
+        /// <param name="productFamilyId">Required parameter: The Chargify id of the product family to which the component belongs.</param>
+        /// <param name="componentId">Required parameter: Either the Chargify id of the component or the handle for the component prefixed with `handle:`.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
+        public async Task<Models.ComponentResponse> UpdateProductFamilyComponentAsync(
+                int productFamilyId,
+                string componentId,
+                Models.UpdateComponentRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ComponentResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Put, "/product_families/{product_family_id}/components/{component_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("product_family_id", productFamilyId))
+                      .Template(_template => _template.Setup("component_id", componentId).Required())
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// This request will create a component definition under the specified product family. These component definitions determine what components are named, how they are measured, and how much they cost.
         /// Components can then be added and “allocated” for each subscription to a product in the product family. These component line-items affect how much a subscription will be charged, depending on the current allocations (i.e. 4 IP Addresses, or SSL “enabled”).
         /// This documentation covers both component definitions and component line-items. Please understand the difference.
@@ -88,140 +155,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
-
-        /// <summary>
-        /// This request will return information regarding a component having the handle you provide. You can identify your components with a handle so you don't have to save or reference the IDs we generate.
-        /// </summary>
-        /// <param name="handle">Required parameter: The handle of the component to find.</param>
-        /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
-        public Models.ComponentResponse ReadComponentByHandle(
-                string handle)
-            => CoreHelper.RunTask(ReadComponentByHandleAsync(handle));
-
-        /// <summary>
-        /// This request will return information regarding a component having the handle you provide. You can identify your components with a handle so you don't have to save or reference the IDs we generate.
-        /// </summary>
-        /// <param name="handle">Required parameter: The handle of the component to find.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
-        public async Task<Models.ComponentResponse> ReadComponentByHandleAsync(
-                string handle,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ComponentResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/components/lookup.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("handle", handle).Required())))
-              .ExecuteAsync(cancellationToken);
-
-        /// <summary>
-        /// This request will return information regarding a component from a specific product family.
-        /// You may read the component by either the component's id or handle. When using the handle, it must be prefixed with `handle:`.
-        /// </summary>
-        /// <param name="productFamilyId">Required parameter: The Chargify id of the product family to which the component belongs.</param>
-        /// <param name="componentId">Required parameter: Either the Chargify id of the component or the handle for the component prefixed with `handle:`.</param>
-        /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
-        public Models.ComponentResponse ReadComponentById(
-                int productFamilyId,
-                string componentId)
-            => CoreHelper.RunTask(ReadComponentByIdAsync(productFamilyId, componentId));
-
-        /// <summary>
-        /// This request will return information regarding a component from a specific product family.
-        /// You may read the component by either the component's id or handle. When using the handle, it must be prefixed with `handle:`.
-        /// </summary>
-        /// <param name="productFamilyId">Required parameter: The Chargify id of the product family to which the component belongs.</param>
-        /// <param name="componentId">Required parameter: Either the Chargify id of the component or the handle for the component prefixed with `handle:`.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
-        public async Task<Models.ComponentResponse> ReadComponentByIdAsync(
-                int productFamilyId,
-                string componentId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ComponentResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/product_families/{product_family_id}/components/{component_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("product_family_id", productFamilyId))
-                      .Template(_template => _template.Setup("component_id", componentId).Required())))
-              .ExecuteAsync(cancellationToken);
-
-        /// <summary>
-        /// This request will update a component from a specific product family.
-        /// You may read the component by either the component's id or handle. When using the handle, it must be prefixed with `handle:`.
-        /// </summary>
-        /// <param name="productFamilyId">Required parameter: The Chargify id of the product family to which the component belongs.</param>
-        /// <param name="componentId">Required parameter: Either the Chargify id of the component or the handle for the component prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
-        public Models.ComponentResponse UpdateProductFamilyComponent(
-                int productFamilyId,
-                string componentId,
-                Models.UpdateComponentRequest body = null)
-            => CoreHelper.RunTask(UpdateProductFamilyComponentAsync(productFamilyId, componentId, body));
-
-        /// <summary>
-        /// This request will update a component from a specific product family.
-        /// You may read the component by either the component's id or handle. When using the handle, it must be prefixed with `handle:`.
-        /// </summary>
-        /// <param name="productFamilyId">Required parameter: The Chargify id of the product family to which the component belongs.</param>
-        /// <param name="componentId">Required parameter: Either the Chargify id of the component or the handle for the component prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
-        public async Task<Models.ComponentResponse> UpdateProductFamilyComponentAsync(
-                int productFamilyId,
-                string componentId,
-                Models.UpdateComponentRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ComponentResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/product_families/{product_family_id}/components/{component_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("product_family_id", productFamilyId))
-                      .Template(_template => _template.Setup("component_id", componentId).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
-
-        /// <summary>
-        /// Sending a DELETE request to this endpoint will archive the component. All current subscribers will be unffected; their subscription/purchase will continue to be charged as usual.
-        /// </summary>
-        /// <param name="productFamilyId">Required parameter: The Chargify id of the product family to which the component belongs.</param>
-        /// <param name="componentId">Required parameter: Either the Chargify id of the component or the handle for the component prefixed with `handle:`.</param>
-        /// <returns>Returns the Models.Component response from the API call.</returns>
-        public Models.Component ArchiveComponent(
-                int productFamilyId,
-                string componentId)
-            => CoreHelper.RunTask(ArchiveComponentAsync(productFamilyId, componentId));
-
-        /// <summary>
-        /// Sending a DELETE request to this endpoint will archive the component. All current subscribers will be unffected; their subscription/purchase will continue to be charged as usual.
-        /// </summary>
-        /// <param name="productFamilyId">Required parameter: The Chargify id of the product family to which the component belongs.</param>
-        /// <param name="componentId">Required parameter: Either the Chargify id of the component or the handle for the component prefixed with `handle:`.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.Component response from the API call.</returns>
-        public async Task<Models.Component> ArchiveComponentAsync(
-                int productFamilyId,
-                string componentId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.Component>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Delete, "/product_families/{product_family_id}/components/{component_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("product_family_id", productFamilyId))
-                      .Template(_template => _template.Setup("component_id", componentId).Required())))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This request will return a list of components for a site.
@@ -256,78 +190,73 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("per_page", input.PerPage))
                       .Query(_query => _query.Setup("filter[ids]", input.FilterIds))
                       .Query(_query => _query.Setup("filter[use_site_exchange_rate]", input.FilterUseSiteExchangeRate))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This request will update a component.
+        /// This request will return information regarding a component from a specific product family.
         /// You may read the component by either the component's id or handle. When using the handle, it must be prefixed with `handle:`.
         /// </summary>
-        /// <param name="componentId">Required parameter: The id or handle of the component.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="productFamilyId">Required parameter: The Chargify id of the product family to which the component belongs.</param>
+        /// <param name="componentId">Required parameter: Either the Chargify id of the component or the handle for the component prefixed with `handle:`.</param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
-        public Models.ComponentResponse UpdateComponent(
-                string componentId,
-                Models.UpdateComponentRequest body = null)
-            => CoreHelper.RunTask(UpdateComponentAsync(componentId, body));
+        public Models.ComponentResponse ReadComponentById(
+                int productFamilyId,
+                string componentId)
+            => CoreHelper.RunTask(ReadComponentByIdAsync(productFamilyId, componentId));
 
         /// <summary>
-        /// This request will update a component.
+        /// This request will return information regarding a component from a specific product family.
         /// You may read the component by either the component's id or handle. When using the handle, it must be prefixed with `handle:`.
         /// </summary>
-        /// <param name="componentId">Required parameter: The id or handle of the component.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="productFamilyId">Required parameter: The Chargify id of the product family to which the component belongs.</param>
+        /// <param name="componentId">Required parameter: Either the Chargify id of the component or the handle for the component prefixed with `handle:`.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
-        public async Task<Models.ComponentResponse> UpdateComponentAsync(
+        public async Task<Models.ComponentResponse> ReadComponentByIdAsync(
+                int productFamilyId,
                 string componentId,
-                Models.UpdateComponentRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ComponentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/components/{component_id}.json")
+                  .Setup(HttpMethod.Get, "/product_families/{product_family_id}/components/{component_id}.json")
                   .WithAuth("global")
                   .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("component_id", componentId).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+                      .Template(_template => _template.Setup("product_family_id", productFamilyId))
+                      .Template(_template => _template.Setup("component_id", componentId).Required())))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Sending a DELETE request to this endpoint will archive the component. All current subscribers will be unffected; their subscription/purchase will continue to be charged as usual.
+        /// </summary>
+        /// <param name="productFamilyId">Required parameter: The Chargify id of the product family to which the component belongs.</param>
+        /// <param name="componentId">Required parameter: Either the Chargify id of the component or the handle for the component prefixed with `handle:`.</param>
+        /// <returns>Returns the Models.Component response from the API call.</returns>
+        public Models.Component ArchiveComponent(
+                int productFamilyId,
+                string componentId)
+            => CoreHelper.RunTask(ArchiveComponentAsync(productFamilyId, componentId));
+
+        /// <summary>
+        /// Sending a DELETE request to this endpoint will archive the component. All current subscribers will be unffected; their subscription/purchase will continue to be charged as usual.
+        /// </summary>
+        /// <param name="productFamilyId">Required parameter: The Chargify id of the product family to which the component belongs.</param>
+        /// <param name="componentId">Required parameter: Either the Chargify id of the component or the handle for the component prefixed with `handle:`.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.Component response from the API call.</returns>
+        public async Task<Models.Component> ArchiveComponentAsync(
+                int productFamilyId,
+                string componentId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.Component>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Delete, "/product_families/{product_family_id}/components/{component_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("product_family_id", productFamilyId))
+                      .Template(_template => _template.Setup("component_id", componentId).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
-
-        /// <summary>
-        /// Sets a new default price point for the component. This new default will apply to all new subscriptions going forward - existing subscriptions will remain on their current price point.
-        /// See [Price Points Documentation](https://chargify.zendesk.com/hc/en-us/articles/4407755865883#price-points) for more information on price points and moving subscriptions between price points.
-        /// Note: Custom price points are not able to be set as the default for a component.
-        /// </summary>
-        /// <param name="componentId">Required parameter: The Chargify id of the component to which the price point belongs.</param>
-        /// <param name="pricePointId">Required parameter: The Chargify id of the price point.</param>
-        /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
-        public Models.ComponentResponse UpdateDefaultPricePointForComponent(
-                int componentId,
-                int pricePointId)
-            => CoreHelper.RunTask(UpdateDefaultPricePointForComponentAsync(componentId, pricePointId));
-
-        /// <summary>
-        /// Sets a new default price point for the component. This new default will apply to all new subscriptions going forward - existing subscriptions will remain on their current price point.
-        /// See [Price Points Documentation](https://chargify.zendesk.com/hc/en-us/articles/4407755865883#price-points) for more information on price points and moving subscriptions between price points.
-        /// Note: Custom price points are not able to be set as the default for a component.
-        /// </summary>
-        /// <param name="componentId">Required parameter: The Chargify id of the component to which the price point belongs.</param>
-        /// <param name="pricePointId">Required parameter: The Chargify id of the price point.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
-        public async Task<Models.ComponentResponse> UpdateDefaultPricePointForComponentAsync(
-                int componentId,
-                int pricePointId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ComponentResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/components/{component_id}/price_points/{price_point_id}/default.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("component_id", componentId))
-                      .Template(_template => _template.Setup("price_point_id", pricePointId))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This request will return a list of components for a particular product family.
@@ -363,39 +292,77 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("start_date", input.StartDate))
                       .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
                       .Query(_query => _query.Setup("filter[use_site_exchange_rate]", input.FilterUseSiteExchangeRate))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This endpoint can be used to create a new price point for an existing component.
+        /// Use this endpoint to unarchive a component price point.
         /// </summary>
-        /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="componentId">Required parameter: The Chargify id of the component to which the price point belongs.</param>
+        /// <param name="pricePointId">Required parameter: The Chargify id of the price point.</param>
         /// <returns>Returns the Models.ComponentPricePointResponse response from the API call.</returns>
-        public Models.ComponentPricePointResponse CreateComponentPricePoint(
+        public Models.ComponentPricePointResponse UnarchiveComponentPricePoint(
                 int componentId,
-                Models.CreateComponentPricePointRequest body = null)
-            => CoreHelper.RunTask(CreateComponentPricePointAsync(componentId, body));
+                int pricePointId)
+            => CoreHelper.RunTask(UnarchiveComponentPricePointAsync(componentId, pricePointId));
 
         /// <summary>
-        /// This endpoint can be used to create a new price point for an existing component.
+        /// Use this endpoint to unarchive a component price point.
         /// </summary>
-        /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="componentId">Required parameter: The Chargify id of the component to which the price point belongs.</param>
+        /// <param name="pricePointId">Required parameter: The Chargify id of the price point.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentPricePointResponse response from the API call.</returns>
-        public async Task<Models.ComponentPricePointResponse> CreateComponentPricePointAsync(
+        public async Task<Models.ComponentPricePointResponse> UnarchiveComponentPricePointAsync(
                 int componentId,
-                Models.CreateComponentPricePointRequest body = null,
+                int pricePointId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ComponentPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/components/{component_id}/price_points.json")
+                  .Setup(HttpMethod.Put, "/components/{component_id}/price_points/{price_point_id}/unarchive.json")
                   .WithAuth("global")
                   .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("component_id", componentId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken);
+                      .Template(_template => _template.Setup("price_point_id", pricePointId))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This method allows to retrieve a list of Components Price Points belonging to a Site.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the Models.ListComponentsPricePointsResponse response from the API call.</returns>
+        public Models.ListComponentsPricePointsResponse ListAllComponentPricePoints(
+                Models.ListAllComponentPricePointsInput input)
+            => CoreHelper.RunTask(ListAllComponentPricePointsAsync(input));
+
+        /// <summary>
+        /// This method allows to retrieve a list of Components Price Points belonging to a Site.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ListComponentsPricePointsResponse response from the API call.</returns>
+        public async Task<Models.ListComponentsPricePointsResponse> ListAllComponentPricePointsAsync(
+                Models.ListAllComponentPricePointsInput input,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ListComponentsPricePointsResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/components_price_points.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Query(_query => _query.Setup("filter[date_field]", (input.FilterDateField.HasValue) ? ApiHelper.JsonSerialize(input.FilterDateField.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("filter[end_date]", input.FilterEndDate.HasValue ? input.FilterEndDate.Value.ToString("yyyy'-'MM'-'dd") : null))
+                      .Query(_query => _query.Setup("filter[end_datetime]", input.FilterEndDatetime.HasValue ? input.FilterEndDatetime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))
+                      .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("page", input.Page))
+                      .Query(_query => _query.Setup("per_page", input.PerPage))
+                      .Query(_query => _query.Setup("filter[start_date]", input.FilterStartDate.HasValue ? input.FilterStartDate.Value.ToString("yyyy'-'MM'-'dd") : null))
+                      .Query(_query => _query.Setup("filter[start_datetime]", input.FilterStartDatetime.HasValue ? input.FilterStartDatetime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))
+                      .Query(_query => _query.Setup("filter[type]", input.FilterType?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))
+                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("filter[ids]", input.FilterIds))
+                      .Query(_query => _query.Setup("filter[archived_at]", (input.FilterArchivedAt.HasValue) ? ApiHelper.JsonSerialize(input.FilterArchivedAt.Value).Trim('\"') : null))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Use this endpoint to read current price points that are associated with a component.
@@ -431,39 +398,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))
                       .Query(_query => _query.Setup("filter[type]", input.FilterType?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
-              .ExecuteAsync(cancellationToken);
-
-        /// <summary>
-        /// Use this endpoint to create multiple component price points in one request.
-        /// </summary>
-        /// <param name="componentId">Required parameter: The Chargify id of the component for which you want to fetch price points..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.ComponentPricePointsResponse response from the API call.</returns>
-        public Models.ComponentPricePointsResponse CreateComponentPricePoints(
-                string componentId,
-                Models.CreateComponentPricePointsRequest body = null)
-            => CoreHelper.RunTask(CreateComponentPricePointsAsync(componentId, body));
-
-        /// <summary>
-        /// Use this endpoint to create multiple component price points in one request.
-        /// </summary>
-        /// <param name="componentId">Required parameter: The Chargify id of the component for which you want to fetch price points..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ComponentPricePointsResponse response from the API call.</returns>
-        public async Task<Models.ComponentPricePointsResponse> CreateComponentPricePointsAsync(
-                string componentId,
-                Models.CreateComponentPricePointsRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ComponentPricePointsResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/components/{component_id}/price_points/bulk.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("component_id", componentId).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// When updating a price point, it's prices can be updated as well by creating new prices or editing / removing existing ones.
@@ -506,7 +441,78 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("component_id", componentId))
                       .Template(_template => _template.Setup("price_point_id", pricePointId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This request will update a component.
+        /// You may read the component by either the component's id or handle. When using the handle, it must be prefixed with `handle:`.
+        /// </summary>
+        /// <param name="componentId">Required parameter: The id or handle of the component.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
+        public Models.ComponentResponse UpdateComponent(
+                string componentId,
+                Models.UpdateComponentRequest body = null)
+            => CoreHelper.RunTask(UpdateComponentAsync(componentId, body));
+
+        /// <summary>
+        /// This request will update a component.
+        /// You may read the component by either the component's id or handle. When using the handle, it must be prefixed with `handle:`.
+        /// </summary>
+        /// <param name="componentId">Required parameter: The id or handle of the component.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
+        public async Task<Models.ComponentResponse> UpdateComponentAsync(
+                string componentId,
+                Models.UpdateComponentRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ComponentResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Put, "/components/{component_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("component_id", componentId).Required())
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Sets a new default price point for the component. This new default will apply to all new subscriptions going forward - existing subscriptions will remain on their current price point.
+        /// See [Price Points Documentation](https://chargify.zendesk.com/hc/en-us/articles/4407755865883#price-points) for more information on price points and moving subscriptions between price points.
+        /// Note: Custom price points are not able to be set as the default for a component.
+        /// </summary>
+        /// <param name="componentId">Required parameter: The Chargify id of the component to which the price point belongs.</param>
+        /// <param name="pricePointId">Required parameter: The Chargify id of the price point.</param>
+        /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
+        public Models.ComponentResponse UpdateDefaultPricePointForComponent(
+                int componentId,
+                int pricePointId)
+            => CoreHelper.RunTask(UpdateDefaultPricePointForComponentAsync(componentId, pricePointId));
+
+        /// <summary>
+        /// Sets a new default price point for the component. This new default will apply to all new subscriptions going forward - existing subscriptions will remain on their current price point.
+        /// See [Price Points Documentation](https://chargify.zendesk.com/hc/en-us/articles/4407755865883#price-points) for more information on price points and moving subscriptions between price points.
+        /// Note: Custom price points are not able to be set as the default for a component.
+        /// </summary>
+        /// <param name="componentId">Required parameter: The Chargify id of the component to which the price point belongs.</param>
+        /// <param name="pricePointId">Required parameter: The Chargify id of the price point.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
+        public async Task<Models.ComponentResponse> UpdateDefaultPricePointForComponentAsync(
+                int componentId,
+                int pricePointId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ComponentResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Put, "/components/{component_id}/price_points/{price_point_id}/default.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("component_id", componentId))
+                      .Template(_template => _template.Setup("price_point_id", pricePointId))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// A price point can be archived at any time. Subscriptions using a price point that has been archived will continue using it until they're moved to another price point.
@@ -537,38 +543,71 @@ namespace AdvancedBilling.Standard.Controllers
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("component_id", componentId))
                       .Template(_template => _template.Setup("price_point_id", pricePointId))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this endpoint to unarchive a component price point.
+        /// This endpoint can be used to create a new price point for an existing component.
         /// </summary>
-        /// <param name="componentId">Required parameter: The Chargify id of the component to which the price point belongs.</param>
-        /// <param name="pricePointId">Required parameter: The Chargify id of the price point.</param>
+        /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.ComponentPricePointResponse response from the API call.</returns>
-        public Models.ComponentPricePointResponse UnarchiveComponentPricePoint(
+        public Models.ComponentPricePointResponse CreateComponentPricePoint(
                 int componentId,
-                int pricePointId)
-            => CoreHelper.RunTask(UnarchiveComponentPricePointAsync(componentId, pricePointId));
+                Models.CreateComponentPricePointRequest body = null)
+            => CoreHelper.RunTask(CreateComponentPricePointAsync(componentId, body));
 
         /// <summary>
-        /// Use this endpoint to unarchive a component price point.
+        /// This endpoint can be used to create a new price point for an existing component.
         /// </summary>
-        /// <param name="componentId">Required parameter: The Chargify id of the component to which the price point belongs.</param>
-        /// <param name="pricePointId">Required parameter: The Chargify id of the price point.</param>
+        /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentPricePointResponse response from the API call.</returns>
-        public async Task<Models.ComponentPricePointResponse> UnarchiveComponentPricePointAsync(
+        public async Task<Models.ComponentPricePointResponse> CreateComponentPricePointAsync(
                 int componentId,
-                int pricePointId,
+                Models.CreateComponentPricePointRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ComponentPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/components/{component_id}/price_points/{price_point_id}/unarchive.json")
+                  .Setup(HttpMethod.Post, "/components/{component_id}/price_points.json")
                   .WithAuth("global")
                   .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("component_id", componentId))
-                      .Template(_template => _template.Setup("price_point_id", pricePointId))))
-              .ExecuteAsync(cancellationToken);
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Use this endpoint to create multiple component price points in one request.
+        /// </summary>
+        /// <param name="componentId">Required parameter: The Chargify id of the component for which you want to fetch price points..</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.ComponentPricePointsResponse response from the API call.</returns>
+        public Models.ComponentPricePointsResponse CreateComponentPricePoints(
+                string componentId,
+                Models.CreateComponentPricePointsRequest body = null)
+            => CoreHelper.RunTask(CreateComponentPricePointsAsync(componentId, body));
+
+        /// <summary>
+        /// Use this endpoint to create multiple component price points in one request.
+        /// </summary>
+        /// <param name="componentId">Required parameter: The Chargify id of the component for which you want to fetch price points..</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ComponentPricePointsResponse response from the API call.</returns>
+        public async Task<Models.ComponentPricePointsResponse> CreateComponentPricePointsAsync(
+                string componentId,
+                Models.CreateComponentPricePointsRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ComponentPricePointsResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/components/{component_id}/price_points/bulk.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("component_id", componentId).Required())
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This endpoint allows you to create currency prices for a given currency that has been defined on the site level in your settings.
@@ -604,7 +643,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("price_point_id", pricePointId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This endpoint allows you to update currency prices for a given currency that has been defined on the site level in your settings.
@@ -638,45 +677,6 @@ namespace AdvancedBilling.Standard.Controllers
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("price_point_id", pricePointId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken);
-
-        /// <summary>
-        /// This method allows to retrieve a list of Components Price Points belonging to a Site.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the Models.ListComponentsPricePointsResponse response from the API call.</returns>
-        public Models.ListComponentsPricePointsResponse ListAllComponentPricePoints(
-                Models.ListAllComponentPricePointsInput input)
-            => CoreHelper.RunTask(ListAllComponentPricePointsAsync(input));
-
-        /// <summary>
-        /// This method allows to retrieve a list of Components Price Points belonging to a Site.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ListComponentsPricePointsResponse response from the API call.</returns>
-        public async Task<Models.ListComponentsPricePointsResponse> ListAllComponentPricePointsAsync(
-                Models.ListAllComponentPricePointsInput input,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ListComponentsPricePointsResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/components_price_points.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("filter[date_field]", (input.FilterDateField.HasValue) ? ApiHelper.JsonSerialize(input.FilterDateField.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("filter[end_date]", input.FilterEndDate.HasValue ? input.FilterEndDate.Value.ToString("yyyy'-'MM'-'dd") : null))
-                      .Query(_query => _query.Setup("filter[end_datetime]", input.FilterEndDatetime.HasValue ? input.FilterEndDatetime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))
-                      .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("filter[start_date]", input.FilterStartDate.HasValue ? input.FilterStartDate.Value.ToString("yyyy'-'MM'-'dd") : null))
-                      .Query(_query => _query.Setup("filter[start_datetime]", input.FilterStartDatetime.HasValue ? input.FilterStartDatetime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))
-                      .Query(_query => _query.Setup("filter[type]", input.FilterType?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("filter[ids]", input.FilterIds))
-                      .Query(_query => _query.Setup("filter[archived_at]", (input.FilterArchivedAt.HasValue) ? ApiHelper.JsonSerialize(input.FilterArchivedAt.Value).Trim('\"') : null))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

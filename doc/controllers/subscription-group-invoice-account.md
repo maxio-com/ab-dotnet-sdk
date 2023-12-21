@@ -11,9 +11,9 @@ SubscriptionGroupInvoiceAccountController subscriptionGroupInvoiceAccountControl
 ## Methods
 
 * [Create Subscription Group Prepayment](../../doc/controllers/subscription-group-invoice-account.md#create-subscription-group-prepayment)
-* [List Prepayments for Subscription Group](../../doc/controllers/subscription-group-invoice-account.md#list-prepayments-for-subscription-group)
-* [Issue Subscription Group Service Credits](../../doc/controllers/subscription-group-invoice-account.md#issue-subscription-group-service-credits)
 * [Deduct Subscription Group Service Credits](../../doc/controllers/subscription-group-invoice-account.md#deduct-subscription-group-service-credits)
+* [Issue Subscription Group Service Credits](../../doc/controllers/subscription-group-invoice-account.md#issue-subscription-group-service-credits)
+* [List Prepayments for Subscription Group](../../doc/controllers/subscription-group-invoice-account.md#list-prepayments-for-subscription-group)
 
 
 # Create Subscription Group Prepayment
@@ -61,6 +61,142 @@ catch (ApiException e)
   "ending_balance_in_cents": 5000,
   "entry_type": "Debit",
   "memo": "Debit from invoice account."
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# Deduct Subscription Group Service Credits
+
+Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
+
+```csharp
+DeductSubscriptionGroupServiceCreditsAsync(
+    string uid,
+    Models.DeductServiceCreditRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `uid` | `string` | Template, Required | The uid of the subscription group |
+| `body` | [`DeductServiceCreditRequest`](../../doc/models/deduct-service-credit-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.ServiceCredit>`](../../doc/models/service-credit.md)
+
+## Example Usage
+
+```csharp
+string uid = "uid0";
+DeductServiceCreditRequest body = new DeductServiceCreditRequest
+{
+    Deduction = new DeductServiceCredit
+    {
+        Amount = DeductServiceCreditAmount.FromPrecision(10),
+        Memo = "Deduct from group account",
+    },
+};
+
+try
+{
+    ServiceCredit result = await subscriptionGroupInvoiceAccountController.DeductSubscriptionGroupServiceCreditsAsync(
+        uid,
+        body
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "id": 100,
+  "amount_in_cents": 1000,
+  "ending_balance_in_cents": 0,
+  "entry_type": "Debit",
+  "memo": "Debit from group account"
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# Issue Subscription Group Service Credits
+
+Credit can be issued for a subscription group identified by the group's `uid`. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
+
+```csharp
+IssueSubscriptionGroupServiceCreditsAsync(
+    string uid,
+    Models.IssueServiceCreditRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `uid` | `string` | Template, Required | The uid of the subscription group |
+| `body` | [`IssueServiceCreditRequest`](../../doc/models/issue-service-credit-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.ServiceCreditResponse>`](../../doc/models/service-credit-response.md)
+
+## Example Usage
+
+```csharp
+string uid = "uid0";
+IssueServiceCreditRequest body = new IssueServiceCreditRequest
+{
+    ServiceCredit = new IssueServiceCredit
+    {
+        Amount = IssueServiceCreditAmount.FromPrecision(10),
+        Memo = "Credit the group account",
+    },
+};
+
+try
+{
+    ServiceCreditResponse result = await subscriptionGroupInvoiceAccountController.IssueSubscriptionGroupServiceCreditsAsync(
+        uid,
+        body
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "service_credit": {
+    "id": 101,
+    "amount_in_cents": 1000,
+    "ending_balance_in_cents": 2000,
+    "entry_type": "Credit",
+    "memo": "Credit to group account"
+  }
 }
 ```
 
@@ -145,140 +281,4 @@ catch (ApiException e)
 | 401 | Unauthorized | `ApiException` |
 | 403 | Forbidden | `ApiException` |
 | 404 | Not Found | `ApiException` |
-
-
-# Issue Subscription Group Service Credits
-
-Credit can be issued for a subscription group identified by the group's `uid`. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
-
-```csharp
-IssueSubscriptionGroupServiceCreditsAsync(
-    string uid,
-    Models.IssueServiceCreditRequest body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `uid` | `string` | Template, Required | The uid of the subscription group |
-| `body` | [`IssueServiceCreditRequest`](../../doc/models/issue-service-credit-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`Task<Models.ServiceCreditResponse>`](../../doc/models/service-credit-response.md)
-
-## Example Usage
-
-```csharp
-string uid = "uid0";
-IssueServiceCreditRequest body = new IssueServiceCreditRequest
-{
-    ServiceCredit = new IssueServiceCredit
-    {
-        Amount = IssueServiceCreditAmount.FromPrecision(10),
-        Memo = "Credit the group account",
-    },
-};
-
-try
-{
-    ServiceCreditResponse result = await subscriptionGroupInvoiceAccountController.IssueSubscriptionGroupServiceCreditsAsync(
-        uid,
-        body
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "service_credit": {
-    "id": 101,
-    "amount_in_cents": 1000,
-    "ending_balance_in_cents": 2000,
-    "entry_type": "Credit",
-    "memo": "Credit to group account"
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
-# Deduct Subscription Group Service Credits
-
-Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
-
-```csharp
-DeductSubscriptionGroupServiceCreditsAsync(
-    string uid,
-    Models.DeductServiceCreditRequest body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `uid` | `string` | Template, Required | The uid of the subscription group |
-| `body` | [`DeductServiceCreditRequest`](../../doc/models/deduct-service-credit-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`Task<Models.ServiceCredit>`](../../doc/models/service-credit.md)
-
-## Example Usage
-
-```csharp
-string uid = "uid0";
-DeductServiceCreditRequest body = new DeductServiceCreditRequest
-{
-    Deduction = new DeductServiceCredit
-    {
-        Amount = DeductServiceCreditAmount.FromPrecision(10),
-        Memo = "Deduct from group account",
-    },
-};
-
-try
-{
-    ServiceCredit result = await subscriptionGroupInvoiceAccountController.DeductSubscriptionGroupServiceCreditsAsync(
-        uid,
-        body
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "id": 100,
-  "amount_in_cents": 1000,
-  "ending_balance_in_cents": 0,
-  "entry_type": "Debit",
-  "memo": "Debit from group account"
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
