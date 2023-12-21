@@ -57,6 +57,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="displayOnHostedPage">display_on_hosted_page.</param>
         /// <param name="allowFractionalQuantities">allow_fractional_quantities.</param>
         /// <param name="publicSignupPageIds">public_signup_page_ids.</param>
+        /// <param name="interval">interval.</param>
+        /// <param name="intervalUnit">interval_unit.</param>
         public MeteredComponent(
             string name,
             string unitName,
@@ -74,7 +76,9 @@ namespace AdvancedBilling.Standard.Models
             string priceInCents = null,
             bool? displayOnHostedPage = null,
             bool? allowFractionalQuantities = null,
-            List<int> publicSignupPageIds = null)
+            List<int> publicSignupPageIds = null,
+            int? interval = null,
+            Models.IntervalUnit? intervalUnit = null)
         {
             this.Name = name;
             this.UnitName = unitName;
@@ -101,6 +105,8 @@ namespace AdvancedBilling.Standard.Models
             this.DisplayOnHostedPage = displayOnHostedPage;
             this.AllowFractionalQuantities = allowFractionalQuantities;
             this.PublicSignupPageIds = publicSignupPageIds;
+            this.Interval = interval;
+            this.IntervalUnit = intervalUnit;
         }
 
         /// <summary>
@@ -231,6 +237,18 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("public_signup_page_ids", NullValueHandling = NullValueHandling.Ignore)]
         public List<int> PublicSignupPageIds { get; set; }
 
+        /// <summary>
+        /// The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this component's default price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Interval { get; set; }
+
+        /// <summary>
+        /// A string representing the interval unit for this component's default price point, either month or day. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval_unit", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.IntervalUnit? IntervalUnit { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -303,7 +321,9 @@ namespace AdvancedBilling.Standard.Models
                 ((this.PriceInCents == null && other.PriceInCents == null) || (this.PriceInCents?.Equals(other.PriceInCents) == true)) &&
                 ((this.DisplayOnHostedPage == null && other.DisplayOnHostedPage == null) || (this.DisplayOnHostedPage?.Equals(other.DisplayOnHostedPage) == true)) &&
                 ((this.AllowFractionalQuantities == null && other.AllowFractionalQuantities == null) || (this.AllowFractionalQuantities?.Equals(other.AllowFractionalQuantities) == true)) &&
-                ((this.PublicSignupPageIds == null && other.PublicSignupPageIds == null) || (this.PublicSignupPageIds?.Equals(other.PublicSignupPageIds) == true));
+                ((this.PublicSignupPageIds == null && other.PublicSignupPageIds == null) || (this.PublicSignupPageIds?.Equals(other.PublicSignupPageIds) == true)) &&
+                ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
+                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true));
         }
         
         /// <summary>
@@ -329,6 +349,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.DisplayOnHostedPage = {(this.DisplayOnHostedPage == null ? "null" : this.DisplayOnHostedPage.ToString())}");
             toStringOutput.Add($"this.AllowFractionalQuantities = {(this.AllowFractionalQuantities == null ? "null" : this.AllowFractionalQuantities.ToString())}");
             toStringOutput.Add($"this.PublicSignupPageIds = {(this.PublicSignupPageIds == null ? "null" : $"[{string.Join(", ", this.PublicSignupPageIds)} ]")}");
+            toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
+            toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
         }
     }
 }

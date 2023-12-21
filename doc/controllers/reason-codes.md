@@ -10,11 +10,60 @@ ReasonCodesController reasonCodesController = client.ReasonCodesController;
 
 ## Methods
 
+* [Delete Reason Code](../../doc/controllers/reason-codes.md#delete-reason-code)
 * [Create Reason Code](../../doc/controllers/reason-codes.md#create-reason-code)
 * [List Reason Codes](../../doc/controllers/reason-codes.md#list-reason-codes)
 * [Read Reason Code](../../doc/controllers/reason-codes.md#read-reason-code)
 * [Update Reason Code](../../doc/controllers/reason-codes.md#update-reason-code)
-* [Delete Reason Code](../../doc/controllers/reason-codes.md#delete-reason-code)
+
+
+# Delete Reason Code
+
+This method gives a merchant the option to delete one reason code from the Churn Reason Codes. This code will be immediately removed. This action is not reversable.
+
+```csharp
+DeleteReasonCodeAsync(
+    int reasonCodeId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `reasonCodeId` | `int` | Template, Required | The Chargify id of the reason code |
+
+## Response Type
+
+[`Task<Models.ReasonCodesJsonResponse>`](../../doc/models/reason-codes-json-response.md)
+
+## Example Usage
+
+```csharp
+int reasonCodeId = 32;
+try
+{
+    ReasonCodesJsonResponse result = await reasonCodesController.DeleteReasonCodeAsync(reasonCodeId);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "ok": "ok"
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
 
 
 # Create Reason Code
@@ -236,55 +285,6 @@ catch (ApiException e)
 {
     // TODO: Handle exception here
     Console.WriteLine(e.Message);
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-
-
-# Delete Reason Code
-
-This method gives a merchant the option to delete one reason code from the Churn Reason Codes. This code will be immediately removed. This action is not reversable.
-
-```csharp
-DeleteReasonCodeAsync(
-    int reasonCodeId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `reasonCodeId` | `int` | Template, Required | The Chargify id of the reason code |
-
-## Response Type
-
-[`Task<Models.ReasonCodesJsonResponse>`](../../doc/models/reason-codes-json-response.md)
-
-## Example Usage
-
-```csharp
-int reasonCodeId = 32;
-try
-{
-    ReasonCodesJsonResponse result = await reasonCodesController.DeleteReasonCodeAsync(reasonCodeId);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "ok": "ok"
 }
 ```
 

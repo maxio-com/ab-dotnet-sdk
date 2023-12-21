@@ -70,33 +70,37 @@ namespace AdvancedBilling.Standard.Controllers
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This endpoint allows you to read the current details of a product that you've created in Chargify.
+        /// Sending a DELETE request to this endpoint will archive the product. All current subscribers will be unffected; their subscription/purchase will continue to be charged monthly.
+        /// This will restrict the option to chose the product for purchase via the Billing Portal, as well as disable Public Signup Pages for the product.
         /// </summary>
         /// <param name="productId">Required parameter: The Chargify id of the product.</param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
-        public Models.ProductResponse ReadProduct(
+        public Models.ProductResponse ArchiveProduct(
                 int productId)
-            => CoreHelper.RunTask(ReadProductAsync(productId));
+            => CoreHelper.RunTask(ArchiveProductAsync(productId));
 
         /// <summary>
-        /// This endpoint allows you to read the current details of a product that you've created in Chargify.
+        /// Sending a DELETE request to this endpoint will archive the product. All current subscribers will be unffected; their subscription/purchase will continue to be charged monthly.
+        /// This will restrict the option to chose the product for purchase via the Billing Portal, as well as disable Public Signup Pages for the product.
         /// </summary>
         /// <param name="productId">Required parameter: The Chargify id of the product.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
-        public async Task<Models.ProductResponse> ReadProductAsync(
+        public async Task<Models.ProductResponse> ArchiveProductAsync(
                 int productId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ProductResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/products/{product_id}.json")
+                  .Setup(HttpMethod.Delete, "/products/{product_id}.json")
                   .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_id", productId))))
-              .ExecuteAsync(cancellationToken);
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Use this method to change aspects of an existing product.
@@ -138,37 +142,33 @@ namespace AdvancedBilling.Standard.Controllers
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Sending a DELETE request to this endpoint will archive the product. All current subscribers will be unffected; their subscription/purchase will continue to be charged monthly.
-        /// This will restrict the option to chose the product for purchase via the Billing Portal, as well as disable Public Signup Pages for the product.
+        /// This endpoint allows you to read the current details of a product that you've created in Chargify.
         /// </summary>
         /// <param name="productId">Required parameter: The Chargify id of the product.</param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
-        public Models.ProductResponse ArchiveProduct(
+        public Models.ProductResponse ReadProduct(
                 int productId)
-            => CoreHelper.RunTask(ArchiveProductAsync(productId));
+            => CoreHelper.RunTask(ReadProductAsync(productId));
 
         /// <summary>
-        /// Sending a DELETE request to this endpoint will archive the product. All current subscribers will be unffected; their subscription/purchase will continue to be charged monthly.
-        /// This will restrict the option to chose the product for purchase via the Billing Portal, as well as disable Public Signup Pages for the product.
+        /// This endpoint allows you to read the current details of a product that you've created in Chargify.
         /// </summary>
         /// <param name="productId">Required parameter: The Chargify id of the product.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
-        public async Task<Models.ProductResponse> ArchiveProductAsync(
+        public async Task<Models.ProductResponse> ReadProductAsync(
                 int productId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ProductResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Delete, "/products/{product_id}.json")
+                  .Setup(HttpMethod.Get, "/products/{product_id}.json")
                   .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_id", productId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This method allows to retrieve a Product object by its `api_handle`.
@@ -194,7 +194,7 @@ namespace AdvancedBilling.Standard.Controllers
                   .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("api_handle", apiHandle).Required())))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This method allows to retrieve a list of Products belonging to a Site.
@@ -230,6 +230,6 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("filter[prepaid_product_price_point][product_price_point_id]", (input.FilterPrepaidProductPricePointProductPricePointId.HasValue) ? ApiHelper.JsonSerialize(input.FilterPrepaidProductPricePointProductPricePointId.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("filter[use_site_exchange_rate]", input.FilterUseSiteExchangeRate))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }
