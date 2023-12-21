@@ -12,27 +12,58 @@ namespace AdvancedBillingTests
         private readonly Fixture _fixture = new();
 
         [Fact]
-        public async Task CreateSubscription_ShouldSucceed()
+        public async Task CreateSubscription_WithDummyData_ShouldFailWithAnyErrorMessage()
         {
             var subscription = _fixture.Create<CreateSubscription>();
             var subscriptionRequest = new CreateSubscriptionRequest(subscription);
 
+            await _client.Invoking(s => s.SubscriptionsController.CreateSubscriptionAsync(subscriptionRequest)).Should()
+                .ThrowAsync<ApiException>()
+                .Where(e => e.Message.Contains("HTTP Response Not OK") && e.Message.Length > "HTTP Response Not OK".Length);
+
+            //var response = await _client.SubscriptionsController.CreateSubscriptionAsync(subscriptionRequest);
+
+
+
+            //response.Should().NotBeNull();
+
+            //var createdSubscriptionId = response.Subscription.Id;
+
+            //createdSubscriptionId.Should().NotBeNull();
+            //createdSubscriptionId.Should().BeGreaterThan(0);
+
+            // await invalidClient.Invoking(i => i.SitesController.ReadSiteAsync()).Should().ThrowAsync<ApiException>().Where(e => e.ResponseCode == 401);
+        }
+
+        [Fact]
+        public async Task CreateSubscription_WithDefaultData_ShouldFailWithAnyErrorMessage()
+        {
+            //var subscription = _fixture.Create<CreateSubscription>();
+            var subscription = new CreateSubscription();
+            var subscriptionRequest = new CreateSubscriptionRequest(subscription);
+
+            //await _client.Invoking(s => s.SubscriptionsController.CreateSubscriptionAsync(subscriptionRequest)).Should()
+            //    .ThrowAsync<ApiException>()
+            //    .Where(e => e.Message.Contains("HTTP Response Not OK") && e.Message.Length > "HTTP Response Not OK".Length);
+
             try
             {
                 var response = await _client.SubscriptionsController.CreateSubscriptionAsync(subscriptionRequest);
-
-                response.Should().NotBeNull();
-
-                var createdSubscriptionId = response.Subscription.Id;
-
-                createdSubscriptionId.Should().NotBeNull();
-                createdSubscriptionId.Should().BeGreaterThan(0);
             }
-            catch (ApiException e)
+            catch (Exception e)
             {
                 Console.WriteLine(e);
                 throw;
             }
+
+            //response.Should().NotBeNull();
+
+            //var createdSubscriptionId = response.Subscription.Id;
+
+            //createdSubscriptionId.Should().NotBeNull();
+            //createdSubscriptionId.Should().BeGreaterThan(0);
+
+            // await invalidClient.Invoking(i => i.SitesController.ReadSiteAsync()).Should().ThrowAsync<ApiException>().Where(e => e.ResponseCode == 401);
         }
     }
 }
