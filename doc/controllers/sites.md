@@ -10,9 +10,52 @@ SitesController sitesController = client.SitesController;
 
 ## Methods
 
-* [Read Site](../../doc/controllers/sites.md#read-site)
 * [Clear Site](../../doc/controllers/sites.md#clear-site)
+* [Read Site](../../doc/controllers/sites.md#read-site)
 * [List Chargify Js Public Keys](../../doc/controllers/sites.md#list-chargify-js-public-keys)
+
+
+# Clear Site
+
+This call is asynchronous and there may be a delay before the site data is fully deleted. If you are clearing site data for an automated test, you will need to build in a delay and/or check that there are no products, etc., in the site before proceeding.
+
+**This functionality will only work on sites in TEST mode. Attempts to perform this on sites in “live” mode will result in a response of 403 FORBIDDEN.**
+
+```csharp
+ClearSiteAsync(
+    Models.CleanupScope? cleanupScope = Models.CleanupScope.All)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `cleanupScope` | [`CleanupScope?`](../../doc/models/cleanup-scope.md) | Query, Optional | `all`: Will clear all products, customers, and related subscriptions from the site.<br>`customers`: Will clear only customers and related subscriptions (leaving the products untouched) for the site.<br>Revenue will also be reset to 0.<br>Use in query `cleanup_scope=all`.<br>**Default**: `CleanupScope.all` |
+
+## Response Type
+
+`Task`
+
+## Example Usage
+
+```csharp
+CleanupScope? cleanupScope = CleanupScope.All;
+try
+{
+    await sitesController.ClearSiteAsync(cleanupScope);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 403 | Forbidden | `ApiException` |
 
 
 # Read Site
@@ -100,49 +143,6 @@ catch (ApiException e)
   }
 }
 ```
-
-
-# Clear Site
-
-This call is asynchronous and there may be a delay before the site data is fully deleted. If you are clearing site data for an automated test, you will need to build in a delay and/or check that there are no products, etc., in the site before proceeding.
-
-**This functionality will only work on sites in TEST mode. Attempts to perform this on sites in “live” mode will result in a response of 403 FORBIDDEN.**
-
-```csharp
-ClearSiteAsync(
-    Models.CleanupScope? cleanupScope = Models.CleanupScope.All)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `cleanupScope` | [`CleanupScope?`](../../doc/models/cleanup-scope.md) | Query, Optional | `all`: Will clear all products, customers, and related subscriptions from the site.<br>`customers`: Will clear only customers and related subscriptions (leaving the products untouched) for the site.<br>Revenue will also be reset to 0.<br>Use in query `cleanup_scope=all`.<br>**Default**: `CleanupScope.all` |
-
-## Response Type
-
-`Task`
-
-## Example Usage
-
-```csharp
-CleanupScope? cleanupScope = CleanupScope.All;
-try
-{
-    await sitesController.ClearSiteAsync(cleanupScope);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 403 | Forbidden | `ApiException` |
 
 
 # List Chargify Js Public Keys

@@ -68,6 +68,6 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("code", code).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new SingleStringErrorResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken);
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

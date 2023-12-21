@@ -10,12 +10,59 @@ WebhooksController webhooksController = client.WebhooksController;
 
 ## Methods
 
-* [List Webhooks](../../doc/controllers/webhooks.md#list-webhooks)
 * [Enable Webhooks](../../doc/controllers/webhooks.md#enable-webhooks)
+* [List Webhooks](../../doc/controllers/webhooks.md#list-webhooks)
 * [Replay Webhooks](../../doc/controllers/webhooks.md#replay-webhooks)
 * [Create Endpoint](../../doc/controllers/webhooks.md#create-endpoint)
 * [List Endpoints](../../doc/controllers/webhooks.md#list-endpoints)
 * [Update Endpoint](../../doc/controllers/webhooks.md#update-endpoint)
+
+
+# Enable Webhooks
+
+This method allows you to enable webhooks via API for your site
+
+```csharp
+EnableWebhooksAsync(
+    Models.EnableWebhooksRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`EnableWebhooksRequest`](../../doc/models/enable-webhooks-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.EnableWebhooksResponse>`](../../doc/models/enable-webhooks-response.md)
+
+## Example Usage
+
+```csharp
+EnableWebhooksRequest body = new EnableWebhooksRequest
+{
+    WebhooksEnabled = true,
+};
+
+try
+{
+    EnableWebhooksResponse result = await webhooksController.EnableWebhooksAsync(body);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "webhooks_enabled": true
+}
+```
 
 
 # List Webhooks
@@ -113,53 +160,6 @@ catch (ApiException e)
     }
   }
 ]
-```
-
-
-# Enable Webhooks
-
-This method allows you to enable webhooks via API for your site
-
-```csharp
-EnableWebhooksAsync(
-    Models.EnableWebhooksRequest body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `body` | [`EnableWebhooksRequest`](../../doc/models/enable-webhooks-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`Task<Models.EnableWebhooksResponse>`](../../doc/models/enable-webhooks-response.md)
-
-## Example Usage
-
-```csharp
-EnableWebhooksRequest body = new EnableWebhooksRequest
-{
-    WebhooksEnabled = true,
-};
-
-try
-{
-    EnableWebhooksResponse result = await webhooksController.EnableWebhooksAsync(body);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "webhooks_enabled": true
-}
 ```
 
 

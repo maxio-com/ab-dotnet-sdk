@@ -10,10 +10,133 @@ ProductFamiliesController productFamiliesController = client.ProductFamiliesCont
 
 ## Methods
 
+* [Read Product Family](../../doc/controllers/product-families.md#read-product-family)
+* [List Product Families](../../doc/controllers/product-families.md#list-product-families)
 * [List Products for Product Family](../../doc/controllers/product-families.md#list-products-for-product-family)
 * [Create Product Family](../../doc/controllers/product-families.md#create-product-family)
-* [List Product Families](../../doc/controllers/product-families.md#list-product-families)
-* [Read Product Family](../../doc/controllers/product-families.md#read-product-family)
+
+
+# Read Product Family
+
+This method allows to retrieve a Product Family via the `product_family_id`. The response will contain a Product Family object.
+
+The product family can be specified either with the id number, or with the `handle:my-family` format.
+
+```csharp
+ReadProductFamilyAsync(
+    int id)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `id` | `int` | Template, Required | The Chargify id of the product family |
+
+## Response Type
+
+[`Task<Models.ProductFamilyResponse>`](../../doc/models/product-family-response.md)
+
+## Example Usage
+
+```csharp
+int id = 112;
+try
+{
+    ProductFamilyResponse result = await productFamiliesController.ReadProductFamilyAsync(id);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "product_family": {
+    "id": 527890,
+    "name": "Acme Projects",
+    "description": "",
+    "handle": "billing-plans",
+    "accounting_code": null
+  }
+}
+```
+
+
+# List Product Families
+
+This method allows to retrieve a list of Product Families for a site.
+
+```csharp
+ListProductFamiliesAsync(
+    Models.ListProductFamiliesInput input)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `dateField` | [`BasicDateField?`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search.<br>Use in query: `date_field=created_at`. |
+| `startDate` | `string` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns products with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
+| `endDate` | `string` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns products with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. |
+| `startDatetime` | `string` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns products with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date. |
+| `endDatetime` | `string` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns products with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. |
+
+## Response Type
+
+[`Task<List<Models.ProductFamilyResponse>>`](../../doc/models/product-family-response.md)
+
+## Example Usage
+
+```csharp
+ListProductFamiliesInput listProductFamiliesInput = new ListProductFamiliesInput
+{
+    DateField = BasicDateField.UpdatedAt,
+};
+
+try
+{
+    List<ProductFamilyResponse> result = await productFamiliesController.ListProductFamiliesAsync(listProductFamiliesInput);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+[
+  {
+    "product_family": {
+      "id": 37,
+      "name": "Acme Projects",
+      "description": null,
+      "handle": "acme-projects",
+      "accounting_code": null,
+      "created_at": "2013-02-20T15:05:51-07:00",
+      "updated_at": "2013-02-20T15:05:51-07:00"
+    }
+  },
+  {
+    "product_family": {
+      "id": 155,
+      "name": "Bat Family",
+      "description": "Another family.",
+      "handle": "bat-family",
+      "accounting_code": null,
+      "created_at": "2014-04-16T12:41:13-06:00",
+      "updated_at": "2014-04-16T12:41:13-06:00"
+    }
+  }
+]
+```
 
 
 # List Products for Product Family
@@ -228,129 +351,6 @@ catch (ApiException e)
     "name": "Acme Projects",
     "description": "Amazing project management tool",
     "handle": "acme-projects",
-    "accounting_code": null
-  }
-}
-```
-
-
-# List Product Families
-
-This method allows to retrieve a list of Product Families for a site.
-
-```csharp
-ListProductFamiliesAsync(
-    Models.ListProductFamiliesInput input)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `dateField` | [`BasicDateField?`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search.<br>Use in query: `date_field=created_at`. |
-| `startDate` | `string` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns products with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
-| `endDate` | `string` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns products with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. |
-| `startDatetime` | `string` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns products with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date. |
-| `endDatetime` | `string` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns products with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. |
-
-## Response Type
-
-[`Task<List<Models.ProductFamilyResponse>>`](../../doc/models/product-family-response.md)
-
-## Example Usage
-
-```csharp
-ListProductFamiliesInput listProductFamiliesInput = new ListProductFamiliesInput
-{
-    DateField = BasicDateField.UpdatedAt,
-};
-
-try
-{
-    List<ProductFamilyResponse> result = await productFamiliesController.ListProductFamiliesAsync(listProductFamiliesInput);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-[
-  {
-    "product_family": {
-      "id": 37,
-      "name": "Acme Projects",
-      "description": null,
-      "handle": "acme-projects",
-      "accounting_code": null,
-      "created_at": "2013-02-20T15:05:51-07:00",
-      "updated_at": "2013-02-20T15:05:51-07:00"
-    }
-  },
-  {
-    "product_family": {
-      "id": 155,
-      "name": "Bat Family",
-      "description": "Another family.",
-      "handle": "bat-family",
-      "accounting_code": null,
-      "created_at": "2014-04-16T12:41:13-06:00",
-      "updated_at": "2014-04-16T12:41:13-06:00"
-    }
-  }
-]
-```
-
-
-# Read Product Family
-
-This method allows to retrieve a Product Family via the `product_family_id`. The response will contain a Product Family object.
-
-The product family can be specified either with the id number, or with the `handle:my-family` format.
-
-```csharp
-ReadProductFamilyAsync(
-    int id)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `id` | `int` | Template, Required | The Chargify id of the product family |
-
-## Response Type
-
-[`Task<Models.ProductFamilyResponse>`](../../doc/models/product-family-response.md)
-
-## Example Usage
-
-```csharp
-int id = 112;
-try
-{
-    ProductFamilyResponse result = await productFamiliesController.ReadProductFamilyAsync(id);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "product_family": {
-    "id": 527890,
-    "name": "Acme Projects",
-    "description": "",
-    "handle": "billing-plans",
     "accounting_code": null
   }
 }

@@ -93,6 +93,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="useSiteExchangeRate">use_site_exchange_rate.</param>
         /// <param name="accountingCode">accounting_code.</param>
         /// <param name="eventBasedBillingMetricId">event_based_billing_metric_id.</param>
+        /// <param name="interval">interval.</param>
+        /// <param name="intervalUnit">interval_unit.</param>
         public Component(
             int? id = null,
             string name = null,
@@ -124,7 +126,9 @@ namespace AdvancedBilling.Standard.Models
             Models.ItemCategory? itemCategory = null,
             bool? useSiteExchangeRate = null,
             string accountingCode = null,
-            int? eventBasedBillingMetricId = null)
+            int? eventBasedBillingMetricId = null,
+            int? interval = null,
+            Models.IntervalUnit? intervalUnit = null)
         {
             this.Id = id;
             this.Name = name;
@@ -209,6 +213,8 @@ namespace AdvancedBilling.Standard.Models
             }
 
             this.EventBasedBillingMetricId = eventBasedBillingMetricId;
+            this.Interval = interval;
+            this.IntervalUnit = intervalUnit;
         }
 
         /// <summary>
@@ -555,6 +561,18 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("event_based_billing_metric_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? EventBasedBillingMetricId { get; set; }
 
+        /// <summary>
+        /// The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this component's default price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Interval { get; set; }
+
+        /// <summary>
+        /// A string representing the interval unit for this component's default price point, either month or day. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval_unit", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.IntervalUnit? IntervalUnit { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -828,7 +846,9 @@ namespace AdvancedBilling.Standard.Models
                 ((this.ItemCategory == null && other.ItemCategory == null) || (this.ItemCategory?.Equals(other.ItemCategory) == true)) &&
                 ((this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null) || (this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true)) &&
                 ((this.AccountingCode == null && other.AccountingCode == null) || (this.AccountingCode?.Equals(other.AccountingCode) == true)) &&
-                ((this.EventBasedBillingMetricId == null && other.EventBasedBillingMetricId == null) || (this.EventBasedBillingMetricId?.Equals(other.EventBasedBillingMetricId) == true));
+                ((this.EventBasedBillingMetricId == null && other.EventBasedBillingMetricId == null) || (this.EventBasedBillingMetricId?.Equals(other.EventBasedBillingMetricId) == true)) &&
+                ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
+                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true));
         }
         
         /// <summary>
@@ -868,6 +888,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
             toStringOutput.Add($"this.AccountingCode = {(this.AccountingCode == null ? "null" : this.AccountingCode)}");
             toStringOutput.Add($"this.EventBasedBillingMetricId = {(this.EventBasedBillingMetricId == null ? "null" : this.EventBasedBillingMetricId.ToString())}");
+            toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
+            toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
         }
     }
 }
