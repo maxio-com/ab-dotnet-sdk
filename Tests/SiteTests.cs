@@ -7,23 +7,10 @@ namespace AdvancedBillingTests
 {
     public class SiteTests
     {
-        private readonly AdvancedBillingClient.Builder _builder;
-
-        public SiteTests()
-        {
-            var accessToken = System.Environment.GetEnvironmentVariable("TEST_ACCESS_TOKEN");
-            var username = System.Environment.GetEnvironmentVariable("TEST_USERNAME");
-            _builder = new AdvancedBillingClient.Builder();
-            _builder.BasicAuthCredentials(username, accessToken);
-            _builder.Environment(Environment.Production);
-            _builder.Domain("staging-chargify.com");
-            _builder.Subdomain("dotnet-sdk");
-        }
-
         [Fact]
         public async Task ValidSiteReading_SuccessfulRequest_ReturnsSiteObject()
         {
-            var validClient = _builder.Build();
+            var validClient = Client.GetClient();
 
             var result = await validClient.SitesController.ReadSiteAsync();
 
@@ -39,8 +26,12 @@ namespace AdvancedBillingTests
         [Fact]
         public async Task UnauthorizedSiteReading_InvalidCredentials_Returns401Unauthorized()
         {
-            _builder.BasicAuthCredentials("abc", "123");
-            var invalidClient = _builder.Build();
+            var builder = new AdvancedBillingClient.Builder();
+            builder.Environment(Environment.Production);
+            builder.Domain("staging-chargify.com");
+            builder.Subdomain("dotnet-sdk");
+            builder.BasicAuthCredentials("abc", "123");
+            var invalidClient = builder.Build();
 
             await invalidClient.Invoking(i => i.SitesController.ReadSiteAsync()).Should().ThrowAsync<ApiException>().Where(e => e.ResponseCode == 401);
         }
