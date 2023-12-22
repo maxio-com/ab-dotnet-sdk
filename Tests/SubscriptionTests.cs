@@ -38,8 +38,47 @@ namespace AdvancedBillingTests
         [Fact]
         public async Task CreateSubscription_WithHappyPathData_ShouldSuccess()
         {
-            var productInfo = new CreateOrUpdateProduct()
-            var product = await _client.ProductsController.CreateProductAsync(1, new CreateOrUpdateProductRequest())
+            var productFamilyName = _fixture.Create<string>();
+            var productFamily = new CreateProductFamily(productFamilyName, _fixture.Create<string>());
+            var productName = _fixture.Create<string>();
+            
+            var productFamilyResponse =await 
+                _client.ProductFamiliesController.CreateProductFamilyAsync(
+                    new CreateProductFamilyRequest(productFamily));
+
+            productFamilyResponse.ProductFamily.Id.Should().NotBeNull();
+
+            var productInfo = new CreateOrUpdateProduct(productName, _fixture.Create<string>(), _fixture.Create<long>(), _fixture.Create<int>(), IntervalUnit.Day);
+            
+            var productResponse =
+                await _client.ProductsController.CreateProductAsync((int)productFamilyResponse.ProductFamily.Id!, new CreateOrUpdateProductRequest(productInfo));
+
+            productResponse.Product.Id.Should().NotBeNull();
+            productResponse.Product.Name.Should().Be(productName);
+
+            var customerName = _fixture.Create<string>();
+            var customerLastName = _fixture.Create<string>();
+            var emailStub = "dummy123@gmail.com";
+            var customer = new CreateCustomer(customerName, customerLastName, emailStub);
+
+            var customerResponse =
+                await _client.CustomersController.CreateCustomerAsync(new CreateCustomerRequest(customer));
+            customerResponse.Customer.Id.Should().NotBeNull();
+            customerResponse.Customer.FirstName.Should().Be(customerName);
+            customerResponse.Customer.LastName.Should().Be(customerLastName);
+            customerResponse.Customer.Email.Should().Be(emailStub);
+
+            var subscription = new CreateSubscription
+            {
+                CustomerId = customerResponse.Customer.Id,
+                ProductId = productResponse.Product.Id,
+                PaymentCollectionMethod = PaymentCollectionMethod.Automatic
+            };
+
+            var subscriptionResponse =
+                await _client.SubscriptionsController.CreateSubscriptionAsync(
+                    new CreateSubscriptionRequest(subscription));
+            subscriptionResponse.Subscription.Id.Should().NotBeNull();
         }
 
         [Fact]
