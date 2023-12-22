@@ -36,6 +36,13 @@ namespace AdvancedBillingTests
         }
 
         [Fact]
+        public async Task CreateSubscription_WithHappyPathData_ShouldSuccess()
+        {
+            var productInfo = new CreateOrUpdateProduct()
+            var product = await _client.ProductsController.CreateProductAsync(1, new CreateOrUpdateProductRequest())
+        }
+
+        [Fact]
         public async Task CreateSubscription_WithDefaultData_ShouldFailWithAnyErrorMessage()
         {
             //var subscription = _fixture.Create<CreateSubscription>();
@@ -64,6 +71,20 @@ namespace AdvancedBillingTests
             //createdSubscriptionId.Should().BeGreaterThan(0);
 
             // await invalidClient.Invoking(i => i.SitesController.ReadSiteAsync()).Should().ThrowAsync<ApiException>().Where(e => e.ResponseCode == 401);
+        }
+
+        [Fact]
+        public async Task GetSubscription_WithDefaultData_ShouldSuccess()
+        {
+            try
+            {
+                var subscription = await _client.SubscriptionsController.ReadSubscriptionAsync(314054);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }
