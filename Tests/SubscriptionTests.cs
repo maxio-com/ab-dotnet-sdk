@@ -66,6 +66,46 @@ namespace AdvancedBillingTests
         }
 
         [Fact]
+        public async Task CreateSubscription_RestrictedCouponMeteredComponentData_ShouldHaveAwaitingSignupStatus()
+        {
+            var productFamilyId = await CreateOrGetProductFamily();
+
+            var restrictedProduct = await CreateProduct(productFamilyId);
+
+            var randomChar = _fixture.Create<char>();
+
+            var quantityComponent = new QuantityBasedComponent($"widget{randomChar}", $"widget {randomChar}",
+                PricingScheme.PerUnit, unitPrice: QuantityBasedComponentUnitPrice.FromPrecision(1));
+
+            var restrictedComponentResponse = await _client.ComponentsController.CreateComponentAsync((int)productFamilyId,
+                ComponentKindPath.QuantityBasedComponents,
+                CreateComponentBody.FromCreateQuantityBasedComponent(new CreateQuantityBasedComponent(quantityComponent)));
+
+            restrictedComponentResponse.Component.Id.Should().NotBeNull();
+
+            var meteredComponent = new MeteredComponent($"ApiCalls{randomChar}", $"api call {randomChar}",
+                PricingScheme.PerUnit, unitPrice: MeteredComponentUnitPrice.FromString("1"));
+
+            var componentResponse = await _client.ComponentsController.CreateComponentAsync((int)productFamilyId,
+                ComponentKindPath.MeteredComponents,
+                CreateComponentBody.FromCreateMeteredComponent(new CreateMeteredComponent(meteredComponent)));
+
+            componentResponse.Component.Id.Should().NotBeNull();
+
+            var createOrUpdatePercentageCoupon = new CreateOrUpdatePercentageCoupon("100% off first month of usage",
+                "100OFF", CreateOrUpdatePercentageCouponPercentage.FromPrecision(100), "100% off one-time", "false",
+                "false", "2024-08-29T12:00:00-04:00", productFamilyId.ToString(), "false", excludeMidPeriodAllocations: true, applyOnCancelAtEndOfPeriod: true);
+
+            var restrictedProductDictionary = new Dictionary<string, bool> { { restrictedProduct.Product.Id.ToString()!, false } };
+            var restrictedComponentsDictionary = new Dictionary<string, bool> { { restrictedComponentResponse.Component.Id.ToString()!, false }, { componentResponse.Component.Id.ToString()!, true} };
+
+            var test = await _client.CouponsController.CreateCouponAsync((int)productFamilyId,
+                new CreateOrUpdateCoupon(
+                    CreateOrUpdateCouponCoupon.FromCreateOrUpdatePercentageCoupon(createOrUpdatePercentageCoupon),
+                    restrictedProductDictionary, restrictedComponentsDictionary));
+        }
+
+        [Fact]
         public async Task CreateSubscription_WithMinimalData_ShouldFailWithAnyErrorMessage()
         {
             var subscription = new CreateSubscription();
