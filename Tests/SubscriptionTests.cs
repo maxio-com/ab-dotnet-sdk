@@ -1,6 +1,7 @@
 ﻿using AdvancedBilling.Standard;
 using AdvancedBilling.Standard.Exceptions;
 using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
 using AutoFixture;
 using FluentAssertions;
 
@@ -18,44 +19,137 @@ namespace AdvancedBillingTests
             var subscriptionRequest = new CreateSubscriptionRequest(subscription);
 
             await _client.Invoking(s => s.SubscriptionsController.CreateSubscriptionAsync(subscriptionRequest)).Should()
-                .ThrowAsync<ApiException>()
-                .Where(e => e.Message.Contains("HTTP Response Not OK") && e.Message.Length > "HTTP Response Not OK".Length);
-
-            //var response = await _client.SubscriptionsController.CreateSubscriptionAsync(subscriptionRequest);
-
-
-
-            //response.Should().NotBeNull();
-
-            //var createdSubscriptionId = response.Subscription.Id;
-
-            //createdSubscriptionId.Should().NotBeNull();
-            //createdSubscriptionId.Should().BeGreaterThan(0);
-
-            // await invalidClient.Invoking(i => i.SitesController.ReadSiteAsync()).Should().ThrowAsync<ApiException>().Where(e => e.ResponseCode == 401);
+                .ThrowAsync<ErrorListResponseException>()
+                .Where(e => e.Errors.Count > 0);
         }
 
         [Fact]
-        public async Task CreateSubscription_WithHappyPathData_ShouldSuccess()
+        public async Task CreateSubscription_BasicScenarioData_ShouldSuccess()
         {
-            var productFamilyName = _fixture.Create<string>();
-            var productFamily = new CreateProductFamily(productFamilyName, _fixture.Create<string>());
-            var productName = _fixture.Create<string>();
+            var productFamilyId = await CreateOrGetProductFamily();
+
+            var productResponse = await CreateProduct(productFamilyId);
+
+            var customerResponse = await CreateCustomer();
+
+            var paymentProfile = await CreatePaymentProfile(customerResponse.Customer.Id);
+
+            var subscription = new CreateSubscription
+            {
+                CustomerId = customerResponse.Customer.Id,
+                ProductId = productResponse.Product.Id,
+                PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
+                PaymentProfileId = paymentProfile.PaymentProfile.Id,
+                DunningCommunicationDelayEnabled = false,
+                SkipBillingManifestTaxes = false
+            };
+
+            var subscriptionResponse =
+                await _client.SubscriptionsController.CreateSubscriptionAsync(
+                    new CreateSubscriptionRequest(subscription));
+            subscriptionResponse.Subscription.Id.Should().NotBeNull();
+
+            try
+            {
+                await _client.SubscriptionsController.PurgeSubscriptionAsync((int)subscriptionResponse.Subscription.Id,
+                    (int)customerResponse.Customer.Id);
+
+                await _client.PaymentProfilesController.DeleteUnusedPaymentProfileAsync(paymentProfile.ToString());
+
+                await _client.CustomersController.DeleteCustomerAsync((int)customerResponse.Customer.Id);
+                await _client.ProductsController.ArchiveProductAsync((int)productResponse.Product.Id);
+            }
+            catch (ApiException e)
+            {
+                // Suppress Errors on Cleanup
+            }
+        }
+
+        [Fact]
+        public async Task CreateSubscription_WithMinimalData_ShouldFailWithAnyErrorMessage()
+        {
+            var subscription = new CreateSubscription();
+            var subscriptionRequest = new CreateSubscriptionRequest(subscription);
+
+            await _client.Invoking(s => s.SubscriptionsController.CreateSubscriptionAsync(subscriptionRequest)).Should()
+                .ThrowAsync<ErrorListResponseException>()
+                .Where(e => e.Errors.Count > 0);
+        }
+
+        [Fact]
+        public async Task GetSubscription_WithDefaultData_ShouldSuccess()
+        {
+            var productFamilyId = await CreateOrGetProductFamily();
+
+            var productResponse = await CreateProduct(productFamilyId);
+
+            var customerResponse = await CreateCustomer();
+
+            var paymentProfile = await CreatePaymentProfile(customerResponse.Customer.Id);
+
+            var createdSubscription = new CreateSubscription
+            {
+                CustomerId = customerResponse.Customer.Id,
+                ProductId = productResponse.Product.Id,
+                PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
+                PaymentProfileId = paymentProfile.PaymentProfile.Id,
+                DunningCommunicationDelayEnabled = false,
+                SkipBillingManifestTaxes = false
+            };
+
+            var subscriptionResponse =
+                await _client.SubscriptionsController.CreateSubscriptionAsync(
+                    new CreateSubscriptionRequest(createdSubscription));
+            subscriptionResponse.Subscription.Id.Should().NotBeNull();
             
-            var productFamilyResponse =await 
-                _client.ProductFamiliesController.CreateProductFamilyAsync(
-                    new CreateProductFamilyRequest(productFamily));
+            var subscription = await _client.SubscriptionsController.ReadSubscriptionAsync((int)subscriptionResponse.Subscription.Id);
 
-            productFamilyResponse.ProductFamily.Id.Should().NotBeNull();
+            subscription.Subscription.Id.Should().Be(subscriptionResponse.Subscription.Id);
+            subscription.Subscription.Product.Id.Should().Be(productResponse.Product.Id);
+            subscription.Subscription.Customer.Id.Should().Be(customerResponse.Customer.Id);
+            subscription.Subscription.PaymentCollectionMethod.Should().Be(PaymentCollectionMethod.Automatic);
 
-            var productInfo = new CreateOrUpdateProduct(productName, _fixture.Create<string>(), _fixture.Create<long>(), _fixture.Create<int>(), IntervalUnit.Day);
-            
-            var productResponse =
-                await _client.ProductsController.CreateProductAsync((int)productFamilyResponse.ProductFamily.Id!, new CreateOrUpdateProductRequest(productInfo));
+            try
+            {
+                await _client.SubscriptionsController.PurgeSubscriptionAsync((int)subscriptionResponse.Subscription.Id,
+                    (int)customerResponse.Customer.Id);
 
-            productResponse.Product.Id.Should().NotBeNull();
-            productResponse.Product.Name.Should().Be(productName);
+                await _client.PaymentProfilesController.DeleteUnusedPaymentProfileAsync(paymentProfile.ToString());
 
+                await _client.CustomersController.DeleteCustomerAsync((int)customerResponse.Customer.Id);
+                await _client.ProductsController.ArchiveProductAsync((int)productResponse.Product.Id);
+            }
+            catch (ApiException e)
+            {
+                // Suppress Errors on Cleanup
+            }
+        }
+
+        private async Task<CreatePaymentProfileResponse> CreatePaymentProfile(int? customerId)
+        {
+            var paymentProfile = new CreatePaymentProfile
+            {
+                FirstName = _fixture.Create<string>(),
+                LastName = _fixture.Create<string>(),
+                CardType = CardType.Bogus,
+                MaskedCardNumber = "1",
+                FullNumber = "1",
+                CustomerId = customerId,
+                ExpirationMonth = CreatePaymentProfileExpirationMonth.FromNumber(5),
+                ExpirationYear = CreatePaymentProfileExpirationYear.FromNumber(2030)
+            };
+
+
+            var paymentProfileResponse =
+                await _client.PaymentProfilesController.CreatePaymentProfileAsync(
+                    new CreatePaymentProfileRequest(paymentProfile));
+
+            paymentProfileResponse.PaymentProfile.Id.Should().NotBeNull();
+            return paymentProfileResponse;
+        }
+
+        private async Task<CustomerResponse> CreateCustomer()
+        {
             var customerName = _fixture.Create<string>();
             var customerLastName = _fixture.Create<string>();
             var emailStub = "dummy123@gmail.com";
@@ -67,63 +161,47 @@ namespace AdvancedBillingTests
             customerResponse.Customer.FirstName.Should().Be(customerName);
             customerResponse.Customer.LastName.Should().Be(customerLastName);
             customerResponse.Customer.Email.Should().Be(emailStub);
-
-            var subscription = new CreateSubscription
-            {
-                CustomerId = customerResponse.Customer.Id,
-                ProductId = productResponse.Product.Id,
-                PaymentCollectionMethod = PaymentCollectionMethod.Automatic
-            };
-
-            var subscriptionResponse =
-                await _client.SubscriptionsController.CreateSubscriptionAsync(
-                    new CreateSubscriptionRequest(subscription));
-            subscriptionResponse.Subscription.Id.Should().NotBeNull();
+            return customerResponse;
         }
 
-        [Fact]
-        public async Task CreateSubscription_WithDefaultData_ShouldFailWithAnyErrorMessage()
+        private async Task<ProductResponse> CreateProduct(int? productFamilyId)
         {
-            //var subscription = _fixture.Create<CreateSubscription>();
-            var subscription = new CreateSubscription();
-            var subscriptionRequest = new CreateSubscriptionRequest(subscription);
+            var productName = _fixture.Create<string>();
 
-            //await _client.Invoking(s => s.SubscriptionsController.CreateSubscriptionAsync(subscriptionRequest)).Should()
-            //    .ThrowAsync<ApiException>()
-            //    .Where(e => e.Message.Contains("HTTP Response Not OK") && e.Message.Length > "HTTP Response Not OK".Length);
+            var productInfo = new CreateOrUpdateProduct(productName, _fixture.Create<string>(), _fixture.Create<long>(),
+                _fixture.Create<int>(), IntervalUnit.Day);
 
-            try
-            {
-                var response = await _client.SubscriptionsController.CreateSubscriptionAsync(subscriptionRequest);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            var productResponse =
+                await _client.ProductsController.CreateProductAsync((int)productFamilyId,
+                    new CreateOrUpdateProductRequest(productInfo));
 
-            //response.Should().NotBeNull();
-
-            //var createdSubscriptionId = response.Subscription.Id;
-
-            //createdSubscriptionId.Should().NotBeNull();
-            //createdSubscriptionId.Should().BeGreaterThan(0);
-
-            // await invalidClient.Invoking(i => i.SitesController.ReadSiteAsync()).Should().ThrowAsync<ApiException>().Where(e => e.ResponseCode == 401);
+            productResponse.Product.Id.Should().NotBeNull();
+            productResponse.Product.Name.Should().Be(productName);
+            return productResponse;
         }
 
-        [Fact]
-        public async Task GetSubscription_WithDefaultData_ShouldSuccess()
+        private async Task<int?> CreateOrGetProductFamily()
         {
-            try
+            var productFamilies =
+                await _client.ProductFamiliesController.ListProductFamiliesAsync(new ListProductFamiliesInput());
+
+            var productFamilyId = productFamilies.FirstOrDefault()?.ProductFamily.Id;
+
+            if (productFamilyId == null)
             {
-                var subscription = await _client.SubscriptionsController.ReadSubscriptionAsync(314054);
+                var productFamilyName = _fixture.Create<string>();
+                var productFamily = new CreateProductFamily(productFamilyName, _fixture.Create<string>());
+
+                var productFamilyResponse = await
+                    _client.ProductFamiliesController.CreateProductFamilyAsync(
+                        new CreateProductFamilyRequest(productFamily));
+
+                productFamilyResponse.ProductFamily.Id.Should().NotBeNull();
+                productFamilyId = (int)productFamilyResponse.ProductFamily.Id!;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+
+            return productFamilyId;
         }
+
     }
 }
