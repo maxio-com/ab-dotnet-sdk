@@ -70,20 +70,22 @@ namespace AdvancedBillingTests
         {
             var productFamilyId = await CreateOrGetProductFamily();
 
-            var restrictedProduct = await CreateProduct(productFamilyId);
+            var product = await CreateProduct(productFamilyId);
 
-            var randomChar = _fixture.Create<char>();
+            var randomString = GenerateRandomString(4);
 
-            var quantityComponent = new QuantityBasedComponent($"widget{randomChar}", $"widget {randomChar}",
+            var quantityComponent = new QuantityBasedComponent($"widget{randomString}", $"widget {randomString}",
                 PricingScheme.PerUnit, unitPrice: QuantityBasedComponentUnitPrice.FromPrecision(1));
 
-            var restrictedComponentResponse = await _client.ComponentsController.CreateComponentAsync((int)productFamilyId,
+            var restrictedComponentResponse = await _client.ComponentsController.CreateComponentAsync(
+                (int)productFamilyId,
                 ComponentKindPath.QuantityBasedComponents,
-                CreateComponentBody.FromCreateQuantityBasedComponent(new CreateQuantityBasedComponent(quantityComponent)));
+                CreateComponentBody.FromCreateQuantityBasedComponent(
+                    new CreateQuantityBasedComponent(quantityComponent)));
 
             restrictedComponentResponse.Component.Id.Should().NotBeNull();
 
-            var meteredComponent = new MeteredComponent($"ApiCalls{randomChar}", $"api call {randomChar}",
+            var meteredComponent = new MeteredComponent($"ApiCalls{randomString}", $"api call {randomString}",
                 PricingScheme.PerUnit, unitPrice: MeteredComponentUnitPrice.FromString("1"));
 
             var componentResponse = await _client.ComponentsController.CreateComponentAsync((int)productFamilyId,
@@ -92,17 +94,82 @@ namespace AdvancedBillingTests
 
             componentResponse.Component.Id.Should().NotBeNull();
 
+            var couponCode = $"100{randomString}OFF";
+
             var createOrUpdatePercentageCoupon = new CreateOrUpdatePercentageCoupon("100% off first month of usage",
-                "100OFF", CreateOrUpdatePercentageCouponPercentage.FromPrecision(100), "100% off one-time", "false",
-                "false", "2024-08-29T12:00:00-04:00", productFamilyId.ToString(), "false", excludeMidPeriodAllocations: true, applyOnCancelAtEndOfPeriod: true);
+                couponCode, CreateOrUpdatePercentageCouponPercentage.FromPrecision(100), "100% off one-time", "false",
+                "false", "2024-08-29T12:00:00-04:00", productFamilyId.ToString(), "false",
+                excludeMidPeriodAllocations: true, applyOnCancelAtEndOfPeriod: true);
 
-            var restrictedProductDictionary = new Dictionary<string, bool> { { restrictedProduct.Product.Id.ToString()!, false } };
-            var restrictedComponentsDictionary = new Dictionary<string, bool> { { restrictedComponentResponse.Component.Id.ToString()!, false }, { componentResponse.Component.Id.ToString()!, true} };
+            var restrictedProductDictionary = new Dictionary<string, bool> { { product.Product.Id.ToString()!, true } };
+            var restrictedComponentsDictionary = new Dictionary<string, bool>
+            {
+                { restrictedComponentResponse.Component.Id.ToString()!, false },
+                { componentResponse.Component.Id.ToString()!, true }
+            };
 
-            var test = await _client.CouponsController.CreateCouponAsync((int)productFamilyId,
-                new CreateOrUpdateCoupon(
-                    CreateOrUpdateCouponCoupon.FromCreateOrUpdatePercentageCoupon(createOrUpdatePercentageCoupon),
-                    restrictedProductDictionary, restrictedComponentsDictionary));
+            try
+            {
+                var couponResponse = await _client.CouponsController.CreateCouponAsync((int)productFamilyId,
+                    new CreateOrUpdateCoupon(
+                        CreateOrUpdateCouponCoupon.FromCreateOrUpdatePercentageCoupon(createOrUpdatePercentageCoupon),
+                        restrictedProductDictionary, restrictedComponentsDictionary));
+                couponResponse.Coupon.Id.Should().NotBeNull();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+           
+            var customer = await CreateCustomer();
+
+            var paymentProfile = await CreatePaymentProfile(customer.Customer.Id);
+
+            var initialBillingDate = DateTime.Now.AddDays(20);
+
+            var createdSubscription = new CreateSubscription
+            {
+                CustomerId = customer.Customer.Id,
+                ProductId = product.Product.Id,
+                PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
+                PaymentProfileId = paymentProfile.PaymentProfile.Id,
+                DunningCommunicationDelayEnabled = false,
+                SkipBillingManifestTaxes = false,
+                Components = new List<CreateSubscriptionComponent>()
+                {
+                    new CreateSubscriptionComponent(
+                        CreateSubscriptionComponentComponentId.FromNumber((int)componentResponse.Component.Id), quantity: 10)
+                },
+                CouponCode = couponCode,
+                InitialBillingAt = initialBillingDate.ToString("yyyy-MM-dd")
+            };
+            var subscriptionResponse =
+                await _client.SubscriptionsController.CreateSubscriptionAsync(
+                    new CreateSubscriptionRequest(createdSubscription));
+
+            subscriptionResponse.Subscription.Id.Should().NotBeNull();
+            subscriptionResponse.Subscription.State.Should().Be(SubscriptionState.AwaitingSignup);
+
+            try
+            {
+                await _client.SubscriptionsController.PurgeSubscriptionAsync((int)subscriptionResponse.Subscription.Id,
+                    (int)customer.Customer.Id);
+
+                await _client.PaymentProfilesController.DeleteUnusedPaymentProfileAsync(paymentProfile.ToString());
+
+                await _client.CustomersController.DeleteCustomerAsync((int)customer.Customer.Id);
+               // await _client.CouponsController.ArchiveCouponAsync((int)productFamilyId, (int)couponResponse.Coupon.Id);
+                await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
+                    componentResponse.Component.Id.ToString());
+                await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
+                    restrictedComponentResponse.Component.Id.ToString());
+                await _client.ProductsController.ArchiveProductAsync((int)product.Product.Id);
+            }
+            catch (ApiException e)
+            {
+                // Suppress Errors on Cleanup
+            }
         }
 
         [Fact]
@@ -243,5 +310,12 @@ namespace AdvancedBillingTests
             return productFamilyId;
         }
 
+        static string GenerateRandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+";
+            var random = new Random();
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
     }
 }
