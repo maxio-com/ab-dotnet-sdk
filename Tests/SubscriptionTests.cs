@@ -4,6 +4,7 @@ using AdvancedBilling.Standard.Models;
 using AdvancedBilling.Standard.Models.Containers;
 using AutoFixture;
 using FluentAssertions;
+using Environment = AdvancedBilling.Standard.Environment;
 
 namespace AdvancedBillingTests
 {
@@ -66,6 +67,127 @@ namespace AdvancedBillingTests
         }
 
         [Fact]
+        public async Task
+            CreateSubscription_WrongCouponCodeProvidedToSubscription_ShouldHaveUnprocessableStatusWithMeaningfulError()
+        {
+            var productFamilyId = await CreateOrGetProductFamily();
+
+            var product = await CreateProduct(productFamilyId);
+
+            var randomString = GenerateRandomString(8);
+
+            var meteredComponent = new MeteredComponent($"ApiCalls{randomString}", $"api call {randomString}",
+                PricingScheme.PerUnit, unitPrice: MeteredComponentUnitPrice.FromString("1"));
+
+            var componentResponse = await _client.ComponentsController.CreateComponentAsync((int)productFamilyId,
+                ComponentKindPath.MeteredComponents,
+                CreateComponentBody.FromCreateMeteredComponent(new CreateMeteredComponent(meteredComponent)));
+
+            componentResponse.Component.Id.Should().NotBeNull();
+
+            var couponCode = $"100{randomString}OFF";
+
+            var createOrUpdatePercentageCoupon = new CreateOrUpdatePercentageCoupon("100% off first month of usage",
+                couponCode, CreateOrUpdatePercentageCouponPercentage.FromPrecision(100), "100% off one-time", "false",
+                "false", "2024-08-29T12:00:00-04:00", productFamilyId.ToString(), "false",
+                excludeMidPeriodAllocations: true, applyOnCancelAtEndOfPeriod: true);
+
+            var restrictedProductDictionary = new Dictionary<string, bool> { { product.Product.Id.ToString()!, true } };
+            var restrictedComponentsDictionary = new Dictionary<string, bool>
+            {
+                { componentResponse.Component.Id.ToString()!, true }
+            };
+
+            var couponResponse = await _client.CouponsController.CreateCouponAsync((int)productFamilyId,
+                new CreateOrUpdateCoupon(
+                    CreateOrUpdateCouponCoupon.FromCreateOrUpdatePercentageCoupon(createOrUpdatePercentageCoupon),
+                    restrictedProductDictionary, restrictedComponentsDictionary));
+            couponResponse.Coupon.Id.Should().NotBeNull();
+
+            var customer = await CreateCustomer();
+
+            var paymentProfile = await CreatePaymentProfile(customer.Customer.Id);
+
+            var initialBillingDate = DateTime.Now.AddDays(20);
+
+            var wrongCouponCode = $"WrongCode{randomString}";
+
+            var createdSubscription = new CreateSubscription
+            {
+                CustomerId = customer.Customer.Id,
+                ProductId = product.Product.Id,
+                PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
+                PaymentProfileId = paymentProfile.PaymentProfile.Id,
+                DunningCommunicationDelayEnabled = false,
+                SkipBillingManifestTaxes = false,
+                Components = new List<CreateSubscriptionComponent>()
+                {
+                    new CreateSubscriptionComponent(
+                        CreateSubscriptionComponentComponentId.FromNumber((int)componentResponse.Component.Id),
+                        quantity: 10)
+                },
+                CouponCode = wrongCouponCode,
+                InitialBillingAt = initialBillingDate.ToString("yyyy-MM-dd")
+            };
+
+            await _client.Invoking(c => c.SubscriptionsController.CreateSubscriptionAsync(
+                    new CreateSubscriptionRequest(createdSubscription))).Should()
+                .ThrowAsync<ErrorListResponseException>()
+                .Where(e => e.ResponseCode == 422 && e.Errors.Any(a => a.Contains("Coupon code could not be found")));
+
+            try
+            {
+                await _client.PaymentProfilesController.DeleteUnusedPaymentProfileAsync(paymentProfile.ToString());
+
+                await _client.CustomersController.DeleteCustomerAsync((int)customer.Customer.Id);
+                await _client.CouponsController.ArchiveCouponAsync((int)productFamilyId, (int)couponResponse.Coupon.Id);
+                await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
+                    componentResponse.Component.Id.ToString());
+
+                await _client.ProductsController.ArchiveProductAsync((int)product.Product.Id);
+            }
+            catch (ApiException e)
+            {
+                // Suppress Errors on Cleanup
+            }
+        }
+
+        [Fact]
+        public async Task
+            CreateSubscription_UnauthorizedAccessCreateSubscription_ShouldHaveReturns401Unauthorized()
+        {
+            var builder = new AdvancedBillingClient.Builder();
+            builder.Environment(Environment.Production);
+            builder.Domain("staging-chargify.com");
+            builder.Subdomain("dotnet-sdk");
+            builder.BasicAuthCredentials("abc", "123");
+            var invalidClient = builder.Build();
+
+            var createdSubscription = new CreateSubscription
+            {
+                CustomerId = _fixture.Create<int>(),
+                ProductId = _fixture.Create<int>(),
+                PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
+                PaymentProfileId = _fixture.Create<int>(),
+                DunningCommunicationDelayEnabled = false,
+                SkipBillingManifestTaxes = false,
+                Components = new List<CreateSubscriptionComponent>()
+                {
+                    new CreateSubscriptionComponent(
+                        CreateSubscriptionComponentComponentId.FromNumber(_fixture.Create<int>()),
+                        quantity: 10)
+                },
+                CouponCode = _fixture.Create<string>(),
+                InitialBillingAt = _fixture.Create<DateTime>().ToString("yyyy-MM-dd")
+            };
+
+            await invalidClient.Invoking(c => c.SubscriptionsController.CreateSubscriptionAsync(
+                    new CreateSubscriptionRequest(createdSubscription))).Should()
+                .ThrowAsync<ApiException>()
+                .Where(e => e.ResponseCode == 401);
+        }
+
+        [Fact]
         public async Task CreateSubscription_RestrictedCouponMeteredComponentData_ShouldHaveAwaitingSignupStatus()
         {
             var productFamilyId = await CreateOrGetProductFamily();
@@ -108,20 +230,12 @@ namespace AdvancedBillingTests
                 { componentResponse.Component.Id.ToString()!, true }
             };
 
-            try
-            {
-                var couponResponse = await _client.CouponsController.CreateCouponAsync((int)productFamilyId,
-                    new CreateOrUpdateCoupon(
-                        CreateOrUpdateCouponCoupon.FromCreateOrUpdatePercentageCoupon(createOrUpdatePercentageCoupon),
-                        restrictedProductDictionary, restrictedComponentsDictionary));
-                couponResponse.Coupon.Id.Should().NotBeNull();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-           
+            var couponResponse = await _client.CouponsController.CreateCouponAsync((int)productFamilyId,
+                new CreateOrUpdateCoupon(
+                    CreateOrUpdateCouponCoupon.FromCreateOrUpdatePercentageCoupon(createOrUpdatePercentageCoupon),
+                    restrictedProductDictionary, restrictedComponentsDictionary));
+            couponResponse.Coupon.Id.Should().NotBeNull();
+
             var customer = await CreateCustomer();
 
             var paymentProfile = await CreatePaymentProfile(customer.Customer.Id);
@@ -139,7 +253,8 @@ namespace AdvancedBillingTests
                 Components = new List<CreateSubscriptionComponent>()
                 {
                     new CreateSubscriptionComponent(
-                        CreateSubscriptionComponentComponentId.FromNumber((int)componentResponse.Component.Id), quantity: 10)
+                        CreateSubscriptionComponentComponentId.FromNumber((int)componentResponse.Component.Id),
+                        quantity: 10)
                 },
                 CouponCode = couponCode,
                 InitialBillingAt = initialBillingDate.ToString("yyyy-MM-dd")
@@ -159,7 +274,7 @@ namespace AdvancedBillingTests
                 await _client.PaymentProfilesController.DeleteUnusedPaymentProfileAsync(paymentProfile.ToString());
 
                 await _client.CustomersController.DeleteCustomerAsync((int)customer.Customer.Id);
-               // await _client.CouponsController.ArchiveCouponAsync((int)productFamilyId, (int)couponResponse.Coupon.Id);
+                // await _client.CouponsController.ArchiveCouponAsync((int)productFamilyId, (int)couponResponse.Coupon.Id);
                 await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
                     componentResponse.Component.Id.ToString());
                 await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
@@ -312,7 +427,7 @@ namespace AdvancedBillingTests
 
         static string GenerateRandomString(int length)
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+";
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             var random = new Random();
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
