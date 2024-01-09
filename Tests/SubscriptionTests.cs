@@ -4,7 +4,6 @@ using AdvancedBilling.Standard.Models;
 using AdvancedBilling.Standard.Models.Containers;
 using AutoFixture;
 using FluentAssertions;
-using Environment = AdvancedBilling.Standard.Environment;
 
 namespace AdvancedBillingTests
 {
@@ -156,12 +155,7 @@ namespace AdvancedBillingTests
         public async Task
             CreateSubscription_UnauthorizedAccessCreateSubscription_ShouldHaveReturns401Unauthorized()
         {
-            var builder = new AdvancedBillingClient.Builder();
-            builder.Environment(Environment.Production);
-            builder.Domain("staging-chargify.com");
-            builder.Subdomain("dotnet-sdk");
-            builder.BasicAuthCredentials("abc", "123");
-            var invalidClient = builder.Build();
+            var invalidClient = InvalidClient.GetInvalidClient();
 
             var createdSubscription = new CreateSubscription
             {
