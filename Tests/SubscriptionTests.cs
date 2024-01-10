@@ -2,6 +2,7 @@
 using AdvancedBilling.Standard.Exceptions;
 using AdvancedBilling.Standard.Models;
 using AdvancedBilling.Standard.Models.Containers;
+using AdvancedBillingTests.Utils;
 using AutoFixture;
 using FluentAssertions;
 
@@ -60,7 +61,7 @@ namespace AdvancedBillingTests
 
             var product = await CreateProduct(productFamilyId);
 
-            var randomString = GenerateRandomString(8);
+            var randomString = TestUtils.GenerateRandomString(8);
 
             var meteredComponent = new MeteredComponent($"ApiCalls{randomString}", $"api call {randomString}",
                 PricingScheme.PerUnit, unitPrice: MeteredComponentUnitPrice.FromString("1"));
@@ -172,7 +173,7 @@ namespace AdvancedBillingTests
 
             var product = await CreateProduct(productFamilyId);
 
-            var randomString = GenerateRandomString(4);
+            var randomString = TestUtils.GenerateRandomString(4);
 
             var quantityComponent = new QuantityBasedComponent($"widget{randomString}", $"widget {randomString}",
                 PricingScheme.PerUnit, unitPrice: QuantityBasedComponentUnitPrice.FromPrecision(1));
@@ -413,14 +414,6 @@ namespace AdvancedBillingTests
             }
 
             return productFamilyId;
-        }
-
-        static string GenerateRandomString(int length)
-        {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-            var random = new Random();
-            return new string(Enumerable.Repeat(chars, length)
-                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }
