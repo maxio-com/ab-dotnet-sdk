@@ -49,20 +49,7 @@ namespace AdvancedBillingTests
                     new CreateSubscriptionRequest(subscription));
             subscriptionResponse.Subscription.Id.Should().NotBeNull();
 
-            try
-            {
-                await _client.SubscriptionsController.PurgeSubscriptionAsync((int)subscriptionResponse.Subscription.Id,
-                    (int)customerResponse.Customer.Id);
-
-                await _client.PaymentProfilesController.DeleteUnusedPaymentProfileAsync(paymentProfile.ToString());
-
-                await _client.CustomersController.DeleteCustomerAsync((int)customerResponse.Customer.Id);
-                await _client.ProductsController.ArchiveProductAsync((int)productResponse.Product.Id);
-            }
-            catch (ApiException e)
-            {
-                // Suppress Errors on Cleanup
-            }
+            await ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfile, productResponse);
         }
 
         [Fact]
@@ -134,21 +121,18 @@ namespace AdvancedBillingTests
                 .ThrowAsync<ErrorListResponseException>()
                 .Where(e => e.ResponseCode == 422 && e.Errors.Any(a => a.Contains("Coupon code could not be found")));
 
-            try
-            {
-                await _client.PaymentProfilesController.DeleteUnusedPaymentProfileAsync(paymentProfile.ToString());
+            await ExecuteCleanupForPaymentProfileProductCustomer(customer, paymentProfile, product);
 
-                await _client.CustomersController.DeleteCustomerAsync((int)customer.Customer.Id);
-                await _client.CouponsController.ArchiveCouponAsync((int)productFamilyId, (int)couponResponse.Coupon.Id);
+            await ErrorSuppressionWrapper.RunAsync(async () =>
+            {
                 await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
                     componentResponse.Component.Id.ToString());
+            });
 
-                await _client.ProductsController.ArchiveProductAsync((int)product.Product.Id);
-            }
-            catch (ApiException e)
+            await ErrorSuppressionWrapper.RunAsync(async () =>
             {
-                // Suppress Errors on Cleanup
-            }
+                await _client.CouponsController.ArchiveCouponAsync((int)productFamilyId, (int)couponResponse.Coupon.Id);
+            });
         }
 
         [Fact]
@@ -260,25 +244,19 @@ namespace AdvancedBillingTests
             subscriptionResponse.Subscription.Id.Should().NotBeNull();
             subscriptionResponse.Subscription.State.Should().Be(SubscriptionState.AwaitingSignup);
 
-            try
+            await ExecuteBasicSubscriptionCleanup(subscriptionResponse, customer, paymentProfile, product);
+
+            await ErrorSuppressionWrapper.RunAsync(async () =>
             {
-                await _client.SubscriptionsController.PurgeSubscriptionAsync((int)subscriptionResponse.Subscription.Id,
-                    (int)customer.Customer.Id);
-
-                await _client.PaymentProfilesController.DeleteUnusedPaymentProfileAsync(paymentProfile.ToString());
-
-                await _client.CustomersController.DeleteCustomerAsync((int)customer.Customer.Id);
-                // await _client.CouponsController.ArchiveCouponAsync((int)productFamilyId, (int)couponResponse.Coupon.Id);
                 await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
                     componentResponse.Component.Id.ToString());
+            });
+
+            await ErrorSuppressionWrapper.RunAsync(async () =>
+            {
                 await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
                     restrictedComponentResponse.Component.Id.ToString());
-                await _client.ProductsController.ArchiveProductAsync((int)product.Product.Id);
-            }
-            catch (ApiException e)
-            {
-                // Suppress Errors on Cleanup
-            }
+            });
         }
 
         [Fact]
@@ -325,20 +303,38 @@ namespace AdvancedBillingTests
             subscription.Subscription.Customer.Id.Should().Be(customerResponse.Customer.Id);
             subscription.Subscription.PaymentCollectionMethod.Should().Be(PaymentCollectionMethod.Automatic);
 
-            try
+            await ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfile, productResponse);
+        }
+
+        private async Task ExecuteBasicSubscriptionCleanup(SubscriptionResponse subscriptionResponse,
+            CustomerResponse customerResponse, CreatePaymentProfileResponse paymentProfile, ProductResponse productResponse)
+        {
+            await ErrorSuppressionWrapper.RunAsync(async () =>
             {
                 await _client.SubscriptionsController.PurgeSubscriptionAsync((int)subscriptionResponse.Subscription.Id,
                     (int)customerResponse.Customer.Id);
+            });
 
-                await _client.PaymentProfilesController.DeleteUnusedPaymentProfileAsync(paymentProfile.ToString());
+            await ExecuteCleanupForPaymentProfileProductCustomer(customerResponse, paymentProfile, productResponse);
+        }
 
-                await _client.CustomersController.DeleteCustomerAsync((int)customerResponse.Customer.Id);
-                await _client.ProductsController.ArchiveProductAsync((int)productResponse.Product.Id);
-            }
-            catch (ApiException e)
+        private async Task ExecuteCleanupForPaymentProfileProductCustomer(CustomerResponse customerResponse,
+            CreatePaymentProfileResponse paymentProfile, ProductResponse productResponse)
+        {
+            await ErrorSuppressionWrapper.RunAsync(async () =>
             {
-                // Suppress Errors on Cleanup
-            }
+                await _client.PaymentProfilesController.DeleteUnusedPaymentProfileAsync(paymentProfile.ToString());
+            });
+
+            await ErrorSuppressionWrapper.RunAsync(async () =>
+            {
+                await _client.CustomersController.DeleteCustomerAsync((int)customerResponse.Customer.Id);
+            });
+
+            await ErrorSuppressionWrapper.RunAsync(async () =>
+            {
+                await _client.ProductsController.ArchiveProductAsync((int)productResponse.Product.Id);
+            });
         }
 
         private async Task<CreatePaymentProfileResponse> CreatePaymentProfile(int? customerId)
