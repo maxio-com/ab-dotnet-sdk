@@ -10,64 +10,10 @@ InsightsController insightsController = client.InsightsController;
 
 ## Methods
 
-* [List Mrr Per Subscription](../../doc/controllers/insights.md#list-mrr-per-subscription)
 * [Read Site Stats](../../doc/controllers/insights.md#read-site-stats)
-* [Read Mrr Movements](../../doc/controllers/insights.md#read-mrr-movements)
 * [Read Mrr](../../doc/controllers/insights.md#read-mrr)
-
-
-# List Mrr Per Subscription
-
-**This endpoint is deprecated.**
-
-This endpoint returns your site's current MRR, including plan and usage breakouts split per subscription.
-
-```csharp
-ListMrrPerSubscriptionAsync(
-    Models.ListMrrPerSubscriptionInput input)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `filterSubscriptionIds` | `List<int>` | Query, Optional | Submit ids in order to limit results. Use in query: `filter[subscription_ids]=1,2,3`. |
-| `atTime` | `string` | Query, Optional | Submit a timestamp in ISO8601 format to request MRR for a historic time. Use in query: `at_time=2022-01-10T10:00:00-05:00`. |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br>**Default**: `20`<br>**Constraints**: `<= 200` |
-| `direction` | [`Direction?`](../../doc/models/direction.md) | Query, Optional | Controls the order in which results are returned. Records are ordered by subscription_id in ascending order by default. Use in query `direction=desc`. |
-
-## Response Type
-
-[`Task<Models.SubscriptionMRRResponse>`](../../doc/models/subscription-mrr-response.md)
-
-## Example Usage
-
-```csharp
-ListMrrPerSubscriptionInput listMrrPerSubscriptionInput = new ListMrrPerSubscriptionInput
-{
-Liquid error: Value cannot be null. (Parameter 'key')    AtTime = "at_time=2022-01-10T10:00:00-05:00",
-    Page = 2,
-    PerPage = 50,
-    Direction = Direction.Desc,
-};
-
-try
-{
-    SubscriptionMRRResponse result = await insightsController.ListMrrPerSubscriptionAsync(listMrrPerSubscriptionInput);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Bad Request | [`SubscriptionsMrrErrorResponseException`](../../doc/models/subscriptions-mrr-error-response-exception.md) |
+* [Read Mrr Movements](../../doc/controllers/insights.md#read-mrr-movements)
+* [List Mrr Per Subscription](../../doc/controllers/insights.md#list-mrr-per-subscription)
 
 
 # Read Site Stats
@@ -124,6 +70,64 @@ catch (ApiException e)
 ```
 
 
+# Read Mrr
+
+**This endpoint is deprecated.**
+
+This endpoint returns your site's current MRR, including plan and usage breakouts.
+
+```csharp
+ReadMrrAsync(
+    DateTimeOffset? atTime = null,
+    int? subscriptionId = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `atTime` | `DateTimeOffset?` | Query, Optional | submit a timestamp in ISO8601 format to request MRR for a historic time |
+| `subscriptionId` | `int?` | Query, Optional | submit the id of a subscription in order to limit results |
+
+## Response Type
+
+[`Task<Models.MRRResponse>`](../../doc/models/mrr-response.md)
+
+## Example Usage
+
+```csharp
+try
+{
+    MRRResponse result = await insightsController.ReadMrrAsync();
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "mrr": {
+    "amount_in_cents": 9915593,
+    "amount_formatted": "$99,155.93",
+    "currency": "USD",
+    "currency_symbol": "$",
+    "at_time": "2021-02-03T14:23:17-05:00",
+    "breakouts": {
+      "plan_amount_in_cents": 9913593,
+      "plan_amount_formatted": "$99,135.93",
+      "usage_amount_in_cents": 2000,
+      "usage_amount_formatted": "$20.00"
+    }
+  }
+}
+```
+
+
 # Read Mrr Movements
 
 **This endpoint is deprecated.**
@@ -163,8 +167,8 @@ ReadMrrMovementsAsync(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `int?` | Query, Optional | optionally filter results by subscription |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 10. The maximum allowed values is 50; any per_page value over 50 will be changed to 50.<br>Use in query `per_page=20`.<br>**Default**: `10`<br>**Constraints**: `<= 50` |
+| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 10. The maximum allowed values is 50; any per_page value over 50 will be changed to 50.<br>Use in query `per_page=20`. |
 | `direction` | [`SortingDirection?`](../../doc/models/sorting-direction.md) | Query, Optional | Controls the order in which results are returned.<br>Use in query `direction=asc`. |
 
 ## Response Type
@@ -244,35 +248,45 @@ catch (ApiException e)
 ```
 
 
-# Read Mrr
+# List Mrr Per Subscription
 
 **This endpoint is deprecated.**
 
-This endpoint returns your site's current MRR, including plan and usage breakouts.
+This endpoint returns your site's current MRR, including plan and usage breakouts split per subscription.
 
 ```csharp
-ReadMrrAsync(
-    DateTimeOffset? atTime = null,
-    int? subscriptionId = null)
+ListMrrPerSubscriptionAsync(
+    Models.ListMrrPerSubscriptionInput input)
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `atTime` | `DateTimeOffset?` | Query, Optional | submit a timestamp in ISO8601 format to request MRR for a historic time |
-| `subscriptionId` | `int?` | Query, Optional | submit the id of a subscription in order to limit results |
+| `filterSubscriptionIds` | `List<int>` | Query, Optional | Submit ids in order to limit results. Use in query: `filter[subscription_ids]=1,2,3`. |
+| `atTime` | `string` | Query, Optional | Submit a timestamp in ISO8601 format to request MRR for a historic time. Use in query: `at_time=2022-01-10T10:00:00-05:00`. |
+| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `direction` | [`Direction?`](../../doc/models/direction.md) | Query, Optional | Controls the order in which results are returned. Records are ordered by subscription_id in ascending order by default. Use in query `direction=desc`. |
 
 ## Response Type
 
-[`Task<Models.MRRResponse>`](../../doc/models/mrr-response.md)
+[`Task<Models.SubscriptionMRRResponse>`](../../doc/models/subscription-mrr-response.md)
 
 ## Example Usage
 
 ```csharp
+ListMrrPerSubscriptionInput listMrrPerSubscriptionInput = new ListMrrPerSubscriptionInput
+{
+Liquid error: Value cannot be null. (Parameter 'key')    AtTime = "at_time=2022-01-10T10:00:00-05:00",
+    Page = 2,
+    PerPage = 50,
+    Direction = Direction.Desc,
+};
+
 try
 {
-    MRRResponse result = await insightsController.ReadMrrAsync();
+    SubscriptionMRRResponse result = await insightsController.ListMrrPerSubscriptionAsync(listMrrPerSubscriptionInput);
 }
 catch (ApiException e)
 {
@@ -281,23 +295,9 @@ catch (ApiException e)
 }
 ```
 
-## Example Response *(as JSON)*
+## Errors
 
-```json
-{
-  "mrr": {
-    "amount_in_cents": 9915593,
-    "amount_formatted": "$99,155.93",
-    "currency": "USD",
-    "currency_symbol": "$",
-    "at_time": "2021-02-03T14:23:17-05:00",
-    "breakouts": {
-      "plan_amount_in_cents": 9913593,
-      "plan_amount_formatted": "$99,135.93",
-      "usage_amount_in_cents": 2000,
-      "usage_amount_formatted": "$20.00"
-    }
-  }
-}
-```
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Bad Request | [`SubscriptionsMrrErrorResponseException`](../../doc/models/subscriptions-mrr-error-response-exception.md) |
 

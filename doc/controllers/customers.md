@@ -10,195 +10,13 @@ CustomersController customersController = client.CustomersController;
 
 ## Methods
 
-* [List Customers](../../doc/controllers/customers.md#list-customers)
-* [Read Customer by Reference](../../doc/controllers/customers.md#read-customer-by-reference)
 * [Create Customer](../../doc/controllers/customers.md#create-customer)
-* [Update Customer](../../doc/controllers/customers.md#update-customer)
+* [List Customers](../../doc/controllers/customers.md#list-customers)
 * [Read Customer](../../doc/controllers/customers.md#read-customer)
-* [List Customer Subscriptions](../../doc/controllers/customers.md#list-customer-subscriptions)
+* [Update Customer](../../doc/controllers/customers.md#update-customer)
 * [Delete Customer](../../doc/controllers/customers.md#delete-customer)
-
-
-# List Customers
-
-This request will by default list all customers associated with your Site.
-
-## Find Customer
-
-Use the search feature with the `q` query parameter to retrieve an array of customers that matches the search query.
-
-Common use cases are:
-
-+ Search by an email
-+ Search by a Chargify ID
-+ Search by an organization
-+ Search by a reference value from your application
-+ Search by a first or last name
-
-To retrieve a single, exact match by reference, please use the [lookup endpoint](https://developers.chargify.com/docs/api-docs/b710d8fbef104-read-customer-by-reference).
-
-```csharp
-ListCustomersAsync(
-    Models.ListCustomersInput input)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `direction` | [`SortingDirection?`](../../doc/models/sorting-direction.md) | Query, Optional | Direction to sort customers by time of creation |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 50. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br>**Default**: `50`<br>**Constraints**: `<= 200` |
-| `dateField` | [`BasicDateField?`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search.<br>Use in query: `date_field=created_at`. |
-| `startDate` | `string` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns subscriptions with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
-| `endDate` | `string` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns subscriptions with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. |
-| `startDatetime` | `string` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns subscriptions with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date. |
-| `endDatetime` | `string` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns subscriptions with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. |
-| `q` | `string` | Query, Optional | A search query by which to filter customers (can be an email, an ID, a reference, organization) |
-
-## Response Type
-
-[`Task<List<Models.CustomerResponse>>`](../../doc/models/customer-response.md)
-
-## Example Usage
-
-```csharp
-ListCustomersInput listCustomersInput = new ListCustomersInput
-{
-    Page = 2,
-    PerPage = 30,
-    DateField = BasicDateField.UpdatedAt,
-};
-
-try
-{
-    List<CustomerResponse> result = await customersController.ListCustomersAsync(listCustomersInput);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-[
-  {
-    "customer": {
-      "first_name": "Kayla",
-      "last_name": "Test",
-      "email": "kayla@example.com",
-      "cc_emails": "john@example.com, sue@example.com",
-      "organization": "",
-      "reference": null,
-      "id": 14126091,
-      "created_at": "2016-10-04T15:22:27-04:00",
-      "updated_at": "2016-10-04T15:22:30-04:00",
-      "address": "",
-      "address_2": "",
-      "city": "",
-      "state": "",
-      "zip": "",
-      "country": "",
-      "phone": "",
-      "verified": null,
-      "portal_customer_created_at": "2016-10-04T15:22:29-04:00",
-      "portal_invite_last_sent_at": "2016-10-04T15:22:30-04:00",
-      "portal_invite_last_accepted_at": null,
-      "tax_exempt": false
-    }
-  },
-  {
-    "customer": {
-      "first_name": "Nick ",
-      "last_name": "Test",
-      "email": "nick@example.com",
-      "cc_emails": "john@example.com, sue@example.com",
-      "organization": "",
-      "reference": null,
-      "id": 14254093,
-      "created_at": "2016-10-13T16:52:51-04:00",
-      "updated_at": "2016-10-13T16:52:54-04:00",
-      "address": "",
-      "address_2": "",
-      "city": "",
-      "state": "",
-      "zip": "",
-      "country": "",
-      "phone": "",
-      "verified": null,
-      "portal_customer_created_at": "2016-10-13T16:52:54-04:00",
-      "portal_invite_last_sent_at": "2016-10-13T16:52:54-04:00",
-      "portal_invite_last_accepted_at": null,
-      "tax_exempt": false,
-      "parent_id": 123
-    }
-  },
-  {
-    "customer": {
-      "first_name": "Don",
-      "last_name": "Test",
-      "email": "don@example.com",
-      "cc_emails": "john@example.com, sue@example.com",
-      "organization": "",
-      "reference": null,
-      "id": 14332342,
-      "created_at": "2016-10-19T10:49:13-04:00",
-      "updated_at": "2016-10-19T10:49:19-04:00",
-      "address": "1737 15th St",
-      "address_2": "",
-      "city": "Boulder",
-      "state": "CO",
-      "zip": "80302",
-      "country": "US",
-      "phone": "",
-      "verified": null,
-      "portal_customer_created_at": "2016-10-19T10:49:19-04:00",
-      "portal_invite_last_sent_at": "2016-10-19T10:49:19-04:00",
-      "portal_invite_last_accepted_at": null,
-      "tax_exempt": false,
-      "parent_id": null
-    }
-  }
-]
-```
-
-
-# Read Customer by Reference
-
-Use this method to return the customer object if you have the unique **Reference ID (Your App)** value handy. It will return a single match.
-
-```csharp
-ReadCustomerByReferenceAsync(
-    string reference)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `reference` | `string` | Query, Required | Customer reference |
-
-## Response Type
-
-[`Task<Models.CustomerResponse>`](../../doc/models/customer-response.md)
-
-## Example Usage
-
-```csharp
-string reference = "reference4";
-try
-{
-    CustomerResponse result = await customersController.ReadCustomerByReferenceAsync(reference);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
+* [Read Customer by Reference](../../doc/controllers/customers.md#read-customer-by-reference)
+* [List Customer Subscriptions](../../doc/controllers/customers.md#list-customer-subscriptions)
 
 
 # Create Customer
@@ -320,6 +138,188 @@ catch (ApiException e)
 | 422 | Unprocessable Entity (WebDAV) | [`CustomerErrorResponseException`](../../doc/models/customer-error-response-exception.md) |
 
 
+# List Customers
+
+This request will by default list all customers associated with your Site.
+
+## Find Customer
+
+Use the search feature with the `q` query parameter to retrieve an array of customers that matches the search query.
+
+Common use cases are:
+
++ Search by an email
++ Search by a Chargify ID
++ Search by an organization
++ Search by a reference value from your application
++ Search by a first or last name
+
+To retrieve a single, exact match by reference, please use the [lookup endpoint](https://developers.chargify.com/docs/api-docs/b710d8fbef104-read-customer-by-reference).
+
+```csharp
+ListCustomersAsync(
+    Models.ListCustomersInput input)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `direction` | [`SortingDirection?`](../../doc/models/sorting-direction.md) | Query, Optional | Direction to sort customers by time of creation |
+| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 50. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `dateField` | [`BasicDateField?`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search.<br>Use in query: `date_field=created_at`. |
+| `startDate` | `string` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns subscriptions with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
+| `endDate` | `string` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns subscriptions with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. |
+| `startDatetime` | `string` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns subscriptions with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date. |
+| `endDatetime` | `string` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns subscriptions with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. |
+| `q` | `string` | Query, Optional | A search query by which to filter customers (can be an email, an ID, a reference, organization) |
+
+## Response Type
+
+[`Task<List<Models.CustomerResponse>>`](../../doc/models/customer-response.md)
+
+## Example Usage
+
+```csharp
+ListCustomersInput listCustomersInput = new ListCustomersInput
+{
+    Page = 2,
+    PerPage = 30,
+    DateField = BasicDateField.UpdatedAt,
+};
+
+try
+{
+    List<CustomerResponse> result = await customersController.ListCustomersAsync(listCustomersInput);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+[
+  {
+    "customer": {
+      "first_name": "Kayla",
+      "last_name": "Test",
+      "email": "kayla@example.com",
+      "cc_emails": "john@example.com, sue@example.com",
+      "organization": "",
+      "reference": null,
+      "id": 14126091,
+      "created_at": "2016-10-04T15:22:27-04:00",
+      "updated_at": "2016-10-04T15:22:30-04:00",
+      "address": "",
+      "address_2": "",
+      "city": "",
+      "state": "",
+      "zip": "",
+      "country": "",
+      "phone": "",
+      "verified": null,
+      "portal_customer_created_at": "2016-10-04T15:22:29-04:00",
+      "portal_invite_last_sent_at": "2016-10-04T15:22:30-04:00",
+      "portal_invite_last_accepted_at": null,
+      "tax_exempt": false
+    }
+  },
+  {
+    "customer": {
+      "first_name": "Nick ",
+      "last_name": "Test",
+      "email": "nick@example.com",
+      "cc_emails": "john@example.com, sue@example.com",
+      "organization": "",
+      "reference": null,
+      "id": 14254093,
+      "created_at": "2016-10-13T16:52:51-04:00",
+      "updated_at": "2016-10-13T16:52:54-04:00",
+      "address": "",
+      "address_2": "",
+      "city": "",
+      "state": "",
+      "zip": "",
+      "country": "",
+      "phone": "",
+      "verified": null,
+      "portal_customer_created_at": "2016-10-13T16:52:54-04:00",
+      "portal_invite_last_sent_at": "2016-10-13T16:52:54-04:00",
+      "portal_invite_last_accepted_at": null,
+      "tax_exempt": false,
+      "parent_id": 123
+    }
+  },
+  {
+    "customer": {
+      "first_name": "Don",
+      "last_name": "Test",
+      "email": "don@example.com",
+      "cc_emails": "john@example.com, sue@example.com",
+      "organization": "",
+      "reference": null,
+      "id": 14332342,
+      "created_at": "2016-10-19T10:49:13-04:00",
+      "updated_at": "2016-10-19T10:49:19-04:00",
+      "address": "1737 15th St",
+      "address_2": "",
+      "city": "Boulder",
+      "state": "CO",
+      "zip": "80302",
+      "country": "US",
+      "phone": "",
+      "verified": null,
+      "portal_customer_created_at": "2016-10-19T10:49:19-04:00",
+      "portal_invite_last_sent_at": "2016-10-19T10:49:19-04:00",
+      "portal_invite_last_accepted_at": null,
+      "tax_exempt": false,
+      "parent_id": null
+    }
+  }
+]
+```
+
+
+# Read Customer
+
+This method allows to retrieve the Customer properties by Chargify-generated Customer ID.
+
+```csharp
+ReadCustomerAsync(
+    int id)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `id` | `int` | Template, Required | The Chargify id of the customer |
+
+## Response Type
+
+[`Task<Models.CustomerResponse>`](../../doc/models/customer-response.md)
+
+## Example Usage
+
+```csharp
+int id = 112;
+try
+{
+    CustomerResponse result = await customersController.ReadCustomerAsync(id);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+
 # Update Customer
 
 This method allows to update the Customer.
@@ -408,12 +408,12 @@ catch (ApiException e)
 | 422 | Unprocessable Entity (WebDAV) | [`CustomerErrorResponseException`](../../doc/models/customer-error-response-exception.md) |
 
 
-# Read Customer
+# Delete Customer
 
-This method allows to retrieve the Customer properties by Chargify-generated Customer ID.
+This method allows you to delete the Customer.
 
 ```csharp
-ReadCustomerAsync(
+DeleteCustomerAsync(
     int id)
 ```
 
@@ -425,7 +425,7 @@ ReadCustomerAsync(
 
 ## Response Type
 
-[`Task<Models.CustomerResponse>`](../../doc/models/customer-response.md)
+`Task`
 
 ## Example Usage
 
@@ -433,7 +433,42 @@ ReadCustomerAsync(
 int id = 112;
 try
 {
-    CustomerResponse result = await customersController.ReadCustomerAsync(id);
+    await customersController.DeleteCustomerAsync(id);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+
+# Read Customer by Reference
+
+Use this method to return the customer object if you have the unique **Reference ID (Your App)** value handy. It will return a single match.
+
+```csharp
+ReadCustomerByReferenceAsync(
+    string reference)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `reference` | `string` | Query, Required | Customer reference |
+
+## Response Type
+
+[`Task<Models.CustomerResponse>`](../../doc/models/customer-response.md)
+
+## Example Usage
+
+```csharp
+string reference = "reference4";
+try
+{
+    CustomerResponse result = await customersController.ReadCustomerByReferenceAsync(reference);
 }
 catch (ApiException e)
 {
@@ -469,41 +504,6 @@ int customerId = 150;
 try
 {
     List<SubscriptionResponse> result = await customersController.ListCustomerSubscriptionsAsync(customerId);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-
-# Delete Customer
-
-This method allows you to delete the Customer.
-
-```csharp
-DeleteCustomerAsync(
-    int id)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `id` | `int` | Template, Required | The Chargify id of the customer |
-
-## Response Type
-
-`Task`
-
-## Example Usage
-
-```csharp
-int id = 112;
-try
-{
-    await customersController.DeleteCustomerAsync(id);
 }
 catch (ApiException e)
 {

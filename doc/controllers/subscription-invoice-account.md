@@ -11,11 +11,11 @@ SubscriptionInvoiceAccountController subscriptionInvoiceAccountController = clie
 ## Methods
 
 * [Read Account Balances](../../doc/controllers/subscription-invoice-account.md#read-account-balances)
-* [Issue Service Credit](../../doc/controllers/subscription-invoice-account.md#issue-service-credit)
 * [Create Prepayment](../../doc/controllers/subscription-invoice-account.md#create-prepayment)
 * [List Prepayments](../../doc/controllers/subscription-invoice-account.md#list-prepayments)
-* [Refund Prepayment](../../doc/controllers/subscription-invoice-account.md#refund-prepayment)
+* [Issue Service Credit](../../doc/controllers/subscription-invoice-account.md#issue-service-credit)
 * [Deduct Service Credit](../../doc/controllers/subscription-invoice-account.md#deduct-service-credit)
+* [Refund Prepayment](../../doc/controllers/subscription-invoice-account.md#refund-prepayment)
 
 
 # Read Account Balances
@@ -49,67 +49,6 @@ catch (ApiException e)
 {
     // TODO: Handle exception here
     Console.WriteLine(e.Message);
-}
-```
-
-
-# Issue Service Credit
-
-Credit will be added to the subscription in the amount specified in the request body. The credit is subsequently applied to the next generated invoice.
-
-```csharp
-IssueServiceCreditAsync(
-    int subscriptionId,
-    Models.IssueServiceCreditRequest body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `body` | [`IssueServiceCreditRequest`](../../doc/models/issue-service-credit-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`Task<Models.ServiceCredit>`](../../doc/models/service-credit.md)
-
-## Example Usage
-
-```csharp
-int subscriptionId = 222;
-IssueServiceCreditRequest body = new IssueServiceCreditRequest
-{
-    ServiceCredit = new IssueServiceCredit
-    {
-        Amount = IssueServiceCreditAmount.FromString("1"),
-        Memo = "Courtesy credit",
-    },
-};
-
-try
-{
-    ServiceCredit result = await subscriptionInvoiceAccountController.IssueServiceCreditAsync(
-        subscriptionId,
-        body
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "id": 101,
-  "amount_in_cents": 1000,
-  "ending_balance_in_cents": 2000,
-  "entry_type": "Credit",
-  "memo": "Credit to group account"
 }
 ```
 
@@ -201,8 +140,8 @@ ListPrepaymentsAsync(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br>**Default**: `20`<br>**Constraints**: `<= 200` |
+| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
 | `filterDateField` | [`BasicDateField?`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search. created_at - Time when prepayment was created. application_at - Time when prepayment was applied to invoice. Use in query `filter[date_field]=created_at`. |
 | `filterStartDate` | `DateTime?` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns prepayments with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. Use in query `filter[start_date]=2011-12-15`. |
 | `filterEndDate` | `DateTime?` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns prepayments with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. Use in query `filter[end_date]=2011-12-15`. |
@@ -262,17 +201,14 @@ catch (ApiException e)
 | 404 | Not Found | `ApiException` |
 
 
-# Refund Prepayment
+# Issue Service Credit
 
-This endpoint will refund, completely or partially, a particular prepayment applied to a subscription. The `prepayment_id` will be the account transaction ID of the original payment. The prepayment must have some amount remaining in order to be refunded.
-
-The amount may be passed either as a decimal, with `amount`, or an integer in cents, with `amount_in_cents`.
+Credit will be added to the subscription in the amount specified in the request body. The credit is subsequently applied to the next generated invoice.
 
 ```csharp
-RefundPrepaymentAsync(
+IssueServiceCreditAsync(
     int subscriptionId,
-    string prepaymentId,
-    Models.RefundPrepaymentRequest body = null)
+    Models.IssueServiceCreditRequest body = null)
 ```
 
 ## Parameters
@@ -280,23 +216,30 @@ RefundPrepaymentAsync(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `prepaymentId` | `string` | Template, Required | id of prepayment |
-| `body` | [`RefundPrepaymentRequest`](../../doc/models/refund-prepayment-request.md) | Body, Optional | - |
+| `body` | [`IssueServiceCreditRequest`](../../doc/models/issue-service-credit-request.md) | Body, Optional | - |
 
 ## Response Type
 
-[`Task<Models.PrepaymentResponse>`](../../doc/models/prepayment-response.md)
+[`Task<Models.ServiceCredit>`](../../doc/models/service-credit.md)
 
 ## Example Usage
 
 ```csharp
 int subscriptionId = 222;
-string prepaymentId = "prepayment_id8";
+IssueServiceCreditRequest body = new IssueServiceCreditRequest
+{
+    ServiceCredit = new IssueServiceCredit
+    {
+        Amount = IssueServiceCreditAmount.FromString("1"),
+        Memo = "Courtesy credit",
+    },
+};
+
 try
 {
-    PrepaymentResponse result = await subscriptionInvoiceAccountController.RefundPrepaymentAsync(
+    ServiceCredit result = await subscriptionInvoiceAccountController.IssueServiceCreditAsync(
         subscriptionId,
-        prepaymentId
+        body
     );
 }
 catch (ApiException e)
@@ -306,13 +249,17 @@ catch (ApiException e)
 }
 ```
 
-## Errors
+## Example Response *(as JSON)*
 
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Bad Request | [`RefundPrepaymentBaseErrorsResponseException`](../../doc/models/refund-prepayment-base-errors-response-exception.md) |
-| 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity | [`RefundPrepaymentAggregatedErrorsResponseException`](../../doc/models/refund-prepayment-aggregated-errors-response-exception.md) |
+```json
+{
+  "id": 101,
+  "amount_in_cents": 1000,
+  "ending_balance_in_cents": 2000,
+  "entry_type": "Credit",
+  "memo": "Credit to group account"
+}
+```
 
 
 # Deduct Service Credit
@@ -368,4 +315,57 @@ catch (ApiException e)
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# Refund Prepayment
+
+This endpoint will refund, completely or partially, a particular prepayment applied to a subscription. The `prepayment_id` will be the account transaction ID of the original payment. The prepayment must have some amount remaining in order to be refunded.
+
+The amount may be passed either as a decimal, with `amount`, or an integer in cents, with `amount_in_cents`.
+
+```csharp
+RefundPrepaymentAsync(
+    int subscriptionId,
+    string prepaymentId,
+    Models.RefundPrepaymentRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `prepaymentId` | `string` | Template, Required | id of prepayment |
+| `body` | [`RefundPrepaymentRequest`](../../doc/models/refund-prepayment-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.PrepaymentResponse>`](../../doc/models/prepayment-response.md)
+
+## Example Usage
+
+```csharp
+int subscriptionId = 222;
+string prepaymentId = "prepayment_id8";
+try
+{
+    PrepaymentResponse result = await subscriptionInvoiceAccountController.RefundPrepaymentAsync(
+        subscriptionId,
+        prepaymentId
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Bad Request | [`RefundPrepaymentBaseErrorsResponseException`](../../doc/models/refund-prepayment-base-errors-response-exception.md) |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity | [`RefundPrepaymentAggregatedErrorsResponseException`](../../doc/models/refund-prepayment-aggregated-errors-response-exception.md) |
 

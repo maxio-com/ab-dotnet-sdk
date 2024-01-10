@@ -10,51 +10,9 @@ AdvanceInvoiceController advanceInvoiceController = client.AdvanceInvoiceControl
 
 ## Methods
 
-* [Read Advance Invoice](../../doc/controllers/advance-invoice.md#read-advance-invoice)
 * [Issue Advance Invoice](../../doc/controllers/advance-invoice.md#issue-advance-invoice)
+* [Read Advance Invoice](../../doc/controllers/advance-invoice.md#read-advance-invoice)
 * [Void Advance Invoice](../../doc/controllers/advance-invoice.md#void-advance-invoice)
-
-
-# Read Advance Invoice
-
-Once an advance invoice has been generated for a subscription's upcoming renewal, it can be viewed through this endpoint. There can only be one advance invoice per subscription per billing cycle.
-
-```csharp
-ReadAdvanceInvoiceAsync(
-    int subscriptionId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-
-## Response Type
-
-[`Task<Models.Invoice>`](../../doc/models/invoice.md)
-
-## Example Usage
-
-```csharp
-int subscriptionId = 222;
-try
-{
-    Invoice result = await advanceInvoiceController.ReadAdvanceInvoiceAsync(subscriptionId);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 403 | Forbidden | `ApiException` |
-| 404 | Not Found | `ApiException` |
 
 
 # Issue Advance Invoice
@@ -111,6 +69,48 @@ catch (ApiException e)
 | 403 | Forbidden | `ApiException` |
 | 404 | Not Found | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# Read Advance Invoice
+
+Once an advance invoice has been generated for a subscription's upcoming renewal, it can be viewed through this endpoint. There can only be one advance invoice per subscription per billing cycle.
+
+```csharp
+ReadAdvanceInvoiceAsync(
+    int subscriptionId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+
+## Response Type
+
+[`Task<Models.Invoice>`](../../doc/models/invoice.md)
+
+## Example Usage
+
+```csharp
+int subscriptionId = 222;
+try
+{
+    Invoice result = await advanceInvoiceController.ReadAdvanceInvoiceAsync(subscriptionId);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 403 | Forbidden | `ApiException` |
+| 404 | Not Found | `ApiException` |
 
 
 # Void Advance Invoice

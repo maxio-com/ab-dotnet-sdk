@@ -9,12 +9,15 @@
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
+| `AllocationId` | `int?` | Optional | The allocation unique id |
 | `ComponentId` | `int?` | Optional | The integer component ID for the allocation. This references a component that you have created in your Product setup |
+| `ComponentHandle` | `string` | Optional | The handle of the component. This references a component that you have created in your Product setup |
 | `SubscriptionId` | `int?` | Optional | The integer subscription ID for the allocation. This references a unique subscription in your Site |
-| `Quantity` | `int?` | Optional | The allocated quantity set in to effect by the allocation |
-| `PreviousQuantity` | `int?` | Optional | The allocated quantity that was in effect before this allocation was created |
+| `Quantity` | [`AllocationQuantity`](../../doc/models/containers/allocation-quantity.md) | Optional | This is a container for one-of cases. |
+| `PreviousQuantity` | [`AllocationPreviousQuantity`](../../doc/models/containers/allocation-previous-quantity.md) | Optional | This is a container for one-of cases. |
 | `Memo` | `string` | Optional | The memo passed when the allocation was created |
-| `Timestamp` | `string` | Optional | The time that the allocation was recorded, in  format and UTC timezone, i.e. 2012-11-20T22:00:37Z |
+| `Timestamp` | `DateTimeOffset?` | Optional | The time that the allocation was recorded, in format and UTC timezone, i.e. 2012-11-20T22:00:37Z |
+| `CreatedAt` | `DateTimeOffset?` | Optional | Timestamp indicating when this allocation was created |
 | `ProrationUpgradeScheme` | `string` | Optional | The scheme used if the proration was an upgrade. This is only present when the allocation was created mid-period. |
 | `ProrationDowngradeScheme` | `string` | Optional | The scheme used if the proration was a downgrade. This is only present when the allocation was created mid-period. |
 | `PricePointId` | `int?` | Optional | - |
@@ -22,19 +25,20 @@
 | `PricePointHandle` | `string` | Optional | - |
 | `PreviousPricePointId` | `int?` | Optional | - |
 | `AccrueCharge` | `bool?` | Optional | If the change in cost is an upgrade, this determines if the charge should accrue to the next renewal or if capture should be attempted immediately. |
+| `InitiateDunning` | `bool?` | Optional | If true, if the immediate component payment fails, initiate dunning for the subscription.<br>Otherwise, leave the charges on the subscription to pay for at renewal. |
 | `UpgradeCharge` | [`CreditType?`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.<br>Available values: `full`, `prorated`, `none`. |
 | `DowngradeCredit` | [`CreditType?`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.<br>Available values: `full`, `prorated`, `none`. |
-| `Payment` | [`AllocationPayment2`](../../doc/models/containers/allocation-payment-2.md) | Optional | This is a container for one-of cases. |
+| `Payment` | [`AllocationPayment`](../../doc/models/containers/allocation-payment.md) | Optional | This is a container for one-of cases. |
 
 ## Example (as JSON)
 
 ```json
 {
+  "allocation_id": 102,
   "component_id": 144,
+  "component_handle": "component_handle0",
   "subscription_id": 144,
-  "quantity": 246,
-  "previous_quantity": 180,
-  "memo": "memo4"
+  "quantity": 168
 }
 ```
 

@@ -13,11 +13,11 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
     using APIMatic.Core;
+    using APIMatic.Core.Http.Configuration;
     using APIMatic.Core.Types;
     using APIMatic.Core.Utilities;
     using APIMatic.Core.Utilities.Date.Xml;
@@ -33,151 +33,6 @@ namespace AdvancedBilling.Standard.Controllers
         /// Initializes a new instance of the <see cref="CustomFieldsController"/> class.
         /// </summary>
         internal CustomFieldsController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
-
-        /// <summary>
-        /// This endpoint lists metafields associated with a site. The metafield description and usage is contained in the response.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the Models.ListMetafieldsResponse response from the API call.</returns>
-        public Models.ListMetafieldsResponse ListMetafields(
-                Models.ListMetafieldsInput input)
-            => CoreHelper.RunTask(ListMetafieldsAsync(input));
-
-        /// <summary>
-        /// This endpoint lists metafields associated with a site. The metafield description and usage is contained in the response.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ListMetafieldsResponse response from the API call.</returns>
-        public async Task<Models.ListMetafieldsResponse> ListMetafieldsAsync(
-                Models.ListMetafieldsInput input,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ListMetafieldsResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/{resource_type}/metafields.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(input.ResourceType).Trim('\"')))
-                      .Query(_query => _query.Setup("name", input.Name))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Use the following method to delete a metafield. This will remove the metafield from the Site.
-        /// Additionally, this will remove the metafield and associated metadata with all Subscriptions on the Site.
-        /// </summary>
-        /// <param name="resourceType">Required parameter: the resource type to which the metafields belong.</param>
-        /// <param name="name">Optional parameter: The name of the metafield to be deleted.</param>
-        public void DeleteMetafield(
-                Models.ResourceType resourceType,
-                string name = null)
-            => CoreHelper.RunVoidTask(DeleteMetafieldAsync(resourceType, name));
-
-        /// <summary>
-        /// Use the following method to delete a metafield. This will remove the metafield from the Site.
-        /// Additionally, this will remove the metafield and associated metadata with all Subscriptions on the Site.
-        /// </summary>
-        /// <param name="resourceType">Required parameter: the resource type to which the metafields belong.</param>
-        /// <param name="name">Optional parameter: The name of the metafield to be deleted.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task DeleteMetafieldAsync(
-                Models.ResourceType resourceType,
-                string name = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Delete, "/{resource_type}/metafields.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(resourceType).Trim('\"')))
-                      .Query(_query => _query.Setup("name", name))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This request will list all of the metadata belonging to a particular resource (ie. subscription, customer) that is specified.
-        /// ## Metadata Data.
-        /// This endpoint will also display the current stats of your metadata to use as a tool for pagination.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the Models.PaginatedMetadata response from the API call.</returns>
-        public Models.PaginatedMetadata ReadMetadata(
-                Models.ReadMetadataInput input)
-            => CoreHelper.RunTask(ReadMetadataAsync(input));
-
-        /// <summary>
-        /// This request will list all of the metadata belonging to a particular resource (ie. subscription, customer) that is specified.
-        /// ## Metadata Data.
-        /// This endpoint will also display the current stats of your metadata to use as a tool for pagination.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.PaginatedMetadata response from the API call.</returns>
-        public async Task<Models.PaginatedMetadata> ReadMetadataAsync(
-                Models.ReadMetadataInput input,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.PaginatedMetadata>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/{resource_type}/{resource_id}/metadata.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(input.ResourceType).Trim('\"')))
-                      .Template(_template => _template.Setup("resource_id", input.ResourceId).Required())
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This method will provide you information on usage of metadata across your selected resource (ie. subscriptions, customers).
-        /// ## Metadata Data.
-        /// This endpoint will also display the current stats of your metadata to use as a tool for pagination.
-        /// ### Metadata for multiple records.
-        /// `https://acme.chargify.com/subscriptions/metadata.json?resource_ids[]=1&resource_ids[]=2`.
-        /// ## Read Metadata for a Site.
-        /// This endpoint will list the number of pages of metadata information that are contained within a site.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the Models.PaginatedMetadata response from the API call.</returns>
-        public Models.PaginatedMetadata ListMetadata(
-                Models.ListMetadataInput input)
-            => CoreHelper.RunTask(ListMetadataAsync(input));
-
-        /// <summary>
-        /// This method will provide you information on usage of metadata across your selected resource (ie. subscriptions, customers).
-        /// ## Metadata Data.
-        /// This endpoint will also display the current stats of your metadata to use as a tool for pagination.
-        /// ### Metadata for multiple records.
-        /// `https://acme.chargify.com/subscriptions/metadata.json?resource_ids[]=1&resource_ids[]=2`.
-        /// ## Read Metadata for a Site.
-        /// This endpoint will list the number of pages of metadata information that are contained within a site.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.PaginatedMetadata response from the API call.</returns>
-        public async Task<Models.PaginatedMetadata> ListMetadataAsync(
-                Models.ListMetadataInput input,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.PaginatedMetadata>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/{resource_type}/metadata.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(input.ResourceType).Trim('\"')))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("start_date", input.StartDate))
-                      .Query(_query => _query.Setup("end_date", input.EndDate))
-                      .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
-                      .Query(_query => _query.Setup("end_datetime", input.EndDatetime))
-                      .Query(_query => _query.Setup("with_deleted", input.WithDeleted))
-                      .Query(_query => _query.Setup("resource_ids[]", input.ResourceIds))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// ## Custom Fields: Metafield Intro.
@@ -228,75 +83,43 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.Metafield>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/{resource_type}/metafields.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(resourceType).Trim('\"')))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new SingleErrorResponseException(_reason, _context))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// ## Custom Fields: Metadata Intro.
-        /// **Chargify refers to Custom Fields in the API documentation as metafields and metadata.** Within the Chargify UI, metadata and metafields are grouped together under the umbrella of "Custom Fields." All of our UI-based documentation that references custom fields will not cite the terminology metafields or metadata.
-        /// + **Metafield is the custom field**.
-        /// + **Metadata is the data populating the custom field.**.
-        /// Chargify Metafields are used to add meaningful attributes to subscription and customer resources. Full documentation on how to create Custom Fields in the Chargify UI can be located [here](https://chargify.zendesk.com/hc/en-us/articles/4407659856411). For additional documentation on how to record data within custom fields, please see our subscription-based documentation [here.](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#custom-fields).
-        /// Metadata is associated to a customer or subscription, and corresponds to a Metafield. When creating a new metadata object for a given record, **if the metafield is not present it will be created**.
-        /// ## Metadata limits.
-        /// Metadata values are limited to 2kB in size. Additonally, there are limits on the number of unique metafields available per resource.
-        /// ## Create Metadata.
-        /// This method will create a metafield for the site on the fly if it does not already exist, and populate the metadata value.
-        /// ### Subscription or Customer Resource.
-        /// Please pay special attention to the resource you use when creating metadata.
+        /// This endpoint lists metafields associated with a site. The metafield description and usage is contained in the response.
         /// </summary>
-        /// <param name="resourceType">Required parameter: the resource type to which the metafields belong.</param>
-        /// <param name="resourceId">Required parameter: The Chargify id of the customer or the subscription for which the metadata applies.</param>
-        /// <param name="mValue">Optional parameter: Can be a single item or a list of metadata.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the List of Models.Metadata response from the API call.</returns>
-        public List<Models.Metadata> CreateMetadata(
-                Models.ResourceType resourceType,
-                string resourceId,
-                string mValue = null,
-                Models.CreateMetadataRequest body = null)
-            => CoreHelper.RunTask(CreateMetadataAsync(resourceType, resourceId, mValue, body));
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the Models.ListMetafieldsResponse response from the API call.</returns>
+        public Models.ListMetafieldsResponse ListMetafields(
+                Models.ListMetafieldsInput input)
+            => CoreHelper.RunTask(ListMetafieldsAsync(input));
 
         /// <summary>
-        /// ## Custom Fields: Metadata Intro.
-        /// **Chargify refers to Custom Fields in the API documentation as metafields and metadata.** Within the Chargify UI, metadata and metafields are grouped together under the umbrella of "Custom Fields." All of our UI-based documentation that references custom fields will not cite the terminology metafields or metadata.
-        /// + **Metafield is the custom field**.
-        /// + **Metadata is the data populating the custom field.**.
-        /// Chargify Metafields are used to add meaningful attributes to subscription and customer resources. Full documentation on how to create Custom Fields in the Chargify UI can be located [here](https://chargify.zendesk.com/hc/en-us/articles/4407659856411). For additional documentation on how to record data within custom fields, please see our subscription-based documentation [here.](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#custom-fields).
-        /// Metadata is associated to a customer or subscription, and corresponds to a Metafield. When creating a new metadata object for a given record, **if the metafield is not present it will be created**.
-        /// ## Metadata limits.
-        /// Metadata values are limited to 2kB in size. Additonally, there are limits on the number of unique metafields available per resource.
-        /// ## Create Metadata.
-        /// This method will create a metafield for the site on the fly if it does not already exist, and populate the metadata value.
-        /// ### Subscription or Customer Resource.
-        /// Please pay special attention to the resource you use when creating metadata.
+        /// This endpoint lists metafields associated with a site. The metafield description and usage is contained in the response.
         /// </summary>
-        /// <param name="resourceType">Required parameter: the resource type to which the metafields belong.</param>
-        /// <param name="resourceId">Required parameter: The Chargify id of the customer or the subscription for which the metadata applies.</param>
-        /// <param name="mValue">Optional parameter: Can be a single item or a list of metadata.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the List of Models.Metadata response from the API call.</returns>
-        public async Task<List<Models.Metadata>> CreateMetadataAsync(
-                Models.ResourceType resourceType,
-                string resourceId,
-                string mValue = null,
-                Models.CreateMetadataRequest body = null,
+        /// <returns>Returns the Models.ListMetafieldsResponse response from the API call.</returns>
+        public async Task<Models.ListMetafieldsResponse> ListMetafieldsAsync(
+                Models.ListMetafieldsInput input,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<List<Models.Metadata>>()
+            => await CreateApiCall<Models.ListMetafieldsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/{resource_type}/{resource_id}/metadata.json")
-                  .WithAuth("global")
+                  .Setup(HttpMethod.Get, "/{resource_type}/metafields.json")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(resourceType).Trim('\"')))
-                      .Template(_template => _template.Setup("resource_id", resourceId).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))
-                      .Query(_query => _query.Setup("value", mValue))))
+                      .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(input.ResourceType).Trim('\"')))
+                      .Query(_query => _query.Setup("name", input.Name))
+                      .Query(_query => _query.Setup("page", input.Page))
+                      .Query(_query => _query.Setup("per_page", input.PerPage))
+                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -332,7 +155,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.Metafield>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/{resource_type}/metafields.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(resourceType).Trim('\"')))
@@ -342,45 +165,168 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This method allows you to update the existing metadata associated with a subscription or customer.
+        /// Use the following method to delete a metafield. This will remove the metafield from the Site.
+        /// Additionally, this will remove the metafield and associated metadata with all Subscriptions on the Site.
+        /// </summary>
+        /// <param name="resourceType">Required parameter: the resource type to which the metafields belong.</param>
+        /// <param name="name">Optional parameter: The name of the metafield to be deleted.</param>
+        public void DeleteMetafield(
+                Models.ResourceType resourceType,
+                string name = null)
+            => CoreHelper.RunVoidTask(DeleteMetafieldAsync(resourceType, name));
+
+        /// <summary>
+        /// Use the following method to delete a metafield. This will remove the metafield from the Site.
+        /// Additionally, this will remove the metafield and associated metadata with all Subscriptions on the Site.
+        /// </summary>
+        /// <param name="resourceType">Required parameter: the resource type to which the metafields belong.</param>
+        /// <param name="name">Optional parameter: The name of the metafield to be deleted.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task DeleteMetafieldAsync(
+                Models.ResourceType resourceType,
+                string name = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Delete, "/{resource_type}/metafields.json")
+                  .WithAuth("BasicAuth")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(resourceType).Trim('\"')))
+                      .Query(_query => _query.Setup("name", name))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// ## Custom Fields: Metadata Intro.
+        /// **Chargify refers to Custom Fields in the API documentation as metafields and metadata.** Within the Chargify UI, metadata and metafields are grouped together under the umbrella of "Custom Fields." All of our UI-based documentation that references custom fields will not cite the terminology metafields or metadata.
+        /// + **Metafield is the custom field**.
+        /// + **Metadata is the data populating the custom field.**.
+        /// Chargify Metafields are used to add meaningful attributes to subscription and customer resources. Full documentation on how to create Custom Fields in the Chargify UI can be located [here](https://chargify.zendesk.com/hc/en-us/articles/4407659856411). For additional documentation on how to record data within custom fields, please see our subscription-based documentation [here.](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#custom-fields).
+        /// Metadata is associated to a customer or subscription, and corresponds to a Metafield. When creating a new metadata object for a given record, **if the metafield is not present it will be created**.
+        /// ## Metadata limits.
+        /// Metadata values are limited to 2kB in size. Additonally, there are limits on the number of unique metafields available per resource.
+        /// ## Create Metadata.
+        /// This method will create a metafield for the site on the fly if it does not already exist, and populate the metadata value.
+        /// ### Subscription or Customer Resource.
+        /// Please pay special attention to the resource you use when creating metadata.
         /// </summary>
         /// <param name="resourceType">Required parameter: the resource type to which the metafields belong.</param>
         /// <param name="resourceId">Required parameter: The Chargify id of the customer or the subscription for which the metadata applies.</param>
-        /// <param name="mValue">Optional parameter: Can be a single item or a list of metadata.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the List of Models.Metadata response from the API call.</returns>
-        public List<Models.Metadata> UpdateMetadata(
+        public List<Models.Metadata> CreateMetadata(
                 Models.ResourceType resourceType,
                 string resourceId,
-                string mValue = null,
-                Models.UpdateMetadataRequest body = null)
-            => CoreHelper.RunTask(UpdateMetadataAsync(resourceType, resourceId, mValue, body));
+                Models.CreateMetadataRequest body = null)
+            => CoreHelper.RunTask(CreateMetadataAsync(resourceType, resourceId, body));
+
+        /// <summary>
+        /// ## Custom Fields: Metadata Intro.
+        /// **Chargify refers to Custom Fields in the API documentation as metafields and metadata.** Within the Chargify UI, metadata and metafields are grouped together under the umbrella of "Custom Fields." All of our UI-based documentation that references custom fields will not cite the terminology metafields or metadata.
+        /// + **Metafield is the custom field**.
+        /// + **Metadata is the data populating the custom field.**.
+        /// Chargify Metafields are used to add meaningful attributes to subscription and customer resources. Full documentation on how to create Custom Fields in the Chargify UI can be located [here](https://chargify.zendesk.com/hc/en-us/articles/4407659856411). For additional documentation on how to record data within custom fields, please see our subscription-based documentation [here.](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#custom-fields).
+        /// Metadata is associated to a customer or subscription, and corresponds to a Metafield. When creating a new metadata object for a given record, **if the metafield is not present it will be created**.
+        /// ## Metadata limits.
+        /// Metadata values are limited to 2kB in size. Additonally, there are limits on the number of unique metafields available per resource.
+        /// ## Create Metadata.
+        /// This method will create a metafield for the site on the fly if it does not already exist, and populate the metadata value.
+        /// ### Subscription or Customer Resource.
+        /// Please pay special attention to the resource you use when creating metadata.
+        /// </summary>
+        /// <param name="resourceType">Required parameter: the resource type to which the metafields belong.</param>
+        /// <param name="resourceId">Required parameter: The Chargify id of the customer or the subscription for which the metadata applies.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the List of Models.Metadata response from the API call.</returns>
+        public async Task<List<Models.Metadata>> CreateMetadataAsync(
+                Models.ResourceType resourceType,
+                string resourceId,
+                Models.CreateMetadataRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<List<Models.Metadata>>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/{resource_type}/{resource_id}/metadata.json")
+                  .WithAuth("BasicAuth")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(resourceType).Trim('\"')))
+                      .Template(_template => _template.Setup("resource_id", resourceId).Required())
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new SingleErrorResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This request will list all of the metadata belonging to a particular resource (ie. subscription, customer) that is specified.
+        /// ## Metadata Data.
+        /// This endpoint will also display the current stats of your metadata to use as a tool for pagination.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the Models.PaginatedMetadata response from the API call.</returns>
+        public Models.PaginatedMetadata ListMetadata(
+                Models.ListMetadataInput input)
+            => CoreHelper.RunTask(ListMetadataAsync(input));
+
+        /// <summary>
+        /// This request will list all of the metadata belonging to a particular resource (ie. subscription, customer) that is specified.
+        /// ## Metadata Data.
+        /// This endpoint will also display the current stats of your metadata to use as a tool for pagination.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.PaginatedMetadata response from the API call.</returns>
+        public async Task<Models.PaginatedMetadata> ListMetadataAsync(
+                Models.ListMetadataInput input,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.PaginatedMetadata>(ArraySerialization.Plain)
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/{resource_type}/{resource_id}/metadata.json")
+                  .WithAuth("BasicAuth")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(input.ResourceType).Trim('\"')))
+                      .Template(_template => _template.Setup("resource_id", input.ResourceId).Required())
+                      .Query(_query => _query.Setup("page", input.Page))
+                      .Query(_query => _query.Setup("per_page", input.PerPage))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This method allows you to update the existing metadata associated with a subscription or customer.
         /// </summary>
         /// <param name="resourceType">Required parameter: the resource type to which the metafields belong.</param>
         /// <param name="resourceId">Required parameter: The Chargify id of the customer or the subscription for which the metadata applies.</param>
-        /// <param name="mValue">Optional parameter: Can be a single item or a list of metadata.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the List of Models.Metadata response from the API call.</returns>
+        public List<Models.Metadata> UpdateMetadata(
+                Models.ResourceType resourceType,
+                string resourceId,
+                Models.UpdateMetadataRequest body = null)
+            => CoreHelper.RunTask(UpdateMetadataAsync(resourceType, resourceId, body));
+
+        /// <summary>
+        /// This method allows you to update the existing metadata associated with a subscription or customer.
+        /// </summary>
+        /// <param name="resourceType">Required parameter: the resource type to which the metafields belong.</param>
+        /// <param name="resourceId">Required parameter: The Chargify id of the customer or the subscription for which the metadata applies.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the List of Models.Metadata response from the API call.</returns>
         public async Task<List<Models.Metadata>> UpdateMetadataAsync(
                 Models.ResourceType resourceType,
                 string resourceId,
-                string mValue = null,
                 Models.UpdateMetadataRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<List<Models.Metadata>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/{resource_type}/{resource_id}/metadata.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(resourceType).Trim('\"')))
                       .Template(_template => _template.Setup("resource_id", resourceId).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))
-                      .Query(_query => _query.Setup("value", mValue))))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -438,10 +384,10 @@ namespace AdvancedBilling.Standard.Controllers
                 string name = null,
                 List<string> names = null,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
+            => await CreateApiCall<VoidType>(ArraySerialization.Plain)
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/{resource_type}/{resource_id}/metadata.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(resourceType).Trim('\"')))
                       .Template(_template => _template.Setup("resource_id", resourceId).Required())
@@ -449,6 +395,54 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("names[]", names))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This method will provide you information on usage of metadata across your selected resource (ie. subscriptions, customers).
+        /// ## Metadata Data.
+        /// This endpoint will also display the current stats of your metadata to use as a tool for pagination.
+        /// ### Metadata for multiple records.
+        /// `https://acme.chargify.com/subscriptions/metadata.json?resource_ids[]=1&resource_ids[]=2`.
+        /// ## Read Metadata for a Site.
+        /// This endpoint will list the number of pages of metadata information that are contained within a site.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the Models.PaginatedMetadata response from the API call.</returns>
+        public Models.PaginatedMetadata ListMetadataForResourceType(
+                Models.ListMetadataForResourceTypeInput input)
+            => CoreHelper.RunTask(ListMetadataForResourceTypeAsync(input));
+
+        /// <summary>
+        /// This method will provide you information on usage of metadata across your selected resource (ie. subscriptions, customers).
+        /// ## Metadata Data.
+        /// This endpoint will also display the current stats of your metadata to use as a tool for pagination.
+        /// ### Metadata for multiple records.
+        /// `https://acme.chargify.com/subscriptions/metadata.json?resource_ids[]=1&resource_ids[]=2`.
+        /// ## Read Metadata for a Site.
+        /// This endpoint will list the number of pages of metadata information that are contained within a site.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.PaginatedMetadata response from the API call.</returns>
+        public async Task<Models.PaginatedMetadata> ListMetadataForResourceTypeAsync(
+                Models.ListMetadataForResourceTypeInput input,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.PaginatedMetadata>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/{resource_type}/metadata.json")
+                  .WithAuth("BasicAuth")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(input.ResourceType).Trim('\"')))
+                      .Query(_query => _query.Setup("page", input.Page))
+                      .Query(_query => _query.Setup("per_page", input.PerPage))
+                      .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("start_date", input.StartDate))
+                      .Query(_query => _query.Setup("end_date", input.EndDate))
+                      .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
+                      .Query(_query => _query.Setup("end_datetime", input.EndDatetime))
+                      .Query(_query => _query.Setup("with_deleted", input.WithDeleted))
+                      .Query(_query => _query.Setup("resource_ids[]", input.ResourceIds))
+                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

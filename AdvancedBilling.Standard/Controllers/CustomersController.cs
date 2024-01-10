@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
@@ -33,84 +32,6 @@ namespace AdvancedBilling.Standard.Controllers
         /// Initializes a new instance of the <see cref="CustomersController"/> class.
         /// </summary>
         internal CustomersController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
-
-        /// <summary>
-        /// This request will by default list all customers associated with your Site.
-        /// ## Find Customer.
-        /// Use the search feature with the `q` query parameter to retrieve an array of customers that matches the search query.
-        /// Common use cases are:.
-        /// + Search by an email.
-        /// + Search by a Chargify ID.
-        /// + Search by an organization.
-        /// + Search by a reference value from your application.
-        /// + Search by a first or last name.
-        /// To retrieve a single, exact match by reference, please use the [lookup endpoint](https://developers.chargify.com/docs/api-docs/b710d8fbef104-read-customer-by-reference).
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the List of Models.CustomerResponse response from the API call.</returns>
-        public List<Models.CustomerResponse> ListCustomers(
-                Models.ListCustomersInput input)
-            => CoreHelper.RunTask(ListCustomersAsync(input));
-
-        /// <summary>
-        /// This request will by default list all customers associated with your Site.
-        /// ## Find Customer.
-        /// Use the search feature with the `q` query parameter to retrieve an array of customers that matches the search query.
-        /// Common use cases are:.
-        /// + Search by an email.
-        /// + Search by a Chargify ID.
-        /// + Search by an organization.
-        /// + Search by a reference value from your application.
-        /// + Search by a first or last name.
-        /// To retrieve a single, exact match by reference, please use the [lookup endpoint](https://developers.chargify.com/docs/api-docs/b710d8fbef104-read-customer-by-reference).
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the List of Models.CustomerResponse response from the API call.</returns>
-        public async Task<List<Models.CustomerResponse>> ListCustomersAsync(
-                Models.ListCustomersInput input,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<List<Models.CustomerResponse>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/customers.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("start_date", input.StartDate))
-                      .Query(_query => _query.Setup("end_date", input.EndDate))
-                      .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
-                      .Query(_query => _query.Setup("end_datetime", input.EndDatetime))
-                      .Query(_query => _query.Setup("q", input.Q))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Use this method to return the customer object if you have the unique **Reference ID (Your App)** value handy. It will return a single match.
-        /// </summary>
-        /// <param name="reference">Required parameter: Customer reference.</param>
-        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
-        public Models.CustomerResponse ReadCustomerByReference(
-                string reference)
-            => CoreHelper.RunTask(ReadCustomerByReferenceAsync(reference));
-
-        /// <summary>
-        /// Use this method to return the customer object if you have the unique **Reference ID (Your App)** value handy. It will return a single match.
-        /// </summary>
-        /// <param name="reference">Required parameter: Customer reference.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
-        public async Task<Models.CustomerResponse> ReadCustomerByReferenceAsync(
-                string reference,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.CustomerResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/customers/lookup.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("reference", reference).Required())))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// You may create a new Customer at any time, or you may create a Customer at the same time you create a Subscription. The only validation restriction is that you may only create one customer for a given reference value.
@@ -157,12 +78,90 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CustomerResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/customers.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new CustomerErrorResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This request will by default list all customers associated with your Site.
+        /// ## Find Customer.
+        /// Use the search feature with the `q` query parameter to retrieve an array of customers that matches the search query.
+        /// Common use cases are:.
+        /// + Search by an email.
+        /// + Search by a Chargify ID.
+        /// + Search by an organization.
+        /// + Search by a reference value from your application.
+        /// + Search by a first or last name.
+        /// To retrieve a single, exact match by reference, please use the [lookup endpoint](https://developers.chargify.com/docs/api-docs/b710d8fbef104-read-customer-by-reference).
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the List of Models.CustomerResponse response from the API call.</returns>
+        public List<Models.CustomerResponse> ListCustomers(
+                Models.ListCustomersInput input)
+            => CoreHelper.RunTask(ListCustomersAsync(input));
+
+        /// <summary>
+        /// This request will by default list all customers associated with your Site.
+        /// ## Find Customer.
+        /// Use the search feature with the `q` query parameter to retrieve an array of customers that matches the search query.
+        /// Common use cases are:.
+        /// + Search by an email.
+        /// + Search by a Chargify ID.
+        /// + Search by an organization.
+        /// + Search by a reference value from your application.
+        /// + Search by a first or last name.
+        /// To retrieve a single, exact match by reference, please use the [lookup endpoint](https://developers.chargify.com/docs/api-docs/b710d8fbef104-read-customer-by-reference).
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the List of Models.CustomerResponse response from the API call.</returns>
+        public async Task<List<Models.CustomerResponse>> ListCustomersAsync(
+                Models.ListCustomersInput input,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<List<Models.CustomerResponse>>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/customers.json")
+                  .WithAuth("BasicAuth")
+                  .Parameters(_parameters => _parameters
+                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("page", input.Page))
+                      .Query(_query => _query.Setup("per_page", input.PerPage))
+                      .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("start_date", input.StartDate))
+                      .Query(_query => _query.Setup("end_date", input.EndDate))
+                      .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
+                      .Query(_query => _query.Setup("end_datetime", input.EndDatetime))
+                      .Query(_query => _query.Setup("q", input.Q))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This method allows to retrieve the Customer properties by Chargify-generated Customer ID.
+        /// </summary>
+        /// <param name="id">Required parameter: The Chargify id of the customer.</param>
+        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
+        public Models.CustomerResponse ReadCustomer(
+                int id)
+            => CoreHelper.RunTask(ReadCustomerAsync(id));
+
+        /// <summary>
+        /// This method allows to retrieve the Customer properties by Chargify-generated Customer ID.
+        /// </summary>
+        /// <param name="id">Required parameter: The Chargify id of the customer.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
+        public async Task<Models.CustomerResponse> ReadCustomerAsync(
+                int id,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.CustomerResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/customers/{id}.json")
+                  .WithAuth("BasicAuth")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("id", id))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -190,7 +189,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CustomerResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/customers/{id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("id", id))
@@ -201,29 +200,54 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This method allows to retrieve the Customer properties by Chargify-generated Customer ID.
+        /// This method allows you to delete the Customer.
         /// </summary>
         /// <param name="id">Required parameter: The Chargify id of the customer.</param>
-        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
-        public Models.CustomerResponse ReadCustomer(
+        public void DeleteCustomer(
                 int id)
-            => CoreHelper.RunTask(ReadCustomerAsync(id));
+            => CoreHelper.RunVoidTask(DeleteCustomerAsync(id));
 
         /// <summary>
-        /// This method allows to retrieve the Customer properties by Chargify-generated Customer ID.
+        /// This method allows you to delete the Customer.
         /// </summary>
         /// <param name="id">Required parameter: The Chargify id of the customer.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
-        public async Task<Models.CustomerResponse> ReadCustomerAsync(
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task DeleteCustomerAsync(
                 int id,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Delete, "/customers/{id}.json")
+                  .WithAuth("BasicAuth")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("id", id))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Use this method to return the customer object if you have the unique **Reference ID (Your App)** value handy. It will return a single match.
+        /// </summary>
+        /// <param name="reference">Required parameter: Customer reference.</param>
+        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
+        public Models.CustomerResponse ReadCustomerByReference(
+                string reference)
+            => CoreHelper.RunTask(ReadCustomerByReferenceAsync(reference));
+
+        /// <summary>
+        /// Use this method to return the customer object if you have the unique **Reference ID (Your App)** value handy. It will return a single match.
+        /// </summary>
+        /// <param name="reference">Required parameter: Customer reference.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
+        public async Task<Models.CustomerResponse> ReadCustomerByReferenceAsync(
+                string reference,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CustomerResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/customers/{id}.json")
-                  .WithAuth("global")
+                  .Setup(HttpMethod.Get, "/customers/lookup.json")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("id", id))))
+                      .Query(_query => _query.Setup("reference", reference).Required())))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -247,34 +271,9 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.SubscriptionResponse>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/customers/{customer_id}/subscriptions.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("customer_id", customerId))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This method allows you to delete the Customer.
-        /// </summary>
-        /// <param name="id">Required parameter: The Chargify id of the customer.</param>
-        public void DeleteCustomer(
-                int id)
-            => CoreHelper.RunVoidTask(DeleteCustomerAsync(id));
-
-        /// <summary>
-        /// This method allows you to delete the Customer.
-        /// </summary>
-        /// <param name="id">Required parameter: The Chargify id of the customer.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task DeleteCustomerAsync(
-                int id,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Delete, "/customers/{id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("id", id))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

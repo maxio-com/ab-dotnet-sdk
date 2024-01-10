@@ -31,21 +31,22 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="InvoicePreviousBalance"/> class.
         /// </summary>
-        /// <param name="captureDate">capture_date.</param>
+        /// <param name="capturedAt">captured_at.</param>
         /// <param name="invoices">invoices.</param>
         public InvoicePreviousBalance(
-            string captureDate = null,
+            DateTimeOffset? capturedAt = null,
             List<Models.InvoiceBalanceItem> invoices = null)
         {
-            this.CaptureDate = captureDate;
+            this.CapturedAt = capturedAt;
             this.Invoices = invoices;
         }
 
         /// <summary>
-        /// Gets or sets CaptureDate.
+        /// Gets or sets CapturedAt.
         /// </summary>
-        [JsonProperty("capture_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string CaptureDate { get; set; }
+        [JsonConverter(typeof(IsoDateTimeConverter))]
+        [JsonProperty("captured_at", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset? CapturedAt { get; set; }
 
         /// <summary>
         /// Gets or sets Invoices.
@@ -75,7 +76,7 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is InvoicePreviousBalance other &&                ((this.CaptureDate == null && other.CaptureDate == null) || (this.CaptureDate?.Equals(other.CaptureDate) == true)) &&
+            return obj is InvoicePreviousBalance other &&                ((this.CapturedAt == null && other.CapturedAt == null) || (this.CapturedAt?.Equals(other.CapturedAt) == true)) &&
                 ((this.Invoices == null && other.Invoices == null) || (this.Invoices?.Equals(other.Invoices) == true));
         }
         
@@ -85,7 +86,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.CaptureDate = {(this.CaptureDate == null ? "null" : this.CaptureDate)}");
+            toStringOutput.Add($"this.CapturedAt = {(this.CapturedAt == null ? "null" : this.CapturedAt.ToString())}");
             toStringOutput.Add($"this.Invoices = {(this.Invoices == null ? "null" : $"[{string.Join(", ", this.Invoices)} ]")}");
         }
     }

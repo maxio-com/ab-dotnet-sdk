@@ -16,16 +16,15 @@ namespace AdvancedBilling.Standard.Authentication
     internal class BasicAuthManager : AuthManager, IBasicAuthCredentials
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="IrisBasicAuthManager"/> class.
+        /// Initializes a new instance of the <see cref="BasicAuthManager"/> class.
         /// </summary>
-        /// <param name="username"> Username.</param>
-        /// <param name="password"> Password.</param>
-        public BasicAuthManager(string username, string password)
+        /// <param name="basicAuth"> BasicAuthModel.</param>
+        internal BasicAuthManager(BasicAuthModel basicAuth)
         {
-            this.BasicAuthUserName = username;
-            this.BasicAuthPassword = password;
+            BasicAuthUserName = basicAuth.Username;
+            BasicAuthPassword = basicAuth.Password;
             Parameters(paramBuilder => paramBuilder
-                .Header(header => header.Setup("Authorization", GetBasicAuthHeader())));
+                .Header(header => header.Setup("Authorization", GetBasicAuthHeader()).Required()));
         }
 
         /// <summary>
@@ -52,9 +51,70 @@ namespace AdvancedBilling.Standard.Authentication
 
         private string GetBasicAuthHeader()
         {
+            if (this.BasicAuthUserName == null || this.BasicAuthPassword == null)
+                return null;
+
             string authCredentials = this.BasicAuthUserName + ":" + this.BasicAuthPassword;
             byte[] data = Encoding.ASCII.GetBytes(authCredentials);
             return "Basic " + Convert.ToBase64String(data);
+        }
+    }
+
+    public sealed class BasicAuthModel
+    {
+        internal BasicAuthModel(string username, string password)
+        {
+            this.Username = username;
+            this.Password = password;
+        }
+
+        internal string Username { get; set; }
+
+        internal string Password { get; set; }
+
+        /// <summary>
+        /// Builder class for BasicAuthModel.
+        /// </summary>
+        public class Builder
+        {
+            private string username;
+            private string password;
+
+            /// <summary>
+            /// Sets Username.
+            /// </summary>
+            /// <param name="username">Username.</param>
+            /// <returns>Builder.</returns>
+            public Builder Username(string username)
+            {
+                this.username = username ?? throw new ArgumentNullException(nameof(username));
+                return this;
+            }
+
+
+            /// <summary>
+            /// Sets Password.
+            /// </summary>
+            /// <param name="password">Password.</param>
+            /// <returns>Builder.</returns>
+            public Builder Password(string password)
+            {
+                this.password = password ?? throw new ArgumentNullException(nameof(password));
+                return this;
+            }
+
+
+            /// <summary>
+            /// Creates an object of the BasicAuthModel using the values provided for the builder.
+            /// </summary>
+            /// <returns>BasicAuthModel.</returns>
+            public BasicAuthModel Build()
+            {
+                return new BasicAuthModel(
+                    username,
+                    password
+                );
+            }
         }
     }
 }

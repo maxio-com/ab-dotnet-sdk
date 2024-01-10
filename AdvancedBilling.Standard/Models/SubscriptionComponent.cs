@@ -85,6 +85,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="allowFractionalQuantities">allow_fractional_quantities.</param>
         /// <param name="subscription">subscription.</param>
         /// <param name="displayOnHostedPage">display_on_hosted_page.</param>
+        /// <param name="interval">interval.</param>
+        /// <param name="intervalUnit">interval_unit.</param>
         public SubscriptionComponent(
             int? id = null,
             string name = null,
@@ -114,7 +116,9 @@ namespace AdvancedBilling.Standard.Models
             string description = null,
             bool? allowFractionalQuantities = null,
             Models.SubscriptionComponentSubscription subscription = null,
-            bool? displayOnHostedPage = null)
+            bool? displayOnHostedPage = null,
+            int? interval = null,
+            Models.IntervalUnit? intervalUnit = null)
         {
             this.Id = id;
             this.Name = name;
@@ -185,6 +189,8 @@ namespace AdvancedBilling.Standard.Models
             this.AllowFractionalQuantities = allowFractionalQuantities;
             this.Subscription = subscription;
             this.DisplayOnHostedPage = displayOnHostedPage;
+            this.Interval = interval;
+            this.IntervalUnit = intervalUnit;
         }
 
         /// <summary>
@@ -485,6 +491,18 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("display_on_hosted_page", NullValueHandling = NullValueHandling.Ignore)]
         public bool? DisplayOnHostedPage { get; set; }
 
+        /// <summary>
+        /// The numerical interval. i.e. an interval of '30' coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Interval { get; set; }
+
+        /// <summary>
+        /// A string representing the interval unit for this component price point, either month or day. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval_unit", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.IntervalUnit? IntervalUnit { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -705,7 +723,9 @@ namespace AdvancedBilling.Standard.Models
                 ((this.Description == null && other.Description == null) || (this.Description?.Equals(other.Description) == true)) &&
                 ((this.AllowFractionalQuantities == null && other.AllowFractionalQuantities == null) || (this.AllowFractionalQuantities?.Equals(other.AllowFractionalQuantities) == true)) &&
                 ((this.Subscription == null && other.Subscription == null) || (this.Subscription?.Equals(other.Subscription) == true)) &&
-                ((this.DisplayOnHostedPage == null && other.DisplayOnHostedPage == null) || (this.DisplayOnHostedPage?.Equals(other.DisplayOnHostedPage) == true));
+                ((this.DisplayOnHostedPage == null && other.DisplayOnHostedPage == null) || (this.DisplayOnHostedPage?.Equals(other.DisplayOnHostedPage) == true)) &&
+                ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
+                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true));
         }
         
         /// <summary>
@@ -743,6 +763,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.AllowFractionalQuantities = {(this.AllowFractionalQuantities == null ? "null" : this.AllowFractionalQuantities.ToString())}");
             toStringOutput.Add($"this.Subscription = {(this.Subscription == null ? "null" : this.Subscription.ToString())}");
             toStringOutput.Add($"this.DisplayOnHostedPage = {(this.DisplayOnHostedPage == null ? "null" : this.DisplayOnHostedPage.ToString())}");
+            toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
+            toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
         }
     }
 }

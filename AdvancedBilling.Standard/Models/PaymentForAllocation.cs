@@ -1,4 +1,4 @@
-// <copyright file="AllocationPayment.cs" company="APIMatic">
+// <copyright file="PaymentForAllocation.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
 namespace AdvancedBilling.Standard.Models
@@ -17,25 +17,25 @@ namespace AdvancedBilling.Standard.Models
     using Newtonsoft.Json.Converters;
 
     /// <summary>
-    /// AllocationPayment.
+    /// PaymentForAllocation.
     /// </summary>
-    public class AllocationPayment
+    public class PaymentForAllocation
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AllocationPayment"/> class.
+        /// Initializes a new instance of the <see cref="PaymentForAllocation"/> class.
         /// </summary>
-        public AllocationPayment()
+        public PaymentForAllocation()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AllocationPayment"/> class.
+        /// Initializes a new instance of the <see cref="PaymentForAllocation"/> class.
         /// </summary>
         /// <param name="id">id.</param>
         /// <param name="amountInCents">amount_in_cents.</param>
         /// <param name="success">success.</param>
         /// <param name="memo">memo.</param>
-        public AllocationPayment(
+        public PaymentForAllocation(
             int? id = null,
             long? amountInCents = null,
             bool? success = null,
@@ -79,7 +79,7 @@ namespace AdvancedBilling.Standard.Models
 
             this.ToString(toStringOutput);
 
-            return $"AllocationPayment : ({string.Join(", ", toStringOutput)})";
+            return $"PaymentForAllocation : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
@@ -94,7 +94,7 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is AllocationPayment other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
+            return obj is PaymentForAllocation other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
                 ((this.AmountInCents == null && other.AmountInCents == null) || (this.AmountInCents?.Equals(other.AmountInCents) == true)) &&
                 ((this.Success == null && other.Success == null) || (this.Success?.Equals(other.Success) == true)) &&
                 ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true));

@@ -10,774 +10,18 @@ SubscriptionsController subscriptionsController = client.SubscriptionsController
 
 ## Methods
 
-* [Read Subscription by Reference](../../doc/controllers/subscriptions.md#read-subscription-by-reference)
-* [Preview Subscription](../../doc/controllers/subscriptions.md#preview-subscription)
-* [Read Subscription](../../doc/controllers/subscriptions.md#read-subscription)
-* [Purge Subscription](../../doc/controllers/subscriptions.md#purge-subscription)
-* [Apply Coupon to Subscription](../../doc/controllers/subscriptions.md#apply-coupon-to-subscription)
-* [Activate Subscription](../../doc/controllers/subscriptions.md#activate-subscription)
 * [Create Subscription](../../doc/controllers/subscriptions.md#create-subscription)
 * [List Subscriptions](../../doc/controllers/subscriptions.md#list-subscriptions)
 * [Update Subscription](../../doc/controllers/subscriptions.md#update-subscription)
+* [Read Subscription](../../doc/controllers/subscriptions.md#read-subscription)
 * [Override Subscription](../../doc/controllers/subscriptions.md#override-subscription)
+* [Read Subscription by Reference](../../doc/controllers/subscriptions.md#read-subscription-by-reference)
+* [Purge Subscription](../../doc/controllers/subscriptions.md#purge-subscription)
 * [Create Prepaid Subscription](../../doc/controllers/subscriptions.md#create-prepaid-subscription)
+* [Preview Subscription](../../doc/controllers/subscriptions.md#preview-subscription)
+* [Apply Coupon to Subscription](../../doc/controllers/subscriptions.md#apply-coupon-to-subscription)
 * [Delete Coupon From Subscription](../../doc/controllers/subscriptions.md#delete-coupon-from-subscription)
-
-
-# Read Subscription by Reference
-
-Use this endpoint to find a subscription by its reference.
-
-```csharp
-ReadSubscriptionByReferenceAsync(
-    string reference = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `reference` | `string` | Query, Optional | Subscription reference |
-
-## Response Type
-
-[`Task<Models.SubscriptionResponse>`](../../doc/models/subscription-response.md)
-
-## Example Usage
-
-```csharp
-try
-{
-    SubscriptionResponse result = await subscriptionsController.ReadSubscriptionByReferenceAsync();
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-
-# Preview Subscription
-
-The Chargify API allows you to preview a subscription by POSTing the same JSON or XML as for a subscription creation.
-
-The "Next Billing" amount and "Next Billing" date are represented in each Subscriber's Summary. For more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#next-billing).
-
-## Side effects
-
-A subscription will not be created by sending a POST to this endpoint. It is meant to serve as a prediction.
-
-## Taxable Subscriptions
-
-This endpoint will preview taxes applicable to a purchase. In order for taxes to be previewed, the following conditions must be met:
-
-+ Taxes must be configured on the subscription
-+ The preview must be for the purchase of a taxable product or component, or combination of the two.
-+ The subscription payload must contain a full billing or shipping address in order to calculate tax
-
-For more information about creating taxable previews, please see our documentation guide on how to create [taxable subscriptions.](https://chargify.zendesk.com/hc/en-us/articles/4407904217755#creating-taxable-subscriptions)
-
-You do **not** need to include a card number to generate tax information when you are previewing a subscription. However, please note that when you actually want to create the subscription, you must include the credit card information if you want the billing address to be stored in Chargify. The billing address and the credit card information are stored together within the payment profile object. Also, you may not send a billing address to Chargify without payment profile information, as the address is stored on the card.
-
-You can pass shipping and billing addresses and still decide not to calculate taxes. To do that, pass `skip_billing_manifest_taxes: true` attribute.
-
-## Non-taxable Subscriptions
-
-If you'd like to calculate subscriptions that do not include tax, please feel free to leave off the billing information.
-
-```csharp
-PreviewSubscriptionAsync(
-    Models.CreateSubscriptionRequest body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `body` | [`CreateSubscriptionRequest`](../../doc/models/create-subscription-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`Task<Models.SubscriptionPreviewResponse>`](../../doc/models/subscription-preview-response.md)
-
-## Example Usage
-
-```csharp
-CreateSubscriptionRequest body = new CreateSubscriptionRequest
-{
-    Subscription = new CreateSubscription
-    {
-        ProductHandle = "gold-product",
-    },
-};
-
-try
-{
-    SubscriptionPreviewResponse result = await subscriptionsController.PreviewSubscriptionAsync(body);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "subscription_preview": {
-    "current_billing_manifest": {
-      "line_items": [
-        {
-          "transaction_type": "charge",
-          "kind": "baseline",
-          "amount_in_cents": 5000,
-          "memo": "Gold Product (08/21/2018 - 09/21/2018)",
-          "discount_amount_in_cents": 0,
-          "taxable_amount_in_cents": 0,
-          "product_id": 1,
-          "product_handle": "gold-product",
-          "product_name": "Gold Product",
-          "period_range_start": "13 Oct 2023",
-          "period_range_end": "13 Nov 2023"
-        },
-        {
-          "transaction_type": "charge",
-          "kind": "component",
-          "amount_in_cents": 28000,
-          "memo": "Component name: 14 Unit names",
-          "discount_amount_in_cents": 0,
-          "taxable_amount_in_cents": 0,
-          "component_id": 462149,
-          "component_handle": "handle",
-          "component_name": "Component name"
-        },
-        {
-          "transaction_type": "charge",
-          "kind": "component",
-          "amount_in_cents": 2000,
-          "memo": "Fractional Metered Components: 20.0 Fractional Metereds",
-          "discount_amount_in_cents": 0,
-          "taxable_amount_in_cents": 0,
-          "component_id": 426665,
-          "component_handle": "handle",
-          "component_name": "Fractional Metered Components"
-        },
-        {
-          "transaction_type": "charge",
-          "kind": "component",
-          "amount_in_cents": 0,
-          "memo": "On/Off Component",
-          "discount_amount_in_cents": 0,
-          "taxable_amount_in_cents": 0,
-          "component_id": 426670,
-          "component_handle": "handle",
-          "component_name": "On/Off Component"
-        },
-        {
-          "transaction_type": "adjustment",
-          "kind": "coupon",
-          "amount_in_cents": 0,
-          "memo": "Coupon: 1DOLLAR - You only get $1.00 off",
-          "discount_amount_in_cents": 0,
-          "taxable_amount_in_cents": 0
-        }
-      ],
-      "total_in_cents": 35000,
-      "total_discount_in_cents": 0,
-      "total_tax_in_cents": 0,
-      "subtotal_in_cents": 35000,
-      "start_date": "2018-08-21T21:25:21Z",
-      "end_date": "2018-09-21T21:25:21Z",
-      "period_type": "recurring",
-      "existing_balance_in_cents": 0
-    },
-    "next_billing_manifest": {
-      "line_items": [
-        {
-          "transaction_type": "charge",
-          "kind": "baseline",
-          "amount_in_cents": 5000,
-          "memo": "Gold Product (09/21/2018 - 10/21/2018)",
-          "discount_amount_in_cents": 0,
-          "taxable_amount_in_cents": 0,
-          "product_id": 1,
-          "product_handle": "gold-product",
-          "product_name": "Gold Product"
-        },
-        {
-          "transaction_type": "charge",
-          "kind": "component",
-          "amount_in_cents": 28000,
-          "memo": "Component name: 14 Unit names",
-          "discount_amount_in_cents": 0,
-          "taxable_amount_in_cents": 0,
-          "component_id": 462149,
-          "component_handle": "handle",
-          "component_name": "Component name"
-        },
-        {
-          "transaction_type": "charge",
-          "kind": "component",
-          "amount_in_cents": 0,
-          "memo": "On/Off Component",
-          "discount_amount_in_cents": 0,
-          "taxable_amount_in_cents": 0,
-          "component_id": 426670,
-          "component_handle": "handle",
-          "component_name": "On/Off Component"
-        }
-      ],
-      "total_in_cents": 33000,
-      "total_discount_in_cents": 0,
-      "total_tax_in_cents": 0,
-      "subtotal_in_cents": 33000,
-      "start_date": "2018-09-21T21:25:21Z",
-      "end_date": "2018-10-21T21:25:21Z",
-      "period_type": "recurring",
-      "existing_balance_in_cents": 0
-    }
-  }
-}
-```
-
-
-# Read Subscription
-
-Use this endpoint to find subscription details.
-
-## Self-Service Page token
-
-Self-Service Page token for the subscription is not returned by default. If this information is desired, the include[]=self_service_page_token parameter must be provided with the request.
-
-```csharp
-ReadSubscriptionAsync(
-    int subscriptionId,
-    List<Models.SubscriptionInclude> include = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `include` | [`List<SubscriptionInclude>`](../../doc/models/subscription-include.md) | Query, Optional | Allows including additional data in the response. Use in query: `include[]=coupons&include[]=self_service_page_token`. |
-
-## Response Type
-
-[`Task<Models.SubscriptionResponse>`](../../doc/models/subscription-response.md)
-
-## Example Usage
-
-```csharp
-int subscriptionId = 222;
-Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')try
-{
-    SubscriptionResponse result = await subscriptionsController.ReadSubscriptionAsync(subscriptionId);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "subscription": {
-    "id": 15236915,
-    "state": "active",
-    "balance_in_cents": 0,
-    "total_revenue_in_cents": 14000,
-    "product_price_in_cents": 1000,
-    "product_version_number": 7,
-    "current_period_ends_at": "2016-11-15T14:48:10-05:00",
-    "next_assessment_at": "2016-11-15T14:48:10-05:00",
-    "trial_started_at": null,
-    "trial_ended_at": null,
-    "activated_at": "2016-11-14T14:48:12-05:00",
-    "expires_at": null,
-    "created_at": "2016-11-14T14:48:10-05:00",
-    "updated_at": "2016-11-14T15:24:41-05:00",
-    "cancellation_message": null,
-    "cancellation_method": null,
-    "cancel_at_end_of_period": null,
-    "canceled_at": null,
-    "current_period_started_at": "2016-11-14T14:48:10-05:00",
-    "previous_state": "active",
-    "signup_payment_id": 162269766,
-    "signup_revenue": "260.00",
-    "delayed_cancel_at": null,
-    "coupon_code": "5SNN6HFK3GBH",
-    "payment_collection_method": "automatic",
-    "snap_day": null,
-    "reason_code": null,
-    "receives_invoice_emails": false,
-    "net_terms": 0,
-    "customer": {
-      "first_name": "Curtis",
-      "last_name": "Test",
-      "email": "curtis@example.com",
-      "cc_emails": "jeff@example.com",
-      "organization": "",
-      "reference": null,
-      "id": 14714298,
-      "created_at": "2016-11-14T14:48:10-05:00",
-      "updated_at": "2016-11-14T14:48:13-05:00",
-      "address": "123 Anywhere Street",
-      "address_2": "",
-      "city": "Boulder",
-      "state": "CO",
-      "zip": "80302",
-      "country": "US",
-      "phone": "",
-      "verified": false,
-      "portal_customer_created_at": "2016-11-14T14:48:13-05:00",
-      "portal_invite_last_sent_at": "2016-11-14T14:48:13-05:00",
-      "portal_invite_last_accepted_at": null,
-      "tax_exempt": false,
-      "vat_number": "012345678"
-    },
-    "product": {
-      "id": 3792003,
-      "name": "$10 Basic Plan",
-      "handle": "basic",
-      "description": "lorem ipsum",
-      "accounting_code": "basic",
-      "price_in_cents": 1000,
-      "interval": 1,
-      "interval_unit": "day",
-      "initial_charge_in_cents": null,
-      "expiration_interval": null,
-      "expiration_interval_unit": "never",
-      "trial_price_in_cents": null,
-      "trial_interval": null,
-      "trial_interval_unit": "month",
-      "initial_charge_after_trial": false,
-      "return_params": "",
-      "request_credit_card": false,
-      "require_credit_card": false,
-      "created_at": "2016-03-24T13:38:39-04:00",
-      "updated_at": "2016-11-03T13:03:05-04:00",
-      "archived_at": null,
-      "update_return_url": "",
-      "update_return_params": "",
-      "product_family": {
-        "id": 527890,
-        "name": "Acme Projects",
-        "handle": "billing-plans",
-        "accounting_code": null,
-        "description": ""
-      },
-      "public_signup_pages": [
-        {
-          "id": 281054,
-          "url": "https://general-goods.chargify.com/subscribe/kqvmfrbgd89q/basic"
-        },
-        {
-          "id": 281240,
-          "url": "https://general-goods.chargify.com/subscribe/dkffht5dxfd8/basic"
-        },
-        {
-          "id": 282694,
-          "url": "https://general-goods.chargify.com/subscribe/jwffwgdd95s8/basic"
-        }
-      ],
-      "taxable": false,
-      "version_number": 7,
-      "product_price_point_name": "Default"
-    },
-    "credit_card": {
-      "id": 10191713,
-      "payment_type": "credit_card",
-      "first_name": "Curtis",
-      "last_name": "Test",
-      "masked_card_number": "XXXX-XXXX-XXXX-1",
-      "card_type": "bogus",
-      "expiration_month": 1,
-      "expiration_year": 2026,
-      "billing_address": "123 Anywhere Street",
-      "billing_address_2": "",
-      "billing_city": "Boulder",
-      "billing_state": null,
-      "billing_country": "",
-      "billing_zip": "80302",
-      "current_vault": "bogus",
-      "vault_token": "1",
-      "customer_vault_token": null,
-      "customer_id": 14714298
-    },
-    "payment_type": "credit_card",
-    "referral_code": "w7kjc9",
-    "next_product_id": null,
-    "coupon_use_count": 1,
-    "coupon_uses_allowed": 1,
-    "stored_credential_transaction_id": 166411599220288,
-    "on_hold_at": null,
-    "scheduled_cancellation_at": "2016-11-14T14:48:13-05:00"
-  }
-}
-```
-
-
-# Purge Subscription
-
-For sites in test mode, you may purge individual subscriptions.
-
-Provide the subscription ID in the url.  To confirm, supply the customer ID in the query string `ack` parameter. You may also delete the customer record and/or payment profiles by passing `cascade` parameters. For example, to delete just the customer record, the query params would be: `?ack={customer_id}&cascade[]=customer`
-
-If you need to remove subscriptions from a live site, please contact support to discuss your use case.
-
-### Delete customer and payment profile
-
-The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`
-
-```csharp
-PurgeSubscriptionAsync(
-    int subscriptionId,
-    int ack,
-    List<Models.SubscriptionPurgeType> cascade = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `ack` | `int` | Query, Required | id of the customer. |
-| `cascade` | [`List<SubscriptionPurgeType>`](../../doc/models/subscription-purge-type.md) | Query, Optional | Options are "customer" or "payment_profile".<br>Use in query: `cascade[]=customer&cascade[]=payment_profile`. |
-
-## Response Type
-
-`Task`
-
-## Example Usage
-
-```csharp
-int subscriptionId = 222;
-int ack = 252;
-Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')try
-{
-    await subscriptionsController.PurgeSubscriptionAsync(
-        subscriptionId,
-        ack
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Bad Request | `ApiException` |
-
-
-# Apply Coupon to Subscription
-
-An existing subscription can accommodate multiple discounts/coupon codes. This is only applicable if each coupon is stackable. For more information on stackable coupons, we recommend reviewing our [coupon documentation.](https://chargify.zendesk.com/hc/en-us/articles/4407755909531#stackable-coupons)
-
-## Query Parameters vs Request Body Parameters
-
-Passing in a coupon code as a query parameter will add the code to the subscription, completely replacing all existing coupon codes on the subscription.
-
-For this reason, using this query parameter on this endpoint has been deprecated in favor of using the request body parameters as described below. When passing in request body parameters, the list of coupon codes will simply be added to any existing list of codes on the subscription.
-
-```csharp
-ApplyCouponToSubscriptionAsync(
-    int subscriptionId,
-    string code = null,
-    Models.AddCouponsRequest body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `code` | `string` | Query, Optional | A code for the coupon that would be applied to a subscription |
-| `body` | [`AddCouponsRequest`](../../doc/models/add-coupons-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`Task<Models.SubscriptionResponse>`](../../doc/models/subscription-response.md)
-
-## Example Usage
-
-```csharp
-int subscriptionId = 222;
-AddCouponsRequest body = new AddCouponsRequest
-{
-    Codes = new List<string>
-    {
-        "COUPON_1",
-        "COUPON_2",
-    },
-};
-
-try
-{
-    SubscriptionResponse result = await subscriptionsController.ApplyCouponToSubscriptionAsync(
-        subscriptionId,
-        null,
-        body
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "subscription": {
-    "id": 21607180,
-    "state": "active",
-    "trial_started_at": null,
-    "trial_ended_at": null,
-    "activated_at": "2018-04-20T14:20:57-05:00",
-    "created_at": "2018-04-20T14:20:57-05:00",
-    "updated_at": "2018-05-11T13:53:44-05:00",
-    "expires_at": null,
-    "balance_in_cents": 49000,
-    "current_period_ends_at": "2018-05-12T11:33:03-05:00",
-    "next_assessment_at": "2018-05-12T11:33:03-05:00",
-    "canceled_at": null,
-    "cancellation_message": null,
-    "next_product_id": null,
-    "cancel_at_end_of_period": false,
-    "payment_collection_method": "remittance",
-    "snap_day": null,
-    "cancellation_method": null,
-    "current_period_started_at": "2018-05-11T11:33:03-05:00",
-    "previous_state": "active",
-    "signup_payment_id": 237154761,
-    "signup_revenue": "0.00",
-    "delayed_cancel_at": null,
-    "coupon_code": "COUPONA",
-    "total_revenue_in_cents": 52762,
-    "product_price_in_cents": 100000,
-    "product_version_number": 2,
-    "payment_type": "credit_card",
-    "referral_code": "x45nc8",
-    "coupon_use_count": 0,
-    "coupon_uses_allowed": 1,
-    "reason_code": null,
-    "automatically_resume_at": null,
-    "coupon_codes": [
-      "COUPONA",
-      "COUPONB"
-    ],
-    "customer": {
-      "id": 21259051,
-      "first_name": "K",
-      "last_name": "C",
-      "organization": "",
-      "email": "example@chargify.com",
-      "created_at": "2018-04-20T14:20:57-05:00",
-      "updated_at": "2018-04-23T15:29:28-05:00",
-      "reference": null,
-      "address": "",
-      "address_2": "",
-      "city": "",
-      "state": "",
-      "zip": "",
-      "country": "",
-      "phone": "",
-      "portal_invite_last_sent_at": "2018-04-20T14:20:59-05:00",
-      "portal_invite_last_accepted_at": null,
-      "verified": false,
-      "portal_customer_created_at": "2018-04-20T14:20:59-05:00",
-      "cc_emails": "",
-      "tax_exempt": false
-    },
-    "product": {
-      "id": 4581816,
-      "name": "Basic",
-      "handle": "basic",
-      "description": "",
-      "accounting_code": "",
-      "request_credit_card": true,
-      "expiration_interval": null,
-      "expiration_interval_unit": "never",
-      "created_at": "2017-11-02T15:00:11-05:00",
-      "updated_at": "2018-04-10T09:02:59-05:00",
-      "price_in_cents": 100000,
-      "interval": 1,
-      "interval_unit": "month",
-      "initial_charge_in_cents": 100000,
-      "trial_price_in_cents": 1000,
-      "trial_interval": 10,
-      "trial_interval_unit": "month",
-      "archived_at": null,
-      "require_credit_card": true,
-      "return_params": "",
-      "taxable": false,
-      "update_return_url": "",
-      "tax_code": "",
-      "initial_charge_after_trial": false,
-      "version_number": 2,
-      "update_return_params": "",
-      "product_family": {
-        "id": 1025627,
-        "name": "My Product Family",
-        "description": "",
-        "handle": "acme-products",
-        "accounting_code": null
-      },
-      "public_signup_pages": [
-        {
-          "id": 333589,
-          "return_url": "",
-          "return_params": "",
-          "url": "https://general-goods.chargifypay.com/subscribe/hbwtd98j3hk2/basic"
-        },
-        {
-          "id": 335926,
-          "return_url": "",
-          "return_params": "",
-          "url": "https://general-goods.chargifypay.com/subscribe/g366zy67c7rm/basic"
-        },
-        {
-          "id": 345555,
-          "return_url": "",
-          "return_params": "",
-          "url": "https://general-goods.chargifypay.com/subscribe/txqyyqk7d8rz/basic"
-        },
-        {
-          "id": 345556,
-          "return_url": "",
-          "return_params": "",
-          "url": "https://general-goods.chargifypay.com/subscribe/2zss3qpf4249/basic"
-        }
-      ]
-    },
-    "credit_card": {
-      "id": 14839830,
-      "first_name": "John",
-      "last_name": "Doe",
-      "masked_card_number": "XXXX-XXXX-XXXX-1",
-      "card_type": "bogus",
-      "expiration_month": 1,
-      "expiration_year": 2028,
-      "customer_id": 21259051,
-      "current_vault": "bogus",
-      "vault_token": "1",
-      "billing_address": null,
-      "billing_city": null,
-      "billing_state": null,
-      "billing_zip": "99999",
-      "billing_country": null,
-      "customer_vault_token": null,
-      "billing_address_2": null,
-      "payment_type": "credit_card"
-    }
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`SubscriptionAddCouponErrorException`](../../doc/models/subscription-add-coupon-error-exception.md) |
-
-
-# Activate Subscription
-
-Chargify offers the ability to activate awaiting signup and trialing subscriptions. This feature is only available on the Relationship Invoicing architecture. Subscriptions in a group may not be activated immediately.
-
-For details on how the activation works, and how to activate subscriptions through the application, see [activation](#).
-
-The `revert_on_failure` parameter controls the behavior upon activation failure.
-
-- If set to `true` and something goes wrong i.e. payment fails, then Chargify will not change the subscription's state. The subscription’s billing period will also remain the same.
-- If set to `false` and something goes wrong i.e. payment fails, then Chargify will continue through with the activation and enter an end of life state. For trialing subscriptions, that will either be trial ended (if the trial is no obligation), past due (if the trial has an obligation), or canceled (if the site has no dunning strategy, or has a strategy that says to cancel immediately). For awaiting signup subscriptions, that will always be canceled.
-
-The default activation failure behavior can be configured per activation attempt, or you may set a default value under Config > Settings > Subscription Activation Settings.
-
-## Activation Scenarios
-
-### Activate Awaiting Signup subscription
-
-- Given you have a product without trial
-- Given you have a site without dunning strategy
-
-```mermaid
-  flowchart LR
-    AS[Awaiting Signup] --> A{Activate}
-    A -->|Success| Active
-    A -->|Failure| ROF{revert_on_failure}
-    ROF -->|true| AS
-    ROF -->|false| Canceled
-```
-
-- Given you have a product with trial
-- Given you have a site with dunning strategy
-
-```mermaid
-  flowchart LR
-    AS[Awaiting Signup] --> A{Activate}
-    A -->|Success| Trialing
-    A -->|Failure| ROF{revert_on_failure}
-    ROF -->|true| AS
-    ROF -->|false| PD[Past Due]
-```
-
-### Activate Trialing subscription
-
-You can read more about the behavior of trialing subscriptions [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404494617357#trialing-subscriptions-0-0).
-When the `revert_on_failure` parameter is set to `true`, the subscription's state will remain as Trialing, we will void the invoice from activation and return any prepayments and credits applied to the invoice back to the subscription.
-
-```csharp
-ActivateSubscriptionAsync(
-    int subscriptionId,
-    Models.ActivateSubscriptionRequest body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `body` | [`ActivateSubscriptionRequest`](../../doc/models/activate-subscription-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`Task<Models.SubscriptionResponse>`](../../doc/models/subscription-response.md)
-
-## Example Usage
-
-```csharp
-int subscriptionId = 222;
-try
-{
-    SubscriptionResponse result = await subscriptionsController.ActivateSubscriptionAsync(subscriptionId);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Bad Request | [`NestedErrorResponseException`](../../doc/models/nested-error-response-exception.md) |
+* [Activate Subscription](../../doc/controllers/subscriptions.md#activate-subscription)
 
 
 # Create Subscription
@@ -1627,8 +871,8 @@ ListSubscriptionsAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br>**Default**: `20`<br>**Constraints**: `<= 200` |
+| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
 | `state` | [`SubscriptionStateFilter?`](../../doc/models/subscription-state-filter.md) | Query, Optional | The current state of the subscription |
 | `product` | `int?` | Query, Optional | The product id of the subscription. (Note that the product handle cannot be used.) |
 | `productPricePointId` | `int?` | Query, Optional | The ID of the product price point. If supplied, product is required |
@@ -1640,7 +884,7 @@ ListSubscriptionsAsync(
 | `endDatetime` | `DateTimeOffset?` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns subscriptions with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. Use in query `end_datetime=2022-08-01 10:00:05`. |
 | `metadata` | `Dictionary<string, string>` | Query, Optional | The value of the metadata field specified in the parameter. Use in query `metadata[my-field]=value&metadata[other-field]=another_value`. |
 | `direction` | [`SortingDirection?`](../../doc/models/sorting-direction.md) | Query, Optional | Controls the order in which results are returned.<br>Use in query `direction=asc`. |
-| `sort` | [`SubscriptionSort?`](../../doc/models/subscription-sort.md) | Query, Optional | The attribute by which to sort<br>**Default**: `SubscriptionSort.signup_date` |
+| `sort` | [`SubscriptionSort?`](../../doc/models/subscription-sort.md) | Query, Optional | The attribute by which to sort |
 | `include` | [`List<SubscriptionListInclude>`](../../doc/models/subscription-list-include.md) | Query, Optional | Allows including additional data in the response. Use in query: `include[]=self_service_page_token`. |
 
 ## Response Type
@@ -1887,6 +1131,186 @@ catch (ApiException e)
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
+# Read Subscription
+
+Use this endpoint to find subscription details.
+
+## Self-Service Page token
+
+Self-Service Page token for the subscription is not returned by default. If this information is desired, the include[]=self_service_page_token parameter must be provided with the request.
+
+```csharp
+ReadSubscriptionAsync(
+    int subscriptionId,
+    List<Models.SubscriptionInclude> include = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `include` | [`List<SubscriptionInclude>`](../../doc/models/subscription-include.md) | Query, Optional | Allows including additional data in the response. Use in query: `include[]=coupons&include[]=self_service_page_token`. |
+
+## Response Type
+
+[`Task<Models.SubscriptionResponse>`](../../doc/models/subscription-response.md)
+
+## Example Usage
+
+```csharp
+int subscriptionId = 222;
+Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')try
+{
+    SubscriptionResponse result = await subscriptionsController.ReadSubscriptionAsync(subscriptionId);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "subscription": {
+    "id": 15236915,
+    "state": "active",
+    "balance_in_cents": 0,
+    "total_revenue_in_cents": 14000,
+    "product_price_in_cents": 1000,
+    "product_version_number": 7,
+    "current_period_ends_at": "2016-11-15T14:48:10-05:00",
+    "next_assessment_at": "2016-11-15T14:48:10-05:00",
+    "trial_started_at": null,
+    "trial_ended_at": null,
+    "activated_at": "2016-11-14T14:48:12-05:00",
+    "expires_at": null,
+    "created_at": "2016-11-14T14:48:10-05:00",
+    "updated_at": "2016-11-14T15:24:41-05:00",
+    "cancellation_message": null,
+    "cancellation_method": null,
+    "cancel_at_end_of_period": null,
+    "canceled_at": null,
+    "current_period_started_at": "2016-11-14T14:48:10-05:00",
+    "previous_state": "active",
+    "signup_payment_id": 162269766,
+    "signup_revenue": "260.00",
+    "delayed_cancel_at": null,
+    "coupon_code": "5SNN6HFK3GBH",
+    "payment_collection_method": "automatic",
+    "snap_day": null,
+    "reason_code": null,
+    "receives_invoice_emails": false,
+    "net_terms": 0,
+    "customer": {
+      "first_name": "Curtis",
+      "last_name": "Test",
+      "email": "curtis@example.com",
+      "cc_emails": "jeff@example.com",
+      "organization": "",
+      "reference": null,
+      "id": 14714298,
+      "created_at": "2016-11-14T14:48:10-05:00",
+      "updated_at": "2016-11-14T14:48:13-05:00",
+      "address": "123 Anywhere Street",
+      "address_2": "",
+      "city": "Boulder",
+      "state": "CO",
+      "zip": "80302",
+      "country": "US",
+      "phone": "",
+      "verified": false,
+      "portal_customer_created_at": "2016-11-14T14:48:13-05:00",
+      "portal_invite_last_sent_at": "2016-11-14T14:48:13-05:00",
+      "portal_invite_last_accepted_at": null,
+      "tax_exempt": false,
+      "vat_number": "012345678"
+    },
+    "product": {
+      "id": 3792003,
+      "name": "$10 Basic Plan",
+      "handle": "basic",
+      "description": "lorem ipsum",
+      "accounting_code": "basic",
+      "price_in_cents": 1000,
+      "interval": 1,
+      "interval_unit": "day",
+      "initial_charge_in_cents": null,
+      "expiration_interval": null,
+      "expiration_interval_unit": "never",
+      "trial_price_in_cents": null,
+      "trial_interval": null,
+      "trial_interval_unit": "month",
+      "initial_charge_after_trial": false,
+      "return_params": "",
+      "request_credit_card": false,
+      "require_credit_card": false,
+      "created_at": "2016-03-24T13:38:39-04:00",
+      "updated_at": "2016-11-03T13:03:05-04:00",
+      "archived_at": null,
+      "update_return_url": "",
+      "update_return_params": "",
+      "product_family": {
+        "id": 527890,
+        "name": "Acme Projects",
+        "handle": "billing-plans",
+        "accounting_code": null,
+        "description": ""
+      },
+      "public_signup_pages": [
+        {
+          "id": 281054,
+          "url": "https://general-goods.chargify.com/subscribe/kqvmfrbgd89q/basic"
+        },
+        {
+          "id": 281240,
+          "url": "https://general-goods.chargify.com/subscribe/dkffht5dxfd8/basic"
+        },
+        {
+          "id": 282694,
+          "url": "https://general-goods.chargify.com/subscribe/jwffwgdd95s8/basic"
+        }
+      ],
+      "taxable": false,
+      "version_number": 7,
+      "product_price_point_name": "Default"
+    },
+    "credit_card": {
+      "id": 10191713,
+      "payment_type": "credit_card",
+      "first_name": "Curtis",
+      "last_name": "Test",
+      "masked_card_number": "XXXX-XXXX-XXXX-1",
+      "card_type": "bogus",
+      "expiration_month": 1,
+      "expiration_year": 2026,
+      "billing_address": "123 Anywhere Street",
+      "billing_address_2": "",
+      "billing_city": "Boulder",
+      "billing_state": null,
+      "billing_country": "",
+      "billing_zip": "80302",
+      "current_vault": "bogus",
+      "vault_token": "1",
+      "customer_vault_token": null,
+      "customer_id": 14714298
+    },
+    "payment_type": "credit_card",
+    "referral_code": "w7kjc9",
+    "next_product_id": null,
+    "coupon_use_count": 1,
+    "coupon_uses_allowed": 1,
+    "stored_credential_transaction_id": 166411599220288,
+    "on_hold_at": null,
+    "scheduled_cancellation_at": "2016-11-14T14:48:13-05:00"
+  }
+}
+```
+
+
 # Override Subscription
 
 This API endpoint allows you to set certain subscription fields that are usually managed for you automatically. Some of the fields can be set via the normal Subscriptions Update API, but others can only be set using this endpoint.
@@ -1966,7 +1390,98 @@ catch (ApiException e)
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 400 | Bad Request | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | [`SingleErrorResponseErrorException`](../../doc/models/single-error-response-error-exception.md) |
+| 422 | Unprocessable Entity (WebDAV) | [`SingleErrorResponseException`](../../doc/models/single-error-response-exception.md) |
+
+
+# Read Subscription by Reference
+
+Use this endpoint to find a subscription by its reference.
+
+```csharp
+ReadSubscriptionByReferenceAsync(
+    string reference = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `reference` | `string` | Query, Optional | Subscription reference |
+
+## Response Type
+
+[`Task<Models.SubscriptionResponse>`](../../doc/models/subscription-response.md)
+
+## Example Usage
+
+```csharp
+try
+{
+    SubscriptionResponse result = await subscriptionsController.ReadSubscriptionByReferenceAsync();
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+
+# Purge Subscription
+
+For sites in test mode, you may purge individual subscriptions.
+
+Provide the subscription ID in the url.  To confirm, supply the customer ID in the query string `ack` parameter. You may also delete the customer record and/or payment profiles by passing `cascade` parameters. For example, to delete just the customer record, the query params would be: `?ack={customer_id}&cascade[]=customer`
+
+If you need to remove subscriptions from a live site, please contact support to discuss your use case.
+
+### Delete customer and payment profile
+
+The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`
+
+```csharp
+PurgeSubscriptionAsync(
+    int subscriptionId,
+    int ack,
+    List<Models.SubscriptionPurgeType> cascade = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `ack` | `int` | Query, Required | id of the customer. |
+| `cascade` | [`List<SubscriptionPurgeType>`](../../doc/models/subscription-purge-type.md) | Query, Optional | Options are "customer" or "payment_profile".<br>Use in query: `cascade[]=customer&cascade[]=payment_profile`. |
+
+## Response Type
+
+`Task`
+
+## Example Usage
+
+```csharp
+int subscriptionId = 222;
+int ack = 252;
+Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')try
+{
+    await subscriptionsController.PurgeSubscriptionAsync(
+        subscriptionId,
+        ack
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Bad Request | `ApiException` |
 
 
 # Create Prepaid Subscription
@@ -2034,6 +1549,406 @@ catch (ApiException e)
 ```
 
 
+# Preview Subscription
+
+The Chargify API allows you to preview a subscription by POSTing the same JSON or XML as for a subscription creation.
+
+The "Next Billing" amount and "Next Billing" date are represented in each Subscriber's Summary. For more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#next-billing).
+
+## Side effects
+
+A subscription will not be created by sending a POST to this endpoint. It is meant to serve as a prediction.
+
+## Taxable Subscriptions
+
+This endpoint will preview taxes applicable to a purchase. In order for taxes to be previewed, the following conditions must be met:
+
++ Taxes must be configured on the subscription
++ The preview must be for the purchase of a taxable product or component, or combination of the two.
++ The subscription payload must contain a full billing or shipping address in order to calculate tax
+
+For more information about creating taxable previews, please see our documentation guide on how to create [taxable subscriptions.](https://chargify.zendesk.com/hc/en-us/articles/4407904217755#creating-taxable-subscriptions)
+
+You do **not** need to include a card number to generate tax information when you are previewing a subscription. However, please note that when you actually want to create the subscription, you must include the credit card information if you want the billing address to be stored in Chargify. The billing address and the credit card information are stored together within the payment profile object. Also, you may not send a billing address to Chargify without payment profile information, as the address is stored on the card.
+
+You can pass shipping and billing addresses and still decide not to calculate taxes. To do that, pass `skip_billing_manifest_taxes: true` attribute.
+
+## Non-taxable Subscriptions
+
+If you'd like to calculate subscriptions that do not include tax, please feel free to leave off the billing information.
+
+```csharp
+PreviewSubscriptionAsync(
+    Models.CreateSubscriptionRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`CreateSubscriptionRequest`](../../doc/models/create-subscription-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.SubscriptionPreviewResponse>`](../../doc/models/subscription-preview-response.md)
+
+## Example Usage
+
+```csharp
+CreateSubscriptionRequest body = new CreateSubscriptionRequest
+{
+    Subscription = new CreateSubscription
+    {
+        ProductHandle = "gold-product",
+    },
+};
+
+try
+{
+    SubscriptionPreviewResponse result = await subscriptionsController.PreviewSubscriptionAsync(body);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "subscription_preview": {
+    "current_billing_manifest": {
+      "line_items": [
+        {
+          "transaction_type": "charge",
+          "kind": "baseline",
+          "amount_in_cents": 5000,
+          "memo": "Gold Product (08/21/2018 - 09/21/2018)",
+          "discount_amount_in_cents": 0,
+          "taxable_amount_in_cents": 0,
+          "product_id": 1,
+          "product_handle": "gold-product",
+          "product_name": "Gold Product",
+          "period_range_start": "13 Oct 2023",
+          "period_range_end": "13 Nov 2023"
+        },
+        {
+          "transaction_type": "charge",
+          "kind": "component",
+          "amount_in_cents": 28000,
+          "memo": "Component name: 14 Unit names",
+          "discount_amount_in_cents": 0,
+          "taxable_amount_in_cents": 0,
+          "component_id": 462149,
+          "component_handle": "handle",
+          "component_name": "Component name"
+        },
+        {
+          "transaction_type": "charge",
+          "kind": "component",
+          "amount_in_cents": 2000,
+          "memo": "Fractional Metered Components: 20.0 Fractional Metereds",
+          "discount_amount_in_cents": 0,
+          "taxable_amount_in_cents": 0,
+          "component_id": 426665,
+          "component_handle": "handle",
+          "component_name": "Fractional Metered Components"
+        },
+        {
+          "transaction_type": "charge",
+          "kind": "component",
+          "amount_in_cents": 0,
+          "memo": "On/Off Component",
+          "discount_amount_in_cents": 0,
+          "taxable_amount_in_cents": 0,
+          "component_id": 426670,
+          "component_handle": "handle",
+          "component_name": "On/Off Component"
+        },
+        {
+          "transaction_type": "adjustment",
+          "kind": "coupon",
+          "amount_in_cents": 0,
+          "memo": "Coupon: 1DOLLAR - You only get $1.00 off",
+          "discount_amount_in_cents": 0,
+          "taxable_amount_in_cents": 0
+        }
+      ],
+      "total_in_cents": 35000,
+      "total_discount_in_cents": 0,
+      "total_tax_in_cents": 0,
+      "subtotal_in_cents": 35000,
+      "start_date": "2018-08-21T21:25:21Z",
+      "end_date": "2018-09-21T21:25:21Z",
+      "period_type": "recurring",
+      "existing_balance_in_cents": 0
+    },
+    "next_billing_manifest": {
+      "line_items": [
+        {
+          "transaction_type": "charge",
+          "kind": "baseline",
+          "amount_in_cents": 5000,
+          "memo": "Gold Product (09/21/2018 - 10/21/2018)",
+          "discount_amount_in_cents": 0,
+          "taxable_amount_in_cents": 0,
+          "product_id": 1,
+          "product_handle": "gold-product",
+          "product_name": "Gold Product"
+        },
+        {
+          "transaction_type": "charge",
+          "kind": "component",
+          "amount_in_cents": 28000,
+          "memo": "Component name: 14 Unit names",
+          "discount_amount_in_cents": 0,
+          "taxable_amount_in_cents": 0,
+          "component_id": 462149,
+          "component_handle": "handle",
+          "component_name": "Component name"
+        },
+        {
+          "transaction_type": "charge",
+          "kind": "component",
+          "amount_in_cents": 0,
+          "memo": "On/Off Component",
+          "discount_amount_in_cents": 0,
+          "taxable_amount_in_cents": 0,
+          "component_id": 426670,
+          "component_handle": "handle",
+          "component_name": "On/Off Component"
+        }
+      ],
+      "total_in_cents": 33000,
+      "total_discount_in_cents": 0,
+      "total_tax_in_cents": 0,
+      "subtotal_in_cents": 33000,
+      "start_date": "2018-09-21T21:25:21Z",
+      "end_date": "2018-10-21T21:25:21Z",
+      "period_type": "recurring",
+      "existing_balance_in_cents": 0
+    }
+  }
+}
+```
+
+
+# Apply Coupon to Subscription
+
+An existing subscription can accommodate multiple discounts/coupon codes. This is only applicable if each coupon is stackable. For more information on stackable coupons, we recommend reviewing our [coupon documentation.](https://chargify.zendesk.com/hc/en-us/articles/4407755909531#stackable-coupons)
+
+## Query Parameters vs Request Body Parameters
+
+Passing in a coupon code as a query parameter will add the code to the subscription, completely replacing all existing coupon codes on the subscription.
+
+For this reason, using this query parameter on this endpoint has been deprecated in favor of using the request body parameters as described below. When passing in request body parameters, the list of coupon codes will simply be added to any existing list of codes on the subscription.
+
+```csharp
+ApplyCouponToSubscriptionAsync(
+    int subscriptionId,
+    string code = null,
+    Models.AddCouponsRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `code` | `string` | Query, Optional | A code for the coupon that would be applied to a subscription |
+| `body` | [`AddCouponsRequest`](../../doc/models/add-coupons-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.SubscriptionResponse>`](../../doc/models/subscription-response.md)
+
+## Example Usage
+
+```csharp
+int subscriptionId = 222;
+AddCouponsRequest body = new AddCouponsRequest
+{
+    Codes = new List<string>
+    {
+        "COUPON_1",
+        "COUPON_2",
+    },
+};
+
+try
+{
+    SubscriptionResponse result = await subscriptionsController.ApplyCouponToSubscriptionAsync(
+        subscriptionId,
+        null,
+        body
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "subscription": {
+    "id": 21607180,
+    "state": "active",
+    "trial_started_at": null,
+    "trial_ended_at": null,
+    "activated_at": "2018-04-20T14:20:57-05:00",
+    "created_at": "2018-04-20T14:20:57-05:00",
+    "updated_at": "2018-05-11T13:53:44-05:00",
+    "expires_at": null,
+    "balance_in_cents": 49000,
+    "current_period_ends_at": "2018-05-12T11:33:03-05:00",
+    "next_assessment_at": "2018-05-12T11:33:03-05:00",
+    "canceled_at": null,
+    "cancellation_message": null,
+    "next_product_id": null,
+    "cancel_at_end_of_period": false,
+    "payment_collection_method": "remittance",
+    "snap_day": null,
+    "cancellation_method": null,
+    "current_period_started_at": "2018-05-11T11:33:03-05:00",
+    "previous_state": "active",
+    "signup_payment_id": 237154761,
+    "signup_revenue": "0.00",
+    "delayed_cancel_at": null,
+    "coupon_code": "COUPONA",
+    "total_revenue_in_cents": 52762,
+    "product_price_in_cents": 100000,
+    "product_version_number": 2,
+    "payment_type": "credit_card",
+    "referral_code": "x45nc8",
+    "coupon_use_count": 0,
+    "coupon_uses_allowed": 1,
+    "reason_code": null,
+    "automatically_resume_at": null,
+    "coupon_codes": [
+      "COUPONA",
+      "COUPONB"
+    ],
+    "customer": {
+      "id": 21259051,
+      "first_name": "K",
+      "last_name": "C",
+      "organization": "",
+      "email": "example@chargify.com",
+      "created_at": "2018-04-20T14:20:57-05:00",
+      "updated_at": "2018-04-23T15:29:28-05:00",
+      "reference": null,
+      "address": "",
+      "address_2": "",
+      "city": "",
+      "state": "",
+      "zip": "",
+      "country": "",
+      "phone": "",
+      "portal_invite_last_sent_at": "2018-04-20T14:20:59-05:00",
+      "portal_invite_last_accepted_at": null,
+      "verified": false,
+      "portal_customer_created_at": "2018-04-20T14:20:59-05:00",
+      "cc_emails": "",
+      "tax_exempt": false
+    },
+    "product": {
+      "id": 4581816,
+      "name": "Basic",
+      "handle": "basic",
+      "description": "",
+      "accounting_code": "",
+      "request_credit_card": true,
+      "expiration_interval": null,
+      "expiration_interval_unit": "never",
+      "created_at": "2017-11-02T15:00:11-05:00",
+      "updated_at": "2018-04-10T09:02:59-05:00",
+      "price_in_cents": 100000,
+      "interval": 1,
+      "interval_unit": "month",
+      "initial_charge_in_cents": 100000,
+      "trial_price_in_cents": 1000,
+      "trial_interval": 10,
+      "trial_interval_unit": "month",
+      "archived_at": null,
+      "require_credit_card": true,
+      "return_params": "",
+      "taxable": false,
+      "update_return_url": "",
+      "tax_code": "",
+      "initial_charge_after_trial": false,
+      "version_number": 2,
+      "update_return_params": "",
+      "product_family": {
+        "id": 1025627,
+        "name": "My Product Family",
+        "description": "",
+        "handle": "acme-products",
+        "accounting_code": null
+      },
+      "public_signup_pages": [
+        {
+          "id": 333589,
+          "return_url": "",
+          "return_params": "",
+          "url": "https://general-goods.chargifypay.com/subscribe/hbwtd98j3hk2/basic"
+        },
+        {
+          "id": 335926,
+          "return_url": "",
+          "return_params": "",
+          "url": "https://general-goods.chargifypay.com/subscribe/g366zy67c7rm/basic"
+        },
+        {
+          "id": 345555,
+          "return_url": "",
+          "return_params": "",
+          "url": "https://general-goods.chargifypay.com/subscribe/txqyyqk7d8rz/basic"
+        },
+        {
+          "id": 345556,
+          "return_url": "",
+          "return_params": "",
+          "url": "https://general-goods.chargifypay.com/subscribe/2zss3qpf4249/basic"
+        }
+      ]
+    },
+    "credit_card": {
+      "id": 14839830,
+      "first_name": "John",
+      "last_name": "Doe",
+      "masked_card_number": "XXXX-XXXX-XXXX-1",
+      "card_type": "bogus",
+      "expiration_month": 1,
+      "expiration_year": 2028,
+      "customer_id": 21259051,
+      "current_vault": "bogus",
+      "vault_token": "1",
+      "billing_address": null,
+      "billing_city": null,
+      "billing_state": null,
+      "billing_zip": "99999",
+      "billing_country": null,
+      "customer_vault_token": null,
+      "billing_address_2": null,
+      "payment_type": "credit_card"
+    }
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`SubscriptionAddCouponErrorException`](../../doc/models/subscription-add-coupon-error-exception.md) |
+
+
 # Delete Coupon From Subscription
 
 Use this endpoint to remove a coupon from an existing subscription.
@@ -2083,4 +1998,89 @@ catch (ApiException e)
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 422 | Unprocessable Entity (WebDAV) | [`SubscriptionRemoveCouponErrorsException`](../../doc/models/subscription-remove-coupon-errors-exception.md) |
+
+
+# Activate Subscription
+
+Chargify offers the ability to activate awaiting signup and trialing subscriptions. This feature is only available on the Relationship Invoicing architecture. Subscriptions in a group may not be activated immediately.
+
+For details on how the activation works, and how to activate subscriptions through the application, see [activation](#).
+
+The `revert_on_failure` parameter controls the behavior upon activation failure.
+
+- If set to `true` and something goes wrong i.e. payment fails, then Chargify will not change the subscription's state. The subscription’s billing period will also remain the same.
+- If set to `false` and something goes wrong i.e. payment fails, then Chargify will continue through with the activation and enter an end of life state. For trialing subscriptions, that will either be trial ended (if the trial is no obligation), past due (if the trial has an obligation), or canceled (if the site has no dunning strategy, or has a strategy that says to cancel immediately). For awaiting signup subscriptions, that will always be canceled.
+
+The default activation failure behavior can be configured per activation attempt, or you may set a default value under Config > Settings > Subscription Activation Settings.
+
+## Activation Scenarios
+
+### Activate Awaiting Signup subscription
+
+- Given you have a product without trial
+- Given you have a site without dunning strategy
+
+```mermaid
+  flowchart LR
+    AS[Awaiting Signup] --> A{Activate}
+    A -->|Success| Active
+    A -->|Failure| ROF{revert_on_failure}
+    ROF -->|true| AS
+    ROF -->|false| Canceled
+```
+
+- Given you have a product with trial
+- Given you have a site with dunning strategy
+
+```mermaid
+  flowchart LR
+    AS[Awaiting Signup] --> A{Activate}
+    A -->|Success| Trialing
+    A -->|Failure| ROF{revert_on_failure}
+    ROF -->|true| AS
+    ROF -->|false| PD[Past Due]
+```
+
+### Activate Trialing subscription
+
+You can read more about the behavior of trialing subscriptions [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404494617357#trialing-subscriptions-0-0).
+When the `revert_on_failure` parameter is set to `true`, the subscription's state will remain as Trialing, we will void the invoice from activation and return any prepayments and credits applied to the invoice back to the subscription.
+
+```csharp
+ActivateSubscriptionAsync(
+    int subscriptionId,
+    Models.ActivateSubscriptionRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `body` | [`ActivateSubscriptionRequest`](../../doc/models/activate-subscription-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.SubscriptionResponse>`](../../doc/models/subscription-response.md)
+
+## Example Usage
+
+```csharp
+int subscriptionId = 222;
+try
+{
+    SubscriptionResponse result = await subscriptionsController.ActivateSubscriptionAsync(subscriptionId);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Bad Request | [`NestedErrorResponseException`](../../doc/models/nested-error-response-exception.md) |
 
