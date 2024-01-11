@@ -35,17 +35,17 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="id">id.</param>
         /// <param name="key">key.</param>
         /// <param name="message">message.</param>
-        /// <param name="subscriptionId">subscription_id.</param>
         /// <param name="customerId">customer_id.</param>
         /// <param name="createdAt">created_at.</param>
+        /// <param name="subscriptionId">subscription_id.</param>
         /// <param name="eventSpecificData">event_specific_data.</param>
         public Event(
             int id,
             string key,
             string message,
-            int subscriptionId,
             int customerId,
             string createdAt,
+            int? subscriptionId = null,
             EventEventSpecificData eventSpecificData = null)
         {
             this.Id = id;
@@ -78,8 +78,8 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets SubscriptionId.
         /// </summary>
-        [JsonProperty("subscription_id")]
-        public int SubscriptionId { get; set; }
+        [JsonProperty("subscription_id", NullValueHandling = NullValueHandling.Include)]
+        public int? SubscriptionId { get; set; }
 
         /// <summary>
         /// Gets or sets CustomerId.
@@ -124,7 +124,7 @@ namespace AdvancedBilling.Standard.Models
             return obj is Event other &&                this.Id.Equals(other.Id) &&
                 ((this.Key == null && other.Key == null) || (this.Key?.Equals(other.Key) == true)) &&
                 ((this.Message == null && other.Message == null) || (this.Message?.Equals(other.Message) == true)) &&
-                this.SubscriptionId.Equals(other.SubscriptionId) &&
+                ((this.SubscriptionId == null && other.SubscriptionId == null) || (this.SubscriptionId?.Equals(other.SubscriptionId) == true)) &&
                 this.CustomerId.Equals(other.CustomerId) &&
                 ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true)) &&
                 ((this.EventSpecificData == null && other.EventSpecificData == null) || (this.EventSpecificData?.Equals(other.EventSpecificData) == true));
@@ -139,7 +139,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Id = {this.Id}");
             toStringOutput.Add($"this.Key = {(this.Key == null ? "null" : this.Key)}");
             toStringOutput.Add($"this.Message = {(this.Message == null ? "null" : this.Message)}");
-            toStringOutput.Add($"this.SubscriptionId = {this.SubscriptionId}");
+            toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
             toStringOutput.Add($"this.CustomerId = {this.CustomerId}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
             toStringOutput.Add($"EventSpecificData = {(this.EventSpecificData == null ? "null" : this.EventSpecificData.ToString())}");

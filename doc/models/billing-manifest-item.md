@@ -9,8 +9,8 @@
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `TransactionType` | `string` | Optional | - |
-| `Kind` | `string` | Optional | - |
+| `TransactionType` | [`LineItemTransactionType?`](../../doc/models/line-item-transaction-type.md) | Optional | A handle for the line item transaction type |
+| `Kind` | [`BillingManifestLineItemKind?`](../../doc/models/billing-manifest-line-item-kind.md) | Optional | A handle for the billing manifest line item kind |
 | `AmountInCents` | `long?` | Optional | - |
 | `Memo` | `string` | Optional | - |
 | `DiscountAmountInCents` | `long?` | Optional | - |
@@ -28,8 +28,8 @@
 
 ```json
 {
-  "transaction_type": "transaction_type2",
-  "kind": "kind8",
+  "transaction_type": "info_transaction",
+  "kind": "baseline",
   "amount_in_cents": 216,
   "memo": "memo4",
   "discount_amount_in_cents": 236

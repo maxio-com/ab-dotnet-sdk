@@ -23,16 +23,22 @@ namespace AdvancedBilling.Standard.Models
     {
         private int? quantityDelta;
         private int? pricingDetailsIndex;
+        private string taxCode;
+        private int? productPricePointId;
         private int? pricePointId;
         private int? componentId;
         private int? billingScheduleItemId;
+        private bool? customItem;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "quantity_delta", false },
             { "pricing_details_index", false },
+            { "tax_code", false },
+            { "product_price_point_id", false },
             { "price_point_id", false },
             { "component_id", false },
             { "billing_schedule_item_id", false },
+            { "custom_item", false },
         };
 
         /// <summary>
@@ -107,10 +113,18 @@ namespace AdvancedBilling.Standard.Models
             }
 
             this.PricingDetails = pricingDetails;
-            this.TaxCode = taxCode;
+            if (taxCode != null)
+            {
+                this.TaxCode = taxCode;
+            }
+
             this.TaxAmount = taxAmount;
             this.ProductId = productId;
-            this.ProductPricePointId = productPricePointId;
+            if (productPricePointId != null)
+            {
+                this.ProductPricePointId = productPricePointId;
+            }
+
             if (pricePointId != null)
             {
                 this.PricePointId = pricePointId;
@@ -126,7 +140,11 @@ namespace AdvancedBilling.Standard.Models
                 this.BillingScheduleItemId = billingScheduleItemId;
             }
 
-            this.CustomItem = customItem;
+            if (customItem != null)
+            {
+                this.CustomItem = customItem;
+            }
+
         }
 
         /// <summary>
@@ -228,8 +246,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets TaxCode.
         /// </summary>
-        [JsonProperty("tax_code", NullValueHandling = NullValueHandling.Ignore)]
-        public string TaxCode { get; set; }
+        [JsonProperty("tax_code")]
+        public string TaxCode
+        {
+            get
+            {
+                return this.taxCode;
+            }
+
+            set
+            {
+                this.shouldSerialize["tax_code"] = true;
+                this.taxCode = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets TaxAmount.
@@ -246,8 +276,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets ProductPricePointId.
         /// </summary>
-        [JsonProperty("product_price_point_id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? ProductPricePointId { get; set; }
+        [JsonProperty("product_price_point_id")]
+        public int? ProductPricePointId
+        {
+            get
+            {
+                return this.productPricePointId;
+            }
+
+            set
+            {
+                this.shouldSerialize["product_price_point_id"] = true;
+                this.productPricePointId = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets PricePointId.
@@ -306,8 +348,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CustomItem.
         /// </summary>
-        [JsonProperty("custom_item", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? CustomItem { get; set; }
+        [JsonProperty("custom_item")]
+        public bool? CustomItem
+        {
+            get
+            {
+                return this.customItem;
+            }
+
+            set
+            {
+                this.shouldSerialize["custom_item"] = true;
+                this.customItem = value;
+            }
+        }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -338,6 +392,22 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serailized.
         /// </summary>
+        public void UnsetTaxCode()
+        {
+            this.shouldSerialize["tax_code"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetProductPricePointId()
+        {
+            this.shouldSerialize["product_price_point_id"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
         public void UnsetPricePointId()
         {
             this.shouldSerialize["price_point_id"] = false;
@@ -360,6 +430,14 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetCustomItem()
+        {
+            this.shouldSerialize["custom_item"] = false;
+        }
+
+        /// <summary>
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
@@ -375,6 +453,24 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializePricingDetailsIndex()
         {
             return this.shouldSerialize["pricing_details_index"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeTaxCode()
+        {
+            return this.shouldSerialize["tax_code"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeProductPricePointId()
+        {
+            return this.shouldSerialize["product_price_point_id"];
         }
 
         /// <summary>
@@ -402,6 +498,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeBillingScheduleItemId()
         {
             return this.shouldSerialize["billing_schedule_item_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeCustomItem()
+        {
+            return this.shouldSerialize["custom_item"];
         }
 
         /// <inheritdoc/>

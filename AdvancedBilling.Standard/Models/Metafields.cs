@@ -31,30 +31,21 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="Metafields"/> class.
         /// </summary>
-        /// <param name="id">id.</param>
         /// <param name="name">name.</param>
         /// <param name="scope">scope.</param>
         /// <param name="inputType">input_type.</param>
         /// <param name="mEnum">enum.</param>
         public Metafields(
-            int? id = null,
             string name = null,
             Models.MetafieldScope scope = null,
             Models.MetafieldInput? inputType = Models.MetafieldInput.Text,
             List<string> mEnum = null)
         {
-            this.Id = id;
             this.Name = name;
             this.Scope = scope;
             this.InputType = inputType;
             this.MEnum = mEnum;
         }
-
-        /// <summary>
-        /// Gets or sets Id.
-        /// </summary>
-        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? Id { get; set; }
 
         /// <summary>
         /// Gets or sets Name.
@@ -102,8 +93,7 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is Metafields other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
+            return obj is Metafields other &&                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
                 ((this.Scope == null && other.Scope == null) || (this.Scope?.Equals(other.Scope) == true)) &&
                 ((this.InputType == null && other.InputType == null) || (this.InputType?.Equals(other.InputType) == true)) &&
                 ((this.MEnum == null && other.MEnum == null) || (this.MEnum?.Equals(other.MEnum) == true));
@@ -115,7 +105,6 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
             toStringOutput.Add($"this.Scope = {(this.Scope == null ? "null" : this.Scope.ToString())}");
             toStringOutput.Add($"this.InputType = {(this.InputType == null ? "null" : this.InputType.ToString())}");

@@ -10,20 +10,297 @@ CouponsController couponsController = client.CouponsController;
 
 ## Methods
 
-* [Read Coupon](../../doc/controllers/coupons.md#read-coupon)
-* [Validate Coupon](../../doc/controllers/coupons.md#validate-coupon)
-* [Update Coupon Currency Prices](../../doc/controllers/coupons.md#update-coupon-currency-prices)
 * [Create Coupon](../../doc/controllers/coupons.md#create-coupon)
-* [List Coupon Subcodes](../../doc/controllers/coupons.md#list-coupon-subcodes)
 * [List Coupons for Product Family](../../doc/controllers/coupons.md#list-coupons-for-product-family)
-* [Update Coupon](../../doc/controllers/coupons.md#update-coupon)
-* [Read Coupon Usage](../../doc/controllers/coupons.md#read-coupon-usage)
-* [Delete Coupon Subcode](../../doc/controllers/coupons.md#delete-coupon-subcode)
 * [Read Coupon by Code](../../doc/controllers/coupons.md#read-coupon-by-code)
+* [Read Coupon](../../doc/controllers/coupons.md#read-coupon)
+* [Update Coupon](../../doc/controllers/coupons.md#update-coupon)
 * [Archive Coupon](../../doc/controllers/coupons.md#archive-coupon)
 * [List Coupons](../../doc/controllers/coupons.md#list-coupons)
+* [Read Coupon Usage](../../doc/controllers/coupons.md#read-coupon-usage)
+* [Validate Coupon](../../doc/controllers/coupons.md#validate-coupon)
+* [Update Coupon Currency Prices](../../doc/controllers/coupons.md#update-coupon-currency-prices)
 * [Create Coupon Subcodes](../../doc/controllers/coupons.md#create-coupon-subcodes)
+* [List Coupon Subcodes](../../doc/controllers/coupons.md#list-coupon-subcodes)
 * [Update Coupon Subcodes](../../doc/controllers/coupons.md#update-coupon-subcodes)
+* [Delete Coupon Subcode](../../doc/controllers/coupons.md#delete-coupon-subcode)
+
+
+# Create Coupon
+
+## Coupons Documentation
+
+Coupons can be administered in the Chargify application or created via API. Please view our section on [creating coupons](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404742830733) for more information.
+
+Additionally, for documentation on how to apply a coupon to a subscription within the Chargify UI, please see our documentation [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404761012877).
+
+## Create Coupon
+
+This request will create a coupon, based on the provided information.
+
+When creating a coupon, you must specify a product family using the `product_family_id`. If no `product_family_id` is passed, the first product family available is used. You will also need to formulate your URL to cite the Product Family ID in your request.
+
+You can restrict a coupon to only apply to specific products / components by optionally passing in hashes of `restricted_products` and/or `restricted_components` in the format:
+`{ "<product/component_id>": boolean_value }`
+
+```csharp
+CreateCouponAsync(
+    int productFamilyId,
+    Models.CreateOrUpdateCoupon body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the coupon belongs |
+| `body` | [`CreateOrUpdateCoupon`](../../doc/models/create-or-update-coupon.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.CouponResponse>`](../../doc/models/coupon-response.md)
+
+## Example Usage
+
+```csharp
+int productFamilyId = 140;
+CreateOrUpdateCoupon body = new CreateOrUpdateCoupon
+{
+    Coupon = CreateOrUpdateCouponCoupon.FromCreateOrUpdatePercentageCoupon(
+        new CreateOrUpdatePercentageCoupon
+        {
+            Name = "15% off",
+            Code = "15OFF",
+            Percentage = CreateOrUpdatePercentageCouponPercentage.FromString("15"),
+            Description = "15% off for life",
+            AllowNegativeBalance = false,
+            Recurring = false,
+            EndDate = DateTime.ParseExact("2012-08-29T12:00:00-04:00", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+                provider: CultureInfo.InvariantCulture,
+                DateTimeStyles.RoundtripKind),
+            ProductFamilyId = "2",
+            Stackable = true,
+            CompoundingStrategy = CompoundingStrategy.Compound,
+            ExcludeMidPeriodAllocations = true,
+            ApplyOnCancelAtEndOfPeriod = true,
+        }
+    ),
+    RestrictedProducts = new Dictionary<string, bool>
+    {
+        ["1"] = true,
+    },
+    RestrictedComponents = new Dictionary<string, bool>
+    {
+        ["1"] = true,
+        ["2"] = false,
+    },
+};
+
+try
+{
+    CouponResponse result = await couponsController.CreateCouponAsync(
+        productFamilyId,
+        body
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# List Coupons for Product Family
+
+List coupons for a specific Product Family in a Site.
+
+If the coupon is set to `use_site_exchange_rate: true`, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency.
+
+```csharp
+ListCouponsForProductFamilyAsync(
+    Models.ListCouponsForProductFamilyInput input)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the coupon belongs |
+| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 30. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `filterDateField` | [`BasicDateField?`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search. Use in query `filter[date_field]=created_at`. |
+| `filterEndDate` | `DateTime?` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns coupons with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. Use in query `filter[date_field]=2011-12-15`. |
+| `filterEndDatetime` | `DateTimeOffset?` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns coupons with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. Use in query `?filter[end_datetime]=2011-12-1T10:15:30+01:00`. |
+| `filterStartDate` | `DateTime?` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns coupons with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. Use in query `filter[start_date]=2011-12-17`. |
+| `filterStartDatetime` | `DateTimeOffset?` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns coupons with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date. Use in query `filter[start_datetime]=2011-12-19T10:15:30+01:00`. |
+| `filterIds` | `List<int>` | Query, Optional | Allows fetching coupons with matching id based on provided values. Use in query `filter[ids]=1,2,3`. |
+| `filterCodes` | `List<string>` | Query, Optional | Allows fetching coupons with matching codes based on provided values. Use in query `filter[codes]=free,free_trial`. |
+| `currencyPrices` | `bool?` | Query, Optional | When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response. Use in query `currency_prices=true`. |
+| `filterUseSiteExchangeRate` | `bool?` | Query, Optional | Allows fetching coupons with matching use_site_exchange_rate based on provided value. Use in query `filter[use_site_exchange_rate]=true`. |
+
+## Response Type
+
+[`Task<List<Models.CouponResponse>>`](../../doc/models/coupon-response.md)
+
+## Example Usage
+
+```csharp
+ListCouponsForProductFamilyInput listCouponsForProductFamilyInput = new ListCouponsForProductFamilyInput
+{
+    ProductFamilyId = 140,
+    Page = 2,
+    PerPage = 50,
+Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')    CurrencyPrices = true,
+Liquid error: Value cannot be null. (Parameter 'key')};
+
+try
+{
+    List<CouponResponse> result = await couponsController.ListCouponsForProductFamilyAsync(listCouponsForProductFamilyInput);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+[
+  {
+    "coupon": {
+      "id": 999999,
+      "name": "50% coupon",
+      "code": "50PERCENT",
+      "description": "50 PERCENT OFF",
+      "amount_in_cents": null,
+      "product_family_id": 527890,
+      "created_at": "2016-10-21T17:02:08-04:00",
+      "updated_at": "2016-10-21T17:06:11-04:00",
+      "start_date": "2016-10-21T17:02:08-04:00",
+      "end_date": null,
+      "percentage": 50,
+      "recurring": true,
+      "duration_period_count": null,
+      "duration_interval": 1,
+      "duration_interval_unit": "day",
+      "allow_negative_balance": true,
+      "archived_at": null,
+      "conversion_limit": "100",
+      "stackable": false,
+      "compounding_strategy": "compound",
+      "coupon_restrictions": [],
+      "use_site_exchange_rate": true
+    }
+  },
+  {
+    "coupon": {
+      "id": 123456,
+      "name": "100% coupon",
+      "code": "100PERCENT",
+      "description": "100 PERCENT OFF",
+      "amount_in_cents": null,
+      "product_family_id": 527890,
+      "created_at": "2016-10-21T17:02:08-04:00",
+      "updated_at": "2016-10-21T17:06:11-04:00",
+      "start_date": "2016-10-21T17:02:08-04:00",
+      "end_date": null,
+      "percentage": 50,
+      "recurring": true,
+      "duration_period_count": null,
+      "duration_interval": 1,
+      "duration_interval_unit": "day",
+      "allow_negative_balance": true,
+      "archived_at": null,
+      "conversion_limit": "100",
+      "stackable": false,
+      "compounding_strategy": "compound",
+      "coupon_restrictions": [],
+      "use_site_exchange_rate": true
+    }
+  },
+  {
+    "coupon": {
+      "id": 888888,
+      "name": "25% coupon",
+      "code": "25PERCENT",
+      "description": "25 PERCENT OFF",
+      "amount_in_cents": null,
+      "product_family_id": 527890,
+      "created_at": "2016-10-21T17:02:08-04:00",
+      "updated_at": "2016-10-21T17:06:11-04:00",
+      "start_date": "2016-10-21T17:02:08-04:00",
+      "end_date": null,
+      "percentage": 25,
+      "recurring": true,
+      "duration_period_count": null,
+      "duration_interval": 1,
+      "duration_interval_unit": "day",
+      "allow_negative_balance": true,
+      "archived_at": null,
+      "conversion_limit": "100",
+      "stackable": false,
+      "compounding_strategy": "compound",
+      "coupon_restrictions": [
+        {
+          "id": 37,
+          "item_type": "Component",
+          "item_id": 519,
+          "name": "test",
+          "handle": null
+        }
+      ],
+      "use_site_exchange_rate": true
+    }
+  }
+]
+```
+
+
+# Read Coupon by Code
+
+You can search for a coupon via the API with the find method. By passing a code parameter, the find will attempt to locate a coupon that matches that code. If no coupon is found, a 404 is returned.
+
+If you have more than one product family and if the coupon you are trying to find does not belong to the default product family in your site, then you will need to specify (either in the url or as a query string param) the product family id.
+
+```csharp
+ReadCouponByCodeAsync(
+    int? productFamilyId = null,
+    string code = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `productFamilyId` | `int?` | Query, Optional | The Chargify id of the product family to which the coupon belongs |
+| `code` | `string` | Query, Optional | The code of the coupon |
+
+## Response Type
+
+[`Task<Models.CouponResponse>`](../../doc/models/coupon-response.md)
+
+## Example Usage
+
+```csharp
+try
+{
+    CouponResponse result = await couponsController.ReadCouponByCodeAsync();
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
 
 
 # Read Coupon
@@ -99,6 +376,377 @@ catch (ApiException e)
     "coupon_restrictions": []
   }
 }
+```
+
+
+# Update Coupon
+
+## Update Coupon
+
+You can update a Coupon via the API with a PUT request to the resource endpoint.
+
+You can restrict a coupon to only apply to specific products / components by optionally passing in hashes of `restricted_products` and/or `restricted_components` in the format:
+`{ "<product/component_id>": boolean_value }`
+
+```csharp
+UpdateCouponAsync(
+    int productFamilyId,
+    int couponId,
+    Models.CreateOrUpdateCoupon body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the coupon belongs |
+| `couponId` | `int` | Template, Required | The Chargify id of the coupon |
+| `body` | [`CreateOrUpdateCoupon`](../../doc/models/create-or-update-coupon.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.CouponResponse>`](../../doc/models/coupon-response.md)
+
+## Example Usage
+
+```csharp
+int productFamilyId = 140;
+int couponId = 162;
+CreateOrUpdateCoupon body = new CreateOrUpdateCoupon
+{
+    Coupon = CreateOrUpdateCouponCoupon.FromCreateOrUpdatePercentageCoupon(
+        new CreateOrUpdatePercentageCoupon
+        {
+            Name = "15% off",
+            Code = "15OFF",
+            Percentage = CreateOrUpdatePercentageCouponPercentage.FromString("15"),
+            Description = "15% off for life",
+            AllowNegativeBalance = false,
+            Recurring = false,
+            EndDate = DateTime.ParseExact("2012-08-29T12:00:00-04:00", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+                provider: CultureInfo.InvariantCulture,
+                DateTimeStyles.RoundtripKind),
+            ProductFamilyId = "2",
+            Stackable = true,
+            CompoundingStrategy = CompoundingStrategy.Compound,
+        }
+    ),
+    RestrictedProducts = new Dictionary<string, bool>
+    {
+        ["1"] = true,
+    },
+    RestrictedComponents = new Dictionary<string, bool>
+    {
+        ["1"] = true,
+        ["2"] = false,
+    },
+};
+
+try
+{
+    CouponResponse result = await couponsController.UpdateCouponAsync(
+        productFamilyId,
+        couponId,
+        body
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "coupon": {
+    "id": 67,
+    "name": "Foo Bar",
+    "code": "YEPPER99934",
+    "description": "my cool coupon",
+    "amount_in_cents": 10000,
+    "product_family_id": 4,
+    "created_at": "2017-11-08T10:01:15-05:00",
+    "updated_at": "2017-11-08T10:01:15-05:00",
+    "start_date": "2017-11-08T10:01:15-05:00",
+    "end_date": null,
+    "percentage": null,
+    "recurring": false,
+    "duration_period_count": null,
+    "duration_interval": null,
+    "duration_interval_unit": null,
+    "allow_negative_balance": false,
+    "archived_at": null,
+    "conversion_limit": null,
+    "stackable": true,
+    "compounding_strategy": "compound",
+    "coupon_restrictions": []
+  }
+}
+```
+
+
+# Archive Coupon
+
+You can archive a Coupon via the API with the archive method.
+Archiving makes that Coupon unavailable for future use, but allows it to remain attached and functional on existing Subscriptions that are using it.
+The `archived_at` date and time will be assigned.
+
+```csharp
+ArchiveCouponAsync(
+    int productFamilyId,
+    int couponId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the coupon belongs |
+| `couponId` | `int` | Template, Required | The Chargify id of the coupon |
+
+## Response Type
+
+[`Task<Models.CouponResponse>`](../../doc/models/coupon-response.md)
+
+## Example Usage
+
+```csharp
+int productFamilyId = 140;
+int couponId = 162;
+try
+{
+    CouponResponse result = await couponsController.ArchiveCouponAsync(
+        productFamilyId,
+        couponId
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "coupon": {
+    "id": 67,
+    "name": "Foo Bar",
+    "code": "YEPPER99934",
+    "description": "my cool coupon",
+    "amount_in_cents": 10000,
+    "product_family_id": 4,
+    "created_at": "2017-11-08T10:01:15-05:00",
+    "updated_at": "2017-11-08T10:01:15-05:00",
+    "start_date": "2017-11-08T10:01:15-05:00",
+    "end_date": null,
+    "percentage": null,
+    "recurring": false,
+    "duration_period_count": null,
+    "duration_interval": null,
+    "duration_interval_unit": null,
+    "allow_negative_balance": false,
+    "archived_at": "2016-12-02T13:09:33-05:00",
+    "conversion_limit": null,
+    "stackable": true,
+    "compounding_strategy": "compound",
+    "coupon_restrictions": []
+  }
+}
+```
+
+
+# List Coupons
+
+You can retrieve a list of coupons.
+
+If the coupon is set to `use_site_exchange_rate: true`, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency.
+
+```csharp
+ListCouponsAsync(
+    Models.ListCouponsInput input)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 30. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `dateField` | [`BasicDateField?`](../../doc/models/basic-date-field.md) | Query, Optional | The field was deprecated: on January 20, 2022. We recommend using filter[date_field] instead to achieve the same result. The type of filter you would like to apply to your search. |
+| `startDate` | `DateTime?` | Query, Optional | The field was deprecated: on January 20, 2022. We recommend using filter[start_date] instead to achieve the same result. The start date (format YYYY-MM-DD) with which to filter the date_field. Returns coupons with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
+| `endDate` | `DateTime?` | Query, Optional | The field was deprecated: on January 20, 2022. We recommend using filter[end_date] instead to achieve the same result. The end date (format YYYY-MM-DD) with which to filter the date_field. Returns coupons with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. |
+| `startDatetime` | `DateTimeOffset?` | Query, Optional | The field was deprecated: on January 20, 2022. We recommend using filter[start_datetime] instead to achieve the same result. The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns coupons with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date. |
+| `endDatetime` | `DateTimeOffset?` | Query, Optional | The field was deprecated: on January 20, 2022. We recommend using filter[end_datetime] instead to achieve the same result. The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns coupons with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. |
+| `filterIds` | `List<int>` | Query, Optional | Allows fetching coupons with matching id based on provided values. Use in query `filter[ids]=1,2,3`. |
+| `filterCodes` | `List<string>` | Query, Optional | Allows fetching coupons with matching code based on provided values. Use in query `filter[ids]=1,2,3`. |
+| `currencyPrices` | `bool?` | Query, Optional | When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response. Use in query `currency_prices=true`. |
+| `filterEndDate` | `DateTime?` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns coupons with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. Use in query `filter[end_date]=2011-12-17`. |
+| `filterEndDatetime` | `DateTimeOffset?` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns coupons with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. Use in query `filter[end_datetime]=2011-12-19T10:15:30+01:00`. |
+| `filterStartDate` | `DateTime?` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns coupons with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. Use in query `filter[start_date]=2011-12-19`. |
+| `filterStartDatetime` | `DateTimeOffset?` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns coupons with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date. Use in query `filter[start_datetime]=2011-12-19T10:15:30+01:00`. |
+| `filterDateField` | [`BasicDateField?`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search. Use in query `filter[date_field]=updated_at`. |
+| `filterUseSiteExchangeRate` | `bool?` | Query, Optional | Allows fetching coupons with matching use_site_exchange_rate based on provided value. Use in query `filter[use_site_exchange_rate]=true`. |
+
+## Response Type
+
+[`Task<List<Models.CouponResponse>>`](../../doc/models/coupon-response.md)
+
+## Example Usage
+
+```csharp
+ListCouponsInput listCouponsInput = new ListCouponsInput
+{
+    Page = 2,
+    PerPage = 50,
+    DateField = BasicDateField.UpdatedAt,
+    StartDate = DateTime.Parse("2011-12-17"),
+    StartDatetime = DateTime.ParseExact("06/07/2019 17:20:06", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    EndDatetime = DateTime.ParseExact("06/07/2019 17:20:06", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')    CurrencyPrices = true,
+Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')};
+
+try
+{
+    List<CouponResponse> result = await couponsController.ListCouponsAsync(listCouponsInput);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+[
+  {
+    "coupon": {
+      "id": 0,
+      "name": "string",
+      "code": "string",
+      "description": "string",
+      "amount": 0,
+      "amount_in_cents": 0,
+      "product_family_id": 0,
+      "product_family_name": "string",
+      "start_date": "string",
+      "end_date": "string",
+      "percentage": 0,
+      "recurring": true,
+      "recurring_scheme": "do_not_recur",
+      "duration_period_count": 0,
+      "duration_interval": 0,
+      "duration_interval_unit": "string",
+      "duration_interval_span": "string",
+      "allow_negative_balance": true,
+      "archived_at": "string",
+      "conversion_limit": "string",
+      "stackable": true,
+      "compounding_strategy": "compound",
+      "use_site_exchange_rate": true,
+      "created_at": "string",
+      "updated_at": "string",
+      "discount_type": "amount",
+      "exclude_mid_period_allocations": true,
+      "apply_on_cancel_at_end_of_period": true,
+      "coupon_restrictions": [
+        {
+          "id": 0,
+          "item_type": "Component",
+          "item_id": 0,
+          "name": "string",
+          "handle": "string"
+        }
+      ]
+    }
+  }
+]
+```
+
+
+# Read Coupon Usage
+
+This request will provide details about the coupon usage as an array of data hashes, one per product.
+
+```csharp
+ReadCouponUsageAsync(
+    int productFamilyId,
+    int couponId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the coupon belongs |
+| `couponId` | `int` | Template, Required | The Chargify id of the coupon |
+
+## Response Type
+
+[`Task<List<Models.CouponUsage>>`](../../doc/models/coupon-usage.md)
+
+## Example Usage
+
+```csharp
+int productFamilyId = 140;
+int couponId = 162;
+try
+{
+    List<CouponUsage> result = await couponsController.ReadCouponUsageAsync(
+        productFamilyId,
+        couponId
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+[
+  {
+    "name": "No cost product",
+    "id": 3903594,
+    "signups": 0,
+    "savings": 0,
+    "savings_in_cents": 0,
+    "revenue": 0,
+    "revenue_in_cents": 0
+  },
+  {
+    "name": "Product that expires",
+    "id": 3853680,
+    "signups": 0,
+    "savings": 0,
+    "savings_in_cents": 0,
+    "revenue": 0,
+    "revenue_in_cents": 0
+  },
+  {
+    "name": "Trial Product",
+    "id": 3861800,
+    "signups": 1,
+    "savings": 30,
+    "savings_in_cents": 3000,
+    "revenue": 20,
+    "revenue_in_cents": 2000
+  }
+]
 ```
 
 
@@ -254,790 +902,6 @@ catch (ApiException e)
 ```
 
 
-# Create Coupon
-
-## Coupons Documentation
-
-Coupons can be administered in the Chargify application or created via API. Please view our section on [creating coupons](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404742830733) for more information.
-
-Additionally, for documentation on how to apply a coupon to a subscription within the Chargify UI, please see our documentation [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404761012877).
-
-## Create Coupon
-
-This request will create a coupon, based on the provided information.
-
-When creating a coupon, you must specify a product family using the `product_family_id`. If no `product_family_id` is passed, the first product family available is used. You will also need to formulate your URL to cite the Product Family ID in your request.
-
-You can restrict a coupon to only apply to specific products / components by optionally passing in hashes of `restricted_products` and/or `restricted_components` in the format:
-`{ "<product/component_id>": boolean_value }`
-
-```csharp
-CreateCouponAsync(
-    int productFamilyId,
-    Models.CreateOrUpdateCoupon body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the coupon belongs |
-| `body` | [`CreateOrUpdateCoupon`](../../doc/models/create-or-update-coupon.md) | Body, Optional | - |
-
-## Response Type
-
-[`Task<Models.CouponResponse>`](../../doc/models/coupon-response.md)
-
-## Example Usage
-
-```csharp
-int productFamilyId = 140;
-CreateOrUpdateCoupon body = new CreateOrUpdateCoupon
-{
-    Coupon = CreateOrUpdateCouponCoupon.FromCreateOrUpdatePercentageCoupon(
-        new CreateOrUpdatePercentageCoupon
-        {
-            Name = "15% off",
-            Code = "15OFF",
-            Percentage = CreateOrUpdatePercentageCouponPercentage.FromString("15"),
-            Description = "15% off for life",
-            AllowNegativeBalance = "false",
-            Recurring = "false",
-            EndDate = "2012-08-29T12:00:00-04:00",
-            ProductFamilyId = "2",
-            Stackable = "true",
-            CompoundingStrategy = CompoundingStrategy.Compound,
-            ExcludeMidPeriodAllocations = true,
-            ApplyOnCancelAtEndOfPeriod = true,
-        }
-    ),
-    RestrictedProducts = new Dictionary<string, bool>
-    {
-        ["1"] = true,
-    },
-    RestrictedComponents = new Dictionary<string, bool>
-    {
-        ["1"] = true,
-        ["2"] = false,
-    },
-};
-
-try
-{
-    CouponResponse result = await couponsController.CreateCouponAsync(
-        productFamilyId,
-        body
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
-# List Coupon Subcodes
-
-This request allows you to request the subcodes that are attached to a coupon.
-
-```csharp
-ListCouponSubcodesAsync(
-    Models.ListCouponSubcodesInput input)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `couponId` | `int` | Template, Required | The Chargify id of the coupon |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br>**Default**: `20`<br>**Constraints**: `<= 200` |
-
-## Response Type
-
-[`Task<Models.CouponSubcodes>`](../../doc/models/coupon-subcodes.md)
-
-## Example Usage
-
-```csharp
-ListCouponSubcodesInput listCouponSubcodesInput = new ListCouponSubcodesInput
-{
-    CouponId = 162,
-    Page = 2,
-    PerPage = 50,
-};
-
-try
-{
-    CouponSubcodes result = await couponsController.ListCouponSubcodesAsync(listCouponSubcodesInput);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "codes": [
-    "3JU6PR",
-    "9RO6MP",
-    "8OG1VV",
-    "5FL7VV",
-    "2SV8XK",
-    "4LW8LH",
-    "3VL4GZ",
-    "9UI9XO",
-    "0LZ0CC",
-    "8XI9JV",
-    "9UV5YE",
-    "3UI4GX",
-    "6SL5ST",
-    "9WC8IJ",
-    "2KA3PZ",
-    "7WR1VR",
-    "3VY7MN",
-    "6KC3KB",
-    "7DF7YT",
-    "9FH1ED"
-  ]
-}
-```
-
-
-# List Coupons for Product Family
-
-List coupons for a specific Product Family in a Site.
-
-If the coupon is set to `use_site_exchange_rate: true`, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency.
-
-```csharp
-ListCouponsForProductFamilyAsync(
-    Models.ListCouponsForProductFamilyInput input)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the coupon belongs |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 30. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br>**Default**: `30`<br>**Constraints**: `<= 200` |
-| `filterDateField` | [`BasicDateField?`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search. Use in query `filter[date_field]=created_at`. |
-| `filterEndDate` | `DateTime?` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns coupons with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. Use in query `filter[date_field]=2011-12-15`. |
-| `filterEndDatetime` | `DateTimeOffset?` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns coupons with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. Use in query `?filter[end_datetime]=2011-12-1T10:15:30+01:00`. |
-| `filterStartDate` | `DateTime?` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns coupons with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. Use in query `filter[start_date]=2011-12-17`. |
-| `filterStartDatetime` | `DateTimeOffset?` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns coupons with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date. Use in query `filter[start_datetime]=2011-12-19T10:15:30+01:00`. |
-| `filterIds` | `List<int>` | Query, Optional | Allows fetching coupons with matching id based on provided values. Use in query `filter[ids]=1,2,3`.<br>**Constraints**: *Minimum Items*: `1` |
-| `filterCodes` | `List<string>` | Query, Optional | Allows fetching coupons with matching codes based on provided values. Use in query `filter[codes]=free,free_trial`. |
-| `currencyPrices` | `bool?` | Query, Optional | When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response. Use in query `currency_prices=true`. |
-| `filterUseSiteExchangeRate` | `bool?` | Query, Optional | Allows fetching coupons with matching use_site_exchange_rate based on provided value. Use in query `filter[use_site_exchange_rate]=true`. |
-
-## Response Type
-
-[`Task<List<Models.CouponResponse>>`](../../doc/models/coupon-response.md)
-
-## Example Usage
-
-```csharp
-ListCouponsForProductFamilyInput listCouponsForProductFamilyInput = new ListCouponsForProductFamilyInput
-{
-    ProductFamilyId = 140,
-    Page = 2,
-    PerPage = 50,
-Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')    CurrencyPrices = true,
-Liquid error: Value cannot be null. (Parameter 'key')};
-
-try
-{
-    List<CouponResponse> result = await couponsController.ListCouponsForProductFamilyAsync(listCouponsForProductFamilyInput);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-[
-  {
-    "coupon": {
-      "id": 999999,
-      "name": "50% coupon",
-      "code": "50PERCENT",
-      "description": "50 PERCENT OFF",
-      "amount_in_cents": null,
-      "product_family_id": 527890,
-      "created_at": "2016-10-21T17:02:08-04:00",
-      "updated_at": "2016-10-21T17:06:11-04:00",
-      "start_date": "2016-10-21T17:02:08-04:00",
-      "end_date": null,
-      "percentage": 50,
-      "recurring": true,
-      "duration_period_count": null,
-      "duration_interval": 1,
-      "duration_interval_unit": "day",
-      "allow_negative_balance": true,
-      "archived_at": null,
-      "conversion_limit": "100",
-      "stackable": false,
-      "compounding_strategy": "compound",
-      "coupon_restrictions": [],
-      "use_site_exchange_rate": true
-    }
-  },
-  {
-    "coupon": {
-      "id": 123456,
-      "name": "100% coupon",
-      "code": "100PERCENT",
-      "description": "100 PERCENT OFF",
-      "amount_in_cents": null,
-      "product_family_id": 527890,
-      "created_at": "2016-10-21T17:02:08-04:00",
-      "updated_at": "2016-10-21T17:06:11-04:00",
-      "start_date": "2016-10-21T17:02:08-04:00",
-      "end_date": null,
-      "percentage": 50,
-      "recurring": true,
-      "duration_period_count": null,
-      "duration_interval": 1,
-      "duration_interval_unit": "day",
-      "allow_negative_balance": true,
-      "archived_at": null,
-      "conversion_limit": "100",
-      "stackable": false,
-      "compounding_strategy": "compound",
-      "coupon_restrictions": [],
-      "use_site_exchange_rate": true
-    }
-  },
-  {
-    "coupon": {
-      "id": 888888,
-      "name": "25% coupon",
-      "code": "25PERCENT",
-      "description": "25 PERCENT OFF",
-      "amount_in_cents": null,
-      "product_family_id": 527890,
-      "created_at": "2016-10-21T17:02:08-04:00",
-      "updated_at": "2016-10-21T17:06:11-04:00",
-      "start_date": "2016-10-21T17:02:08-04:00",
-      "end_date": null,
-      "percentage": 25,
-      "recurring": true,
-      "duration_period_count": null,
-      "duration_interval": 1,
-      "duration_interval_unit": "day",
-      "allow_negative_balance": true,
-      "archived_at": null,
-      "conversion_limit": "100",
-      "stackable": false,
-      "compounding_strategy": "compound",
-      "coupon_restrictions": [
-        {
-          "id": 37,
-          "item_type": "Component",
-          "item_id": 519,
-          "name": "test",
-          "handle": null
-        }
-      ],
-      "use_site_exchange_rate": true
-    }
-  }
-]
-```
-
-
-# Update Coupon
-
-## Update Coupon
-
-You can update a Coupon via the API with a PUT request to the resource endpoint.
-
-You can restrict a coupon to only apply to specific products / components by optionally passing in hashes of `restricted_products` and/or `restricted_components` in the format:
-`{ "<product/component_id>": boolean_value }`
-
-```csharp
-UpdateCouponAsync(
-    int productFamilyId,
-    int couponId,
-    Models.CreateOrUpdateCoupon body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the coupon belongs |
-| `couponId` | `int` | Template, Required | The Chargify id of the coupon |
-| `body` | [`CreateOrUpdateCoupon`](../../doc/models/create-or-update-coupon.md) | Body, Optional | - |
-
-## Response Type
-
-[`Task<Models.CouponResponse>`](../../doc/models/coupon-response.md)
-
-## Example Usage
-
-```csharp
-int productFamilyId = 140;
-int couponId = 162;
-CreateOrUpdateCoupon body = new CreateOrUpdateCoupon
-{
-    Coupon = CreateOrUpdateCouponCoupon.FromCreateOrUpdatePercentageCoupon(
-        new CreateOrUpdatePercentageCoupon
-        {
-            Name = "15% off",
-            Code = "15OFF",
-            Percentage = CreateOrUpdatePercentageCouponPercentage.FromString("15"),
-            Description = "15% off for life",
-            AllowNegativeBalance = "false",
-            Recurring = "false",
-            EndDate = "2012-08-29T12:00:00-04:00",
-            ProductFamilyId = "2",
-            Stackable = "true",
-            CompoundingStrategy = CompoundingStrategy.Compound,
-        }
-    ),
-    RestrictedProducts = new Dictionary<string, bool>
-    {
-        ["1"] = true,
-    },
-    RestrictedComponents = new Dictionary<string, bool>
-    {
-        ["1"] = true,
-        ["2"] = false,
-    },
-};
-
-try
-{
-    CouponResponse result = await couponsController.UpdateCouponAsync(
-        productFamilyId,
-        couponId,
-        body
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "coupon": {
-    "id": 67,
-    "name": "Foo Bar",
-    "code": "YEPPER99934",
-    "description": "my cool coupon",
-    "amount_in_cents": 10000,
-    "product_family_id": 4,
-    "created_at": "2017-11-08T10:01:15-05:00",
-    "updated_at": "2017-11-08T10:01:15-05:00",
-    "start_date": "2017-11-08T10:01:15-05:00",
-    "end_date": null,
-    "percentage": null,
-    "recurring": false,
-    "duration_period_count": null,
-    "duration_interval": null,
-    "duration_interval_unit": null,
-    "allow_negative_balance": false,
-    "archived_at": null,
-    "conversion_limit": null,
-    "stackable": true,
-    "compounding_strategy": "compound",
-    "coupon_restrictions": []
-  }
-}
-```
-
-
-# Read Coupon Usage
-
-This request will provide details about the coupon usage as an array of data hashes, one per product.
-
-```csharp
-ReadCouponUsageAsync(
-    int productFamilyId,
-    int couponId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the coupon belongs |
-| `couponId` | `int` | Template, Required | The Chargify id of the coupon |
-
-## Response Type
-
-[`Task<List<Models.CouponUsage>>`](../../doc/models/coupon-usage.md)
-
-## Example Usage
-
-```csharp
-int productFamilyId = 140;
-int couponId = 162;
-try
-{
-    List<CouponUsage> result = await couponsController.ReadCouponUsageAsync(
-        productFamilyId,
-        couponId
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-[
-  {
-    "name": "No cost product",
-    "id": 3903594,
-    "signups": 0,
-    "savings": 0,
-    "savings_in_cents": 0,
-    "revenue": 0,
-    "revenue_in_cents": 0
-  },
-  {
-    "name": "Product that expires",
-    "id": 3853680,
-    "signups": 0,
-    "savings": 0,
-    "savings_in_cents": 0,
-    "revenue": 0,
-    "revenue_in_cents": 0
-  },
-  {
-    "name": "Trial Product",
-    "id": 3861800,
-    "signups": 1,
-    "savings": 30,
-    "savings_in_cents": 3000,
-    "revenue": 20,
-    "revenue_in_cents": 2000
-  }
-]
-```
-
-
-# Delete Coupon Subcode
-
-## Example
-
-Given a coupon with an ID of 567, and a coupon subcode of 20OFF, the URL to `DELETE` this coupon subcode would be:
-
-```
-http://subdomain.chargify.com/coupons/567/codes/20OFF.<format>
-```
-
-Note: If you are using any of the allowed special characters (“%”, “@”, “+”, “-”, “_”, and “.”), you must encode them for use in the URL.
-
-| Special character | Encoding |
-|-------------------|----------|
-| %                 | %25      |
-| @                 | %40      |
-| +                 | %2B      |
-| –                 | %2D      |
-| _                 | %5F      |
-| .                 | %2E      |
-
-## Percent Encoding Example
-
-Or if the coupon subcode is 20%OFF, the URL to delete this coupon subcode would be: @https://<subdomain>.chargify.com/coupons/567/codes/20%25OFF.<format>
-
-```csharp
-DeleteCouponSubcodeAsync(
-    int couponId,
-    string subcode)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `couponId` | `int` | Template, Required | The Chargify id of the coupon to which the subcode belongs |
-| `subcode` | `string` | Template, Required | The subcode of the coupon |
-
-## Response Type
-
-`Task`
-
-## Example Usage
-
-```csharp
-int couponId = 162;
-string subcode = "subcode4";
-try
-{
-    await couponsController.DeleteCouponSubcodeAsync(
-        couponId,
-        subcode
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-
-
-# Read Coupon by Code
-
-You can search for a coupon via the API with the find method. By passing a code parameter, the find will attempt to locate a coupon that matches that code. If no coupon is found, a 404 is returned.
-
-If you have more than one product family and if the coupon you are trying to find does not belong to the default product family in your site, then you will need to specify (either in the url or as a query string param) the product family id.
-
-```csharp
-ReadCouponByCodeAsync(
-    int? productFamilyId = null,
-    string code = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `productFamilyId` | `int?` | Query, Optional | The Chargify id of the product family to which the coupon belongs |
-| `code` | `string` | Query, Optional | The code of the coupon |
-
-## Response Type
-
-[`Task<Models.CouponResponse>`](../../doc/models/coupon-response.md)
-
-## Example Usage
-
-```csharp
-try
-{
-    CouponResponse result = await couponsController.ReadCouponByCodeAsync();
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-
-# Archive Coupon
-
-You can archive a Coupon via the API with the archive method.
-Archiving makes that Coupon unavailable for future use, but allows it to remain attached and functional on existing Subscriptions that are using it.
-The `archived_at` date and time will be assigned.
-
-```csharp
-ArchiveCouponAsync(
-    int productFamilyId,
-    int couponId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the coupon belongs |
-| `couponId` | `int` | Template, Required | The Chargify id of the coupon |
-
-## Response Type
-
-[`Task<Models.CouponResponse>`](../../doc/models/coupon-response.md)
-
-## Example Usage
-
-```csharp
-int productFamilyId = 140;
-int couponId = 162;
-try
-{
-    CouponResponse result = await couponsController.ArchiveCouponAsync(
-        productFamilyId,
-        couponId
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "coupon": {
-    "id": 67,
-    "name": "Foo Bar",
-    "code": "YEPPER99934",
-    "description": "my cool coupon",
-    "amount_in_cents": 10000,
-    "product_family_id": 4,
-    "created_at": "2017-11-08T10:01:15-05:00",
-    "updated_at": "2017-11-08T10:01:15-05:00",
-    "start_date": "2017-11-08T10:01:15-05:00",
-    "end_date": null,
-    "percentage": null,
-    "recurring": false,
-    "duration_period_count": null,
-    "duration_interval": null,
-    "duration_interval_unit": null,
-    "allow_negative_balance": false,
-    "archived_at": "2016-12-02T13:09:33-05:00",
-    "conversion_limit": null,
-    "stackable": true,
-    "compounding_strategy": "compound",
-    "coupon_restrictions": []
-  }
-}
-```
-
-
-# List Coupons
-
-You can retrieve a list of coupons.
-
-If the coupon is set to `use_site_exchange_rate: true`, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency.
-
-```csharp
-ListCouponsAsync(
-    Models.ListCouponsInput input)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 30. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br>**Default**: `30`<br>**Constraints**: `<= 200` |
-| `dateField` | [`BasicDateField?`](../../doc/models/basic-date-field.md) | Query, Optional | The field was deprecated: on January 20, 2022. We recommend using filter[date_field] instead to achieve the same result. The type of filter you would like to apply to your search. |
-| `startDate` | `DateTime?` | Query, Optional | The field was deprecated: on January 20, 2022. We recommend using filter[start_date] instead to achieve the same result. The start date (format YYYY-MM-DD) with which to filter the date_field. Returns coupons with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
-| `endDate` | `DateTime?` | Query, Optional | The field was deprecated: on January 20, 2022. We recommend using filter[end_date] instead to achieve the same result. The end date (format YYYY-MM-DD) with which to filter the date_field. Returns coupons with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. |
-| `startDatetime` | `DateTimeOffset?` | Query, Optional | The field was deprecated: on January 20, 2022. We recommend using filter[start_datetime] instead to achieve the same result. The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns coupons with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date. |
-| `endDatetime` | `DateTimeOffset?` | Query, Optional | The field was deprecated: on January 20, 2022. We recommend using filter[end_datetime] instead to achieve the same result. The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns coupons with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. |
-| `filterIds` | `List<int>` | Query, Optional | Allows fetching coupons with matching id based on provided values. Use in query `filter[ids]=1,2,3`.<br>**Constraints**: *Minimum Items*: `1` |
-| `filterCodes` | `List<string>` | Query, Optional | Allows fetching coupons with matching code based on provided values. Use in query `filter[ids]=1,2,3`.<br>**Constraints**: *Minimum Items*: `1` |
-| `currencyPrices` | `bool?` | Query, Optional | When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response. Use in query `currency_prices=true`. |
-| `filterEndDate` | `DateTime?` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns coupons with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. Use in query `filter[end_date]=2011-12-17`. |
-| `filterEndDatetime` | `DateTimeOffset?` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns coupons with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. Use in query `filter[end_datetime]=2011-12-19T10:15:30+01:00`. |
-| `filterStartDate` | `DateTime?` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns coupons with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. Use in query `filter[start_date]=2011-12-19`. |
-| `filterStartDatetime` | `DateTimeOffset?` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns coupons with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date. Use in query `filter[start_datetime]=2011-12-19T10:15:30+01:00`. |
-| `filterDateField` | [`BasicDateField?`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search. Use in query `filter[date_field]=updated_at`. |
-| `filterUseSiteExchangeRate` | `bool?` | Query, Optional | Allows fetching coupons with matching use_site_exchange_rate based on provided value. Use in query `filter[use_site_exchange_rate]=true`. |
-
-## Response Type
-
-[`Task<List<Models.CouponResponse>>`](../../doc/models/coupon-response.md)
-
-## Example Usage
-
-```csharp
-ListCouponsInput listCouponsInput = new ListCouponsInput
-{
-    Page = 2,
-    PerPage = 50,
-    DateField = BasicDateField.UpdatedAt,
-    StartDate = DateTime.Parse("2011-12-17"),
-    StartDatetime = DateTime.ParseExact("06/07/2019 17:20:06", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
-        provider: CultureInfo.InvariantCulture,
-        DateTimeStyles.RoundtripKind),
-    EndDatetime = DateTime.ParseExact("06/07/2019 17:20:06", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
-        provider: CultureInfo.InvariantCulture,
-        DateTimeStyles.RoundtripKind),
-Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')    CurrencyPrices = true,
-Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')};
-
-try
-{
-    List<CouponResponse> result = await couponsController.ListCouponsAsync(listCouponsInput);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-[
-  {
-    "coupon": {
-      "id": 0,
-      "name": "string",
-      "code": "string",
-      "description": "string",
-      "amount": 0,
-      "amount_in_cents": 0,
-      "product_family_id": 0,
-      "product_family_name": "string",
-      "start_date": "string",
-      "end_date": "string",
-      "percentage": 0,
-      "recurring": true,
-      "recurring_scheme": "do_not_recur",
-      "duration_period_count": 0,
-      "duration_interval": 0,
-      "duration_interval_unit": "string",
-      "duration_interval_span": "string",
-      "allow_negative_balance": true,
-      "archived_at": "string",
-      "conversion_limit": "string",
-      "stackable": true,
-      "compounding_strategy": "compound",
-      "use_site_exchange_rate": true,
-      "created_at": "string",
-      "updated_at": "string",
-      "discount_type": "amount",
-      "exclude_mid_period_allocations": true,
-      "apply_on_cancel_at_end_of_period": true,
-      "coupon_restrictions": [
-        {
-          "id": 0,
-          "item_type": "Component",
-          "item_id": 0,
-          "name": "string",
-          "handle": "string"
-        }
-      ]
-    }
-  }
-]
-```
-
-
 # Create Coupon Subcodes
 
 ## Coupon Subcodes Intro
@@ -1141,6 +1005,78 @@ catch (ApiException e)
 ```
 
 
+# List Coupon Subcodes
+
+This request allows you to request the subcodes that are attached to a coupon.
+
+```csharp
+ListCouponSubcodesAsync(
+    Models.ListCouponSubcodesInput input)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `couponId` | `int` | Template, Required | The Chargify id of the coupon |
+| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+
+## Response Type
+
+[`Task<Models.CouponSubcodes>`](../../doc/models/coupon-subcodes.md)
+
+## Example Usage
+
+```csharp
+ListCouponSubcodesInput listCouponSubcodesInput = new ListCouponSubcodesInput
+{
+    CouponId = 162,
+    Page = 2,
+    PerPage = 50,
+};
+
+try
+{
+    CouponSubcodes result = await couponsController.ListCouponSubcodesAsync(listCouponSubcodesInput);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "codes": [
+    "3JU6PR",
+    "9RO6MP",
+    "8OG1VV",
+    "5FL7VV",
+    "2SV8XK",
+    "4LW8LH",
+    "3VL4GZ",
+    "9UI9XO",
+    "0LZ0CC",
+    "8XI9JV",
+    "9UV5YE",
+    "3UI4GX",
+    "6SL5ST",
+    "9WC8IJ",
+    "2KA3PZ",
+    "7WR1VR",
+    "3VY7MN",
+    "6KC3KB",
+    "7DF7YT",
+    "9FH1ED"
+  ]
+}
+```
+
+
 # Update Coupon Subcodes
 
 You can update the subcodes for the given Coupon via the API with a PUT request to the resource endpoint.
@@ -1199,4 +1135,72 @@ catch (ApiException e)
     Console.WriteLine(e.Message);
 }
 ```
+
+
+# Delete Coupon Subcode
+
+## Example
+
+Given a coupon with an ID of 567, and a coupon subcode of 20OFF, the URL to `DELETE` this coupon subcode would be:
+
+```
+http://subdomain.chargify.com/coupons/567/codes/20OFF.<format>
+```
+
+Note: If you are using any of the allowed special characters (“%”, “@”, “+”, “-”, “_”, and “.”), you must encode them for use in the URL.
+
+| Special character | Encoding |
+|-------------------|----------|
+| %                 | %25      |
+| @                 | %40      |
+| +                 | %2B      |
+| –                 | %2D      |
+| _                 | %5F      |
+| .                 | %2E      |
+
+## Percent Encoding Example
+
+Or if the coupon subcode is 20%OFF, the URL to delete this coupon subcode would be: @https://<subdomain>.chargify.com/coupons/567/codes/20%25OFF.<format>
+
+```csharp
+DeleteCouponSubcodeAsync(
+    int couponId,
+    string subcode)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `couponId` | `int` | Template, Required | The Chargify id of the coupon to which the subcode belongs |
+| `subcode` | `string` | Template, Required | The subcode of the coupon |
+
+## Response Type
+
+`Task`
+
+## Example Usage
+
+```csharp
+int couponId = 162;
+string subcode = "subcode4";
+try
+{
+    await couponsController.DeleteCouponSubcodeAsync(
+        couponId,
+        subcode
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
 

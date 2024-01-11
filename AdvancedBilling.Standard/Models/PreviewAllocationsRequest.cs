@@ -21,6 +21,14 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class PreviewAllocationsRequest
     {
+        private Models.CreditType? upgradeCharge;
+        private Models.CreditType? downgradeCredit;
+        private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
+        {
+            { "upgrade_charge", false },
+            { "downgrade_credit", false },
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PreviewAllocationsRequest"/> class.
         /// </summary>
@@ -33,12 +41,26 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         /// <param name="allocations">allocations.</param>
         /// <param name="effectiveProrationDate">effective_proration_date.</param>
+        /// <param name="upgradeCharge">upgrade_charge.</param>
+        /// <param name="downgradeCredit">downgrade_credit.</param>
         public PreviewAllocationsRequest(
             List<Models.CreateAllocation> allocations,
-            string effectiveProrationDate = null)
+            DateTime? effectiveProrationDate = null,
+            Models.CreditType? upgradeCharge = null,
+            Models.CreditType? downgradeCredit = null)
         {
             this.Allocations = allocations;
             this.EffectiveProrationDate = effectiveProrationDate;
+            if (upgradeCharge != null)
+            {
+                this.UpgradeCharge = upgradeCharge;
+            }
+
+            if (downgradeCredit != null)
+            {
+                this.DowngradeCredit = downgradeCredit;
+            }
+
         }
 
         /// <summary>
@@ -50,8 +72,47 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// To calculate proration amounts for a future time. Only within a current subscription period. Only ISO8601 format is supported.
         /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("effective_proration_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string EffectiveProrationDate { get; set; }
+        public DateTime? EffectiveProrationDate { get; set; }
+
+        /// <summary>
+        /// The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.
+        /// Available values: `full`, `prorated`, `none`.
+        /// </summary>
+        [JsonProperty("upgrade_charge")]
+        public Models.CreditType? UpgradeCharge
+        {
+            get
+            {
+                return this.upgradeCharge;
+            }
+
+            set
+            {
+                this.shouldSerialize["upgrade_charge"] = true;
+                this.upgradeCharge = value;
+            }
+        }
+
+        /// <summary>
+        /// The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.
+        /// Available values: `full`, `prorated`, `none`.
+        /// </summary>
+        [JsonProperty("downgrade_credit")]
+        public Models.CreditType? DowngradeCredit
+        {
+            get
+            {
+                return this.downgradeCredit;
+            }
+
+            set
+            {
+                this.shouldSerialize["downgrade_credit"] = true;
+                this.downgradeCredit = value;
+            }
+        }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -61,6 +122,40 @@ namespace AdvancedBilling.Standard.Models
             this.ToString(toStringOutput);
 
             return $"PreviewAllocationsRequest : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetUpgradeCharge()
+        {
+            this.shouldSerialize["upgrade_charge"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetDowngradeCredit()
+        {
+            this.shouldSerialize["downgrade_credit"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeUpgradeCharge()
+        {
+            return this.shouldSerialize["upgrade_charge"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeDowngradeCredit()
+        {
+            return this.shouldSerialize["downgrade_credit"];
         }
 
         /// <inheritdoc/>
@@ -76,7 +171,9 @@ namespace AdvancedBilling.Standard.Models
                 return true;
             }
             return obj is PreviewAllocationsRequest other &&                ((this.Allocations == null && other.Allocations == null) || (this.Allocations?.Equals(other.Allocations) == true)) &&
-                ((this.EffectiveProrationDate == null && other.EffectiveProrationDate == null) || (this.EffectiveProrationDate?.Equals(other.EffectiveProrationDate) == true));
+                ((this.EffectiveProrationDate == null && other.EffectiveProrationDate == null) || (this.EffectiveProrationDate?.Equals(other.EffectiveProrationDate) == true)) &&
+                ((this.UpgradeCharge == null && other.UpgradeCharge == null) || (this.UpgradeCharge?.Equals(other.UpgradeCharge) == true)) &&
+                ((this.DowngradeCredit == null && other.DowngradeCredit == null) || (this.DowngradeCredit?.Equals(other.DowngradeCredit) == true));
         }
         
         /// <summary>
@@ -86,7 +183,9 @@ namespace AdvancedBilling.Standard.Models
         protected void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Allocations = {(this.Allocations == null ? "null" : $"[{string.Join(", ", this.Allocations)} ]")}");
-            toStringOutput.Add($"this.EffectiveProrationDate = {(this.EffectiveProrationDate == null ? "null" : this.EffectiveProrationDate)}");
+            toStringOutput.Add($"this.EffectiveProrationDate = {(this.EffectiveProrationDate == null ? "null" : this.EffectiveProrationDate.ToString())}");
+            toStringOutput.Add($"this.UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
+            toStringOutput.Add($"this.DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
         }
     }
 }

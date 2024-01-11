@@ -46,8 +46,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="periodRangeStart">period_range_start.</param>
         /// <param name="periodRangeEnd">period_range_end.</param>
         public RenewalPreviewLineItem(
-            string transactionType = null,
-            string kind = null,
+            Models.LineItemTransactionType? transactionType = null,
+            Models.LineItemKind? kind = null,
             long? amountInCents = null,
             string memo = null,
             long? discountAmountInCents = null,
@@ -78,16 +78,16 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Gets or sets TransactionType.
+        /// A handle for the line item transaction type
         /// </summary>
         [JsonProperty("transaction_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string TransactionType { get; set; }
+        public Models.LineItemTransactionType? TransactionType { get; set; }
 
         /// <summary>
-        /// Gets or sets Kind.
+        /// A handle for the line item kind
         /// </summary>
         [JsonProperty("kind", NullValueHandling = NullValueHandling.Ignore)]
-        public string Kind { get; set; }
+        public Models.LineItemKind? Kind { get; set; }
 
         /// <summary>
         /// Gets or sets AmountInCents.
@@ -205,8 +205,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.TransactionType = {(this.TransactionType == null ? "null" : this.TransactionType)}");
-            toStringOutput.Add($"this.Kind = {(this.Kind == null ? "null" : this.Kind)}");
+            toStringOutput.Add($"this.TransactionType = {(this.TransactionType == null ? "null" : this.TransactionType.ToString())}");
+            toStringOutput.Add($"this.Kind = {(this.Kind == null ? "null" : this.Kind.ToString())}");
             toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.DiscountAmountInCents = {(this.DiscountAmountInCents == null ? "null" : this.DiscountAmountInCents.ToString())}");

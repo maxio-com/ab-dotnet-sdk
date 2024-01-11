@@ -15,7 +15,7 @@
 | `TotalTaxInCents` | `long?` | Optional | - |
 | `TotalDiscountInCents` | `long?` | Optional | - |
 | `TotalInCents` | `long?` | Optional | - |
-| `Direction` | `string` | Optional | - |
+| `Direction` | [`AllocationPreviewDirection?`](../../doc/models/allocation-preview-direction.md) | Optional | - |
 | `ProrationScheme` | `string` | Optional | - |
 | `LineItems` | [`List<AllocationPreviewLineItem>`](../../doc/models/allocation-preview-line-item.md) | Optional | - |
 | `AccrueCharge` | `bool?` | Optional | - |

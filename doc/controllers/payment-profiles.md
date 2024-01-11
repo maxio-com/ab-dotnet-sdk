@@ -11,15 +11,15 @@ PaymentProfilesController paymentProfilesController = client.PaymentProfilesCont
 ## Methods
 
 * [Create Payment Profile](../../doc/controllers/payment-profiles.md#create-payment-profile)
-* [Read Payment Profile](../../doc/controllers/payment-profiles.md#read-payment-profile)
-* [Delete Unused Payment Profile](../../doc/controllers/payment-profiles.md#delete-unused-payment-profile)
-* [Update Subscription Group Default Payment Profile](../../doc/controllers/payment-profiles.md#update-subscription-group-default-payment-profile)
 * [List Payment Profiles](../../doc/controllers/payment-profiles.md#list-payment-profiles)
+* [Read Payment Profile](../../doc/controllers/payment-profiles.md#read-payment-profile)
 * [Update Payment Profile](../../doc/controllers/payment-profiles.md#update-payment-profile)
+* [Delete Unused Payment Profile](../../doc/controllers/payment-profiles.md#delete-unused-payment-profile)
+* [Delete Subscriptions Payment Profile](../../doc/controllers/payment-profiles.md#delete-subscriptions-payment-profile)
 * [Verify Bank Account](../../doc/controllers/payment-profiles.md#verify-bank-account)
 * [Delete Subscription Group Payment Profile](../../doc/controllers/payment-profiles.md#delete-subscription-group-payment-profile)
 * [Update Subscription Default Payment Profile](../../doc/controllers/payment-profiles.md#update-subscription-default-payment-profile)
-* [Delete Subscriptions Payment Profile](../../doc/controllers/payment-profiles.md#delete-subscriptions-payment-profile)
+* [Update Subscription Group Default Payment Profile](../../doc/controllers/payment-profiles.md#update-subscription-group-default-payment-profile)
 * [Read One Time Token](../../doc/controllers/payment-profiles.md#read-one-time-token)
 * [Send Request Update Payment Email](../../doc/controllers/payment-profiles.md#send-request-update-payment-email)
 
@@ -348,6 +348,105 @@ catch (ApiException e)
 | 404 | Not Found | `ApiException` |
 
 
+# List Payment Profiles
+
+This method will return all of the active `payment_profiles` for a Site, or for one Customer within a site.  If no payment profiles are found, this endpoint will return an empty array, not a 404.
+
+```csharp
+ListPaymentProfilesAsync(
+    Models.ListPaymentProfilesInput input)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `customerId` | `int?` | Query, Optional | The ID of the customer for which you wish to list payment profiles |
+
+## Response Type
+
+[`Task<List<Models.ListPaymentProfilesResponse>>`](../../doc/models/list-payment-profiles-response.md)
+
+## Example Usage
+
+```csharp
+ListPaymentProfilesInput listPaymentProfilesInput = new ListPaymentProfilesInput
+{
+    Page = 2,
+    PerPage = 50,
+};
+
+try
+{
+    List<ListPaymentProfilesResponse> result = await paymentProfilesController.ListPaymentProfilesAsync(listPaymentProfilesInput);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+[
+  {
+    "payment_profile": {
+      "id": 10089892,
+      "first_name": "Chester",
+      "last_name": "Tester",
+      "customer_id": 14543792,
+      "current_vault": "bogus",
+      "vault_token": "0011223344",
+      "billing_address": "456 Juniper Court",
+      "billing_city": "Boulder",
+      "billing_state": "CO",
+      "billing_zip": "80302",
+      "billing_country": "US",
+      "customer_vault_token": null,
+      "billing_address_2": "",
+      "bank_name": "Bank of Kansas City",
+      "masked_bank_routing_number": "XXXX6789",
+      "masked_bank_account_number": "XXXX3344",
+      "bank_account_type": "checking",
+      "bank_account_holder_type": "personal",
+      "payment_type": "bank_account",
+      "site_gateway_setting_id": 1,
+      "gateway_handle": "handle"
+    }
+  },
+  {
+    "payment_profile": {
+      "id": 10188522,
+      "first_name": "Frankie",
+      "last_name": "Tester",
+      "customer_id": 14543712,
+      "current_vault": "bogus",
+      "vault_token": "123456789",
+      "billing_address": "123 Montana Way",
+      "billing_city": "Los Angeles",
+      "billing_state": "CA",
+      "billing_zip": "90210",
+      "billing_country": "US",
+      "customer_vault_token": null,
+      "billing_address_2": "",
+      "bank_name": "Bank of Kansas City",
+      "masked_bank_routing_number": "XXXX6789",
+      "masked_bank_account_number": "XXXX6789",
+      "bank_account_type": "checking",
+      "bank_account_holder_type": "personal",
+      "payment_type": "bank_account",
+      "site_gateway_setting_id": 1,
+      "gateway_handle": "handle"
+    }
+  }
+]
+```
+
+
 # Read Payment Profile
 
 Using the GET method you can retrieve a Payment Profile identified by its unique ID.
@@ -443,228 +542,6 @@ catch (ApiException e)
     "gateway_handle": null
   }
 }
-```
-
-
-# Delete Unused Payment Profile
-
-Deletes an unused payment profile.
-
-If the payment profile is in use by one or more subscriptions or groups, a 422 and error message will be returned.
-
-```csharp
-DeleteUnusedPaymentProfileAsync(
-    string paymentProfileId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `paymentProfileId` | `string` | Template, Required | The Chargify id of the payment profile |
-
-## Response Type
-
-`Task`
-
-## Example Usage
-
-```csharp
-string paymentProfileId = "payment_profile_id2";
-try
-{
-    await paymentProfilesController.DeleteUnusedPaymentProfileAsync(paymentProfileId);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
-# Update Subscription Group Default Payment Profile
-
-This will change the default payment profile on the subscription group to the existing payment profile with the id specified.
-
-You must elect to change the existing payment profile to a new payment profile ID in order to receive a satisfactory response from this endpoint.
-
-The new payment profile must belong to the subscription group's customer, otherwise you will receive an error.
-
-```csharp
-UpdateSubscriptionGroupDefaultPaymentProfileAsync(
-    string uid,
-    string paymentProfileId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `uid` | `string` | Template, Required | The uid of the subscription group |
-| `paymentProfileId` | `string` | Template, Required | The Chargify id of the payment profile |
-
-## Response Type
-
-[`Task<Models.PaymentProfileResponse>`](../../doc/models/payment-profile-response.md)
-
-## Example Usage
-
-```csharp
-string uid = "uid0";
-string paymentProfileId = "payment_profile_id2";
-try
-{
-    PaymentProfileResponse result = await paymentProfilesController.UpdateSubscriptionGroupDefaultPaymentProfileAsync(
-        uid,
-        paymentProfileId
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "payment_profile": {
-    "id": 10211899,
-    "first_name": "Amelia",
-    "last_name": "Example",
-    "masked_card_number": "XXXX-XXXX-XXXX-1",
-    "card_type": "bogus",
-    "expiration_month": 2,
-    "expiration_year": 2018,
-    "customer_id": 14399371,
-    "current_vault": "bogus",
-    "vault_token": "1",
-    "billing_address": "",
-    "billing_city": "",
-    "billing_state": "",
-    "billing_zip": "",
-    "billing_country": "",
-    "customer_vault_token": null,
-    "billing_address_2": "",
-    "payment_type": "credit_card",
-    "site_gateway_setting_id": 1,
-    "gateway_handle": null
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
-# List Payment Profiles
-
-This method will return all of the active `payment_profiles` for a Site, or for one Customer within a site.  If no payment profiles are found, this endpoint will return an empty array, not a 404.
-
-```csharp
-ListPaymentProfilesAsync(
-    Models.ListPaymentProfilesInput input)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br>**Default**: `20`<br>**Constraints**: `<= 200` |
-| `customerId` | `int?` | Query, Optional | The ID of the customer for which you wish to list payment profiles |
-
-## Response Type
-
-[`Task<List<Models.ListPaymentProfilesResponse>>`](../../doc/models/list-payment-profiles-response.md)
-
-## Example Usage
-
-```csharp
-ListPaymentProfilesInput listPaymentProfilesInput = new ListPaymentProfilesInput
-{
-    Page = 2,
-    PerPage = 50,
-};
-
-try
-{
-    List<ListPaymentProfilesResponse> result = await paymentProfilesController.ListPaymentProfilesAsync(listPaymentProfilesInput);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-[
-  {
-    "payment_profile": {
-      "id": 10089892,
-      "first_name": "Chester",
-      "last_name": "Tester",
-      "customer_id": 14543792,
-      "current_vault": "bogus",
-      "vault_token": "0011223344",
-      "billing_address": "456 Juniper Court",
-      "billing_city": "Boulder",
-      "billing_state": "CO",
-      "billing_zip": "80302",
-      "billing_country": "US",
-      "customer_vault_token": null,
-      "billing_address_2": "",
-      "bank_name": "Bank of Kansas City",
-      "masked_bank_routing_number": "XXXX6789",
-      "masked_bank_account_number": "XXXX3344",
-      "bank_account_type": "checking",
-      "bank_account_holder_type": "personal",
-      "payment_type": "bank_account",
-      "site_gateway_setting_id": 1,
-      "gateway_handle": "handle"
-    }
-  },
-  {
-    "payment_profile": {
-      "id": 10188522,
-      "first_name": "Frankie",
-      "last_name": "Tester",
-      "customer_id": 14543712,
-      "current_vault": "bogus",
-      "vault_token": "123456789",
-      "billing_address": "123 Montana Way",
-      "billing_city": "Los Angeles",
-      "billing_state": "CA",
-      "billing_zip": "90210",
-      "billing_country": "US",
-      "customer_vault_token": null,
-      "billing_address_2": "",
-      "bank_name": "Bank of Kansas City",
-      "masked_bank_routing_number": "XXXX6789",
-      "masked_bank_account_number": "XXXX6789",
-      "bank_account_type": "checking",
-      "bank_account_holder_type": "personal",
-      "payment_type": "bank_account",
-      "site_gateway_setting_id": 1,
-      "gateway_handle": "handle"
-    }
-  }
-]
 ```
 
 
@@ -786,6 +663,94 @@ catch (ApiException e)
     "site_gateway_setting_id": 1,
     "gateway_handle": null
   }
+}
+```
+
+
+# Delete Unused Payment Profile
+
+Deletes an unused payment profile.
+
+If the payment profile is in use by one or more subscriptions or groups, a 422 and error message will be returned.
+
+```csharp
+DeleteUnusedPaymentProfileAsync(
+    string paymentProfileId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `paymentProfileId` | `string` | Template, Required | The Chargify id of the payment profile |
+
+## Response Type
+
+`Task`
+
+## Example Usage
+
+```csharp
+string paymentProfileId = "payment_profile_id2";
+try
+{
+    await paymentProfilesController.DeleteUnusedPaymentProfileAsync(paymentProfileId);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# Delete Subscriptions Payment Profile
+
+This will delete a payment profile belonging to the customer on the subscription.
+
++ If the customer has multiple subscriptions, the payment profile will be removed from all of them.
+
++ If you delete the default payment profile for a subscription, you will need to specify another payment profile to be the default through the api, or either prompt the user to enter a card in the billing portal or on the self-service page, or visit the Payment Details tab on the subscription in the Admin UI and use the “Add New Credit Card” or “Make Active Payment Method” link, (depending on whether there are other cards present).
+
+```csharp
+DeleteSubscriptionsPaymentProfileAsync(
+    int subscriptionId,
+    string paymentProfileId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `paymentProfileId` | `string` | Template, Required | The Chargify id of the payment profile |
+
+## Response Type
+
+`Task`
+
+## Example Usage
+
+```csharp
+int subscriptionId = 222;
+string paymentProfileId = "payment_profile_id2";
+try
+{
+    await paymentProfilesController.DeleteSubscriptionsPaymentProfileAsync(
+        subscriptionId,
+        paymentProfileId
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
 }
 ```
 
@@ -995,17 +960,17 @@ catch (ApiException e)
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
-# Delete Subscriptions Payment Profile
+# Update Subscription Group Default Payment Profile
 
-This will delete a payment profile belonging to the customer on the subscription.
+This will change the default payment profile on the subscription group to the existing payment profile with the id specified.
 
-+ If the customer has multiple subscriptions, the payment profile will be removed from all of them.
+You must elect to change the existing payment profile to a new payment profile ID in order to receive a satisfactory response from this endpoint.
 
-+ If you delete the default payment profile for a subscription, you will need to specify another payment profile to be the default through the api, or either prompt the user to enter a card in the billing portal or on the self-service page, or visit the Payment Details tab on the subscription in the Admin UI and use the “Add New Credit Card” or “Make Active Payment Method” link, (depending on whether there are other cards present).
+The new payment profile must belong to the subscription group's customer, otherwise you will receive an error.
 
 ```csharp
-DeleteSubscriptionsPaymentProfileAsync(
-    int subscriptionId,
+UpdateSubscriptionGroupDefaultPaymentProfileAsync(
+    string uid,
     string paymentProfileId)
 ```
 
@@ -1013,22 +978,22 @@ DeleteSubscriptionsPaymentProfileAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `uid` | `string` | Template, Required | The uid of the subscription group |
 | `paymentProfileId` | `string` | Template, Required | The Chargify id of the payment profile |
 
 ## Response Type
 
-`Task`
+[`Task<Models.PaymentProfileResponse>`](../../doc/models/payment-profile-response.md)
 
 ## Example Usage
 
 ```csharp
-int subscriptionId = 222;
+string uid = "uid0";
 string paymentProfileId = "payment_profile_id2";
 try
 {
-    await paymentProfilesController.DeleteSubscriptionsPaymentProfileAsync(
-        subscriptionId,
+    PaymentProfileResponse result = await paymentProfilesController.UpdateSubscriptionGroupDefaultPaymentProfileAsync(
+        uid,
         paymentProfileId
     );
 }
@@ -1038,6 +1003,41 @@ catch (ApiException e)
     Console.WriteLine(e.Message);
 }
 ```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "payment_profile": {
+    "id": 10211899,
+    "first_name": "Amelia",
+    "last_name": "Example",
+    "masked_card_number": "XXXX-XXXX-XXXX-1",
+    "card_type": "bogus",
+    "expiration_month": 2,
+    "expiration_year": 2018,
+    "customer_id": 14399371,
+    "current_vault": "bogus",
+    "vault_token": "1",
+    "billing_address": "",
+    "billing_city": "",
+    "billing_state": "",
+    "billing_zip": "",
+    "billing_country": "",
+    "customer_vault_token": null,
+    "billing_address_2": "",
+    "payment_type": "credit_card",
+    "site_gateway_setting_id": 1,
+    "gateway_handle": null
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # Read One Time Token

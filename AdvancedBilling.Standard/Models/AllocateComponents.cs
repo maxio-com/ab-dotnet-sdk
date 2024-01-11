@@ -46,14 +46,16 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="upgradeCharge">upgrade_charge.</param>
         /// <param name="downgradeCredit">downgrade_credit.</param>
         /// <param name="paymentCollectionMethod">payment_collection_method.</param>
+        /// <param name="initiateDunning">initiate_dunning.</param>
         public AllocateComponents(
-            string prorationUpgradeScheme = "no-prorate",
-            string prorationDowngradeScheme = "no-prorate",
-            List<Models.CreateAllocationRequest> allocations = null,
+            string prorationUpgradeScheme = null,
+            string prorationDowngradeScheme = null,
+            List<Models.CreateAllocation> allocations = null,
             bool? accrueCharge = null,
             Models.CreditType? upgradeCharge = null,
             Models.CreditType? downgradeCredit = null,
-            Models.PaymentCollectionMethod1? paymentCollectionMethod = Models.PaymentCollectionMethod1.Automatic)
+            Models.PaymentCollectionMethod1? paymentCollectionMethod = Models.PaymentCollectionMethod1.Automatic,
+            bool? initiateDunning = null)
         {
             this.ProrationUpgradeScheme = prorationUpgradeScheme;
             this.ProrationDowngradeScheme = prorationDowngradeScheme;
@@ -70,6 +72,7 @@ namespace AdvancedBilling.Standard.Models
             }
 
             this.PaymentCollectionMethod = paymentCollectionMethod;
+            this.InitiateDunning = initiateDunning;
         }
 
         /// <summary>
@@ -88,7 +91,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Allocations.
         /// </summary>
         [JsonProperty("allocations", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Models.CreateAllocationRequest> Allocations { get; set; }
+        public List<Models.CreateAllocation> Allocations { get; set; }
 
         /// <summary>
         /// Gets or sets AccrueCharge.
@@ -139,6 +142,13 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("payment_collection_method", NullValueHandling = NullValueHandling.Ignore)]
         public Models.PaymentCollectionMethod1? PaymentCollectionMethod { get; set; }
+
+        /// <summary>
+        /// If true, if the immediate component payment fails, initiate dunning for the subscription.
+        /// Otherwise, leave the charges on the subscription to pay for at renewal.
+        /// </summary>
+        [JsonProperty("initiate_dunning", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? InitiateDunning { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -202,7 +212,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.AccrueCharge == null && other.AccrueCharge == null) || (this.AccrueCharge?.Equals(other.AccrueCharge) == true)) &&
                 ((this.UpgradeCharge == null && other.UpgradeCharge == null) || (this.UpgradeCharge?.Equals(other.UpgradeCharge) == true)) &&
                 ((this.DowngradeCredit == null && other.DowngradeCredit == null) || (this.DowngradeCredit?.Equals(other.DowngradeCredit) == true)) &&
-                ((this.PaymentCollectionMethod == null && other.PaymentCollectionMethod == null) || (this.PaymentCollectionMethod?.Equals(other.PaymentCollectionMethod) == true));
+                ((this.PaymentCollectionMethod == null && other.PaymentCollectionMethod == null) || (this.PaymentCollectionMethod?.Equals(other.PaymentCollectionMethod) == true)) &&
+                ((this.InitiateDunning == null && other.InitiateDunning == null) || (this.InitiateDunning?.Equals(other.InitiateDunning) == true));
         }
         
         /// <summary>
@@ -218,6 +229,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
             toStringOutput.Add($"this.DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
             toStringOutput.Add($"this.PaymentCollectionMethod = {(this.PaymentCollectionMethod == null ? "null" : this.PaymentCollectionMethod.ToString())}");
+            toStringOutput.Add($"this.InitiateDunning = {(this.InitiateDunning == null ? "null" : this.InitiateDunning.ToString())}");
         }
     }
 }

@@ -9,14 +9,16 @@ The following parameters are configurable for the API Client:
 | `Domain` | `string` | The Chargify server domain.<br>*Default*: `"chargify.com"` |
 | `Environment` | Environment | The API environment. <br> **Default: `Environment.Production`** |
 | `Timeout` | `TimeSpan` | Http client timeout.<br>*Default*: `TimeSpan.FromSeconds(30)` |
-| `BasicAuthUserName` | `string` | The username to use with basic authentication |
-| `BasicAuthPassword` | `string` | The password to use with basic authentication |
+| `BasicAuthCredentials` | [`BasicAuthCredentials`]($a/basic-authentication.md) | The Credentials Setter for Basic Authentication |
 
 The API client can be initialized as follows:
 
 ```csharp
 AdvancedBilling.Standard.AdvancedBillingClient client = new AdvancedBilling.Standard.AdvancedBillingClient.Builder()
-    .BasicAuthCredentials("BasicAuthUserName", "BasicAuthPassword")
+    .BasicAuthCredentials(auth => auth
+        .Username("BasicAuthUserName")
+        .Password("BasicAuthPassword")
+    )
     .Environment(AdvancedBilling.Standard.Environment.Production)
     .Subdomain("subdomain")
     .Domain("chargify.com")
@@ -72,6 +74,7 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 | Environment | Current API environment. | `Environment` |
 | Subdomain | The subdomain for your Chargify site. | `string` |
 | Domain | The Chargify server domain. | `string` |
+| BasicAuthCredentials | Gets the credentials to use with BasicAuth. | [`IBasicAuthCredentials`]($a/basic-authentication.md) |
 
 ### Methods
 
@@ -93,4 +96,5 @@ Class to build instances of Maxio Advanced BillingClient.
 | `Environment(Environment environment)` | Current API environment. | `Builder` |
 | `Subdomain(string subdomain)` | The subdomain for your Chargify site. | `Builder` |
 | `Domain(string domain)` | The Chargify server domain. | `Builder` |
+| `BasicAuthCredentials(Action<BasicAuthModel.Builder> action)` | Sets credentials for BasicAuth. | `Builder` |
 

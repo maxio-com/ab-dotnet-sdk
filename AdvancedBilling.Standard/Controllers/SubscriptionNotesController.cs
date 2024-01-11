@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
@@ -33,74 +32,6 @@ namespace AdvancedBilling.Standard.Controllers
         /// Initializes a new instance of the <see cref="SubscriptionNotesController"/> class.
         /// </summary>
         internal SubscriptionNotesController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
-
-        /// <summary>
-        /// Once you have obtained the ID of the note you wish to read, use this method to show a particular note attached to a subscription.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="noteId">Required parameter: The Chargify id of the note.</param>
-        /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
-        public Models.SubscriptionNoteResponse ReadSubscriptionNote(
-                int subscriptionId,
-                int noteId)
-            => CoreHelper.RunTask(ReadSubscriptionNoteAsync(subscriptionId, noteId));
-
-        /// <summary>
-        /// Once you have obtained the ID of the note you wish to read, use this method to show a particular note attached to a subscription.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="noteId">Required parameter: The Chargify id of the note.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionNoteResponse> ReadSubscriptionNoteAsync(
-                int subscriptionId,
-                int noteId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SubscriptionNoteResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/notes/{note_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("note_id", noteId))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Use the following method to update a note for a Subscription.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="noteId">Required parameter: The Chargify id of the note.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
-        public Models.SubscriptionNoteResponse UpdateSubscriptionNote(
-                int subscriptionId,
-                int noteId,
-                Models.UpdateSubscriptionNoteRequest body = null)
-            => CoreHelper.RunTask(UpdateSubscriptionNoteAsync(subscriptionId, noteId, body));
-
-        /// <summary>
-        /// Use the following method to update a note for a Subscription.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="noteId">Required parameter: The Chargify id of the note.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionNoteResponse> UpdateSubscriptionNoteAsync(
-                int subscriptionId,
-                int noteId,
-                Models.UpdateSubscriptionNoteRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SubscriptionNoteResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/notes/{note_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("note_id", noteId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Use the following method to create a note for a subscription.
@@ -135,7 +66,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.SubscriptionNoteResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/notes.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
@@ -163,11 +94,79 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.SubscriptionNoteResponse>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/notes.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("subscription_id", input.SubscriptionId))
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Once you have obtained the ID of the note you wish to read, use this method to show a particular note attached to a subscription.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="noteId">Required parameter: The Chargify id of the note.</param>
+        /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
+        public Models.SubscriptionNoteResponse ReadSubscriptionNote(
+                int subscriptionId,
+                int noteId)
+            => CoreHelper.RunTask(ReadSubscriptionNoteAsync(subscriptionId, noteId));
+
+        /// <summary>
+        /// Once you have obtained the ID of the note you wish to read, use this method to show a particular note attached to a subscription.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="noteId">Required parameter: The Chargify id of the note.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
+        public async Task<Models.SubscriptionNoteResponse> ReadSubscriptionNoteAsync(
+                int subscriptionId,
+                int noteId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.SubscriptionNoteResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/notes/{note_id}.json")
+                  .WithAuth("BasicAuth")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Template(_template => _template.Setup("note_id", noteId))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Use the following method to update a note for a Subscription.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="noteId">Required parameter: The Chargify id of the note.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
+        public Models.SubscriptionNoteResponse UpdateSubscriptionNote(
+                int subscriptionId,
+                int noteId,
+                Models.UpdateSubscriptionNoteRequest body = null)
+            => CoreHelper.RunTask(UpdateSubscriptionNoteAsync(subscriptionId, noteId, body));
+
+        /// <summary>
+        /// Use the following method to update a note for a Subscription.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="noteId">Required parameter: The Chargify id of the note.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
+        public async Task<Models.SubscriptionNoteResponse> UpdateSubscriptionNoteAsync(
+                int subscriptionId,
+                int noteId,
+                Models.UpdateSubscriptionNoteRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.SubscriptionNoteResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/notes/{note_id}.json")
+                  .WithAuth("BasicAuth")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Template(_template => _template.Setup("note_id", noteId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -194,7 +193,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<VoidType>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/notes/{note_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Template(_template => _template.Setup("note_id", noteId))))

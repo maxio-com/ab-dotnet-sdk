@@ -74,8 +74,8 @@ namespace AdvancedBillingTests
             var couponCode = $"100{randomString}OFF";
 
             var createOrUpdatePercentageCoupon = new CreateOrUpdatePercentageCoupon("100% off first month of usage",
-                couponCode, CreateOrUpdatePercentageCouponPercentage.FromPrecision(100), "100% off one-time", "false",
-                "false", "2024-08-29T12:00:00-04:00", productFamilyId.ToString(), "false",
+                couponCode, CreateOrUpdatePercentageCouponPercentage.FromPrecision(100), "100% off one-time", false,
+                false, DateTimeOffset.Now.AddYears(1), productFamilyId.ToString(), false,
                 excludeMidPeriodAllocations: true, applyOnCancelAtEndOfPeriod: true);
 
             var restrictedProductDictionary = new Dictionary<string, bool> { { product.Product.Id.ToString()!, true } };
@@ -197,8 +197,8 @@ namespace AdvancedBillingTests
             var couponCode = $"100{randomString}OFF";
 
             var createOrUpdatePercentageCoupon = new CreateOrUpdatePercentageCoupon("100% off first month of usage",
-                couponCode, CreateOrUpdatePercentageCouponPercentage.FromPrecision(100), "100% off one-time", "false",
-                "false", "2024-08-29T12:00:00-04:00", productFamilyId.ToString(), "false",
+                couponCode, CreateOrUpdatePercentageCouponPercentage.FromPrecision(100), "100% off one-time", false,
+                false, DateTimeOffset.Now.AddYears(1), productFamilyId.ToString(), false,
                 excludeMidPeriodAllocations: true, applyOnCancelAtEndOfPeriod: true);
 
             var restrictedProductDictionary = new Dictionary<string, bool> { { product.Product.Id.ToString()!, true } };
