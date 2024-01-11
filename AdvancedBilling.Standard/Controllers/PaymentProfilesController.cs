@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
@@ -421,12 +420,40 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CreatePaymentProfileResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/payment_profiles.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This method will return all of the active `payment_profiles` for a Site, or for one Customer within a site.  If no payment profiles are found, this endpoint will return an empty array, not a 404.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the List of Models.ListPaymentProfilesResponse response from the API call.</returns>
+        public List<Models.ListPaymentProfilesResponse> ListPaymentProfiles(
+                Models.ListPaymentProfilesInput input)
+            => CoreHelper.RunTask(ListPaymentProfilesAsync(input));
+
+        /// <summary>
+        /// This method will return all of the active `payment_profiles` for a Site, or for one Customer within a site.  If no payment profiles are found, this endpoint will return an empty array, not a 404.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the List of Models.ListPaymentProfilesResponse response from the API call.</returns>
+        public async Task<List<Models.ListPaymentProfilesResponse>> ListPaymentProfilesAsync(
+                Models.ListPaymentProfilesInput input,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<List<Models.ListPaymentProfilesResponse>>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/payment_profiles.json")
+                  .WithAuth("BasicAuth")
+                  .Parameters(_parameters => _parameters
+                      .Query(_query => _query.Setup("page", input.Page))
+                      .Query(_query => _query.Setup("per_page", input.PerPage))
+                      .Query(_query => _query.Setup("customer_id", input.CustomerId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -510,103 +537,9 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ReadPaymentProfileResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/payment_profiles/{payment_profile_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("payment_profile_id", paymentProfileId).Required())))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Deletes an unused payment profile.
-        /// If the payment profile is in use by one or more subscriptions or groups, a 422 and error message will be returned.
-        /// </summary>
-        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
-        public void DeleteUnusedPaymentProfile(
-                string paymentProfileId)
-            => CoreHelper.RunVoidTask(DeleteUnusedPaymentProfileAsync(paymentProfileId));
-
-        /// <summary>
-        /// Deletes an unused payment profile.
-        /// If the payment profile is in use by one or more subscriptions or groups, a 422 and error message will be returned.
-        /// </summary>
-        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task DeleteUnusedPaymentProfileAsync(
-                string paymentProfileId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Delete, "/payment_profiles/{payment_profile_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("payment_profile_id", paymentProfileId).Required())))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This will change the default payment profile on the subscription group to the existing payment profile with the id specified.
-        /// You must elect to change the existing payment profile to a new payment profile ID in order to receive a satisfactory response from this endpoint.
-        /// The new payment profile must belong to the subscription group's customer, otherwise you will receive an error.
-        /// </summary>
-        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
-        /// <returns>Returns the Models.PaymentProfileResponse response from the API call.</returns>
-        public Models.PaymentProfileResponse UpdateSubscriptionGroupDefaultPaymentProfile(
-                string uid,
-                string paymentProfileId)
-            => CoreHelper.RunTask(UpdateSubscriptionGroupDefaultPaymentProfileAsync(uid, paymentProfileId));
-
-        /// <summary>
-        /// This will change the default payment profile on the subscription group to the existing payment profile with the id specified.
-        /// You must elect to change the existing payment profile to a new payment profile ID in order to receive a satisfactory response from this endpoint.
-        /// The new payment profile must belong to the subscription group's customer, otherwise you will receive an error.
-        /// </summary>
-        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.PaymentProfileResponse response from the API call.</returns>
-        public async Task<Models.PaymentProfileResponse> UpdateSubscriptionGroupDefaultPaymentProfileAsync(
-                string uid,
-                string paymentProfileId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.PaymentProfileResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscription_groups/{uid}/payment_profiles/{payment_profile_id}/change_payment_profile.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("uid", uid).Required())
-                      .Template(_template => _template.Setup("payment_profile_id", paymentProfileId).Required())))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This method will return all of the active `payment_profiles` for a Site, or for one Customer within a site.  If no payment profiles are found, this endpoint will return an empty array, not a 404.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the List of Models.ListPaymentProfilesResponse response from the API call.</returns>
-        public List<Models.ListPaymentProfilesResponse> ListPaymentProfiles(
-                Models.ListPaymentProfilesInput input)
-            => CoreHelper.RunTask(ListPaymentProfilesAsync(input));
-
-        /// <summary>
-        /// This method will return all of the active `payment_profiles` for a Site, or for one Customer within a site.  If no payment profiles are found, this endpoint will return an empty array, not a 404.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the List of Models.ListPaymentProfilesResponse response from the API call.</returns>
-        public async Task<List<Models.ListPaymentProfilesResponse>> ListPaymentProfilesAsync(
-                Models.ListPaymentProfilesInput input,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<List<Models.ListPaymentProfilesResponse>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/payment_profiles.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("customer_id", input.CustomerId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -680,11 +613,74 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.UpdatePaymentProfileResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/payment_profiles/{payment_profile_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("payment_profile_id", paymentProfileId).Required())
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Deletes an unused payment profile.
+        /// If the payment profile is in use by one or more subscriptions or groups, a 422 and error message will be returned.
+        /// </summary>
+        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
+        public void DeleteUnusedPaymentProfile(
+                string paymentProfileId)
+            => CoreHelper.RunVoidTask(DeleteUnusedPaymentProfileAsync(paymentProfileId));
+
+        /// <summary>
+        /// Deletes an unused payment profile.
+        /// If the payment profile is in use by one or more subscriptions or groups, a 422 and error message will be returned.
+        /// </summary>
+        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task DeleteUnusedPaymentProfileAsync(
+                string paymentProfileId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Delete, "/payment_profiles/{payment_profile_id}.json")
+                  .WithAuth("BasicAuth")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("payment_profile_id", paymentProfileId).Required())))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This will delete a payment profile belonging to the customer on the subscription.
+        /// + If the customer has multiple subscriptions, the payment profile will be removed from all of them.
+        /// + If you delete the default payment profile for a subscription, you will need to specify another payment profile to be the default through the api, or either prompt the user to enter a card in the billing portal or on the self-service page, or visit the Payment Details tab on the subscription in the Admin UI and use the “Add New Credit Card” or “Make Active Payment Method” link, (depending on whether there are other cards present).
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
+        public void DeleteSubscriptionsPaymentProfile(
+                int subscriptionId,
+                string paymentProfileId)
+            => CoreHelper.RunVoidTask(DeleteSubscriptionsPaymentProfileAsync(subscriptionId, paymentProfileId));
+
+        /// <summary>
+        /// This will delete a payment profile belonging to the customer on the subscription.
+        /// + If the customer has multiple subscriptions, the payment profile will be removed from all of them.
+        /// + If you delete the default payment profile for a subscription, you will need to specify another payment profile to be the default through the api, or either prompt the user to enter a card in the billing portal or on the self-service page, or visit the Payment Details tab on the subscription in the Admin UI and use the “Add New Credit Card” or “Make Active Payment Method” link, (depending on whether there are other cards present).
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task DeleteSubscriptionsPaymentProfileAsync(
+                int subscriptionId,
+                string paymentProfileId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/payment_profiles/{payment_profile_id}.json")
+                  .WithAuth("BasicAuth")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Template(_template => _template.Setup("payment_profile_id", paymentProfileId).Required())))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -712,7 +708,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.BankAccountResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/bank_accounts/{bank_account_id}/verification.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("bank_account_id", bankAccountId))
@@ -748,7 +744,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<VoidType>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/subscription_groups/{uid}/payment_profiles/{payment_profile_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("uid", uid).Required())
                       .Template(_template => _template.Setup("payment_profile_id", paymentProfileId).Required())))
@@ -781,7 +777,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.PaymentProfileResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/payment_profiles/{payment_profile_id}/change_payment_profile.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Template(_template => _template.Setup("payment_profile_id", paymentProfileId))))
@@ -790,37 +786,40 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This will delete a payment profile belonging to the customer on the subscription.
-        /// + If the customer has multiple subscriptions, the payment profile will be removed from all of them.
-        /// + If you delete the default payment profile for a subscription, you will need to specify another payment profile to be the default through the api, or either prompt the user to enter a card in the billing portal or on the self-service page, or visit the Payment Details tab on the subscription in the Admin UI and use the “Add New Credit Card” or “Make Active Payment Method” link, (depending on whether there are other cards present).
+        /// This will change the default payment profile on the subscription group to the existing payment profile with the id specified.
+        /// You must elect to change the existing payment profile to a new payment profile ID in order to receive a satisfactory response from this endpoint.
+        /// The new payment profile must belong to the subscription group's customer, otherwise you will receive an error.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
         /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
-        public void DeleteSubscriptionsPaymentProfile(
-                int subscriptionId,
+        /// <returns>Returns the Models.PaymentProfileResponse response from the API call.</returns>
+        public Models.PaymentProfileResponse UpdateSubscriptionGroupDefaultPaymentProfile(
+                string uid,
                 string paymentProfileId)
-            => CoreHelper.RunVoidTask(DeleteSubscriptionsPaymentProfileAsync(subscriptionId, paymentProfileId));
+            => CoreHelper.RunTask(UpdateSubscriptionGroupDefaultPaymentProfileAsync(uid, paymentProfileId));
 
         /// <summary>
-        /// This will delete a payment profile belonging to the customer on the subscription.
-        /// + If the customer has multiple subscriptions, the payment profile will be removed from all of them.
-        /// + If you delete the default payment profile for a subscription, you will need to specify another payment profile to be the default through the api, or either prompt the user to enter a card in the billing portal or on the self-service page, or visit the Payment Details tab on the subscription in the Admin UI and use the “Add New Credit Card” or “Make Active Payment Method” link, (depending on whether there are other cards present).
+        /// This will change the default payment profile on the subscription group to the existing payment profile with the id specified.
+        /// You must elect to change the existing payment profile to a new payment profile ID in order to receive a satisfactory response from this endpoint.
+        /// The new payment profile must belong to the subscription group's customer, otherwise you will receive an error.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
         /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task DeleteSubscriptionsPaymentProfileAsync(
-                int subscriptionId,
+        /// <returns>Returns the Models.PaymentProfileResponse response from the API call.</returns>
+        public async Task<Models.PaymentProfileResponse> UpdateSubscriptionGroupDefaultPaymentProfileAsync(
+                string uid,
                 string paymentProfileId,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
+            => await CreateApiCall<Models.PaymentProfileResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/payment_profiles/{payment_profile_id}.json")
-                  .WithAuth("global")
+                  .Setup(HttpMethod.Post, "/subscription_groups/{uid}/payment_profiles/{payment_profile_id}/change_payment_profile.json")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Template(_template => _template.Setup("uid", uid).Required())
                       .Template(_template => _template.Setup("payment_profile_id", paymentProfileId).Required())))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -848,7 +847,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.GetOneTimeTokenRequest>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/one_time_tokens/{chargify_token}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("chargify_token", chargifyToken).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
@@ -881,7 +880,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<VoidType>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/request_payment_profiles_update.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))))
               .ResponseHandler(_responseHandler => _responseHandler

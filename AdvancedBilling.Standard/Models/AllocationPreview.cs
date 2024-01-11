@@ -51,7 +51,7 @@ namespace AdvancedBilling.Standard.Models
             long? totalTaxInCents = null,
             long? totalDiscountInCents = null,
             long? totalInCents = null,
-            string direction = null,
+            Models.AllocationPreviewDirection? direction = null,
             string prorationScheme = null,
             List<Models.AllocationPreviewLineItem> lineItems = null,
             bool? accrueCharge = null,
@@ -114,7 +114,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Direction.
         /// </summary>
         [JsonProperty("direction", NullValueHandling = NullValueHandling.Ignore)]
-        public string Direction { get; set; }
+        public Models.AllocationPreviewDirection? Direction { get; set; }
 
         /// <summary>
         /// Gets or sets ProrationScheme.
@@ -201,7 +201,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.TotalTaxInCents = {(this.TotalTaxInCents == null ? "null" : this.TotalTaxInCents.ToString())}");
             toStringOutput.Add($"this.TotalDiscountInCents = {(this.TotalDiscountInCents == null ? "null" : this.TotalDiscountInCents.ToString())}");
             toStringOutput.Add($"this.TotalInCents = {(this.TotalInCents == null ? "null" : this.TotalInCents.ToString())}");
-            toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction)}");
+            toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
             toStringOutput.Add($"this.ProrationScheme = {(this.ProrationScheme == null ? "null" : this.ProrationScheme)}");
             toStringOutput.Add($"this.LineItems = {(this.LineItems == null ? "null" : $"[{string.Join(", ", this.LineItems)} ]")}");
             toStringOutput.Add($"this.AccrueCharge = {(this.AccrueCharge == null ? "null" : this.AccrueCharge.ToString())}");

@@ -12,6 +12,7 @@ namespace AdvancedBilling.Standard.Models
     using System.Threading.Tasks;
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
+    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
@@ -21,14 +22,18 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class AllocationPreviewItem
     {
+        private string memo;
         private string timestamp;
         private Models.CreditType? upgradeCharge;
         private Models.CreditType? downgradeCredit;
+        private string componentHandle;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
+            { "memo", false },
             { "timestamp", false },
             { "upgrade_charge", false },
             { "downgrade_credit", false },
+            { "component_handle", false },
         };
 
         /// <summary>
@@ -54,12 +59,14 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="downgradeCredit">downgrade_credit.</param>
         /// <param name="pricePointId">price_point_id.</param>
         /// <param name="previousPricePointId">previous_price_point_id.</param>
+        /// <param name="pricePointHandle">price_point_handle.</param>
+        /// <param name="pricePointName">price_point_name.</param>
         /// <param name="componentHandle">component_handle.</param>
         public AllocationPreviewItem(
             int? componentId = null,
             int? subscriptionId = null,
-            double? quantity = null,
-            int? previousQuantity = null,
+            AllocationPreviewItemQuantity quantity = null,
+            AllocationPreviewItemPreviousQuantity previousQuantity = null,
             string memo = null,
             string timestamp = null,
             string prorationUpgradeScheme = null,
@@ -69,13 +76,19 @@ namespace AdvancedBilling.Standard.Models
             Models.CreditType? downgradeCredit = null,
             int? pricePointId = null,
             int? previousPricePointId = null,
+            string pricePointHandle = null,
+            string pricePointName = null,
             string componentHandle = null)
         {
             this.ComponentId = componentId;
             this.SubscriptionId = subscriptionId;
             this.Quantity = quantity;
             this.PreviousQuantity = previousQuantity;
-            this.Memo = memo;
+            if (memo != null)
+            {
+                this.Memo = memo;
+            }
+
             if (timestamp != null)
             {
                 this.Timestamp = timestamp;
@@ -96,7 +109,13 @@ namespace AdvancedBilling.Standard.Models
 
             this.PricePointId = pricePointId;
             this.PreviousPricePointId = previousPricePointId;
-            this.ComponentHandle = componentHandle;
+            this.PricePointHandle = pricePointHandle;
+            this.PricePointName = pricePointName;
+            if (componentHandle != null)
+            {
+                this.ComponentHandle = componentHandle;
+            }
+
         }
 
         /// <summary>
@@ -115,19 +134,31 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Quantity.
         /// </summary>
         [JsonProperty("quantity", NullValueHandling = NullValueHandling.Ignore)]
-        public double? Quantity { get; set; }
+        public AllocationPreviewItemQuantity Quantity { get; set; }
 
         /// <summary>
         /// Gets or sets PreviousQuantity.
         /// </summary>
         [JsonProperty("previous_quantity", NullValueHandling = NullValueHandling.Ignore)]
-        public int? PreviousQuantity { get; set; }
+        public AllocationPreviewItemPreviousQuantity PreviousQuantity { get; set; }
 
         /// <summary>
         /// Gets or sets Memo.
         /// </summary>
-        [JsonProperty("memo", NullValueHandling = NullValueHandling.Ignore)]
-        public string Memo { get; set; }
+        [JsonProperty("memo")]
+        public string Memo
+        {
+            get
+            {
+                return this.memo;
+            }
+
+            set
+            {
+                this.shouldSerialize["memo"] = true;
+                this.memo = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets Timestamp.
@@ -216,10 +247,34 @@ namespace AdvancedBilling.Standard.Models
         public int? PreviousPricePointId { get; set; }
 
         /// <summary>
+        /// Gets or sets PricePointHandle.
+        /// </summary>
+        [JsonProperty("price_point_handle", NullValueHandling = NullValueHandling.Ignore)]
+        public string PricePointHandle { get; set; }
+
+        /// <summary>
+        /// Gets or sets PricePointName.
+        /// </summary>
+        [JsonProperty("price_point_name", NullValueHandling = NullValueHandling.Ignore)]
+        public string PricePointName { get; set; }
+
+        /// <summary>
         /// Gets or sets ComponentHandle.
         /// </summary>
-        [JsonProperty("component_handle", NullValueHandling = NullValueHandling.Ignore)]
-        public string ComponentHandle { get; set; }
+        [JsonProperty("component_handle")]
+        public string ComponentHandle
+        {
+            get
+            {
+                return this.componentHandle;
+            }
+
+            set
+            {
+                this.shouldSerialize["component_handle"] = true;
+                this.componentHandle = value;
+            }
+        }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -229,6 +284,14 @@ namespace AdvancedBilling.Standard.Models
             this.ToString(toStringOutput);
 
             return $"AllocationPreviewItem : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetMemo()
+        {
+            this.shouldSerialize["memo"] = false;
         }
 
         /// <summary>
@@ -253,6 +316,23 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetDowngradeCredit()
         {
             this.shouldSerialize["downgrade_credit"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetComponentHandle()
+        {
+            this.shouldSerialize["component_handle"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeMemo()
+        {
+            return this.shouldSerialize["memo"];
         }
 
         /// <summary>
@@ -282,6 +362,15 @@ namespace AdvancedBilling.Standard.Models
             return this.shouldSerialize["downgrade_credit"];
         }
 
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeComponentHandle()
+        {
+            return this.shouldSerialize["component_handle"];
+        }
+
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
@@ -307,6 +396,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.DowngradeCredit == null && other.DowngradeCredit == null) || (this.DowngradeCredit?.Equals(other.DowngradeCredit) == true)) &&
                 ((this.PricePointId == null && other.PricePointId == null) || (this.PricePointId?.Equals(other.PricePointId) == true)) &&
                 ((this.PreviousPricePointId == null && other.PreviousPricePointId == null) || (this.PreviousPricePointId?.Equals(other.PreviousPricePointId) == true)) &&
+                ((this.PricePointHandle == null && other.PricePointHandle == null) || (this.PricePointHandle?.Equals(other.PricePointHandle) == true)) &&
+                ((this.PricePointName == null && other.PricePointName == null) || (this.PricePointName?.Equals(other.PricePointName) == true)) &&
                 ((this.ComponentHandle == null && other.ComponentHandle == null) || (this.ComponentHandle?.Equals(other.ComponentHandle) == true));
         }
         
@@ -318,8 +409,8 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
-            toStringOutput.Add($"this.Quantity = {(this.Quantity == null ? "null" : this.Quantity.ToString())}");
-            toStringOutput.Add($"this.PreviousQuantity = {(this.PreviousQuantity == null ? "null" : this.PreviousQuantity.ToString())}");
+            toStringOutput.Add($"Quantity = {(this.Quantity == null ? "null" : this.Quantity.ToString())}");
+            toStringOutput.Add($"PreviousQuantity = {(this.PreviousQuantity == null ? "null" : this.PreviousQuantity.ToString())}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.Timestamp = {(this.Timestamp == null ? "null" : this.Timestamp)}");
             toStringOutput.Add($"this.ProrationUpgradeScheme = {(this.ProrationUpgradeScheme == null ? "null" : this.ProrationUpgradeScheme)}");
@@ -329,6 +420,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
             toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
             toStringOutput.Add($"this.PreviousPricePointId = {(this.PreviousPricePointId == null ? "null" : this.PreviousPricePointId.ToString())}");
+            toStringOutput.Add($"this.PricePointHandle = {(this.PricePointHandle == null ? "null" : this.PricePointHandle)}");
+            toStringOutput.Add($"this.PricePointName = {(this.PricePointName == null ? "null" : this.PricePointName)}");
             toStringOutput.Add($"this.ComponentHandle = {(this.ComponentHandle == null ? "null" : this.ComponentHandle)}");
         }
     }

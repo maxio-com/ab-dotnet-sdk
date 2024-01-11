@@ -10,246 +10,15 @@ CustomFieldsController customFieldsController = client.CustomFieldsController;
 
 ## Methods
 
-* [List Metafields](../../doc/controllers/custom-fields.md#list-metafields)
-* [Delete Metafield](../../doc/controllers/custom-fields.md#delete-metafield)
-* [Read Metadata](../../doc/controllers/custom-fields.md#read-metadata)
-* [List Metadata](../../doc/controllers/custom-fields.md#list-metadata)
 * [Create Metafields](../../doc/controllers/custom-fields.md#create-metafields)
-* [Create Metadata](../../doc/controllers/custom-fields.md#create-metadata)
+* [List Metafields](../../doc/controllers/custom-fields.md#list-metafields)
 * [Update Metafield](../../doc/controllers/custom-fields.md#update-metafield)
+* [Delete Metafield](../../doc/controllers/custom-fields.md#delete-metafield)
+* [Create Metadata](../../doc/controllers/custom-fields.md#create-metadata)
+* [List Metadata](../../doc/controllers/custom-fields.md#list-metadata)
 * [Update Metadata](../../doc/controllers/custom-fields.md#update-metadata)
 * [Delete Metadata](../../doc/controllers/custom-fields.md#delete-metadata)
-
-
-# List Metafields
-
-This endpoint lists metafields associated with a site. The metafield description and usage is contained in the response.
-
-```csharp
-ListMetafieldsAsync(
-    Models.ListMetafieldsInput input)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `resourceType` | [`ResourceType`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
-| `name` | `string` | Query, Optional | filter by the name of the metafield |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br>**Default**: `20`<br>**Constraints**: `<= 200` |
-| `direction` | [`SortingDirection?`](../../doc/models/sorting-direction.md) | Query, Optional | Controls the order in which results are returned.<br>Use in query `direction=asc`. |
-
-## Response Type
-
-[`Task<Models.ListMetafieldsResponse>`](../../doc/models/list-metafields-response.md)
-
-## Example Usage
-
-```csharp
-ListMetafieldsInput listMetafieldsInput = new ListMetafieldsInput
-{
-    ResourceType = ResourceType.Subscriptions,
-    Page = 2,
-    PerPage = 50,
-};
-
-try
-{
-    ListMetafieldsResponse result = await customFieldsController.ListMetafieldsAsync(listMetafieldsInput);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "total_count": 0,
-  "current_page": 0,
-  "total_pages": 0,
-  "per_page": 0,
-  "metafields": [
-    {
-      "id": 0,
-      "name": "string",
-      "scope": {
-        "csv": "0",
-        "statements": "0",
-        "invoices": "0",
-        "portal": "0",
-        "public_show": "0",
-        "public_edit": "0"
-      },
-      "data_count": 0,
-      "input_type": "string",
-      "enum": null
-    }
-  ]
-}
-```
-
-
-# Delete Metafield
-
-Use the following method to delete a metafield. This will remove the metafield from the Site.
-
-Additionally, this will remove the metafield and associated metadata with all Subscriptions on the Site.
-
-```csharp
-DeleteMetafieldAsync(
-    Models.ResourceType resourceType,
-    string name = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `resourceType` | [`ResourceType`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
-| `name` | `string` | Query, Optional | The name of the metafield to be deleted |
-
-## Response Type
-
-`Task`
-
-## Example Usage
-
-```csharp
-ResourceType resourceType = ResourceType.Subscriptions;
-try
-{
-    await customFieldsController.DeleteMetafieldAsync(resourceType);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-
-
-# Read Metadata
-
-This request will list all of the metadata belonging to a particular resource (ie. subscription, customer) that is specified.
-
-## Metadata Data
-
-This endpoint will also display the current stats of your metadata to use as a tool for pagination.
-
-```csharp
-ReadMetadataAsync(
-    Models.ReadMetadataInput input)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `resourceType` | [`ResourceType`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
-| `resourceId` | `string` | Template, Required | The Chargify id of the customer or the subscription for which the metadata applies |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br>**Default**: `20`<br>**Constraints**: `<= 200` |
-
-## Response Type
-
-[`Task<Models.PaginatedMetadata>`](../../doc/models/paginated-metadata.md)
-
-## Example Usage
-
-```csharp
-ReadMetadataInput readMetadataInput = new ReadMetadataInput
-{
-    ResourceType = ResourceType.Subscriptions,
-    ResourceId = "resource_id4",
-    Page = 2,
-    PerPage = 50,
-};
-
-try
-{
-    PaginatedMetadata result = await customFieldsController.ReadMetadataAsync(readMetadataInput);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-
-# List Metadata
-
-This method will provide you information on usage of metadata across your selected resource (ie. subscriptions, customers)
-
-## Metadata Data
-
-This endpoint will also display the current stats of your metadata to use as a tool for pagination.
-
-### Metadata for multiple records
-
-`https://acme.chargify.com/subscriptions/metadata.json?resource_ids[]=1&resource_ids[]=2`
-
-## Read Metadata for a Site
-
-This endpoint will list the number of pages of metadata information that are contained within a site.
-
-```csharp
-ListMetadataAsync(
-    Models.ListMetadataInput input)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `resourceType` | [`ResourceType`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br>**Default**: `20`<br>**Constraints**: `<= 200` |
-| `dateField` | [`BasicDateField?`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search. |
-| `startDate` | `string` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns metadata with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
-| `endDate` | `string` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns metadata with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. |
-| `startDatetime` | `string` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns metadata with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date. |
-| `endDatetime` | `string` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns metadata with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. |
-| `withDeleted` | `bool?` | Query, Optional | Allow to fetch deleted metadata. |
-| `resourceIds` | `List<int>` | Query, Optional | Allow to fetch metadata for multiple records based on provided ids. Use in query: `resource_ids[]=122&resource_ids[]=123&resource_ids[]=124`.<br>**Constraints**: *Maximum Items*: `50` |
-| `direction` | [`SortingDirection?`](../../doc/models/sorting-direction.md) | Query, Optional | Controls the order in which results are returned.<br>Use in query `direction=asc`. |
-
-## Response Type
-
-[`Task<Models.PaginatedMetadata>`](../../doc/models/paginated-metadata.md)
-
-## Example Usage
-
-```csharp
-ListMetadataInput listMetadataInput = new ListMetadataInput
-{
-    ResourceType = ResourceType.Subscriptions,
-    Page = 2,
-    PerPage = 50,
-    DateField = BasicDateField.UpdatedAt,
-Liquid error: Value cannot be null. (Parameter 'key')};
-
-try
-{
-    PaginatedMetadata result = await customFieldsController.ListMetadataAsync(listMetadataInput);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
+* [List Metadata for Resource Type](../../doc/controllers/custom-fields.md#list-metadata-for-resource-type)
 
 
 # Create Metafields
@@ -368,38 +137,20 @@ catch (ApiException e)
 ]
 ```
 
+## Errors
 
-# Create Metadata
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`SingleErrorResponseException`](../../doc/models/single-error-response-exception.md) |
 
-## Custom Fields: Metadata Intro
 
-**Chargify refers to Custom Fields in the API documentation as metafields and metadata.** Within the Chargify UI, metadata and metafields are grouped together under the umbrella of "Custom Fields." All of our UI-based documentation that references custom fields will not cite the terminology metafields or metadata.
+# List Metafields
 
-+ **Metafield is the custom field**
-+ **Metadata is the data populating the custom field.**
-
-Chargify Metafields are used to add meaningful attributes to subscription and customer resources. Full documentation on how to create Custom Fields in the Chargify UI can be located [here](https://chargify.zendesk.com/hc/en-us/articles/4407659856411). For additional documentation on how to record data within custom fields, please see our subscription-based documentation [here.](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#custom-fields)
-
-Metadata is associated to a customer or subscription, and corresponds to a Metafield. When creating a new metadata object for a given record, **if the metafield is not present it will be created**.
-
-## Metadata limits
-
-Metadata values are limited to 2kB in size. Additonally, there are limits on the number of unique metafields available per resource.
-
-## Create Metadata
-
-This method will create a metafield for the site on the fly if it does not already exist, and populate the metadata value.
-
-### Subscription or Customer Resource
-
-Please pay special attention to the resource you use when creating metadata.
+This endpoint lists metafields associated with a site. The metafield description and usage is contained in the response.
 
 ```csharp
-CreateMetadataAsync(
-    Models.ResourceType resourceType,
-    string resourceId,
-    string mValue = null,
-    Models.CreateMetadataRequest body = null)
+ListMetafieldsAsync(
+    Models.ListMetafieldsInput input)
 ```
 
 ## Parameters
@@ -407,49 +158,61 @@ CreateMetadataAsync(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `resourceType` | [`ResourceType`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
-| `resourceId` | `string` | Template, Required | The Chargify id of the customer or the subscription for which the metadata applies |
-| `mValue` | `string` | Query, Optional | Can be a single item or a list of metadata |
-| `body` | [`CreateMetadataRequest`](../../doc/models/create-metadata-request.md) | Body, Optional | - |
+| `name` | `string` | Query, Optional | filter by the name of the metafield |
+| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `direction` | [`SortingDirection?`](../../doc/models/sorting-direction.md) | Query, Optional | Controls the order in which results are returned.<br>Use in query `direction=asc`. |
 
 ## Response Type
 
-[`Task<List<Models.Metadata>>`](../../doc/models/metadata.md)
+[`Task<Models.ListMetafieldsResponse>`](../../doc/models/list-metafields-response.md)
 
 ## Example Usage
 
 ```csharp
-ResourceType resourceType = ResourceType.Subscriptions;
-string resourceId = "resource_id4";
-CreateMetadataRequest body = new CreateMetadataRequest
+ListMetafieldsInput listMetafieldsInput = new ListMetafieldsInput
 {
-    Metadata = new List<Models.CreateMetadata>
-    {
-        new CreateMetadata
-        {
-            Name = "Color",
-            MValue = "Blue",
-        },
-        new CreateMetadata
-        {
-            Name = "Something",
-            MValue = "Useful",
-        },
-    },
+    ResourceType = ResourceType.Subscriptions,
+    Page = 2,
+    PerPage = 50,
 };
 
 try
 {
-    List<Metadata> result = await customFieldsController.CreateMetadataAsync(
-        resourceType,
-        resourceId,
-        null,
-        body
-    );
+    ListMetafieldsResponse result = await customFieldsController.ListMetafieldsAsync(listMetafieldsInput);
 }
 catch (ApiException e)
 {
     // TODO: Handle exception here
     Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "total_count": 0,
+  "current_page": 0,
+  "total_pages": 0,
+  "per_page": 0,
+  "metafields": [
+    {
+      "id": 0,
+      "name": "string",
+      "scope": {
+        "csv": "0",
+        "statements": "0",
+        "invoices": "0",
+        "portal": "0",
+        "public_show": "0",
+        "public_edit": "0"
+      },
+      "data_count": 0,
+      "input_type": "string",
+      "enum": null
+    }
+  ]
 }
 ```
 
@@ -499,6 +262,188 @@ catch (ApiException e)
 ```
 
 
+# Delete Metafield
+
+Use the following method to delete a metafield. This will remove the metafield from the Site.
+
+Additionally, this will remove the metafield and associated metadata with all Subscriptions on the Site.
+
+```csharp
+DeleteMetafieldAsync(
+    Models.ResourceType resourceType,
+    string name = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `resourceType` | [`ResourceType`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
+| `name` | `string` | Query, Optional | The name of the metafield to be deleted |
+
+## Response Type
+
+`Task`
+
+## Example Usage
+
+```csharp
+ResourceType resourceType = ResourceType.Subscriptions;
+try
+{
+    await customFieldsController.DeleteMetafieldAsync(resourceType);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+
+
+# Create Metadata
+
+## Custom Fields: Metadata Intro
+
+**Chargify refers to Custom Fields in the API documentation as metafields and metadata.** Within the Chargify UI, metadata and metafields are grouped together under the umbrella of "Custom Fields." All of our UI-based documentation that references custom fields will not cite the terminology metafields or metadata.
+
++ **Metafield is the custom field**
++ **Metadata is the data populating the custom field.**
+
+Chargify Metafields are used to add meaningful attributes to subscription and customer resources. Full documentation on how to create Custom Fields in the Chargify UI can be located [here](https://chargify.zendesk.com/hc/en-us/articles/4407659856411). For additional documentation on how to record data within custom fields, please see our subscription-based documentation [here.](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#custom-fields)
+
+Metadata is associated to a customer or subscription, and corresponds to a Metafield. When creating a new metadata object for a given record, **if the metafield is not present it will be created**.
+
+## Metadata limits
+
+Metadata values are limited to 2kB in size. Additonally, there are limits on the number of unique metafields available per resource.
+
+## Create Metadata
+
+This method will create a metafield for the site on the fly if it does not already exist, and populate the metadata value.
+
+### Subscription or Customer Resource
+
+Please pay special attention to the resource you use when creating metadata.
+
+```csharp
+CreateMetadataAsync(
+    Models.ResourceType resourceType,
+    string resourceId,
+    Models.CreateMetadataRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `resourceType` | [`ResourceType`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
+| `resourceId` | `string` | Template, Required | The Chargify id of the customer or the subscription for which the metadata applies |
+| `body` | [`CreateMetadataRequest`](../../doc/models/create-metadata-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<List<Models.Metadata>>`](../../doc/models/metadata.md)
+
+## Example Usage
+
+```csharp
+ResourceType resourceType = ResourceType.Subscriptions;
+string resourceId = "resource_id4";
+CreateMetadataRequest body = new CreateMetadataRequest
+{
+    Metadata = new List<Models.CreateMetadata>
+    {
+        new CreateMetadata
+        {
+            Name = "Color",
+            MValue = "Blue",
+        },
+        new CreateMetadata
+        {
+            Name = "Something",
+            MValue = "Useful",
+        },
+    },
+};
+
+try
+{
+    List<Metadata> result = await customFieldsController.CreateMetadataAsync(
+        resourceType,
+        resourceId,
+        body
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`SingleErrorResponseException`](../../doc/models/single-error-response-exception.md) |
+
+
+# List Metadata
+
+This request will list all of the metadata belonging to a particular resource (ie. subscription, customer) that is specified.
+
+## Metadata Data
+
+This endpoint will also display the current stats of your metadata to use as a tool for pagination.
+
+```csharp
+ListMetadataAsync(
+    Models.ListMetadataInput input)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `resourceType` | [`ResourceType`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
+| `resourceId` | `string` | Template, Required | The Chargify id of the customer or the subscription for which the metadata applies |
+| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+
+## Response Type
+
+[`Task<Models.PaginatedMetadata>`](../../doc/models/paginated-metadata.md)
+
+## Example Usage
+
+```csharp
+ListMetadataInput listMetadataInput = new ListMetadataInput
+{
+    ResourceType = ResourceType.Subscriptions,
+    ResourceId = "resource_id4",
+    Page = 2,
+    PerPage = 50,
+};
+
+try
+{
+    PaginatedMetadata result = await customFieldsController.ListMetadataAsync(listMetadataInput);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+
 # Update Metadata
 
 This method allows you to update the existing metadata associated with a subscription or customer.
@@ -507,7 +452,6 @@ This method allows you to update the existing metadata associated with a subscri
 UpdateMetadataAsync(
     Models.ResourceType resourceType,
     string resourceId,
-    string mValue = null,
     Models.UpdateMetadataRequest body = null)
 ```
 
@@ -517,7 +461,6 @@ UpdateMetadataAsync(
 |  --- | --- | --- | --- |
 | `resourceType` | [`ResourceType`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
 | `resourceId` | `string` | Template, Required | The Chargify id of the customer or the subscription for which the metadata applies |
-| `mValue` | `string` | Query, Optional | Can be a single item or a list of metadata |
 | `body` | [`UpdateMetadataRequest`](../../doc/models/update-metadata-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -615,4 +558,68 @@ catch (ApiException e)
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
+
+
+# List Metadata for Resource Type
+
+This method will provide you information on usage of metadata across your selected resource (ie. subscriptions, customers)
+
+## Metadata Data
+
+This endpoint will also display the current stats of your metadata to use as a tool for pagination.
+
+### Metadata for multiple records
+
+`https://acme.chargify.com/subscriptions/metadata.json?resource_ids[]=1&resource_ids[]=2`
+
+## Read Metadata for a Site
+
+This endpoint will list the number of pages of metadata information that are contained within a site.
+
+```csharp
+ListMetadataForResourceTypeAsync(
+    Models.ListMetadataForResourceTypeInput input)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `resourceType` | [`ResourceType`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
+| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `dateField` | [`BasicDateField?`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search. |
+| `startDate` | `string` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns metadata with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
+| `endDate` | `string` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns metadata with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. |
+| `startDatetime` | `string` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns metadata with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date. |
+| `endDatetime` | `string` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns metadata with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. |
+| `withDeleted` | `bool?` | Query, Optional | Allow to fetch deleted metadata. |
+| `resourceIds` | `List<int>` | Query, Optional | Allow to fetch metadata for multiple records based on provided ids. Use in query: `resource_ids[]=122&resource_ids[]=123&resource_ids[]=124`. |
+| `direction` | [`SortingDirection?`](../../doc/models/sorting-direction.md) | Query, Optional | Controls the order in which results are returned.<br>Use in query `direction=asc`. |
+
+## Response Type
+
+[`Task<Models.PaginatedMetadata>`](../../doc/models/paginated-metadata.md)
+
+## Example Usage
+
+```csharp
+ListMetadataForResourceTypeInput listMetadataForResourceTypeInput = new ListMetadataForResourceTypeInput
+{
+    ResourceType = ResourceType.Subscriptions,
+    Page = 2,
+    PerPage = 50,
+    DateField = BasicDateField.UpdatedAt,
+Liquid error: Value cannot be null. (Parameter 'key')};
+
+try
+{
+    PaginatedMetadata result = await customFieldsController.ListMetadataForResourceTypeAsync(listMetadataForResourceTypeInput);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
 

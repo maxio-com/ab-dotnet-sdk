@@ -39,6 +39,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="componentName">component_name.</param>
         /// <param name="pricePointName">price_point_name.</param>
         /// <param name="currencyPrices">currency_prices.</param>
+        /// <param name="interval">interval.</param>
+        /// <param name="intervalUnit">interval_unit.</param>
         public OfferItem(
             int? componentId = null,
             int? pricePointId = null,
@@ -47,7 +49,9 @@ namespace AdvancedBilling.Standard.Models
             string componentUnitPrice = null,
             string componentName = null,
             string pricePointName = null,
-            List<Models.CurrencyPrice> currencyPrices = null)
+            List<Models.CurrencyPrice> currencyPrices = null,
+            int? interval = null,
+            Models.IntervalUnit? intervalUnit = null)
         {
             this.ComponentId = componentId;
             this.PricePointId = pricePointId;
@@ -57,6 +61,8 @@ namespace AdvancedBilling.Standard.Models
             this.ComponentName = componentName;
             this.PricePointName = pricePointName;
             this.CurrencyPrices = currencyPrices;
+            this.Interval = interval;
+            this.IntervalUnit = intervalUnit;
         }
 
         /// <summary>
@@ -107,6 +113,18 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("currency_prices", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.CurrencyPrice> CurrencyPrices { get; set; }
 
+        /// <summary>
+        /// The numerical interval. i.e. an interval of '30' coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Interval { get; set; }
+
+        /// <summary>
+        /// A string representing the interval unit for this component price point, either month or day. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval_unit", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.IntervalUnit? IntervalUnit { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -136,7 +154,9 @@ namespace AdvancedBilling.Standard.Models
                 ((this.ComponentUnitPrice == null && other.ComponentUnitPrice == null) || (this.ComponentUnitPrice?.Equals(other.ComponentUnitPrice) == true)) &&
                 ((this.ComponentName == null && other.ComponentName == null) || (this.ComponentName?.Equals(other.ComponentName) == true)) &&
                 ((this.PricePointName == null && other.PricePointName == null) || (this.PricePointName?.Equals(other.PricePointName) == true)) &&
-                ((this.CurrencyPrices == null && other.CurrencyPrices == null) || (this.CurrencyPrices?.Equals(other.CurrencyPrices) == true));
+                ((this.CurrencyPrices == null && other.CurrencyPrices == null) || (this.CurrencyPrices?.Equals(other.CurrencyPrices) == true)) &&
+                ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
+                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true));
         }
         
         /// <summary>
@@ -153,6 +173,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ComponentName = {(this.ComponentName == null ? "null" : this.ComponentName)}");
             toStringOutput.Add($"this.PricePointName = {(this.PricePointName == null ? "null" : this.PricePointName)}");
             toStringOutput.Add($"this.CurrencyPrices = {(this.CurrencyPrices == null ? "null" : $"[{string.Join(", ", this.CurrencyPrices)} ]")}");
+            toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
+            toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
         }
     }
 }

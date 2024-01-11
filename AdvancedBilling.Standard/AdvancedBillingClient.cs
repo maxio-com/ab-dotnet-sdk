@@ -40,7 +40,6 @@ namespace AdvancedBilling.Standard
 
         private readonly GlobalConfiguration globalConfiguration;
         private const string userAgent = "AB SDK DotNet:0.0.4 on OS {os-info}";
-        private readonly BasicAuthManager basicAuthManager;
         private readonly Lazy<APIExportsController> aPIExports;
         private readonly Lazy<AdvanceInvoiceController> advanceInvoice;
         private readonly Lazy<BillingPortalController> billingPortal;
@@ -77,18 +76,17 @@ namespace AdvancedBilling.Standard
             Environment environment,
             string subdomain,
             string domain,
-            string basicAuthUserName,
-            string basicAuthPassword,
+            BasicAuthManager basicAuthManager,
             IHttpClientConfiguration httpClientConfiguration)
         {
             this.Environment = environment;
             this.Subdomain = subdomain;
             this.Domain = domain;
             this.HttpClientConfiguration = httpClientConfiguration;
-            basicAuthManager = new BasicAuthManager(basicAuthUserName, basicAuthPassword);
+
             globalConfiguration = new GlobalConfiguration.Builder()
                 .AuthManagers(new Dictionary<string, AuthManager> {
-                        {"global", basicAuthManager}
+                    {"BasicAuth", basicAuthManager},
                 })
                 .HttpConfiguration(httpClientConfiguration)
                 .ServerUrls(EnvironmentsMap[environment], Server.Default)
@@ -98,6 +96,7 @@ namespace AdvancedBilling.Standard
                 .UserAgent(userAgent)
                 .Build();
 
+            BasicAuthCredentials = basicAuthManager;
 
             this.aPIExports = new Lazy<APIExportsController>(
                 () => new APIExportsController(globalConfiguration));
@@ -345,7 +344,7 @@ namespace AdvancedBilling.Standard
         /// <summary>
         /// Gets the credentials to use with BasicAuth.
         /// </summary>
-        public IBasicAuthCredentials BasicAuthCredentials => this.basicAuthManager;
+        public IBasicAuthCredentials BasicAuthCredentials { get; private set; }
 
         /// <summary>
         /// Gets the URL for a particular alias in the current environment and appends
@@ -368,8 +367,15 @@ namespace AdvancedBilling.Standard
                 .Environment(this.Environment)
                 .Subdomain(this.Subdomain)
                 .Domain(this.Domain)
-                .BasicAuthCredentials(basicAuthManager.BasicAuthUserName, basicAuthManager.BasicAuthPassword)
                 .HttpClientConfig(config => config.Build());
+
+            if (BasicAuthCredentials.BasicAuthUserName != null && BasicAuthCredentials.BasicAuthPassword != null)
+            {
+                builder.BasicAuthCredentials(auth => auth
+                    .Username(BasicAuthCredentials.BasicAuthUserName)
+                    .Password(BasicAuthCredentials.BasicAuthPassword)
+                );
+            }
 
             return builder;
         }
@@ -415,7 +421,10 @@ namespace AdvancedBilling.Standard
 
             if (basicAuthUserName != null && basicAuthPassword != null)
             {
-                builder.BasicAuthCredentials(basicAuthUserName, basicAuthPassword);
+                builder.BasicAuthCredentials(auth => auth
+                    .Username(basicAuthUserName)
+                    .Password(basicAuthPassword)
+                );
             }
 
             return builder.Build();
@@ -429,8 +438,7 @@ namespace AdvancedBilling.Standard
             private Environment environment = AdvancedBilling.Standard.Environment.Production;
             private string subdomain = "subdomain";
             private string domain = "chargify.com";
-            private string basicAuthUserName = "";
-            private string basicAuthPassword = "";
+            private readonly BasicAuthModel.Builder basicAuth = new BasicAuthModel.Builder();
             private HttpClientConfiguration.Builder httpClientConfig = new HttpClientConfiguration.Builder();
 
             /// <summary>
@@ -439,10 +447,28 @@ namespace AdvancedBilling.Standard
             /// <param name="basicAuthUserName">BasicAuthUserName.</param>
             /// <param name="basicAuthPassword">BasicAuthPassword.</param>
             /// <returns>Builder.</returns>
+            [Obsolete("This method is deprecated. Use BasicAuthCredentials(action) instead.")]
             public Builder BasicAuthCredentials(string basicAuthUserName, string basicAuthPassword)
             {
-                this.basicAuthUserName = basicAuthUserName ?? throw new ArgumentNullException(nameof(basicAuthUserName));
-                this.basicAuthPassword = basicAuthPassword ?? throw new ArgumentNullException(nameof(basicAuthPassword));
+                basicAuth
+                    .Username(basicAuthUserName)
+                    .Password(basicAuthPassword);
+                return this;
+            }
+
+            /// <summary>
+            /// Sets credentials for BasicAuth.
+            /// </summary>
+            /// <param name="action">Action.</param>
+            /// <returns>Builder.</returns>
+            public Builder BasicAuthCredentials(Action<BasicAuthModel.Builder> action)
+            {
+                if (action is null)
+                {
+                    throw new ArgumentNullException(nameof(action));
+                }
+
+                action(this.basicAuth);
                 return this;
             }
 
@@ -508,8 +534,7 @@ namespace AdvancedBilling.Standard
                     environment,
                     subdomain,
                     domain,
-                    basicAuthUserName,
-                    basicAuthPassword,
+                    new BasicAuthManager(basicAuth.Build()),
                     httpClientConfig.Build());
             }
         }

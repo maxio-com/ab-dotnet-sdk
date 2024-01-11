@@ -50,6 +50,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="accrueCharge">accrue_charge.</param>
         /// <param name="downgradeCredit">downgrade_credit.</param>
         /// <param name="upgradeCharge">upgrade_charge.</param>
+        /// <param name="initiateDunning">initiate_dunning.</param>
         /// <param name="pricePointId">price_point_id.</param>
         /// <param name="billingSchedule">billing_schedule.</param>
         public CreateAllocation(
@@ -61,6 +62,7 @@ namespace AdvancedBilling.Standard.Models
             bool? accrueCharge = null,
             Models.CreditType? downgradeCredit = null,
             Models.CreditType? upgradeCharge = null,
+            bool? initiateDunning = null,
             CreateAllocationPricePointId pricePointId = null,
             Models.BillingSchedule billingSchedule = null)
         {
@@ -80,6 +82,7 @@ namespace AdvancedBilling.Standard.Models
                 this.UpgradeCharge = upgradeCharge;
             }
 
+            this.InitiateDunning = initiateDunning;
             if (pricePointId != null)
             {
                 this.PricePointId = pricePointId;
@@ -161,6 +164,13 @@ namespace AdvancedBilling.Standard.Models
                 this.upgradeCharge = value;
             }
         }
+
+        /// <summary>
+        /// If set to true, if the immediate component payment fails, initiate dunning for the subscription.
+        /// Otherwise, leave the charges on the subscription to pay for at renewal. Defaults to false.
+        /// </summary>
+        [JsonProperty("initiate_dunning", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? InitiateDunning { get; set; }
 
         /// <summary>
         /// Price point that the allocation should be charged at. Accepts either the price point's id (integer) or handle (string). When not specified, the default price point will be used.
@@ -267,6 +277,7 @@ namespace AdvancedBilling.Standard.Models
                 ((this.AccrueCharge == null && other.AccrueCharge == null) || (this.AccrueCharge?.Equals(other.AccrueCharge) == true)) &&
                 ((this.DowngradeCredit == null && other.DowngradeCredit == null) || (this.DowngradeCredit?.Equals(other.DowngradeCredit) == true)) &&
                 ((this.UpgradeCharge == null && other.UpgradeCharge == null) || (this.UpgradeCharge?.Equals(other.UpgradeCharge) == true)) &&
+                ((this.InitiateDunning == null && other.InitiateDunning == null) || (this.InitiateDunning?.Equals(other.InitiateDunning) == true)) &&
                 ((this.PricePointId == null && other.PricePointId == null) || (this.PricePointId?.Equals(other.PricePointId) == true)) &&
                 ((this.BillingSchedule == null && other.BillingSchedule == null) || (this.BillingSchedule?.Equals(other.BillingSchedule) == true));
         }
@@ -285,6 +296,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.AccrueCharge = {(this.AccrueCharge == null ? "null" : this.AccrueCharge.ToString())}");
             toStringOutput.Add($"this.DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
             toStringOutput.Add($"this.UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
+            toStringOutput.Add($"this.InitiateDunning = {(this.InitiateDunning == null ? "null" : this.InitiateDunning.ToString())}");
             toStringOutput.Add($"PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
             toStringOutput.Add($"this.BillingSchedule = {(this.BillingSchedule == null ? "null" : this.BillingSchedule.ToString())}");
         }

@@ -44,7 +44,7 @@ namespace AdvancedBilling.Standard.Models
         public Usage(
             int? id = null,
             string memo = null,
-            string createdAt = null,
+            DateTimeOffset? createdAt = null,
             int? pricePointId = null,
             UsageQuantity quantity = null,
             int? overageQuantity = null,
@@ -78,8 +78,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CreatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets PricePointId.
@@ -158,7 +159,7 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
+            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
             toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
             toStringOutput.Add($"Quantity = {(this.Quantity == null ? "null" : this.Quantity.ToString())}");
             toStringOutput.Add($"this.OverageQuantity = {(this.OverageQuantity == null ? "null" : this.OverageQuantity.ToString())}");

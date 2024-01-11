@@ -49,11 +49,11 @@ namespace AdvancedBilling.Standard.Models
             string code,
             CreateOrUpdatePercentageCouponPercentage percentage,
             string description = null,
-            string allowNegativeBalance = null,
-            string recurring = null,
-            string endDate = null,
+            bool? allowNegativeBalance = null,
+            bool? recurring = null,
+            DateTimeOffset? endDate = null,
             string productFamilyId = null,
-            string stackable = null,
+            bool? stackable = null,
             Models.CompoundingStrategy? compoundingStrategy = null,
             bool? excludeMidPeriodAllocations = null,
             bool? applyOnCancelAtEndOfPeriod = null)
@@ -105,23 +105,21 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets AllowNegativeBalance.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("allow_negative_balance", NullValueHandling = NullValueHandling.Ignore)]
-        public string AllowNegativeBalance { get; set; }
+        public bool? AllowNegativeBalance { get; set; }
 
         /// <summary>
         /// Gets or sets Recurring.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("recurring", NullValueHandling = NullValueHandling.Ignore)]
-        public string Recurring { get; set; }
+        public bool? Recurring { get; set; }
 
         /// <summary>
         /// Gets or sets EndDate.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("end_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string EndDate { get; set; }
+        public DateTimeOffset? EndDate { get; set; }
 
         /// <summary>
         /// Gets or sets ProductFamilyId.
@@ -133,9 +131,8 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets Stackable.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("stackable", NullValueHandling = NullValueHandling.Ignore)]
-        public string Stackable { get; set; }
+        public bool? Stackable { get; set; }
 
         /// <summary>
         /// Gets or sets CompoundingStrategy.
@@ -201,11 +198,11 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Code = {(this.Code == null ? "null" : this.Code)}");
             toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
             toStringOutput.Add($"Percentage = {(this.Percentage == null ? "null" : this.Percentage.ToString())}");
-            toStringOutput.Add($"this.AllowNegativeBalance = {(this.AllowNegativeBalance == null ? "null" : this.AllowNegativeBalance)}");
-            toStringOutput.Add($"this.Recurring = {(this.Recurring == null ? "null" : this.Recurring)}");
-            toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate)}");
+            toStringOutput.Add($"this.AllowNegativeBalance = {(this.AllowNegativeBalance == null ? "null" : this.AllowNegativeBalance.ToString())}");
+            toStringOutput.Add($"this.Recurring = {(this.Recurring == null ? "null" : this.Recurring.ToString())}");
+            toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate.ToString())}");
             toStringOutput.Add($"this.ProductFamilyId = {(this.ProductFamilyId == null ? "null" : this.ProductFamilyId)}");
-            toStringOutput.Add($"this.Stackable = {(this.Stackable == null ? "null" : this.Stackable)}");
+            toStringOutput.Add($"this.Stackable = {(this.Stackable == null ? "null" : this.Stackable.ToString())}");
             toStringOutput.Add($"this.CompoundingStrategy = {(this.CompoundingStrategy == null ? "null" : this.CompoundingStrategy.ToString())}");
             toStringOutput.Add($"this.ExcludeMidPeriodAllocations = {(this.ExcludeMidPeriodAllocations == null ? "null" : this.ExcludeMidPeriodAllocations.ToString())}");
             toStringOutput.Add($"this.ApplyOnCancelAtEndOfPeriod = {(this.ApplyOnCancelAtEndOfPeriod == null ? "null" : this.ApplyOnCancelAtEndOfPeriod.ToString())}");

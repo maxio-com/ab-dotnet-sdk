@@ -11,9 +11,9 @@ ProductsController productsController = client.ProductsController;
 ## Methods
 
 * [Create Product](../../doc/controllers/products.md#create-product)
-* [Archive Product](../../doc/controllers/products.md#archive-product)
-* [Update Product](../../doc/controllers/products.md#update-product)
 * [Read Product](../../doc/controllers/products.md#read-product)
+* [Update Product](../../doc/controllers/products.md#update-product)
+* [Archive Product](../../doc/controllers/products.md#archive-product)
 * [Read Product by Handle](../../doc/controllers/products.md#read-product-by-handle)
 * [List Products](../../doc/controllers/products.md#list-products)
 
@@ -133,14 +133,12 @@ catch (ApiException e)
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
-# Archive Product
+# Read Product
 
-Sending a DELETE request to this endpoint will archive the product. All current subscribers will be unffected; their subscription/purchase will continue to be charged monthly.
-
-This will restrict the option to chose the product for purchase via the Billing Portal, as well as disable Public Signup Pages for the product.
+This endpoint allows you to read the current details of a product that you've created in Chargify.
 
 ```csharp
-ArchiveProductAsync(
+ReadProductAsync(
     int productId)
 ```
 
@@ -160,7 +158,7 @@ ArchiveProductAsync(
 int productId = 202;
 try
 {
-    ProductResponse result = await productsController.ArchiveProductAsync(productId);
+    ProductResponse result = await productsController.ReadProductAsync(productId);
 }
 catch (ApiException e)
 {
@@ -174,32 +172,32 @@ catch (ApiException e)
 ```json
 {
   "product": {
-    "id": 4535638,
-    "name": "Business Monthly",
-    "handle": null,
-    "description": "Business Monthly",
-    "accounting_code": "",
+    "id": 4535635,
+    "name": "Paid Annual Seats",
+    "handle": "paid-annual-seats",
+    "description": "Paid annual seats for our commercial enterprise product",
+    "accounting_code": "paid-annual-seats",
     "request_credit_card": true,
-    "expiration_interval": null,
-    "expiration_interval_unit": "never",
+    "expiration_interval": 1,
+    "expiration_interval_unit": "day",
     "created_at": "2017-08-25T10:25:31-05:00",
-    "updated_at": "2018-01-16T13:02:44-06:00",
-    "price_in_cents": 4900,
-    "interval": 1,
+    "updated_at": "2018-01-16T12:58:04-06:00",
+    "price_in_cents": 10000,
+    "interval": 12,
     "interval_unit": "month",
-    "initial_charge_in_cents": null,
-    "trial_price_in_cents": 0,
-    "trial_interval": 1,
+    "initial_charge_in_cents": 4900,
+    "trial_price_in_cents": 1000,
+    "trial_interval": 14,
     "trial_interval_unit": "day",
-    "archived_at": "2018-01-16T13:02:44-06:00",
-    "require_credit_card": false,
-    "return_params": "",
-    "taxable": false,
-    "update_return_url": "",
-    "tax_code": "",
+    "archived_at": null,
+    "require_credit_card": true,
+    "return_params": "id={subscription_id}&ref={customer_reference}",
+    "taxable": true,
+    "update_return_url": "http://www.example.com",
+    "tax_code": "D0000000",
     "initial_charge_after_trial": false,
-    "version_number": 1,
-    "update_return_params": "",
+    "version_number": 4,
+    "update_return_params": "id={subscription_id}&ref={customer_reference}",
     "product_family": {
       "id": 1025627,
       "name": "Acme Products",
@@ -212,12 +210,6 @@ catch (ApiException e)
   }
 }
 ```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # Update Product
@@ -319,12 +311,14 @@ catch (ApiException e)
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
-# Read Product
+# Archive Product
 
-This endpoint allows you to read the current details of a product that you've created in Chargify.
+Sending a DELETE request to this endpoint will archive the product. All current subscribers will be unffected; their subscription/purchase will continue to be charged monthly.
+
+This will restrict the option to chose the product for purchase via the Billing Portal, as well as disable Public Signup Pages for the product.
 
 ```csharp
-ReadProductAsync(
+ArchiveProductAsync(
     int productId)
 ```
 
@@ -344,7 +338,7 @@ ReadProductAsync(
 int productId = 202;
 try
 {
-    ProductResponse result = await productsController.ReadProductAsync(productId);
+    ProductResponse result = await productsController.ArchiveProductAsync(productId);
 }
 catch (ApiException e)
 {
@@ -358,32 +352,32 @@ catch (ApiException e)
 ```json
 {
   "product": {
-    "id": 4535635,
-    "name": "Paid Annual Seats",
-    "handle": "paid-annual-seats",
-    "description": "Paid annual seats for our commercial enterprise product",
-    "accounting_code": "paid-annual-seats",
+    "id": 4535638,
+    "name": "Business Monthly",
+    "handle": null,
+    "description": "Business Monthly",
+    "accounting_code": "",
     "request_credit_card": true,
-    "expiration_interval": 1,
-    "expiration_interval_unit": "day",
+    "expiration_interval": null,
+    "expiration_interval_unit": "never",
     "created_at": "2017-08-25T10:25:31-05:00",
-    "updated_at": "2018-01-16T12:58:04-06:00",
-    "price_in_cents": 10000,
-    "interval": 12,
+    "updated_at": "2018-01-16T13:02:44-06:00",
+    "price_in_cents": 4900,
+    "interval": 1,
     "interval_unit": "month",
-    "initial_charge_in_cents": 4900,
-    "trial_price_in_cents": 1000,
-    "trial_interval": 14,
+    "initial_charge_in_cents": null,
+    "trial_price_in_cents": 0,
+    "trial_interval": 1,
     "trial_interval_unit": "day",
-    "archived_at": null,
-    "require_credit_card": true,
-    "return_params": "id={subscription_id}&ref={customer_reference}",
-    "taxable": true,
-    "update_return_url": "http://www.example.com",
-    "tax_code": "D0000000",
+    "archived_at": "2018-01-16T13:02:44-06:00",
+    "require_credit_card": false,
+    "return_params": "",
+    "taxable": false,
+    "update_return_url": "",
+    "tax_code": "",
     "initial_charge_after_trial": false,
-    "version_number": 4,
-    "update_return_params": "id={subscription_id}&ref={customer_reference}",
+    "version_number": 1,
+    "update_return_params": "",
     "product_family": {
       "id": 1025627,
       "name": "Acme Products",
@@ -396,6 +390,12 @@ catch (ApiException e)
   }
 }
 ```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # Read Product by Handle
@@ -519,8 +519,8 @@ ListProductsAsync(
 | `endDatetime` | `DateTimeOffset?` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns products with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of end_date. |
 | `startDate` | `DateTime?` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns products with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
 | `startDatetime` | `DateTimeOffset?` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns products with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of start_date. |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br>**Default**: `20`<br>**Constraints**: `<= 200` |
+| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
 | `includeArchived` | `bool?` | Query, Optional | Include archived products. Use in query: `include_archived=true`. |
 | `include` | [`ListProductsInclude?`](../../doc/models/list-products-include.md) | Query, Optional | Allows including additional data in the response. Use in query `include=prepaid_product_price_point`. |
 | `filterPrepaidProductPricePointProductPricePointId` | [`IncludeNotNull?`](../../doc/models/include-not-null.md) | Query, Optional | Allows fetching products only if a prepaid product price point is present or not. To use this filter you also have to include the following param in the request `include=prepaid_product_price_point`. Use in query `filter[prepaid_product_price_point][product_price_point_id]=not_null`. |

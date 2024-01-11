@@ -8,23 +8,23 @@ namespace AdvancedBilling.Standard.Models.Containers
     /// This is a container class for one-of types.
     /// </summary>
     [JsonConverter(
-        typeof(UnionTypeConverter<AllocationPayment2>),
+        typeof(UnionTypeConverter<AllocationPayment>),
         new Type[] {
-            typeof(AllocationPaymentCase)
+            typeof(PaymentForAllocationCase)
         },
         true
     )]
-    public abstract class AllocationPayment2
+    public abstract class AllocationPayment
     {
         /// <summary>
-        /// This is Allocation Payment case.
+        /// This is Payment for Allocation case.
         /// </summary>
         /// <returns>
-        /// The AllocationPayment2 instance, wrapping the provided AllocationPayment value.
+        /// The AllocationPayment instance, wrapping the provided PaymentForAllocation value.
         /// </returns>
-        public static AllocationPayment2 FromAllocationPayment(AllocationPayment allocationPayment)
+        public static AllocationPayment FromPaymentForAllocation(PaymentForAllocation paymentForAllocation)
         {
-            return new AllocationPaymentCase().Set(allocationPayment);
+            return new PaymentForAllocationCase().Set(paymentForAllocation);
         }
 
         /// <summary>
@@ -35,25 +35,25 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// callback function.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public abstract T Match<T>(Func<AllocationPayment, T> allocationPayment);
+        public abstract T Match<T>(Func<PaymentForAllocation, T> paymentForAllocation);
 
-        [JsonConverter(typeof(UnionTypeCaseConverter<AllocationPaymentCase, AllocationPayment>))]
-        private sealed class AllocationPaymentCase : AllocationPayment2, ICaseValue<AllocationPaymentCase, AllocationPayment>
+        [JsonConverter(typeof(UnionTypeCaseConverter<PaymentForAllocationCase, PaymentForAllocation>))]
+        private sealed class PaymentForAllocationCase : AllocationPayment, ICaseValue<PaymentForAllocationCase, PaymentForAllocation>
         {
-            public AllocationPayment _value;
+            public PaymentForAllocation _value;
 
-            public override T Match<T>(Func<AllocationPayment, T> allocationPayment)
+            public override T Match<T>(Func<PaymentForAllocation, T> paymentForAllocation)
             {
-                return allocationPayment(_value);
+                return paymentForAllocation(_value);
             }
 
-            public AllocationPaymentCase Set(AllocationPayment value)
+            public PaymentForAllocationCase Set(PaymentForAllocation value)
             {
                 _value = value;
                 return this;
             }
 
-            public AllocationPayment Get()
+            public PaymentForAllocation Get()
             {
                 return _value;
             }

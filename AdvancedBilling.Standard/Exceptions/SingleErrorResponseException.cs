@@ -1,4 +1,4 @@
-// <copyright file="SingleErrorResponseErrorException.cs" company="APIMatic">
+// <copyright file="SingleErrorResponseException.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
 namespace AdvancedBilling.Standard.Exceptions
@@ -19,16 +19,16 @@ namespace AdvancedBilling.Standard.Exceptions
     using Newtonsoft.Json.Converters;
 
     /// <summary>
-    /// SingleErrorResponseErrorException.
+    /// SingleErrorResponseException.
     /// </summary>
-    public class SingleErrorResponseErrorException : ApiException
+    public class SingleErrorResponseException : ApiException
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SingleErrorResponseErrorException"/> class.
+        /// Initializes a new instance of the <see cref="SingleErrorResponseException"/> class.
         /// </summary>
         /// <param name="reason"> The reason for throwing exception.</param>
         /// <param name="context"> The HTTP context that encapsulates request and response objects.</param>
-        public SingleErrorResponseErrorException(string reason, HttpContext context)
+        public SingleErrorResponseException(string reason, HttpContext context)
             : base(reason, context)
         {
         }
