@@ -13,6 +13,7 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
+    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Models.Containers;
@@ -59,13 +60,13 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProductPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/products/{product_id}/price_points.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_id", productId).Required())
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ProductPricePointErrorResponseException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ProductPricePointErrorResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -89,7 +90,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ListProductPricePointsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/products/{product_id}/price_points.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_id", input.ProductId).Required())
                       .Query(_query => _query.Setup("page", input.Page))
@@ -129,7 +130,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProductPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/products/{product_id}/price_points/{price_point_id}.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_id", productId).Required())
@@ -166,7 +167,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProductPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/products/{product_id}/price_points/{price_point_id}.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_id", productId).Required())
                       .Template(_template => _template.Setup("price_point_id", pricePointId).Required())
@@ -198,12 +199,12 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProductPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/products/{product_id}/price_points/{price_point_id}.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_id", productId).Required())
                       .Template(_template => _template.Setup("price_point_id", pricePointId).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -231,7 +232,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProductPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(new HttpMethod("PATCH"), "/products/{product_id}/price_points/{price_point_id}/unarchive.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_id", productId))
                       .Template(_template => _template.Setup("price_point_id", pricePointId))))
@@ -264,7 +265,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProductResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(new HttpMethod("PATCH"), "/products/{product_id}/price_points/{price_point_id}/default.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_id", productId))
                       .Template(_template => _template.Setup("price_point_id", pricePointId))))
@@ -295,13 +296,13 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.BulkCreateProductPricePointsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/products/{product_id}/price_points/bulk.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_id", productId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ApiException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ApiException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -333,13 +334,13 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProductPricePointCurrencyPrice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/product_price_points/{product_price_point_id}/currency_prices.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_price_point_id", productPricePointId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorMapResponseException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorMapResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -371,13 +372,13 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProductPricePointCurrencyPrice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/product_price_points/{product_price_point_id}/currency_prices.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_price_point_id", productPricePointId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorMapResponseException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorMapResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -401,7 +402,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ListProductPricePointsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/products_price_points.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("filter[archived_at]", (input.FilterArchivedAt.HasValue) ? ApiHelper.JsonSerialize(input.FilterArchivedAt.Value).Trim('\"') : null))
@@ -416,7 +417,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

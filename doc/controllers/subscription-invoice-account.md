@@ -196,8 +196,6 @@ catch (ApiException e)
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 401 | Unauthorized | `ApiException` |
-| 403 | Forbidden | `ApiException` |
 | 404 | Not Found | `ApiException` |
 
 

@@ -13,7 +13,7 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Exceptions;
+    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
     using APIMatic.Core;
@@ -66,7 +66,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.SubscriptionNoteResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/notes.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
@@ -94,7 +94,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.SubscriptionNoteResponse>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/notes.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("subscription_id", input.SubscriptionId))
                       .Query(_query => _query.Setup("page", input.Page))
@@ -126,7 +126,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.SubscriptionNoteResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/notes/{note_id}.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Template(_template => _template.Setup("note_id", noteId))))
@@ -161,7 +161,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.SubscriptionNoteResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/notes/{note_id}.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
@@ -193,12 +193,10 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<VoidType>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/notes/{note_id}.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Template(_template => _template.Setup("note_id", noteId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ApiException(_reason, _context))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

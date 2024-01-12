@@ -13,11 +13,11 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
+    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
     using APIMatic.Core;
-    using APIMatic.Core.Http.Configuration;
     using APIMatic.Core.Types;
     using APIMatic.Core.Utilities;
     using APIMatic.Core.Utilities.Date.Xml;
@@ -83,13 +83,13 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.Metafield>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/{resource_type}/metafields.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(resourceType).Trim('\"')))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new SingleErrorResponseException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SingleErrorResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ListMetafieldsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/{resource_type}/metafields.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(input.ResourceType).Trim('\"')))
                       .Query(_query => _query.Setup("name", input.Name))
@@ -155,7 +155,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.Metafield>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/{resource_type}/metafields.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(resourceType).Trim('\"')))
@@ -190,12 +190,12 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<VoidType>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/{resource_type}/metafields.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(resourceType).Trim('\"')))
                       .Query(_query => _query.Setup("name", name))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.Metadata>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/{resource_type}/{resource_id}/metadata.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(resourceType).Trim('\"')))
@@ -281,10 +281,10 @@ namespace AdvancedBilling.Standard.Controllers
         public async Task<Models.PaginatedMetadata> ListMetadataAsync(
                 Models.ListMetadataInput input,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.PaginatedMetadata>(ArraySerialization.Plain)
+            => await CreateApiCall<Models.PaginatedMetadata>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/{resource_type}/{resource_id}/metadata.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(input.ResourceType).Trim('\"')))
                       .Template(_template => _template.Setup("resource_id", input.ResourceId).Required())
@@ -321,7 +321,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.Metadata>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/{resource_type}/{resource_id}/metadata.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(resourceType).Trim('\"')))
@@ -384,17 +384,17 @@ namespace AdvancedBilling.Standard.Controllers
                 string name = null,
                 List<string> names = null,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>(ArraySerialization.Plain)
+            => await CreateApiCall<VoidType>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/{resource_type}/{resource_id}/metadata.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(resourceType).Trim('\"')))
                       .Template(_template => _template.Setup("resource_id", resourceId).Required())
                       .Query(_query => _query.Setup("name", name))
                       .Query(_query => _query.Setup("names[]", names))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -430,7 +430,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.PaginatedMetadata>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/{resource_type}/metadata.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(input.ResourceType).Trim('\"')))
                       .Query(_query => _query.Setup("page", input.Page))

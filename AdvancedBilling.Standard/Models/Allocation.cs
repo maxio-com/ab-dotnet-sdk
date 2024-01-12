@@ -60,6 +60,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="pricePointId">price_point_id.</param>
         /// <param name="pricePointName">price_point_name.</param>
         /// <param name="pricePointHandle">price_point_handle.</param>
+        /// <param name="interval">interval.</param>
+        /// <param name="intervalUnit">interval_unit.</param>
         /// <param name="previousPricePointId">previous_price_point_id.</param>
         /// <param name="accrueCharge">accrue_charge.</param>
         /// <param name="initiateDunning">initiate_dunning.</param>
@@ -81,6 +83,8 @@ namespace AdvancedBilling.Standard.Models
             int? pricePointId = null,
             string pricePointName = null,
             string pricePointHandle = null,
+            int? interval = null,
+            Models.IntervalUnit? intervalUnit = null,
             int? previousPricePointId = null,
             bool? accrueCharge = null,
             bool? initiateDunning = null,
@@ -110,6 +114,8 @@ namespace AdvancedBilling.Standard.Models
             this.PricePointId = pricePointId;
             this.PricePointName = pricePointName;
             this.PricePointHandle = pricePointHandle;
+            this.Interval = interval;
+            this.IntervalUnit = intervalUnit;
             this.PreviousPricePointId = previousPricePointId;
             this.AccrueCharge = accrueCharge;
             this.InitiateDunning = initiateDunning;
@@ -239,6 +245,18 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("price_point_handle", NullValueHandling = NullValueHandling.Ignore)]
         public string PricePointHandle { get; set; }
+
+        /// <summary>
+        /// The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Interval { get; set; }
+
+        /// <summary>
+        /// A string representing the interval unit for this component price point, either month or day. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval_unit", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.IntervalUnit? IntervalUnit { get; set; }
 
         /// <summary>
         /// Gets or sets PreviousPricePointId.
@@ -436,6 +454,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.PricePointId == null && other.PricePointId == null) || (this.PricePointId?.Equals(other.PricePointId) == true)) &&
                 ((this.PricePointName == null && other.PricePointName == null) || (this.PricePointName?.Equals(other.PricePointName) == true)) &&
                 ((this.PricePointHandle == null && other.PricePointHandle == null) || (this.PricePointHandle?.Equals(other.PricePointHandle) == true)) &&
+                ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
+                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true)) &&
                 ((this.PreviousPricePointId == null && other.PreviousPricePointId == null) || (this.PreviousPricePointId?.Equals(other.PreviousPricePointId) == true)) &&
                 ((this.AccrueCharge == null && other.AccrueCharge == null) || (this.AccrueCharge?.Equals(other.AccrueCharge) == true)) &&
                 ((this.InitiateDunning == null && other.InitiateDunning == null) || (this.InitiateDunning?.Equals(other.InitiateDunning) == true)) &&
@@ -464,6 +484,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
             toStringOutput.Add($"this.PricePointName = {(this.PricePointName == null ? "null" : this.PricePointName)}");
             toStringOutput.Add($"this.PricePointHandle = {(this.PricePointHandle == null ? "null" : this.PricePointHandle)}");
+            toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
+            toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
             toStringOutput.Add($"this.PreviousPricePointId = {(this.PreviousPricePointId == null ? "null" : this.PreviousPricePointId.ToString())}");
             toStringOutput.Add($"this.AccrueCharge = {(this.AccrueCharge == null ? "null" : this.AccrueCharge.ToString())}");
             toStringOutput.Add($"this.InitiateDunning = {(this.InitiateDunning == null ? "null" : this.InitiateDunning.ToString())}");

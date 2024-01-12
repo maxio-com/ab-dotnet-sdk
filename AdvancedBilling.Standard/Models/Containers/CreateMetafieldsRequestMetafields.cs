@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace AdvancedBilling.Standard.Models.Containers
 {
     /// <summary>
-    /// This is a container class for any-of types.
+    /// This is a container class for one-of types.
     /// </summary>
     [JsonConverter(
         typeof(UnionTypeConverter<CreateMetafieldsRequestMetafields>),
@@ -14,7 +14,7 @@ namespace AdvancedBilling.Standard.Models.Containers
             typeof(CreateMetafieldCase),
             typeof(ListOfCreateMetafieldCase)
         },
-        false
+        true
     )]
     public abstract class CreateMetafieldsRequestMetafields
     {
@@ -41,8 +41,8 @@ namespace AdvancedBilling.Standard.Models.Containers
         }
 
         /// <summary>
-        /// Method to match from the provided any-of cases. Here parameters
-        /// represents the callback functions for any-of type cases. All
+        /// Method to match from the provided one-of cases. Here parameters
+        /// represents the callback functions for one-of type cases. All
         /// callback functions must have the same return type T. This typeparam T
         /// represents the type that will be returned after applying the selected
         /// callback function.

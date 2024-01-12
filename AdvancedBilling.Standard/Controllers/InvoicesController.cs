@@ -13,6 +13,7 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
+    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
@@ -64,7 +65,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.Invoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/refunds.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("uid", uid).Required())
@@ -92,7 +93,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ListInvoicesResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/invoices.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("start_date", input.StartDate))
                       .Query(_query => _query.Setup("end_date", input.EndDate))
@@ -139,7 +140,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.Invoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/invoices/{uid}.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("uid", uid).Required())))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
@@ -201,7 +202,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ListInvoiceEventsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/invoices/events.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("since_date", input.SinceDate))
                       .Query(_query => _query.Setup("since_id", input.SinceId))
@@ -303,7 +304,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.Invoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/payments.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("uid", uid).Required())
@@ -375,12 +376,12 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.MultiInvoicePaymentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/payments.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -406,7 +407,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ListCreditNotesResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/credit_notes.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("subscription_id", input.SubscriptionId))
                       .Query(_query => _query.Setup("page", input.Page))
@@ -439,7 +440,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CreditNote>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/credit_notes/{uid}.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("uid", uid).Required())))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
@@ -475,13 +476,13 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.PaymentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/payments.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -517,12 +518,12 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.Invoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/reopen.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("uid", uid).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context)))
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -550,14 +551,14 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.Invoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/void.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("uid", uid).Required())
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context)))
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -581,7 +582,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ConsolidatedInvoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/invoices/{invoice_uid}/segments.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("invoice_uid", input.InvoiceUid).Required())
                       .Query(_query => _query.Setup("page", input.Page))
@@ -834,14 +835,13 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.InvoiceResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/invoices.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("401", CreateErrorCase("Unauthorized", (_reason, _context) => new ApiException(_reason, _context)))
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new NestedErrorResponseException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new NestedErrorResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -872,13 +872,13 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<VoidType>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/deliveries.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("uid", uid).Required())
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -904,12 +904,12 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CustomerChangesPreviewResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/customer_information/preview.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("uid", uid).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ErrorListResponseException(_reason, _context)))
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ErrorListResponseException(_reason, _context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -935,12 +935,12 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.Invoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/invoices/{uid}/customer_information.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("uid", uid).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ErrorListResponseException(_reason, _context)))
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ErrorListResponseException(_reason, _context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -980,15 +980,14 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.Invoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/issue.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("uid", uid).Required())
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("401", CreateErrorCase("Unauthorized", (_reason, _context) => new ApiException(_reason, _context)))
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context)))
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

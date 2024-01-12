@@ -13,6 +13,7 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
+    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Models.Containers;
@@ -79,14 +80,14 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/product_families/{product_family_id}/{component_kind}.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
                       .Template(_template => _template.Setup("component_kind", ApiHelper.JsonSerialize(componentKind).Trim('\"')))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -110,7 +111,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/components/lookup.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("handle", handle).Required())))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
@@ -142,7 +143,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/product_families/{product_family_id}/components/{component_id}.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
                       .Template(_template => _template.Setup("component_id", componentId).Required())))
@@ -179,14 +180,14 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/product_families/{product_family_id}/components/{component_id}.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
                       .Template(_template => _template.Setup("component_id", componentId).Required())
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -214,12 +215,12 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.Component>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/product_families/{product_family_id}/components/{component_id}.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
                       .Template(_template => _template.Setup("component_id", componentId).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -243,7 +244,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.ComponentResponse>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/components.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("start_date", input.StartDate))
@@ -284,13 +285,13 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/components/{component_id}.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("component_id", componentId).Required())
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -322,7 +323,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/components/{component_id}/price_points/{price_point_id}/default.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("component_id", componentId))
                       .Template(_template => _template.Setup("price_point_id", pricePointId))))
@@ -349,7 +350,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.ComponentResponse>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/product_families/{product_family_id}/components.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_family_id", input.ProductFamilyId))
                       .Query(_query => _query.Setup("include_archived", input.IncludeArchived))
@@ -389,7 +390,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/components/{component_id}/price_points.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("component_id", componentId))
@@ -423,7 +424,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentPricePointsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/components/{component_id}/price_points.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("component_id", input.ComponentId))
                       .Query(_query => _query.Setup("currency_prices", input.CurrencyPrices))
@@ -457,7 +458,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentPricePointsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/components/{component_id}/price_points/bulk.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("component_id", componentId).Required())
@@ -499,7 +500,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/components/{component_id}/price_points/{price_point_id}.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("component_id", componentId))
@@ -532,7 +533,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/components/{component_id}/price_points/{price_point_id}.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("component_id", componentId))
                       .Template(_template => _template.Setup("price_point_id", pricePointId))))
@@ -563,7 +564,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/components/{component_id}/price_points/{price_point_id}/unarchive.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("component_id", componentId))
                       .Template(_template => _template.Setup("price_point_id", pricePointId))))
@@ -598,7 +599,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.CurrencyPrice>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/price_points/{price_point_id}/currency_prices.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("price_point_id", pricePointId))
@@ -632,7 +633,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.CurrencyPrice>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/price_points/{price_point_id}/currency_prices.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("price_point_id", pricePointId))
@@ -660,7 +661,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ListComponentsPricePointsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/components_price_points.json")
-                  .WithAuth("BasicAuth")
+                  .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("filter[date_field]", (input.FilterDateField.HasValue) ? ApiHelper.JsonSerialize(input.FilterDateField.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("filter[end_date]", input.FilterEndDate.HasValue ? input.FilterEndDate.Value.ToString("yyyy'-'MM'-'dd") : null))
@@ -675,7 +676,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("filter[ids]", input.FilterIds))
                       .Query(_query => _query.Setup("filter[archived_at]", (input.FilterArchivedAt.HasValue) ? ApiHelper.JsonSerialize(input.FilterArchivedAt.Value).Trim('\"') : null))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorListResponseException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

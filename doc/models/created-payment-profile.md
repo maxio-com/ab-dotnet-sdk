@@ -35,6 +35,7 @@
 | `Verified` | `bool?` | Optional | - |
 | `SiteGatewaySettingId` | `int?` | Optional | - |
 | `GatewayHandle` | `string` | Optional | - |
+| `Disabled` | `bool?` | Optional | - |
 
 ## Example (as JSON)
 
