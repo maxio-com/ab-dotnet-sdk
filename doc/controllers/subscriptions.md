@@ -1389,7 +1389,6 @@ catch (ApiException e)
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 400 | Bad Request | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | [`SingleErrorResponseException`](../../doc/models/single-error-response-exception.md) |
 
 
@@ -1476,12 +1475,6 @@ catch (ApiException e)
     Console.WriteLine(e.Message);
 }
 ```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Bad Request | `ApiException` |
 
 
 # Create Prepaid Subscription

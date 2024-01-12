@@ -67,6 +67,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="verified">verified.</param>
         /// <param name="siteGatewaySettingId">site_gateway_setting_id.</param>
         /// <param name="gatewayHandle">gateway_handle.</param>
+        /// <param name="disabled">disabled.</param>
         public CreatedPaymentProfile(
             int? id = null,
             string firstName = null,
@@ -93,7 +94,8 @@ namespace AdvancedBilling.Standard.Models
             string bankAccountHolderType = null,
             bool? verified = null,
             int? siteGatewaySettingId = null,
-            string gatewayHandle = null)
+            string gatewayHandle = null,
+            bool? disabled = null)
         {
             this.Id = id;
             this.FirstName = firstName;
@@ -133,6 +135,7 @@ namespace AdvancedBilling.Standard.Models
             this.Verified = verified;
             this.SiteGatewaySettingId = siteGatewaySettingId;
             this.GatewayHandle = gatewayHandle;
+            this.Disabled = disabled;
         }
 
         /// <summary>
@@ -327,6 +330,12 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("gateway_handle", NullValueHandling = NullValueHandling.Ignore)]
         public string GatewayHandle { get; set; }
 
+        /// <summary>
+        /// Gets or sets Disabled.
+        /// </summary>
+        [JsonProperty("disabled", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? Disabled { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -425,7 +434,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.BankAccountHolderType == null && other.BankAccountHolderType == null) || (this.BankAccountHolderType?.Equals(other.BankAccountHolderType) == true)) &&
                 ((this.Verified == null && other.Verified == null) || (this.Verified?.Equals(other.Verified) == true)) &&
                 ((this.SiteGatewaySettingId == null && other.SiteGatewaySettingId == null) || (this.SiteGatewaySettingId?.Equals(other.SiteGatewaySettingId) == true)) &&
-                ((this.GatewayHandle == null && other.GatewayHandle == null) || (this.GatewayHandle?.Equals(other.GatewayHandle) == true));
+                ((this.GatewayHandle == null && other.GatewayHandle == null) || (this.GatewayHandle?.Equals(other.GatewayHandle) == true)) &&
+                ((this.Disabled == null && other.Disabled == null) || (this.Disabled?.Equals(other.Disabled) == true));
         }
         
         /// <summary>
@@ -460,6 +470,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Verified = {(this.Verified == null ? "null" : this.Verified.ToString())}");
             toStringOutput.Add($"this.SiteGatewaySettingId = {(this.SiteGatewaySettingId == null ? "null" : this.SiteGatewaySettingId.ToString())}");
             toStringOutput.Add($"this.GatewayHandle = {(this.GatewayHandle == null ? "null" : this.GatewayHandle)}");
+            toStringOutput.Add($"this.Disabled = {(this.Disabled == null ? "null" : this.Disabled.ToString())}");
         }
     }
 }

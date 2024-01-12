@@ -955,6 +955,7 @@ CreateComponentPricePointRequest body = new CreateComponentPricePointRequest
                 },
             },
             Handle = "wholesale-handle",
+            UseSiteExchangeRate = false,
         }
     ),
 };

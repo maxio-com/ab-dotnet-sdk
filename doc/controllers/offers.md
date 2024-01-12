@@ -268,12 +268,6 @@ catch (ApiException e)
 }
 ```
 
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 401 | Unauthorized | `ApiException` |
-
 
 # Archive Offer
 
@@ -309,12 +303,6 @@ catch (ApiException e)
 }
 ```
 
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 401 | Unauthorized | `ApiException` |
-
 
 # Unarchive Offer
 
@@ -349,10 +337,4 @@ catch (ApiException e)
     Console.WriteLine(e.Message);
 }
 ```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 401 | Unauthorized | `ApiException` |
 

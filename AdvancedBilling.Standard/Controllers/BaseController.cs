@@ -12,6 +12,7 @@ namespace AdvancedBilling.Standard.Controllers
     using AdvancedBilling.Standard.Http.Response;
     using AdvancedBilling.Standard.Utilities;
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The base class for all controller classes.
@@ -28,13 +29,19 @@ namespace AdvancedBilling.Standard.Controllers
         protected static ErrorCase<HttpRequest, HttpResponse, HttpContext, ApiException> CreateErrorCase(string reason, Func<string, HttpContext, ApiException> error, bool isErrorTemplate = false)
             => new ErrorCase<HttpRequest, HttpResponse, HttpContext, ApiException>(reason, error, isErrorTemplate);
 
-        protected ApiCall<HttpRequest, HttpResponse, HttpContext, ApiException, T, T> CreateApiCall<T>(ArraySerialization arraySerialization = ArraySerialization.CSV)
+        protected ApiCall<HttpRequest, HttpResponse, HttpContext, ApiException, T, T> CreateApiCall<T>()
             => new ApiCall<HttpRequest, HttpResponse, HttpContext, ApiException, T, T>(
                 globalConfiguration,
                 compatibilityFactory,
-                serialization: arraySerialization
+                globalErrors: globalErrors,
+                serialization: ArraySerialization.CSV
             );
 
         private static readonly CompatibilityFactory compatibilityFactory = new CompatibilityFactory();
+        private static readonly Dictionary<string, ErrorCase<HttpRequest, HttpResponse, HttpContext, ApiException>> globalErrors = new Dictionary<string, ErrorCase<HttpRequest, HttpResponse, HttpContext, ApiException>>
+        {
+            { "404", CreateErrorCase("Not Found:'{$response.body}'", (reason, context) => new ApiException(reason, context), true) },
+            { "0", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (reason, context) => new ApiException(reason, context), true) }
+        };
     }
 }

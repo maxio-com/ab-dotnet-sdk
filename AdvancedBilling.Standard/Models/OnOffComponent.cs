@@ -41,7 +41,6 @@ namespace AdvancedBilling.Standard.Models
         /// Initializes a new instance of the <see cref="OnOffComponent"/> class.
         /// </summary>
         /// <param name="name">name.</param>
-        /// <param name="unitName">unit_name.</param>
         /// <param name="description">description.</param>
         /// <param name="handle">handle.</param>
         /// <param name="taxable">taxable.</param>
@@ -60,7 +59,6 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="intervalUnit">interval_unit.</param>
         public OnOffComponent(
             string name,
-            string unitName = null,
             string description = null,
             string handle = null,
             bool? taxable = null,
@@ -79,7 +77,6 @@ namespace AdvancedBilling.Standard.Models
             Models.IntervalUnit? intervalUnit = null)
         {
             this.Name = name;
-            this.UnitName = unitName;
             this.Description = description;
             this.Handle = handle;
             this.Taxable = taxable;
@@ -111,12 +108,6 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("name")]
         public string Name { get; set; }
-
-        /// <summary>
-        /// The name of the unit of measurement for the component. It should be singular since it will be automatically pluralized when necessary. i.e. “message”, which may then be shown as “5 messages” on a subscription’s component line-item
-        /// </summary>
-        [JsonProperty("unit_name", NullValueHandling = NullValueHandling.Ignore)]
-        public string UnitName { get; set; }
 
         /// <summary>
         /// A description for the component that will be displayed to the user on the hosted signup page.
@@ -297,7 +288,6 @@ namespace AdvancedBilling.Standard.Models
                 return true;
             }
             return obj is OnOffComponent other &&                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.UnitName == null && other.UnitName == null) || (this.UnitName?.Equals(other.UnitName) == true)) &&
                 ((this.Description == null && other.Description == null) || (this.Description?.Equals(other.Description) == true)) &&
                 ((this.Handle == null && other.Handle == null) || (this.Handle?.Equals(other.Handle) == true)) &&
                 ((this.Taxable == null && other.Taxable == null) || (this.Taxable?.Equals(other.Taxable) == true)) &&
@@ -323,7 +313,6 @@ namespace AdvancedBilling.Standard.Models
         protected void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
-            toStringOutput.Add($"this.UnitName = {(this.UnitName == null ? "null" : this.UnitName)}");
             toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
             toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
             toStringOutput.Add($"this.Taxable = {(this.Taxable == null ? "null" : this.Taxable.ToString())}");

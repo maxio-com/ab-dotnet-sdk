@@ -96,7 +96,12 @@ catch (ApiException e)
       "net_terms_on_remittance_signups_enabled": false,
       "custom_net_terms_enabled": false
     },
-    "test": true
+    "test": true,
+    "allocation_settings": {
+      "upgrade_charge": "prorated",
+      "downgrade_credit": "none",
+      "accrue_charge": "true"
+    }
   }
 }
 ```
@@ -137,12 +142,6 @@ catch (ApiException e)
     Console.WriteLine(e.Message);
 }
 ```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 403 | Forbidden | `ApiException` |
 
 
 # List Chargify Js Public Keys

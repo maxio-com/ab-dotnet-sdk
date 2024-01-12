@@ -45,7 +45,7 @@ namespace AdvancedBilling.Standard.Models
         public AllocationSettings(
             Models.CreditType? upgradeCharge = null,
             Models.CreditType? downgradeCredit = null,
-            bool? accrueCharge = null)
+            string accrueCharge = null)
         {
             if (upgradeCharge != null)
             {
@@ -99,10 +99,10 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Gets or sets AccrueCharge.
+        /// Either "true" or "false".
         /// </summary>
         [JsonProperty("accrue_charge", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? AccrueCharge { get; set; }
+        public string AccrueCharge { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -173,7 +173,7 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
             toStringOutput.Add($"this.DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
-            toStringOutput.Add($"this.AccrueCharge = {(this.AccrueCharge == null ? "null" : this.AccrueCharge.ToString())}");
+            toStringOutput.Add($"this.AccrueCharge = {(this.AccrueCharge == null ? "null" : this.AccrueCharge)}");
         }
     }
 }
