@@ -165,6 +165,89 @@ namespace AdvancedBillingTests
                 .Where(e => e.ResponseCode == 401);
         }
 
+
+        [Fact]
+        public async Task ComponentAllocations_Test_Test()
+        {
+            var productFamilyId = await CreateOrGetProductFamily();
+
+            var randomString = GenerateRandomString(6);
+
+            var productResponse = await CreateProduct(productFamilyId);
+
+            var customerResponse = await CreateCustomer();
+
+            var paymentProfile = await CreatePaymentProfile(customerResponse.Customer.Id);
+
+            var subscription = new CreateSubscription
+            {
+                CustomerId = customerResponse.Customer.Id,
+                ProductId = productResponse.Product.Id,
+                PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
+                PaymentProfileId = paymentProfile.PaymentProfile.Id,
+                DunningCommunicationDelayEnabled = false,
+                SkipBillingManifestTaxes = false
+            };
+
+            var subscriptionResponse =
+                await _client.SubscriptionsController.CreateSubscriptionAsync(
+                    new CreateSubscriptionRequest(subscription));
+            subscriptionResponse.Subscription.Id.Should().NotBeNull();
+
+            var quantityComponent = new QuantityBasedComponent($"widget{randomString}", $"widget {randomString}",
+                PricingScheme.PerUnit, unitPrice: QuantityBasedComponentUnitPrice.FromString("10,23"), allowFractionalQuantities: true);
+
+            var quantityComponentResponse = await _client.ComponentsController.CreateComponentAsync(
+                (int)productFamilyId,
+                ComponentKindPath.QuantityBasedComponents,
+                CreateComponentBody.FromCreateQuantityBasedComponent(
+                    new CreateQuantityBasedComponent(quantityComponent)));
+
+            quantityComponentResponse.Component.Id.Should().NotBeNull();
+
+            var onOffComponent = new OnOffComponent($"247Support{randomString}", unitPrice: OnOffComponentUnitPrice.FromString("100"));
+
+            var onOffComponentResponse = await _client.ComponentsController.CreateComponentAsync((int)productFamilyId,
+                ComponentKindPath.OnOffComponents,
+                CreateComponentBody.FromCreateOnOffComponent(new CreateOnOffComponent(onOffComponent)));
+
+            onOffComponentResponse.Component.Id.Should().NotBeNull();
+
+            var quantityAmount = 10.6;
+            var onOffAmount = 1;
+
+            var allocationsList = new List<CreateAllocation>()
+            {
+                new(quantityAmount, quantityComponentResponse.Component.Id),
+                new(onOffAmount, onOffComponentResponse.Component.Id)
+            };
+
+           var allocationsPreview = await _client.SubscriptionComponentsController.PreviewAllocationsAsync(
+                (int)subscriptionResponse.Subscription.Id, new PreviewAllocationsRequest(allocationsList));
+
+           var qualityComponentExistence =
+               allocationsPreview.AllocationPreview.Allocations.FirstOrDefault(x =>
+                   x.ComponentId == quantityComponentResponse.Component.Id);
+
+           var quantityValue = qualityComponentExistence.Quantity;
+
+           quantityValue.Should().BeEquivalentTo(quantityAmount);
+
+           await ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfile, productResponse);
+
+           await ErrorSuppressionWrapper.RunAsync(async () =>
+           {
+               await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
+                   quantityComponentResponse.Component.Id.ToString());
+           });
+
+           await ErrorSuppressionWrapper.RunAsync(async () =>
+           {
+               await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
+                   onOffComponentResponse.Component.Id.ToString());
+           });
+        }
+
         [Fact]
         public async Task CreateSubscription_RestrictedCouponMeteredComponentData_ShouldHaveAwaitingSignupStatus()
         {
