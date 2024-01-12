@@ -172,7 +172,7 @@ namespace AdvancedBillingTests
         {
             var productFamilyId = await CreateOrGetProductFamily();
 
-            var randomString = GenerateRandomString(6);
+            var randomString = TestUtils.GenerateRandomString(6);
 
             var productResponse = await CreateProduct(productFamilyId);
 
@@ -231,6 +231,8 @@ namespace AdvancedBillingTests
                    x.ComponentId == quantityComponentResponse.Component.Id);
 
            var quantityValue = qualityComponentExistence.Quantity;
+
+           //quantityValue.Match()
 
            quantityValue.Should().BeEquivalentTo(quantityAmount);
 
