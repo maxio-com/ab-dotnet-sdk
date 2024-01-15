@@ -168,11 +168,9 @@ namespace AdvancedBillingTests
 
 
         [Fact]
-        public async Task ComponentAllocations_Test_Test()
+        public async Task AllocateComponents_InvalidQualityOnOffComponent_StatusIs422WithCorrectErrorMessage()
         {
             var productFamilyId = await CreateOrGetProductFamily();
-
-            var randomString = TestUtils.GenerateRandomString(6);
 
             var productResponse = await CreateProduct(productFamilyId);
 
@@ -195,8 +193,77 @@ namespace AdvancedBillingTests
                     new CreateSubscriptionRequest(subscription));
             subscriptionResponse.Subscription.Id.Should().NotBeNull();
 
+            var randomString = TestUtils.GenerateRandomString(6);
+
+            var onOffComponent = new OnOffComponent($"247Support{randomString}",
+                unitPrice: OnOffComponentUnitPrice.FromString("100"));
+
+            var onOffComponentResponse = await _client.ComponentsController.CreateComponentAsync((int)productFamilyId,
+                ComponentKindPath.OnOffComponents,
+                CreateComponentBody.FromCreateOnOffComponent(new CreateOnOffComponent(onOffComponent)));
+
+            onOffComponentResponse.Component.Id.Should().NotBeNull();
+
+            const int onOffAmount = 50;
+
+            var allocationsList = new List<CreateAllocation>()
+            {
+                new(onOffAmount, onOffComponentResponse.Component.Id)
+            };
+
+            await _client.Invoking(s => s.SubscriptionComponentsController.PreviewAllocationsAsync(
+                    (int)subscriptionResponse.Subscription.Id, new PreviewAllocationsRequest(allocationsList))).Should()
+                .ThrowAsync<ComponentAllocationErrorException>()
+                .Where(e => e.Errors.Any(c => c.Message.Contains("Quantity: must be either 1 (on) or 0 (off).")) &&
+                            e.ResponseCode == 422);
+
+            await ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfile,
+                productResponse);
+
+            await ErrorSuppressionWrapper.RunAsync(async () =>
+            {
+                await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
+                    onOffComponentResponse.Component.Id.ToString());
+            });
+
+            await ErrorSuppressionWrapper.RunAsync(async () =>
+            {
+                await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
+                    onOffComponentResponse.Component.Id.ToString());
+            });
+        }
+
+        [Fact]
+        public async Task AllocateComponents_DoubleQuantityForAllocations_UpgradeChargeProratedQualityCanBeRead()
+        {
+            var productFamilyId = await CreateOrGetProductFamily();
+
+            var productResponse = await CreateProduct(productFamilyId);
+
+            var customerResponse = await CreateCustomer();
+
+            var paymentProfile = await CreatePaymentProfile(customerResponse.Customer.Id);
+
+            var subscription = new CreateSubscription
+            {
+                CustomerId = customerResponse.Customer.Id,
+                ProductId = productResponse.Product.Id,
+                PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
+                PaymentProfileId = paymentProfile.PaymentProfile.Id,
+                DunningCommunicationDelayEnabled = false,
+                SkipBillingManifestTaxes = false
+            };
+
+            var subscriptionResponse =
+                await _client.SubscriptionsController.CreateSubscriptionAsync(
+                    new CreateSubscriptionRequest(subscription));
+            subscriptionResponse.Subscription.Id.Should().NotBeNull();
+
+            var randomString = TestUtils.GenerateRandomString(6);
+
             var quantityComponent = new QuantityBasedComponent($"widget{randomString}", $"widget {randomString}",
-                PricingScheme.PerUnit, unitPrice: QuantityBasedComponentUnitPrice.FromString("10,23"), allowFractionalQuantities: true);
+                PricingScheme.PerUnit, unitPrice: QuantityBasedComponentUnitPrice.FromString("10,23"),
+                allowFractionalQuantities: true);
 
             var quantityComponentResponse = await _client.ComponentsController.CreateComponentAsync(
                 (int)productFamilyId,
@@ -206,7 +273,8 @@ namespace AdvancedBillingTests
 
             quantityComponentResponse.Component.Id.Should().NotBeNull();
 
-            var onOffComponent = new OnOffComponent($"247Support{randomString}", unitPrice: OnOffComponentUnitPrice.FromString("100"));
+            var onOffComponent = new OnOffComponent($"247Support{randomString}",
+                unitPrice: OnOffComponentUnitPrice.FromString("100"));
 
             var onOffComponentResponse = await _client.ComponentsController.CreateComponentAsync((int)productFamilyId,
                 ComponentKindPath.OnOffComponents,
@@ -214,8 +282,8 @@ namespace AdvancedBillingTests
 
             onOffComponentResponse.Component.Id.Should().NotBeNull();
 
-            var quantityAmount = 10.6;
-            var onOffAmount = 1;
+            const double quantityAmount = 10.6;
+            const int onOffAmount = 1;
 
             var allocationsList = new List<CreateAllocation>()
             {
@@ -223,32 +291,51 @@ namespace AdvancedBillingTests
                 new(onOffAmount, onOffComponentResponse.Component.Id)
             };
 
-           var allocationsPreview = await _client.SubscriptionComponentsController.PreviewAllocationsAsync(
+            var allocationsPreview = await _client.SubscriptionComponentsController.PreviewAllocationsAsync(
                 (int)subscriptionResponse.Subscription.Id, new PreviewAllocationsRequest(allocationsList));
 
-           var qualityComponentExistence =
-               allocationsPreview.AllocationPreview.Allocations.FirstOrDefault(x =>
-                   x.ComponentId == quantityComponentResponse.Component.Id);
+            allocationsPreview.AllocationPreview.PeriodType.Should().BeEquivalentTo("prorated");
 
-           var quantityValue = qualityComponentExistence.Quantity;
+            var allocationPreviewItem =
+                allocationsPreview.AllocationPreview.Allocations.FirstOrDefault(x =>
+                    x.ComponentId == quantityComponentResponse.Component.Id);
 
-           //quantityValue.Match()
+            allocationPreviewItem.Should().NotBeNull();
 
-           quantityValue.Should().BeEquivalentTo(quantityAmount);
+            allocationPreviewItem?.UpgradeCharge.Should().Be(CreditType.Prorated);
 
-           await ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfile, productResponse);
+            var quantityPreviewValue = allocationPreviewItem.Quantity.Match(Convert.ToDouble, double.Parse);
+            quantityPreviewValue.Should().Be(quantityAmount);
 
-           await ErrorSuppressionWrapper.RunAsync(async () =>
-           {
-               await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
-                   quantityComponentResponse.Component.Id.ToString());
-           });
+            var allocationResponses = await _client.SubscriptionComponentsController.AllocateComponentsAsync(
+                (int)subscriptionResponse.Subscription.Id, new AllocateComponents(allocations: allocationsList));
 
-           await ErrorSuppressionWrapper.RunAsync(async () =>
-           {
-               await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
-                   onOffComponentResponse.Component.Id.ToString());
-           });
+            var allocation = allocationResponses.FirstOrDefault(x =>
+                x.Allocation.ComponentId == quantityComponentResponse.Component.Id)
+                ?.Allocation;
+
+            allocation.Should().NotBeNull();
+
+            allocation.UpgradeCharge.Should().Be(CreditType.Prorated);
+
+            var quantityAllocationValue = allocation.Quantity.Match(Convert.ToDouble, double.Parse);
+
+            quantityAllocationValue.Should().Be(quantityPreviewValue);
+
+            await ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfile,
+                productResponse);
+
+            await ErrorSuppressionWrapper.RunAsync(async () =>
+            {
+                await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
+                    quantityComponentResponse.Component.Id.ToString());
+            });
+
+            await ErrorSuppressionWrapper.RunAsync(async () =>
+            {
+                await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
+                    onOffComponentResponse.Component.Id.ToString());
+            });
         }
 
         [Fact]
