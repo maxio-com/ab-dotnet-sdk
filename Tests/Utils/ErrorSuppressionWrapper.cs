@@ -1,6 +1,6 @@
 ﻿using AdvancedBilling.Standard.Exceptions;
 
-namespace AdvancedBillingTests
+namespace AdvancedBillingTests.Utils
 {
     public static class ErrorSuppressionWrapper
     {
