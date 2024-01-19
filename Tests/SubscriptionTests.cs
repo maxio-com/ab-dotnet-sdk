@@ -27,13 +27,13 @@ namespace AdvancedBillingTests
         [Fact]
         public async Task CreateSubscription_BasicScenarioData_ShouldSuccess()
         {
-            var productFamilyId = await CreateOrGetProductFamily();
+            var productFamilyId = await CreationUtils.CreateOrGetProductFamily(_client);
 
-            var productResponse = await CreateProduct(productFamilyId);
+            var productResponse = await CreationUtils.CreateProduct(productFamilyId, _client);
 
-            var customerResponse = await CreateCustomer();
+            var customerResponse = await CreationUtils.CreateCustomer(_client);
 
-            var paymentProfile = await CreatePaymentProfile(customerResponse.Customer.Id);
+            var paymentProfile = await CreationUtils.CreatePaymentProfile(customerResponse.Customer.Id, _client);
 
             var subscription = new CreateSubscription
             {
@@ -50,16 +50,16 @@ namespace AdvancedBillingTests
                     new CreateSubscriptionRequest(subscription));
             subscriptionResponse.Subscription.Id.Should().NotBeNull();
 
-            await ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfile, productResponse);
+            await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfile, productResponse, _client);
         }
 
         [Fact]
         public async Task
             CreateSubscription_WrongCouponCodeProvidedToSubscription_ShouldHaveUnprocessableStatusWithMeaningfulError()
         {
-            var productFamilyId = await CreateOrGetProductFamily();
+            var productFamilyId = await CreationUtils.CreateOrGetProductFamily(_client);
 
-            var product = await CreateProduct(productFamilyId);
+            var product = await CreationUtils.CreateProduct(productFamilyId, _client);
 
             var randomString = TestUtils.GenerateRandomString(8);
 
@@ -91,9 +91,9 @@ namespace AdvancedBillingTests
                     restrictedProductDictionary, restrictedComponentsDictionary));
             couponResponse.Coupon.Id.Should().NotBeNull();
 
-            var customer = await CreateCustomer();
+            var customer = await CreationUtils.CreateCustomer(_client);
 
-            var paymentProfile = await CreatePaymentProfile(customer.Customer.Id);
+            var paymentProfile = await CreationUtils.CreatePaymentProfile(customer.Customer.Id, _client);
 
             var initialBillingDate = DateTime.Now.AddDays(20);
 
@@ -122,7 +122,7 @@ namespace AdvancedBillingTests
                 .ThrowAsync<ErrorListResponseException>()
                 .Where(e => e.ResponseCode == 422 && e.Errors.Any(a => a.Contains("Coupon code could not be found")));
 
-            await ExecuteCleanupForPaymentProfileProductCustomer(customer, paymentProfile, product);
+            await CleanupUtils.ExecuteCleanupForPaymentProfileProductCustomer(customer, paymentProfile, product, _client);
 
             await ErrorSuppressionWrapper.RunAsync(async () =>
             {
@@ -166,184 +166,12 @@ namespace AdvancedBillingTests
                 .Where(e => e.ResponseCode == 401);
         }
 
-
-        [Fact]
-        public async Task AllocateComponents_InvalidQualityOnOffComponent_StatusIs422WithCorrectErrorMessage()
-        {
-            var productFamilyId = await CreateOrGetProductFamily();
-
-            var productResponse = await CreateProduct(productFamilyId);
-
-            var customerResponse = await CreateCustomer();
-
-            var paymentProfile = await CreatePaymentProfile(customerResponse.Customer.Id);
-
-            var subscription = new CreateSubscription
-            {
-                CustomerId = customerResponse.Customer.Id,
-                ProductId = productResponse.Product.Id,
-                PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
-                PaymentProfileId = paymentProfile.PaymentProfile.Id,
-                DunningCommunicationDelayEnabled = false,
-                SkipBillingManifestTaxes = false
-            };
-
-            var subscriptionResponse =
-                await _client.SubscriptionsController.CreateSubscriptionAsync(
-                    new CreateSubscriptionRequest(subscription));
-            subscriptionResponse.Subscription.Id.Should().NotBeNull();
-
-            var randomString = TestUtils.GenerateRandomString(6);
-
-            var onOffComponent = new OnOffComponent($"247Support{randomString}",
-                unitPrice: OnOffComponentUnitPrice.FromString("100"));
-
-            var onOffComponentResponse = await _client.ComponentsController.CreateComponentAsync((int)productFamilyId,
-                ComponentKindPath.OnOffComponents,
-                CreateComponentBody.FromCreateOnOffComponent(new CreateOnOffComponent(onOffComponent)));
-
-            onOffComponentResponse.Component.Id.Should().NotBeNull();
-
-            const int onOffAmount = 50;
-
-            var allocationsList = new List<CreateAllocation>()
-            {
-                new(onOffAmount, onOffComponentResponse.Component.Id)
-            };
-
-            await _client.Invoking(s => s.SubscriptionComponentsController.PreviewAllocationsAsync(
-                    (int)subscriptionResponse.Subscription.Id, new PreviewAllocationsRequest(allocationsList))).Should()
-                .ThrowAsync<ComponentAllocationErrorException>()
-                .Where(e => e.Errors.Any(c => c.Message.Contains("Quantity: must be either 1 (on) or 0 (off).")) &&
-                            e.ResponseCode == 422);
-
-            await ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfile,
-                productResponse);
-
-            await ErrorSuppressionWrapper.RunAsync(async () =>
-            {
-                await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
-                    onOffComponentResponse.Component.Id.ToString());
-            });
-
-            await ErrorSuppressionWrapper.RunAsync(async () =>
-            {
-                await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
-                    onOffComponentResponse.Component.Id.ToString());
-            });
-        }
-
-        [Fact]
-        public async Task AllocateComponents_DoubleQuantityForAllocations_UpgradeChargeProratedQualityCanBeRead()
-        {
-            var productFamilyId = await CreateOrGetProductFamily();
-
-            var productResponse = await CreateProduct(productFamilyId);
-
-            var customerResponse = await CreateCustomer();
-
-            var paymentProfile = await CreatePaymentProfile(customerResponse.Customer.Id);
-
-            var subscription = new CreateSubscription
-            {
-                CustomerId = customerResponse.Customer.Id,
-                ProductId = productResponse.Product.Id,
-                PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
-                PaymentProfileId = paymentProfile.PaymentProfile.Id,
-                DunningCommunicationDelayEnabled = false,
-                SkipBillingManifestTaxes = false
-            };
-
-            var subscriptionResponse =
-                await _client.SubscriptionsController.CreateSubscriptionAsync(
-                    new CreateSubscriptionRequest(subscription));
-            subscriptionResponse.Subscription.Id.Should().NotBeNull();
-
-            var randomString = TestUtils.GenerateRandomString(6);
-
-            var quantityComponent = new QuantityBasedComponent($"widget{randomString}", $"widget {randomString}",
-                PricingScheme.PerUnit, unitPrice: QuantityBasedComponentUnitPrice.FromString("10,23"),
-                allowFractionalQuantities: true);
-
-            var quantityComponentResponse = await _client.ComponentsController.CreateComponentAsync(
-                (int)productFamilyId,
-                ComponentKindPath.QuantityBasedComponents,
-                CreateComponentBody.FromCreateQuantityBasedComponent(
-                    new CreateQuantityBasedComponent(quantityComponent)));
-
-            quantityComponentResponse.Component.Id.Should().NotBeNull();
-
-            var onOffComponent = new OnOffComponent($"247Support{randomString}",
-                unitPrice: OnOffComponentUnitPrice.FromString("100"));
-
-            var onOffComponentResponse = await _client.ComponentsController.CreateComponentAsync((int)productFamilyId,
-                ComponentKindPath.OnOffComponents,
-                CreateComponentBody.FromCreateOnOffComponent(new CreateOnOffComponent(onOffComponent)));
-
-            onOffComponentResponse.Component.Id.Should().NotBeNull();
-
-            const double quantityAmount = 10.6;
-            const int onOffAmount = 1;
-
-            var allocationsList = new List<CreateAllocation>()
-            {
-                new(quantityAmount, quantityComponentResponse.Component.Id),
-                new(onOffAmount, onOffComponentResponse.Component.Id)
-            };
-
-            var allocationsPreview = await _client.SubscriptionComponentsController.PreviewAllocationsAsync(
-                (int)subscriptionResponse.Subscription.Id, new PreviewAllocationsRequest(allocationsList));
-
-            allocationsPreview.AllocationPreview.PeriodType.Should().BeEquivalentTo("prorated");
-
-            var allocationPreviewItem =
-                allocationsPreview.AllocationPreview.Allocations.FirstOrDefault(x =>
-                    x.ComponentId == quantityComponentResponse.Component.Id);
-
-            allocationPreviewItem.Should().NotBeNull();
-
-            allocationPreviewItem?.UpgradeCharge.Should().Be(CreditType.Prorated);
-
-            var quantityPreviewValue = allocationPreviewItem.Quantity.Match(Convert.ToDouble, double.Parse);
-            quantityPreviewValue.Should().Be(quantityAmount);
-
-            var allocationResponses = await _client.SubscriptionComponentsController.AllocateComponentsAsync(
-                (int)subscriptionResponse.Subscription.Id, new AllocateComponents(allocations: allocationsList));
-
-            var allocation = allocationResponses.FirstOrDefault(x =>
-                x.Allocation.ComponentId == quantityComponentResponse.Component.Id)
-                ?.Allocation;
-
-            allocation.Should().NotBeNull();
-
-            allocation.UpgradeCharge.Should().Be(CreditType.Prorated);
-
-            var quantityAllocationValue = allocation.Quantity.Match(Convert.ToDouble, double.Parse);
-
-            quantityAllocationValue.Should().Be(quantityPreviewValue);
-
-            await ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfile,
-                productResponse);
-
-            await ErrorSuppressionWrapper.RunAsync(async () =>
-            {
-                await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
-                    quantityComponentResponse.Component.Id.ToString());
-            });
-
-            await ErrorSuppressionWrapper.RunAsync(async () =>
-            {
-                await _client.ComponentsController.ArchiveComponentAsync((int)productFamilyId,
-                    onOffComponentResponse.Component.Id.ToString());
-            });
-        }
-
         [Fact]
         public async Task CreateSubscription_RestrictedCouponMeteredComponentData_ShouldHaveAwaitingSignupStatus()
         {
-            var productFamilyId = await CreateOrGetProductFamily();
+            var productFamilyId = await CreationUtils.CreateOrGetProductFamily(_client);
 
-            var product = await CreateProduct(productFamilyId);
+            var product = await CreationUtils.CreateProduct(productFamilyId, _client);
 
             var randomString = TestUtils.GenerateRandomString(4);
 
@@ -387,9 +215,9 @@ namespace AdvancedBillingTests
                     restrictedProductDictionary, restrictedComponentsDictionary));
             couponResponse.Coupon.Id.Should().NotBeNull();
 
-            var customer = await CreateCustomer();
+            var customer = await CreationUtils.CreateCustomer(_client);
 
-            var paymentProfile = await CreatePaymentProfile(customer.Customer.Id);
+            var paymentProfile = await CreationUtils.CreatePaymentProfile(customer.Customer.Id, _client);
 
             var initialBillingDate = DateTime.Now.AddDays(20);
 
@@ -417,7 +245,7 @@ namespace AdvancedBillingTests
             subscriptionResponse.Subscription.Id.Should().NotBeNull();
             subscriptionResponse.Subscription.State.Should().Be(SubscriptionState.AwaitingSignup);
 
-            await ExecuteBasicSubscriptionCleanup(subscriptionResponse, customer, paymentProfile, product);
+            await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customer, paymentProfile, product, _client);
 
             await ErrorSuppressionWrapper.RunAsync(async () =>
             {
@@ -446,13 +274,13 @@ namespace AdvancedBillingTests
         [Fact]
         public async Task GetSubscription_WithDefaultData_ShouldSuccess()
         {
-            var productFamilyId = await CreateOrGetProductFamily();
+            var productFamilyId = await CreationUtils.CreateOrGetProductFamily(_client);
 
-            var productResponse = await CreateProduct(productFamilyId);
+            var productResponse = await CreationUtils.CreateProduct(productFamilyId, _client);
 
-            var customerResponse = await CreateCustomer();
+            var customerResponse = await CreationUtils.CreateCustomer(_client);
 
-            var paymentProfile = await CreatePaymentProfile(customerResponse.Customer.Id);
+            var paymentProfile = await CreationUtils.CreatePaymentProfile(customerResponse.Customer.Id, _client);
 
             var createdSubscription = new CreateSubscription
             {
@@ -476,116 +304,7 @@ namespace AdvancedBillingTests
             subscription.Subscription.Customer.Id.Should().Be(customerResponse.Customer.Id);
             subscription.Subscription.PaymentCollectionMethod.Should().Be(PaymentCollectionMethod.Automatic);
 
-            await ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfile, productResponse);
-        }
-
-        private async Task ExecuteBasicSubscriptionCleanup(SubscriptionResponse subscriptionResponse,
-            CustomerResponse customerResponse, CreatePaymentProfileResponse paymentProfile, ProductResponse productResponse)
-        {
-            await ErrorSuppressionWrapper.RunAsync(async () =>
-            {
-                await _client.SubscriptionsController.PurgeSubscriptionAsync((int)subscriptionResponse.Subscription.Id,
-                    (int)customerResponse.Customer.Id);
-            });
-
-            await ExecuteCleanupForPaymentProfileProductCustomer(customerResponse, paymentProfile, productResponse);
-        }
-
-        private async Task ExecuteCleanupForPaymentProfileProductCustomer(CustomerResponse customerResponse,
-            CreatePaymentProfileResponse paymentProfile, ProductResponse productResponse)
-        {
-            await ErrorSuppressionWrapper.RunAsync(async () =>
-            {
-                await _client.PaymentProfilesController.DeleteUnusedPaymentProfileAsync(paymentProfile.ToString());
-            });
-
-            await ErrorSuppressionWrapper.RunAsync(async () =>
-            {
-                await _client.CustomersController.DeleteCustomerAsync((int)customerResponse.Customer.Id);
-            });
-
-            await ErrorSuppressionWrapper.RunAsync(async () =>
-            {
-                await _client.ProductsController.ArchiveProductAsync((int)productResponse.Product.Id);
-            });
-        }
-
-        private async Task<CreatePaymentProfileResponse> CreatePaymentProfile(int? customerId)
-        {
-            var paymentProfile = new CreatePaymentProfile
-            {
-                FirstName = _fixture.Create<string>(),
-                LastName = _fixture.Create<string>(),
-                CardType = CardType.Bogus,
-                MaskedCardNumber = "1",
-                FullNumber = "1",
-                CustomerId = customerId,
-                ExpirationMonth = CreatePaymentProfileExpirationMonth.FromNumber(5),
-                ExpirationYear = CreatePaymentProfileExpirationYear.FromNumber(2030)
-            };
-
-
-            var paymentProfileResponse =
-                await _client.PaymentProfilesController.CreatePaymentProfileAsync(
-                    new CreatePaymentProfileRequest(paymentProfile));
-
-            paymentProfileResponse.PaymentProfile.Id.Should().NotBeNull();
-            return paymentProfileResponse;
-        }
-
-        private async Task<CustomerResponse> CreateCustomer()
-        {
-            var customerName = _fixture.Create<string>();
-            var customerLastName = _fixture.Create<string>();
-            var emailStub = "dummy123@gmail.com";
-            var customer = new CreateCustomer(customerName, customerLastName, emailStub);
-
-            var customerResponse =
-                await _client.CustomersController.CreateCustomerAsync(new CreateCustomerRequest(customer));
-            customerResponse.Customer.Id.Should().NotBeNull();
-            customerResponse.Customer.FirstName.Should().Be(customerName);
-            customerResponse.Customer.LastName.Should().Be(customerLastName);
-            customerResponse.Customer.Email.Should().Be(emailStub);
-            return customerResponse;
-        }
-
-        private async Task<ProductResponse> CreateProduct(int? productFamilyId)
-        {
-            var productName = _fixture.Create<string>();
-
-            var productInfo = new CreateOrUpdateProduct(productName, _fixture.Create<string>(), _fixture.Create<long>(),
-                _fixture.Create<int>(), IntervalUnit.Day);
-
-            var productResponse =
-                await _client.ProductsController.CreateProductAsync((int)productFamilyId,
-                    new CreateOrUpdateProductRequest(productInfo));
-
-            productResponse.Product.Id.Should().NotBeNull();
-            productResponse.Product.Name.Should().Be(productName);
-            return productResponse;
-        }
-
-        private async Task<int?> CreateOrGetProductFamily()
-        {
-            var productFamilies =
-                await _client.ProductFamiliesController.ListProductFamiliesAsync(new ListProductFamiliesInput());
-
-            var productFamilyId = productFamilies.FirstOrDefault()?.ProductFamily.Id;
-
-            if (productFamilyId == null)
-            {
-                var productFamilyName = _fixture.Create<string>();
-                var productFamily = new CreateProductFamily(productFamilyName, _fixture.Create<string>());
-
-                var productFamilyResponse = await
-                    _client.ProductFamiliesController.CreateProductFamilyAsync(
-                        new CreateProductFamilyRequest(productFamily));
-
-                productFamilyResponse.ProductFamily.Id.Should().NotBeNull();
-                productFamilyId = (int)productFamilyResponse.ProductFamily.Id!;
-            }
-
-            return productFamilyId;
+            await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfile, productResponse, _client);
         }
     }
 }
