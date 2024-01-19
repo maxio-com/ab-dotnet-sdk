@@ -16,7 +16,8 @@ namespace AdvancedBillingTests
         [InlineData(MetafieldInput.Dropdown, "dropdown")]
         [InlineData(MetafieldInput.Radio, "radio")]
         [InlineData(MetafieldInput.Text, "text")]
-        public async Task CreateMetafields_GivenResourceTypeForSubscription_ResourceIsCreatedValuesAreMappedCorrectly(MetafieldInput inputType, string expectedType)
+        public async Task CreateMetafields_GivenResourceTypeForSubscription_ResourceIsCreatedValuesAreMappedCorrectly(
+            MetafieldInput inputType, string expectedType)
         {
             var metadataName = $"{TestUtils.GenerateRandomString(4)}{expectedType}";
 
@@ -47,7 +48,8 @@ namespace AdvancedBillingTests
         }
 
         [Fact]
-        public async Task CreateMetafields_ResourceTypeSubscriptionDefaultMinimalValues_ResourceIsCreatedValuesAreMappedCorrectly()
+        public async Task
+            CreateMetafields_ResourceTypeSubscriptionDefaultMinimalValues_ResourceIsCreatedValuesAreMappedCorrectly()
         {
             var defaultMetadataName = $"{TestUtils.GenerateRandomString(4)}minvalname";
 
@@ -58,7 +60,8 @@ namespace AdvancedBillingTests
 
             var defaultMetadata = new CreateMetafield(name: defaultMetadataName, mEnum: optionsList);
 
-            var defaultMetaResponse = await _client.CustomFieldsController.CreateMetafieldsAsync(ResourceType.Subscriptions,
+            var defaultMetaResponse = await _client.CustomFieldsController.CreateMetafieldsAsync(
+                ResourceType.Subscriptions,
                 new CreateMetafieldsRequest(CreateMetafieldsRequestMetafields.FromCreateMetafield(defaultMetadata)));
 
             defaultMetaResponse.FirstOrDefault().Should().NotBeNull();
@@ -84,7 +87,7 @@ namespace AdvancedBillingTests
             var option1 = $"{TestUtils.GenerateRandomString(5)}option";
             var option2 = $"{TestUtils.GenerateRandomString(5)}option";
 
-            var optionsList = new List<CreateMetadata> { new(metadataName, option1), new(metadataName, option2)};
+            var optionsList = new List<CreateMetadata> { new(metadataName, option1), new(metadataName, option2) };
 
             var productFamilyId = await CreationUtils.CreateOrGetProductFamily(_client);
 
@@ -109,17 +112,55 @@ namespace AdvancedBillingTests
                     new CreateSubscriptionRequest(subscription));
             subscriptionResponse.Subscription.Id.Should().NotBeNull();
 
-            var metadatas = await _client.CustomFieldsController.CreateMetadataAsync(ResourceType.Subscriptions, subscriptionResponse.Subscription.Id.ToString(),
+            var metadatas = await _client.CustomFieldsController.CreateMetadataAsync(ResourceType.Subscriptions,
+                subscriptionResponse.Subscription.Id.ToString(),
                 new CreateMetadataRequest(optionsList));
 
             metadatas.Should().Contain(x => x.MValue == option1 && x.Name == metadataName);
             metadatas.Should().Contain(x => x.MValue == option2 && x.Name == metadataName);
+
+            //// TODO: It is not working, to be investigated
+            //var listOfMetadata =
+            //    await _client.CustomFieldsController.ListMetadataForResourceTypeAsync(
+            //        new ListMetadataForResourceTypeInput(ResourceType.Subscriptions));
+
+            //listOfMetadata.Metadata.Should().Contain(x => x.MValue == option1 && x.Name == metadataName);
+            //listOfMetadata.Metadata.Should().Contain(x => x.MValue == option2 && x.Name == metadataName);
 
             await _client.CustomFieldsController.DeleteMetadataAsync(ResourceType.Subscriptions,
                 subscriptionResponse.Subscription.Id.ToString(), metadataName);
 
             await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfile,
                 productResponse, _client);
+        }
+
+        [Fact]
+        public async Task
+            CreateMetadata_ResourceTypeCustomerReferenceProvided_ResourceIsCreatedValuesAreMappedCorrectly()
+        {
+            var metadataName = $"{TestUtils.GenerateRandomString(4)}metaname";
+
+            var option1 = $"{TestUtils.GenerateRandomString(5)}option";
+            var option2 = $"{TestUtils.GenerateRandomString(5)}option";
+
+            var optionsList = new List<CreateMetadata> { new(metadataName, option1), new(metadataName, option2) };
+
+            var customerResponse = await CreationUtils.CreateCustomer(_client);
+
+            var metadatas = await _client.CustomFieldsController.CreateMetadataAsync(ResourceType.Customers,
+                customerResponse.Customer.Id.ToString(),
+                new CreateMetadataRequest(optionsList));
+
+            metadatas.Should().Contain(x => x.MValue == option1 && x.Name == metadataName);
+            metadatas.Should().Contain(x => x.MValue == option2 && x.Name == metadataName);
+
+            await _client.CustomFieldsController.DeleteMetadataAsync(ResourceType.Customers,
+                customerResponse.Customer.Id.ToString(), metadataName);
+
+            await ErrorSuppressionWrapper.RunAsync(async () =>
+            {
+                await _client.CustomersController.DeleteCustomerAsync((int)customerResponse.Customer.Id);
+            });
         }
     }
 }
