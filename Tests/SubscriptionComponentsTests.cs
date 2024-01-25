@@ -20,14 +20,14 @@ namespace AdvancedBillingTests
 
             var customerResponse = await CreationUtils.CreateCustomer(_client);
 
-            var paymentProfile = await CreationUtils.CreatePaymentProfile(customerResponse.Customer.Id, _client);
+            var paymentProfileId = await CreationUtils.CreatePaymentProfile(customerResponse.Customer.Id, _client);
 
             var subscription = new CreateSubscription
             {
                 CustomerId = customerResponse.Customer.Id,
                 ProductId = productResponse.Product.Id,
                 PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
-                PaymentProfileId = paymentProfile.PaymentProfile.Id,
+                PaymentProfileId = paymentProfileId,
                 DunningCommunicationDelayEnabled = false,
                 SkipBillingManifestTaxes = false
             };
@@ -42,7 +42,7 @@ namespace AdvancedBillingTests
             var onOffComponent = new OnOffComponent($"247Support{randomString}",
                 unitPrice: OnOffComponentUnitPrice.FromString("100"));
 
-            var onOffComponentResponse = await _client.ComponentsController.CreateComponentAsync((int)productFamilyId,
+            var onOffComponentResponse = await _client.ComponentsController.CreateComponentCreateComponentAsync((int)productFamilyId,
                 ComponentKindPath.OnOffComponents,
                 CreateComponentBody.FromCreateOnOffComponent(new CreateOnOffComponent(onOffComponent)));
 
@@ -61,7 +61,7 @@ namespace AdvancedBillingTests
                 .Where(e => e.Errors.Any(c => c.Message.Contains("Quantity: must be either 1 (on) or 0 (off).")) &&
                             e.ResponseCode == 422);
 
-            await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfile,
+            await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfileId,
                 productResponse, _client);
 
             await ErrorSuppressionWrapper.RunAsync(async () =>
@@ -86,14 +86,14 @@ namespace AdvancedBillingTests
 
             var customerResponse = await CreationUtils.CreateCustomer(_client);
 
-            var paymentProfile = await CreationUtils.CreatePaymentProfile(customerResponse.Customer.Id, _client);
+            var paymentProfileId = await CreationUtils.CreatePaymentProfile(customerResponse.Customer.Id, _client);
 
             var subscription = new CreateSubscription
             {
                 CustomerId = customerResponse.Customer.Id,
                 ProductId = productResponse.Product.Id,
                 PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
-                PaymentProfileId = paymentProfile.PaymentProfile.Id,
+                PaymentProfileId = paymentProfileId,
                 DunningCommunicationDelayEnabled = false,
                 SkipBillingManifestTaxes = false
             };
@@ -166,7 +166,7 @@ namespace AdvancedBillingTests
 
             quantityAllocationValue.Should().Be(quantityPreviewValue);
 
-            await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfile,
+            await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfileId,
                 productResponse, _client);
 
             await ErrorSuppressionWrapper.RunAsync(async () =>
