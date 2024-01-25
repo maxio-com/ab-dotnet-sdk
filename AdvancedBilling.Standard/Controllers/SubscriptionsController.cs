@@ -18,6 +18,7 @@ namespace AdvancedBilling.Standard.Controllers
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
     using APIMatic.Core;
+    using APIMatic.Core.Http.Configuration;
     using APIMatic.Core.Types;
     using APIMatic.Core.Utilities;
     using APIMatic.Core.Utilities.Date.Xml;
@@ -33,6 +34,367 @@ namespace AdvancedBilling.Standard.Controllers
         /// Initializes a new instance of the <see cref="SubscriptionsController"/> class.
         /// </summary>
         internal SubscriptionsController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
+
+        /// <summary>
+        /// Use this endpoint to find a subscription by its reference.
+        /// </summary>
+        /// <param name="reference">Optional parameter: Subscription reference.</param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public Models.SubscriptionResponse ReadSubscriptionByReference(
+                string reference = null)
+            => CoreHelper.RunTask(ReadSubscriptionByReferenceAsync(reference));
+
+        /// <summary>
+        /// Use this endpoint to find a subscription by its reference.
+        /// </summary>
+        /// <param name="reference">Optional parameter: Subscription reference.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public async Task<Models.SubscriptionResponse> ReadSubscriptionByReferenceAsync(
+                string reference = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.SubscriptionResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/subscriptions/lookup.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Query(_query => _query.Setup("reference", reference))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// An existing subscription can accommodate multiple discounts/coupon codes. This is only applicable if each coupon is stackable. For more information on stackable coupons, we recommend reviewing our [coupon documentation.](https://chargify.zendesk.com/hc/en-us/articles/4407755909531#stackable-coupons).
+        /// ## Query Parameters vs Request Body Parameters.
+        /// Passing in a coupon code as a query parameter will add the code to the subscription, completely replacing all existing coupon codes on the subscription.
+        /// For this reason, using this query parameter on this endpoint has been deprecated in favor of using the request body parameters as described below. When passing in request body parameters, the list of coupon codes will simply be added to any existing list of codes on the subscription.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="code">Optional parameter: A code for the coupon that would be applied to a subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public Models.SubscriptionResponse ApplyCouponToSubscription(
+                int subscriptionId,
+                string code = null,
+                Models.AddCouponsRequest body = null)
+            => CoreHelper.RunTask(ApplyCouponToSubscriptionAsync(subscriptionId, code, body));
+
+        /// <summary>
+        /// An existing subscription can accommodate multiple discounts/coupon codes. This is only applicable if each coupon is stackable. For more information on stackable coupons, we recommend reviewing our [coupon documentation.](https://chargify.zendesk.com/hc/en-us/articles/4407755909531#stackable-coupons).
+        /// ## Query Parameters vs Request Body Parameters.
+        /// Passing in a coupon code as a query parameter will add the code to the subscription, completely replacing all existing coupon codes on the subscription.
+        /// For this reason, using this query parameter on this endpoint has been deprecated in favor of using the request body parameters as described below. When passing in request body parameters, the list of coupon codes will simply be added to any existing list of codes on the subscription.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="code">Optional parameter: A code for the coupon that would be applied to a subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public async Task<Models.SubscriptionResponse> ApplyCouponToSubscriptionAsync(
+                int subscriptionId,
+                string code = null,
+                Models.AddCouponsRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.SubscriptionResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/add_coupon.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))
+                      .Query(_query => _query.Setup("code", code))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionAddCouponErrorException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The subscription endpoint allows you to instantly update one or many attributes about a subscription in a single call.
+        /// ## Update Subscription Payment Method.
+        /// Change the card that your Subscriber uses for their subscription. You can also use this method to simply change the expiration date of the card **if your gateway allows**.
+        /// Note that partial card updates for **Authorize.Net** are not allowed via this endpoint. The existing Payment Profile must be directly updated instead.
+        /// You also use this method to change the subscription to a different product by setting a new value for product_handle. A product change can be done in two different ways, **product change** or **delayed product change**.
+        /// ## Product Change.
+        /// This endpoint may be used to change a subscription's product. The new payment amount is calculated and charged at the normal start of the next period. If you desire complex product changes or prorated upgrades and downgrades instead, please see the documentation on Migrating Subscription Products.
+        /// To perform a product change, simply set either the `product_handle` or `product_id` attribute to that of a different product from the same site as the subscription. You can also change the price point by passing in either `product_price_point_id` or `product_price_point_handle` - otherwise the new product's default price point will be used.
+        /// ### Delayed Product Change.
+        /// This method also changes the product and/or price point, and the new payment amount is calculated and charged at the normal start of the next period.
+        /// This method schedules the product change to happen automatically at the subscription’s next renewal date. To perform a Delayed Product Change, set the `product_handle` attribute as you would in a regular product change, but also set the `product_change_delayed` attribute to `true`. No proration applies in this case.
+        /// You can also perform a delayed change to the price point by passing in either `product_price_point_id` or `product_price_point_handle`.
+        /// **Note: To cancel a delayed product change, set `next_product_id` to an empty string.**.
+        /// ## Billing Date Changes.
+        /// ### Regular Billing Date Changes.
+        /// Send the `next_billing_at` to set the next billing date for the subscription. After that date passes and the subscription is processed, the following billing date will be set according to the subscription's product period.
+        /// Note that if you pass an invalid date, we will automatically interpret and set the correct date. For example, when February 30 is entered, the next billing will be set to March 2nd in a non-leap year.
+        /// The server response will not return data under the key/value pair of `next_billing`. Please view the key/value pair of `current_period_ends_at` to verify that the `next_billing` date has been changed successfully.
+        /// ### Snap Day Changes.
+        /// For a subscription using Calendar Billing, setting the next billing date is a bit different. Send the `snap_day` attribute to change the calendar billing date for **a subscription using a product eligible for calendar billing**.
+        /// Note: If you change the product associated with a subscription that contains a `snap_date` and immediately `READ/GET` the subscription data, it will still contain evidence of the existing `snap_date`. This is due to the fact that a product change is instantanous and only affects the product associated with a subscription. After the `next_billing` date arrives, the `snap_day` associated with the subscription will return to `null.` Another way of looking at this is that you willl have to wait for the next billing cycle to arrive before the `snap_date` will reset to `null`.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public Models.SubscriptionResponse UpdateSubscription(
+                int subscriptionId,
+                Models.UpdateSubscriptionRequest body = null)
+            => CoreHelper.RunTask(UpdateSubscriptionAsync(subscriptionId, body));
+
+        /// <summary>
+        /// The subscription endpoint allows you to instantly update one or many attributes about a subscription in a single call.
+        /// ## Update Subscription Payment Method.
+        /// Change the card that your Subscriber uses for their subscription. You can also use this method to simply change the expiration date of the card **if your gateway allows**.
+        /// Note that partial card updates for **Authorize.Net** are not allowed via this endpoint. The existing Payment Profile must be directly updated instead.
+        /// You also use this method to change the subscription to a different product by setting a new value for product_handle. A product change can be done in two different ways, **product change** or **delayed product change**.
+        /// ## Product Change.
+        /// This endpoint may be used to change a subscription's product. The new payment amount is calculated and charged at the normal start of the next period. If you desire complex product changes or prorated upgrades and downgrades instead, please see the documentation on Migrating Subscription Products.
+        /// To perform a product change, simply set either the `product_handle` or `product_id` attribute to that of a different product from the same site as the subscription. You can also change the price point by passing in either `product_price_point_id` or `product_price_point_handle` - otherwise the new product's default price point will be used.
+        /// ### Delayed Product Change.
+        /// This method also changes the product and/or price point, and the new payment amount is calculated and charged at the normal start of the next period.
+        /// This method schedules the product change to happen automatically at the subscription’s next renewal date. To perform a Delayed Product Change, set the `product_handle` attribute as you would in a regular product change, but also set the `product_change_delayed` attribute to `true`. No proration applies in this case.
+        /// You can also perform a delayed change to the price point by passing in either `product_price_point_id` or `product_price_point_handle`.
+        /// **Note: To cancel a delayed product change, set `next_product_id` to an empty string.**.
+        /// ## Billing Date Changes.
+        /// ### Regular Billing Date Changes.
+        /// Send the `next_billing_at` to set the next billing date for the subscription. After that date passes and the subscription is processed, the following billing date will be set according to the subscription's product period.
+        /// Note that if you pass an invalid date, we will automatically interpret and set the correct date. For example, when February 30 is entered, the next billing will be set to March 2nd in a non-leap year.
+        /// The server response will not return data under the key/value pair of `next_billing`. Please view the key/value pair of `current_period_ends_at` to verify that the `next_billing` date has been changed successfully.
+        /// ### Snap Day Changes.
+        /// For a subscription using Calendar Billing, setting the next billing date is a bit different. Send the `snap_day` attribute to change the calendar billing date for **a subscription using a product eligible for calendar billing**.
+        /// Note: If you change the product associated with a subscription that contains a `snap_date` and immediately `READ/GET` the subscription data, it will still contain evidence of the existing `snap_date`. This is due to the fact that a product change is instantanous and only affects the product associated with a subscription. After the `next_billing` date arrives, the `snap_day` associated with the subscription will return to `null.` Another way of looking at this is that you willl have to wait for the next billing cycle to arrive before the `snap_date` will reset to `null`.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public async Task<Models.SubscriptionResponse> UpdateSubscriptionAsync(
+                int subscriptionId,
+                Models.UpdateSubscriptionRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.SubscriptionResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// For sites in test mode, you may purge individual subscriptions.
+        /// Provide the subscription ID in the url.  To confirm, supply the customer ID in the query string `ack` parameter. You may also delete the customer record and/or payment profiles by passing `cascade` parameters. For example, to delete just the customer record, the query params would be: `?ack={customer_id}&cascade[]=customer`.
+        /// If you need to remove subscriptions from a live site, please contact support to discuss your use case.
+        /// ### Delete customer and payment profile.
+        /// The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="ack">Required parameter: id of the customer..</param>
+        /// <param name="cascade">Optional parameter: Options are "customer" or "payment_profile". Use in query: `cascade[]=customer&cascade[]=payment_profile`..</param>
+        public void PurgeSubscription(
+                int subscriptionId,
+                int ack,
+                List<Models.SubscriptionPurgeType> cascade = null)
+            => CoreHelper.RunVoidTask(PurgeSubscriptionAsync(subscriptionId, ack, cascade));
+
+        /// <summary>
+        /// For sites in test mode, you may purge individual subscriptions.
+        /// Provide the subscription ID in the url.  To confirm, supply the customer ID in the query string `ack` parameter. You may also delete the customer record and/or payment profiles by passing `cascade` parameters. For example, to delete just the customer record, the query params would be: `?ack={customer_id}&cascade[]=customer`.
+        /// If you need to remove subscriptions from a live site, please contact support to discuss your use case.
+        /// ### Delete customer and payment profile.
+        /// The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="ack">Required parameter: id of the customer..</param>
+        /// <param name="cascade">Optional parameter: Options are "customer" or "payment_profile". Use in query: `cascade[]=customer&cascade[]=payment_profile`..</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task PurgeSubscriptionAsync(
+                int subscriptionId,
+                int ack,
+                List<Models.SubscriptionPurgeType> cascade = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>(ArraySerialization.Plain)
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/purge.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Query(_query => _query.Setup("ack", ack))
+                      .Query(_query => _query.Setup("cascade[]", cascade?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The Chargify API allows you to preview a subscription by POSTing the same JSON or XML as for a subscription creation.
+        /// The "Next Billing" amount and "Next Billing" date are represented in each Subscriber's Summary. For more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#next-billing).
+        /// ## Side effects.
+        /// A subscription will not be created by sending a POST to this endpoint. It is meant to serve as a prediction.
+        /// ## Taxable Subscriptions.
+        /// This endpoint will preview taxes applicable to a purchase. In order for taxes to be previewed, the following conditions must be met:.
+        /// + Taxes must be configured on the subscription.
+        /// + The preview must be for the purchase of a taxable product or component, or combination of the two.
+        /// + The subscription payload must contain a full billing or shipping address in order to calculate tax.
+        /// For more information about creating taxable previews, please see our documentation guide on how to create [taxable subscriptions.](https://chargify.zendesk.com/hc/en-us/articles/4407904217755#creating-taxable-subscriptions).
+        /// You do **not** need to include a card number to generate tax information when you are previewing a subscription. However, please note that when you actually want to create the subscription, you must include the credit card information if you want the billing address to be stored in Chargify. The billing address and the credit card information are stored together within the payment profile object. Also, you may not send a billing address to Chargify without payment profile information, as the address is stored on the card.
+        /// You can pass shipping and billing addresses and still decide not to calculate taxes. To do that, pass `skip_billing_manifest_taxes: true` attribute.
+        /// ## Non-taxable Subscriptions.
+        /// If you'd like to calculate subscriptions that do not include tax, please feel free to leave off the billing information.
+        /// </summary>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.SubscriptionPreviewResponse response from the API call.</returns>
+        public Models.SubscriptionPreviewResponse PreviewSubscription(
+                Models.CreateSubscriptionRequest body = null)
+            => CoreHelper.RunTask(PreviewSubscriptionAsync(body));
+
+        /// <summary>
+        /// The Chargify API allows you to preview a subscription by POSTing the same JSON or XML as for a subscription creation.
+        /// The "Next Billing" amount and "Next Billing" date are represented in each Subscriber's Summary. For more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#next-billing).
+        /// ## Side effects.
+        /// A subscription will not be created by sending a POST to this endpoint. It is meant to serve as a prediction.
+        /// ## Taxable Subscriptions.
+        /// This endpoint will preview taxes applicable to a purchase. In order for taxes to be previewed, the following conditions must be met:.
+        /// + Taxes must be configured on the subscription.
+        /// + The preview must be for the purchase of a taxable product or component, or combination of the two.
+        /// + The subscription payload must contain a full billing or shipping address in order to calculate tax.
+        /// For more information about creating taxable previews, please see our documentation guide on how to create [taxable subscriptions.](https://chargify.zendesk.com/hc/en-us/articles/4407904217755#creating-taxable-subscriptions).
+        /// You do **not** need to include a card number to generate tax information when you are previewing a subscription. However, please note that when you actually want to create the subscription, you must include the credit card information if you want the billing address to be stored in Chargify. The billing address and the credit card information are stored together within the payment profile object. Also, you may not send a billing address to Chargify without payment profile information, as the address is stored on the card.
+        /// You can pass shipping and billing addresses and still decide not to calculate taxes. To do that, pass `skip_billing_manifest_taxes: true` attribute.
+        /// ## Non-taxable Subscriptions.
+        /// If you'd like to calculate subscriptions that do not include tax, please feel free to leave off the billing information.
+        /// </summary>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.SubscriptionPreviewResponse response from the API call.</returns>
+        public async Task<Models.SubscriptionPreviewResponse> PreviewSubscriptionAsync(
+                Models.CreateSubscriptionRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.SubscriptionPreviewResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/subscriptions/preview.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Use this endpoint to find subscription details.
+        /// ## Self-Service Page token.
+        /// Self-Service Page token for the subscription is not returned by default. If this information is desired, the include[]=self_service_page_token parameter must be provided with the request.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="include">Optional parameter: Allows including additional data in the response. Use in query: `include[]=coupons&include[]=self_service_page_token`..</param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public Models.SubscriptionResponse ReadSubscription(
+                int subscriptionId,
+                List<Models.SubscriptionInclude> include = null)
+            => CoreHelper.RunTask(ReadSubscriptionAsync(subscriptionId, include));
+
+        /// <summary>
+        /// Use this endpoint to find subscription details.
+        /// ## Self-Service Page token.
+        /// Self-Service Page token for the subscription is not returned by default. If this information is desired, the include[]=self_service_page_token parameter must be provided with the request.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="include">Optional parameter: Allows including additional data in the response. Use in query: `include[]=coupons&include[]=self_service_page_token`..</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public async Task<Models.SubscriptionResponse> ReadSubscriptionAsync(
+                int subscriptionId,
+                List<Models.SubscriptionInclude> include = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.SubscriptionResponse>(ArraySerialization.Plain)
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Query(_query => _query.Setup("include[]", include?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This API endpoint allows you to set certain subscription fields that are usually managed for you automatically. Some of the fields can be set via the normal Subscriptions Update API, but others can only be set using this endpoint.
+        /// This endpoint is provided for cases where you need to “align” Chargify data with data that happened in your system, perhaps before you started using Chargify. For example, you may choose to import your historical subscription data, and would like the activation and cancellation dates in Chargify to match your existing historical dates. Chargify does not backfill historical events (i.e. from the Events API), but some static data can be changed via this API.
+        /// Why are some fields only settable from this endpoint, and not the normal subscription create and update endpoints? Because we want users of this endpoint to be aware that these fields are usually managed by Chargify, and using this API means **you are stepping out on your own.**.
+        /// Changing these fields will not affect any other attributes. For example, adding an expiration date will not affect the next assessment date on the subscription.
+        /// If you regularly need to override the current_period_starts_at for new subscriptions, this can also be accomplished by setting both `previous_billing_at` and `next_billing_at` at subscription creation. See the documentation on [Importing Subscriptions](./b3A6MTQxMDgzODg-create-subscription#subscriptions-import) for more information.
+        /// ## Limitations.
+        /// When passing `current_period_starts_at` some validations are made:.
+        /// 1. The subscription needs to be unbilled (no statements or invoices).
+        /// 2. The value passed must be a valid date/time. We recommend using the iso 8601 format.
+        /// 3. The value passed must be before the current date/time.
+        /// If unpermitted parameters are sent, a 400 HTTP response is sent along with a string giving the reason for the problem.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="body">Optional parameter: Only these fields are available to be set..</param>
+        public void OverrideSubscription(
+                int subscriptionId,
+                Models.OverrideSubscriptionRequest body = null)
+            => CoreHelper.RunVoidTask(OverrideSubscriptionAsync(subscriptionId, body));
+
+        /// <summary>
+        /// This API endpoint allows you to set certain subscription fields that are usually managed for you automatically. Some of the fields can be set via the normal Subscriptions Update API, but others can only be set using this endpoint.
+        /// This endpoint is provided for cases where you need to “align” Chargify data with data that happened in your system, perhaps before you started using Chargify. For example, you may choose to import your historical subscription data, and would like the activation and cancellation dates in Chargify to match your existing historical dates. Chargify does not backfill historical events (i.e. from the Events API), but some static data can be changed via this API.
+        /// Why are some fields only settable from this endpoint, and not the normal subscription create and update endpoints? Because we want users of this endpoint to be aware that these fields are usually managed by Chargify, and using this API means **you are stepping out on your own.**.
+        /// Changing these fields will not affect any other attributes. For example, adding an expiration date will not affect the next assessment date on the subscription.
+        /// If you regularly need to override the current_period_starts_at for new subscriptions, this can also be accomplished by setting both `previous_billing_at` and `next_billing_at` at subscription creation. See the documentation on [Importing Subscriptions](./b3A6MTQxMDgzODg-create-subscription#subscriptions-import) for more information.
+        /// ## Limitations.
+        /// When passing `current_period_starts_at` some validations are made:.
+        /// 1. The subscription needs to be unbilled (no statements or invoices).
+        /// 2. The value passed must be a valid date/time. We recommend using the iso 8601 format.
+        /// 3. The value passed must be before the current date/time.
+        /// If unpermitted parameters are sent, a 400 HTTP response is sent along with a string giving the reason for the problem.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="body">Optional parameter: Only these fields are available to be set..</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task OverrideSubscriptionAsync(
+                int subscriptionId,
+                Models.OverrideSubscriptionRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/override.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SingleErrorResponseException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Use this endpoint to update a subscription's prepaid configuration.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.PrepaidConfigurationResponse response from the API call.</returns>
+        public Models.PrepaidConfigurationResponse CreatePrepaidSubscription(
+                int subscriptionId,
+                Models.UpsertPrepaidConfigurationRequest body = null)
+            => CoreHelper.RunTask(CreatePrepaidSubscriptionAsync(subscriptionId, body));
+
+        /// <summary>
+        /// Use this endpoint to update a subscription's prepaid configuration.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.PrepaidConfigurationResponse response from the API call.</returns>
+        public async Task<Models.PrepaidConfigurationResponse> CreatePrepaidSubscriptionAsync(
+                int subscriptionId,
+                Models.UpsertPrepaidConfigurationRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.PrepaidConfigurationResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/prepaid_configurations.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Full documentation on how subscriptions operate within Chargify can be located under the following topics:.
@@ -1028,402 +1390,6 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// The subscription endpoint allows you to instantly update one or many attributes about a subscription in a single call.
-        /// ## Update Subscription Payment Method.
-        /// Change the card that your Subscriber uses for their subscription. You can also use this method to simply change the expiration date of the card **if your gateway allows**.
-        /// Note that partial card updates for **Authorize.Net** are not allowed via this endpoint. The existing Payment Profile must be directly updated instead.
-        /// You also use this method to change the subscription to a different product by setting a new value for product_handle. A product change can be done in two different ways, **product change** or **delayed product change**.
-        /// ## Product Change.
-        /// This endpoint may be used to change a subscription's product. The new payment amount is calculated and charged at the normal start of the next period. If you desire complex product changes or prorated upgrades and downgrades instead, please see the documentation on Migrating Subscription Products.
-        /// To perform a product change, simply set either the `product_handle` or `product_id` attribute to that of a different product from the same site as the subscription. You can also change the price point by passing in either `product_price_point_id` or `product_price_point_handle` - otherwise the new product's default price point will be used.
-        /// ### Delayed Product Change.
-        /// This method also changes the product and/or price point, and the new payment amount is calculated and charged at the normal start of the next period.
-        /// This method schedules the product change to happen automatically at the subscription’s next renewal date. To perform a Delayed Product Change, set the `product_handle` attribute as you would in a regular product change, but also set the `product_change_delayed` attribute to `true`. No proration applies in this case.
-        /// You can also perform a delayed change to the price point by passing in either `product_price_point_id` or `product_price_point_handle`.
-        /// **Note: To cancel a delayed product change, set `next_product_id` to an empty string.**.
-        /// ## Billing Date Changes.
-        /// ### Regular Billing Date Changes.
-        /// Send the `next_billing_at` to set the next billing date for the subscription. After that date passes and the subscription is processed, the following billing date will be set according to the subscription's product period.
-        /// Note that if you pass an invalid date, we will automatically interpret and set the correct date. For example, when February 30 is entered, the next billing will be set to March 2nd in a non-leap year.
-        /// The server response will not return data under the key/value pair of `next_billing`. Please view the key/value pair of `current_period_ends_at` to verify that the `next_billing` date has been changed successfully.
-        /// ### Snap Day Changes.
-        /// For a subscription using Calendar Billing, setting the next billing date is a bit different. Send the `snap_day` attribute to change the calendar billing date for **a subscription using a product eligible for calendar billing**.
-        /// Note: If you change the product associated with a subscription that contains a `snap_date` and immediately `READ/GET` the subscription data, it will still contain evidence of the existing `snap_date`. This is due to the fact that a product change is instantanous and only affects the product associated with a subscription. After the `next_billing` date arrives, the `snap_day` associated with the subscription will return to `null.` Another way of looking at this is that you willl have to wait for the next billing cycle to arrive before the `snap_date` will reset to `null`.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public Models.SubscriptionResponse UpdateSubscription(
-                int subscriptionId,
-                Models.UpdateSubscriptionRequest body = null)
-            => CoreHelper.RunTask(UpdateSubscriptionAsync(subscriptionId, body));
-
-        /// <summary>
-        /// The subscription endpoint allows you to instantly update one or many attributes about a subscription in a single call.
-        /// ## Update Subscription Payment Method.
-        /// Change the card that your Subscriber uses for their subscription. You can also use this method to simply change the expiration date of the card **if your gateway allows**.
-        /// Note that partial card updates for **Authorize.Net** are not allowed via this endpoint. The existing Payment Profile must be directly updated instead.
-        /// You also use this method to change the subscription to a different product by setting a new value for product_handle. A product change can be done in two different ways, **product change** or **delayed product change**.
-        /// ## Product Change.
-        /// This endpoint may be used to change a subscription's product. The new payment amount is calculated and charged at the normal start of the next period. If you desire complex product changes or prorated upgrades and downgrades instead, please see the documentation on Migrating Subscription Products.
-        /// To perform a product change, simply set either the `product_handle` or `product_id` attribute to that of a different product from the same site as the subscription. You can also change the price point by passing in either `product_price_point_id` or `product_price_point_handle` - otherwise the new product's default price point will be used.
-        /// ### Delayed Product Change.
-        /// This method also changes the product and/or price point, and the new payment amount is calculated and charged at the normal start of the next period.
-        /// This method schedules the product change to happen automatically at the subscription’s next renewal date. To perform a Delayed Product Change, set the `product_handle` attribute as you would in a regular product change, but also set the `product_change_delayed` attribute to `true`. No proration applies in this case.
-        /// You can also perform a delayed change to the price point by passing in either `product_price_point_id` or `product_price_point_handle`.
-        /// **Note: To cancel a delayed product change, set `next_product_id` to an empty string.**.
-        /// ## Billing Date Changes.
-        /// ### Regular Billing Date Changes.
-        /// Send the `next_billing_at` to set the next billing date for the subscription. After that date passes and the subscription is processed, the following billing date will be set according to the subscription's product period.
-        /// Note that if you pass an invalid date, we will automatically interpret and set the correct date. For example, when February 30 is entered, the next billing will be set to March 2nd in a non-leap year.
-        /// The server response will not return data under the key/value pair of `next_billing`. Please view the key/value pair of `current_period_ends_at` to verify that the `next_billing` date has been changed successfully.
-        /// ### Snap Day Changes.
-        /// For a subscription using Calendar Billing, setting the next billing date is a bit different. Send the `snap_day` attribute to change the calendar billing date for **a subscription using a product eligible for calendar billing**.
-        /// Note: If you change the product associated with a subscription that contains a `snap_date` and immediately `READ/GET` the subscription data, it will still contain evidence of the existing `snap_date`. This is due to the fact that a product change is instantanous and only affects the product associated with a subscription. After the `next_billing` date arrives, the `snap_day` associated with the subscription will return to `null.` Another way of looking at this is that you willl have to wait for the next billing cycle to arrive before the `snap_date` will reset to `null`.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionResponse> UpdateSubscriptionAsync(
-                int subscriptionId,
-                Models.UpdateSubscriptionRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Use this endpoint to find subscription details.
-        /// ## Self-Service Page token.
-        /// Self-Service Page token for the subscription is not returned by default. If this information is desired, the include[]=self_service_page_token parameter must be provided with the request.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="include">Optional parameter: Allows including additional data in the response. Use in query: `include[]=coupons&include[]=self_service_page_token`..</param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public Models.SubscriptionResponse ReadSubscription(
-                int subscriptionId,
-                List<Models.SubscriptionInclude> include = null)
-            => CoreHelper.RunTask(ReadSubscriptionAsync(subscriptionId, include));
-
-        /// <summary>
-        /// Use this endpoint to find subscription details.
-        /// ## Self-Service Page token.
-        /// Self-Service Page token for the subscription is not returned by default. If this information is desired, the include[]=self_service_page_token parameter must be provided with the request.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="include">Optional parameter: Allows including additional data in the response. Use in query: `include[]=coupons&include[]=self_service_page_token`..</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionResponse> ReadSubscriptionAsync(
-                int subscriptionId,
-                List<Models.SubscriptionInclude> include = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Query(_query => _query.Setup("include[]", include?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This API endpoint allows you to set certain subscription fields that are usually managed for you automatically. Some of the fields can be set via the normal Subscriptions Update API, but others can only be set using this endpoint.
-        /// This endpoint is provided for cases where you need to “align” Chargify data with data that happened in your system, perhaps before you started using Chargify. For example, you may choose to import your historical subscription data, and would like the activation and cancellation dates in Chargify to match your existing historical dates. Chargify does not backfill historical events (i.e. from the Events API), but some static data can be changed via this API.
-        /// Why are some fields only settable from this endpoint, and not the normal subscription create and update endpoints? Because we want users of this endpoint to be aware that these fields are usually managed by Chargify, and using this API means **you are stepping out on your own.**.
-        /// Changing these fields will not affect any other attributes. For example, adding an expiration date will not affect the next assessment date on the subscription.
-        /// If you regularly need to override the current_period_starts_at for new subscriptions, this can also be accomplished by setting both `previous_billing_at` and `next_billing_at` at subscription creation. See the documentation on [Importing Subscriptions](./b3A6MTQxMDgzODg-create-subscription#subscriptions-import) for more information.
-        /// ## Limitations.
-        /// When passing `current_period_starts_at` some validations are made:.
-        /// 1. The subscription needs to be unbilled (no statements or invoices).
-        /// 2. The value passed must be a valid date/time. We recommend using the iso 8601 format.
-        /// 3. The value passed must be before the current date/time.
-        /// If unpermitted parameters are sent, a 400 HTTP response is sent along with a string giving the reason for the problem.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Only these fields are available to be set..</param>
-        public void OverrideSubscription(
-                int subscriptionId,
-                Models.OverrideSubscriptionRequest body = null)
-            => CoreHelper.RunVoidTask(OverrideSubscriptionAsync(subscriptionId, body));
-
-        /// <summary>
-        /// This API endpoint allows you to set certain subscription fields that are usually managed for you automatically. Some of the fields can be set via the normal Subscriptions Update API, but others can only be set using this endpoint.
-        /// This endpoint is provided for cases where you need to “align” Chargify data with data that happened in your system, perhaps before you started using Chargify. For example, you may choose to import your historical subscription data, and would like the activation and cancellation dates in Chargify to match your existing historical dates. Chargify does not backfill historical events (i.e. from the Events API), but some static data can be changed via this API.
-        /// Why are some fields only settable from this endpoint, and not the normal subscription create and update endpoints? Because we want users of this endpoint to be aware that these fields are usually managed by Chargify, and using this API means **you are stepping out on your own.**.
-        /// Changing these fields will not affect any other attributes. For example, adding an expiration date will not affect the next assessment date on the subscription.
-        /// If you regularly need to override the current_period_starts_at for new subscriptions, this can also be accomplished by setting both `previous_billing_at` and `next_billing_at` at subscription creation. See the documentation on [Importing Subscriptions](./b3A6MTQxMDgzODg-create-subscription#subscriptions-import) for more information.
-        /// ## Limitations.
-        /// When passing `current_period_starts_at` some validations are made:.
-        /// 1. The subscription needs to be unbilled (no statements or invoices).
-        /// 2. The value passed must be a valid date/time. We recommend using the iso 8601 format.
-        /// 3. The value passed must be before the current date/time.
-        /// If unpermitted parameters are sent, a 400 HTTP response is sent along with a string giving the reason for the problem.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Only these fields are available to be set..</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task OverrideSubscriptionAsync(
-                int subscriptionId,
-                Models.OverrideSubscriptionRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/override.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SingleErrorResponseException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Use this endpoint to find a subscription by its reference.
-        /// </summary>
-        /// <param name="reference">Optional parameter: Subscription reference.</param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public Models.SubscriptionResponse ReadSubscriptionByReference(
-                string reference = null)
-            => CoreHelper.RunTask(ReadSubscriptionByReferenceAsync(reference));
-
-        /// <summary>
-        /// Use this endpoint to find a subscription by its reference.
-        /// </summary>
-        /// <param name="reference">Optional parameter: Subscription reference.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionResponse> ReadSubscriptionByReferenceAsync(
-                string reference = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/subscriptions/lookup.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("reference", reference))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// For sites in test mode, you may purge individual subscriptions.
-        /// Provide the subscription ID in the url.  To confirm, supply the customer ID in the query string `ack` parameter. You may also delete the customer record and/or payment profiles by passing `cascade` parameters. For example, to delete just the customer record, the query params would be: `?ack={customer_id}&cascade[]=customer`.
-        /// If you need to remove subscriptions from a live site, please contact support to discuss your use case.
-        /// ### Delete customer and payment profile.
-        /// The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="ack">Required parameter: id of the customer..</param>
-        /// <param name="cascade">Optional parameter: Options are "customer" or "payment_profile". Use in query: `cascade[]=customer&cascade[]=payment_profile`..</param>
-        public void PurgeSubscription(
-                int subscriptionId,
-                int ack,
-                List<Models.SubscriptionPurgeType> cascade = null)
-            => CoreHelper.RunVoidTask(PurgeSubscriptionAsync(subscriptionId, ack, cascade));
-
-        /// <summary>
-        /// For sites in test mode, you may purge individual subscriptions.
-        /// Provide the subscription ID in the url.  To confirm, supply the customer ID in the query string `ack` parameter. You may also delete the customer record and/or payment profiles by passing `cascade` parameters. For example, to delete just the customer record, the query params would be: `?ack={customer_id}&cascade[]=customer`.
-        /// If you need to remove subscriptions from a live site, please contact support to discuss your use case.
-        /// ### Delete customer and payment profile.
-        /// The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="ack">Required parameter: id of the customer..</param>
-        /// <param name="cascade">Optional parameter: Options are "customer" or "payment_profile". Use in query: `cascade[]=customer&cascade[]=payment_profile`..</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task PurgeSubscriptionAsync(
-                int subscriptionId,
-                int ack,
-                List<Models.SubscriptionPurgeType> cascade = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/purge.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Query(_query => _query.Setup("ack", ack))
-                      .Query(_query => _query.Setup("cascade[]", cascade?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Use this endpoint to update a subscription's prepaid configuration.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.PrepaidConfigurationResponse response from the API call.</returns>
-        public Models.PrepaidConfigurationResponse CreatePrepaidSubscription(
-                int subscriptionId,
-                Models.UpsertPrepaidConfigurationRequest body = null)
-            => CoreHelper.RunTask(CreatePrepaidSubscriptionAsync(subscriptionId, body));
-
-        /// <summary>
-        /// Use this endpoint to update a subscription's prepaid configuration.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.PrepaidConfigurationResponse response from the API call.</returns>
-        public async Task<Models.PrepaidConfigurationResponse> CreatePrepaidSubscriptionAsync(
-                int subscriptionId,
-                Models.UpsertPrepaidConfigurationRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.PrepaidConfigurationResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/prepaid_configurations.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// The Chargify API allows you to preview a subscription by POSTing the same JSON or XML as for a subscription creation.
-        /// The "Next Billing" amount and "Next Billing" date are represented in each Subscriber's Summary. For more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#next-billing).
-        /// ## Side effects.
-        /// A subscription will not be created by sending a POST to this endpoint. It is meant to serve as a prediction.
-        /// ## Taxable Subscriptions.
-        /// This endpoint will preview taxes applicable to a purchase. In order for taxes to be previewed, the following conditions must be met:.
-        /// + Taxes must be configured on the subscription.
-        /// + The preview must be for the purchase of a taxable product or component, or combination of the two.
-        /// + The subscription payload must contain a full billing or shipping address in order to calculate tax.
-        /// For more information about creating taxable previews, please see our documentation guide on how to create [taxable subscriptions.](https://chargify.zendesk.com/hc/en-us/articles/4407904217755#creating-taxable-subscriptions).
-        /// You do **not** need to include a card number to generate tax information when you are previewing a subscription. However, please note that when you actually want to create the subscription, you must include the credit card information if you want the billing address to be stored in Chargify. The billing address and the credit card information are stored together within the payment profile object. Also, you may not send a billing address to Chargify without payment profile information, as the address is stored on the card.
-        /// You can pass shipping and billing addresses and still decide not to calculate taxes. To do that, pass `skip_billing_manifest_taxes: true` attribute.
-        /// ## Non-taxable Subscriptions.
-        /// If you'd like to calculate subscriptions that do not include tax, please feel free to leave off the billing information.
-        /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.SubscriptionPreviewResponse response from the API call.</returns>
-        public Models.SubscriptionPreviewResponse PreviewSubscription(
-                Models.CreateSubscriptionRequest body = null)
-            => CoreHelper.RunTask(PreviewSubscriptionAsync(body));
-
-        /// <summary>
-        /// The Chargify API allows you to preview a subscription by POSTing the same JSON or XML as for a subscription creation.
-        /// The "Next Billing" amount and "Next Billing" date are represented in each Subscriber's Summary. For more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#next-billing).
-        /// ## Side effects.
-        /// A subscription will not be created by sending a POST to this endpoint. It is meant to serve as a prediction.
-        /// ## Taxable Subscriptions.
-        /// This endpoint will preview taxes applicable to a purchase. In order for taxes to be previewed, the following conditions must be met:.
-        /// + Taxes must be configured on the subscription.
-        /// + The preview must be for the purchase of a taxable product or component, or combination of the two.
-        /// + The subscription payload must contain a full billing or shipping address in order to calculate tax.
-        /// For more information about creating taxable previews, please see our documentation guide on how to create [taxable subscriptions.](https://chargify.zendesk.com/hc/en-us/articles/4407904217755#creating-taxable-subscriptions).
-        /// You do **not** need to include a card number to generate tax information when you are previewing a subscription. However, please note that when you actually want to create the subscription, you must include the credit card information if you want the billing address to be stored in Chargify. The billing address and the credit card information are stored together within the payment profile object. Also, you may not send a billing address to Chargify without payment profile information, as the address is stored on the card.
-        /// You can pass shipping and billing addresses and still decide not to calculate taxes. To do that, pass `skip_billing_manifest_taxes: true` attribute.
-        /// ## Non-taxable Subscriptions.
-        /// If you'd like to calculate subscriptions that do not include tax, please feel free to leave off the billing information.
-        /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.SubscriptionPreviewResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionPreviewResponse> PreviewSubscriptionAsync(
-                Models.CreateSubscriptionRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SubscriptionPreviewResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscriptions/preview.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// An existing subscription can accommodate multiple discounts/coupon codes. This is only applicable if each coupon is stackable. For more information on stackable coupons, we recommend reviewing our [coupon documentation.](https://chargify.zendesk.com/hc/en-us/articles/4407755909531#stackable-coupons).
-        /// ## Query Parameters vs Request Body Parameters.
-        /// Passing in a coupon code as a query parameter will add the code to the subscription, completely replacing all existing coupon codes on the subscription.
-        /// For this reason, using this query parameter on this endpoint has been deprecated in favor of using the request body parameters as described below. When passing in request body parameters, the list of coupon codes will simply be added to any existing list of codes on the subscription.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="code">Optional parameter: A code for the coupon that would be applied to a subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public Models.SubscriptionResponse ApplyCouponToSubscription(
-                int subscriptionId,
-                string code = null,
-                Models.AddCouponsRequest body = null)
-            => CoreHelper.RunTask(ApplyCouponToSubscriptionAsync(subscriptionId, code, body));
-
-        /// <summary>
-        /// An existing subscription can accommodate multiple discounts/coupon codes. This is only applicable if each coupon is stackable. For more information on stackable coupons, we recommend reviewing our [coupon documentation.](https://chargify.zendesk.com/hc/en-us/articles/4407755909531#stackable-coupons).
-        /// ## Query Parameters vs Request Body Parameters.
-        /// Passing in a coupon code as a query parameter will add the code to the subscription, completely replacing all existing coupon codes on the subscription.
-        /// For this reason, using this query parameter on this endpoint has been deprecated in favor of using the request body parameters as described below. When passing in request body parameters, the list of coupon codes will simply be added to any existing list of codes on the subscription.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="code">Optional parameter: A code for the coupon that would be applied to a subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionResponse> ApplyCouponToSubscriptionAsync(
-                int subscriptionId,
-                string code = null,
-                Models.AddCouponsRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/add_coupon.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))
-                      .Query(_query => _query.Setup("code", code))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionAddCouponErrorException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Use this endpoint to remove a coupon from an existing subscription.
-        /// For more information on the expected behaviour of removing a coupon from a subscription, please see our documentation [here.](https://chargify.zendesk.com/hc/en-us/articles/4407896488987#removing-a-coupon).
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="couponCode">Optional parameter: The coupon code.</param>
-        /// <returns>Returns the string response from the API call.</returns>
-        public string DeleteCouponFromSubscription(
-                int subscriptionId,
-                string couponCode = null)
-            => CoreHelper.RunTask(DeleteCouponFromSubscriptionAsync(subscriptionId, couponCode));
-
-        /// <summary>
-        /// Use this endpoint to remove a coupon from an existing subscription.
-        /// For more information on the expected behaviour of removing a coupon from a subscription, please see our documentation [here.](https://chargify.zendesk.com/hc/en-us/articles/4407896488987#removing-a-coupon).
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="couponCode">Optional parameter: The coupon code.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the string response from the API call.</returns>
-        public async Task<string> DeleteCouponFromSubscriptionAsync(
-                int subscriptionId,
-                string couponCode = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<string>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/remove_coupon.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Query(_query => _query.Setup("coupon_code", couponCode))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionRemoveCouponErrorsException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// Chargify offers the ability to activate awaiting signup and trialing subscriptions. This feature is only available on the Relationship Invoicing architecture. Subscriptions in a group may not be activated immediately.
         /// For details on how the activation works, and how to activate subscriptions through the application, see [activation](#).
         /// The `revert_on_failure` parameter controls the behavior upon activation failure.
@@ -1514,7 +1480,42 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("400", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new NestedErrorResponseException(_reason, _context), true)))
+                  .ErrorCase("400", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorArrayMapResponseException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Use this endpoint to remove a coupon from an existing subscription.
+        /// For more information on the expected behaviour of removing a coupon from a subscription, please see our documentation [here.](https://chargify.zendesk.com/hc/en-us/articles/4407896488987#removing-a-coupon).
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="couponCode">Optional parameter: The coupon code.</param>
+        /// <returns>Returns the string response from the API call.</returns>
+        public string DeleteCouponFromSubscription(
+                int subscriptionId,
+                string couponCode = null)
+            => CoreHelper.RunTask(DeleteCouponFromSubscriptionAsync(subscriptionId, couponCode));
+
+        /// <summary>
+        /// Use this endpoint to remove a coupon from an existing subscription.
+        /// For more information on the expected behaviour of removing a coupon from a subscription, please see our documentation [here.](https://chargify.zendesk.com/hc/en-us/articles/4407896488987#removing-a-coupon).
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="couponCode">Optional parameter: The coupon code.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the string response from the API call.</returns>
+        public async Task<string> DeleteCouponFromSubscriptionAsync(
+                int subscriptionId,
+                string couponCode = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<string>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/remove_coupon.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Query(_query => _query.Setup("coupon_code", couponCode))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionRemoveCouponErrorsException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

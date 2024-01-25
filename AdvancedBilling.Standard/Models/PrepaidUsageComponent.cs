@@ -63,7 +63,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="allowFractionalQuantities">allow_fractional_quantities.</param>
         /// <param name="publicSignupPageIds">public_signup_page_ids.</param>
         public PrepaidUsageComponent(
-            string name = null,
+            string name,
             string unitName = null,
             string description = null,
             string handle = null,
@@ -121,7 +121,7 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// A name for this component that is suitable for showing customers and displaying on billing statements, ie. "Minutes".
         /// </summary>
-        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
         /// <summary>

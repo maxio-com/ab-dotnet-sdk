@@ -21,11 +21,23 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class BankAccountPaymentProfile
     {
+        private string billingAddress;
+        private string billingCity;
+        private string billingState;
+        private string billingZip;
+        private string billingCountry;
         private string customerVaultToken;
+        private string billingAddress2;
         private string gatewayHandle;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
+            { "billing_address", false },
+            { "billing_city", false },
+            { "billing_state", false },
+            { "billing_zip", false },
+            { "billing_country", false },
             { "customer_vault_token", false },
+            { "billing_address_2", false },
             { "gateway_handle", false },
         };
 
@@ -78,9 +90,9 @@ namespace AdvancedBilling.Standard.Models
             string customerVaultToken = null,
             string billingAddress2 = null,
             string bankName = null,
-            string bankAccountType = null,
-            string bankAccountHolderType = null,
-            string paymentType = null,
+            Models.BankAccountType? bankAccountType = Models.BankAccountType.Checking,
+            Models.BankAccountHolderType? bankAccountHolderType = null,
+            Models.PaymentType? paymentType = Models.PaymentType.CreditCard,
             bool? verified = false,
             int? siteGatewaySettingId = null,
             string gatewayHandle = null)
@@ -91,17 +103,41 @@ namespace AdvancedBilling.Standard.Models
             this.CustomerId = customerId;
             this.CurrentVault = currentVault;
             this.VaultToken = vaultToken;
-            this.BillingAddress = billingAddress;
-            this.BillingCity = billingCity;
-            this.BillingState = billingState;
-            this.BillingZip = billingZip;
-            this.BillingCountry = billingCountry;
+            if (billingAddress != null)
+            {
+                this.BillingAddress = billingAddress;
+            }
+
+            if (billingCity != null)
+            {
+                this.BillingCity = billingCity;
+            }
+
+            if (billingState != null)
+            {
+                this.BillingState = billingState;
+            }
+
+            if (billingZip != null)
+            {
+                this.BillingZip = billingZip;
+            }
+
+            if (billingCountry != null)
+            {
+                this.BillingCountry = billingCountry;
+            }
+
             if (customerVaultToken != null)
             {
                 this.CustomerVaultToken = customerVaultToken;
             }
 
-            this.BillingAddress2 = billingAddress2;
+            if (billingAddress2 != null)
+            {
+                this.BillingAddress2 = billingAddress2;
+            }
+
             this.BankName = bankName;
             this.MaskedBankRoutingNumber = maskedBankRoutingNumber;
             this.MaskedBankAccountNumber = maskedBankAccountNumber;
@@ -118,27 +154,27 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Gets or sets Id.
+        /// The Chargify-assigned ID of the stored bank account. This value can be used as an input to payment_profile_id when creating a subscription, in order to re-use a stored payment profile for the same customer
         /// </summary>
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }
 
         /// <summary>
-        /// Gets or sets FirstName.
+        /// The first name of the bank account holder
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("first_name", NullValueHandling = NullValueHandling.Ignore)]
         public string FirstName { get; set; }
 
         /// <summary>
-        /// Gets or sets LastName.
+        /// The last name of the bank account holder
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("last_name", NullValueHandling = NullValueHandling.Ignore)]
         public string LastName { get; set; }
 
         /// <summary>
-        /// Gets or sets CustomerId.
+        /// The Chargify-assigned id for the customer record to which the bank account belongs
         /// </summary>
         [JsonProperty("customer_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? CustomerId { get; set; }
@@ -150,49 +186,109 @@ namespace AdvancedBilling.Standard.Models
         public Models.BankAccountVault? CurrentVault { get; set; }
 
         /// <summary>
-        /// Gets or sets VaultToken.
+        /// The “token” provided by your vault storage for an already stored payment profile
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("vault_token", NullValueHandling = NullValueHandling.Ignore)]
         public string VaultToken { get; set; }
 
         /// <summary>
-        /// Gets or sets BillingAddress.
+        /// The current billing street address for the bank account
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("billing_address", NullValueHandling = NullValueHandling.Ignore)]
-        public string BillingAddress { get; set; }
+        [JsonProperty("billing_address")]
+        public string BillingAddress
+        {
+            get
+            {
+                return this.billingAddress;
+            }
+
+            set
+            {
+                this.shouldSerialize["billing_address"] = true;
+                this.billingAddress = value;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets BillingCity.
+        /// The current billing address city for the bank account
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("billing_city", NullValueHandling = NullValueHandling.Ignore)]
-        public string BillingCity { get; set; }
+        [JsonProperty("billing_city")]
+        public string BillingCity
+        {
+            get
+            {
+                return this.billingCity;
+            }
+
+            set
+            {
+                this.shouldSerialize["billing_city"] = true;
+                this.billingCity = value;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets BillingState.
+        /// The current billing address state for the bank account
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("billing_state", NullValueHandling = NullValueHandling.Ignore)]
-        public string BillingState { get; set; }
+        [JsonProperty("billing_state")]
+        public string BillingState
+        {
+            get
+            {
+                return this.billingState;
+            }
+
+            set
+            {
+                this.shouldSerialize["billing_state"] = true;
+                this.billingState = value;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets BillingZip.
+        /// The current billing address zip code for the bank account
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("billing_zip", NullValueHandling = NullValueHandling.Ignore)]
-        public string BillingZip { get; set; }
+        [JsonProperty("billing_zip")]
+        public string BillingZip
+        {
+            get
+            {
+                return this.billingZip;
+            }
+
+            set
+            {
+                this.shouldSerialize["billing_zip"] = true;
+                this.billingZip = value;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets BillingCountry.
+        /// The current billing address country for the bank account
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("billing_country", NullValueHandling = NullValueHandling.Ignore)]
-        public string BillingCountry { get; set; }
+        [JsonProperty("billing_country")]
+        public string BillingCountry
+        {
+            get
+            {
+                return this.billingCountry;
+            }
+
+            set
+            {
+                this.shouldSerialize["billing_country"] = true;
+                this.billingCountry = value;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets CustomerVaultToken.
+        /// (only for Authorize.Net CIM storage): the customerProfileId for the owner of the customerPaymentProfileId provided as the vault_token.
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("customer_vault_token")]
@@ -211,21 +307,33 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Gets or sets BillingAddress2.
+        /// The current billing street address, second line, for the bank account
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("billing_address_2", NullValueHandling = NullValueHandling.Ignore)]
-        public string BillingAddress2 { get; set; }
+        [JsonProperty("billing_address_2")]
+        public string BillingAddress2
+        {
+            get
+            {
+                return this.billingAddress2;
+            }
+
+            set
+            {
+                this.shouldSerialize["billing_address_2"] = true;
+                this.billingAddress2 = value;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets BankName.
+        /// The bank where the account resides
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("bank_name", NullValueHandling = NullValueHandling.Ignore)]
         public string BankName { get; set; }
 
         /// <summary>
-        /// Gets or sets MaskedBankRoutingNumber.
+        /// A string representation of the stored bank routing number with all but the last 4 digits marked with X’s (i.e. ‘XXXXXXX1111’). payment_type will be bank_account
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("masked_bank_routing_number")]
@@ -233,7 +341,7 @@ namespace AdvancedBilling.Standard.Models
         public string MaskedBankRoutingNumber { get; set; }
 
         /// <summary>
-        /// Gets or sets MaskedBankAccountNumber.
+        /// A string representation of the stored bank account number with all but the last 4 digits marked with X’s (i.e. ‘XXXXXXX1111’)
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("masked_bank_account_number")]
@@ -241,25 +349,22 @@ namespace AdvancedBilling.Standard.Models
         public string MaskedBankAccountNumber { get; set; }
 
         /// <summary>
-        /// Gets or sets BankAccountType.
+        /// Defaults to checking
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("bank_account_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string BankAccountType { get; set; }
+        public Models.BankAccountType? BankAccountType { get; set; }
 
         /// <summary>
-        /// Gets or sets BankAccountHolderType.
+        /// Defaults to personal
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("bank_account_holder_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string BankAccountHolderType { get; set; }
+        public Models.BankAccountHolderType? BankAccountHolderType { get; set; }
 
         /// <summary>
         /// Gets or sets PaymentType.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("payment_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string PaymentType { get; set; }
+        public Models.PaymentType? PaymentType { get; set; }
 
         /// <summary>
         /// denotes whether a bank account has been verified by providing the amounts of two small deposits made into the account
@@ -305,9 +410,57 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serailized.
         /// </summary>
+        public void UnsetBillingAddress()
+        {
+            this.shouldSerialize["billing_address"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetBillingCity()
+        {
+            this.shouldSerialize["billing_city"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetBillingState()
+        {
+            this.shouldSerialize["billing_state"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetBillingZip()
+        {
+            this.shouldSerialize["billing_zip"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetBillingCountry()
+        {
+            this.shouldSerialize["billing_country"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
         public void UnsetCustomerVaultToken()
         {
             this.shouldSerialize["customer_vault_token"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetBillingAddress2()
+        {
+            this.shouldSerialize["billing_address_2"] = false;
         }
 
         /// <summary>
@@ -322,9 +475,63 @@ namespace AdvancedBilling.Standard.Models
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeBillingAddress()
+        {
+            return this.shouldSerialize["billing_address"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeBillingCity()
+        {
+            return this.shouldSerialize["billing_city"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeBillingState()
+        {
+            return this.shouldSerialize["billing_state"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeBillingZip()
+        {
+            return this.shouldSerialize["billing_zip"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeBillingCountry()
+        {
+            return this.shouldSerialize["billing_country"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
         public bool ShouldSerializeCustomerVaultToken()
         {
             return this.shouldSerialize["customer_vault_token"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeBillingAddress2()
+        {
+            return this.shouldSerialize["billing_address_2"];
         }
 
         /// <summary>
@@ -394,9 +601,9 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.BankName = {(this.BankName == null ? "null" : this.BankName)}");
             toStringOutput.Add($"this.MaskedBankRoutingNumber = {(this.MaskedBankRoutingNumber == null ? "null" : this.MaskedBankRoutingNumber)}");
             toStringOutput.Add($"this.MaskedBankAccountNumber = {(this.MaskedBankAccountNumber == null ? "null" : this.MaskedBankAccountNumber)}");
-            toStringOutput.Add($"this.BankAccountType = {(this.BankAccountType == null ? "null" : this.BankAccountType)}");
-            toStringOutput.Add($"this.BankAccountHolderType = {(this.BankAccountHolderType == null ? "null" : this.BankAccountHolderType)}");
-            toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType)}");
+            toStringOutput.Add($"this.BankAccountType = {(this.BankAccountType == null ? "null" : this.BankAccountType.ToString())}");
+            toStringOutput.Add($"this.BankAccountHolderType = {(this.BankAccountHolderType == null ? "null" : this.BankAccountHolderType.ToString())}");
+            toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
             toStringOutput.Add($"this.Verified = {(this.Verified == null ? "null" : this.Verified.ToString())}");
             toStringOutput.Add($"this.SiteGatewaySettingId = {(this.SiteGatewaySettingId == null ? "null" : this.SiteGatewaySettingId.ToString())}");
             toStringOutput.Add($"this.GatewayHandle = {(this.GatewayHandle == null ? "null" : this.GatewayHandle)}");

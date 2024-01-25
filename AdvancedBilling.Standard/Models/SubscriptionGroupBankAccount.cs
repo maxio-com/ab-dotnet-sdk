@@ -54,8 +54,8 @@ namespace AdvancedBilling.Standard.Models
             string bankIban = null,
             string bankBranchCode = null,
             Models.BankAccountType? bankAccountType = Models.BankAccountType.Checking,
-            Models.HolderType? bankAccountHolderType = null,
-            string paymentType = null,
+            Models.BankAccountHolderType? bankAccountHolderType = null,
+            Models.PaymentType? paymentType = Models.PaymentType.CreditCard,
             string billingAddress = null,
             string billingCity = null,
             string billingState = null,
@@ -114,22 +114,22 @@ namespace AdvancedBilling.Standard.Models
         public string BankBranchCode { get; set; }
 
         /// <summary>
-        /// Gets or sets BankAccountType.
+        /// Defaults to checking
         /// </summary>
         [JsonProperty("bank_account_type", NullValueHandling = NullValueHandling.Ignore)]
         public Models.BankAccountType? BankAccountType { get; set; }
 
         /// <summary>
-        /// Gets or sets BankAccountHolderType.
+        /// Defaults to personal
         /// </summary>
         [JsonProperty("bank_account_holder_type", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.HolderType? BankAccountHolderType { get; set; }
+        public Models.BankAccountHolderType? BankAccountHolderType { get; set; }
 
         /// <summary>
         /// Gets or sets PaymentType.
         /// </summary>
         [JsonProperty("payment_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string PaymentType { get; set; }
+        public Models.PaymentType? PaymentType { get; set; }
 
         /// <summary>
         /// Gets or sets BillingAddress.
@@ -232,7 +232,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.BankBranchCode = {(this.BankBranchCode == null ? "null" : this.BankBranchCode)}");
             toStringOutput.Add($"this.BankAccountType = {(this.BankAccountType == null ? "null" : this.BankAccountType.ToString())}");
             toStringOutput.Add($"this.BankAccountHolderType = {(this.BankAccountHolderType == null ? "null" : this.BankAccountHolderType.ToString())}");
-            toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType)}");
+            toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
             toStringOutput.Add($"this.BillingAddress = {(this.BillingAddress == null ? "null" : this.BillingAddress)}");
             toStringOutput.Add($"this.BillingCity = {(this.BillingCity == null ? "null" : this.BillingCity)}");
             toStringOutput.Add($"this.BillingState = {(this.BillingState == null ? "null" : this.BillingState)}");

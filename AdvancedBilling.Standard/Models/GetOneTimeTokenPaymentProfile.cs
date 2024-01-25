@@ -68,7 +68,7 @@ namespace AdvancedBilling.Standard.Models
             string firstName,
             string lastName,
             string maskedCardNumber,
-            string cardType,
+            Models.CardType cardType,
             double expirationMonth,
             double expirationYear,
             Models.CurrentVault currentVault,
@@ -163,10 +163,10 @@ namespace AdvancedBilling.Standard.Models
         public string MaskedCardNumber { get; set; }
 
         /// <summary>
-        /// Gets or sets CardType.
+        /// The type of card used.
         /// </summary>
         [JsonProperty("card_type")]
-        public string CardType { get; set; }
+        public Models.CardType CardType { get; set; }
 
         /// <summary>
         /// Gets or sets ExpirationMonth.
@@ -394,7 +394,7 @@ namespace AdvancedBilling.Standard.Models
                 ((this.FirstName == null && other.FirstName == null) || (this.FirstName?.Equals(other.FirstName) == true)) &&
                 ((this.LastName == null && other.LastName == null) || (this.LastName?.Equals(other.LastName) == true)) &&
                 ((this.MaskedCardNumber == null && other.MaskedCardNumber == null) || (this.MaskedCardNumber?.Equals(other.MaskedCardNumber) == true)) &&
-                ((this.CardType == null && other.CardType == null) || (this.CardType?.Equals(other.CardType) == true)) &&
+                this.CardType.Equals(other.CardType) &&
                 this.ExpirationMonth.Equals(other.ExpirationMonth) &&
                 this.ExpirationYear.Equals(other.ExpirationYear) &&
                 ((this.CustomerId == null && other.CustomerId == null) || (this.CustomerId?.Equals(other.CustomerId) == true)) &&
@@ -423,7 +423,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : this.FirstName)}");
             toStringOutput.Add($"this.LastName = {(this.LastName == null ? "null" : this.LastName)}");
             toStringOutput.Add($"this.MaskedCardNumber = {(this.MaskedCardNumber == null ? "null" : this.MaskedCardNumber)}");
-            toStringOutput.Add($"this.CardType = {(this.CardType == null ? "null" : this.CardType)}");
+            toStringOutput.Add($"this.CardType = {this.CardType}");
             toStringOutput.Add($"this.ExpirationMonth = {this.ExpirationMonth}");
             toStringOutput.Add($"this.ExpirationYear = {this.ExpirationYear}");
             toStringOutput.Add($"this.CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId)}");

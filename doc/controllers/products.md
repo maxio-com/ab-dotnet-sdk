@@ -10,305 +10,12 @@ ProductsController productsController = client.ProductsController;
 
 ## Methods
 
-* [Create Product](../../doc/controllers/products.md#create-product)
-* [Read Product](../../doc/controllers/products.md#read-product)
-* [Update Product](../../doc/controllers/products.md#update-product)
 * [Archive Product](../../doc/controllers/products.md#archive-product)
 * [Read Product by Handle](../../doc/controllers/products.md#read-product-by-handle)
 * [List Products](../../doc/controllers/products.md#list-products)
-
-
-# Create Product
-
-Use this method to create a product within your Chargify site.
-
-+ [Products Documentation](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405561405709)
-+ [Changing a Subscription's Product](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404225334669-Product-Changes-Migrations)
-
-```csharp
-CreateProductAsync(
-    int productFamilyId,
-    Models.CreateOrUpdateProductRequest body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the product belongs |
-| `body` | [`CreateOrUpdateProductRequest`](../../doc/models/create-or-update-product-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`Task<Models.ProductResponse>`](../../doc/models/product-response.md)
-
-## Example Usage
-
-```csharp
-int productFamilyId = 140;
-CreateOrUpdateProductRequest body = new CreateOrUpdateProductRequest
-{
-    Product = new CreateOrUpdateProduct
-    {
-        Name = "Gold Plan",
-        Description = "This is our gold plan.",
-        PriceInCents = 1000L,
-        Interval = 1,
-        IntervalUnit = IntervalUnit.Month,
-        Handle = "gold",
-        AccountingCode = "123",
-        RequireCreditCard = true,
-        AutoCreateSignupPage = true,
-        TaxCode = "D0000000",
-    },
-};
-
-try
-{
-    ProductResponse result = await productsController.CreateProductAsync(
-        productFamilyId,
-        body
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "product": {
-    "id": 4364984,
-    "name": "Gold Plan",
-    "handle": "gold",
-    "description": "This is our gold plan.",
-    "accounting_code": "123",
-    "request_credit_card": true,
-    "created_at": "2016-11-04T16:31:15-04:00",
-    "updated_at": "2016-11-04T16:31:15-04:00",
-    "price_in_cents": 1000,
-    "interval": 1,
-    "interval_unit": "month",
-    "expiration_interval_unit": null,
-    "initial_charge_in_cents": null,
-    "trial_price_in_cents": null,
-    "trial_interval": null,
-    "trial_interval_unit": null,
-    "archived_at": null,
-    "require_credit_card": true,
-    "return_params": null,
-    "taxable": false,
-    "update_return_url": null,
-    "initial_charge_after_trial": false,
-    "version_number": 1,
-    "update_return_params": null,
-    "product_family": {
-      "id": 527890,
-      "name": "Acme Projects",
-      "description": "",
-      "handle": "billing-plans",
-      "accounting_code": null
-    },
-    "public_signup_pages": [
-      {
-        "id": 301078,
-        "return_url": null,
-        "return_params": null,
-        "url": "https://general-goods.chargify.com/subscribe/ftgbpq7f5qpr/gold"
-      }
-    ],
-    "product_price_point_name": "Default"
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
-# Read Product
-
-This endpoint allows you to read the current details of a product that you've created in Chargify.
-
-```csharp
-ReadProductAsync(
-    int productId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `productId` | `int` | Template, Required | The Chargify id of the product |
-
-## Response Type
-
-[`Task<Models.ProductResponse>`](../../doc/models/product-response.md)
-
-## Example Usage
-
-```csharp
-int productId = 202;
-try
-{
-    ProductResponse result = await productsController.ReadProductAsync(productId);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "product": {
-    "id": 4535635,
-    "name": "Paid Annual Seats",
-    "handle": "paid-annual-seats",
-    "description": "Paid annual seats for our commercial enterprise product",
-    "accounting_code": "paid-annual-seats",
-    "request_credit_card": true,
-    "expiration_interval": 1,
-    "expiration_interval_unit": "day",
-    "created_at": "2017-08-25T10:25:31-05:00",
-    "updated_at": "2018-01-16T12:58:04-06:00",
-    "price_in_cents": 10000,
-    "interval": 12,
-    "interval_unit": "month",
-    "initial_charge_in_cents": 4900,
-    "trial_price_in_cents": 1000,
-    "trial_interval": 14,
-    "trial_interval_unit": "day",
-    "archived_at": null,
-    "require_credit_card": true,
-    "return_params": "id={subscription_id}&ref={customer_reference}",
-    "taxable": true,
-    "update_return_url": "http://www.example.com",
-    "tax_code": "D0000000",
-    "initial_charge_after_trial": false,
-    "version_number": 4,
-    "update_return_params": "id={subscription_id}&ref={customer_reference}",
-    "product_family": {
-      "id": 1025627,
-      "name": "Acme Products",
-      "description": "",
-      "handle": "acme-products",
-      "accounting_code": null
-    },
-    "public_signup_pages": [],
-    "product_price_point_name": "Default"
-  }
-}
-```
-
-
-# Update Product
-
-Use this method to change aspects of an existing product.
-
-### Input Attributes Update Notes
-
-+ `update_return_params` The parameters we will append to your `update_return_url`. See Return URLs and Parameters
-
-### Product Price Point
-
-Updating a product using this endpoint will create a new price point and set it as the default price point for this product. If you should like to update an existing product price point, that must be done separately.
-
-```csharp
-UpdateProductAsync(
-    int productId,
-    Models.CreateOrUpdateProductRequest body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `productId` | `int` | Template, Required | The Chargify id of the product |
-| `body` | [`CreateOrUpdateProductRequest`](../../doc/models/create-or-update-product-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`Task<Models.ProductResponse>`](../../doc/models/product-response.md)
-
-## Example Usage
-
-```csharp
-int productId = 202;
-try
-{
-    ProductResponse result = await productsController.UpdateProductAsync(productId);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "product": {
-    "id": 4365034,
-    "name": "Platinum Plan",
-    "handle": "platinum",
-    "description": "This is our platinum plan.",
-    "accounting_code": "123",
-    "request_credit_card": true,
-    "created_at": "2016-11-04T16:34:29-04:00",
-    "updated_at": "2016-11-04T16:37:11-04:00",
-    "price_in_cents": 1000,
-    "interval": 1,
-    "interval_unit": "month",
-    "initial_charge_in_cents": null,
-    "trial_price_in_cents": null,
-    "trial_interval": null,
-    "trial_interval_unit": null,
-    "archived_at": null,
-    "require_credit_card": true,
-    "return_params": null,
-    "taxable": false,
-    "update_return_url": null,
-    "initial_charge_after_trial": false,
-    "version_number": 1,
-    "update_return_params": null,
-    "product_family": {
-      "id": 527890,
-      "name": "Acme Projects",
-      "description": "",
-      "handle": "billing-plans",
-      "accounting_code": null
-    },
-    "public_signup_pages": [
-      {
-        "id": 301079,
-        "return_url": null,
-        "return_params": null,
-        "url": "https://general-goods.chargify.com/subscribe/wgyd96tb5pj9/platinum"
-      }
-    ],
-    "product_price_point_name": "Original"
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+* [Read Product](../../doc/controllers/products.md#read-product)
+* [Update Product](../../doc/controllers/products.md#update-product)
+* [Create Product](../../doc/controllers/products.md#create-product)
 
 
 # Archive Product
@@ -612,4 +319,297 @@ catch (ApiException e)
   }
 ]
 ```
+
+
+# Read Product
+
+This endpoint allows you to read the current details of a product that you've created in Chargify.
+
+```csharp
+ReadProductAsync(
+    int productId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `productId` | `int` | Template, Required | The Chargify id of the product |
+
+## Response Type
+
+[`Task<Models.ProductResponse>`](../../doc/models/product-response.md)
+
+## Example Usage
+
+```csharp
+int productId = 202;
+try
+{
+    ProductResponse result = await productsController.ReadProductAsync(productId);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "product": {
+    "id": 4535635,
+    "name": "Paid Annual Seats",
+    "handle": "paid-annual-seats",
+    "description": "Paid annual seats for our commercial enterprise product",
+    "accounting_code": "paid-annual-seats",
+    "request_credit_card": true,
+    "expiration_interval": 1,
+    "expiration_interval_unit": "day",
+    "created_at": "2017-08-25T10:25:31-05:00",
+    "updated_at": "2018-01-16T12:58:04-06:00",
+    "price_in_cents": 10000,
+    "interval": 12,
+    "interval_unit": "month",
+    "initial_charge_in_cents": 4900,
+    "trial_price_in_cents": 1000,
+    "trial_interval": 14,
+    "trial_interval_unit": "day",
+    "archived_at": null,
+    "require_credit_card": true,
+    "return_params": "id={subscription_id}&ref={customer_reference}",
+    "taxable": true,
+    "update_return_url": "http://www.example.com",
+    "tax_code": "D0000000",
+    "initial_charge_after_trial": false,
+    "version_number": 4,
+    "update_return_params": "id={subscription_id}&ref={customer_reference}",
+    "product_family": {
+      "id": 1025627,
+      "name": "Acme Products",
+      "description": "",
+      "handle": "acme-products",
+      "accounting_code": null
+    },
+    "public_signup_pages": [],
+    "product_price_point_name": "Default"
+  }
+}
+```
+
+
+# Update Product
+
+Use this method to change aspects of an existing product.
+
+### Input Attributes Update Notes
+
++ `update_return_params` The parameters we will append to your `update_return_url`. See Return URLs and Parameters
+
+### Product Price Point
+
+Updating a product using this endpoint will create a new price point and set it as the default price point for this product. If you should like to update an existing product price point, that must be done separately.
+
+```csharp
+UpdateProductAsync(
+    int productId,
+    Models.CreateOrUpdateProductRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `productId` | `int` | Template, Required | The Chargify id of the product |
+| `body` | [`CreateOrUpdateProductRequest`](../../doc/models/create-or-update-product-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.ProductResponse>`](../../doc/models/product-response.md)
+
+## Example Usage
+
+```csharp
+int productId = 202;
+try
+{
+    ProductResponse result = await productsController.UpdateProductAsync(productId);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "product": {
+    "id": 4365034,
+    "name": "Platinum Plan",
+    "handle": "platinum",
+    "description": "This is our platinum plan.",
+    "accounting_code": "123",
+    "request_credit_card": true,
+    "created_at": "2016-11-04T16:34:29-04:00",
+    "updated_at": "2016-11-04T16:37:11-04:00",
+    "price_in_cents": 1000,
+    "interval": 1,
+    "interval_unit": "month",
+    "initial_charge_in_cents": null,
+    "trial_price_in_cents": null,
+    "trial_interval": null,
+    "trial_interval_unit": null,
+    "archived_at": null,
+    "require_credit_card": true,
+    "return_params": null,
+    "taxable": false,
+    "update_return_url": null,
+    "initial_charge_after_trial": false,
+    "version_number": 1,
+    "update_return_params": null,
+    "product_family": {
+      "id": 527890,
+      "name": "Acme Projects",
+      "description": "",
+      "handle": "billing-plans",
+      "accounting_code": null
+    },
+    "public_signup_pages": [
+      {
+        "id": 301079,
+        "return_url": null,
+        "return_params": null,
+        "url": "https://general-goods.chargify.com/subscribe/wgyd96tb5pj9/platinum"
+      }
+    ],
+    "product_price_point_name": "Original"
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# Create Product
+
+Use this method to create a product within your Chargify site.
+
++ [Products Documentation](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405561405709)
++ [Changing a Subscription's Product](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404225334669-Product-Changes-Migrations)
+
+```csharp
+CreateProductAsync(
+    int productFamilyId,
+    Models.CreateOrUpdateProductRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the product belongs |
+| `body` | [`CreateOrUpdateProductRequest`](../../doc/models/create-or-update-product-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.ProductResponse>`](../../doc/models/product-response.md)
+
+## Example Usage
+
+```csharp
+int productFamilyId = 140;
+CreateOrUpdateProductRequest body = new CreateOrUpdateProductRequest
+{
+    Product = new CreateOrUpdateProduct
+    {
+        Name = "Gold Plan",
+        Description = "This is our gold plan.",
+        PriceInCents = 1000L,
+        Interval = 1,
+        IntervalUnit = IntervalUnit.Month,
+        Handle = "gold",
+        AccountingCode = "123",
+        RequireCreditCard = true,
+        AutoCreateSignupPage = true,
+        TaxCode = "D0000000",
+    },
+};
+
+try
+{
+    ProductResponse result = await productsController.CreateProductAsync(
+        productFamilyId,
+        body
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "product": {
+    "id": 4364984,
+    "name": "Gold Plan",
+    "handle": "gold",
+    "description": "This is our gold plan.",
+    "accounting_code": "123",
+    "request_credit_card": true,
+    "created_at": "2016-11-04T16:31:15-04:00",
+    "updated_at": "2016-11-04T16:31:15-04:00",
+    "price_in_cents": 1000,
+    "interval": 1,
+    "interval_unit": "month",
+    "expiration_interval_unit": null,
+    "initial_charge_in_cents": null,
+    "trial_price_in_cents": null,
+    "trial_interval": null,
+    "trial_interval_unit": null,
+    "archived_at": null,
+    "require_credit_card": true,
+    "return_params": null,
+    "taxable": false,
+    "update_return_url": null,
+    "initial_charge_after_trial": false,
+    "version_number": 1,
+    "update_return_params": null,
+    "product_family": {
+      "id": 527890,
+      "name": "Acme Projects",
+      "description": "",
+      "handle": "billing-plans",
+      "accounting_code": null
+    },
+    "public_signup_pages": [
+      {
+        "id": 301078,
+        "return_url": null,
+        "return_params": null,
+        "url": "https://general-goods.chargify.com/subscribe/ftgbpq7f5qpr/gold"
+      }
+    ],
+    "product_price_point_name": "Default"
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 

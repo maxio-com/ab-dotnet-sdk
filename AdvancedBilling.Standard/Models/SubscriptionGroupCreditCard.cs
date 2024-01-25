@@ -69,7 +69,7 @@ namespace AdvancedBilling.Standard.Models
             string billingZip = null,
             string billingCountry = null,
             string lastFour = null,
-            string cardType = null,
+            Models.CardType? cardType = null,
             string customerVaultToken = null,
             string cvv = null,
             string paymentType = null)
@@ -193,10 +193,10 @@ namespace AdvancedBilling.Standard.Models
         public string LastFour { get; set; }
 
         /// <summary>
-        /// Gets or sets CardType.
+        /// The type of card used.
         /// </summary>
         [JsonProperty("card_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string CardType { get; set; }
+        public Models.CardType? CardType { get; set; }
 
         /// <summary>
         /// Gets or sets CustomerVaultToken.
@@ -282,7 +282,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.BillingZip = {(this.BillingZip == null ? "null" : this.BillingZip)}");
             toStringOutput.Add($"this.BillingCountry = {(this.BillingCountry == null ? "null" : this.BillingCountry)}");
             toStringOutput.Add($"this.LastFour = {(this.LastFour == null ? "null" : this.LastFour)}");
-            toStringOutput.Add($"this.CardType = {(this.CardType == null ? "null" : this.CardType)}");
+            toStringOutput.Add($"this.CardType = {(this.CardType == null ? "null" : this.CardType.ToString())}");
             toStringOutput.Add($"this.CustomerVaultToken = {(this.CustomerVaultToken == null ? "null" : this.CustomerVaultToken)}");
             toStringOutput.Add($"this.Cvv = {(this.Cvv == null ? "null" : this.Cvv)}");
             toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType)}");

@@ -34,6 +34,60 @@ namespace AdvancedBilling.Standard.Controllers
         internal SitesController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
+        /// This endpoint returns public keys used for Chargify.js.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the Models.ListPublicKeysResponse response from the API call.</returns>
+        public Models.ListPublicKeysResponse ListChargifyJsPublicKeys(
+                Models.ListChargifyJsPublicKeysInput input)
+            => CoreHelper.RunTask(ListChargifyJsPublicKeysAsync(input));
+
+        /// <summary>
+        /// This endpoint returns public keys used for Chargify.js.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ListPublicKeysResponse response from the API call.</returns>
+        public async Task<Models.ListPublicKeysResponse> ListChargifyJsPublicKeysAsync(
+                Models.ListChargifyJsPublicKeysInput input,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ListPublicKeysResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/chargify_js_keys.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Query(_query => _query.Setup("page", input.Page))
+                      .Query(_query => _query.Setup("per_page", input.PerPage))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This call is asynchronous and there may be a delay before the site data is fully deleted. If you are clearing site data for an automated test, you will need to build in a delay and/or check that there are no products, etc., in the site before proceeding.
+        /// **This functionality will only work on sites in TEST mode. Attempts to perform this on sites in “live” mode will result in a response of 403 FORBIDDEN.**.
+        /// </summary>
+        /// <param name="cleanupScope">Optional parameter: `all`: Will clear all products, customers, and related subscriptions from the site.  `customers`: Will clear only customers and related subscriptions (leaving the products untouched) for the site.  Revenue will also be reset to 0. Use in query `cleanup_scope=all`..</param>
+        public void ClearSite(
+                Models.CleanupScope? cleanupScope = Models.CleanupScope.All)
+            => CoreHelper.RunVoidTask(ClearSiteAsync(cleanupScope));
+
+        /// <summary>
+        /// This call is asynchronous and there may be a delay before the site data is fully deleted. If you are clearing site data for an automated test, you will need to build in a delay and/or check that there are no products, etc., in the site before proceeding.
+        /// **This functionality will only work on sites in TEST mode. Attempts to perform this on sites in “live” mode will result in a response of 403 FORBIDDEN.**.
+        /// </summary>
+        /// <param name="cleanupScope">Optional parameter: `all`: Will clear all products, customers, and related subscriptions from the site.  `customers`: Will clear only customers and related subscriptions (leaving the products untouched) for the site.  Revenue will also be reset to 0. Use in query `cleanup_scope=all`..</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task ClearSiteAsync(
+                Models.CleanupScope? cleanupScope = Models.CleanupScope.All,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/sites/clear_data.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Query(_query => _query.Setup("cleanup_scope", (cleanupScope.HasValue) ? ApiHelper.JsonSerialize(cleanupScope.Value).Trim('\"') : "all"))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// This endpoint allows you to fetch some site data.
         /// Full documentation on Sites in the Chargify UI can be located [here](https://chargify.zendesk.com/hc/en-us/articles/4407870738587).
         /// Specifically, the [Clearing Site Data](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405428327309) section is extremely relevant to this endpoint documentation.
@@ -68,60 +122,6 @@ namespace AdvancedBilling.Standard.Controllers
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/site.json")
                   .WithAuth("global"))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This call is asynchronous and there may be a delay before the site data is fully deleted. If you are clearing site data for an automated test, you will need to build in a delay and/or check that there are no products, etc., in the site before proceeding.
-        /// **This functionality will only work on sites in TEST mode. Attempts to perform this on sites in “live” mode will result in a response of 403 FORBIDDEN.**.
-        /// </summary>
-        /// <param name="cleanupScope">Optional parameter: `all`: Will clear all products, customers, and related subscriptions from the site.  `customers`: Will clear only customers and related subscriptions (leaving the products untouched) for the site.  Revenue will also be reset to 0. Use in query `cleanup_scope=all`..</param>
-        public void ClearSite(
-                Models.CleanupScope? cleanupScope = Models.CleanupScope.All)
-            => CoreHelper.RunVoidTask(ClearSiteAsync(cleanupScope));
-
-        /// <summary>
-        /// This call is asynchronous and there may be a delay before the site data is fully deleted. If you are clearing site data for an automated test, you will need to build in a delay and/or check that there are no products, etc., in the site before proceeding.
-        /// **This functionality will only work on sites in TEST mode. Attempts to perform this on sites in “live” mode will result in a response of 403 FORBIDDEN.**.
-        /// </summary>
-        /// <param name="cleanupScope">Optional parameter: `all`: Will clear all products, customers, and related subscriptions from the site.  `customers`: Will clear only customers and related subscriptions (leaving the products untouched) for the site.  Revenue will also be reset to 0. Use in query `cleanup_scope=all`..</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task ClearSiteAsync(
-                Models.CleanupScope? cleanupScope = Models.CleanupScope.All,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/sites/clear_data.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("cleanup_scope", (cleanupScope.HasValue) ? ApiHelper.JsonSerialize(cleanupScope.Value).Trim('\"') : "all"))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This endpoint returns public keys used for Chargify.js.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the Models.ListPublicKeysResponse response from the API call.</returns>
-        public Models.ListPublicKeysResponse ListChargifyJsPublicKeys(
-                Models.ListChargifyJsPublicKeysInput input)
-            => CoreHelper.RunTask(ListChargifyJsPublicKeysAsync(input));
-
-        /// <summary>
-        /// This endpoint returns public keys used for Chargify.js.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ListPublicKeysResponse response from the API call.</returns>
-        public async Task<Models.ListPublicKeysResponse> ListChargifyJsPublicKeysAsync(
-                Models.ListChargifyJsPublicKeysInput input,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ListPublicKeysResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/chargify_js_keys.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

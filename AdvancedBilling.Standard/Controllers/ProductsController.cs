@@ -35,112 +35,6 @@ namespace AdvancedBilling.Standard.Controllers
         internal ProductsController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
-        /// Use this method to create a product within your Chargify site.
-        /// + [Products Documentation](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405561405709).
-        /// + [Changing a Subscription's Product](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404225334669-Product-Changes-Migrations).
-        /// </summary>
-        /// <param name="productFamilyId">Required parameter: The Chargify id of the product family to which the product belongs.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
-        public Models.ProductResponse CreateProduct(
-                int productFamilyId,
-                Models.CreateOrUpdateProductRequest body = null)
-            => CoreHelper.RunTask(CreateProductAsync(productFamilyId, body));
-
-        /// <summary>
-        /// Use this method to create a product within your Chargify site.
-        /// + [Products Documentation](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405561405709).
-        /// + [Changing a Subscription's Product](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404225334669-Product-Changes-Migrations).
-        /// </summary>
-        /// <param name="productFamilyId">Required parameter: The Chargify id of the product family to which the product belongs.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
-        public async Task<Models.ProductResponse> CreateProductAsync(
-                int productFamilyId,
-                Models.CreateOrUpdateProductRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ProductResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/product_families/{product_family_id}/products.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("product_family_id", productFamilyId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This endpoint allows you to read the current details of a product that you've created in Chargify.
-        /// </summary>
-        /// <param name="productId">Required parameter: The Chargify id of the product.</param>
-        /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
-        public Models.ProductResponse ReadProduct(
-                int productId)
-            => CoreHelper.RunTask(ReadProductAsync(productId));
-
-        /// <summary>
-        /// This endpoint allows you to read the current details of a product that you've created in Chargify.
-        /// </summary>
-        /// <param name="productId">Required parameter: The Chargify id of the product.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
-        public async Task<Models.ProductResponse> ReadProductAsync(
-                int productId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ProductResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/products/{product_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("product_id", productId))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Use this method to change aspects of an existing product.
-        /// ### Input Attributes Update Notes.
-        /// + `update_return_params` The parameters we will append to your `update_return_url`. See Return URLs and Parameters.
-        /// ### Product Price Point.
-        /// Updating a product using this endpoint will create a new price point and set it as the default price point for this product. If you should like to update an existing product price point, that must be done separately.
-        /// </summary>
-        /// <param name="productId">Required parameter: The Chargify id of the product.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
-        public Models.ProductResponse UpdateProduct(
-                int productId,
-                Models.CreateOrUpdateProductRequest body = null)
-            => CoreHelper.RunTask(UpdateProductAsync(productId, body));
-
-        /// <summary>
-        /// Use this method to change aspects of an existing product.
-        /// ### Input Attributes Update Notes.
-        /// + `update_return_params` The parameters we will append to your `update_return_url`. See Return URLs and Parameters.
-        /// ### Product Price Point.
-        /// Updating a product using this endpoint will create a new price point and set it as the default price point for this product. If you should like to update an existing product price point, that must be done separately.
-        /// </summary>
-        /// <param name="productId">Required parameter: The Chargify id of the product.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
-        public async Task<Models.ProductResponse> UpdateProductAsync(
-                int productId,
-                Models.CreateOrUpdateProductRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ProductResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/products/{product_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("product_id", productId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// Sending a DELETE request to this endpoint will archive the product. All current subscribers will be unffected; their subscription/purchase will continue to be charged monthly.
         /// This will restrict the option to chose the product for purchase via the Billing Portal, as well as disable Public Signup Pages for the product.
         /// </summary>
@@ -230,6 +124,112 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("filter[prepaid_product_price_point][product_price_point_id]", (input.FilterPrepaidProductPricePointProductPricePointId.HasValue) ? ApiHelper.JsonSerialize(input.FilterPrepaidProductPricePointProductPricePointId.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("filter[use_site_exchange_rate]", input.FilterUseSiteExchangeRate))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This endpoint allows you to read the current details of a product that you've created in Chargify.
+        /// </summary>
+        /// <param name="productId">Required parameter: The Chargify id of the product.</param>
+        /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
+        public Models.ProductResponse ReadProduct(
+                int productId)
+            => CoreHelper.RunTask(ReadProductAsync(productId));
+
+        /// <summary>
+        /// This endpoint allows you to read the current details of a product that you've created in Chargify.
+        /// </summary>
+        /// <param name="productId">Required parameter: The Chargify id of the product.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
+        public async Task<Models.ProductResponse> ReadProductAsync(
+                int productId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ProductResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/products/{product_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("product_id", productId))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Use this method to change aspects of an existing product.
+        /// ### Input Attributes Update Notes.
+        /// + `update_return_params` The parameters we will append to your `update_return_url`. See Return URLs and Parameters.
+        /// ### Product Price Point.
+        /// Updating a product using this endpoint will create a new price point and set it as the default price point for this product. If you should like to update an existing product price point, that must be done separately.
+        /// </summary>
+        /// <param name="productId">Required parameter: The Chargify id of the product.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
+        public Models.ProductResponse UpdateProduct(
+                int productId,
+                Models.CreateOrUpdateProductRequest body = null)
+            => CoreHelper.RunTask(UpdateProductAsync(productId, body));
+
+        /// <summary>
+        /// Use this method to change aspects of an existing product.
+        /// ### Input Attributes Update Notes.
+        /// + `update_return_params` The parameters we will append to your `update_return_url`. See Return URLs and Parameters.
+        /// ### Product Price Point.
+        /// Updating a product using this endpoint will create a new price point and set it as the default price point for this product. If you should like to update an existing product price point, that must be done separately.
+        /// </summary>
+        /// <param name="productId">Required parameter: The Chargify id of the product.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
+        public async Task<Models.ProductResponse> UpdateProductAsync(
+                int productId,
+                Models.CreateOrUpdateProductRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ProductResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Put, "/products/{product_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("product_id", productId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Use this method to create a product within your Chargify site.
+        /// + [Products Documentation](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405561405709).
+        /// + [Changing a Subscription's Product](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404225334669-Product-Changes-Migrations).
+        /// </summary>
+        /// <param name="productFamilyId">Required parameter: The Chargify id of the product family to which the product belongs.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
+        public Models.ProductResponse CreateProduct(
+                int productFamilyId,
+                Models.CreateOrUpdateProductRequest body = null)
+            => CoreHelper.RunTask(CreateProductAsync(productFamilyId, body));
+
+        /// <summary>
+        /// Use this method to create a product within your Chargify site.
+        /// + [Products Documentation](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405561405709).
+        /// + [Changing a Subscription's Product](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404225334669-Product-Changes-Migrations).
+        /// </summary>
+        /// <param name="productFamilyId">Required parameter: The Chargify id of the product family to which the product belongs.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
+        public async Task<Models.ProductResponse> CreateProductAsync(
+                int productFamilyId,
+                Models.CreateOrUpdateProductRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ProductResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/product_families/{product_family_id}/products.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("product_family_id", productFamilyId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

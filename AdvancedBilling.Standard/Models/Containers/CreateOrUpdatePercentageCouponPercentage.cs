@@ -11,24 +11,13 @@ namespace AdvancedBilling.Standard.Models.Containers
     [JsonConverter(
         typeof(UnionTypeConverter<CreateOrUpdatePercentageCouponPercentage>),
         new Type[] {
-            typeof(PrecisionCase),
-            typeof(MStringCase)
+            typeof(MStringCase),
+            typeof(PrecisionCase)
         },
         true
     )]
     public abstract class CreateOrUpdatePercentageCouponPercentage
     {
-        /// <summary>
-        /// This is Precision case.
-        /// </summary>
-        /// <returns>
-        /// The CreateOrUpdatePercentageCouponPercentage instance, wrapping the provided double value.
-        /// </returns>
-        public static CreateOrUpdatePercentageCouponPercentage FromPrecision(double precision)
-        {
-            return new PrecisionCase().Set(precision);
-        }
-
         /// <summary>
         /// This is String case.
         /// </summary>
@@ -41,6 +30,17 @@ namespace AdvancedBilling.Standard.Models.Containers
         }
 
         /// <summary>
+        /// This is Precision case.
+        /// </summary>
+        /// <returns>
+        /// The CreateOrUpdatePercentageCouponPercentage instance, wrapping the provided double value.
+        /// </returns>
+        public static CreateOrUpdatePercentageCouponPercentage FromPrecision(double precision)
+        {
+            return new PrecisionCase().Set(precision);
+        }
+
+        /// <summary>
         /// Method to match from the provided one-of cases. Here parameters
         /// represents the callback functions for one-of type cases. All
         /// callback functions must have the same return type T. This typeparam T
@@ -48,41 +48,14 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// callback function.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public abstract T Match<T>(Func<double, T> precision, Func<string, T> mString);
-
-        [JsonConverter(typeof(UnionTypeCaseConverter<PrecisionCase, double>), JTokenType.Float)]
-        private sealed class PrecisionCase : CreateOrUpdatePercentageCouponPercentage, ICaseValue<PrecisionCase, double>
-        {
-            public double _value;
-
-            public override T Match<T>(Func<double, T> precision, Func<string, T> mString)
-            {
-                return precision(_value);
-            }
-
-            public PrecisionCase Set(double value)
-            {
-                _value = value;
-                return this;
-            }
-
-            public double Get()
-            {
-                return _value;
-            }
-
-            public override string ToString()
-            {
-                return _value.ToString();
-            }
-        }
+        public abstract T Match<T>(Func<string, T> mString, Func<double, T> precision);
 
         [JsonConverter(typeof(UnionTypeCaseConverter<MStringCase, string>), JTokenType.String, JTokenType.Null)]
         private sealed class MStringCase : CreateOrUpdatePercentageCouponPercentage, ICaseValue<MStringCase, string>
         {
             public string _value;
 
-            public override T Match<T>(Func<double, T> precision, Func<string, T> mString)
+            public override T Match<T>(Func<string, T> mString, Func<double, T> precision)
             {
                 return mString(_value);
             }
@@ -101,6 +74,33 @@ namespace AdvancedBilling.Standard.Models.Containers
             public override string ToString()
             {
                 return _value?.ToString();
+            }
+        }
+
+        [JsonConverter(typeof(UnionTypeCaseConverter<PrecisionCase, double>), JTokenType.Float)]
+        private sealed class PrecisionCase : CreateOrUpdatePercentageCouponPercentage, ICaseValue<PrecisionCase, double>
+        {
+            public double _value;
+
+            public override T Match<T>(Func<string, T> mString, Func<double, T> precision)
+            {
+                return precision(_value);
+            }
+
+            public PrecisionCase Set(double value)
+            {
+                _value = value;
+                return this;
+            }
+
+            public double Get()
+            {
+                return _value;
+            }
+
+            public override string ToString()
+            {
+                return _value.ToString();
             }
         }
     }

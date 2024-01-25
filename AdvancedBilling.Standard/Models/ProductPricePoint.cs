@@ -62,6 +62,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="type">type.</param>
         /// <param name="taxIncluded">tax_included.</param>
         /// <param name="subscriptionId">subscription_id.</param>
+        /// <param name="currencyPrices">currency_prices.</param>
         public ProductPricePoint(
             int? id = null,
             string name = null,
@@ -85,7 +86,8 @@ namespace AdvancedBilling.Standard.Models
             bool? useSiteExchangeRate = null,
             Models.PricePointType? type = null,
             bool? taxIncluded = null,
-            int? subscriptionId = null)
+            int? subscriptionId = null,
+            List<Models.CurrencyPrice> currencyPrices = null)
         {
             this.Id = id;
             this.Name = name;
@@ -118,6 +120,7 @@ namespace AdvancedBilling.Standard.Models
                 this.SubscriptionId = subscriptionId;
             }
 
+            this.CurrencyPrices = currencyPrices;
         }
 
         /// <summary>
@@ -285,6 +288,12 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// An array of currency pricing data is available when multiple currencies are defined for the site. It varies based on the use_site_exchange_rate setting for the price point. This parameter is present only in the response of read endpoints, after including the appropriate query parameter.
+        /// </summary>
+        [JsonProperty("currency_prices", NullValueHandling = NullValueHandling.Ignore)]
+        public List<Models.CurrencyPrice> CurrencyPrices { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -363,7 +372,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null) || (this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true)) &&
                 ((this.Type == null && other.Type == null) || (this.Type?.Equals(other.Type) == true)) &&
                 ((this.TaxIncluded == null && other.TaxIncluded == null) || (this.TaxIncluded?.Equals(other.TaxIncluded) == true)) &&
-                ((this.SubscriptionId == null && other.SubscriptionId == null) || (this.SubscriptionId?.Equals(other.SubscriptionId) == true));
+                ((this.SubscriptionId == null && other.SubscriptionId == null) || (this.SubscriptionId?.Equals(other.SubscriptionId) == true)) &&
+                ((this.CurrencyPrices == null && other.CurrencyPrices == null) || (this.CurrencyPrices?.Equals(other.CurrencyPrices) == true));
         }
         
         /// <summary>
@@ -395,6 +405,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Type = {(this.Type == null ? "null" : this.Type.ToString())}");
             toStringOutput.Add($"this.TaxIncluded = {(this.TaxIncluded == null ? "null" : this.TaxIncluded.ToString())}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
+            toStringOutput.Add($"this.CurrencyPrices = {(this.CurrencyPrices == null ? "null" : $"[{string.Join(", ", this.CurrencyPrices)} ]")}");
         }
     }
 }

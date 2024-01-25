@@ -76,34 +76,6 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Once an advance invoice has been generated for a subscription's upcoming renewal, it can be viewed through this endpoint. There can only be one advance invoice per subscription per billing cycle.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <returns>Returns the Models.Invoice response from the API call.</returns>
-        public Models.Invoice ReadAdvanceInvoice(
-                int subscriptionId)
-            => CoreHelper.RunTask(ReadAdvanceInvoiceAsync(subscriptionId));
-
-        /// <summary>
-        /// Once an advance invoice has been generated for a subscription's upcoming renewal, it can be viewed through this endpoint. There can only be one advance invoice per subscription per billing cycle.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.Invoice response from the API call.</returns>
-        public async Task<Models.Invoice> ReadAdvanceInvoiceAsync(
-                int subscriptionId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.Invoice>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/advance_invoice.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// Void a subscription's existing advance invoice. Once voided, it can later be regenerated if desired.
         /// A `reason` is required in order to void, and the invoice must have an open status. Voiding will cause any prepayments and credits that were applied to the invoice to be returned to the subscription. For a full overview of the impact of voiding, please [see our help docs](reference/Chargify-API.v1.yaml/components/schemas/Invoice).
         /// </summary>
@@ -135,6 +107,34 @@ namespace AdvancedBilling.Standard.Controllers
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Once an advance invoice has been generated for a subscription's upcoming renewal, it can be viewed through this endpoint. There can only be one advance invoice per subscription per billing cycle.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <returns>Returns the Models.Invoice response from the API call.</returns>
+        public Models.Invoice ReadAdvanceInvoice(
+                int subscriptionId)
+            => CoreHelper.RunTask(ReadAdvanceInvoiceAsync(subscriptionId));
+
+        /// <summary>
+        /// Once an advance invoice has been generated for a subscription's upcoming renewal, it can be viewed through this endpoint. There can only be one advance invoice per subscription per billing cycle.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.Invoice response from the API call.</returns>
+        public async Task<Models.Invoice> ReadAdvanceInvoiceAsync(
+                int subscriptionId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.Invoice>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/advance_invoice.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);

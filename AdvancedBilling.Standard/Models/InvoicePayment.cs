@@ -50,7 +50,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="gatewayUsed">gateway_used.</param>
         /// <param name="gatewayTransactionId">gateway_transaction_id.</param>
         public InvoicePayment(
-            string transactionTime = null,
+            DateTimeOffset? transactionTime = null,
             string memo = null,
             string originalAmount = null,
             string appliedAmount = null,
@@ -84,8 +84,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets TransactionTime.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("transaction_time", NullValueHandling = NullValueHandling.Ignore)]
-        public string TransactionTime { get; set; }
+        public DateTimeOffset? TransactionTime { get; set; }
 
         /// <summary>
         /// Gets or sets Memo.
@@ -239,7 +240,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.TransactionTime = {(this.TransactionTime == null ? "null" : this.TransactionTime)}");
+            toStringOutput.Add($"this.TransactionTime = {(this.TransactionTime == null ? "null" : this.TransactionTime.ToString())}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.OriginalAmount = {(this.OriginalAmount == null ? "null" : this.OriginalAmount)}");
             toStringOutput.Add($"this.AppliedAmount = {(this.AppliedAmount == null ? "null" : this.AppliedAmount)}");

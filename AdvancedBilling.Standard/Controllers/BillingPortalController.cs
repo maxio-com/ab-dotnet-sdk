@@ -35,6 +35,38 @@ namespace AdvancedBilling.Standard.Controllers
         internal BillingPortalController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
+        /// You can revoke a customer's Billing Portal invitation.
+        /// If you attempt to revoke an invitation when the Billing Portal is already disabled for a Customer, you will receive a 422 error response.
+        /// ## Limitations.
+        /// This endpoint will only return a JSON response.
+        /// </summary>
+        /// <param name="customerId">Required parameter: The Chargify id of the customer.</param>
+        /// <returns>Returns the Models.RevokedInvitation response from the API call.</returns>
+        public Models.RevokedInvitation RevokeBillingPortalAccess(
+                int customerId)
+            => CoreHelper.RunTask(RevokeBillingPortalAccessAsync(customerId));
+
+        /// <summary>
+        /// You can revoke a customer's Billing Portal invitation.
+        /// If you attempt to revoke an invitation when the Billing Portal is already disabled for a Customer, you will receive a 422 error response.
+        /// ## Limitations.
+        /// This endpoint will only return a JSON response.
+        /// </summary>
+        /// <param name="customerId">Required parameter: The Chargify id of the customer.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.RevokedInvitation response from the API call.</returns>
+        public async Task<Models.RevokedInvitation> RevokeBillingPortalAccessAsync(
+                int customerId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.RevokedInvitation>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Delete, "/portal/customers/{customer_id}/invitations/revoke.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("customer_id", customerId))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// ## Billing Portal Documentation.
         /// Full documentation on how the Billing Portal operates within the Chargify UI can be located [here](https://chargify.zendesk.com/hc/en-us/articles/4407648972443).
         /// This documentation is focused on how the to configure the Billing Portal Settings, as well as Subscriber Interaction and Merchant Management of the Billing Portal.
@@ -161,38 +193,6 @@ namespace AdvancedBilling.Standard.Controllers
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
                   .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// You can revoke a customer's Billing Portal invitation.
-        /// If you attempt to revoke an invitation when the Billing Portal is already disabled for a Customer, you will receive a 422 error response.
-        /// ## Limitations.
-        /// This endpoint will only return a JSON response.
-        /// </summary>
-        /// <param name="customerId">Required parameter: The Chargify id of the customer.</param>
-        /// <returns>Returns the Models.RevokedInvitation response from the API call.</returns>
-        public Models.RevokedInvitation RevokeBillingPortalAccess(
-                int customerId)
-            => CoreHelper.RunTask(RevokeBillingPortalAccessAsync(customerId));
-
-        /// <summary>
-        /// You can revoke a customer's Billing Portal invitation.
-        /// If you attempt to revoke an invitation when the Billing Portal is already disabled for a Customer, you will receive a 422 error response.
-        /// ## Limitations.
-        /// This endpoint will only return a JSON response.
-        /// </summary>
-        /// <param name="customerId">Required parameter: The Chargify id of the customer.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.RevokedInvitation response from the API call.</returns>
-        public async Task<Models.RevokedInvitation> RevokeBillingPortalAccessAsync(
-                int customerId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.RevokedInvitation>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Delete, "/portal/customers/{customer_id}/invitations/revoke.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("customer_id", customerId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

@@ -27,6 +27,8 @@ namespace AdvancedBilling.Standard.Models
         private string unitPrice;
         private long? pricePerUnitInCents;
         private string description;
+        private int? defaultPricePointId;
+        private List<Models.ComponentPrice> overagePrices;
         private List<Models.ComponentPrice> prices;
         private string taxCode;
         private Models.CreditType? upgradeCharge;
@@ -42,6 +44,8 @@ namespace AdvancedBilling.Standard.Models
             { "unit_price", false },
             { "price_per_unit_in_cents", false },
             { "description", false },
+            { "default_price_point_id", false },
+            { "overage_prices", false },
             { "prices", false },
             { "tax_code", false },
             { "upgrade_charge", false },
@@ -76,6 +80,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="taxable">taxable.</param>
         /// <param name="description">description.</param>
         /// <param name="defaultPricePointId">default_price_point_id.</param>
+        /// <param name="overagePrices">overage_prices.</param>
         /// <param name="prices">prices.</param>
         /// <param name="pricePointCount">price_point_count.</param>
         /// <param name="pricePointsUrl">price_points_url.</param>
@@ -110,6 +115,7 @@ namespace AdvancedBilling.Standard.Models
             bool? taxable = null,
             string description = null,
             int? defaultPricePointId = null,
+            List<Models.ComponentPrice> overagePrices = null,
             List<Models.ComponentPrice> prices = null,
             int? pricePointCount = null,
             string pricePointsUrl = null,
@@ -118,8 +124,8 @@ namespace AdvancedBilling.Standard.Models
             bool? recurring = null,
             Models.CreditType? upgradeCharge = null,
             Models.CreditType? downgradeCredit = null,
-            string createdAt = null,
-            string updatedAt = null,
+            DateTimeOffset? createdAt = null,
+            DateTimeOffset? updatedAt = null,
             string archivedAt = null,
             bool? hideDateRangeOnInvoice = null,
             bool? allowFractionalQuantities = null,
@@ -163,7 +169,16 @@ namespace AdvancedBilling.Standard.Models
                 this.Description = description;
             }
 
-            this.DefaultPricePointId = defaultPricePointId;
+            if (defaultPricePointId != null)
+            {
+                this.DefaultPricePointId = defaultPricePointId;
+            }
+
+            if (overagePrices != null)
+            {
+                this.OveragePrices = overagePrices;
+            }
+
             if (prices != null)
             {
                 this.Prices = prices;
@@ -358,8 +373,38 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets DefaultPricePointId.
         /// </summary>
-        [JsonProperty("default_price_point_id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? DefaultPricePointId { get; set; }
+        [JsonProperty("default_price_point_id")]
+        public int? DefaultPricePointId
+        {
+            get
+            {
+                return this.defaultPricePointId;
+            }
+
+            set
+            {
+                this.shouldSerialize["default_price_point_id"] = true;
+                this.defaultPricePointId = value;
+            }
+        }
+
+        /// <summary>
+        /// An array of price brackets. If the component uses the ‘per_unit’ pricing scheme, this array will be empty.
+        /// </summary>
+        [JsonProperty("overage_prices")]
+        public List<Models.ComponentPrice> OveragePrices
+        {
+            get
+            {
+                return this.overagePrices;
+            }
+
+            set
+            {
+                this.shouldSerialize["overage_prices"] = true;
+                this.overagePrices = value;
+            }
+        }
 
         /// <summary>
         /// An array of price brackets. If the component uses the ‘per_unit’ pricing scheme, this array will be empty.
@@ -462,14 +507,16 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Timestamp indicating when this component was created
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
         /// <summary>
         /// Timestamp indicating when this component was updated
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("updated_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string UpdatedAt { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
 
         /// <summary>
         /// Timestamp indicating when this component was archived
@@ -626,6 +673,22 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serailized.
         /// </summary>
+        public void UnsetDefaultPricePointId()
+        {
+            this.shouldSerialize["default_price_point_id"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetOveragePrices()
+        {
+            this.shouldSerialize["overage_prices"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
         public void UnsetPrices()
         {
             this.shouldSerialize["prices"] = false;
@@ -736,6 +799,24 @@ namespace AdvancedBilling.Standard.Models
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeDefaultPricePointId()
+        {
+            return this.shouldSerialize["default_price_point_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeOveragePrices()
+        {
+            return this.shouldSerialize["overage_prices"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
         public bool ShouldSerializePrices()
         {
             return this.shouldSerialize["prices"];
@@ -830,6 +911,7 @@ namespace AdvancedBilling.Standard.Models
                 ((this.Taxable == null && other.Taxable == null) || (this.Taxable?.Equals(other.Taxable) == true)) &&
                 ((this.Description == null && other.Description == null) || (this.Description?.Equals(other.Description) == true)) &&
                 ((this.DefaultPricePointId == null && other.DefaultPricePointId == null) || (this.DefaultPricePointId?.Equals(other.DefaultPricePointId) == true)) &&
+                ((this.OveragePrices == null && other.OveragePrices == null) || (this.OveragePrices?.Equals(other.OveragePrices) == true)) &&
                 ((this.Prices == null && other.Prices == null) || (this.Prices?.Equals(other.Prices) == true)) &&
                 ((this.PricePointCount == null && other.PricePointCount == null) || (this.PricePointCount?.Equals(other.PricePointCount) == true)) &&
                 ((this.PricePointsUrl == null && other.PricePointsUrl == null) || (this.PricePointsUrl?.Equals(other.PricePointsUrl) == true)) &&
@@ -871,6 +953,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Taxable = {(this.Taxable == null ? "null" : this.Taxable.ToString())}");
             toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
             toStringOutput.Add($"this.DefaultPricePointId = {(this.DefaultPricePointId == null ? "null" : this.DefaultPricePointId.ToString())}");
+            toStringOutput.Add($"this.OveragePrices = {(this.OveragePrices == null ? "null" : $"[{string.Join(", ", this.OveragePrices)} ]")}");
             toStringOutput.Add($"this.Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
             toStringOutput.Add($"this.PricePointCount = {(this.PricePointCount == null ? "null" : this.PricePointCount.ToString())}");
             toStringOutput.Add($"this.PricePointsUrl = {(this.PricePointsUrl == null ? "null" : this.PricePointsUrl)}");
@@ -879,8 +962,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Recurring = {(this.Recurring == null ? "null" : this.Recurring.ToString())}");
             toStringOutput.Add($"this.UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
             toStringOutput.Add($"this.DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
-            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt)}");
+            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
             toStringOutput.Add($"this.ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt)}");
             toStringOutput.Add($"this.HideDateRangeOnInvoice = {(this.HideDateRangeOnInvoice == null ? "null" : this.HideDateRangeOnInvoice.ToString())}");
             toStringOutput.Add($"this.AllowFractionalQuantities = {(this.AllowFractionalQuantities == null ? "null" : this.AllowFractionalQuantities.ToString())}");
