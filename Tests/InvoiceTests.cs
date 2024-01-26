@@ -1,4 +1,5 @@
-﻿using AdvancedBilling.Standard;
+﻿using System.Globalization;
+using AdvancedBilling.Standard;
 using AutoFixture;
 using AdvancedBilling.Standard.Models;
 using AdvancedBilling.Standard.Models.Containers;
@@ -15,7 +16,7 @@ namespace AdvancedBillingTests
         [Fact]
 
         public async Task
-            Invoices_Test_Test()
+            Invoices_BasicInvoicesVoidInvoices_AllResponsesAreSuccessfulAndCanBeDeserialized()
         {
             var productFamilyId = await CreationUtils.CreateOrGetProductFamily(_client);
 
@@ -23,14 +24,14 @@ namespace AdvancedBillingTests
 
             var customerResponse = await CreationUtils.CreateCustomer(_client);
 
-            var paymentProfile = await CreationUtils.CreatePaymentProfile(customerResponse.Customer.Id, _client);
+            var paymentProfileId = await CreationUtils.CreatePaymentProfile(customerResponse.Customer.Id, _client);
 
             var subscription = new CreateSubscription
             {
                 CustomerId = customerResponse.Customer.Id,
                 ProductId = productResponse.Product.Id,
                 PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
-                PaymentProfileId = paymentProfile.PaymentProfile.Id,
+                PaymentProfileId = paymentProfileId,
                 DunningCommunicationDelayEnabled = false,
                 SkipBillingManifestTaxes = false
             };
@@ -59,14 +60,35 @@ namespace AdvancedBillingTests
 
             var invoice = new CreateInvoice(invoiceLineItems, DateTime.Today, billingAddress: billingAddress, coupons: createInvoiceCoupons);
 
-            var test = await _client.InvoicesController.CreateInvoiceAsync((int)subscriptionResponse.Subscription.Id,
+            var invoiceResponse = await _client.InvoicesController.CreateInvoiceAsync((int)subscriptionResponse.Subscription.Id,
                 new CreateInvoiceRequest(invoice));
 
-            test.Invoice.Id.Should().NotBeNull();
-            test.Invoice.Uid.Should().NotBeNullOrEmpty();
+            invoiceResponse.Invoice.Uid.Should().NotBeNullOrEmpty();
 
-            var blabla = await _client.InvoicesController.VoidInvoiceAsync(test.Invoice.Uid);
+            var reason = "Duplicate invoice";
 
+            var voidInvoice = new VoidInvoice(reason);
+
+            var voidInvoiceResponse = await _client.InvoicesController.VoidInvoiceAsync(invoiceResponse.Invoice.Uid, new VoidInvoiceRequest(voidInvoice));
+
+            voidInvoiceResponse.Uid.Should().NotBeNull();
+
+            var invoiceEventsResponse = await _client.InvoicesController.ListInvoiceEventsAsync(new ListInvoiceEventsInput(
+                sinceDate: DateTime.Now.AddDays(-1).ToString(CultureInfo.InvariantCulture), eventTypes: new List<InvoiceEventType>()
+                {
+                    InvoiceEventType.VoidInvoice
+                }));
+
+            invoiceEventsResponse.Events.Count.Should().BeGreaterOrEqualTo(1);
+
+            var singleEvent = invoiceEventsResponse.Events.FirstOrDefault();
+
+            singleEvent.Should().NotBeNull();
+
+            singleEvent.EventType.Should().Be(InvoiceEventType.VoidInvoice);
+
+            await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfileId,
+                productResponse, _client);
         }
 
     }
