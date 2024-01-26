@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `Id` | `int?` | Optional | - |
+| `Id` | `long?` | Optional | **Constraints**: `>= 0` |
 | `Memo` | `string` | Optional | - |
 | `CreatedAt` | `DateTimeOffset?` | Optional | - |
 | `PricePointId` | `int?` | Optional | - |

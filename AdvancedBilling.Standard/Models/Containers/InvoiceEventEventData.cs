@@ -18,7 +18,7 @@ namespace AdvancedBilling.Standard.Models.Containers
             typeof(RefundInvoiceEventDataCase),
             typeof(RemovePaymentEventDataCase),
             typeof(VoidInvoiceEventDataCase),
-            typeof(VoidInvoiceEventData1Case)
+            typeof(VoidRemainderEventDataCase)
         },
         false
     )]
@@ -113,14 +113,14 @@ namespace AdvancedBilling.Standard.Models.Containers
         }
 
         /// <summary>
-        /// This is Void Invoice Event Data1 case.
+        /// This is Void Remainder Event Data case.
         /// </summary>
         /// <returns>
-        /// The InvoiceEventEventData instance, wrapping the provided VoidInvoiceEventData1 value.
+        /// The InvoiceEventEventData instance, wrapping the provided VoidRemainderEventData value.
         /// </returns>
-        public static InvoiceEventEventData FromVoidInvoiceEventData1(VoidInvoiceEventData1 voidInvoiceEventData1)
+        public static InvoiceEventEventData FromVoidRemainderEventData(VoidRemainderEventData voidRemainderEventData)
         {
-            return new VoidInvoiceEventData1Case().Set(voidInvoiceEventData1);
+            return new VoidRemainderEventDataCase().Set(voidRemainderEventData);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace AdvancedBilling.Standard.Models.Containers
             Func<RefundInvoiceEventData, T> refundInvoiceEventData,
             Func<RemovePaymentEventData, T> removePaymentEventData,
             Func<VoidInvoiceEventData, T> voidInvoiceEventData,
-            Func<VoidInvoiceEventData1, T> voidInvoiceEventData1);
+            Func<VoidRemainderEventData, T> voidRemainderEventData);
 
         [JsonConverter(typeof(UnionTypeCaseConverter<ApplyCreditNoteEventDataCase, ApplyCreditNoteEventData>))]
         private sealed class ApplyCreditNoteEventDataCase : InvoiceEventEventData, ICaseValue<ApplyCreditNoteEventDataCase, ApplyCreditNoteEventData>
@@ -156,7 +156,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<RefundInvoiceEventData, T> refundInvoiceEventData,
                 Func<RemovePaymentEventData, T> removePaymentEventData,
                 Func<VoidInvoiceEventData, T> voidInvoiceEventData,
-                Func<VoidInvoiceEventData1, T> voidInvoiceEventData1)
+                Func<VoidRemainderEventData, T> voidRemainderEventData)
             {
                 return applyCreditNoteEventData(_value);
             }
@@ -192,7 +192,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<RefundInvoiceEventData, T> refundInvoiceEventData,
                 Func<RemovePaymentEventData, T> removePaymentEventData,
                 Func<VoidInvoiceEventData, T> voidInvoiceEventData,
-                Func<VoidInvoiceEventData1, T> voidInvoiceEventData1)
+                Func<VoidRemainderEventData, T> voidRemainderEventData)
             {
                 return applyDebitNoteEventData(_value);
             }
@@ -228,7 +228,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<RefundInvoiceEventData, T> refundInvoiceEventData,
                 Func<RemovePaymentEventData, T> removePaymentEventData,
                 Func<VoidInvoiceEventData, T> voidInvoiceEventData,
-                Func<VoidInvoiceEventData1, T> voidInvoiceEventData1)
+                Func<VoidRemainderEventData, T> voidRemainderEventData)
             {
                 return applyPaymentEventData(_value);
             }
@@ -264,7 +264,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<RefundInvoiceEventData, T> refundInvoiceEventData,
                 Func<RemovePaymentEventData, T> removePaymentEventData,
                 Func<VoidInvoiceEventData, T> voidInvoiceEventData,
-                Func<VoidInvoiceEventData1, T> voidInvoiceEventData1)
+                Func<VoidRemainderEventData, T> voidRemainderEventData)
             {
                 return changeInvoiceCollectionMethodEventData(_value);
             }
@@ -300,7 +300,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<RefundInvoiceEventData, T> refundInvoiceEventData,
                 Func<RemovePaymentEventData, T> removePaymentEventData,
                 Func<VoidInvoiceEventData, T> voidInvoiceEventData,
-                Func<VoidInvoiceEventData1, T> voidInvoiceEventData1)
+                Func<VoidRemainderEventData, T> voidRemainderEventData)
             {
                 return issueInvoiceEventData(_value);
             }
@@ -336,7 +336,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<RefundInvoiceEventData, T> refundInvoiceEventData,
                 Func<RemovePaymentEventData, T> removePaymentEventData,
                 Func<VoidInvoiceEventData, T> voidInvoiceEventData,
-                Func<VoidInvoiceEventData1, T> voidInvoiceEventData1)
+                Func<VoidRemainderEventData, T> voidRemainderEventData)
             {
                 return refundInvoiceEventData(_value);
             }
@@ -372,7 +372,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<RefundInvoiceEventData, T> refundInvoiceEventData,
                 Func<RemovePaymentEventData, T> removePaymentEventData,
                 Func<VoidInvoiceEventData, T> voidInvoiceEventData,
-                Func<VoidInvoiceEventData1, T> voidInvoiceEventData1)
+                Func<VoidRemainderEventData, T> voidRemainderEventData)
             {
                 return removePaymentEventData(_value);
             }
@@ -408,7 +408,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<RefundInvoiceEventData, T> refundInvoiceEventData,
                 Func<RemovePaymentEventData, T> removePaymentEventData,
                 Func<VoidInvoiceEventData, T> voidInvoiceEventData,
-                Func<VoidInvoiceEventData1, T> voidInvoiceEventData1)
+                Func<VoidRemainderEventData, T> voidRemainderEventData)
             {
                 return voidInvoiceEventData(_value);
             }
@@ -430,10 +430,10 @@ namespace AdvancedBilling.Standard.Models.Containers
             }
         }
 
-        [JsonConverter(typeof(UnionTypeCaseConverter<VoidInvoiceEventData1Case, VoidInvoiceEventData1>))]
-        private sealed class VoidInvoiceEventData1Case : InvoiceEventEventData, ICaseValue<VoidInvoiceEventData1Case, VoidInvoiceEventData1>
+        [JsonConverter(typeof(UnionTypeCaseConverter<VoidRemainderEventDataCase, VoidRemainderEventData>))]
+        private sealed class VoidRemainderEventDataCase : InvoiceEventEventData, ICaseValue<VoidRemainderEventDataCase, VoidRemainderEventData>
         {
-            public VoidInvoiceEventData1 _value;
+            public VoidRemainderEventData _value;
 
             public override T Match<T>(
                 Func<ApplyCreditNoteEventData, T> applyCreditNoteEventData,
@@ -444,18 +444,18 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<RefundInvoiceEventData, T> refundInvoiceEventData,
                 Func<RemovePaymentEventData, T> removePaymentEventData,
                 Func<VoidInvoiceEventData, T> voidInvoiceEventData,
-                Func<VoidInvoiceEventData1, T> voidInvoiceEventData1)
+                Func<VoidRemainderEventData, T> voidRemainderEventData)
             {
-                return voidInvoiceEventData1(_value);
+                return voidRemainderEventData(_value);
             }
 
-            public VoidInvoiceEventData1Case Set(VoidInvoiceEventData1 value)
+            public VoidRemainderEventDataCase Set(VoidRemainderEventData value)
             {
                 _value = value;
                 return this;
             }
 
-            public VoidInvoiceEventData1 Get()
+            public VoidRemainderEventData Get()
             {
                 return _value;
             }

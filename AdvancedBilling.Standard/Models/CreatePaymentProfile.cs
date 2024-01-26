@@ -100,8 +100,8 @@ namespace AdvancedBilling.Standard.Models
             string bankRoutingNumber = null,
             string bankAccountNumber = null,
             string bankBranchCode = null,
-            string bankAccountType = null,
-            string bankAccountHolderType = null,
+            Models.BankAccountType? bankAccountType = Models.BankAccountType.Checking,
+            Models.BankAccountHolderType? bankAccountHolderType = null,
             string lastFour = null)
         {
             this.ChargifyToken = chargifyToken;
@@ -329,16 +329,16 @@ namespace AdvancedBilling.Standard.Models
         public string BankBranchCode { get; set; }
 
         /// <summary>
-        /// Gets or sets BankAccountType.
+        /// Defaults to checking
         /// </summary>
         [JsonProperty("bank_account_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string BankAccountType { get; set; }
+        public Models.BankAccountType? BankAccountType { get; set; }
 
         /// <summary>
-        /// Gets or sets BankAccountHolderType.
+        /// Defaults to personal
         /// </summary>
         [JsonProperty("bank_account_holder_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string BankAccountHolderType { get; set; }
+        public Models.BankAccountHolderType? BankAccountHolderType { get; set; }
 
         /// <summary>
         /// (Optional) Used for creating subscription with payment profile imported using vault_token, for proper display in Advanced Billing UI
@@ -454,8 +454,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.BankRoutingNumber = {(this.BankRoutingNumber == null ? "null" : this.BankRoutingNumber)}");
             toStringOutput.Add($"this.BankAccountNumber = {(this.BankAccountNumber == null ? "null" : this.BankAccountNumber)}");
             toStringOutput.Add($"this.BankBranchCode = {(this.BankBranchCode == null ? "null" : this.BankBranchCode)}");
-            toStringOutput.Add($"this.BankAccountType = {(this.BankAccountType == null ? "null" : this.BankAccountType)}");
-            toStringOutput.Add($"this.BankAccountHolderType = {(this.BankAccountHolderType == null ? "null" : this.BankAccountHolderType)}");
+            toStringOutput.Add($"this.BankAccountType = {(this.BankAccountType == null ? "null" : this.BankAccountType.ToString())}");
+            toStringOutput.Add($"this.BankAccountHolderType = {(this.BankAccountHolderType == null ? "null" : this.BankAccountHolderType.ToString())}");
             toStringOutput.Add($"this.LastFour = {(this.LastFour == null ? "null" : this.LastFour)}");
         }
     }

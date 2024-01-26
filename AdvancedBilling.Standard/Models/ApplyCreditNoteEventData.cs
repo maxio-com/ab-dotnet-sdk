@@ -51,7 +51,7 @@ namespace AdvancedBilling.Standard.Models
             string memo = null,
             string role = null,
             bool? consolidatedInvoice = null,
-            List<Models.AppliedCreditNote> appliedCreditNotes = null)
+            List<Models.AppliedCreditNoteData> appliedCreditNotes = null)
         {
             this.Uid = uid;
             this.CreditNoteNumber = creditNoteNumber;
@@ -131,7 +131,7 @@ namespace AdvancedBilling.Standard.Models
         /// List of credit notes applied to children invoices (if consolidated invoice)
         /// </summary>
         [JsonProperty("applied_credit_notes", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Models.AppliedCreditNote> AppliedCreditNotes { get; set; }
+        public List<Models.AppliedCreditNoteData> AppliedCreditNotes { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

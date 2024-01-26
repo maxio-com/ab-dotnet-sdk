@@ -42,7 +42,6 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets QuantityBasedComponent.
         /// </summary>
         [JsonProperty("quantity_based_component")]
-        [JsonRequired]
         public Models.QuantityBasedComponent QuantityBasedComponent { get; set; }
 
         /// <inheritdoc/>

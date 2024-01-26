@@ -12,6 +12,7 @@ namespace AdvancedBilling.Standard.Models
     using System.Threading.Tasks;
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
+    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
@@ -38,10 +39,10 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="startingQuantity">starting_quantity.</param>
         public UpdatePrice(
             int? id = null,
-            int? endingQuantity = null,
-            int? unitPrice = null,
-            string destroy = null,
-            int? startingQuantity = null)
+            UpdatePriceEndingQuantity endingQuantity = null,
+            UpdatePriceUnitPrice unitPrice = null,
+            bool? destroy = null,
+            UpdatePriceStartingQuantity startingQuantity = null)
         {
             this.Id = id;
             this.EndingQuantity = endingQuantity;
@@ -60,25 +61,25 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets EndingQuantity.
         /// </summary>
         [JsonProperty("ending_quantity", NullValueHandling = NullValueHandling.Ignore)]
-        public int? EndingQuantity { get; set; }
+        public UpdatePriceEndingQuantity EndingQuantity { get; set; }
 
         /// <summary>
-        /// Gets or sets UnitPrice.
+        /// The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
         /// </summary>
         [JsonProperty("unit_price", NullValueHandling = NullValueHandling.Ignore)]
-        public int? UnitPrice { get; set; }
+        public UpdatePriceUnitPrice UnitPrice { get; set; }
 
         /// <summary>
         /// Gets or sets Destroy.
         /// </summary>
         [JsonProperty("_destroy", NullValueHandling = NullValueHandling.Ignore)]
-        public string Destroy { get; set; }
+        public bool? Destroy { get; set; }
 
         /// <summary>
         /// Gets or sets StartingQuantity.
         /// </summary>
         [JsonProperty("starting_quantity", NullValueHandling = NullValueHandling.Ignore)]
-        public int? StartingQuantity { get; set; }
+        public UpdatePriceStartingQuantity StartingQuantity { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -116,10 +117,10 @@ namespace AdvancedBilling.Standard.Models
         protected void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.EndingQuantity = {(this.EndingQuantity == null ? "null" : this.EndingQuantity.ToString())}");
-            toStringOutput.Add($"this.UnitPrice = {(this.UnitPrice == null ? "null" : this.UnitPrice.ToString())}");
-            toStringOutput.Add($"this.Destroy = {(this.Destroy == null ? "null" : this.Destroy)}");
-            toStringOutput.Add($"this.StartingQuantity = {(this.StartingQuantity == null ? "null" : this.StartingQuantity.ToString())}");
+            toStringOutput.Add($"EndingQuantity = {(this.EndingQuantity == null ? "null" : this.EndingQuantity.ToString())}");
+            toStringOutput.Add($"UnitPrice = {(this.UnitPrice == null ? "null" : this.UnitPrice.ToString())}");
+            toStringOutput.Add($"this.Destroy = {(this.Destroy == null ? "null" : this.Destroy.ToString())}");
+            toStringOutput.Add($"StartingQuantity = {(this.StartingQuantity == null ? "null" : this.StartingQuantity.ToString())}");
         }
     }
 }

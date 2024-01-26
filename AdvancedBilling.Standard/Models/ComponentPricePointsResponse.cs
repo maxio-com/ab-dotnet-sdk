@@ -32,10 +32,13 @@ namespace AdvancedBilling.Standard.Models
         /// Initializes a new instance of the <see cref="ComponentPricePointsResponse"/> class.
         /// </summary>
         /// <param name="pricePoints">price_points.</param>
+        /// <param name="meta">meta.</param>
         public ComponentPricePointsResponse(
-            List<Models.ComponentPricePoint> pricePoints = null)
+            List<Models.ComponentPricePoint> pricePoints = null,
+            Models.ListPublicKeysMeta meta = null)
         {
             this.PricePoints = pricePoints;
+            this.Meta = meta;
         }
 
         /// <summary>
@@ -43,6 +46,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("price_points", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.ComponentPricePoint> PricePoints { get; set; }
+
+        /// <summary>
+        /// Gets or sets Meta.
+        /// </summary>
+        [JsonProperty("meta", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.ListPublicKeysMeta Meta { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -66,7 +75,8 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is ComponentPricePointsResponse other &&                ((this.PricePoints == null && other.PricePoints == null) || (this.PricePoints?.Equals(other.PricePoints) == true));
+            return obj is ComponentPricePointsResponse other &&                ((this.PricePoints == null && other.PricePoints == null) || (this.PricePoints?.Equals(other.PricePoints) == true)) &&
+                ((this.Meta == null && other.Meta == null) || (this.Meta?.Equals(other.Meta) == true));
         }
         
         /// <summary>
@@ -76,6 +86,7 @@ namespace AdvancedBilling.Standard.Models
         protected void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PricePoints = {(this.PricePoints == null ? "null" : $"[{string.Join(", ", this.PricePoints)} ]")}");
+            toStringOutput.Add($"this.Meta = {(this.Meta == null ? "null" : this.Meta.ToString())}");
         }
     }
 }

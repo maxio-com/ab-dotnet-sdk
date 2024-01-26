@@ -64,6 +64,40 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
+        /// This endpoint returns your site's current MRR, including plan and usage breakouts split per subscription.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the Models.SubscriptionMRRResponse response from the API call.</returns>
+        [Obsolete]
+        public Models.SubscriptionMRRResponse ListMrrPerSubscription(
+                Models.ListMrrPerSubscriptionInput input)
+            => CoreHelper.RunTask(ListMrrPerSubscriptionAsync(input));
+
+        /// <summary>
+        /// This endpoint returns your site's current MRR, including plan and usage breakouts split per subscription.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.SubscriptionMRRResponse response from the API call.</returns>
+        [Obsolete]
+        public async Task<Models.SubscriptionMRRResponse> ListMrrPerSubscriptionAsync(
+                Models.ListMrrPerSubscriptionInput input,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.SubscriptionMRRResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/subscriptions_mrr.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Query(_query => _query.Setup("filter[subscription_ids]", input.FilterSubscriptionIds))
+                      .Query(_query => _query.Setup("at_time", input.AtTime))
+                      .Query(_query => _query.Setup("page", input.Page))
+                      .Query(_query => _query.Setup("per_page", input.PerPage))
+                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("400", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionsMrrErrorResponseException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// This endpoint returns your site's current MRR, including plan and usage breakouts.
         /// </summary>
         /// <param name="atTime">Optional parameter: submit a timestamp in ISO8601 format to request MRR for a historic time.</param>
@@ -151,40 +185,6 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))
                       .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This endpoint returns your site's current MRR, including plan and usage breakouts split per subscription.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the Models.SubscriptionMRRResponse response from the API call.</returns>
-        [Obsolete]
-        public Models.SubscriptionMRRResponse ListMrrPerSubscription(
-                Models.ListMrrPerSubscriptionInput input)
-            => CoreHelper.RunTask(ListMrrPerSubscriptionAsync(input));
-
-        /// <summary>
-        /// This endpoint returns your site's current MRR, including plan and usage breakouts split per subscription.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.SubscriptionMRRResponse response from the API call.</returns>
-        [Obsolete]
-        public async Task<Models.SubscriptionMRRResponse> ListMrrPerSubscriptionAsync(
-                Models.ListMrrPerSubscriptionInput input,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SubscriptionMRRResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/subscriptions_mrr.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("filter[subscription_ids]", input.FilterSubscriptionIds))
-                      .Query(_query => _query.Setup("at_time", input.AtTime))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("400", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionsMrrErrorResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

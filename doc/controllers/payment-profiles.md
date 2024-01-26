@@ -10,18 +10,238 @@ PaymentProfilesController paymentProfilesController = client.PaymentProfilesCont
 
 ## Methods
 
+* [Update Payment Profile](../../doc/controllers/payment-profiles.md#update-payment-profile)
+* [Delete Subscription Group Payment Profile](../../doc/controllers/payment-profiles.md#delete-subscription-group-payment-profile)
+* [Send Request Update Payment Email](../../doc/controllers/payment-profiles.md#send-request-update-payment-email)
 * [Create Payment Profile](../../doc/controllers/payment-profiles.md#create-payment-profile)
 * [List Payment Profiles](../../doc/controllers/payment-profiles.md#list-payment-profiles)
 * [Read Payment Profile](../../doc/controllers/payment-profiles.md#read-payment-profile)
-* [Update Payment Profile](../../doc/controllers/payment-profiles.md#update-payment-profile)
-* [Delete Unused Payment Profile](../../doc/controllers/payment-profiles.md#delete-unused-payment-profile)
 * [Delete Subscriptions Payment Profile](../../doc/controllers/payment-profiles.md#delete-subscriptions-payment-profile)
-* [Verify Bank Account](../../doc/controllers/payment-profiles.md#verify-bank-account)
-* [Delete Subscription Group Payment Profile](../../doc/controllers/payment-profiles.md#delete-subscription-group-payment-profile)
 * [Update Subscription Default Payment Profile](../../doc/controllers/payment-profiles.md#update-subscription-default-payment-profile)
+* [Delete Unused Payment Profile](../../doc/controllers/payment-profiles.md#delete-unused-payment-profile)
+* [Verify Bank Account](../../doc/controllers/payment-profiles.md#verify-bank-account)
 * [Update Subscription Group Default Payment Profile](../../doc/controllers/payment-profiles.md#update-subscription-group-default-payment-profile)
 * [Read One Time Token](../../doc/controllers/payment-profiles.md#read-one-time-token)
-* [Send Request Update Payment Email](../../doc/controllers/payment-profiles.md#send-request-update-payment-email)
+
+
+# Update Payment Profile
+
+## Partial Card Updates
+
+In the event that you are using the Authorize.net, Stripe, Cybersource, Forte or Braintree Blue payment gateways, you can update just the billing and contact information for a payment method. Note the lack of credit-card related data contained in the JSON payload.
+
+In this case, the following JSON is acceptable:
+
+```
+{
+  "payment_profile": {
+    "first_name": "Kelly",
+    "last_name": "Test",
+    "billing_address": "789 Juniper Court",
+    "billing_city": "Boulder",
+    "billing_state": "CO",
+    "billing_zip": "80302",
+    "billing_country": "US",
+    "billing_address_2": null
+  }
+}
+```
+
+The result will be that you have updated the billing information for the card, yet retained the original card number data.
+
+## Specific notes on updating payment profiles
+
+- Merchants with **Authorize.net**, **Cybersource**, **Forte**, **Braintree Blue** or **Stripe** as their payment gateway can update their Customer’s credit cards without passing in the full credit card number and CVV.
+
+- If you are using **Authorize.net**, **Cybersource**, **Forte**, **Braintree Blue** or **Stripe**, Chargify will ignore the credit card number and CVV when processing an update via the API, and attempt a partial update instead. If you wish to change the card number on a payment profile, you will need to create a new payment profile for the given customer.
+
+- A Payment Profile cannot be updated with the attributes of another type of Payment Profile. For example, if the payment profile you are attempting to update is a credit card, you cannot pass in bank account attributes (like `bank_account_number`), and vice versa.
+
+- Updating a payment profile directly will not trigger an attempt to capture a past-due balance. If this is the intent, update the card details via the Subscription instead.
+
+- If you are using Authorize.net or Stripe, you may elect to manually trigger a retry for a past due subscription after a partial update.
+
+```csharp
+UpdatePaymentProfileAsync(
+    int paymentProfileId,
+    Models.UpdatePaymentProfileRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `paymentProfileId` | `int` | Template, Required | The Chargify id of the payment profile |
+| `body` | [`UpdatePaymentProfileRequest`](../../doc/models/update-payment-profile-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.PaymentProfileResponse>`](../../doc/models/payment-profile-response.md)
+
+## Example Usage
+
+```csharp
+int paymentProfileId = 198;
+UpdatePaymentProfileRequest body = new UpdatePaymentProfileRequest
+{
+    PaymentProfile = new UpdatePaymentProfile
+    {
+        FirstName = "Graham",
+        LastName = "Test",
+        FullNumber = "4111111111111111",
+        CardType = CardType.Master,
+        ExpirationMonth = "04",
+        ExpirationYear = "2030",
+        CurrentVault = CurrentVault.Bogus,
+        BillingAddress = "456 Juniper Court",
+        BillingCity = "Boulder",
+        BillingState = "CO",
+        BillingZip = "80302",
+        BillingCountry = "US",
+        BillingAddress2 = "billing_address_22",
+    },
+};
+
+try
+{
+    PaymentProfileResponse result = await paymentProfilesController.UpdatePaymentProfileAsync(
+        paymentProfileId,
+        body
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "payment_profile": {
+    "id": 10088716,
+    "first_name": "Test",
+    "last_name": "Subscription",
+    "masked_card_number": "XXXX-XXXX-XXXX-1",
+    "card_type": "bogus",
+    "expiration_month": 1,
+    "expiration_year": 2022,
+    "customer_id": 14543792,
+    "current_vault": "bogus",
+    "vault_token": "1",
+    "billing_address": "123 Montana Way",
+    "billing_city": "Billings",
+    "billing_state": "MT",
+    "billing_zip": "59101",
+    "billing_country": "US",
+    "customer_vault_token": null,
+    "billing_address_2": "",
+    "payment_type": "credit_card",
+    "site_gateway_setting_id": 1,
+    "gateway_handle": null
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorStringMapResponseException`](../../doc/models/error-string-map-response-exception.md) |
+
+
+# Delete Subscription Group Payment Profile
+
+This will delete a Payment Profile belonging to a Subscription Group.
+
+**Note**: If the Payment Profile belongs to multiple Subscription Groups and/or Subscriptions, it will be removed from all of them.
+
+```csharp
+DeleteSubscriptionGroupPaymentProfileAsync(
+    string uid,
+    int paymentProfileId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `uid` | `string` | Template, Required | The uid of the subscription group |
+| `paymentProfileId` | `int` | Template, Required | The Chargify id of the payment profile |
+
+## Response Type
+
+`Task`
+
+## Example Usage
+
+```csharp
+string uid = "uid0";
+int paymentProfileId = 198;
+try
+{
+    await paymentProfilesController.DeleteSubscriptionGroupPaymentProfileAsync(
+        uid,
+        paymentProfileId
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+
+# Send Request Update Payment Email
+
+You can send a "request payment update" email to the customer associated with the subscription.
+
+If you attempt to send a "request payment update" email more than five times within a 30-minute period, you will receive a `422` response with an error message in the body. This error message will indicate that the request has been rejected due to excessive attempts, and will provide instructions on how to resubmit the request.
+
+Additionally, if you attempt to send a "request payment update" email for a subscription that does not exist, you will receive a `404` error response. This error message will indicate that the subscription could not be found, and will provide instructions on how to correct the error and resubmit the request.
+
+These error responses are designed to prevent excessive or invalid requests, and to provide clear and helpful information to users who encounter errors during the request process.
+
+```csharp
+SendRequestUpdatePaymentEmailAsync(
+    int subscriptionId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+
+## Response Type
+
+`Task`
+
+## Example Usage
+
+```csharp
+int subscriptionId = 222;
+try
+{
+    await paymentProfilesController.SendRequestUpdatePaymentEmailAsync(subscriptionId);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # Create Payment Profile
@@ -284,7 +504,7 @@ CreatePaymentProfileAsync(
 
 ## Response Type
 
-[`Task<Models.CreatePaymentProfileResponse>`](../../doc/models/create-payment-profile-response.md)
+[`Task<Models.PaymentProfileResponse>`](../../doc/models/payment-profile-response.md)
 
 ## Example Usage
 
@@ -298,14 +518,14 @@ CreatePaymentProfileRequest body = new CreatePaymentProfileRequest
         BankName = "Best Bank",
         BankRoutingNumber = "021000089",
         BankAccountNumber = "111111111111",
-        BankAccountType = "checking",
-        BankAccountHolderType = "business",
+        BankAccountType = BankAccountType.Checking,
+        BankAccountHolderType = BankAccountHolderType.Business,
     },
 };
 
 try
 {
-    CreatePaymentProfileResponse result = await paymentProfilesController.CreatePaymentProfileAsync(body);
+    PaymentProfileResponse result = await paymentProfilesController.CreatePaymentProfileAsync(body);
 }
 catch (ApiException e)
 {
@@ -322,6 +542,7 @@ catch (ApiException e)
     "first_name": "Jessica",
     "last_name": "Test",
     "card_type": "visa",
+    "masked_card_number": "XXXX-XXXX-XXXX-1111",
     "expiration_month": 10,
     "expiration_year": 2018,
     "customer_id": 19195410,
@@ -369,7 +590,7 @@ ListPaymentProfilesAsync(
 
 ## Response Type
 
-[`Task<List<Models.ListPaymentProfilesResponse>>`](../../doc/models/list-payment-profiles-response.md)
+[`Task<List<Models.PaymentProfileResponse>>`](../../doc/models/payment-profile-response.md)
 
 ## Example Usage
 
@@ -382,7 +603,7 @@ ListPaymentProfilesInput listPaymentProfilesInput = new ListPaymentProfilesInput
 
 try
 {
-    List<ListPaymentProfilesResponse> result = await paymentProfilesController.ListPaymentProfilesAsync(listPaymentProfilesInput);
+    List<PaymentProfileResponse> result = await paymentProfilesController.ListPaymentProfilesAsync(listPaymentProfilesInput);
 }
 catch (ApiException e)
 {
@@ -416,6 +637,7 @@ catch (ApiException e)
       "bank_account_type": "checking",
       "bank_account_holder_type": "personal",
       "payment_type": "bank_account",
+      "verified": true,
       "site_gateway_setting_id": 1,
       "gateway_handle": "handle"
     }
@@ -441,6 +663,7 @@ catch (ApiException e)
       "bank_account_type": "checking",
       "bank_account_holder_type": "personal",
       "payment_type": "bank_account",
+      "verified": true,
       "site_gateway_setting_id": 1,
       "gateway_handle": "handle"
     }
@@ -489,26 +712,26 @@ Example response for Bank Account:
 
 ```csharp
 ReadPaymentProfileAsync(
-    string paymentProfileId)
+    int paymentProfileId)
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `paymentProfileId` | `string` | Template, Required | The Chargify id of the payment profile |
+| `paymentProfileId` | `int` | Template, Required | The Chargify id of the payment profile |
 
 ## Response Type
 
-[`Task<Models.ReadPaymentProfileResponse>`](../../doc/models/read-payment-profile-response.md)
+[`Task<Models.PaymentProfileResponse>`](../../doc/models/payment-profile-response.md)
 
 ## Example Usage
 
 ```csharp
-string paymentProfileId = "payment_profile_id2";
+int paymentProfileId = 198;
 try
 {
-    ReadPaymentProfileResponse result = await paymentProfilesController.ReadPaymentProfileAsync(paymentProfileId);
+    PaymentProfileResponse result = await paymentProfilesController.ReadPaymentProfileAsync(paymentProfileId);
 }
 catch (ApiException e)
 {
@@ -543,165 +766,6 @@ catch (ApiException e)
     "site_gateway_setting_id": 1,
     "gateway_handle": null
   }
-}
-```
-
-
-# Update Payment Profile
-
-## Partial Card Updates
-
-In the event that you are using the Authorize.net, Stripe, Cybersource, Forte or Braintree Blue payment gateways, you can update just the billing and contact information for a payment method. Note the lack of credit-card related data contained in the JSON payload.
-
-In this case, the following JSON is acceptable:
-
-```
-{
-  "payment_profile": {
-    "first_name": "Kelly",
-    "last_name": "Test",
-    "billing_address": "789 Juniper Court",
-    "billing_city": "Boulder",
-    "billing_state": "CO",
-    "billing_zip": "80302",
-    "billing_country": "US",
-    "billing_address_2": null
-  }
-}
-```
-
-The result will be that you have updated the billing information for the card, yet retained the original card number data.
-
-## Specific notes on updating payment profiles
-
-- Merchants with **Authorize.net**, **Cybersource**, **Forte**, **Braintree Blue** or **Stripe** as their payment gateway can update their Customer’s credit cards without passing in the full credit card number and CVV.
-
-- If you are using **Authorize.net**, **Cybersource**, **Forte**, **Braintree Blue** or **Stripe**, Chargify will ignore the credit card number and CVV when processing an update via the API, and attempt a partial update instead. If you wish to change the card number on a payment profile, you will need to create a new payment profile for the given customer.
-
-- A Payment Profile cannot be updated with the attributes of another type of Payment Profile. For example, if the payment profile you are attempting to update is a credit card, you cannot pass in bank account attributes (like `bank_account_number`), and vice versa.
-
-- Updating a payment profile directly will not trigger an attempt to capture a past-due balance. If this is the intent, update the card details via the Subscription instead.
-
-- If you are using Authorize.net or Stripe, you may elect to manually trigger a retry for a past due subscription after a partial update.
-
-```csharp
-UpdatePaymentProfileAsync(
-    string paymentProfileId,
-    Models.UpdatePaymentProfileRequest body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `paymentProfileId` | `string` | Template, Required | The Chargify id of the payment profile |
-| `body` | [`UpdatePaymentProfileRequest`](../../doc/models/update-payment-profile-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`Task<Models.UpdatePaymentProfileResponse>`](../../doc/models/update-payment-profile-response.md)
-
-## Example Usage
-
-```csharp
-string paymentProfileId = "payment_profile_id2";
-UpdatePaymentProfileRequest body = new UpdatePaymentProfileRequest
-{
-    PaymentProfile = new UpdatePaymentProfile
-    {
-        FirstName = "Graham",
-        LastName = "Test",
-        FullNumber = "4111111111111111",
-        CardType = CardType.Master,
-        ExpirationMonth = "04",
-        ExpirationYear = "2030",
-        CurrentVault = CurrentVault.Bogus,
-        BillingAddress = "456 Juniper Court",
-        BillingCity = "Boulder",
-        BillingState = "CO",
-        BillingZip = "80302",
-        BillingCountry = "US",
-        BillingAddress2 = "billing_address_22",
-    },
-};
-
-try
-{
-    UpdatePaymentProfileResponse result = await paymentProfilesController.UpdatePaymentProfileAsync(
-        paymentProfileId,
-        body
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "payment_profile": {
-    "id": 10088716,
-    "first_name": "Test",
-    "last_name": "Subscription",
-    "masked_card_number": "XXXX-XXXX-XXXX-1",
-    "card_type": "bogus",
-    "expiration_month": 1,
-    "expiration_year": 2022,
-    "customer_id": 14543792,
-    "current_vault": "bogus",
-    "vault_token": "1",
-    "billing_address": "123 Montana Way",
-    "billing_city": "Billings",
-    "billing_state": "MT",
-    "billing_zip": "59101",
-    "billing_country": "US",
-    "customer_vault_token": null,
-    "billing_address_2": "",
-    "payment_type": "credit_card",
-    "site_gateway_setting_id": 1,
-    "gateway_handle": null
-  }
-}
-```
-
-
-# Delete Unused Payment Profile
-
-Deletes an unused payment profile.
-
-If the payment profile is in use by one or more subscriptions or groups, a 422 and error message will be returned.
-
-```csharp
-DeleteUnusedPaymentProfileAsync(
-    string paymentProfileId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `paymentProfileId` | `string` | Template, Required | The Chargify id of the payment profile |
-
-## Response Type
-
-`Task`
-
-## Example Usage
-
-```csharp
-string paymentProfileId = "payment_profile_id2";
-try
-{
-    await paymentProfilesController.DeleteUnusedPaymentProfileAsync(paymentProfileId);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
 }
 ```
 
@@ -709,7 +773,7 @@ catch (ApiException e)
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+| 404 | Not Found | `ApiException` |
 
 
 # Delete Subscriptions Payment Profile
@@ -723,7 +787,7 @@ This will delete a payment profile belonging to the customer on the subscription
 ```csharp
 DeleteSubscriptionsPaymentProfileAsync(
     int subscriptionId,
-    string paymentProfileId)
+    int paymentProfileId)
 ```
 
 ## Parameters
@@ -731,7 +795,7 @@ DeleteSubscriptionsPaymentProfileAsync(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `paymentProfileId` | `string` | Template, Required | The Chargify id of the payment profile |
+| `paymentProfileId` | `int` | Template, Required | The Chargify id of the payment profile |
 
 ## Response Type
 
@@ -741,138 +805,11 @@ DeleteSubscriptionsPaymentProfileAsync(
 
 ```csharp
 int subscriptionId = 222;
-string paymentProfileId = "payment_profile_id2";
+int paymentProfileId = 198;
 try
 {
     await paymentProfilesController.DeleteSubscriptionsPaymentProfileAsync(
         subscriptionId,
-        paymentProfileId
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-
-# Verify Bank Account
-
-Submit the two small deposit amounts the customer received in their bank account in order to verify the bank account. (Stripe only)
-
-```csharp
-VerifyBankAccountAsync(
-    int bankAccountId,
-    Models.BankAccountVerificationRequest body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `bankAccountId` | `int` | Template, Required | Identifier of the bank account in the system. |
-| `body` | [`BankAccountVerificationRequest`](../../doc/models/bank-account-verification-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`Task<Models.BankAccountResponse>`](../../doc/models/bank-account-response.md)
-
-## Example Usage
-
-```csharp
-int bankAccountId = 252;
-BankAccountVerificationRequest body = new BankAccountVerificationRequest
-{
-    BankAccountVerification = new BankAccountVerification
-    {
-        Deposit1InCents = 32L,
-        Deposit2InCents = 45L,
-    },
-};
-
-try
-{
-    BankAccountResponse result = await paymentProfilesController.VerifyBankAccountAsync(
-        bankAccountId,
-        body
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "payment_profile": {
-    "id": 10089892,
-    "first_name": "Chester",
-    "last_name": "Tester",
-    "customer_id": 14543792,
-    "current_vault": "stripe_connect",
-    "vault_token": "cus_0123abc456def",
-    "billing_address": "456 Juniper Court",
-    "billing_city": "Boulder",
-    "billing_state": "CO",
-    "billing_zip": "80302",
-    "billing_country": "US",
-    "customer_vault_token": null,
-    "billing_address_2": "",
-    "bank_name": "Bank of Kansas City",
-    "masked_bank_routing_number": "XXXX6789",
-    "masked_bank_account_number": "XXXX3344",
-    "bank_account_type": "checking",
-    "bank_account_holder_type": "personal",
-    "payment_type": "bank_account"
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
-# Delete Subscription Group Payment Profile
-
-This will delete a Payment Profile belonging to a Subscription Group.
-
-**Note**: If the Payment Profile belongs to multiple Subscription Groups and/or Subscriptions, it will be removed from all of them.
-
-```csharp
-DeleteSubscriptionGroupPaymentProfileAsync(
-    string uid,
-    string paymentProfileId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `uid` | `string` | Template, Required | The uid of the subscription group |
-| `paymentProfileId` | `string` | Template, Required | The Chargify id of the payment profile |
-
-## Response Type
-
-`Task`
-
-## Example Usage
-
-```csharp
-string uid = "uid0";
-string paymentProfileId = "payment_profile_id2";
-try
-{
-    await paymentProfilesController.DeleteSubscriptionGroupPaymentProfileAsync(
-        uid,
         paymentProfileId
     );
 }
@@ -959,6 +896,135 @@ catch (ApiException e)
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# Delete Unused Payment Profile
+
+Deletes an unused payment profile.
+
+If the payment profile is in use by one or more subscriptions or groups, a 422 and error message will be returned.
+
+```csharp
+DeleteUnusedPaymentProfileAsync(
+    int paymentProfileId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `paymentProfileId` | `int` | Template, Required | The Chargify id of the payment profile |
+
+## Response Type
+
+`Task`
+
+## Example Usage
+
+```csharp
+int paymentProfileId = 198;
+try
+{
+    await paymentProfilesController.DeleteUnusedPaymentProfileAsync(paymentProfileId);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# Verify Bank Account
+
+Submit the two small deposit amounts the customer received in their bank account in order to verify the bank account. (Stripe only)
+
+```csharp
+VerifyBankAccountAsync(
+    int bankAccountId,
+    Models.BankAccountVerificationRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `bankAccountId` | `int` | Template, Required | Identifier of the bank account in the system. |
+| `body` | [`BankAccountVerificationRequest`](../../doc/models/bank-account-verification-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.BankAccountResponse>`](../../doc/models/bank-account-response.md)
+
+## Example Usage
+
+```csharp
+int bankAccountId = 252;
+BankAccountVerificationRequest body = new BankAccountVerificationRequest
+{
+    BankAccountVerification = new BankAccountVerification
+    {
+        Deposit1InCents = 32L,
+        Deposit2InCents = 45L,
+    },
+};
+
+try
+{
+    BankAccountResponse result = await paymentProfilesController.VerifyBankAccountAsync(
+        bankAccountId,
+        body
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "payment_profile": {
+    "id": 10089892,
+    "first_name": "Chester",
+    "last_name": "Tester",
+    "customer_id": 14543792,
+    "current_vault": "stripe_connect",
+    "vault_token": "cus_0123abc456def",
+    "billing_address": "456 Juniper Court",
+    "billing_city": "Boulder",
+    "billing_state": "CO",
+    "billing_zip": "80302",
+    "billing_country": "US",
+    "customer_vault_token": null,
+    "billing_address_2": "",
+    "bank_name": "Bank of Kansas City",
+    "masked_bank_routing_number": "XXXX6789",
+    "masked_bank_account_number": "XXXX3344",
+    "bank_account_type": "checking",
+    "bank_account_holder_type": "personal",
+    "payment_type": "bank_account"
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
@@ -973,7 +1039,7 @@ The new payment profile must belong to the subscription group's customer, otherw
 ```csharp
 UpdateSubscriptionGroupDefaultPaymentProfileAsync(
     string uid,
-    string paymentProfileId)
+    int paymentProfileId)
 ```
 
 ## Parameters
@@ -981,7 +1047,7 @@ UpdateSubscriptionGroupDefaultPaymentProfileAsync(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `uid` | `string` | Template, Required | The uid of the subscription group |
-| `paymentProfileId` | `string` | Template, Required | The Chargify id of the payment profile |
+| `paymentProfileId` | `int` | Template, Required | The Chargify id of the payment profile |
 
 ## Response Type
 
@@ -991,7 +1057,7 @@ UpdateSubscriptionGroupDefaultPaymentProfileAsync(
 
 ```csharp
 string uid = "uid0";
-string paymentProfileId = "payment_profile_id2";
+int paymentProfileId = 198;
 try
 {
     PaymentProfileResponse result = await paymentProfilesController.UpdateSubscriptionGroupDefaultPaymentProfileAsync(
@@ -1085,52 +1151,4 @@ catch (ApiException e)
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 404 | Not Found | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
-# Send Request Update Payment Email
-
-You can send a "request payment update" email to the customer associated with the subscription.
-
-If you attempt to send a "request payment update" email more than five times within a 30-minute period, you will receive a `422` response with an error message in the body. This error message will indicate that the request has been rejected due to excessive attempts, and will provide instructions on how to resubmit the request.
-
-Additionally, if you attempt to send a "request payment update" email for a subscription that does not exist, you will receive a `404` error response. This error message will indicate that the subscription could not be found, and will provide instructions on how to correct the error and resubmit the request.
-
-These error responses are designed to prevent excessive or invalid requests, and to provide clear and helpful information to users who encounter errors during the request process.
-
-```csharp
-SendRequestUpdatePaymentEmailAsync(
-    int subscriptionId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-
-## Response Type
-
-`Task`
-
-## Example Usage
-
-```csharp
-int subscriptionId = 222;
-try
-{
-    await paymentProfilesController.SendRequestUpdatePaymentEmailAsync(subscriptionId);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 

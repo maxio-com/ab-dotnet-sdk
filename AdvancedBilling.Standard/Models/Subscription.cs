@@ -187,9 +187,9 @@ namespace AdvancedBilling.Standard.Models
             Models.PaymentCollectionMethod? paymentCollectionMethod = Models.PaymentCollectionMethod.Automatic,
             Models.Customer customer = null,
             Models.Product product = null,
-            Models.PaymentProfile creditCard = null,
+            Models.CreditCardPaymentProfile creditCard = null,
             SubscriptionGroup2 mGroup = null,
-            Models.SubscriptionBankAccount bankAccount = null,
+            Models.BankAccountPaymentProfile bankAccount = null,
             string paymentType = null,
             string referralCode = null,
             int? nextProductId = null,
@@ -728,7 +728,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets CreditCard.
         /// </summary>
         [JsonProperty("credit_card", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.PaymentProfile CreditCard { get; set; }
+        public Models.CreditCardPaymentProfile CreditCard { get; set; }
 
         /// <summary>
         /// Gets or sets MGroup.
@@ -752,7 +752,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets BankAccount.
         /// </summary>
         [JsonProperty("bank_account", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.SubscriptionBankAccount BankAccount { get; set; }
+        public Models.BankAccountPaymentProfile BankAccount { get; set; }
 
         /// <summary>
         /// The payment profile type for the active profile on file.

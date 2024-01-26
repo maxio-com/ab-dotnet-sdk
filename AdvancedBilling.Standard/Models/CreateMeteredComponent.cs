@@ -42,7 +42,6 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets MeteredComponent.
         /// </summary>
         [JsonProperty("metered_component")]
-        [JsonRequired]
         public Models.MeteredComponent MeteredComponent { get; set; }
 
         /// <inheritdoc/>

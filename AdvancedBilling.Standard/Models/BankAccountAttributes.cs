@@ -48,11 +48,11 @@ namespace AdvancedBilling.Standard.Models
             string bankName = null,
             string bankRoutingNumber = null,
             string bankAccountNumber = null,
-            string bankAccountType = null,
+            Models.BankAccountType? bankAccountType = Models.BankAccountType.Checking,
             string bankBranchCode = null,
             string bankIban = null,
-            string bankAccountHolderType = null,
-            string paymentType = null,
+            Models.BankAccountHolderType? bankAccountHolderType = null,
+            Models.PaymentType? paymentType = Models.PaymentType.CreditCard,
             Models.BankAccountVault? currentVault = null,
             string vaultToken = null,
             string customerVaultToken = null)
@@ -96,10 +96,10 @@ namespace AdvancedBilling.Standard.Models
         public string BankAccountNumber { get; set; }
 
         /// <summary>
-        /// Gets or sets BankAccountType.
+        /// Defaults to checking
         /// </summary>
         [JsonProperty("bank_account_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string BankAccountType { get; set; }
+        public Models.BankAccountType? BankAccountType { get; set; }
 
         /// <summary>
         /// (Optional when creating a subscription with GoCardless) Branch code. Alternatively, an IBAN can be provided
@@ -114,16 +114,16 @@ namespace AdvancedBilling.Standard.Models
         public string BankIban { get; set; }
 
         /// <summary>
-        /// Gets or sets BankAccountHolderType.
+        /// Defaults to personal
         /// </summary>
         [JsonProperty("bank_account_holder_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string BankAccountHolderType { get; set; }
+        public Models.BankAccountHolderType? BankAccountHolderType { get; set; }
 
         /// <summary>
         /// Gets or sets PaymentType.
         /// </summary>
         [JsonProperty("payment_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string PaymentType { get; set; }
+        public Models.PaymentType? PaymentType { get; set; }
 
         /// <summary>
         /// The vault that stores the payment profile with the provided vault_token.
@@ -189,11 +189,11 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.BankName = {(this.BankName == null ? "null" : this.BankName)}");
             toStringOutput.Add($"this.BankRoutingNumber = {(this.BankRoutingNumber == null ? "null" : this.BankRoutingNumber)}");
             toStringOutput.Add($"this.BankAccountNumber = {(this.BankAccountNumber == null ? "null" : this.BankAccountNumber)}");
-            toStringOutput.Add($"this.BankAccountType = {(this.BankAccountType == null ? "null" : this.BankAccountType)}");
+            toStringOutput.Add($"this.BankAccountType = {(this.BankAccountType == null ? "null" : this.BankAccountType.ToString())}");
             toStringOutput.Add($"this.BankBranchCode = {(this.BankBranchCode == null ? "null" : this.BankBranchCode)}");
             toStringOutput.Add($"this.BankIban = {(this.BankIban == null ? "null" : this.BankIban)}");
-            toStringOutput.Add($"this.BankAccountHolderType = {(this.BankAccountHolderType == null ? "null" : this.BankAccountHolderType)}");
-            toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType)}");
+            toStringOutput.Add($"this.BankAccountHolderType = {(this.BankAccountHolderType == null ? "null" : this.BankAccountHolderType.ToString())}");
+            toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
             toStringOutput.Add($"this.CurrentVault = {(this.CurrentVault == null ? "null" : this.CurrentVault.ToString())}");
             toStringOutput.Add($"this.VaultToken = {(this.VaultToken == null ? "null" : this.VaultToken)}");
             toStringOutput.Add($"this.CustomerVaultToken = {(this.CustomerVaultToken == null ? "null" : this.CustomerVaultToken)}");

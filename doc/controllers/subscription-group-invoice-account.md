@@ -10,65 +10,10 @@ SubscriptionGroupInvoiceAccountController subscriptionGroupInvoiceAccountControl
 
 ## Methods
 
-* [Create Subscription Group Prepayment](../../doc/controllers/subscription-group-invoice-account.md#create-subscription-group-prepayment)
 * [List Prepayments for Subscription Group](../../doc/controllers/subscription-group-invoice-account.md#list-prepayments-for-subscription-group)
-* [Issue Subscription Group Service Credits](../../doc/controllers/subscription-group-invoice-account.md#issue-subscription-group-service-credits)
+* [Create Subscription Group Prepayment](../../doc/controllers/subscription-group-invoice-account.md#create-subscription-group-prepayment)
 * [Deduct Subscription Group Service Credits](../../doc/controllers/subscription-group-invoice-account.md#deduct-subscription-group-service-credits)
-
-
-# Create Subscription Group Prepayment
-
-A prepayment can be added for a subscription group identified by the group's `uid`. This endpoint requires a `amount`, `details`, `method`, and `memo`. On success, the prepayment will be added to the group's prepayment balance.
-
-```csharp
-CreateSubscriptionGroupPrepaymentAsync(
-    string uid,
-    Models.SubscriptionGroupPrepaymentRequest body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `uid` | `string` | Template, Required | The uid of the subscription group |
-| `body` | [`SubscriptionGroupPrepaymentRequest`](../../doc/models/subscription-group-prepayment-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`Task<Models.SubscriptionGroupPrepaymentResponse>`](../../doc/models/subscription-group-prepayment-response.md)
-
-## Example Usage
-
-```csharp
-string uid = "uid0";
-try
-{
-    SubscriptionGroupPrepaymentResponse result = await subscriptionGroupInvoiceAccountController.CreateSubscriptionGroupPrepaymentAsync(uid);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "id": 6049554,
-  "amount_in_cents": 10000,
-  "ending_balance_in_cents": 5000,
-  "entry_type": "Debit",
-  "memo": "Debit from invoice account."
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+* [Issue Subscription Group Service Credits](../../doc/controllers/subscription-group-invoice-account.md#issue-subscription-group-service-credits)
 
 
 # List Prepayments for Subscription Group
@@ -145,14 +90,14 @@ catch (ApiException e)
 | 404 | Not Found | `ApiException` |
 
 
-# Issue Subscription Group Service Credits
+# Create Subscription Group Prepayment
 
-Credit can be issued for a subscription group identified by the group's `uid`. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
+A prepayment can be added for a subscription group identified by the group's `uid`. This endpoint requires a `amount`, `details`, `method`, and `memo`. On success, the prepayment will be added to the group's prepayment balance.
 
 ```csharp
-IssueSubscriptionGroupServiceCreditsAsync(
+CreateSubscriptionGroupPrepaymentAsync(
     string uid,
-    Models.IssueServiceCreditRequest body = null)
+    Models.SubscriptionGroupPrepaymentRequest body = null)
 ```
 
 ## Parameters
@@ -160,31 +105,19 @@ IssueSubscriptionGroupServiceCreditsAsync(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `uid` | `string` | Template, Required | The uid of the subscription group |
-| `body` | [`IssueServiceCreditRequest`](../../doc/models/issue-service-credit-request.md) | Body, Optional | - |
+| `body` | [`SubscriptionGroupPrepaymentRequest`](../../doc/models/subscription-group-prepayment-request.md) | Body, Optional | - |
 
 ## Response Type
 
-[`Task<Models.ServiceCreditResponse>`](../../doc/models/service-credit-response.md)
+[`Task<Models.SubscriptionGroupPrepaymentResponse>`](../../doc/models/subscription-group-prepayment-response.md)
 
 ## Example Usage
 
 ```csharp
 string uid = "uid0";
-IssueServiceCreditRequest body = new IssueServiceCreditRequest
-{
-    ServiceCredit = new IssueServiceCredit
-    {
-        Amount = IssueServiceCreditAmount.FromPrecision(10),
-        Memo = "Credit the group account",
-    },
-};
-
 try
 {
-    ServiceCreditResponse result = await subscriptionGroupInvoiceAccountController.IssueSubscriptionGroupServiceCreditsAsync(
-        uid,
-        body
-    );
+    SubscriptionGroupPrepaymentResponse result = await subscriptionGroupInvoiceAccountController.CreateSubscriptionGroupPrepaymentAsync(uid);
 }
 catch (ApiException e)
 {
@@ -197,13 +130,11 @@ catch (ApiException e)
 
 ```json
 {
-  "service_credit": {
-    "id": 101,
-    "amount_in_cents": 1000,
-    "ending_balance_in_cents": 2000,
-    "entry_type": "Credit",
-    "memo": "Credit to group account"
-  }
+  "id": 6049554,
+  "amount_in_cents": 10000,
+  "ending_balance_in_cents": 5000,
+  "entry_type": "Debit",
+  "memo": "Debit from invoice account."
 }
 ```
 
@@ -271,6 +202,75 @@ catch (ApiException e)
   "ending_balance_in_cents": 0,
   "entry_type": "Debit",
   "memo": "Debit from group account"
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# Issue Subscription Group Service Credits
+
+Credit can be issued for a subscription group identified by the group's `uid`. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
+
+```csharp
+IssueSubscriptionGroupServiceCreditsAsync(
+    string uid,
+    Models.IssueServiceCreditRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `uid` | `string` | Template, Required | The uid of the subscription group |
+| `body` | [`IssueServiceCreditRequest`](../../doc/models/issue-service-credit-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.ServiceCreditResponse>`](../../doc/models/service-credit-response.md)
+
+## Example Usage
+
+```csharp
+string uid = "uid0";
+IssueServiceCreditRequest body = new IssueServiceCreditRequest
+{
+    ServiceCredit = new IssueServiceCredit
+    {
+        Amount = IssueServiceCreditAmount.FromPrecision(10),
+        Memo = "Credit the group account",
+    },
+};
+
+try
+{
+    ServiceCreditResponse result = await subscriptionGroupInvoiceAccountController.IssueSubscriptionGroupServiceCreditsAsync(
+        uid,
+        body
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "service_credit": {
+    "id": 101,
+    "amount_in_cents": 1000,
+    "ending_balance_in_cents": 2000,
+    "entry_type": "Credit",
+    "memo": "Credit to group account"
+  }
 }
 ```
 

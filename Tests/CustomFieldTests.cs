@@ -95,14 +95,14 @@ namespace AdvancedBillingTests
 
             var customerResponse = await CreationUtils.CreateCustomer(_client);
 
-            var paymentProfile = await CreationUtils.CreatePaymentProfile(customerResponse.Customer.Id, _client);
+            var paymentProfileId = await CreationUtils.CreatePaymentProfile(customerResponse.Customer.Id, _client);
 
             var subscription = new CreateSubscription
             {
                 CustomerId = customerResponse.Customer.Id,
                 ProductId = productResponse.Product.Id,
                 PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
-                PaymentProfileId = paymentProfile.PaymentProfile.Id,
+                PaymentProfileId = paymentProfileId,
                 DunningCommunicationDelayEnabled = false,
                 SkipBillingManifestTaxes = false
             };
@@ -130,7 +130,7 @@ namespace AdvancedBillingTests
             await _client.CustomFieldsController.DeleteMetadataAsync(ResourceType.Subscriptions,
                 subscriptionResponse.Subscription.Id.ToString(), metadataName);
 
-            await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfile,
+            await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfileId,
                 productResponse, _client);
         }
 

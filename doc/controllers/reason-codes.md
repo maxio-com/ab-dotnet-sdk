@@ -10,41 +10,29 @@ ReasonCodesController reasonCodesController = client.ReasonCodesController;
 
 ## Methods
 
-* [Create Reason Code](../../doc/controllers/reason-codes.md#create-reason-code)
-* [List Reason Codes](../../doc/controllers/reason-codes.md#list-reason-codes)
-* [Read Reason Code](../../doc/controllers/reason-codes.md#read-reason-code)
 * [Update Reason Code](../../doc/controllers/reason-codes.md#update-reason-code)
+* [List Reason Codes](../../doc/controllers/reason-codes.md#list-reason-codes)
+* [Create Reason Code](../../doc/controllers/reason-codes.md#create-reason-code)
+* [Read Reason Code](../../doc/controllers/reason-codes.md#read-reason-code)
 * [Delete Reason Code](../../doc/controllers/reason-codes.md#delete-reason-code)
 
 
-# Create Reason Code
+# Update Reason Code
 
-# Reason Codes Intro
-
-ReasonCodes are a way to gain a high level view of why your customers are cancelling the subcription to your product or service.
-
-Add a set of churn reason codes to be displayed in-app and/or the Chargify Billing Portal. As your subscribers decide to cancel their subscription, learn why they decided to cancel.
-
-## Reason Code Documentation
-
-Full documentation on how Reason Codes operate within Chargify can be located under the following links.
-
-[Churn Reason Codes](https://chargify.zendesk.com/hc/en-us/articles/4407896775579#churn-reason-codes)
-
-## Create Reason Code
-
-This method gives a merchant the option to create a reason codes for a given Site.
+This method gives a merchant the option to update an existing reason code for a given site.
 
 ```csharp
-CreateReasonCodeAsync(
-    Models.CreateReasonCodeRequest body = null)
+UpdateReasonCodeAsync(
+    int reasonCodeId,
+    Models.UpdateReasonCodeRequest body = null)
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `body` | [`CreateReasonCodeRequest`](../../doc/models/create-reason-code-request.md) | Body, Optional | - |
+| `reasonCodeId` | `int` | Template, Required | The Chargify id of the reason code |
+| `body` | [`UpdateReasonCodeRequest`](../../doc/models/update-reason-code-request.md) | Body, Optional | - |
 
 ## Response Type
 
@@ -53,19 +41,10 @@ CreateReasonCodeAsync(
 ## Example Usage
 
 ```csharp
-CreateReasonCodeRequest body = new CreateReasonCodeRequest
-{
-    ReasonCode = new CreateReasonCode
-    {
-        Code = "NOTHANKYOU",
-        Description = "No thank you!",
-        Position = 5,
-    },
-};
-
+int reasonCodeId = 32;
 try
 {
-    ReasonCodeResponse result = await reasonCodesController.CreateReasonCodeAsync(body);
+    ReasonCodeResponse result = await reasonCodesController.UpdateReasonCodeAsync(reasonCodeId);
 }
 catch (ApiException e)
 {
@@ -78,7 +57,7 @@ catch (ApiException e)
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+| 404 | Not Found | `ApiException` |
 
 
 # List Reason Codes
@@ -162,6 +141,70 @@ catch (ApiException e)
 ```
 
 
+# Create Reason Code
+
+# Reason Codes Intro
+
+ReasonCodes are a way to gain a high level view of why your customers are cancelling the subcription to your product or service.
+
+Add a set of churn reason codes to be displayed in-app and/or the Chargify Billing Portal. As your subscribers decide to cancel their subscription, learn why they decided to cancel.
+
+## Reason Code Documentation
+
+Full documentation on how Reason Codes operate within Chargify can be located under the following links.
+
+[Churn Reason Codes](https://chargify.zendesk.com/hc/en-us/articles/4407896775579#churn-reason-codes)
+
+## Create Reason Code
+
+This method gives a merchant the option to create a reason codes for a given Site.
+
+```csharp
+CreateReasonCodeAsync(
+    Models.CreateReasonCodeRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`CreateReasonCodeRequest`](../../doc/models/create-reason-code-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.ReasonCodeResponse>`](../../doc/models/reason-code-response.md)
+
+## Example Usage
+
+```csharp
+CreateReasonCodeRequest body = new CreateReasonCodeRequest
+{
+    ReasonCode = new CreateReasonCode
+    {
+        Code = "NOTHANKYOU",
+        Description = "No thank you!",
+        Position = 5,
+    },
+};
+
+try
+{
+    ReasonCodeResponse result = await reasonCodesController.CreateReasonCodeAsync(body);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
 # Read Reason Code
 
 This method gives a merchant the option to retrieve a list of a particular code for a given Site by providing the unique numerical ID of the code.
@@ -188,49 +231,6 @@ int reasonCodeId = 32;
 try
 {
     ReasonCodeResponse result = await reasonCodesController.ReadReasonCodeAsync(reasonCodeId);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-
-
-# Update Reason Code
-
-This method gives a merchant the option to update an existing reason code for a given site.
-
-```csharp
-UpdateReasonCodeAsync(
-    int reasonCodeId,
-    Models.UpdateReasonCodeRequest body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `reasonCodeId` | `int` | Template, Required | The Chargify id of the reason code |
-| `body` | [`UpdateReasonCodeRequest`](../../doc/models/update-reason-code-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`Task<Models.ReasonCodeResponse>`](../../doc/models/reason-code-response.md)
-
-## Example Usage
-
-```csharp
-int reasonCodeId = 32;
-try
-{
-    ReasonCodeResponse result = await reasonCodesController.UpdateReasonCodeAsync(reasonCodeId);
 }
 catch (ApiException e)
 {
