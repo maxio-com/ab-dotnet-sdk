@@ -33,14 +33,14 @@ namespace AdvancedBillingTests
 
             var customerResponse = await CreationUtils.CreateCustomer(_client);
 
-            var paymentProfile = await CreationUtils.CreatePaymentProfile(customerResponse.Customer.Id, _client);
+            var paymentProfileId = await CreationUtils.CreatePaymentProfile(customerResponse.Customer.Id, _client);
 
             var subscription = new CreateSubscription
             {
                 CustomerId = customerResponse.Customer.Id,
                 ProductId = productResponse.Product.Id,
                 PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
-                PaymentProfileId = paymentProfile.PaymentProfile.Id,
+                PaymentProfileId = paymentProfileId,
                 DunningCommunicationDelayEnabled = false,
                 SkipBillingManifestTaxes = false
             };
@@ -50,7 +50,7 @@ namespace AdvancedBillingTests
                     new CreateSubscriptionRequest(subscription));
             subscriptionResponse.Subscription.Id.Should().NotBeNull();
 
-            await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfile, productResponse, _client);
+            await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfileId, productResponse, _client);
         }
 
         [Fact]
@@ -66,9 +66,8 @@ namespace AdvancedBillingTests
             var meteredComponent = new MeteredComponent($"ApiCalls{randomString}", $"api call {randomString}",
                 PricingScheme.PerUnit, unitPrice: MeteredComponentUnitPrice.FromString("1"));
 
-            var componentResponse = await _client.ComponentsController.CreateComponentAsync((int)productFamilyId,
-                ComponentKindPath.MeteredComponents,
-                CreateComponentBody.FromCreateMeteredComponent(new CreateMeteredComponent(meteredComponent)));
+            var componentResponse = await _client.ComponentsController.CreateMeteredComponentAsync((int)productFamilyId,
+               new CreateMeteredComponent(meteredComponent));
 
             componentResponse.Component.Id.Should().NotBeNull();
 
@@ -93,7 +92,7 @@ namespace AdvancedBillingTests
 
             var customer = await CreationUtils.CreateCustomer(_client);
 
-            var paymentProfile = await CreationUtils.CreatePaymentProfile(customer.Customer.Id, _client);
+            var paymentProfileId = await CreationUtils.CreatePaymentProfile(customer.Customer.Id, _client);
 
             var initialBillingDate = DateTime.Now.AddDays(20);
 
@@ -104,7 +103,7 @@ namespace AdvancedBillingTests
                 CustomerId = customer.Customer.Id,
                 ProductId = product.Product.Id,
                 PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
-                PaymentProfileId = paymentProfile.PaymentProfile.Id,
+                PaymentProfileId = paymentProfileId,
                 DunningCommunicationDelayEnabled = false,
                 SkipBillingManifestTaxes = false,
                 Components = new List<CreateSubscriptionComponent>()
@@ -122,7 +121,7 @@ namespace AdvancedBillingTests
                 .ThrowAsync<ErrorListResponseException>()
                 .Where(e => e.ResponseCode == 422 && e.Errors.Any(a => a.Contains("Coupon code could not be found")));
 
-            await CleanupUtils.ExecuteCleanupForPaymentProfileProductCustomer(customer, paymentProfile, product, _client);
+            await CleanupUtils.ExecuteCleanupForPaymentProfileProductCustomer(customer, paymentProfileId, product, _client);
 
             await ErrorSuppressionWrapper.RunAsync(async () =>
             {
@@ -178,20 +177,17 @@ namespace AdvancedBillingTests
             var quantityComponent = new QuantityBasedComponent($"widget{randomString}", $"widget {randomString}",
                 PricingScheme.PerUnit, unitPrice: QuantityBasedComponentUnitPrice.FromPrecision(1));
 
-            var restrictedComponentResponse = await _client.ComponentsController.CreateComponentAsync(
+            var restrictedComponentResponse = await _client.ComponentsController.CreateQuantityBasedComponentAsync(
                 (int)productFamilyId,
-                ComponentKindPath.QuantityBasedComponents,
-                CreateComponentBody.FromCreateQuantityBasedComponent(
-                    new CreateQuantityBasedComponent(quantityComponent)));
+                    new CreateQuantityBasedComponent(quantityComponent));
 
             restrictedComponentResponse.Component.Id.Should().NotBeNull();
 
             var meteredComponent = new MeteredComponent($"ApiCalls{randomString}", $"api call {randomString}",
                 PricingScheme.PerUnit, unitPrice: MeteredComponentUnitPrice.FromString("1"));
 
-            var componentResponse = await _client.ComponentsController.CreateComponentAsync((int)productFamilyId,
-                ComponentKindPath.MeteredComponents,
-                CreateComponentBody.FromCreateMeteredComponent(new CreateMeteredComponent(meteredComponent)));
+            var componentResponse = await _client.ComponentsController.CreateMeteredComponentAsync((int)productFamilyId,
+               new CreateMeteredComponent(meteredComponent));
 
             componentResponse.Component.Id.Should().NotBeNull();
 
@@ -217,7 +213,7 @@ namespace AdvancedBillingTests
 
             var customer = await CreationUtils.CreateCustomer(_client);
 
-            var paymentProfile = await CreationUtils.CreatePaymentProfile(customer.Customer.Id, _client);
+            var paymentProfileId = await CreationUtils.CreatePaymentProfile(customer.Customer.Id, _client);
 
             var initialBillingDate = DateTime.Now.AddDays(20);
 
@@ -226,7 +222,7 @@ namespace AdvancedBillingTests
                 CustomerId = customer.Customer.Id,
                 ProductId = product.Product.Id,
                 PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
-                PaymentProfileId = paymentProfile.PaymentProfile.Id,
+                PaymentProfileId = paymentProfileId,
                 DunningCommunicationDelayEnabled = false,
                 SkipBillingManifestTaxes = false,
                 Components = new List<CreateSubscriptionComponent>()
@@ -245,7 +241,7 @@ namespace AdvancedBillingTests
             subscriptionResponse.Subscription.Id.Should().NotBeNull();
             subscriptionResponse.Subscription.State.Should().Be(SubscriptionState.AwaitingSignup);
 
-            await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customer, paymentProfile, product, _client);
+            await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customer, paymentProfileId, product, _client);
 
             await ErrorSuppressionWrapper.RunAsync(async () =>
             {
@@ -280,14 +276,14 @@ namespace AdvancedBillingTests
 
             var customerResponse = await CreationUtils.CreateCustomer(_client);
 
-            var paymentProfile = await CreationUtils.CreatePaymentProfile(customerResponse.Customer.Id, _client);
+            var paymentProfileId = await CreationUtils.CreatePaymentProfile(customerResponse.Customer.Id, _client);
 
             var createdSubscription = new CreateSubscription
             {
                 CustomerId = customerResponse.Customer.Id,
                 ProductId = productResponse.Product.Id,
                 PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
-                PaymentProfileId = paymentProfile.PaymentProfile.Id,
+                PaymentProfileId = paymentProfileId,
                 DunningCommunicationDelayEnabled = false,
                 SkipBillingManifestTaxes = false
             };
@@ -304,7 +300,7 @@ namespace AdvancedBillingTests
             subscription.Subscription.Customer.Id.Should().Be(customerResponse.Customer.Id);
             subscription.Subscription.PaymentCollectionMethod.Should().Be(PaymentCollectionMethod.Automatic);
 
-            await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfile, productResponse, _client);
+            await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfileId, productResponse, _client);
         }
     }
 }
