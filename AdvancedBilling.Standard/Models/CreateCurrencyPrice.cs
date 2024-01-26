@@ -36,7 +36,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="priceId">price_id.</param>
         public CreateCurrencyPrice(
             string currency = null,
-            int? price = null,
+            double? price = null,
             int? priceId = null)
         {
             this.Currency = currency;
@@ -54,7 +54,7 @@ namespace AdvancedBilling.Standard.Models
         /// Price for the price level in this currency
         /// </summary>
         [JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
-        public int? Price { get; set; }
+        public double? Price { get; set; }
 
         /// <summary>
         /// ID of the price that this corresponds with

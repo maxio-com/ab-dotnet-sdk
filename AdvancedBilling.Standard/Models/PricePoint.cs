@@ -36,6 +36,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="pricingScheme">pricing_scheme.</param>
         /// <param name="prices">prices.</param>
         /// <param name="useSiteExchangeRate">use_site_exchange_rate.</param>
+        /// <param name="taxIncluded">tax_included.</param>
         /// <param name="interval">interval.</param>
         /// <param name="intervalUnit">interval_unit.</param>
         /// <param name="overagePricing">overage_pricing.</param>
@@ -49,6 +50,7 @@ namespace AdvancedBilling.Standard.Models
             Models.PricingScheme? pricingScheme = null,
             List<Models.Price> prices = null,
             bool? useSiteExchangeRate = true,
+            bool? taxIncluded = null,
             int? interval = null,
             Models.IntervalUnit? intervalUnit = null,
             Models.OveragePricing overagePricing = null,
@@ -62,6 +64,7 @@ namespace AdvancedBilling.Standard.Models
             this.PricingScheme = pricingScheme;
             this.Prices = prices;
             this.UseSiteExchangeRate = useSiteExchangeRate;
+            this.TaxIncluded = taxIncluded;
             this.Interval = interval;
             this.IntervalUnit = intervalUnit;
             this.OveragePricing = overagePricing;
@@ -100,6 +103,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("use_site_exchange_rate", NullValueHandling = NullValueHandling.Ignore)]
         public bool? UseSiteExchangeRate { get; set; }
+
+        /// <summary>
+        /// Whether or not the price point includes tax
+        /// </summary>
+        [JsonProperty("tax_included", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? TaxIncluded { get; set; }
 
         /// <summary>
         /// The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
@@ -170,6 +179,7 @@ namespace AdvancedBilling.Standard.Models
                 ((this.PricingScheme == null && other.PricingScheme == null) || (this.PricingScheme?.Equals(other.PricingScheme) == true)) &&
                 ((this.Prices == null && other.Prices == null) || (this.Prices?.Equals(other.Prices) == true)) &&
                 ((this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null) || (this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true)) &&
+                ((this.TaxIncluded == null && other.TaxIncluded == null) || (this.TaxIncluded?.Equals(other.TaxIncluded) == true)) &&
                 ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
                 ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true)) &&
                 ((this.OveragePricing == null && other.OveragePricing == null) || (this.OveragePricing?.Equals(other.OveragePricing) == true)) &&
@@ -190,6 +200,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
             toStringOutput.Add($"this.Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
             toStringOutput.Add($"this.UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
+            toStringOutput.Add($"this.TaxIncluded = {(this.TaxIncluded == null ? "null" : this.TaxIncluded.ToString())}");
             toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
             toStringOutput.Add($"this.OveragePricing = {(this.OveragePricing == null ? "null" : this.OveragePricing.ToString())}");

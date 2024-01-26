@@ -42,7 +42,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="componentHandle">component_handle.</param>
         /// <param name="subscriptionId">subscription_id.</param>
         public Usage(
-            int? id = null,
+            long? id = null,
             string memo = null,
             DateTimeOffset? createdAt = null,
             int? pricePointId = null,
@@ -67,7 +67,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Id.
         /// </summary>
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? Id { get; set; }
+        public long? Id { get; set; }
 
         /// <summary>
         /// Gets or sets Memo.

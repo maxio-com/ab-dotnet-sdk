@@ -11,8 +11,8 @@ SubscriptionGroupStatusController subscriptionGroupStatusController = client.Sub
 ## Methods
 
 * [Cancel Subscriptions in Group](../../doc/controllers/subscription-group-status.md#cancel-subscriptions-in-group)
-* [Initiate Delayed Cancellation for Group](../../doc/controllers/subscription-group-status.md#initiate-delayed-cancellation-for-group)
 * [Stop Delayed Cancellation for Group](../../doc/controllers/subscription-group-status.md#stop-delayed-cancellation-for-group)
+* [Initiate Delayed Cancellation for Group](../../doc/controllers/subscription-group-status.md#initiate-delayed-cancellation-for-group)
 * [Reactivate Subscription Group](../../doc/controllers/subscription-group-status.md#reactivate-subscription-group)
 
 
@@ -69,6 +69,47 @@ catch (ApiException e)
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
+# Stop Delayed Cancellation for Group
+
+Removing the delayed cancellation on a subscription group will ensure that the subscriptions do not get canceled at the end of the period. The request will reset the `cancel_at_end_of_period` flag to false on each member in the group.
+
+```csharp
+StopDelayedCancellationForGroupAsync(
+    string uid)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `uid` | `string` | Template, Required | The uid of the subscription group |
+
+## Response Type
+
+`Task`
+
+## Example Usage
+
+```csharp
+string uid = "uid0";
+try
+{
+    await subscriptionGroupStatusController.StopDelayedCancellationForGroupAsync(uid);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
 # Initiate Delayed Cancellation for Group
 
 This endpoint will schedule all subscriptions within the specified group to be canceled at the end of their billing period. The group is identified by it's uid passed in the URL.
@@ -97,47 +138,6 @@ string uid = "uid0";
 try
 {
     await subscriptionGroupStatusController.InitiateDelayedCancellationForGroupAsync(uid);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
-# Stop Delayed Cancellation for Group
-
-Removing the delayed cancellation on a subscription group will ensure that the subscriptions do not get canceled at the end of the period. The request will reset the `cancel_at_end_of_period` flag to false on each member in the group.
-
-```csharp
-StopDelayedCancellationForGroupAsync(
-    string uid)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `uid` | `string` | Template, Required | The uid of the subscription group |
-
-## Response Type
-
-`Task`
-
-## Example Usage
-
-```csharp
-string uid = "uid0";
-try
-{
-    await subscriptionGroupStatusController.StopDelayedCancellationForGroupAsync(uid);
 }
 catch (ApiException e)
 {

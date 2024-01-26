@@ -11,9 +11,9 @@ InsightsController insightsController = client.InsightsController;
 ## Methods
 
 * [Read Site Stats](../../doc/controllers/insights.md#read-site-stats)
+* [List Mrr Per Subscription](../../doc/controllers/insights.md#list-mrr-per-subscription)
 * [Read Mrr](../../doc/controllers/insights.md#read-mrr)
 * [Read Mrr Movements](../../doc/controllers/insights.md#read-mrr-movements)
-* [List Mrr Per Subscription](../../doc/controllers/insights.md#list-mrr-per-subscription)
 
 
 # Read Site Stats
@@ -68,6 +68,60 @@ catch (ApiException e)
   }
 }
 ```
+
+
+# List Mrr Per Subscription
+
+**This endpoint is deprecated.**
+
+This endpoint returns your site's current MRR, including plan and usage breakouts split per subscription.
+
+```csharp
+ListMrrPerSubscriptionAsync(
+    Models.ListMrrPerSubscriptionInput input)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `filterSubscriptionIds` | `List<int>` | Query, Optional | Submit ids in order to limit results. Use in query: `filter[subscription_ids]=1,2,3`. |
+| `atTime` | `string` | Query, Optional | Submit a timestamp in ISO8601 format to request MRR for a historic time. Use in query: `at_time=2022-01-10T10:00:00-05:00`. |
+| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `direction` | [`Direction?`](../../doc/models/direction.md) | Query, Optional | Controls the order in which results are returned. Records are ordered by subscription_id in ascending order by default. Use in query `direction=desc`. |
+
+## Response Type
+
+[`Task<Models.SubscriptionMRRResponse>`](../../doc/models/subscription-mrr-response.md)
+
+## Example Usage
+
+```csharp
+ListMrrPerSubscriptionInput listMrrPerSubscriptionInput = new ListMrrPerSubscriptionInput
+{
+Liquid error: Value cannot be null. (Parameter 'key')    AtTime = "at_time=2022-01-10T10:00:00-05:00",
+    Page = 2,
+    PerPage = 50,
+    Direction = Direction.Desc,
+};
+
+try
+{
+    SubscriptionMRRResponse result = await insightsController.ListMrrPerSubscriptionAsync(listMrrPerSubscriptionInput);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Bad Request | [`SubscriptionsMrrErrorResponseException`](../../doc/models/subscriptions-mrr-error-response-exception.md) |
 
 
 # Read Mrr
@@ -246,58 +300,4 @@ catch (ApiException e)
   }
 }
 ```
-
-
-# List Mrr Per Subscription
-
-**This endpoint is deprecated.**
-
-This endpoint returns your site's current MRR, including plan and usage breakouts split per subscription.
-
-```csharp
-ListMrrPerSubscriptionAsync(
-    Models.ListMrrPerSubscriptionInput input)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `filterSubscriptionIds` | `List<int>` | Query, Optional | Submit ids in order to limit results. Use in query: `filter[subscription_ids]=1,2,3`. |
-| `atTime` | `string` | Query, Optional | Submit a timestamp in ISO8601 format to request MRR for a historic time. Use in query: `at_time=2022-01-10T10:00:00-05:00`. |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
-| `direction` | [`Direction?`](../../doc/models/direction.md) | Query, Optional | Controls the order in which results are returned. Records are ordered by subscription_id in ascending order by default. Use in query `direction=desc`. |
-
-## Response Type
-
-[`Task<Models.SubscriptionMRRResponse>`](../../doc/models/subscription-mrr-response.md)
-
-## Example Usage
-
-```csharp
-ListMrrPerSubscriptionInput listMrrPerSubscriptionInput = new ListMrrPerSubscriptionInput
-{
-Liquid error: Value cannot be null. (Parameter 'key')    AtTime = "at_time=2022-01-10T10:00:00-05:00",
-    Page = 2,
-    PerPage = 50,
-    Direction = Direction.Desc,
-};
-
-try
-{
-    SubscriptionMRRResponse result = await insightsController.ListMrrPerSubscriptionAsync(listMrrPerSubscriptionInput);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Bad Request | [`SubscriptionsMrrErrorResponseException`](../../doc/models/subscriptions-mrr-error-response-exception.md) |
 

@@ -12,6 +12,7 @@ namespace AdvancedBilling.Standard.Models
     using System.Threading.Tasks;
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
+    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
@@ -33,7 +34,7 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         /// <param name="paymentProfile">payment_profile.</param>
         public PaymentProfileResponse(
-            Models.PaymentProfile paymentProfile)
+            PaymentProfileResponsePaymentProfile paymentProfile)
         {
             this.PaymentProfile = paymentProfile;
         }
@@ -42,7 +43,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets PaymentProfile.
         /// </summary>
         [JsonProperty("payment_profile")]
-        public Models.PaymentProfile PaymentProfile { get; set; }
+        public PaymentProfileResponsePaymentProfile PaymentProfile { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -75,7 +76,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.PaymentProfile = {(this.PaymentProfile == null ? "null" : this.PaymentProfile.ToString())}");
+            toStringOutput.Add($"PaymentProfile = {(this.PaymentProfile == null ? "null" : this.PaymentProfile.ToString())}");
         }
     }
 }

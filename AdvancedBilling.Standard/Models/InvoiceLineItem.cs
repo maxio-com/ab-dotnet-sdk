@@ -80,8 +80,8 @@ namespace AdvancedBilling.Standard.Models
             string taxAmount = null,
             string totalAmount = null,
             bool? tieredUnitPrice = null,
-            string periodRangeStart = null,
-            string periodRangeEnd = null,
+            DateTime? periodRangeStart = null,
+            DateTime? periodRangeEnd = null,
             int? transactionId = null,
             int? productId = null,
             int? productVersion = null,
@@ -211,8 +211,9 @@ namespace AdvancedBilling.Standard.Models
         /// * For periodic charges paid in arrears (e.g. metered charges), this date will be the date of the previous billing, and the end date will be the current billing date.
         /// * For non-periodic charges, this date and the end date will match.
         /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("period_range_start", NullValueHandling = NullValueHandling.Ignore)]
-        public string PeriodRangeStart { get; set; }
+        public DateTime? PeriodRangeStart { get; set; }
 
         /// <summary>
         /// End date for the period covered by this line. The format is `"YYYY-MM-DD"`.
@@ -220,8 +221,9 @@ namespace AdvancedBilling.Standard.Models
         /// * For periodic charges paid in arrears (e.g. metered charges), this date will be the date of the current billing date.
         /// * For non-periodic charges, this date and the start date will match.
         /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("period_range_end", NullValueHandling = NullValueHandling.Ignore)]
-        public string PeriodRangeEnd { get; set; }
+        public DateTime? PeriodRangeEnd { get; set; }
 
         /// <summary>
         /// Gets or sets TransactionId.
@@ -513,8 +515,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.TaxAmount = {(this.TaxAmount == null ? "null" : this.TaxAmount)}");
             toStringOutput.Add($"this.TotalAmount = {(this.TotalAmount == null ? "null" : this.TotalAmount)}");
             toStringOutput.Add($"this.TieredUnitPrice = {(this.TieredUnitPrice == null ? "null" : this.TieredUnitPrice.ToString())}");
-            toStringOutput.Add($"this.PeriodRangeStart = {(this.PeriodRangeStart == null ? "null" : this.PeriodRangeStart)}");
-            toStringOutput.Add($"this.PeriodRangeEnd = {(this.PeriodRangeEnd == null ? "null" : this.PeriodRangeEnd)}");
+            toStringOutput.Add($"this.PeriodRangeStart = {(this.PeriodRangeStart == null ? "null" : this.PeriodRangeStart.ToString())}");
+            toStringOutput.Add($"this.PeriodRangeEnd = {(this.PeriodRangeEnd == null ? "null" : this.PeriodRangeEnd.ToString())}");
             toStringOutput.Add($"this.TransactionId = {(this.TransactionId == null ? "null" : this.TransactionId.ToString())}");
             toStringOutput.Add($"this.ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
             toStringOutput.Add($"this.ProductVersion = {(this.ProductVersion == null ? "null" : this.ProductVersion.ToString())}");

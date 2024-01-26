@@ -29,12 +29,12 @@ namespace AdvancedBilling.Standard.Controllers
         protected static ErrorCase<HttpRequest, HttpResponse, HttpContext, ApiException> CreateErrorCase(string reason, Func<string, HttpContext, ApiException> error, bool isErrorTemplate = false)
             => new ErrorCase<HttpRequest, HttpResponse, HttpContext, ApiException>(reason, error, isErrorTemplate);
 
-        protected ApiCall<HttpRequest, HttpResponse, HttpContext, ApiException, T, T> CreateApiCall<T>()
+        protected ApiCall<HttpRequest, HttpResponse, HttpContext, ApiException, T, T> CreateApiCall<T>(ArraySerialization arraySerialization = ArraySerialization.CSV)
             => new ApiCall<HttpRequest, HttpResponse, HttpContext, ApiException, T, T>(
                 globalConfiguration,
                 compatibilityFactory,
-                globalErrors: globalErrors,
-                serialization: ArraySerialization.CSV
+                serialization: arraySerialization,
+                globalErrors: globalErrors
             );
 
         private static readonly CompatibilityFactory compatibilityFactory = new CompatibilityFactory();

@@ -26,7 +26,7 @@ namespace AdvancedBilling.Standard.Models
         private int? amountInCents;
         private string productFamilyName;
         private string endDate;
-        private double? percentage;
+        private string percentage;
         private int? durationPeriodCount;
         private int? durationInterval;
         private string durationIntervalUnit;
@@ -98,7 +98,7 @@ namespace AdvancedBilling.Standard.Models
             string productFamilyName = null,
             string startDate = null,
             string endDate = null,
-            double? percentage = null,
+            string percentage = null,
             bool? recurring = null,
             Models.RecurringScheme? recurringScheme = null,
             int? durationPeriodCount = null,
@@ -305,7 +305,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Percentage.
         /// </summary>
         [JsonProperty("percentage")]
-        public double? Percentage
+        public string Percentage
         {
             get
             {
@@ -755,7 +755,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ProductFamilyName = {(this.ProductFamilyName == null ? "null" : this.ProductFamilyName)}");
             toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate)}");
             toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate)}");
-            toStringOutput.Add($"this.Percentage = {(this.Percentage == null ? "null" : this.Percentage.ToString())}");
+            toStringOutput.Add($"this.Percentage = {(this.Percentage == null ? "null" : this.Percentage)}");
             toStringOutput.Add($"this.Recurring = {(this.Recurring == null ? "null" : this.Recurring.ToString())}");
             toStringOutput.Add($"this.RecurringScheme = {(this.RecurringScheme == null ? "null" : this.RecurringScheme.ToString())}");
             toStringOutput.Add($"this.DurationPeriodCount = {(this.DurationPeriodCount == null ? "null" : this.DurationPeriodCount.ToString())}");

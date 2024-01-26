@@ -42,7 +42,6 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets PrepaidUsageComponent.
         /// </summary>
         [JsonProperty("prepaid_usage_component")]
-        [JsonRequired]
         public Models.PrepaidUsageComponent PrepaidUsageComponent { get; set; }
 
         /// <inheritdoc/>

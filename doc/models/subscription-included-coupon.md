@@ -14,7 +14,7 @@
 | `UsesAllowed` | `int?` | Optional | - |
 | `ExpiresAt` | `string` | Optional | - |
 | `Recurring` | `bool?` | Optional | - |
-| `AmountInCents` | `long?` | Optional | - |
+| `AmountInCents` | `long?` | Optional | **Constraints**: `>= 0` |
 | `Percentage` | `string` | Optional | - |
 
 ## Example (as JSON)

@@ -42,7 +42,6 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets EventBasedComponent.
         /// </summary>
         [JsonProperty("event_based_component")]
-        [JsonRequired]
         public Models.EBBComponent EventBasedComponent { get; set; }
 
         /// <inheritdoc/>

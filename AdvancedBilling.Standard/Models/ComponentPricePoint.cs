@@ -12,6 +12,7 @@ namespace AdvancedBilling.Standard.Models
     using System.Threading.Tasks;
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
+    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
@@ -21,10 +22,14 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class ComponentPricePoint
     {
-        private string archivedAt;
+        private DateTimeOffset? archivedAt;
+        private int? interval;
+        private ComponentPricePointIntervalUnit intervalUnit;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "archived_at", false },
+            { "interval", false },
+            { "interval_unit", false },
         };
 
         /// <summary>
@@ -53,6 +58,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="taxIncluded">tax_included.</param>
         /// <param name="interval">interval.</param>
         /// <param name="intervalUnit">interval_unit.</param>
+        /// <param name="currencyPrices">currency_prices.</param>
         public ComponentPricePoint(
             int? id = null,
             Models.PricePointType? type = null,
@@ -61,15 +67,16 @@ namespace AdvancedBilling.Standard.Models
             Models.PricingScheme? pricingScheme = null,
             int? componentId = null,
             string handle = null,
-            string archivedAt = null,
-            string createdAt = null,
-            string updatedAt = null,
-            List<Models.ComponentPricePointPrice> prices = null,
+            DateTimeOffset? archivedAt = null,
+            DateTimeOffset? createdAt = null,
+            DateTimeOffset? updatedAt = null,
+            List<Models.ComponentPrice> prices = null,
             bool? useSiteExchangeRate = true,
             int? subscriptionId = null,
             bool? taxIncluded = null,
             int? interval = null,
-            Models.IntervalUnit? intervalUnit = null)
+            ComponentPricePointIntervalUnit intervalUnit = null,
+            List<Models.ComponentCurrencyPrice> currencyPrices = null)
         {
             this.Id = id;
             this.Type = type;
@@ -89,8 +96,17 @@ namespace AdvancedBilling.Standard.Models
             this.UseSiteExchangeRate = useSiteExchangeRate;
             this.SubscriptionId = subscriptionId;
             this.TaxIncluded = taxIncluded;
-            this.Interval = interval;
-            this.IntervalUnit = intervalUnit;
+            if (interval != null)
+            {
+                this.Interval = interval;
+            }
+
+            if (intervalUnit != null)
+            {
+                this.IntervalUnit = intervalUnit;
+            }
+
+            this.CurrencyPrices = currencyPrices;
         }
 
         /// <summary>
@@ -141,8 +157,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets ArchivedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("archived_at")]
-        public string ArchivedAt
+        public DateTimeOffset? ArchivedAt
         {
             get
             {
@@ -159,20 +176,22 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CreatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets UpdatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("updated_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string UpdatedAt { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets Prices.
         /// </summary>
         [JsonProperty("prices", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Models.ComponentPricePointPrice> Prices { get; set; }
+        public List<Models.ComponentPrice> Prices { get; set; }
 
         /// <summary>
         /// Whether to use the site level exchange rate or define your own prices for each currency if you have multiple currencies defined on the site.
@@ -195,14 +214,44 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
         /// </summary>
-        [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
-        public int? Interval { get; set; }
+        [JsonProperty("interval")]
+        public int? Interval
+        {
+            get
+            {
+                return this.interval;
+            }
+
+            set
+            {
+                this.shouldSerialize["interval"] = true;
+                this.interval = value;
+            }
+        }
 
         /// <summary>
         /// A string representing the interval unit for this component price point, either month or day. This property is only available for sites with Multifrequency enabled.
         /// </summary>
-        [JsonProperty("interval_unit", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.IntervalUnit? IntervalUnit { get; set; }
+        [JsonProperty("interval_unit")]
+        public ComponentPricePointIntervalUnit IntervalUnit
+        {
+            get
+            {
+                return this.intervalUnit;
+            }
+
+            set
+            {
+                this.shouldSerialize["interval_unit"] = true;
+                this.intervalUnit = value;
+            }
+        }
+
+        /// <summary>
+        /// An array of currency pricing data is available when multiple currencies are defined for the site. It varies based on the use_site_exchange_rate setting for the price point. This parameter is present only in the response of read endpoints, after including the appropriate query parameter.
+        /// </summary>
+        [JsonProperty("currency_prices", NullValueHandling = NullValueHandling.Ignore)]
+        public List<Models.ComponentCurrencyPrice> CurrencyPrices { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -223,12 +272,46 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetInterval()
+        {
+            this.shouldSerialize["interval"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetIntervalUnit()
+        {
+            this.shouldSerialize["interval_unit"] = false;
+        }
+
+        /// <summary>
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
         public bool ShouldSerializeArchivedAt()
         {
             return this.shouldSerialize["archived_at"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeInterval()
+        {
+            return this.shouldSerialize["interval"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeIntervalUnit()
+        {
+            return this.shouldSerialize["interval_unit"];
         }
 
         /// <inheritdoc/>
@@ -258,7 +341,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.SubscriptionId == null && other.SubscriptionId == null) || (this.SubscriptionId?.Equals(other.SubscriptionId) == true)) &&
                 ((this.TaxIncluded == null && other.TaxIncluded == null) || (this.TaxIncluded?.Equals(other.TaxIncluded) == true)) &&
                 ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
-                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true));
+                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true)) &&
+                ((this.CurrencyPrices == null && other.CurrencyPrices == null) || (this.CurrencyPrices?.Equals(other.CurrencyPrices) == true));
         }
         
         /// <summary>
@@ -274,15 +358,16 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
-            toStringOutput.Add($"this.ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt)}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
-            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt)}");
+            toStringOutput.Add($"this.ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt.ToString())}");
+            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
             toStringOutput.Add($"this.Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
             toStringOutput.Add($"this.UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
             toStringOutput.Add($"this.TaxIncluded = {(this.TaxIncluded == null ? "null" : this.TaxIncluded.ToString())}");
             toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
-            toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
+            toStringOutput.Add($"IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
+            toStringOutput.Add($"this.CurrencyPrices = {(this.CurrencyPrices == null ? "null" : $"[{string.Join(", ", this.CurrencyPrices)} ]")}");
         }
     }
 }

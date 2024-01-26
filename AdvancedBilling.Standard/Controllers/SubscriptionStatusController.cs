@@ -35,42 +35,6 @@ namespace AdvancedBilling.Standard.Controllers
         internal SubscriptionStatusController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
-        /// Chargify offers the ability to retry collecting the balance due on a past due Subscription without waiting for the next scheduled attempt.
-        /// ## Successful Reactivation.
-        /// The response will be `200 OK` with the updated Subscription.
-        /// ## Failed Reactivation.
-        /// The response will be `422 "Unprocessable Entity`.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public Models.SubscriptionResponse RetrySubscription(
-                int subscriptionId)
-            => CoreHelper.RunTask(RetrySubscriptionAsync(subscriptionId));
-
-        /// <summary>
-        /// Chargify offers the ability to retry collecting the balance due on a past due Subscription without waiting for the next scheduled attempt.
-        /// ## Successful Reactivation.
-        /// The response will be `200 OK` with the updated Subscription.
-        /// ## Failed Reactivation.
-        /// The response will be `422 "Unprocessable Entity`.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionResponse> RetrySubscriptionAsync(
-                int subscriptionId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/retry.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// The DELETE action causes the cancellation of the Subscription. This means, the method sets the Subscription state to "canceled".
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
@@ -172,6 +136,110 @@ namespace AdvancedBilling.Standard.Controllers
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Chargify offers the ability to cancel a subscription at the end of the current billing period. This period is set by its current product.
+        /// Requesting to cancel the subscription at the end of the period sets the `cancel_at_end_of_period` flag to true.
+        /// Note that you cannot set `cancel_at_end_of_period` at subscription creation, or if the subscription is past due.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.DelayedCancellationResponse response from the API call.</returns>
+        public Models.DelayedCancellationResponse InitiateDelayedCancellation(
+                int subscriptionId,
+                Models.CancellationRequest body = null)
+            => CoreHelper.RunTask(InitiateDelayedCancellationAsync(subscriptionId, body));
+
+        /// <summary>
+        /// Chargify offers the ability to cancel a subscription at the end of the current billing period. This period is set by its current product.
+        /// Requesting to cancel the subscription at the end of the period sets the `cancel_at_end_of_period` flag to true.
+        /// Note that you cannot set `cancel_at_end_of_period` at subscription creation, or if the subscription is past due.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.DelayedCancellationResponse response from the API call.</returns>
+        public async Task<Models.DelayedCancellationResponse> InitiateDelayedCancellationAsync(
+                int subscriptionId,
+                Models.CancellationRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.DelayedCancellationResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/delayed_cancel.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Removing the delayed cancellation on a subscription will ensure that it doesn't get canceled at the end of the period that it is in. The request will reset the `cancel_at_end_of_period` flag to `false`.
+        /// This endpoint is idempotent. If the subscription was not set to cancel in the future, removing the delayed cancellation has no effect and the call will be successful.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <returns>Returns the Models.DelayedCancellationResponse response from the API call.</returns>
+        public Models.DelayedCancellationResponse StopDelayedCancellation(
+                int subscriptionId)
+            => CoreHelper.RunTask(StopDelayedCancellationAsync(subscriptionId));
+
+        /// <summary>
+        /// Removing the delayed cancellation on a subscription will ensure that it doesn't get canceled at the end of the period that it is in. The request will reset the `cancel_at_end_of_period` flag to `false`.
+        /// This endpoint is idempotent. If the subscription was not set to cancel in the future, removing the delayed cancellation has no effect and the call will be successful.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.DelayedCancellationResponse response from the API call.</returns>
+        public async Task<Models.DelayedCancellationResponse> StopDelayedCancellationAsync(
+                int subscriptionId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.DelayedCancellationResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/delayed_cancel.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Chargify offers the ability to retry collecting the balance due on a past due Subscription without waiting for the next scheduled attempt.
+        /// ## Successful Reactivation.
+        /// The response will be `200 OK` with the updated Subscription.
+        /// ## Failed Reactivation.
+        /// The response will be `422 "Unprocessable Entity`.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public Models.SubscriptionResponse RetrySubscription(
+                int subscriptionId)
+            => CoreHelper.RunTask(RetrySubscriptionAsync(subscriptionId));
+
+        /// <summary>
+        /// Chargify offers the ability to retry collecting the balance due on a past due Subscription without waiting for the next scheduled attempt.
+        /// ## Successful Reactivation.
+        /// The response will be `200 OK` with the updated Subscription.
+        /// ## Failed Reactivation.
+        /// The response will be `422 "Unprocessable Entity`.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public async Task<Models.SubscriptionResponse> RetrySubscriptionAsync(
+                int subscriptionId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.SubscriptionResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/retry.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
@@ -442,74 +510,6 @@ namespace AdvancedBilling.Standard.Controllers
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Chargify offers the ability to cancel a subscription at the end of the current billing period. This period is set by its current product.
-        /// Requesting to cancel the subscription at the end of the period sets the `cancel_at_end_of_period` flag to true.
-        /// Note that you cannot set `cancel_at_end_of_period` at subscription creation, or if the subscription is past due.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.DelayedCancellationResponse response from the API call.</returns>
-        public Models.DelayedCancellationResponse InitiateDelayedCancellation(
-                int subscriptionId,
-                Models.CancellationRequest body = null)
-            => CoreHelper.RunTask(InitiateDelayedCancellationAsync(subscriptionId, body));
-
-        /// <summary>
-        /// Chargify offers the ability to cancel a subscription at the end of the current billing period. This period is set by its current product.
-        /// Requesting to cancel the subscription at the end of the period sets the `cancel_at_end_of_period` flag to true.
-        /// Note that you cannot set `cancel_at_end_of_period` at subscription creation, or if the subscription is past due.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.DelayedCancellationResponse response from the API call.</returns>
-        public async Task<Models.DelayedCancellationResponse> InitiateDelayedCancellationAsync(
-                int subscriptionId,
-                Models.CancellationRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.DelayedCancellationResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/delayed_cancel.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Removing the delayed cancellation on a subscription will ensure that it doesn't get canceled at the end of the period that it is in. The request will reset the `cancel_at_end_of_period` flag to `false`.
-        /// This endpoint is idempotent. If the subscription was not set to cancel in the future, removing the delayed cancellation has no effect and the call will be successful.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <returns>Returns the Models.DelayedCancellationResponse response from the API call.</returns>
-        public Models.DelayedCancellationResponse StopDelayedCancellation(
-                int subscriptionId)
-            => CoreHelper.RunTask(StopDelayedCancellationAsync(subscriptionId));
-
-        /// <summary>
-        /// Removing the delayed cancellation on a subscription will ensure that it doesn't get canceled at the end of the period that it is in. The request will reset the `cancel_at_end_of_period` flag to `false`.
-        /// This endpoint is idempotent. If the subscription was not set to cancel in the future, removing the delayed cancellation has no effect and the call will be successful.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.DelayedCancellationResponse response from the API call.</returns>
-        public async Task<Models.DelayedCancellationResponse> StopDelayedCancellationAsync(
-                int subscriptionId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.DelayedCancellationResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/delayed_cancel.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>

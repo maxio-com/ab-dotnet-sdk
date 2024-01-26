@@ -10,7 +10,7 @@ namespace AdvancedBillingTests.Utils
     {
         private static readonly Fixture _fixture = new();
 
-        public static async Task<CreatePaymentProfileResponse> CreatePaymentProfile(int? customerId, AdvancedBillingClient client)
+        public static async Task<int> CreatePaymentProfile(int? customerId, AdvancedBillingClient client)
         {
             var paymentProfile = new CreatePaymentProfile
             {
@@ -28,8 +28,11 @@ namespace AdvancedBillingTests.Utils
                 await client.PaymentProfilesController.CreatePaymentProfileAsync(
                     new CreatePaymentProfileRequest(paymentProfile));
 
-            paymentProfileResponse.PaymentProfile.Id.Should().NotBeNull();
-            return paymentProfileResponse;
+            var paymentProfileId = paymentProfileResponse.PaymentProfile.Match(x => x.Id, y => y.Id);
+
+            paymentProfileId.Should().NotBeNull();
+
+            return (int)paymentProfileId!;
         }
 
         public static async Task<CustomerResponse> CreateCustomer(AdvancedBillingClient client)

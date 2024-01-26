@@ -42,7 +42,6 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets OnOffComponent.
         /// </summary>
         [JsonProperty("on_off_component")]
-        [JsonRequired]
         public Models.OnOffComponent OnOffComponent { get; set; }
 
         /// <inheritdoc/>

@@ -37,9 +37,9 @@
 | `PaymentCollectionMethod` | [`PaymentCollectionMethod?`](../../doc/models/payment-collection-method.md) | Optional | The type of payment collection to be used in the subscription. For legacy Statements Architecture valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid options are - `remittance`, `automatic`, `prepaid`.<br>**Default**: `PaymentCollectionMethod.automatic` |
 | `Customer` | [`Customer`](../../doc/models/customer.md) | Optional | - |
 | `Product` | [`Product`](../../doc/models/product.md) | Optional | - |
-| `CreditCard` | [`PaymentProfile`](../../doc/models/payment-profile.md) | Optional | - |
+| `CreditCard` | [`CreditCardPaymentProfile`](../../doc/models/credit-card-payment-profile.md) | Optional | - |
 | `Group` | [`SubscriptionGroup2`](../../doc/models/containers/subscription-group-2.md) | Optional | This is a container for one-of cases. |
-| `BankAccount` | [`SubscriptionBankAccount`](../../doc/models/subscription-bank-account.md) | Optional | - |
+| `BankAccount` | [`BankAccountPaymentProfile`](../../doc/models/bank-account-payment-profile.md) | Optional | - |
 | `PaymentType` | `string` | Optional | The payment profile type for the active profile on file. |
 | `ReferralCode` | `string` | Optional | The subscription's unique code that can be given to referrals. |
 | `NextProductId` | `int?` | Optional | If a delayed product change is scheduled, the ID of the product that the subscription will be changed to at the next renewal. |

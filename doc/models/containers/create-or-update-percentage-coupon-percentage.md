@@ -9,6 +9,6 @@
 
 | Type | Factory Method |
 |  --- | --- |
-| `double` | CreateOrUpdatePercentageCouponPercentage.FromPrecision(double precision) |
 | `string` | CreateOrUpdatePercentageCouponPercentage.FromString(string mString) |
+| `double` | CreateOrUpdatePercentageCouponPercentage.FromPrecision(double precision) |
 

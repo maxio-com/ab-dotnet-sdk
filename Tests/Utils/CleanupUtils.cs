@@ -6,7 +6,7 @@ namespace AdvancedBillingTests.Utils
     public static class CleanupUtils
     {
         public static async Task ExecuteBasicSubscriptionCleanup(SubscriptionResponse subscriptionResponse,
-            CustomerResponse customerResponse, CreatePaymentProfileResponse paymentProfile, ProductResponse productResponse, AdvancedBillingClient client)
+            CustomerResponse customerResponse, int paymentProfileId, ProductResponse productResponse, AdvancedBillingClient client)
         {
             await ErrorSuppressionWrapper.RunAsync(async () =>
             {
@@ -14,15 +14,15 @@ namespace AdvancedBillingTests.Utils
                     (int)customerResponse.Customer.Id);
             });
 
-            await ExecuteCleanupForPaymentProfileProductCustomer(customerResponse, paymentProfile, productResponse, client);
+            await ExecuteCleanupForPaymentProfileProductCustomer(customerResponse, paymentProfileId, productResponse, client);
         }
 
         public static async Task ExecuteCleanupForPaymentProfileProductCustomer(CustomerResponse customerResponse,
-            CreatePaymentProfileResponse paymentProfile, ProductResponse productResponse, AdvancedBillingClient client)
+            int paymentProfileId, ProductResponse productResponse, AdvancedBillingClient client)
         {
             await ErrorSuppressionWrapper.RunAsync(async () =>
             {
-                await client.PaymentProfilesController.DeleteUnusedPaymentProfileAsync(paymentProfile.ToString());
+                await client.PaymentProfilesController.DeleteUnusedPaymentProfileAsync(paymentProfileId);
             });
 
             await ErrorSuppressionWrapper.RunAsync(async () =>
