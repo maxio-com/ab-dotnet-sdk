@@ -11,10 +11,10 @@ SubscriptionNotesController subscriptionNotesController = client.SubscriptionNot
 ## Methods
 
 * [Create Subscription Note](../../doc/controllers/subscription-notes.md#create-subscription-note)
-* [Delete Subscription Note](../../doc/controllers/subscription-notes.md#delete-subscription-note)
 * [List Subscription Notes](../../doc/controllers/subscription-notes.md#list-subscription-notes)
 * [Read Subscription Note](../../doc/controllers/subscription-notes.md#read-subscription-note)
 * [Update Subscription Note](../../doc/controllers/subscription-notes.md#update-subscription-note)
+* [Delete Subscription Note](../../doc/controllers/subscription-notes.md#delete-subscription-note)
 
 
 # Create Subscription Note
@@ -64,47 +64,6 @@ try
     SubscriptionNoteResponse result = await subscriptionNotesController.CreateSubscriptionNoteAsync(
         subscriptionId,
         body
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-
-# Delete Subscription Note
-
-Use the following method to delete a note for a Subscription.
-
-```csharp
-DeleteSubscriptionNoteAsync(
-    int subscriptionId,
-    int noteId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `noteId` | `int` | Template, Required | The Chargify id of the note |
-
-## Response Type
-
-`Task`
-
-## Example Usage
-
-```csharp
-int subscriptionId = 222;
-int noteId = 66;
-try
-{
-    await subscriptionNotesController.DeleteSubscriptionNoteAsync(
-        subscriptionId,
-        noteId
     );
 }
 catch (ApiException e)
@@ -284,6 +243,47 @@ try
         subscriptionId,
         noteId,
         body
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+
+# Delete Subscription Note
+
+Use the following method to delete a note for a Subscription.
+
+```csharp
+DeleteSubscriptionNoteAsync(
+    int subscriptionId,
+    int noteId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `noteId` | `int` | Template, Required | The Chargify id of the note |
+
+## Response Type
+
+`Task`
+
+## Example Usage
+
+```csharp
+int subscriptionId = 222;
+int noteId = 66;
+try
+{
+    await subscriptionNotesController.DeleteSubscriptionNoteAsync(
+        subscriptionId,
+        noteId
     );
 }
 catch (ApiException e)

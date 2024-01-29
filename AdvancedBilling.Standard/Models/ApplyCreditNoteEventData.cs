@@ -13,6 +13,7 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -42,11 +43,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="consolidatedInvoice">consolidated_invoice.</param>
         /// <param name="appliedCreditNotes">applied_credit_notes.</param>
         public ApplyCreditNoteEventData(
-            string uid = null,
-            string creditNoteNumber = null,
-            string creditNoteUid = null,
-            string originalAmount = null,
-            string appliedAmount = null,
+            string uid,
+            string creditNoteNumber,
+            string creditNoteUid,
+            string originalAmount,
+            string appliedAmount,
             DateTimeOffset? transactionTime = null,
             string memo = null,
             string role = null,
@@ -68,36 +69,41 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Unique identifier for the credit note application. It is generated automatically by Chargify and has the prefix "cdt_" followed by alphanumeric characters.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("uid", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("uid")]
+        [JsonRequired]
         public string Uid { get; set; }
 
         /// <summary>
         /// A unique, identifying string that appears on the credit note and in places it is referenced.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("credit_note_number", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("credit_note_number")]
+        [JsonRequired]
         public string CreditNoteNumber { get; set; }
 
         /// <summary>
         /// Unique identifier for the credit note. It is generated automatically by Chargify and has the prefix "cn_" followed by alphanumeric characters.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("credit_note_uid", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("credit_note_uid")]
+        [JsonRequired]
         public string CreditNoteUid { get; set; }
 
         /// <summary>
         /// The full, original amount of the credit note.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("original_amount", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("original_amount")]
+        [JsonRequired]
         public string OriginalAmount { get; set; }
 
         /// <summary>
         /// The amount of the credit note applied to invoice.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("applied_amount", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("applied_amount")]
+        [JsonRequired]
         public string AppliedAmount { get; set; }
 
         /// <summary>

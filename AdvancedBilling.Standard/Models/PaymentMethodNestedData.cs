@@ -13,12 +13,14 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
     /// <summary>
     /// PaymentMethodNestedData.
     /// </summary>
+    [JsonConverter(typeof(JsonSubtypes), "type")]
     public class PaymentMethodNestedData
     {
         private string lastFour;
@@ -32,6 +34,7 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         public PaymentMethodNestedData()
         {
+            this.Type = "Payment Method Nested Data";
         }
 
         /// <summary>
@@ -49,7 +52,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="memo">memo.</param>
         /// <param name="email">email.</param>
         public PaymentMethodNestedData(
-            string type = "apple_pay",
+            string type = "Payment Method Nested Data",
             string maskedAccountNumber = null,
             string maskedRoutingNumber = null,
             string cardBrand = null,

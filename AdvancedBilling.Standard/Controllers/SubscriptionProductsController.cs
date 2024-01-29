@@ -35,6 +35,7 @@ namespace AdvancedBilling.Standard.Controllers
         internal SubscriptionProductsController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
+        /// <![CDATA[
         /// In order to create a migration, you must pass the `product_id` or `product_handle` in the object when you send a POST request. You may also pass either a `product_price_point_id` or `product_price_point_handle` to choose which price point the subscription is moved to. If no price point identifier is passed the subscription will be moved to the products default price point. The response will be the updated subscription.
         /// ## Valid Subscriptions.
         /// Subscriptions should be in the `active` or `trialing` state in order to be migrated.
@@ -73,6 +74,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// 6. After the customer finishes 3DS authentication, we let you know the result by making a request to applied `callback_url`.
         /// 7. After that, we redirect the customer to the `redirect_url`; at this point the result of authentication is known.
         /// 8. Optionally, you can use the applied "msg" param in the `redirect_url` to determine whether it was successful or not.
+        /// ]]>
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="body">Optional parameter: Example: .</param>
@@ -83,6 +85,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(MigrateSubscriptionProductAsync(subscriptionId, body));
 
         /// <summary>
+        /// <![CDATA[
         /// In order to create a migration, you must pass the `product_id` or `product_handle` in the object when you send a POST request. You may also pass either a `product_price_point_id` or `product_price_point_handle` to choose which price point the subscription is moved to. If no price point identifier is passed the subscription will be moved to the products default price point. The response will be the updated subscription.
         /// ## Valid Subscriptions.
         /// Subscriptions should be in the `active` or `trialing` state in order to be migrated.
@@ -121,6 +124,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// 6. After the customer finishes 3DS authentication, we let you know the result by making a request to applied `callback_url`.
         /// 7. After that, we redirect the customer to the `redirect_url`; at this point the result of authentication is known.
         /// 8. Optionally, you can use the applied "msg" param in the `redirect_url` to determine whether it was successful or not.
+        /// ]]>
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="body">Optional parameter: Example: .</param>

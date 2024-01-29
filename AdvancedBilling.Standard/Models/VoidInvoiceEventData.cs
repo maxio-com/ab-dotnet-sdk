@@ -12,7 +12,9 @@ namespace AdvancedBilling.Standard.Models
     using System.Threading.Tasks;
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
+    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -31,57 +33,69 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="VoidInvoiceEventData"/> class.
         /// </summary>
+        /// <param name="isAdvanceInvoice">is_advance_invoice.</param>
+        /// <param name="reason">reason.</param>
         /// <param name="creditNoteAttributes">credit_note_attributes.</param>
         /// <param name="memo">memo.</param>
         /// <param name="appliedAmount">applied_amount.</param>
         /// <param name="transactionTime">transaction_time.</param>
-        /// <param name="isAdvanceInvoice">is_advance_invoice.</param>
         public VoidInvoiceEventData(
-            Models.CreditNote creditNoteAttributes = null,
+            bool isAdvanceInvoice,
+            string reason,
+            VoidInvoiceEventDataCreditNoteAttributes creditNoteAttributes = null,
             string memo = null,
             string appliedAmount = null,
-            DateTimeOffset? transactionTime = null,
-            bool? isAdvanceInvoice = null)
+            DateTimeOffset? transactionTime = null)
         {
             this.CreditNoteAttributes = creditNoteAttributes;
             this.Memo = memo;
             this.AppliedAmount = appliedAmount;
             this.TransactionTime = transactionTime;
             this.IsAdvanceInvoice = isAdvanceInvoice;
+            this.Reason = reason;
         }
 
         /// <summary>
         /// Gets or sets CreditNoteAttributes.
         /// </summary>
-        [JsonProperty("credit_note_attributes", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.CreditNote CreditNoteAttributes { get; set; }
+        [JsonProperty("credit_note_attributes", NullValueHandling = NullValueHandling.Include)]
+        public VoidInvoiceEventDataCreditNoteAttributes CreditNoteAttributes { get; set; }
 
         /// <summary>
         /// The memo provided during invoice voiding.
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("memo", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("memo", NullValueHandling = NullValueHandling.Include)]
         public string Memo { get; set; }
 
         /// <summary>
         /// The amount of the void.
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("applied_amount", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("applied_amount", NullValueHandling = NullValueHandling.Include)]
         public string AppliedAmount { get; set; }
 
         /// <summary>
         /// The time the refund was applied, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z"
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
-        [JsonProperty("transaction_time", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("transaction_time", NullValueHandling = NullValueHandling.Include)]
         public DateTimeOffset? TransactionTime { get; set; }
 
         /// <summary>
         /// If true, the invoice is an advance invoice.
         /// </summary>
-        [JsonProperty("is_advance_invoice", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? IsAdvanceInvoice { get; set; }
+        [JsonProperty("is_advance_invoice")]
+        [JsonRequired]
+        public bool IsAdvanceInvoice { get; set; }
+
+        /// <summary>
+        /// The reason for the void.
+        /// </summary>
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("reason")]
+        [JsonRequired]
+        public string Reason { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -109,7 +123,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
                 ((this.AppliedAmount == null && other.AppliedAmount == null) || (this.AppliedAmount?.Equals(other.AppliedAmount) == true)) &&
                 ((this.TransactionTime == null && other.TransactionTime == null) || (this.TransactionTime?.Equals(other.TransactionTime) == true)) &&
-                ((this.IsAdvanceInvoice == null && other.IsAdvanceInvoice == null) || (this.IsAdvanceInvoice?.Equals(other.IsAdvanceInvoice) == true));
+                this.IsAdvanceInvoice.Equals(other.IsAdvanceInvoice) &&
+                ((this.Reason == null && other.Reason == null) || (this.Reason?.Equals(other.Reason) == true));
         }
         
         /// <summary>
@@ -118,11 +133,12 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.CreditNoteAttributes = {(this.CreditNoteAttributes == null ? "null" : this.CreditNoteAttributes.ToString())}");
+            toStringOutput.Add($"CreditNoteAttributes = {(this.CreditNoteAttributes == null ? "null" : this.CreditNoteAttributes.ToString())}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.AppliedAmount = {(this.AppliedAmount == null ? "null" : this.AppliedAmount)}");
             toStringOutput.Add($"this.TransactionTime = {(this.TransactionTime == null ? "null" : this.TransactionTime.ToString())}");
-            toStringOutput.Add($"this.IsAdvanceInvoice = {(this.IsAdvanceInvoice == null ? "null" : this.IsAdvanceInvoice.ToString())}");
+            toStringOutput.Add($"this.IsAdvanceInvoice = {this.IsAdvanceInvoice}");
+            toStringOutput.Add($"this.Reason = {(this.Reason == null ? "null" : this.Reason)}");
         }
     }
 }

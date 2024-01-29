@@ -13,6 +13,7 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -54,7 +55,7 @@ namespace AdvancedBilling.Standard.Models
             bool? accrueCharge = null,
             Models.CreditType? upgradeCharge = null,
             Models.CreditType? downgradeCredit = null,
-            Models.PaymentCollectionMethod1? paymentCollectionMethod = Models.PaymentCollectionMethod1.Automatic,
+            Models.CollectionMethod? paymentCollectionMethod = null,
             bool? initiateDunning = null)
         {
             this.ProrationUpgradeScheme = prorationUpgradeScheme;
@@ -141,7 +142,7 @@ namespace AdvancedBilling.Standard.Models
         /// (Optional) If not passed, the allocation(s) will use the payment collection method on the subscription
         /// </summary>
         [JsonProperty("payment_collection_method", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.PaymentCollectionMethod1? PaymentCollectionMethod { get; set; }
+        public Models.CollectionMethod? PaymentCollectionMethod { get; set; }
 
         /// <summary>
         /// If true, if the immediate component payment fails, initiate dunning for the subscription.

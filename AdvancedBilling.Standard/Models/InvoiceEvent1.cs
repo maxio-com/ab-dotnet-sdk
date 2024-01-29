@@ -14,6 +14,7 @@ namespace AdvancedBilling.Standard.Models
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -60,6 +61,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="refundId">refund_id.</param>
         /// <param name="prepayment">prepayment.</param>
         /// <param name="isAdvanceInvoice">is_advance_invoice.</param>
+        /// <param name="reason">reason.</param>
         public InvoiceEvent1(
             string uid = null,
             string creditNoteNumber = null,
@@ -88,7 +90,8 @@ namespace AdvancedBilling.Standard.Models
             string refundAmount = null,
             int? refundId = null,
             bool? prepayment = null,
-            bool? isAdvanceInvoice = null)
+            bool? isAdvanceInvoice = null,
+            string reason = null)
         {
             this.Uid = uid;
             this.CreditNoteNumber = creditNoteNumber;
@@ -118,6 +121,7 @@ namespace AdvancedBilling.Standard.Models
             this.RefundId = refundId;
             this.Prepayment = prepayment;
             this.IsAdvanceInvoice = isAdvanceInvoice;
+            this.Reason = reason;
         }
 
         /// <summary>
@@ -294,6 +298,12 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("is_advance_invoice", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsAdvanceInvoice { get; set; }
 
+        /// <summary>
+        /// The reason for the void.
+        /// </summary>
+        [JsonProperty("reason", NullValueHandling = NullValueHandling.Ignore)]
+        public string Reason { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -343,7 +353,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.RefundAmount == null && other.RefundAmount == null) || (this.RefundAmount?.Equals(other.RefundAmount) == true)) &&
                 ((this.RefundId == null && other.RefundId == null) || (this.RefundId?.Equals(other.RefundId) == true)) &&
                 ((this.Prepayment == null && other.Prepayment == null) || (this.Prepayment?.Equals(other.Prepayment) == true)) &&
-                ((this.IsAdvanceInvoice == null && other.IsAdvanceInvoice == null) || (this.IsAdvanceInvoice?.Equals(other.IsAdvanceInvoice) == true));
+                ((this.IsAdvanceInvoice == null && other.IsAdvanceInvoice == null) || (this.IsAdvanceInvoice?.Equals(other.IsAdvanceInvoice) == true)) &&
+                ((this.Reason == null && other.Reason == null) || (this.Reason?.Equals(other.Reason) == true));
         }
         
         /// <summary>
@@ -380,6 +391,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.RefundId = {(this.RefundId == null ? "null" : this.RefundId.ToString())}");
             toStringOutput.Add($"this.Prepayment = {(this.Prepayment == null ? "null" : this.Prepayment.ToString())}");
             toStringOutput.Add($"this.IsAdvanceInvoice = {(this.IsAdvanceInvoice == null ? "null" : this.IsAdvanceInvoice.ToString())}");
+            toStringOutput.Add($"this.Reason = {(this.Reason == null ? "null" : this.Reason)}");
         }
     }
 }

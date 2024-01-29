@@ -14,6 +14,7 @@ namespace AdvancedBilling.Standard.Models
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -184,7 +185,7 @@ namespace AdvancedBilling.Standard.Models
             DateTimeOffset? delayedCancelAt = null,
             string couponCode = null,
             string snapDay = null,
-            Models.PaymentCollectionMethod? paymentCollectionMethod = Models.PaymentCollectionMethod.Automatic,
+            Models.CollectionMethod? paymentCollectionMethod = Models.CollectionMethod.Automatic,
             Models.Customer customer = null,
             Models.Product product = null,
             Models.CreditCardPaymentProfile creditCard = null,
@@ -710,7 +711,7 @@ namespace AdvancedBilling.Standard.Models
         /// The type of payment collection to be used in the subscription. For legacy Statements Architecture valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid options are - `remittance`, `automatic`, `prepaid`.
         /// </summary>
         [JsonProperty("payment_collection_method", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.PaymentCollectionMethod? PaymentCollectionMethod { get; set; }
+        public Models.CollectionMethod? PaymentCollectionMethod { get; set; }
 
         /// <summary>
         /// Gets or sets Customer.
@@ -924,7 +925,9 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// <![CDATA[
         /// On Relationship Invoicing, the ID of the individual paying for the subscription. Defaults to the Customer ID unless the 'Customer Hierarchies & WhoPays' feature is enabled.
+        /// ]]>
         /// </summary>
         [JsonProperty("payer_id")]
         public int? PayerId

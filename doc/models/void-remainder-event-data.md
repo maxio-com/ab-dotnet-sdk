@@ -11,10 +11,10 @@ Example schema for an `void_remainder` event
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `CreditNoteAttributes` | [`CreditNote`](../../doc/models/credit-note.md) | Optional | - |
-| `Memo` | `string` | Optional | The memo provided during invoice remainder voiding. |
-| `AppliedAmount` | `string` | Optional | The amount of the void. |
-| `TransactionTime` | `DateTimeOffset?` | Optional | The time the refund was applied, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z" |
+| `CreditNoteAttributes` | [`CreditNote`](../../doc/models/credit-note.md) | Required | - |
+| `Memo` | `string` | Required | The memo provided during invoice remainder voiding. |
+| `AppliedAmount` | `string` | Required | The amount of the void. |
+| `TransactionTime` | `DateTimeOffset` | Required | The time the refund was applied, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z" |
 
 ## Example (as JSON)
 

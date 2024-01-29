@@ -35,153 +35,7 @@ namespace AdvancedBilling.Standard.Controllers
         internal PaymentProfilesController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
-        /// ## Partial Card Updates.
-        /// In the event that you are using the Authorize.net, Stripe, Cybersource, Forte or Braintree Blue payment gateways, you can update just the billing and contact information for a payment method. Note the lack of credit-card related data contained in the JSON payload.
-        /// In this case, the following JSON is acceptable:.
-        /// ```.
-        /// {.
-        ///   "payment_profile": {.
-        ///     "first_name": "Kelly",.
-        ///     "last_name": "Test",.
-        ///     "billing_address": "789 Juniper Court",.
-        ///     "billing_city": "Boulder",.
-        ///     "billing_state": "CO",.
-        ///     "billing_zip": "80302",.
-        ///     "billing_country": "US",.
-        ///     "billing_address_2": null.
-        ///   }.
-        /// }.
-        /// ```.
-        /// The result will be that you have updated the billing information for the card, yet retained the original card number data.
-        /// ## Specific notes on updating payment profiles.
-        /// - Merchants with **Authorize.net**, **Cybersource**, **Forte**, **Braintree Blue** or **Stripe** as their payment gateway can update their Customer’s credit cards without passing in the full credit card number and CVV.
-        /// - If you are using **Authorize.net**, **Cybersource**, **Forte**, **Braintree Blue** or **Stripe**, Chargify will ignore the credit card number and CVV when processing an update via the API, and attempt a partial update instead. If you wish to change the card number on a payment profile, you will need to create a new payment profile for the given customer.
-        /// - A Payment Profile cannot be updated with the attributes of another type of Payment Profile. For example, if the payment profile you are attempting to update is a credit card, you cannot pass in bank account attributes (like `bank_account_number`), and vice versa.
-        /// - Updating a payment profile directly will not trigger an attempt to capture a past-due balance. If this is the intent, update the card details via the Subscription instead.
-        /// - If you are using Authorize.net or Stripe, you may elect to manually trigger a retry for a past due subscription after a partial update.
-        /// </summary>
-        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.PaymentProfileResponse response from the API call.</returns>
-        public Models.PaymentProfileResponse UpdatePaymentProfile(
-                int paymentProfileId,
-                Models.UpdatePaymentProfileRequest body = null)
-            => CoreHelper.RunTask(UpdatePaymentProfileAsync(paymentProfileId, body));
-
-        /// <summary>
-        /// ## Partial Card Updates.
-        /// In the event that you are using the Authorize.net, Stripe, Cybersource, Forte or Braintree Blue payment gateways, you can update just the billing and contact information for a payment method. Note the lack of credit-card related data contained in the JSON payload.
-        /// In this case, the following JSON is acceptable:.
-        /// ```.
-        /// {.
-        ///   "payment_profile": {.
-        ///     "first_name": "Kelly",.
-        ///     "last_name": "Test",.
-        ///     "billing_address": "789 Juniper Court",.
-        ///     "billing_city": "Boulder",.
-        ///     "billing_state": "CO",.
-        ///     "billing_zip": "80302",.
-        ///     "billing_country": "US",.
-        ///     "billing_address_2": null.
-        ///   }.
-        /// }.
-        /// ```.
-        /// The result will be that you have updated the billing information for the card, yet retained the original card number data.
-        /// ## Specific notes on updating payment profiles.
-        /// - Merchants with **Authorize.net**, **Cybersource**, **Forte**, **Braintree Blue** or **Stripe** as their payment gateway can update their Customer’s credit cards without passing in the full credit card number and CVV.
-        /// - If you are using **Authorize.net**, **Cybersource**, **Forte**, **Braintree Blue** or **Stripe**, Chargify will ignore the credit card number and CVV when processing an update via the API, and attempt a partial update instead. If you wish to change the card number on a payment profile, you will need to create a new payment profile for the given customer.
-        /// - A Payment Profile cannot be updated with the attributes of another type of Payment Profile. For example, if the payment profile you are attempting to update is a credit card, you cannot pass in bank account attributes (like `bank_account_number`), and vice versa.
-        /// - Updating a payment profile directly will not trigger an attempt to capture a past-due balance. If this is the intent, update the card details via the Subscription instead.
-        /// - If you are using Authorize.net or Stripe, you may elect to manually trigger a retry for a past due subscription after a partial update.
-        /// </summary>
-        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.PaymentProfileResponse response from the API call.</returns>
-        public async Task<Models.PaymentProfileResponse> UpdatePaymentProfileAsync(
-                int paymentProfileId,
-                Models.UpdatePaymentProfileRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.PaymentProfileResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/payment_profiles/{payment_profile_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("payment_profile_id", paymentProfileId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context)))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorStringMapResponseException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This will delete a Payment Profile belonging to a Subscription Group.
-        /// **Note**: If the Payment Profile belongs to multiple Subscription Groups and/or Subscriptions, it will be removed from all of them.
-        /// </summary>
-        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
-        public void DeleteSubscriptionGroupPaymentProfile(
-                string uid,
-                int paymentProfileId)
-            => CoreHelper.RunVoidTask(DeleteSubscriptionGroupPaymentProfileAsync(uid, paymentProfileId));
-
-        /// <summary>
-        /// This will delete a Payment Profile belonging to a Subscription Group.
-        /// **Note**: If the Payment Profile belongs to multiple Subscription Groups and/or Subscriptions, it will be removed from all of them.
-        /// </summary>
-        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task DeleteSubscriptionGroupPaymentProfileAsync(
-                string uid,
-                int paymentProfileId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Delete, "/subscription_groups/{uid}/payment_profiles/{payment_profile_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("uid", uid).Required())
-                      .Template(_template => _template.Setup("payment_profile_id", paymentProfileId))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// You can send a "request payment update" email to the customer associated with the subscription.
-        /// If you attempt to send a "request payment update" email more than five times within a 30-minute period, you will receive a `422` response with an error message in the body. This error message will indicate that the request has been rejected due to excessive attempts, and will provide instructions on how to resubmit the request.
-        /// Additionally, if you attempt to send a "request payment update" email for a subscription that does not exist, you will receive a `404` error response. This error message will indicate that the subscription could not be found, and will provide instructions on how to correct the error and resubmit the request.
-        /// These error responses are designed to prevent excessive or invalid requests, and to provide clear and helpful information to users who encounter errors during the request process.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        public void SendRequestUpdatePaymentEmail(
-                int subscriptionId)
-            => CoreHelper.RunVoidTask(SendRequestUpdatePaymentEmailAsync(subscriptionId));
-
-        /// <summary>
-        /// You can send a "request payment update" email to the customer associated with the subscription.
-        /// If you attempt to send a "request payment update" email more than five times within a 30-minute period, you will receive a `422` response with an error message in the body. This error message will indicate that the request has been rejected due to excessive attempts, and will provide instructions on how to resubmit the request.
-        /// Additionally, if you attempt to send a "request payment update" email for a subscription that does not exist, you will receive a `404` error response. This error message will indicate that the subscription could not be found, and will provide instructions on how to correct the error and resubmit the request.
-        /// These error responses are designed to prevent excessive or invalid requests, and to provide clear and helpful information to users who encounter errors during the request process.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task SendRequestUpdatePaymentEmailAsync(
-                int subscriptionId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/request_payment_profiles_update.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
+        /// <![CDATA[
         /// Use this endpoint to create a payment profile for a customer.
         /// Payment Profiles house the credit card, ACH (Authorize.Net or Stripe only,) or PayPal (Braintree only,) data for a customer. The payment information is attached to the customer within Chargify, as opposed to the Subscription itself.
         /// You must include a customer_id so that Chargify will attach it to the customer entry. If no customer_id is included the API will return a 404.
@@ -366,6 +220,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// 6. After the customer finishes 3DS authentication, we let you know the result by making a request to applied `callback_url`.
         /// 7. After that, we redirect the customer to the `redirect_url`; at this point the result of authentication is known.
         /// 8. Optionally, you can use the applied "msg" param in the `redirect_url` to determine whether it was successful or not.
+        /// ]]>
         /// </summary>
         /// <param name="body">Optional parameter: When following the IBAN or the Local Bank details examples, a customer, bank account and mandate will be created in your current vault. If the customer, bank account, and mandate already exist in your vault, follow the Import example to link the payment profile into Chargify..</param>
         /// <returns>Returns the Models.PaymentProfileResponse response from the API call.</returns>
@@ -374,6 +229,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(CreatePaymentProfileAsync(body));
 
         /// <summary>
+        /// <![CDATA[
         /// Use this endpoint to create a payment profile for a customer.
         /// Payment Profiles house the credit card, ACH (Authorize.Net or Stripe only,) or PayPal (Braintree only,) data for a customer. The payment information is attached to the customer within Chargify, as opposed to the Subscription itself.
         /// You must include a customer_id so that Chargify will attach it to the customer entry. If no customer_id is included the API will return a 404.
@@ -558,6 +414,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// 6. After the customer finishes 3DS authentication, we let you know the result by making a request to applied `callback_url`.
         /// 7. After that, we redirect the customer to the `redirect_url`; at this point the result of authentication is known.
         /// 8. Optionally, you can use the applied "msg" param in the `redirect_url` to determine whether it was successful or not.
+        /// ]]>
         /// </summary>
         /// <param name="body">Optional parameter: When following the IBAN or the Local Bank details examples, a customer, bank account and mandate will be created in your current vault. If the customer, bank account, and mandate already exist in your vault, follow the Import example to link the payment profile into Chargify..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -694,6 +551,117 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
+        /// ## Partial Card Updates.
+        /// In the event that you are using the Authorize.net, Stripe, Cybersource, Forte or Braintree Blue payment gateways, you can update just the billing and contact information for a payment method. Note the lack of credit-card related data contained in the JSON payload.
+        /// In this case, the following JSON is acceptable:.
+        /// ```.
+        /// {.
+        ///   "payment_profile": {.
+        ///     "first_name": "Kelly",.
+        ///     "last_name": "Test",.
+        ///     "billing_address": "789 Juniper Court",.
+        ///     "billing_city": "Boulder",.
+        ///     "billing_state": "CO",.
+        ///     "billing_zip": "80302",.
+        ///     "billing_country": "US",.
+        ///     "billing_address_2": null.
+        ///   }.
+        /// }.
+        /// ```.
+        /// The result will be that you have updated the billing information for the card, yet retained the original card number data.
+        /// ## Specific notes on updating payment profiles.
+        /// - Merchants with **Authorize.net**, **Cybersource**, **Forte**, **Braintree Blue** or **Stripe** as their payment gateway can update their Customer’s credit cards without passing in the full credit card number and CVV.
+        /// - If you are using **Authorize.net**, **Cybersource**, **Forte**, **Braintree Blue** or **Stripe**, Chargify will ignore the credit card number and CVV when processing an update via the API, and attempt a partial update instead. If you wish to change the card number on a payment profile, you will need to create a new payment profile for the given customer.
+        /// - A Payment Profile cannot be updated with the attributes of another type of Payment Profile. For example, if the payment profile you are attempting to update is a credit card, you cannot pass in bank account attributes (like `bank_account_number`), and vice versa.
+        /// - Updating a payment profile directly will not trigger an attempt to capture a past-due balance. If this is the intent, update the card details via the Subscription instead.
+        /// - If you are using Authorize.net or Stripe, you may elect to manually trigger a retry for a past due subscription after a partial update.
+        /// </summary>
+        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.PaymentProfileResponse response from the API call.</returns>
+        public Models.PaymentProfileResponse UpdatePaymentProfile(
+                int paymentProfileId,
+                Models.UpdatePaymentProfileRequest body = null)
+            => CoreHelper.RunTask(UpdatePaymentProfileAsync(paymentProfileId, body));
+
+        /// <summary>
+        /// ## Partial Card Updates.
+        /// In the event that you are using the Authorize.net, Stripe, Cybersource, Forte or Braintree Blue payment gateways, you can update just the billing and contact information for a payment method. Note the lack of credit-card related data contained in the JSON payload.
+        /// In this case, the following JSON is acceptable:.
+        /// ```.
+        /// {.
+        ///   "payment_profile": {.
+        ///     "first_name": "Kelly",.
+        ///     "last_name": "Test",.
+        ///     "billing_address": "789 Juniper Court",.
+        ///     "billing_city": "Boulder",.
+        ///     "billing_state": "CO",.
+        ///     "billing_zip": "80302",.
+        ///     "billing_country": "US",.
+        ///     "billing_address_2": null.
+        ///   }.
+        /// }.
+        /// ```.
+        /// The result will be that you have updated the billing information for the card, yet retained the original card number data.
+        /// ## Specific notes on updating payment profiles.
+        /// - Merchants with **Authorize.net**, **Cybersource**, **Forte**, **Braintree Blue** or **Stripe** as their payment gateway can update their Customer’s credit cards without passing in the full credit card number and CVV.
+        /// - If you are using **Authorize.net**, **Cybersource**, **Forte**, **Braintree Blue** or **Stripe**, Chargify will ignore the credit card number and CVV when processing an update via the API, and attempt a partial update instead. If you wish to change the card number on a payment profile, you will need to create a new payment profile for the given customer.
+        /// - A Payment Profile cannot be updated with the attributes of another type of Payment Profile. For example, if the payment profile you are attempting to update is a credit card, you cannot pass in bank account attributes (like `bank_account_number`), and vice versa.
+        /// - Updating a payment profile directly will not trigger an attempt to capture a past-due balance. If this is the intent, update the card details via the Subscription instead.
+        /// - If you are using Authorize.net or Stripe, you may elect to manually trigger a retry for a past due subscription after a partial update.
+        /// </summary>
+        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.PaymentProfileResponse response from the API call.</returns>
+        public async Task<Models.PaymentProfileResponse> UpdatePaymentProfileAsync(
+                int paymentProfileId,
+                Models.UpdatePaymentProfileRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.PaymentProfileResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Put, "/payment_profiles/{payment_profile_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("payment_profile_id", paymentProfileId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context)))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorStringMapResponseException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Deletes an unused payment profile.
+        /// If the payment profile is in use by one or more subscriptions or groups, a 422 and error message will be returned.
+        /// </summary>
+        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
+        public void DeleteUnusedPaymentProfile(
+                int paymentProfileId)
+            => CoreHelper.RunVoidTask(DeleteUnusedPaymentProfileAsync(paymentProfileId));
+
+        /// <summary>
+        /// Deletes an unused payment profile.
+        /// If the payment profile is in use by one or more subscriptions or groups, a 422 and error message will be returned.
+        /// </summary>
+        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task DeleteUnusedPaymentProfileAsync(
+                int paymentProfileId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Delete, "/payment_profiles/{payment_profile_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("payment_profile_id", paymentProfileId))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context)))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// This will delete a payment profile belonging to the customer on the subscription.
         /// + If the customer has multiple subscriptions, the payment profile will be removed from all of them.
         /// + If you delete the default payment profile for a subscription, you will need to specify another payment profile to be the default through the api, or either prompt the user to enter a card in the billing portal or on the self-service page, or visit the Payment Details tab on the subscription in the Admin UI and use the “Add New Credit Card” or “Make Active Payment Method” link, (depending on whether there are other cards present).
@@ -724,6 +692,73 @@ namespace AdvancedBilling.Standard.Controllers
                   .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Template(_template => _template.Setup("payment_profile_id", paymentProfileId))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Submit the two small deposit amounts the customer received in their bank account in order to verify the bank account. (Stripe only).
+        /// </summary>
+        /// <param name="bankAccountId">Required parameter: Identifier of the bank account in the system..</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.BankAccountResponse response from the API call.</returns>
+        public Models.BankAccountResponse VerifyBankAccount(
+                int bankAccountId,
+                Models.BankAccountVerificationRequest body = null)
+            => CoreHelper.RunTask(VerifyBankAccountAsync(bankAccountId, body));
+
+        /// <summary>
+        /// Submit the two small deposit amounts the customer received in their bank account in order to verify the bank account. (Stripe only).
+        /// </summary>
+        /// <param name="bankAccountId">Required parameter: Identifier of the bank account in the system..</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.BankAccountResponse response from the API call.</returns>
+        public async Task<Models.BankAccountResponse> VerifyBankAccountAsync(
+                int bankAccountId,
+                Models.BankAccountVerificationRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.BankAccountResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Put, "/bank_accounts/{bank_account_id}/verification.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("bank_account_id", bankAccountId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This will delete a Payment Profile belonging to a Subscription Group.
+        /// **Note**: If the Payment Profile belongs to multiple Subscription Groups and/or Subscriptions, it will be removed from all of them.
+        /// </summary>
+        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
+        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
+        public void DeleteSubscriptionGroupPaymentProfile(
+                string uid,
+                int paymentProfileId)
+            => CoreHelper.RunVoidTask(DeleteSubscriptionGroupPaymentProfileAsync(uid, paymentProfileId));
+
+        /// <summary>
+        /// This will delete a Payment Profile belonging to a Subscription Group.
+        /// **Note**: If the Payment Profile belongs to multiple Subscription Groups and/or Subscriptions, it will be removed from all of them.
+        /// </summary>
+        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
+        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task DeleteSubscriptionGroupPaymentProfileAsync(
+                string uid,
+                int paymentProfileId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Delete, "/subscription_groups/{uid}/payment_profiles/{payment_profile_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("uid", uid).Required())
                       .Template(_template => _template.Setup("payment_profile_id", paymentProfileId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
@@ -760,71 +795,6 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("payment_profile_id", paymentProfileId))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context)))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Deletes an unused payment profile.
-        /// If the payment profile is in use by one or more subscriptions or groups, a 422 and error message will be returned.
-        /// </summary>
-        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
-        public void DeleteUnusedPaymentProfile(
-                int paymentProfileId)
-            => CoreHelper.RunVoidTask(DeleteUnusedPaymentProfileAsync(paymentProfileId));
-
-        /// <summary>
-        /// Deletes an unused payment profile.
-        /// If the payment profile is in use by one or more subscriptions or groups, a 422 and error message will be returned.
-        /// </summary>
-        /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task DeleteUnusedPaymentProfileAsync(
-                int paymentProfileId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Delete, "/payment_profiles/{payment_profile_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("payment_profile_id", paymentProfileId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context)))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Submit the two small deposit amounts the customer received in their bank account in order to verify the bank account. (Stripe only).
-        /// </summary>
-        /// <param name="bankAccountId">Required parameter: Identifier of the bank account in the system..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.BankAccountResponse response from the API call.</returns>
-        public Models.BankAccountResponse VerifyBankAccount(
-                int bankAccountId,
-                Models.BankAccountVerificationRequest body = null)
-            => CoreHelper.RunTask(VerifyBankAccountAsync(bankAccountId, body));
-
-        /// <summary>
-        /// Submit the two small deposit amounts the customer received in their bank account in order to verify the bank account. (Stripe only).
-        /// </summary>
-        /// <param name="bankAccountId">Required parameter: Identifier of the bank account in the system..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.BankAccountResponse response from the API call.</returns>
-        public async Task<Models.BankAccountResponse> VerifyBankAccountAsync(
-                int bankAccountId,
-                Models.BankAccountVerificationRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.BankAccountResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/bank_accounts/{bank_account_id}/verification.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("bank_account_id", bankAccountId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
                   .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
@@ -895,6 +865,40 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("chargify_token", chargifyToken).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// You can send a "request payment update" email to the customer associated with the subscription.
+        /// If you attempt to send a "request payment update" email more than five times within a 30-minute period, you will receive a `422` response with an error message in the body. This error message will indicate that the request has been rejected due to excessive attempts, and will provide instructions on how to resubmit the request.
+        /// Additionally, if you attempt to send a "request payment update" email for a subscription that does not exist, you will receive a `404` error response. This error message will indicate that the subscription could not be found, and will provide instructions on how to correct the error and resubmit the request.
+        /// These error responses are designed to prevent excessive or invalid requests, and to provide clear and helpful information to users who encounter errors during the request process.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        public void SendRequestUpdatePaymentEmail(
+                int subscriptionId)
+            => CoreHelper.RunVoidTask(SendRequestUpdatePaymentEmailAsync(subscriptionId));
+
+        /// <summary>
+        /// You can send a "request payment update" email to the customer associated with the subscription.
+        /// If you attempt to send a "request payment update" email more than five times within a 30-minute period, you will receive a `422` response with an error message in the body. This error message will indicate that the request has been rejected due to excessive attempts, and will provide instructions on how to resubmit the request.
+        /// Additionally, if you attempt to send a "request payment update" email for a subscription that does not exist, you will receive a `404` error response. This error message will indicate that the subscription could not be found, and will provide instructions on how to correct the error and resubmit the request.
+        /// These error responses are designed to prevent excessive or invalid requests, and to provide clear and helpful information to users who encounter errors during the request process.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task SendRequestUpdatePaymentEmailAsync(
+                int subscriptionId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/request_payment_profiles_update.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

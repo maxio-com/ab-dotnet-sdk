@@ -35,82 +35,6 @@ namespace AdvancedBilling.Standard.Controllers
         internal OffersController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
-        /// This method allows you to list a specific offer's attributes. This is different than list all offers for a site, as it requires an `offer_id`.
-        /// </summary>
-        /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
-        /// <returns>Returns the Models.OfferResponse response from the API call.</returns>
-        public Models.OfferResponse ReadOffers(
-                int offerId)
-            => CoreHelper.RunTask(ReadOffersAsync(offerId));
-
-        /// <summary>
-        /// This method allows you to list a specific offer's attributes. This is different than list all offers for a site, as it requires an `offer_id`.
-        /// </summary>
-        /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.OfferResponse response from the API call.</returns>
-        public async Task<Models.OfferResponse> ReadOffersAsync(
-                int offerId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.OfferResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/offers/{offer_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("offer_id", offerId))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Unarchive a previously archived offer. Please provide an `offer_id` in order to un-archive the correct item.
-        /// </summary>
-        /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
-        public void UnarchiveOffer(
-                int offerId)
-            => CoreHelper.RunVoidTask(UnarchiveOfferAsync(offerId));
-
-        /// <summary>
-        /// Unarchive a previously archived offer. Please provide an `offer_id` in order to un-archive the correct item.
-        /// </summary>
-        /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task UnarchiveOfferAsync(
-                int offerId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/offers/{offer_id}/unarchive.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("offer_id", offerId))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Archive an existing offer. Please provide an `offer_id` in order to archive the correct item.
-        /// </summary>
-        /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
-        public void ArchiveOffer(
-                int offerId)
-            => CoreHelper.RunVoidTask(ArchiveOfferAsync(offerId));
-
-        /// <summary>
-        /// Archive an existing offer. Please provide an `offer_id` in order to archive the correct item.
-        /// </summary>
-        /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task ArchiveOfferAsync(
-                int offerId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/offers/{offer_id}/archive.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("offer_id", offerId))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// Create an offer within your Chargify site by sending a POST request.
         /// ## Documentation.
         /// Offers allow you to package complicated combinations of products, components and coupons into a convenient package which can then be subscribed to just like products.
@@ -177,6 +101,82 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))
                       .Query(_query => _query.Setup("include_archived", input.IncludeArchived))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This method allows you to list a specific offer's attributes. This is different than list all offers for a site, as it requires an `offer_id`.
+        /// </summary>
+        /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
+        /// <returns>Returns the Models.OfferResponse response from the API call.</returns>
+        public Models.OfferResponse ReadOffers(
+                int offerId)
+            => CoreHelper.RunTask(ReadOffersAsync(offerId));
+
+        /// <summary>
+        /// This method allows you to list a specific offer's attributes. This is different than list all offers for a site, as it requires an `offer_id`.
+        /// </summary>
+        /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.OfferResponse response from the API call.</returns>
+        public async Task<Models.OfferResponse> ReadOffersAsync(
+                int offerId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.OfferResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/offers/{offer_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("offer_id", offerId))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Archive an existing offer. Please provide an `offer_id` in order to archive the correct item.
+        /// </summary>
+        /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
+        public void ArchiveOffer(
+                int offerId)
+            => CoreHelper.RunVoidTask(ArchiveOfferAsync(offerId));
+
+        /// <summary>
+        /// Archive an existing offer. Please provide an `offer_id` in order to archive the correct item.
+        /// </summary>
+        /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task ArchiveOfferAsync(
+                int offerId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Put, "/offers/{offer_id}/archive.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("offer_id", offerId))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Unarchive a previously archived offer. Please provide an `offer_id` in order to un-archive the correct item.
+        /// </summary>
+        /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
+        public void UnarchiveOffer(
+                int offerId)
+            => CoreHelper.RunVoidTask(UnarchiveOfferAsync(offerId));
+
+        /// <summary>
+        /// Unarchive a previously archived offer. Please provide an `offer_id` in order to un-archive the correct item.
+        /// </summary>
+        /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task UnarchiveOfferAsync(
+                int offerId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Put, "/offers/{offer_id}/unarchive.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("offer_id", offerId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

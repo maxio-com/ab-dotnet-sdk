@@ -13,6 +13,7 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -36,10 +37,10 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="originalAmount">original_amount.</param>
         /// <param name="appliedAmount">applied_amount.</param>
         public ApplyDebitNoteEventData(
-            string debitNoteNumber = null,
-            string debitNoteUid = null,
-            string originalAmount = null,
-            string appliedAmount = null)
+            string debitNoteNumber,
+            string debitNoteUid,
+            string originalAmount,
+            string appliedAmount)
         {
             this.DebitNoteNumber = debitNoteNumber;
             this.DebitNoteUid = debitNoteUid;
@@ -50,29 +51,33 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// A unique, identifying string that appears on the debit note and in places it is referenced.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("debit_note_number", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("debit_note_number")]
+        [JsonRequired]
         public string DebitNoteNumber { get; set; }
 
         /// <summary>
         /// Unique identifier for the debit note. It is generated automatically by Chargify and has the prefix "db_" followed by alphanumeric characters.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("debit_note_uid", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("debit_note_uid")]
+        [JsonRequired]
         public string DebitNoteUid { get; set; }
 
         /// <summary>
         /// The full, original amount of the debit note.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("original_amount", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("original_amount")]
+        [JsonRequired]
         public string OriginalAmount { get; set; }
 
         /// <summary>
         /// The amount of the debit note applied to invoice.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("applied_amount", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("applied_amount")]
+        [JsonRequired]
         public string AppliedAmount { get; set; }
 
         /// <inheritdoc/>

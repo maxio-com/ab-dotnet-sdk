@@ -13,6 +13,7 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -38,16 +39,16 @@ namespace AdvancedBilling.Standard.Models
         /// Initializes a new instance of the <see cref="PaymentMethodCreditCardType"/> class.
         /// </summary>
         /// <param name="cardBrand">card_brand.</param>
-        /// <param name="cardExpiration">card_expiration.</param>
-        /// <param name="lastFour">last_four.</param>
         /// <param name="maskedCardNumber">masked_card_number.</param>
         /// <param name="type">type.</param>
+        /// <param name="cardExpiration">card_expiration.</param>
+        /// <param name="lastFour">last_four.</param>
         public PaymentMethodCreditCardType(
-            string cardBrand = null,
+            string cardBrand,
+            string maskedCardNumber,
+            string type,
             string cardExpiration = null,
-            string lastFour = null,
-            string maskedCardNumber = null,
-            string type = "credit_card")
+            string lastFour = null)
         {
             this.CardBrand = cardBrand;
             this.CardExpiration = cardExpiration;
@@ -63,8 +64,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CardBrand.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("card_brand", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("card_brand")]
+        [JsonRequired]
         public string CardBrand { get; set; }
 
         /// <summary>
@@ -96,15 +98,17 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets MaskedCardNumber.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("masked_card_number", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("masked_card_number")]
+        [JsonRequired]
         public string MaskedCardNumber { get; set; }
 
         /// <summary>
         /// Gets or sets Type.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("type")]
+        [JsonRequired]
         public string Type { get; set; }
 
         /// <inheritdoc/>

@@ -88,118 +88,6 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This method allows to update the Customer.
-        /// </summary>
-        /// <param name="id">Required parameter: The Chargify id of the customer.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
-        public Models.CustomerResponse UpdateCustomer(
-                int id,
-                Models.UpdateCustomerRequest body = null)
-            => CoreHelper.RunTask(UpdateCustomerAsync(id, body));
-
-        /// <summary>
-        /// This method allows to update the Customer.
-        /// </summary>
-        /// <param name="id">Required parameter: The Chargify id of the customer.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
-        public async Task<Models.CustomerResponse> UpdateCustomerAsync(
-                int id,
-                Models.UpdateCustomerRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.CustomerResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/customers/{id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("id", id))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new CustomerErrorResponseException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Use this method to return the customer object if you have the unique **Reference ID (Your App)** value handy. It will return a single match.
-        /// </summary>
-        /// <param name="reference">Required parameter: Customer reference.</param>
-        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
-        public Models.CustomerResponse ReadCustomerByReference(
-                string reference)
-            => CoreHelper.RunTask(ReadCustomerByReferenceAsync(reference));
-
-        /// <summary>
-        /// Use this method to return the customer object if you have the unique **Reference ID (Your App)** value handy. It will return a single match.
-        /// </summary>
-        /// <param name="reference">Required parameter: Customer reference.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
-        public async Task<Models.CustomerResponse> ReadCustomerByReferenceAsync(
-                string reference,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.CustomerResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/customers/lookup.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("reference", reference).Required())))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This method allows to retrieve the Customer properties by Chargify-generated Customer ID.
-        /// </summary>
-        /// <param name="id">Required parameter: The Chargify id of the customer.</param>
-        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
-        public Models.CustomerResponse ReadCustomer(
-                int id)
-            => CoreHelper.RunTask(ReadCustomerAsync(id));
-
-        /// <summary>
-        /// This method allows to retrieve the Customer properties by Chargify-generated Customer ID.
-        /// </summary>
-        /// <param name="id">Required parameter: The Chargify id of the customer.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
-        public async Task<Models.CustomerResponse> ReadCustomerAsync(
-                int id,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.CustomerResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/customers/{id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("id", id))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This method allows you to delete the Customer.
-        /// </summary>
-        /// <param name="id">Required parameter: The Chargify id of the customer.</param>
-        public void DeleteCustomer(
-                int id)
-            => CoreHelper.RunVoidTask(DeleteCustomerAsync(id));
-
-        /// <summary>
-        /// This method allows you to delete the Customer.
-        /// </summary>
-        /// <param name="id">Required parameter: The Chargify id of the customer.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task DeleteCustomerAsync(
-                int id,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Delete, "/customers/{id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("id", id))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// This request will by default list all customers associated with your Site.
         /// ## Find Customer.
         /// Use the search feature with the `q` query parameter to retrieve an array of customers that matches the search query.
@@ -249,6 +137,118 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
                       .Query(_query => _query.Setup("end_datetime", input.EndDatetime))
                       .Query(_query => _query.Setup("q", input.Q))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This method allows to retrieve the Customer properties by Chargify-generated Customer ID.
+        /// </summary>
+        /// <param name="id">Required parameter: The Chargify id of the customer.</param>
+        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
+        public Models.CustomerResponse ReadCustomer(
+                int id)
+            => CoreHelper.RunTask(ReadCustomerAsync(id));
+
+        /// <summary>
+        /// This method allows to retrieve the Customer properties by Chargify-generated Customer ID.
+        /// </summary>
+        /// <param name="id">Required parameter: The Chargify id of the customer.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
+        public async Task<Models.CustomerResponse> ReadCustomerAsync(
+                int id,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.CustomerResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/customers/{id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("id", id))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This method allows to update the Customer.
+        /// </summary>
+        /// <param name="id">Required parameter: The Chargify id of the customer.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
+        public Models.CustomerResponse UpdateCustomer(
+                int id,
+                Models.UpdateCustomerRequest body = null)
+            => CoreHelper.RunTask(UpdateCustomerAsync(id, body));
+
+        /// <summary>
+        /// This method allows to update the Customer.
+        /// </summary>
+        /// <param name="id">Required parameter: The Chargify id of the customer.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
+        public async Task<Models.CustomerResponse> UpdateCustomerAsync(
+                int id,
+                Models.UpdateCustomerRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.CustomerResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Put, "/customers/{id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("id", id))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new CustomerErrorResponseException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This method allows you to delete the Customer.
+        /// </summary>
+        /// <param name="id">Required parameter: The Chargify id of the customer.</param>
+        public void DeleteCustomer(
+                int id)
+            => CoreHelper.RunVoidTask(DeleteCustomerAsync(id));
+
+        /// <summary>
+        /// This method allows you to delete the Customer.
+        /// </summary>
+        /// <param name="id">Required parameter: The Chargify id of the customer.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task DeleteCustomerAsync(
+                int id,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Delete, "/customers/{id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("id", id))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Use this method to return the customer object if you have the unique **Reference ID (Your App)** value handy. It will return a single match.
+        /// </summary>
+        /// <param name="reference">Required parameter: Customer reference.</param>
+        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
+        public Models.CustomerResponse ReadCustomerByReference(
+                string reference)
+            => CoreHelper.RunTask(ReadCustomerByReferenceAsync(reference));
+
+        /// <summary>
+        /// Use this method to return the customer object if you have the unique **Reference ID (Your App)** value handy. It will return a single match.
+        /// </summary>
+        /// <param name="reference">Required parameter: Customer reference.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
+        public async Task<Models.CustomerResponse> ReadCustomerByReferenceAsync(
+                string reference,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.CustomerResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/customers/lookup.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Query(_query => _query.Setup("reference", reference).Required())))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>

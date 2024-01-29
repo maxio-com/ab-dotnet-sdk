@@ -13,6 +13,7 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -37,7 +38,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="perPage">per_page.</param>
         public ListMetadataInput(
             Models.ResourceType resourceType,
-            string resourceId,
+            int resourceId,
             int? page = 1,
             int? perPage = 20)
         {
@@ -57,7 +58,7 @@ namespace AdvancedBilling.Standard.Models
         /// The Chargify id of the customer or the subscription for which the metadata applies
         /// </summary>
         [JsonProperty("resource_id")]
-        public string ResourceId { get; set; }
+        public int ResourceId { get; set; }
 
         /// <summary>
         /// Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.
@@ -96,7 +97,7 @@ namespace AdvancedBilling.Standard.Models
                 return true;
             }
             return obj is ListMetadataInput other &&                this.ResourceType.Equals(other.ResourceType) &&
-                ((this.ResourceId == null && other.ResourceId == null) || (this.ResourceId?.Equals(other.ResourceId) == true)) &&
+                this.ResourceId.Equals(other.ResourceId) &&
                 ((this.Page == null && other.Page == null) || (this.Page?.Equals(other.Page) == true)) &&
                 ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true));
         }
@@ -108,7 +109,7 @@ namespace AdvancedBilling.Standard.Models
         protected void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ResourceType = {this.ResourceType}");
-            toStringOutput.Add($"this.ResourceId = {(this.ResourceId == null ? "null" : this.ResourceId)}");
+            toStringOutput.Add($"this.ResourceId = {this.ResourceId}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
         }

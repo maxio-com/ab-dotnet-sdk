@@ -5,7 +5,7 @@ using System;
 namespace AdvancedBilling.Standard.Models.Containers
 {
     /// <summary>
-    /// This is a container class for one-of types.
+    /// This is a container class for any-of types.
     /// </summary>
     [JsonConverter(
         typeof(UnionTypeConverter<InvoiceEvent1PaymentMethod>),
@@ -16,7 +16,7 @@ namespace AdvancedBilling.Standard.Models.Containers
             typeof(PaymentMethodExternalTypeCase),
             typeof(PaymentMethodPaypalTypeCase)
         },
-        true
+        false
     )]
     public abstract class InvoiceEvent1PaymentMethod
     {
@@ -76,8 +76,8 @@ namespace AdvancedBilling.Standard.Models.Containers
         }
 
         /// <summary>
-        /// Method to match from the provided one-of cases. Here parameters
-        /// represents the callback functions for one-of type cases. All
+        /// Method to match from the provided any-of cases. Here parameters
+        /// represents the callback functions for any-of type cases. All
         /// callback functions must have the same return type T. This typeparam T
         /// represents the type that will be returned after applying the selected
         /// callback function.

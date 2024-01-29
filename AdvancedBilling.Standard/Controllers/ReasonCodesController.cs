@@ -35,67 +35,6 @@ namespace AdvancedBilling.Standard.Controllers
         internal ReasonCodesController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
-        /// This method gives a merchant the option to update an existing reason code for a given site.
-        /// </summary>
-        /// <param name="reasonCodeId">Required parameter: The Chargify id of the reason code.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.ReasonCodeResponse response from the API call.</returns>
-        public Models.ReasonCodeResponse UpdateReasonCode(
-                int reasonCodeId,
-                Models.UpdateReasonCodeRequest body = null)
-            => CoreHelper.RunTask(UpdateReasonCodeAsync(reasonCodeId, body));
-
-        /// <summary>
-        /// This method gives a merchant the option to update an existing reason code for a given site.
-        /// </summary>
-        /// <param name="reasonCodeId">Required parameter: The Chargify id of the reason code.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ReasonCodeResponse response from the API call.</returns>
-        public async Task<Models.ReasonCodeResponse> UpdateReasonCodeAsync(
-                int reasonCodeId,
-                Models.UpdateReasonCodeRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ReasonCodeResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/reason_codes/{reason_code_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("reason_code_id", reasonCodeId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This method gives a merchant the option to retrieve a list of all of the current churn codes for a given site.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the List of Models.ReasonCodeResponse response from the API call.</returns>
-        public List<Models.ReasonCodeResponse> ListReasonCodes(
-                Models.ListReasonCodesInput input)
-            => CoreHelper.RunTask(ListReasonCodesAsync(input));
-
-        /// <summary>
-        /// This method gives a merchant the option to retrieve a list of all of the current churn codes for a given site.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the List of Models.ReasonCodeResponse response from the API call.</returns>
-        public async Task<List<Models.ReasonCodeResponse>> ListReasonCodesAsync(
-                Models.ListReasonCodesInput input,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<List<Models.ReasonCodeResponse>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/reason_codes.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// # Reason Codes Intro.
         /// ReasonCodes are a way to gain a high level view of why your customers are cancelling the subcription to your product or service.
         /// Add a set of churn reason codes to be displayed in-app and/or the Chargify Billing Portal. As your subscribers decide to cancel their subscription, learn why they decided to cancel.
@@ -139,6 +78,33 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
+        /// This method gives a merchant the option to retrieve a list of all of the current churn codes for a given site.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the List of Models.ReasonCodeResponse response from the API call.</returns>
+        public List<Models.ReasonCodeResponse> ListReasonCodes(
+                Models.ListReasonCodesInput input)
+            => CoreHelper.RunTask(ListReasonCodesAsync(input));
+
+        /// <summary>
+        /// This method gives a merchant the option to retrieve a list of all of the current churn codes for a given site.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the List of Models.ReasonCodeResponse response from the API call.</returns>
+        public async Task<List<Models.ReasonCodeResponse>> ListReasonCodesAsync(
+                Models.ListReasonCodesInput input,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<List<Models.ReasonCodeResponse>>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/reason_codes.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Query(_query => _query.Setup("page", input.Page))
+                      .Query(_query => _query.Setup("per_page", input.PerPage))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// This method gives a merchant the option to retrieve a list of a particular code for a given Site by providing the unique numerical ID of the code.
         /// </summary>
         /// <param name="reasonCodeId">Required parameter: The Chargify id of the reason code.</param>
@@ -162,6 +128,40 @@ namespace AdvancedBilling.Standard.Controllers
                   .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("reason_code_id", reasonCodeId))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This method gives a merchant the option to update an existing reason code for a given site.
+        /// </summary>
+        /// <param name="reasonCodeId">Required parameter: The Chargify id of the reason code.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.ReasonCodeResponse response from the API call.</returns>
+        public Models.ReasonCodeResponse UpdateReasonCode(
+                int reasonCodeId,
+                Models.UpdateReasonCodeRequest body = null)
+            => CoreHelper.RunTask(UpdateReasonCodeAsync(reasonCodeId, body));
+
+        /// <summary>
+        /// This method gives a merchant the option to update an existing reason code for a given site.
+        /// </summary>
+        /// <param name="reasonCodeId">Required parameter: The Chargify id of the reason code.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ReasonCodeResponse response from the API call.</returns>
+        public async Task<Models.ReasonCodeResponse> UpdateReasonCodeAsync(
+                int reasonCodeId,
+                Models.UpdateReasonCodeRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ReasonCodeResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Put, "/reason_codes/{reason_code_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("reason_code_id", reasonCodeId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);

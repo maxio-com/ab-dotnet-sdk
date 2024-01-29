@@ -10,147 +10,10 @@ ProductFamiliesController productFamiliesController = client.ProductFamiliesCont
 
 ## Methods
 
-* [List Product Families](../../doc/controllers/product-families.md#list-product-families)
-* [Create Product Family](../../doc/controllers/product-families.md#create-product-family)
 * [List Products for Product Family](../../doc/controllers/product-families.md#list-products-for-product-family)
+* [Create Product Family](../../doc/controllers/product-families.md#create-product-family)
+* [List Product Families](../../doc/controllers/product-families.md#list-product-families)
 * [Read Product Family](../../doc/controllers/product-families.md#read-product-family)
-
-
-# List Product Families
-
-This method allows to retrieve a list of Product Families for a site.
-
-```csharp
-ListProductFamiliesAsync(
-    Models.ListProductFamiliesInput input)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `dateField` | [`BasicDateField?`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search.<br>Use in query: `date_field=created_at`. |
-| `startDate` | `string` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns products with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
-| `endDate` | `string` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns products with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. |
-| `startDatetime` | `string` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns products with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date. |
-| `endDatetime` | `string` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns products with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. |
-
-## Response Type
-
-[`Task<List<Models.ProductFamilyResponse>>`](../../doc/models/product-family-response.md)
-
-## Example Usage
-
-```csharp
-ListProductFamiliesInput listProductFamiliesInput = new ListProductFamiliesInput
-{
-    DateField = BasicDateField.UpdatedAt,
-};
-
-try
-{
-    List<ProductFamilyResponse> result = await productFamiliesController.ListProductFamiliesAsync(listProductFamiliesInput);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-[
-  {
-    "product_family": {
-      "id": 37,
-      "name": "Acme Projects",
-      "description": null,
-      "handle": "acme-projects",
-      "accounting_code": null,
-      "created_at": "2013-02-20T15:05:51-07:00",
-      "updated_at": "2013-02-20T15:05:51-07:00"
-    }
-  },
-  {
-    "product_family": {
-      "id": 155,
-      "name": "Bat Family",
-      "description": "Another family.",
-      "handle": "bat-family",
-      "accounting_code": null,
-      "created_at": "2014-04-16T12:41:13-06:00",
-      "updated_at": "2014-04-16T12:41:13-06:00"
-    }
-  }
-]
-```
-
-
-# Create Product Family
-
-This method will create a Product Family within your Chargify site. Create a Product Family to act as a container for your products, components and coupons.
-
-Full documentation on how Product Families operate within the Chargify UI can be located [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405369633421).
-
-```csharp
-CreateProductFamilyAsync(
-    Models.CreateProductFamilyRequest body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `body` | [`CreateProductFamilyRequest`](../../doc/models/create-product-family-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`Task<Models.ProductFamilyResponse>`](../../doc/models/product-family-response.md)
-
-## Example Usage
-
-```csharp
-CreateProductFamilyRequest body = new CreateProductFamilyRequest
-{
-    ProductFamily = new CreateProductFamily
-    {
-        Name = "Acme Projects",
-        Description = "Amazing project management tool",
-    },
-};
-
-try
-{
-    ProductFamilyResponse result = await productFamiliesController.CreateProductFamilyAsync(body);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "product_family": {
-    "id": 933860,
-    "name": "Acme Projects",
-    "description": "Amazing project management tool",
-    "handle": "acme-projects",
-    "accounting_code": null
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # List Products for Product Family
@@ -310,6 +173,143 @@ catch (ApiException e)
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
+
+
+# Create Product Family
+
+This method will create a Product Family within your Chargify site. Create a Product Family to act as a container for your products, components and coupons.
+
+Full documentation on how Product Families operate within the Chargify UI can be located [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405369633421).
+
+```csharp
+CreateProductFamilyAsync(
+    Models.CreateProductFamilyRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`CreateProductFamilyRequest`](../../doc/models/create-product-family-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.ProductFamilyResponse>`](../../doc/models/product-family-response.md)
+
+## Example Usage
+
+```csharp
+CreateProductFamilyRequest body = new CreateProductFamilyRequest
+{
+    ProductFamily = new CreateProductFamily
+    {
+        Name = "Acme Projects",
+        Description = "Amazing project management tool",
+    },
+};
+
+try
+{
+    ProductFamilyResponse result = await productFamiliesController.CreateProductFamilyAsync(body);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "product_family": {
+    "id": 933860,
+    "name": "Acme Projects",
+    "description": "Amazing project management tool",
+    "handle": "acme-projects",
+    "accounting_code": null
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# List Product Families
+
+This method allows to retrieve a list of Product Families for a site.
+
+```csharp
+ListProductFamiliesAsync(
+    Models.ListProductFamiliesInput input)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `dateField` | [`BasicDateField?`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search.<br>Use in query: `date_field=created_at`. |
+| `startDate` | `string` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns products with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
+| `endDate` | `string` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns products with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. |
+| `startDatetime` | `string` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns products with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date. |
+| `endDatetime` | `string` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns products with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. |
+
+## Response Type
+
+[`Task<List<Models.ProductFamilyResponse>>`](../../doc/models/product-family-response.md)
+
+## Example Usage
+
+```csharp
+ListProductFamiliesInput listProductFamiliesInput = new ListProductFamiliesInput
+{
+    DateField = BasicDateField.UpdatedAt,
+};
+
+try
+{
+    List<ProductFamilyResponse> result = await productFamiliesController.ListProductFamiliesAsync(listProductFamiliesInput);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+[
+  {
+    "product_family": {
+      "id": 37,
+      "name": "Acme Projects",
+      "description": null,
+      "handle": "acme-projects",
+      "accounting_code": null,
+      "created_at": "2013-02-20T15:05:51-07:00",
+      "updated_at": "2013-02-20T15:05:51-07:00"
+    }
+  },
+  {
+    "product_family": {
+      "id": 155,
+      "name": "Bat Family",
+      "description": "Another family.",
+      "handle": "bat-family",
+      "accounting_code": null,
+      "created_at": "2014-04-16T12:41:13-06:00",
+      "updated_at": "2014-04-16T12:41:13-06:00"
+    }
+  }
+]
+```
 
 
 # Read Product Family

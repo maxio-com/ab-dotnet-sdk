@@ -14,6 +14,7 @@ namespace AdvancedBilling.Standard.Models
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -73,7 +74,7 @@ namespace AdvancedBilling.Standard.Models
         public CreatePaymentProfile(
             string chargifyToken = null,
             int? id = null,
-            Models.PaymentType? paymentType = Models.PaymentType.CreditCard,
+            Models.PaymentType? paymentType = null,
             string firstName = null,
             string lastName = null,
             string maskedCardNumber = null,

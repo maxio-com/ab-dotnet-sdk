@@ -13,6 +13,7 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -32,24 +33,24 @@ namespace AdvancedBilling.Standard.Models
         /// Initializes a new instance of the <see cref="RefundInvoiceEventData"/> class.
         /// </summary>
         /// <param name="applyCredit">apply_credit.</param>
-        /// <param name="consolidationLevel">consolidation_level.</param>
         /// <param name="creditNoteAttributes">credit_note_attributes.</param>
-        /// <param name="memo">memo.</param>
-        /// <param name="originalAmount">original_amount.</param>
         /// <param name="paymentId">payment_id.</param>
         /// <param name="refundAmount">refund_amount.</param>
         /// <param name="refundId">refund_id.</param>
         /// <param name="transactionTime">transaction_time.</param>
+        /// <param name="consolidationLevel">consolidation_level.</param>
+        /// <param name="memo">memo.</param>
+        /// <param name="originalAmount">original_amount.</param>
         public RefundInvoiceEventData(
-            bool? applyCredit = null,
+            bool applyCredit,
+            Models.CreditNote creditNoteAttributes,
+            int paymentId,
+            string refundAmount,
+            int refundId,
+            DateTimeOffset transactionTime,
             Models.InvoiceConsolidationLevel? consolidationLevel = null,
-            Models.CreditNote creditNoteAttributes = null,
             string memo = null,
-            string originalAmount = null,
-            int? paymentId = null,
-            string refundAmount = null,
-            int? refundId = null,
-            DateTimeOffset? transactionTime = null)
+            string originalAmount = null)
         {
             this.ApplyCredit = applyCredit;
             this.ConsolidationLevel = consolidationLevel;
@@ -65,8 +66,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// If true, credit was created and applied it to the invoice.
         /// </summary>
-        [JsonProperty("apply_credit", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? ApplyCredit { get; set; }
+        [JsonProperty("apply_credit")]
+        [JsonRequired]
+        public bool ApplyCredit { get; set; }
 
         /// <summary>
         /// Consolidation level of the invoice, which is applicable to invoice consolidation.  It will hold one of the following values:
@@ -82,7 +84,8 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CreditNoteAttributes.
         /// </summary>
-        [JsonProperty("credit_note_attributes", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("credit_note_attributes")]
+        [JsonRequired]
         public Models.CreditNote CreditNoteAttributes { get; set; }
 
         /// <summary>
@@ -102,28 +105,32 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The ID of the payment transaction to be refunded.
         /// </summary>
-        [JsonProperty("payment_id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? PaymentId { get; set; }
+        [JsonProperty("payment_id")]
+        [JsonRequired]
+        public int PaymentId { get; set; }
 
         /// <summary>
         /// The amount of the refund.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("refund_amount", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("refund_amount")]
+        [JsonRequired]
         public string RefundAmount { get; set; }
 
         /// <summary>
         /// The ID of the refund transaction.
         /// </summary>
-        [JsonProperty("refund_id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? RefundId { get; set; }
+        [JsonProperty("refund_id")]
+        [JsonRequired]
+        public int RefundId { get; set; }
 
         /// <summary>
         /// The time the refund was applied, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z"
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
-        [JsonProperty("transaction_time", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTimeOffset? TransactionTime { get; set; }
+        [JsonProperty("transaction_time")]
+        [JsonRequired]
+        public DateTimeOffset TransactionTime { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -147,15 +154,15 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is RefundInvoiceEventData other &&                ((this.ApplyCredit == null && other.ApplyCredit == null) || (this.ApplyCredit?.Equals(other.ApplyCredit) == true)) &&
+            return obj is RefundInvoiceEventData other &&                this.ApplyCredit.Equals(other.ApplyCredit) &&
                 ((this.ConsolidationLevel == null && other.ConsolidationLevel == null) || (this.ConsolidationLevel?.Equals(other.ConsolidationLevel) == true)) &&
                 ((this.CreditNoteAttributes == null && other.CreditNoteAttributes == null) || (this.CreditNoteAttributes?.Equals(other.CreditNoteAttributes) == true)) &&
                 ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
                 ((this.OriginalAmount == null && other.OriginalAmount == null) || (this.OriginalAmount?.Equals(other.OriginalAmount) == true)) &&
-                ((this.PaymentId == null && other.PaymentId == null) || (this.PaymentId?.Equals(other.PaymentId) == true)) &&
+                this.PaymentId.Equals(other.PaymentId) &&
                 ((this.RefundAmount == null && other.RefundAmount == null) || (this.RefundAmount?.Equals(other.RefundAmount) == true)) &&
-                ((this.RefundId == null && other.RefundId == null) || (this.RefundId?.Equals(other.RefundId) == true)) &&
-                ((this.TransactionTime == null && other.TransactionTime == null) || (this.TransactionTime?.Equals(other.TransactionTime) == true));
+                this.RefundId.Equals(other.RefundId) &&
+                this.TransactionTime.Equals(other.TransactionTime);
         }
         
         /// <summary>
@@ -164,15 +171,15 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ApplyCredit = {(this.ApplyCredit == null ? "null" : this.ApplyCredit.ToString())}");
+            toStringOutput.Add($"this.ApplyCredit = {this.ApplyCredit}");
             toStringOutput.Add($"this.ConsolidationLevel = {(this.ConsolidationLevel == null ? "null" : this.ConsolidationLevel.ToString())}");
             toStringOutput.Add($"this.CreditNoteAttributes = {(this.CreditNoteAttributes == null ? "null" : this.CreditNoteAttributes.ToString())}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.OriginalAmount = {(this.OriginalAmount == null ? "null" : this.OriginalAmount)}");
-            toStringOutput.Add($"this.PaymentId = {(this.PaymentId == null ? "null" : this.PaymentId.ToString())}");
+            toStringOutput.Add($"this.PaymentId = {this.PaymentId}");
             toStringOutput.Add($"this.RefundAmount = {(this.RefundAmount == null ? "null" : this.RefundAmount)}");
-            toStringOutput.Add($"this.RefundId = {(this.RefundId == null ? "null" : this.RefundId.ToString())}");
-            toStringOutput.Add($"this.TransactionTime = {(this.TransactionTime == null ? "null" : this.TransactionTime.ToString())}");
+            toStringOutput.Add($"this.RefundId = {this.RefundId}");
+            toStringOutput.Add($"this.TransactionTime = {this.TransactionTime}");
         }
     }
 }
