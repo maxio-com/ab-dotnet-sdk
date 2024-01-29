@@ -74,36 +74,6 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use the following method to delete a note for a Subscription.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="noteId">Required parameter: The Chargify id of the note.</param>
-        public void DeleteSubscriptionNote(
-                int subscriptionId,
-                int noteId)
-            => CoreHelper.RunVoidTask(DeleteSubscriptionNoteAsync(subscriptionId, noteId));
-
-        /// <summary>
-        /// Use the following method to delete a note for a Subscription.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="noteId">Required parameter: The Chargify id of the note.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task DeleteSubscriptionNoteAsync(
-                int subscriptionId,
-                int noteId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/notes/{note_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("note_id", noteId))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// Use this method to retrieve a list of Notes associated with a Subscription. The response will be an array of Notes.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
@@ -197,6 +167,36 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Template(_template => _template.Setup("note_id", noteId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Use the following method to delete a note for a Subscription.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="noteId">Required parameter: The Chargify id of the note.</param>
+        public void DeleteSubscriptionNote(
+                int subscriptionId,
+                int noteId)
+            => CoreHelper.RunVoidTask(DeleteSubscriptionNoteAsync(subscriptionId, noteId));
+
+        /// <summary>
+        /// Use the following method to delete a note for a Subscription.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="noteId">Required parameter: The Chargify id of the note.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task DeleteSubscriptionNoteAsync(
+                int subscriptionId,
+                int noteId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/notes/{note_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Template(_template => _template.Setup("note_id", noteId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

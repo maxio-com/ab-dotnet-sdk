@@ -9,15 +9,15 @@
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `Email` | `string` | Optional | - |
-| `Type` | `string` | Optional | **Default**: `"paypal_account"` |
+| `Email` | `string` | Required | - |
+| `Type` | `string` | Required | **Default**: `"paypal_account"` |
 
 ## Example (as JSON)
 
 ```json
 {
-  "type": "paypal_account",
-  "email": "email4"
+  "email": "email4",
+  "type": "paypal_account"
 }
 ```
 

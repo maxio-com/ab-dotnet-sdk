@@ -13,6 +13,7 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -37,11 +38,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="dueAmount">due_amount.</param>
         /// <param name="totalAmount">total_amount.</param>
         public IssueInvoiceEventData(
-            Models.InvoiceConsolidationLevel? consolidationLevel = null,
-            Models.InvoiceStatus? fromStatus = null,
-            Models.InvoiceStatus? toStatus = null,
-            string dueAmount = null,
-            string totalAmount = null)
+            Models.InvoiceConsolidationLevel consolidationLevel,
+            Models.InvoiceStatus fromStatus,
+            Models.InvoiceStatus toStatus,
+            string dueAmount,
+            string totalAmount)
         {
             this.ConsolidationLevel = consolidationLevel;
             this.FromStatus = fromStatus;
@@ -58,33 +59,38 @@ namespace AdvancedBilling.Standard.Models
         /// "Parent" invoices do not have lines of their own, but they have subtotals and totals which aggregate the member invoice segments.
         /// See also the [invoice consolidation documentation](https://chargify.zendesk.com/hc/en-us/articles/4407746391835).
         /// </summary>
-        [JsonProperty("consolidation_level", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.InvoiceConsolidationLevel? ConsolidationLevel { get; set; }
+        [JsonProperty("consolidation_level")]
+        [JsonRequired]
+        public Models.InvoiceConsolidationLevel ConsolidationLevel { get; set; }
 
         /// <summary>
         /// The status of the invoice before event occurence. See [Invoice Statuses](https://chargify.zendesk.com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
         /// </summary>
-        [JsonProperty("from_status", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.InvoiceStatus? FromStatus { get; set; }
+        [JsonProperty("from_status")]
+        [JsonRequired]
+        public Models.InvoiceStatus FromStatus { get; set; }
 
         /// <summary>
         /// The status of the invoice after event occurence. See [Invoice Statuses](https://chargify.zendesk.com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
         /// </summary>
-        [JsonProperty("to_status", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.InvoiceStatus? ToStatus { get; set; }
+        [JsonProperty("to_status")]
+        [JsonRequired]
+        public Models.InvoiceStatus ToStatus { get; set; }
 
         /// <summary>
         /// Amount due on the invoice, which is `total_amount - credit_amount - paid_amount`.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("due_amount", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("due_amount")]
+        [JsonRequired]
         public string DueAmount { get; set; }
 
         /// <summary>
         /// The invoice total, which is `subtotal_amount - discount_amount + tax_amount`.'
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("total_amount", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("total_amount")]
+        [JsonRequired]
         public string TotalAmount { get; set; }
 
         /// <inheritdoc/>
@@ -109,9 +115,9 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is IssueInvoiceEventData other &&                ((this.ConsolidationLevel == null && other.ConsolidationLevel == null) || (this.ConsolidationLevel?.Equals(other.ConsolidationLevel) == true)) &&
-                ((this.FromStatus == null && other.FromStatus == null) || (this.FromStatus?.Equals(other.FromStatus) == true)) &&
-                ((this.ToStatus == null && other.ToStatus == null) || (this.ToStatus?.Equals(other.ToStatus) == true)) &&
+            return obj is IssueInvoiceEventData other &&                this.ConsolidationLevel.Equals(other.ConsolidationLevel) &&
+                this.FromStatus.Equals(other.FromStatus) &&
+                this.ToStatus.Equals(other.ToStatus) &&
                 ((this.DueAmount == null && other.DueAmount == null) || (this.DueAmount?.Equals(other.DueAmount) == true)) &&
                 ((this.TotalAmount == null && other.TotalAmount == null) || (this.TotalAmount?.Equals(other.TotalAmount) == true));
         }
@@ -122,9 +128,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ConsolidationLevel = {(this.ConsolidationLevel == null ? "null" : this.ConsolidationLevel.ToString())}");
-            toStringOutput.Add($"this.FromStatus = {(this.FromStatus == null ? "null" : this.FromStatus.ToString())}");
-            toStringOutput.Add($"this.ToStatus = {(this.ToStatus == null ? "null" : this.ToStatus.ToString())}");
+            toStringOutput.Add($"this.ConsolidationLevel = {this.ConsolidationLevel}");
+            toStringOutput.Add($"this.FromStatus = {this.FromStatus}");
+            toStringOutput.Add($"this.ToStatus = {this.ToStatus}");
             toStringOutput.Add($"this.DueAmount = {(this.DueAmount == null ? "null" : this.DueAmount)}");
             toStringOutput.Add($"this.TotalAmount = {(this.TotalAmount == null ? "null" : this.TotalAmount)}");
         }

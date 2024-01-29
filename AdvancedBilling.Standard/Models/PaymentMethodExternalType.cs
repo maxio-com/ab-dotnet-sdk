@@ -13,6 +13,7 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -36,10 +37,10 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="memo">memo.</param>
         /// <param name="type">type.</param>
         public PaymentMethodExternalType(
-            string details = null,
-            string kind = null,
-            string memo = null,
-            string type = "external")
+            string details,
+            string kind,
+            string memo,
+            string type)
         {
             this.Details = details;
             this.Kind = kind;
@@ -50,29 +51,33 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets Details.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("details", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("details")]
+        [JsonRequired]
         public string Details { get; set; }
 
         /// <summary>
         /// Gets or sets Kind.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("kind", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("kind")]
+        [JsonRequired]
         public string Kind { get; set; }
 
         /// <summary>
         /// Gets or sets Memo.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("memo", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("memo")]
+        [JsonRequired]
         public string Memo { get; set; }
 
         /// <summary>
         /// Gets or sets Type.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("type")]
+        [JsonRequired]
         public string Type { get; set; }
 
         /// <inheritdoc/>

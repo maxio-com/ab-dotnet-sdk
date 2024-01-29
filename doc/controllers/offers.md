@@ -10,116 +10,11 @@ OffersController offersController = client.OffersController;
 
 ## Methods
 
-* [Read Offers](../../doc/controllers/offers.md#read-offers)
-* [Unarchive Offer](../../doc/controllers/offers.md#unarchive-offer)
-* [Archive Offer](../../doc/controllers/offers.md#archive-offer)
 * [Create Offer](../../doc/controllers/offers.md#create-offer)
 * [List Offers](../../doc/controllers/offers.md#list-offers)
-
-
-# Read Offers
-
-This method allows you to list a specific offer's attributes. This is different than list all offers for a site, as it requires an `offer_id`.
-
-```csharp
-ReadOffersAsync(
-    int offerId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `offerId` | `int` | Template, Required | The Chargify id of the offer |
-
-## Response Type
-
-[`Task<Models.OfferResponse>`](../../doc/models/offer-response.md)
-
-## Example Usage
-
-```csharp
-int offerId = 130;
-try
-{
-    OfferResponse result = await offersController.ReadOffersAsync(offerId);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-
-# Unarchive Offer
-
-Unarchive a previously archived offer. Please provide an `offer_id` in order to un-archive the correct item.
-
-```csharp
-UnarchiveOfferAsync(
-    int offerId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `offerId` | `int` | Template, Required | The Chargify id of the offer |
-
-## Response Type
-
-`Task`
-
-## Example Usage
-
-```csharp
-int offerId = 130;
-try
-{
-    await offersController.UnarchiveOfferAsync(offerId);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-
-# Archive Offer
-
-Archive an existing offer. Please provide an `offer_id` in order to archive the correct item.
-
-```csharp
-ArchiveOfferAsync(
-    int offerId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `offerId` | `int` | Template, Required | The Chargify id of the offer |
-
-## Response Type
-
-`Task`
-
-## Example Usage
-
-```csharp
-int offerId = 130;
-try
-{
-    await offersController.ArchiveOfferAsync(offerId);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
+* [Read Offers](../../doc/controllers/offers.md#read-offers)
+* [Archive Offer](../../doc/controllers/offers.md#archive-offer)
+* [Unarchive Offer](../../doc/controllers/offers.md#unarchive-offer)
 
 
 # Create Offer
@@ -335,6 +230,111 @@ catch (ApiException e)
       ]
     }
   ]
+}
+```
+
+
+# Read Offers
+
+This method allows you to list a specific offer's attributes. This is different than list all offers for a site, as it requires an `offer_id`.
+
+```csharp
+ReadOffersAsync(
+    int offerId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `offerId` | `int` | Template, Required | The Chargify id of the offer |
+
+## Response Type
+
+[`Task<Models.OfferResponse>`](../../doc/models/offer-response.md)
+
+## Example Usage
+
+```csharp
+int offerId = 130;
+try
+{
+    OfferResponse result = await offersController.ReadOffersAsync(offerId);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+
+# Archive Offer
+
+Archive an existing offer. Please provide an `offer_id` in order to archive the correct item.
+
+```csharp
+ArchiveOfferAsync(
+    int offerId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `offerId` | `int` | Template, Required | The Chargify id of the offer |
+
+## Response Type
+
+`Task`
+
+## Example Usage
+
+```csharp
+int offerId = 130;
+try
+{
+    await offersController.ArchiveOfferAsync(offerId);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+
+# Unarchive Offer
+
+Unarchive a previously archived offer. Please provide an `offer_id` in order to un-archive the correct item.
+
+```csharp
+UnarchiveOfferAsync(
+    int offerId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `offerId` | `int` | Template, Required | The Chargify id of the offer |
+
+## Response Type
+
+`Task`
+
+## Example Usage
+
+```csharp
+int offerId = 130;
+try
+{
+    await offersController.UnarchiveOfferAsync(offerId);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
 }
 ```
 

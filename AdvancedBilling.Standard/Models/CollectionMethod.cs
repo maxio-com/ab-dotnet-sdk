@@ -1,4 +1,4 @@
-// <copyright file="PaymentCollectionMethod1.cs" company="APIMatic">
+// <copyright file="CollectionMethod.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
 namespace AdvancedBilling.Standard.Models
@@ -13,11 +13,11 @@ namespace AdvancedBilling.Standard.Models
     using Newtonsoft.Json;
 
     /// <summary>
-    /// PaymentCollectionMethod1.
+    /// CollectionMethod.
     /// </summary>
 
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum PaymentCollectionMethod1
+    public enum CollectionMethod
     {
         /// <summary>
         /// Automatic.

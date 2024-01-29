@@ -36,6 +36,81 @@ namespace AdvancedBilling.Standard.Controllers
         internal SubscriptionComponentsController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
+        /// This request will list information regarding a specific component owned by a subscription.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="componentId">Required parameter: The Chargify id of the component. Alternatively, the component's handle prefixed by `handle:`.</param>
+        /// <returns>Returns the Models.SubscriptionComponentResponse response from the API call.</returns>
+        public Models.SubscriptionComponentResponse ReadSubscriptionComponent(
+                int subscriptionId,
+                int componentId)
+            => CoreHelper.RunTask(ReadSubscriptionComponentAsync(subscriptionId, componentId));
+
+        /// <summary>
+        /// This request will list information regarding a specific component owned by a subscription.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="componentId">Required parameter: The Chargify id of the component. Alternatively, the component's handle prefixed by `handle:`.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.SubscriptionComponentResponse response from the API call.</returns>
+        public async Task<Models.SubscriptionComponentResponse> ReadSubscriptionComponentAsync(
+                int subscriptionId,
+                int componentId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.SubscriptionComponentResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/components/{component_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Template(_template => _template.Setup("component_id", componentId))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This request will list a subscription's applied components.
+        /// ## Archived Components.
+        /// When requesting to list components for a given subscription, if the subscription contains **archived** components they will be listed in the server response.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the List of Models.SubscriptionComponentResponse response from the API call.</returns>
+        public List<Models.SubscriptionComponentResponse> ListSubscriptionComponents(
+                Models.ListSubscriptionComponentsInput input)
+            => CoreHelper.RunTask(ListSubscriptionComponentsAsync(input));
+
+        /// <summary>
+        /// This request will list a subscription's applied components.
+        /// ## Archived Components.
+        /// When requesting to list components for a given subscription, if the subscription contains **archived** components they will be listed in the server response.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the List of Models.SubscriptionComponentResponse response from the API call.</returns>
+        public async Task<List<Models.SubscriptionComponentResponse>> ListSubscriptionComponentsAsync(
+                Models.ListSubscriptionComponentsInput input,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<List<Models.SubscriptionComponentResponse>>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/components.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("subscription_id", input.SubscriptionId))
+                      .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("end_date", input.EndDate))
+                      .Query(_query => _query.Setup("end_datetime", input.EndDatetime))
+                      .Query(_query => _query.Setup("price_point_ids", (input.PricePointIds.HasValue) ? ApiHelper.JsonSerialize(input.PricePointIds.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("product_family_ids", input.ProductFamilyIds))
+                      .Query(_query => _query.Setup("sort", (input.Sort.HasValue) ? ApiHelper.JsonSerialize(input.Sort.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("start_date", input.StartDate))
+                      .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
+                      .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("filter[use_site_exchange_rate]", input.FilterUseSiteExchangeRate))
+                      .Query(_query => _query.Setup("filter[currencies]", input.FilterCurrencies))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// Updates the price points on one or more of a subscription's components.
         /// The `price_point` key can take either a:.
         /// 1. Price point id (integer).
@@ -75,6 +150,34 @@ namespace AdvancedBilling.Standard.Controllers
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ComponentPricePointErrorException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Resets all of a subscription's components to use the current default.
+        /// **Note**: this will update the price point for all of the subscription's components, even ones that have not been allocated yet.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public Models.SubscriptionResponse ResetSubscriptionComponentsPricePoints(
+                int subscriptionId)
+            => CoreHelper.RunTask(ResetSubscriptionComponentsPricePointsAsync(subscriptionId));
+
+        /// <summary>
+        /// Resets all of a subscription's components to use the current default.
+        /// **Note**: this will update the price point for all of the subscription's components, even ones that have not been allocated yet.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public async Task<Models.SubscriptionResponse> ResetSubscriptionComponentsPricePointsAsync(
+                int subscriptionId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.SubscriptionResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/price_points/reset.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -181,119 +284,68 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// When the expiration interval options are selected on a prepaid usage component price point, all allocations will be created with an expiration date. This expiration date can be changed after the fact to allow for extending or shortening the allocation's active window.
-        /// In order to change a prepaid usage allocation's expiration date, a PUT call must be made to the allocation's endpoint with a new expiration date.
-        /// ## Limitations.
-        /// A few limitations exist when changing an allocation's expiration date:.
-        /// - An expiration date can only be changed for an allocation that belongs to a price point with expiration interval options explicitly set.
-        /// - An expiration date can be changed towards the future with no limitations.
-        /// - An expiration date can be changed towards the past (essentially expiring it) up to the subscription's current period beginning date.
+        /// This endpoint returns the 50 most recent Allocations, ordered by most recent first.
+        /// ## On/Off Components.
+        /// When a subscription's on/off component has been toggled to on (`1`) or off (`0`), usage will be logged in this response.
+        /// ## Querying data via Chargify gem.
+        /// You can also query the current quantity via the [official Chargify Gem.](http://github.com/chargify/chargify_api_ares).
+        /// ```# First way.
+        /// component = Chargify::Subscription::Component.find(1, :params => {:subscription_id => 7}).
+        /// puts component.allocated_quantity.
+        /// # => 23.
+        /// # Second way.
+        /// component = Chargify::Subscription.find(7).component(1).
+        /// puts component.allocated_quantity.
+        /// # => 23.
+        /// ```.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
-        /// <param name="allocationId">Required parameter: The Chargify id of the allocation.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        public void UpdatePrepaidUsageAllocation(
+        /// <param name="page">Optional parameter: Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned. Use in query `page=1`..</param>
+        /// <returns>Returns the List of Models.AllocationResponse response from the API call.</returns>
+        public List<Models.AllocationResponse> ListAllocations(
                 int subscriptionId,
                 int componentId,
-                int allocationId,
-                Models.UpdateAllocationExpirationDate body = null)
-            => CoreHelper.RunVoidTask(UpdatePrepaidUsageAllocationAsync(subscriptionId, componentId, allocationId, body));
+                int? page = 1)
+            => CoreHelper.RunTask(ListAllocationsAsync(subscriptionId, componentId, page));
 
         /// <summary>
-        /// When the expiration interval options are selected on a prepaid usage component price point, all allocations will be created with an expiration date. This expiration date can be changed after the fact to allow for extending or shortening the allocation's active window.
-        /// In order to change a prepaid usage allocation's expiration date, a PUT call must be made to the allocation's endpoint with a new expiration date.
-        /// ## Limitations.
-        /// A few limitations exist when changing an allocation's expiration date:.
-        /// - An expiration date can only be changed for an allocation that belongs to a price point with expiration interval options explicitly set.
-        /// - An expiration date can be changed towards the future with no limitations.
-        /// - An expiration date can be changed towards the past (essentially expiring it) up to the subscription's current period beginning date.
+        /// This endpoint returns the 50 most recent Allocations, ordered by most recent first.
+        /// ## On/Off Components.
+        /// When a subscription's on/off component has been toggled to on (`1`) or off (`0`), usage will be logged in this response.
+        /// ## Querying data via Chargify gem.
+        /// You can also query the current quantity via the [official Chargify Gem.](http://github.com/chargify/chargify_api_ares).
+        /// ```# First way.
+        /// component = Chargify::Subscription::Component.find(1, :params => {:subscription_id => 7}).
+        /// puts component.allocated_quantity.
+        /// # => 23.
+        /// # Second way.
+        /// component = Chargify::Subscription.find(7).component(1).
+        /// puts component.allocated_quantity.
+        /// # => 23.
+        /// ```.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
-        /// <param name="allocationId">Required parameter: The Chargify id of the allocation.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="page">Optional parameter: Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned. Use in query `page=1`..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task UpdatePrepaidUsageAllocationAsync(
+        /// <returns>Returns the List of Models.AllocationResponse response from the API call.</returns>
+        public async Task<List<Models.AllocationResponse>> ListAllocationsAsync(
                 int subscriptionId,
                 int componentId,
-                int allocationId,
-                Models.UpdateAllocationExpirationDate body = null,
+                int? page = 1,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
+            => await CreateApiCall<List<Models.AllocationResponse>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/components/{component_id}/allocations/{allocation_id}.json")
+                  .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/components/{component_id}/allocations.json")
                   .WithAuth("global")
                   .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Template(_template => _template.Setup("component_id", componentId))
-                      .Template(_template => _template.Setup("allocation_id", allocationId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+                      .Query(_query => _query.Setup("page", (page != null) ? page : 1))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionComponentAllocationErrorException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// ## Documentation.
-        /// Events-Based Billing is an evolved form of metered billing that is based on data-rich events streamed in real-time from your system to Chargify.
-        /// These events can then be transformed, enriched, or analyzed to form the computed totals of usage charges billed to your customers.
-        /// This API allows you to stream events into the Chargify data ingestion engine.
-        /// Learn more about the feature in general in the [Events-Based Billing help docs](https://chargify.zendesk.com/hc/en-us/articles/4407720613403).
-        /// ## Record Event.
-        /// Use this endpoint to record a single event.
-        /// *Note: this endpoint differs from the standard Chargify endpoints in that the URL subdomain will be `events` and your site subdomain will be included in the URL path. For example:*.
-        /// ```.
-        /// https://events.chargify.com/my-site-subdomain/events/my-stream-api-handle.
-        /// ```.
-        /// </summary>
-        /// <param name="subdomain">Required parameter: Your site's subdomain.</param>
-        /// <param name="apiHandle">Required parameter: Identifies the Stream for which the event should be published..</param>
-        /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as a Chargify event data-store, use this parameter to indicate the data-store..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        public void RecordEvent(
-                string subdomain,
-                string apiHandle,
-                string storeUid = null,
-                Models.EBBEvent body = null)
-            => CoreHelper.RunVoidTask(RecordEventAsync(subdomain, apiHandle, storeUid, body));
-
-        /// <summary>
-        /// ## Documentation.
-        /// Events-Based Billing is an evolved form of metered billing that is based on data-rich events streamed in real-time from your system to Chargify.
-        /// These events can then be transformed, enriched, or analyzed to form the computed totals of usage charges billed to your customers.
-        /// This API allows you to stream events into the Chargify data ingestion engine.
-        /// Learn more about the feature in general in the [Events-Based Billing help docs](https://chargify.zendesk.com/hc/en-us/articles/4407720613403).
-        /// ## Record Event.
-        /// Use this endpoint to record a single event.
-        /// *Note: this endpoint differs from the standard Chargify endpoints in that the URL subdomain will be `events` and your site subdomain will be included in the URL path. For example:*.
-        /// ```.
-        /// https://events.chargify.com/my-site-subdomain/events/my-stream-api-handle.
-        /// ```.
-        /// </summary>
-        /// <param name="subdomain">Required parameter: Your site's subdomain.</param>
-        /// <param name="apiHandle">Required parameter: Identifies the Stream for which the event should be published..</param>
-        /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as a Chargify event data-store, use this parameter to indicate the data-store..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task RecordEventAsync(
-                string subdomain,
-                string apiHandle,
-                string storeUid = null,
-                Models.EBBEvent body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/{subdomain}/events/{api_handle}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subdomain", subdomain).Required())
-                      .Template(_template => _template.Setup("api_handle", apiHandle).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))
-                      .Query(_query => _query.Setup("store_uid", storeUid))))
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -373,6 +425,114 @@ namespace AdvancedBilling.Standard.Controllers
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ComponentAllocationErrorException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// When the expiration interval options are selected on a prepaid usage component price point, all allocations will be created with an expiration date. This expiration date can be changed after the fact to allow for extending or shortening the allocation's active window.
+        /// In order to change a prepaid usage allocation's expiration date, a PUT call must be made to the allocation's endpoint with a new expiration date.
+        /// ## Limitations.
+        /// A few limitations exist when changing an allocation's expiration date:.
+        /// - An expiration date can only be changed for an allocation that belongs to a price point with expiration interval options explicitly set.
+        /// - An expiration date can be changed towards the future with no limitations.
+        /// - An expiration date can be changed towards the past (essentially expiring it) up to the subscription's current period beginning date.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
+        /// <param name="allocationId">Required parameter: The Chargify id of the allocation.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        public void UpdatePrepaidUsageAllocation(
+                int subscriptionId,
+                int componentId,
+                int allocationId,
+                Models.UpdateAllocationExpirationDate body = null)
+            => CoreHelper.RunVoidTask(UpdatePrepaidUsageAllocationAsync(subscriptionId, componentId, allocationId, body));
+
+        /// <summary>
+        /// When the expiration interval options are selected on a prepaid usage component price point, all allocations will be created with an expiration date. This expiration date can be changed after the fact to allow for extending or shortening the allocation's active window.
+        /// In order to change a prepaid usage allocation's expiration date, a PUT call must be made to the allocation's endpoint with a new expiration date.
+        /// ## Limitations.
+        /// A few limitations exist when changing an allocation's expiration date:.
+        /// - An expiration date can only be changed for an allocation that belongs to a price point with expiration interval options explicitly set.
+        /// - An expiration date can be changed towards the future with no limitations.
+        /// - An expiration date can be changed towards the past (essentially expiring it) up to the subscription's current period beginning date.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
+        /// <param name="allocationId">Required parameter: The Chargify id of the allocation.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task UpdatePrepaidUsageAllocationAsync(
+                int subscriptionId,
+                int componentId,
+                int allocationId,
+                Models.UpdateAllocationExpirationDate body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/components/{component_id}/allocations/{allocation_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Template(_template => _template.Setup("component_id", componentId))
+                      .Template(_template => _template.Setup("allocation_id", allocationId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionComponentAllocationErrorException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Prepaid Usage components are unique in that their allocations are always additive. In order to reduce a subscription's allocated quantity for a prepaid usage component each allocation must be destroyed individually via this endpoint.
+        /// ## Credit Scheme.
+        /// By default, destroying an allocation will generate a service credit on the subscription. This behavior can be modified with the optional `credit_scheme` parameter on this endpoint. The accepted values are:.
+        /// 1. `none`: The allocation will be destroyed and the balances will be updated but no service credit or refund will be created.
+        /// 2. `credit`: The allocation will be destroyed and the balances will be updated and a service credit will be generated. This is also the default behavior if the `credit_scheme` param is not passed.
+        /// 3. `refund`: The allocation will be destroyed and the balances will be updated and a refund will be issued along with a Credit Note.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
+        /// <param name="allocationId">Required parameter: The Chargify id of the allocation.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        public void DeletePrepaidUsageAllocation(
+                int subscriptionId,
+                int componentId,
+                int allocationId,
+                Models.CreditSchemeRequest body = null)
+            => CoreHelper.RunVoidTask(DeletePrepaidUsageAllocationAsync(subscriptionId, componentId, allocationId, body));
+
+        /// <summary>
+        /// Prepaid Usage components are unique in that their allocations are always additive. In order to reduce a subscription's allocated quantity for a prepaid usage component each allocation must be destroyed individually via this endpoint.
+        /// ## Credit Scheme.
+        /// By default, destroying an allocation will generate a service credit on the subscription. This behavior can be modified with the optional `credit_scheme` parameter on this endpoint. The accepted values are:.
+        /// 1. `none`: The allocation will be destroyed and the balances will be updated but no service credit or refund will be created.
+        /// 2. `credit`: The allocation will be destroyed and the balances will be updated and a service credit will be generated. This is also the default behavior if the `credit_scheme` param is not passed.
+        /// 3. `refund`: The allocation will be destroyed and the balances will be updated and a refund will be issued along with a Credit Note.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
+        /// <param name="allocationId">Required parameter: The Chargify id of the allocation.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task DeletePrepaidUsageAllocationAsync(
+                int subscriptionId,
+                int componentId,
+                int allocationId,
+                Models.CreditSchemeRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/components/{component_id}/allocations/{allocation_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Template(_template => _template.Setup("component_id", componentId))
+                      .Template(_template => _template.Setup("allocation_id", allocationId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionComponentAllocationErrorException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -485,303 +645,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This request will list information regarding a specific component owned by a subscription.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="componentId">Required parameter: The Chargify id of the component. Alternatively, the component's handle prefixed by `handle:`.</param>
-        /// <returns>Returns the Models.SubscriptionComponentResponse response from the API call.</returns>
-        public Models.SubscriptionComponentResponse ReadSubscriptionComponent(
-                int subscriptionId,
-                int componentId)
-            => CoreHelper.RunTask(ReadSubscriptionComponentAsync(subscriptionId, componentId));
-
-        /// <summary>
-        /// This request will list information regarding a specific component owned by a subscription.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="componentId">Required parameter: The Chargify id of the component. Alternatively, the component's handle prefixed by `handle:`.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.SubscriptionComponentResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionComponentResponse> ReadSubscriptionComponentAsync(
-                int subscriptionId,
-                int componentId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SubscriptionComponentResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/components/{component_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("component_id", componentId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This request will list a subscription's applied components.
-        /// ## Archived Components.
-        /// When requesting to list components for a given subscription, if the subscription contains **archived** components they will be listed in the server response.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the List of Models.SubscriptionComponentResponse response from the API call.</returns>
-        public List<Models.SubscriptionComponentResponse> ListSubscriptionComponents(
-                Models.ListSubscriptionComponentsInput input)
-            => CoreHelper.RunTask(ListSubscriptionComponentsAsync(input));
-
-        /// <summary>
-        /// This request will list a subscription's applied components.
-        /// ## Archived Components.
-        /// When requesting to list components for a given subscription, if the subscription contains **archived** components they will be listed in the server response.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the List of Models.SubscriptionComponentResponse response from the API call.</returns>
-        public async Task<List<Models.SubscriptionComponentResponse>> ListSubscriptionComponentsAsync(
-                Models.ListSubscriptionComponentsInput input,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<List<Models.SubscriptionComponentResponse>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/components.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", input.SubscriptionId))
-                      .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("end_date", input.EndDate))
-                      .Query(_query => _query.Setup("end_datetime", input.EndDatetime))
-                      .Query(_query => _query.Setup("price_point_ids", (input.PricePointIds.HasValue) ? ApiHelper.JsonSerialize(input.PricePointIds.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("product_family_ids", input.ProductFamilyIds))
-                      .Query(_query => _query.Setup("sort", (input.Sort.HasValue) ? ApiHelper.JsonSerialize(input.Sort.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("start_date", input.StartDate))
-                      .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
-                      .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("filter[use_site_exchange_rate]", input.FilterUseSiteExchangeRate))
-                      .Query(_query => _query.Setup("filter[currencies]", input.FilterCurrencies))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Use this endpoint to deactivate an event-based component for a single subscription. Deactivating the event-based component causes Chargify to ignore related events at subscription renewal.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
-        public void DeactivateEventBasedComponent(
-                int subscriptionId,
-                int componentId)
-            => CoreHelper.RunVoidTask(DeactivateEventBasedComponentAsync(subscriptionId, componentId));
-
-        /// <summary>
-        /// Use this endpoint to deactivate an event-based component for a single subscription. Deactivating the event-based component causes Chargify to ignore related events at subscription renewal.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task DeactivateEventBasedComponentAsync(
-                int subscriptionId,
-                int componentId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/event_based_billing/subscriptions/{subscription_id}/components/{component_id}/deactivate.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("component_id", componentId))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This request will list components applied to each subscription.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the Models.ListSubscriptionComponentsResponse response from the API call.</returns>
-        public Models.ListSubscriptionComponentsResponse ListSubscriptionComponentsForSite(
-                Models.ListSubscriptionComponentsForSiteInput input)
-            => CoreHelper.RunTask(ListSubscriptionComponentsForSiteAsync(input));
-
-        /// <summary>
-        /// This request will list components applied to each subscription.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ListSubscriptionComponentsResponse response from the API call.</returns>
-        public async Task<Models.ListSubscriptionComponentsResponse> ListSubscriptionComponentsForSiteAsync(
-                Models.ListSubscriptionComponentsForSiteInput input,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ListSubscriptionComponentsResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/subscriptions_components.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("sort", (input.Sort.HasValue) ? ApiHelper.JsonSerialize(input.Sort.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("start_date", input.StartDate))
-                      .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
-                      .Query(_query => _query.Setup("end_date", input.EndDate))
-                      .Query(_query => _query.Setup("end_datetime", input.EndDatetime))
-                      .Query(_query => _query.Setup("subscription_ids", input.SubscriptionIds))
-                      .Query(_query => _query.Setup("price_point_ids", (input.PricePointIds.HasValue) ? ApiHelper.JsonSerialize(input.PricePointIds.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("product_family_ids", input.ProductFamilyIds))
-                      .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("filter[use_site_exchange_rate]", input.FilterUseSiteExchangeRate))
-                      .Query(_query => _query.Setup("filter[currencies]", input.FilterCurrencies))
-                      .Query(_query => _query.Setup("filter[subscription][states]", input.FilterSubscriptionStates?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))
-                      .Query(_query => _query.Setup("filter[subscription][date_field]", (input.FilterSubscriptionDateField.HasValue) ? ApiHelper.JsonSerialize(input.FilterSubscriptionDateField.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("filter[subscription][start_date]", input.FilterSubscriptionStartDate))
-                      .Query(_query => _query.Setup("filter[subscription][start_datetime]", input.FilterSubscriptionStartDatetime))
-                      .Query(_query => _query.Setup("filter[subscription][end_date]", input.FilterSubscriptionEndDate))
-                      .Query(_query => _query.Setup("filter[subscription][end_datetime]", input.FilterSubscriptionEndDatetime))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Resets all of a subscription's components to use the current default.
-        /// **Note**: this will update the price point for all of the subscription's components, even ones that have not been allocated yet.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public Models.SubscriptionResponse ResetSubscriptionComponentsPricePoints(
-                int subscriptionId)
-            => CoreHelper.RunTask(ResetSubscriptionComponentsPricePointsAsync(subscriptionId));
-
-        /// <summary>
-        /// Resets all of a subscription's components to use the current default.
-        /// **Note**: this will update the price point for all of the subscription's components, even ones that have not been allocated yet.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionResponse> ResetSubscriptionComponentsPricePointsAsync(
-                int subscriptionId,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/price_points/reset.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This endpoint returns the 50 most recent Allocations, ordered by most recent first.
-        /// ## On/Off Components.
-        /// When a subscription's on/off component has been toggled to on (`1`) or off (`0`), usage will be logged in this response.
-        /// ## Querying data via Chargify gem.
-        /// You can also query the current quantity via the [official Chargify Gem.](http://github.com/chargify/chargify_api_ares).
-        /// ```# First way.
-        /// component = Chargify::Subscription::Component.find(1, :params => {:subscription_id => 7}).
-        /// puts component.allocated_quantity.
-        /// # => 23.
-        /// # Second way.
-        /// component = Chargify::Subscription.find(7).component(1).
-        /// puts component.allocated_quantity.
-        /// # => 23.
-        /// ```.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
-        /// <param name="page">Optional parameter: Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned. Use in query `page=1`..</param>
-        /// <returns>Returns the List of Models.AllocationResponse response from the API call.</returns>
-        public List<Models.AllocationResponse> ListAllocations(
-                int subscriptionId,
-                int componentId,
-                int? page = 1)
-            => CoreHelper.RunTask(ListAllocationsAsync(subscriptionId, componentId, page));
-
-        /// <summary>
-        /// This endpoint returns the 50 most recent Allocations, ordered by most recent first.
-        /// ## On/Off Components.
-        /// When a subscription's on/off component has been toggled to on (`1`) or off (`0`), usage will be logged in this response.
-        /// ## Querying data via Chargify gem.
-        /// You can also query the current quantity via the [official Chargify Gem.](http://github.com/chargify/chargify_api_ares).
-        /// ```# First way.
-        /// component = Chargify::Subscription::Component.find(1, :params => {:subscription_id => 7}).
-        /// puts component.allocated_quantity.
-        /// # => 23.
-        /// # Second way.
-        /// component = Chargify::Subscription.find(7).component(1).
-        /// puts component.allocated_quantity.
-        /// # => 23.
-        /// ```.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
-        /// <param name="page">Optional parameter: Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned. Use in query `page=1`..</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the List of Models.AllocationResponse response from the API call.</returns>
-        public async Task<List<Models.AllocationResponse>> ListAllocationsAsync(
-                int subscriptionId,
-                int componentId,
-                int? page = 1,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<List<Models.AllocationResponse>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/components/{component_id}/allocations.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("component_id", componentId))
-                      .Query(_query => _query.Setup("page", (page != null) ? page : 1))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Prepaid Usage components are unique in that their allocations are always additive. In order to reduce a subscription's allocated quantity for a prepaid usage component each allocation must be destroyed individually via this endpoint.
-        /// ## Credit Scheme.
-        /// By default, destroying an allocation will generate a service credit on the subscription. This behavior can be modified with the optional `credit_scheme` parameter on this endpoint. The accepted values are:.
-        /// 1. `none`: The allocation will be destroyed and the balances will be updated but no service credit or refund will be created.
-        /// 2. `credit`: The allocation will be destroyed and the balances will be updated and a service credit will be generated. This is also the default behavior if the `credit_scheme` param is not passed.
-        /// 3. `refund`: The allocation will be destroyed and the balances will be updated and a refund will be issued along with a Credit Note.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
-        /// <param name="allocationId">Required parameter: The Chargify id of the allocation.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        public void DeletePrepaidUsageAllocation(
-                int subscriptionId,
-                int componentId,
-                int allocationId,
-                Models.CreditSchemeRequest body = null)
-            => CoreHelper.RunVoidTask(DeletePrepaidUsageAllocationAsync(subscriptionId, componentId, allocationId, body));
-
-        /// <summary>
-        /// Prepaid Usage components are unique in that their allocations are always additive. In order to reduce a subscription's allocated quantity for a prepaid usage component each allocation must be destroyed individually via this endpoint.
-        /// ## Credit Scheme.
-        /// By default, destroying an allocation will generate a service credit on the subscription. This behavior can be modified with the optional `credit_scheme` parameter on this endpoint. The accepted values are:.
-        /// 1. `none`: The allocation will be destroyed and the balances will be updated but no service credit or refund will be created.
-        /// 2. `credit`: The allocation will be destroyed and the balances will be updated and a service credit will be generated. This is also the default behavior if the `credit_scheme` param is not passed.
-        /// 3. `refund`: The allocation will be destroyed and the balances will be updated and a refund will be issued along with a Credit Note.
-        /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
-        /// <param name="allocationId">Required parameter: The Chargify id of the allocation.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task DeletePrepaidUsageAllocationAsync(
-                int subscriptionId,
-                int componentId,
-                int allocationId,
-                Models.CreditSchemeRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/components/{component_id}/allocations/{allocation_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("component_id", componentId))
-                      .Template(_template => _template.Setup("allocation_id", allocationId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionComponentAllocationErrorException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
+        /// <![CDATA[
         /// This request will return a list of the usages associated with a subscription for a particular metered component. This will display the previously recorded components for a subscription.
         /// This endpoint is not compatible with quantity-based components.
         /// ## Since Date and Until Date Usage.
@@ -791,6 +655,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ```.
         /// ## Read Usage by Handle.
         /// Use this endpoint to read the previously recorded components for a subscription.  You can now specify either the component id (integer) or the component handle prefixed by "handle:" to specify the unique identifier for the component you are working with.
+        /// ]]>
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the List of Models.UsageResponse response from the API call.</returns>
@@ -799,6 +664,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListUsagesAsync(input));
 
         /// <summary>
+        /// <![CDATA[
         /// This request will return a list of the usages associated with a subscription for a particular metered component. This will display the previously recorded components for a subscription.
         /// This endpoint is not compatible with quantity-based components.
         /// ## Since Date and Until Date Usage.
@@ -808,6 +674,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ```.
         /// ## Read Usage by Handle.
         /// Use this endpoint to read the previously recorded components for a subscription.  You can now specify either the component id (integer) or the component handle prefixed by "handle:" to specify the unique identifier for the component you are working with.
+        /// ]]>
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -867,6 +734,97 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
+        /// Use this endpoint to deactivate an event-based component for a single subscription. Deactivating the event-based component causes Chargify to ignore related events at subscription renewal.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
+        public void DeactivateEventBasedComponent(
+                int subscriptionId,
+                int componentId)
+            => CoreHelper.RunVoidTask(DeactivateEventBasedComponentAsync(subscriptionId, componentId));
+
+        /// <summary>
+        /// Use this endpoint to deactivate an event-based component for a single subscription. Deactivating the event-based component causes Chargify to ignore related events at subscription renewal.
+        /// </summary>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task DeactivateEventBasedComponentAsync(
+                int subscriptionId,
+                int componentId,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/event_based_billing/subscriptions/{subscription_id}/components/{component_id}/deactivate.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Template(_template => _template.Setup("component_id", componentId))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// ## Documentation.
+        /// Events-Based Billing is an evolved form of metered billing that is based on data-rich events streamed in real-time from your system to Chargify.
+        /// These events can then be transformed, enriched, or analyzed to form the computed totals of usage charges billed to your customers.
+        /// This API allows you to stream events into the Chargify data ingestion engine.
+        /// Learn more about the feature in general in the [Events-Based Billing help docs](https://chargify.zendesk.com/hc/en-us/articles/4407720613403).
+        /// ## Record Event.
+        /// Use this endpoint to record a single event.
+        /// *Note: this endpoint differs from the standard Chargify endpoints in that the URL subdomain will be `events` and your site subdomain will be included in the URL path. For example:*.
+        /// ```.
+        /// https://events.chargify.com/my-site-subdomain/events/my-stream-api-handle.
+        /// ```.
+        /// </summary>
+        /// <param name="subdomain">Required parameter: Your site's subdomain.</param>
+        /// <param name="apiHandle">Required parameter: Identifies the Stream for which the event should be published..</param>
+        /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as a Chargify event data-store, use this parameter to indicate the data-store..</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        public void RecordEvent(
+                string subdomain,
+                string apiHandle,
+                string storeUid = null,
+                Models.EBBEvent body = null)
+            => CoreHelper.RunVoidTask(RecordEventAsync(subdomain, apiHandle, storeUid, body));
+
+        /// <summary>
+        /// ## Documentation.
+        /// Events-Based Billing is an evolved form of metered billing that is based on data-rich events streamed in real-time from your system to Chargify.
+        /// These events can then be transformed, enriched, or analyzed to form the computed totals of usage charges billed to your customers.
+        /// This API allows you to stream events into the Chargify data ingestion engine.
+        /// Learn more about the feature in general in the [Events-Based Billing help docs](https://chargify.zendesk.com/hc/en-us/articles/4407720613403).
+        /// ## Record Event.
+        /// Use this endpoint to record a single event.
+        /// *Note: this endpoint differs from the standard Chargify endpoints in that the URL subdomain will be `events` and your site subdomain will be included in the URL path. For example:*.
+        /// ```.
+        /// https://events.chargify.com/my-site-subdomain/events/my-stream-api-handle.
+        /// ```.
+        /// </summary>
+        /// <param name="subdomain">Required parameter: Your site's subdomain.</param>
+        /// <param name="apiHandle">Required parameter: Identifies the Stream for which the event should be published..</param>
+        /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as a Chargify event data-store, use this parameter to indicate the data-store..</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task RecordEventAsync(
+                string subdomain,
+                string apiHandle,
+                string storeUid = null,
+                Models.EBBEvent body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/{subdomain}/events/{api_handle}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("subdomain", subdomain).Required())
+                      .Template(_template => _template.Setup("api_handle", apiHandle).Required())
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))
+                      .Query(_query => _query.Setup("store_uid", storeUid))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// Use this endpoint to record a collection of events.
         /// *Note: this endpoint differs from the standard Chargify endpoints in that the subdomain will be `events` and your site subdomain will be included in the URL path.*.
         /// A maximum of 1000 events can be published in a single request. A 422 will be returned if this limit is exceeded.
@@ -909,6 +867,52 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("api_handle", apiHandle).Required())
                       .Header(_header => _header.Setup("Content-Type", "application/json"))
                       .Query(_query => _query.Setup("store_uid", storeUid))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This request will list components applied to each subscription.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the Models.ListSubscriptionComponentsResponse response from the API call.</returns>
+        public Models.ListSubscriptionComponentsResponse ListSubscriptionComponentsForSite(
+                Models.ListSubscriptionComponentsForSiteInput input)
+            => CoreHelper.RunTask(ListSubscriptionComponentsForSiteAsync(input));
+
+        /// <summary>
+        /// This request will list components applied to each subscription.
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ListSubscriptionComponentsResponse response from the API call.</returns>
+        public async Task<Models.ListSubscriptionComponentsResponse> ListSubscriptionComponentsForSiteAsync(
+                Models.ListSubscriptionComponentsForSiteInput input,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ListSubscriptionComponentsResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/subscriptions_components.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Query(_query => _query.Setup("page", input.Page))
+                      .Query(_query => _query.Setup("per_page", input.PerPage))
+                      .Query(_query => _query.Setup("sort", (input.Sort.HasValue) ? ApiHelper.JsonSerialize(input.Sort.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("start_date", input.StartDate))
+                      .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
+                      .Query(_query => _query.Setup("end_date", input.EndDate))
+                      .Query(_query => _query.Setup("end_datetime", input.EndDatetime))
+                      .Query(_query => _query.Setup("subscription_ids", input.SubscriptionIds))
+                      .Query(_query => _query.Setup("price_point_ids", (input.PricePointIds.HasValue) ? ApiHelper.JsonSerialize(input.PricePointIds.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("product_family_ids", input.ProductFamilyIds))
+                      .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("filter[use_site_exchange_rate]", input.FilterUseSiteExchangeRate))
+                      .Query(_query => _query.Setup("filter[currencies]", input.FilterCurrencies))
+                      .Query(_query => _query.Setup("filter[subscription][states]", input.FilterSubscriptionStates?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))
+                      .Query(_query => _query.Setup("filter[subscription][date_field]", (input.FilterSubscriptionDateField.HasValue) ? ApiHelper.JsonSerialize(input.FilterSubscriptionDateField.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("filter[subscription][start_date]", input.FilterSubscriptionStartDate))
+                      .Query(_query => _query.Setup("filter[subscription][start_datetime]", input.FilterSubscriptionStartDatetime))
+                      .Query(_query => _query.Setup("filter[subscription][end_date]", input.FilterSubscriptionEndDate))
+                      .Query(_query => _query.Setup("filter[subscription][end_datetime]", input.FilterSubscriptionEndDatetime))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

@@ -34,30 +34,44 @@ namespace AdvancedBilling.Standard.Controllers
         internal SitesController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
-        /// This endpoint returns public keys used for Chargify.js.
+        /// <![CDATA[
+        /// This endpoint allows you to fetch some site data.
+        /// Full documentation on Sites in the Chargify UI can be located [here](https://chargify.zendesk.com/hc/en-us/articles/4407870738587).
+        /// Specifically, the [Clearing Site Data](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405428327309) section is extremely relevant to this endpoint documentation.
+        /// #### Relationship invoicing enabled.
+        /// If site has RI enabled then you will see more settings like:.
+        ///     "customer_hierarchy_enabled": true,.
+        ///     "whopays_enabled": true,.
+        ///     "whopays_default_payer": "self".
+        /// You can read more about these settings here:.
+        ///  [Who Pays & Customer Hierarchy](https://chargify.zendesk.com/hc/en-us/articles/4407746683291).
+        /// ]]>
         /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the Models.ListPublicKeysResponse response from the API call.</returns>
-        public Models.ListPublicKeysResponse ListChargifyJsPublicKeys(
-                Models.ListChargifyJsPublicKeysInput input)
-            => CoreHelper.RunTask(ListChargifyJsPublicKeysAsync(input));
+        /// <returns>Returns the Models.SiteResponse response from the API call.</returns>
+        public Models.SiteResponse ReadSite()
+            => CoreHelper.RunTask(ReadSiteAsync());
 
         /// <summary>
-        /// This endpoint returns public keys used for Chargify.js.
+        /// <![CDATA[
+        /// This endpoint allows you to fetch some site data.
+        /// Full documentation on Sites in the Chargify UI can be located [here](https://chargify.zendesk.com/hc/en-us/articles/4407870738587).
+        /// Specifically, the [Clearing Site Data](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405428327309) section is extremely relevant to this endpoint documentation.
+        /// #### Relationship invoicing enabled.
+        /// If site has RI enabled then you will see more settings like:.
+        ///     "customer_hierarchy_enabled": true,.
+        ///     "whopays_enabled": true,.
+        ///     "whopays_default_payer": "self".
+        /// You can read more about these settings here:.
+        ///  [Who Pays & Customer Hierarchy](https://chargify.zendesk.com/hc/en-us/articles/4407746683291).
+        /// ]]>
         /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ListPublicKeysResponse response from the API call.</returns>
-        public async Task<Models.ListPublicKeysResponse> ListChargifyJsPublicKeysAsync(
-                Models.ListChargifyJsPublicKeysInput input,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ListPublicKeysResponse>()
+        /// <returns>Returns the Models.SiteResponse response from the API call.</returns>
+        public async Task<Models.SiteResponse> ReadSiteAsync(CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.SiteResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/chargify_js_keys.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))))
+                  .Setup(HttpMethod.Get, "/site.json")
+                  .WithAuth("global"))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -88,40 +102,30 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This endpoint allows you to fetch some site data.
-        /// Full documentation on Sites in the Chargify UI can be located [here](https://chargify.zendesk.com/hc/en-us/articles/4407870738587).
-        /// Specifically, the [Clearing Site Data](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405428327309) section is extremely relevant to this endpoint documentation.
-        /// #### Relationship invoicing enabled.
-        /// If site has RI enabled then you will see more settings like:.
-        ///     "customer_hierarchy_enabled": true,.
-        ///     "whopays_enabled": true,.
-        ///     "whopays_default_payer": "self".
-        /// You can read more about these settings here:.
-        ///  [Who Pays & Customer Hierarchy](https://chargify.zendesk.com/hc/en-us/articles/4407746683291).
+        /// This endpoint returns public keys used for Chargify.js.
         /// </summary>
-        /// <returns>Returns the Models.SiteResponse response from the API call.</returns>
-        public Models.SiteResponse ReadSite()
-            => CoreHelper.RunTask(ReadSiteAsync());
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the Models.ListPublicKeysResponse response from the API call.</returns>
+        public Models.ListPublicKeysResponse ListChargifyJsPublicKeys(
+                Models.ListChargifyJsPublicKeysInput input)
+            => CoreHelper.RunTask(ListChargifyJsPublicKeysAsync(input));
 
         /// <summary>
-        /// This endpoint allows you to fetch some site data.
-        /// Full documentation on Sites in the Chargify UI can be located [here](https://chargify.zendesk.com/hc/en-us/articles/4407870738587).
-        /// Specifically, the [Clearing Site Data](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405428327309) section is extremely relevant to this endpoint documentation.
-        /// #### Relationship invoicing enabled.
-        /// If site has RI enabled then you will see more settings like:.
-        ///     "customer_hierarchy_enabled": true,.
-        ///     "whopays_enabled": true,.
-        ///     "whopays_default_payer": "self".
-        /// You can read more about these settings here:.
-        ///  [Who Pays & Customer Hierarchy](https://chargify.zendesk.com/hc/en-us/articles/4407746683291).
+        /// This endpoint returns public keys used for Chargify.js.
         /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.SiteResponse response from the API call.</returns>
-        public async Task<Models.SiteResponse> ReadSiteAsync(CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SiteResponse>()
+        /// <returns>Returns the Models.ListPublicKeysResponse response from the API call.</returns>
+        public async Task<Models.ListPublicKeysResponse> ListChargifyJsPublicKeysAsync(
+                Models.ListChargifyJsPublicKeysInput input,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ListPublicKeysResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/site.json")
-                  .WithAuth("global"))
+                  .Setup(HttpMethod.Get, "/chargify_js_keys.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Query(_query => _query.Setup("page", input.Page))
+                      .Query(_query => _query.Setup("per_page", input.PerPage))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

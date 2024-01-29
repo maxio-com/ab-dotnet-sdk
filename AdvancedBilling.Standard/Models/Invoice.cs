@@ -13,6 +13,7 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -114,9 +115,9 @@ namespace AdvancedBilling.Standard.Models
             DateTime? dueDate = null,
             DateTime? paidDate = null,
             Models.InvoiceStatus? status = null,
-            string role = null,
+            Models.InvoiceRole? role = null,
             int? parentInvoiceId = null,
-            string collectionMethod = null,
+            Models.CollectionMethod? collectionMethod = Models.CollectionMethod.Automatic,
             string paymentInstructions = null,
             string currency = null,
             Models.InvoiceConsolidationLevel? consolidationLevel = null,
@@ -342,7 +343,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Role.
         /// </summary>
         [JsonProperty("role", NullValueHandling = NullValueHandling.Ignore)]
-        public string Role { get; set; }
+        public Models.InvoiceRole? Role { get; set; }
 
         /// <summary>
         /// Gets or sets ParentInvoiceId.
@@ -363,10 +364,10 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The collection method of the invoice, which is either "automatic" (tried and retried on an existing payment method by Chargify) or "remittance" (payment must be remitted by the customer or keyed in by the merchant).
+        /// The type of payment collection to be used in the subscription. For legacy Statements Architecture valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid options are - `remittance`, `automatic`, `prepaid`.
         /// </summary>
         [JsonProperty("collection_method", NullValueHandling = NullValueHandling.Ignore)]
-        public string CollectionMethod { get; set; }
+        public Models.CollectionMethod? CollectionMethod { get; set; }
 
         /// <summary>
         /// A message that is printed on the invoice when it is marked for remittance collection. It is intended to describe to the customer how they may make payment, and is configured by the merchant.
@@ -830,9 +831,9 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.DueDate = {(this.DueDate == null ? "null" : this.DueDate.ToString())}");
             toStringOutput.Add($"this.PaidDate = {(this.PaidDate == null ? "null" : this.PaidDate.ToString())}");
             toStringOutput.Add($"this.Status = {(this.Status == null ? "null" : this.Status.ToString())}");
-            toStringOutput.Add($"this.Role = {(this.Role == null ? "null" : this.Role)}");
+            toStringOutput.Add($"this.Role = {(this.Role == null ? "null" : this.Role.ToString())}");
             toStringOutput.Add($"this.ParentInvoiceId = {(this.ParentInvoiceId == null ? "null" : this.ParentInvoiceId.ToString())}");
-            toStringOutput.Add($"this.CollectionMethod = {(this.CollectionMethod == null ? "null" : this.CollectionMethod)}");
+            toStringOutput.Add($"this.CollectionMethod = {(this.CollectionMethod == null ? "null" : this.CollectionMethod.ToString())}");
             toStringOutput.Add($"this.PaymentInstructions = {(this.PaymentInstructions == null ? "null" : this.PaymentInstructions)}");
             toStringOutput.Add($"this.Currency = {(this.Currency == null ? "null" : this.Currency)}");
             toStringOutput.Add($"this.ConsolidationLevel = {(this.ConsolidationLevel == null ? "null" : this.ConsolidationLevel.ToString())}");

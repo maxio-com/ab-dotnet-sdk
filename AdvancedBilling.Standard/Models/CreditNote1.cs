@@ -13,6 +13,7 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -67,7 +68,7 @@ namespace AdvancedBilling.Standard.Models
             int? sequenceNumber = null,
             string issueDate = null,
             string appliedDate = null,
-            string status = null,
+            Models.CreditNoteStatus? status = null,
             string currency = null,
             string memo = null,
             Models.Seller seller = null,
@@ -169,12 +170,10 @@ namespace AdvancedBilling.Standard.Models
         public string AppliedDate { get; set; }
 
         /// <summary>
-        /// Current status of the credit note. Valid values:
-        /// * open
-        /// * applied
+        /// Current status of the credit note.
         /// </summary>
         [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
-        public string Status { get; set; }
+        public Models.CreditNoteStatus? Status { get; set; }
 
         /// <summary>
         /// The ISO 4217 currency code (3 character string) representing the currency of the credit note amount fields.
@@ -349,7 +348,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.SequenceNumber = {(this.SequenceNumber == null ? "null" : this.SequenceNumber.ToString())}");
             toStringOutput.Add($"this.IssueDate = {(this.IssueDate == null ? "null" : this.IssueDate)}");
             toStringOutput.Add($"this.AppliedDate = {(this.AppliedDate == null ? "null" : this.AppliedDate)}");
-            toStringOutput.Add($"this.Status = {(this.Status == null ? "null" : this.Status)}");
+            toStringOutput.Add($"this.Status = {(this.Status == null ? "null" : this.Status.ToString())}");
             toStringOutput.Add($"this.Currency = {(this.Currency == null ? "null" : this.Currency)}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.Seller = {(this.Seller == null ? "null" : this.Seller.ToString())}");

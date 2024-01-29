@@ -26,7 +26,7 @@ namespace AdvancedBillingTests
             {
                 CustomerId = customerResponse.Customer.Id,
                 ProductId = productResponse.Product.Id,
-                PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
+                PaymentCollectionMethod = CollectionMethod.Automatic,
                 PaymentProfileId = paymentProfileId,
                 DunningCommunicationDelayEnabled = false,
                 SkipBillingManifestTaxes = false
@@ -90,7 +90,7 @@ namespace AdvancedBillingTests
             {
                 CustomerId = customerResponse.Customer.Id,
                 ProductId = productResponse.Product.Id,
-                PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
+                PaymentCollectionMethod = CollectionMethod.Automatic,
                 PaymentProfileId = paymentProfileId,
                 DunningCommunicationDelayEnabled = false,
                 SkipBillingManifestTaxes = false

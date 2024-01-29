@@ -13,13 +13,13 @@ namespace AdvancedBillingTests
         private readonly Fixture _fixture = new();
 
         [Theory]
-        [InlineData(MetafieldInput.Dropdown, "dropdown")]
-        [InlineData(MetafieldInput.Radio, "radio")]
-        [InlineData(MetafieldInput.Text, "text")]
+        [InlineData(MetafieldInput.Dropdown)]
+        [InlineData(MetafieldInput.Radio)]
+        [InlineData(MetafieldInput.Text)]
         public async Task CreateMetafields_GivenResourceTypeForSubscription_ResourceIsCreatedValuesAreMappedCorrectly(
-            MetafieldInput inputType, string expectedType)
+            MetafieldInput inputType)
         {
-            var metadataName = $"{TestUtils.GenerateRandomString(4)}{expectedType}";
+            var metadataName = $"{TestUtils.GenerateRandomString(4)}{inputType.ToString()}";
 
             var dropDownOption1 = $"{TestUtils.GenerateRandomString(5)}doption";
             var dropDownOption2 = $"{TestUtils.GenerateRandomString(5)}doption";
@@ -37,7 +37,7 @@ namespace AdvancedBillingTests
 
             var firstMetaResponse = metaResponse.FirstOrDefault();
 
-            firstMetaResponse?.InputType.Should().BeEquivalentTo(expectedType);
+            firstMetaResponse?.InputType.Should().Be(inputType);
 
             var listOfDropdownOptions = firstMetaResponse?.MEnum.Match(x => new List<string> { x }, y => y);
 
@@ -68,7 +68,7 @@ namespace AdvancedBillingTests
 
             var firstDefaultMetaResponse = defaultMetaResponse.FirstOrDefault();
 
-            firstDefaultMetaResponse?.InputType.Should().BeEquivalentTo("text");
+            firstDefaultMetaResponse?.InputType.Should().Be(MetafieldInput.Text);
 
             var listOfDropdownOptions = firstDefaultMetaResponse?.MEnum.Match(x => new List<string> { x }, y => y);
 
@@ -101,7 +101,7 @@ namespace AdvancedBillingTests
             {
                 CustomerId = customerResponse.Customer.Id,
                 ProductId = productResponse.Product.Id,
-                PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
+                PaymentCollectionMethod = CollectionMethod.Automatic,
                 PaymentProfileId = paymentProfileId,
                 DunningCommunicationDelayEnabled = false,
                 SkipBillingManifestTaxes = false
@@ -113,7 +113,7 @@ namespace AdvancedBillingTests
             subscriptionResponse.Subscription.Id.Should().NotBeNull();
 
             var metadatas = await _client.CustomFieldsController.CreateMetadataAsync(ResourceType.Subscriptions,
-                subscriptionResponse.Subscription.Id.ToString(),
+                (int) subscriptionResponse.Subscription.Id,
                 new CreateMetadataRequest(optionsList));
 
             metadatas.Should().Contain(x => x.MValue == option1 && x.Name == metadataName);
@@ -128,7 +128,7 @@ namespace AdvancedBillingTests
             //listOfMetadata.Metadata.Should().Contain(x => x.MValue == option2 && x.Name == metadataName);
 
             await _client.CustomFieldsController.DeleteMetadataAsync(ResourceType.Subscriptions,
-                subscriptionResponse.Subscription.Id.ToString(), metadataName);
+                (int) subscriptionResponse.Subscription.Id, metadataName);
 
             await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfileId,
                 productResponse, _client);
@@ -148,14 +148,14 @@ namespace AdvancedBillingTests
             var customerResponse = await CreationUtils.CreateCustomer(_client);
 
             var metadatas = await _client.CustomFieldsController.CreateMetadataAsync(ResourceType.Customers,
-                customerResponse.Customer.Id.ToString(),
+                (int) customerResponse.Customer.Id,
                 new CreateMetadataRequest(optionsList));
 
             metadatas.Should().Contain(x => x.MValue == option1 && x.Name == metadataName);
             metadatas.Should().Contain(x => x.MValue == option2 && x.Name == metadataName);
 
             await _client.CustomFieldsController.DeleteMetadataAsync(ResourceType.Customers,
-                customerResponse.Customer.Id.ToString(), metadataName);
+                (int) customerResponse.Customer.Id, metadataName);
 
             await ErrorSuppressionWrapper.RunAsync(async () =>
             {

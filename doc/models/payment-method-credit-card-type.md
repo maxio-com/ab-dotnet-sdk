@@ -9,21 +9,21 @@
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `CardBrand` | `string` | Optional | - |
+| `CardBrand` | `string` | Required | - |
 | `CardExpiration` | `string` | Optional | - |
 | `LastFour` | `string` | Optional | - |
-| `MaskedCardNumber` | `string` | Optional | - |
-| `Type` | `string` | Optional | **Default**: `"credit_card"` |
+| `MaskedCardNumber` | `string` | Required | - |
+| `Type` | `string` | Required | **Default**: `"credit_card"` |
 
 ## Example (as JSON)
 
 ```json
 {
-  "type": "credit_card",
   "card_brand": "card_brand0",
+  "masked_card_number": "masked_card_number4",
+  "type": "credit_card",
   "card_expiration": "card_expiration8",
-  "last_four": "last_four0",
-  "masked_card_number": "masked_card_number4"
+  "last_four": "last_four0"
 }
 ```
 

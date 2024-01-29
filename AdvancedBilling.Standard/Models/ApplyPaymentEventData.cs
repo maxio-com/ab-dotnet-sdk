@@ -14,6 +14,7 @@ namespace AdvancedBilling.Standard.Models
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -39,11 +40,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="paymentMethod">payment_method.</param>
         /// <param name="transactionId">transaction_id.</param>
         public ApplyPaymentEventData(
-            string memo = null,
-            string originalAmount = null,
-            string appliedAmount = null,
-            DateTimeOffset? transactionTime = null,
-            ApplyPaymentEventDataPaymentMethod paymentMethod = null,
+            string memo,
+            string originalAmount,
+            string appliedAmount,
+            DateTimeOffset transactionTime,
+            ApplyPaymentEventDataPaymentMethod paymentMethod,
             int? transactionId = null)
         {
             this.Memo = memo;
@@ -57,35 +58,40 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The payment memo
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("memo", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("memo")]
+        [JsonRequired]
         public string Memo { get; set; }
 
         /// <summary>
         /// The full, original amount of the payment transaction as a string in full units. Incoming payments can be split amongst several invoices, which will result in a `applied_amount` less than the `original_amount`. Example: A $100.99 payment, of which $40.11 is applied to this invoice, will have an `original_amount` of `"100.99"`.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("original_amount", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("original_amount")]
+        [JsonRequired]
         public string OriginalAmount { get; set; }
 
         /// <summary>
         /// The amount of the payment applied to this invoice. Incoming payments can be split amongst several invoices, which will result in a `applied_amount` less than the `original_amount`. Example: A $100.99 payment, of which $40.11 is applied to this invoice, will have an `applied_amount` of `"40.11"`.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("applied_amount", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("applied_amount")]
+        [JsonRequired]
         public string AppliedAmount { get; set; }
 
         /// <summary>
         /// The time the payment was applied, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z"
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
-        [JsonProperty("transaction_time", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTimeOffset? TransactionTime { get; set; }
+        [JsonProperty("transaction_time")]
+        [JsonRequired]
+        public DateTimeOffset TransactionTime { get; set; }
 
         /// <summary>
         /// A nested data structure detailing the method of payment
         /// </summary>
-        [JsonProperty("payment_method", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("payment_method")]
+        [JsonRequired]
         public ApplyPaymentEventDataPaymentMethod PaymentMethod { get; set; }
 
         /// <summary>
@@ -119,7 +125,7 @@ namespace AdvancedBilling.Standard.Models
             return obj is ApplyPaymentEventData other &&                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
                 ((this.OriginalAmount == null && other.OriginalAmount == null) || (this.OriginalAmount?.Equals(other.OriginalAmount) == true)) &&
                 ((this.AppliedAmount == null && other.AppliedAmount == null) || (this.AppliedAmount?.Equals(other.AppliedAmount) == true)) &&
-                ((this.TransactionTime == null && other.TransactionTime == null) || (this.TransactionTime?.Equals(other.TransactionTime) == true)) &&
+                this.TransactionTime.Equals(other.TransactionTime) &&
                 ((this.PaymentMethod == null && other.PaymentMethod == null) || (this.PaymentMethod?.Equals(other.PaymentMethod) == true)) &&
                 ((this.TransactionId == null && other.TransactionId == null) || (this.TransactionId?.Equals(other.TransactionId) == true));
         }
@@ -133,7 +139,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.OriginalAmount = {(this.OriginalAmount == null ? "null" : this.OriginalAmount)}");
             toStringOutput.Add($"this.AppliedAmount = {(this.AppliedAmount == null ? "null" : this.AppliedAmount)}");
-            toStringOutput.Add($"this.TransactionTime = {(this.TransactionTime == null ? "null" : this.TransactionTime.ToString())}");
+            toStringOutput.Add($"this.TransactionTime = {this.TransactionTime}");
             toStringOutput.Add($"PaymentMethod = {(this.PaymentMethod == null ? "null" : this.PaymentMethod.ToString())}");
             toStringOutput.Add($"this.TransactionId = {(this.TransactionId == null ? "null" : this.TransactionId.ToString())}");
         }

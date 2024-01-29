@@ -83,103 +83,6 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// The Chargify API allows you to create an endpoint and assign a list of webhooks subscriptions (events) to it.
-        /// You can check available events here.
-        /// [Event keys](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405357509645-Webhooks-Reference#example-payloads).
-        /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.EndpointResponse response from the API call.</returns>
-        public Models.EndpointResponse CreateEndpoint(
-                Models.UpdateEndpointRequest body = null)
-            => CoreHelper.RunTask(CreateEndpointAsync(body));
-
-        /// <summary>
-        /// The Chargify API allows you to create an endpoint and assign a list of webhooks subscriptions (events) to it.
-        /// You can check available events here.
-        /// [Event keys](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405357509645-Webhooks-Reference#example-payloads).
-        /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.EndpointResponse response from the API call.</returns>
-        public async Task<Models.EndpointResponse> CreateEndpointAsync(
-                Models.UpdateEndpointRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.EndpointResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/endpoints.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// You can update an Endpoint via the API with a PUT request to the resource endpoint.
-        /// You can change the `url` of your endpoint which consumes webhooks or list of `webhook_subscriptions`.
-        /// Check available [Event keys](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404448450317-Webhooks#configure-webhook-url).
-        /// Always send a complete list of events which you want subscribe/watch.
-        /// Sending an PUT request for existing endpoint with empty list of `webhook_subscriptions` will end with unsubscribe from all events.
-        /// If you want unsubscribe from specific event, just send a list of `webhook_subscriptions` without the specific event key.
-        /// </summary>
-        /// <param name="endpointId">Required parameter: The Chargify id for the endpoint that should be updated.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.EndpointResponse response from the API call.</returns>
-        public Models.EndpointResponse UpdateEndpoint(
-                int endpointId,
-                Models.UpdateEndpointRequest body = null)
-            => CoreHelper.RunTask(UpdateEndpointAsync(endpointId, body));
-
-        /// <summary>
-        /// You can update an Endpoint via the API with a PUT request to the resource endpoint.
-        /// You can change the `url` of your endpoint which consumes webhooks or list of `webhook_subscriptions`.
-        /// Check available [Event keys](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404448450317-Webhooks#configure-webhook-url).
-        /// Always send a complete list of events which you want subscribe/watch.
-        /// Sending an PUT request for existing endpoint with empty list of `webhook_subscriptions` will end with unsubscribe from all events.
-        /// If you want unsubscribe from specific event, just send a list of `webhook_subscriptions` without the specific event key.
-        /// </summary>
-        /// <param name="endpointId">Required parameter: The Chargify id for the endpoint that should be updated.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.EndpointResponse response from the API call.</returns>
-        public async Task<Models.EndpointResponse> UpdateEndpointAsync(
-                int endpointId,
-                Models.UpdateEndpointRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.EndpointResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Put, "/endpoints/{endpoint_id}.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("endpoint_id", endpointId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// This method returns created endpoints for site.
-        /// </summary>
-        /// <returns>Returns the List of Models.Endpoint response from the API call.</returns>
-        public List<Models.Endpoint> ListEndpoints()
-            => CoreHelper.RunTask(ListEndpointsAsync());
-
-        /// <summary>
-        /// This method returns created endpoints for site.
-        /// </summary>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the List of Models.Endpoint response from the API call.</returns>
-        public async Task<List<Models.Endpoint>> ListEndpointsAsync(CancellationToken cancellationToken = default)
-            => await CreateApiCall<List<Models.Endpoint>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/endpoints.json")
-                  .WithAuth("global"))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// This method allows you to enable webhooks via API for your site.
         /// </summary>
         /// <param name="body">Optional parameter: Example: .</param>
@@ -233,6 +136,103 @@ namespace AdvancedBilling.Standard.Controllers
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The Chargify API allows you to create an endpoint and assign a list of webhooks subscriptions (events) to it.
+        /// You can check available events here.
+        /// [Event keys](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405357509645-Webhooks-Reference#example-payloads).
+        /// </summary>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.EndpointResponse response from the API call.</returns>
+        public Models.EndpointResponse CreateEndpoint(
+                Models.UpdateEndpointRequest body = null)
+            => CoreHelper.RunTask(CreateEndpointAsync(body));
+
+        /// <summary>
+        /// The Chargify API allows you to create an endpoint and assign a list of webhooks subscriptions (events) to it.
+        /// You can check available events here.
+        /// [Event keys](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405357509645-Webhooks-Reference#example-payloads).
+        /// </summary>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.EndpointResponse response from the API call.</returns>
+        public async Task<Models.EndpointResponse> CreateEndpointAsync(
+                Models.UpdateEndpointRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.EndpointResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Post, "/endpoints.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// This method returns created endpoints for site.
+        /// </summary>
+        /// <returns>Returns the List of Models.Endpoint response from the API call.</returns>
+        public List<Models.Endpoint> ListEndpoints()
+            => CoreHelper.RunTask(ListEndpointsAsync());
+
+        /// <summary>
+        /// This method returns created endpoints for site.
+        /// </summary>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the List of Models.Endpoint response from the API call.</returns>
+        public async Task<List<Models.Endpoint>> ListEndpointsAsync(CancellationToken cancellationToken = default)
+            => await CreateApiCall<List<Models.Endpoint>>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/endpoints.json")
+                  .WithAuth("global"))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// You can update an Endpoint via the API with a PUT request to the resource endpoint.
+        /// You can change the `url` of your endpoint which consumes webhooks or list of `webhook_subscriptions`.
+        /// Check available [Event keys](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404448450317-Webhooks#configure-webhook-url).
+        /// Always send a complete list of events which you want subscribe/watch.
+        /// Sending an PUT request for existing endpoint with empty list of `webhook_subscriptions` will end with unsubscribe from all events.
+        /// If you want unsubscribe from specific event, just send a list of `webhook_subscriptions` without the specific event key.
+        /// </summary>
+        /// <param name="endpointId">Required parameter: The Chargify id for the endpoint that should be updated.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <returns>Returns the Models.EndpointResponse response from the API call.</returns>
+        public Models.EndpointResponse UpdateEndpoint(
+                int endpointId,
+                Models.UpdateEndpointRequest body = null)
+            => CoreHelper.RunTask(UpdateEndpointAsync(endpointId, body));
+
+        /// <summary>
+        /// You can update an Endpoint via the API with a PUT request to the resource endpoint.
+        /// You can change the `url` of your endpoint which consumes webhooks or list of `webhook_subscriptions`.
+        /// Check available [Event keys](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404448450317-Webhooks#configure-webhook-url).
+        /// Always send a complete list of events which you want subscribe/watch.
+        /// Sending an PUT request for existing endpoint with empty list of `webhook_subscriptions` will end with unsubscribe from all events.
+        /// If you want unsubscribe from specific event, just send a list of `webhook_subscriptions` without the specific event key.
+        /// </summary>
+        /// <param name="endpointId">Required parameter: The Chargify id for the endpoint that should be updated.</param>
+        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.EndpointResponse response from the API call.</returns>
+        public async Task<Models.EndpointResponse> UpdateEndpointAsync(
+                int endpointId,
+                Models.UpdateEndpointRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.EndpointResponse>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Put, "/endpoints/{endpoint_id}.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Body(_bodyParameter => _bodyParameter.Setup(body))
+                      .Template(_template => _template.Setup("endpoint_id", endpointId))
+                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

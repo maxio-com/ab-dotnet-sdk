@@ -14,6 +14,7 @@ namespace AdvancedBilling.Standard.Models
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -49,7 +50,7 @@ namespace AdvancedBilling.Standard.Models
             string name = null,
             Models.MetafieldScope scope = null,
             int? dataCount = null,
-            string inputType = null,
+            Models.MetafieldInput? inputType = null,
             MetafieldEnum mEnum = null)
         {
             this.Id = id;
@@ -89,10 +90,10 @@ namespace AdvancedBilling.Standard.Models
         public int? DataCount { get; set; }
 
         /// <summary>
-        /// Gets or sets InputType.
+        /// Indicates how data should be added to the metafield. For example, a text type is just a string, so a given metafield of this type can have any value attached. On the other hand, dropdown and radio have a set of allowed values that can be input, and appear differently on a Public Signup Page. Defaults to 'text'
         /// </summary>
         [JsonProperty("input_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string InputType { get; set; }
+        public Models.MetafieldInput? InputType { get; set; }
 
         /// <summary>
         /// Gets or sets MEnum.
@@ -169,7 +170,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
             toStringOutput.Add($"this.Scope = {(this.Scope == null ? "null" : this.Scope.ToString())}");
             toStringOutput.Add($"this.DataCount = {(this.DataCount == null ? "null" : this.DataCount.ToString())}");
-            toStringOutput.Add($"this.InputType = {(this.InputType == null ? "null" : this.InputType)}");
+            toStringOutput.Add($"this.InputType = {(this.InputType == null ? "null" : this.InputType.ToString())}");
             toStringOutput.Add($"MEnum = {(this.MEnum == null ? "null" : this.MEnum.ToString())}");
         }
     }

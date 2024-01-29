@@ -13,6 +13,7 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -44,7 +45,7 @@ namespace AdvancedBilling.Standard.Models
             int? paymentProfileId = null,
             int? payerId = null,
             string payerReference = null,
-            Models.PaymentCollectionMethod? paymentCollectionMethod = Models.PaymentCollectionMethod.Automatic,
+            Models.CollectionMethod? paymentCollectionMethod = Models.CollectionMethod.Automatic,
             Models.PayerAttributes payerAttributes = null,
             Models.SubscriptionGroupCreditCard creditCardAttributes = null,
             Models.SubscriptionGroupBankAccount bankAccountAttributes = null)
@@ -81,7 +82,7 @@ namespace AdvancedBilling.Standard.Models
         /// The type of payment collection to be used in the subscription. For legacy Statements Architecture valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid options are - `remittance`, `automatic`, `prepaid`.
         /// </summary>
         [JsonProperty("payment_collection_method", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.PaymentCollectionMethod? PaymentCollectionMethod { get; set; }
+        public Models.CollectionMethod? PaymentCollectionMethod { get; set; }
 
         /// <summary>
         /// Gets or sets PayerAttributes.

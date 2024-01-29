@@ -13,6 +13,7 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -125,7 +126,9 @@ namespace AdvancedBilling.Standard.Models
         public bool? WithDeleted { get; set; }
 
         /// <summary>
+        /// <![CDATA[
         /// Allow to fetch metadata for multiple records based on provided ids. Use in query: `resource_ids[]=122&resource_ids[]=123&resource_ids[]=124`.
+        /// ]]>
         /// </summary>
         [JsonProperty("resource_ids[]", NullValueHandling = NullValueHandling.Ignore)]
         public List<int> ResourceIds { get; set; }

@@ -13,6 +13,7 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -35,9 +36,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="maskedRoutingNumber">masked_routing_number.</param>
         /// <param name="type">type.</param>
         public PaymentMethodBankAccountType(
-            string maskedAccountNumber = null,
-            string maskedRoutingNumber = null,
-            string type = "bank_account")
+            string maskedAccountNumber,
+            string maskedRoutingNumber,
+            string type)
         {
             this.MaskedAccountNumber = maskedAccountNumber;
             this.MaskedRoutingNumber = maskedRoutingNumber;
@@ -47,22 +48,25 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets MaskedAccountNumber.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("masked_account_number", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("masked_account_number")]
+        [JsonRequired]
         public string MaskedAccountNumber { get; set; }
 
         /// <summary>
         /// Gets or sets MaskedRoutingNumber.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("masked_routing_number", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("masked_routing_number")]
+        [JsonRequired]
         public string MaskedRoutingNumber { get; set; }
 
         /// <summary>
         /// Gets or sets Type.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("type")]
+        [JsonRequired]
         public string Type { get; set; }
 
         /// <inheritdoc/>

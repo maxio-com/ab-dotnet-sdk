@@ -13,6 +13,7 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -38,7 +39,7 @@ namespace AdvancedBilling.Standard.Models
         public CreateMetafield(
             string name = null,
             Models.MetafieldScope scope = null,
-            Models.MetafieldInput? inputType = Models.MetafieldInput.Text,
+            Models.MetafieldInput? inputType = null,
             List<string> mEnum = null)
         {
             this.Name = name;
@@ -61,7 +62,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.MetafieldScope Scope { get; set; }
 
         /// <summary>
-        /// Indicates how data should be added to the metafield. For example, a text type is just a string, so a given metafield of this type can have any value attached. On the other hand, dropdown and radio have a set of allowed values that can be input, and appear differently on a Public Signup Page.
+        /// Indicates how data should be added to the metafield. For example, a text type is just a string, so a given metafield of this type can have any value attached. On the other hand, dropdown and radio have a set of allowed values that can be input, and appear differently on a Public Signup Page. Defaults to 'text'
         /// </summary>
         [JsonProperty("input_type", NullValueHandling = NullValueHandling.Ignore)]
         public Models.MetafieldInput? InputType { get; set; }

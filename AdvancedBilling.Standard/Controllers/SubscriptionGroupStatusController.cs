@@ -70,33 +70,6 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Removing the delayed cancellation on a subscription group will ensure that the subscriptions do not get canceled at the end of the period. The request will reset the `cancel_at_end_of_period` flag to false on each member in the group.
-        /// </summary>
-        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        public void StopDelayedCancellationForGroup(
-                string uid)
-            => CoreHelper.RunVoidTask(StopDelayedCancellationForGroupAsync(uid));
-
-        /// <summary>
-        /// Removing the delayed cancellation on a subscription group will ensure that the subscriptions do not get canceled at the end of the period. The request will reset the `cancel_at_end_of_period` flag to false on each member in the group.
-        /// </summary>
-        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task StopDelayedCancellationForGroupAsync(
-                string uid,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Delete, "/subscription_groups/{uid}/delayed_cancel.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("uid", uid).Required())))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// This endpoint will schedule all subscriptions within the specified group to be canceled at the end of their billing period. The group is identified by it's uid passed in the URL.
         /// All subscriptions in the group must be on automatic billing in order to successfully cancel them, and the group must not be in a "past_due" state.
         /// </summary>
@@ -118,6 +91,33 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<VoidType>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscription_groups/{uid}/delayed_cancel.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("uid", uid).Required())))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Removing the delayed cancellation on a subscription group will ensure that the subscriptions do not get canceled at the end of the period. The request will reset the `cancel_at_end_of_period` flag to false on each member in the group.
+        /// </summary>
+        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
+        public void StopDelayedCancellationForGroup(
+                string uid)
+            => CoreHelper.RunVoidTask(StopDelayedCancellationForGroupAsync(uid));
+
+        /// <summary>
+        /// Removing the delayed cancellation on a subscription group will ensure that the subscriptions do not get canceled at the end of the period. The request will reset the `cancel_at_end_of_period` flag to false on each member in the group.
+        /// </summary>
+        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the void response from the API call.</returns>
+        public async Task StopDelayedCancellationForGroupAsync(
+                string uid,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<VoidType>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Delete, "/subscription_groups/{uid}/delayed_cancel.json")
                   .WithAuth("global")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("uid", uid).Required())))

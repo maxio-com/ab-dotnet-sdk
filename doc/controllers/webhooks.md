@@ -11,11 +11,11 @@ WebhooksController webhooksController = client.WebhooksController;
 ## Methods
 
 * [List Webhooks](../../doc/controllers/webhooks.md#list-webhooks)
-* [Create Endpoint](../../doc/controllers/webhooks.md#create-endpoint)
-* [Update Endpoint](../../doc/controllers/webhooks.md#update-endpoint)
-* [List Endpoints](../../doc/controllers/webhooks.md#list-endpoints)
 * [Enable Webhooks](../../doc/controllers/webhooks.md#enable-webhooks)
 * [Replay Webhooks](../../doc/controllers/webhooks.md#replay-webhooks)
+* [Create Endpoint](../../doc/controllers/webhooks.md#create-endpoint)
+* [List Endpoints](../../doc/controllers/webhooks.md#list-endpoints)
+* [Update Endpoint](../../doc/controllers/webhooks.md#update-endpoint)
 
 
 # List Webhooks
@@ -111,203 +111,6 @@ catch (ApiException e)
       "signature": "fbcf2f6be579f9658cff90c4373e0ca2",
       "signature_hmac_sha_256": "db96654f5456c5460062feb944ac8bb1418f9d181ae04a8ed982fe9ffdca8de1"
     }
-  }
-]
-```
-
-
-# Create Endpoint
-
-The Chargify API allows you to create an endpoint and assign a list of webhooks subscriptions (events) to it.
-
-You can check available events here.
-[Event keys](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405357509645-Webhooks-Reference#example-payloads)
-
-```csharp
-CreateEndpointAsync(
-    Models.UpdateEndpointRequest body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `body` | [`UpdateEndpointRequest`](../../doc/models/update-endpoint-request.md) | Body, Optional | Used to Create or Update Endpoint |
-
-## Response Type
-
-[`Task<Models.EndpointResponse>`](../../doc/models/endpoint-response.md)
-
-## Example Usage
-
-```csharp
-UpdateEndpointRequest body = new UpdateEndpointRequest
-{
-    Endpoint = new UpdateEndpoint
-    {
-        Url = "https://your.site/webhooks",
-        WebhookSubscriptions = new List<WebhookSubscription>
-        {
-            WebhookSubscription.PaymentSuccess,
-            WebhookSubscription.PaymentFailure,
-        },
-    },
-};
-
-try
-{
-    EndpointResponse result = await webhooksController.CreateEndpointAsync(body);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "endpoint": {
-    "id": 1,
-    "url": "https://your.site/webhooks",
-    "site_id": 1,
-    "status": "enabled",
-    "webhook_subscriptions": [
-      "payment_success",
-      "payment_failure"
-    ]
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
-# Update Endpoint
-
-You can update an Endpoint via the API with a PUT request to the resource endpoint.
-
-You can change the `url` of your endpoint which consumes webhooks or list of `webhook_subscriptions`.
-Check available [Event keys](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404448450317-Webhooks#configure-webhook-url).
-
-Always send a complete list of events which you want subscribe/watch.
-Sending an PUT request for existing endpoint with empty list of `webhook_subscriptions` will end with unsubscribe from all events.
-
-If you want unsubscribe from specific event, just send a list of `webhook_subscriptions` without the specific event key.
-
-```csharp
-UpdateEndpointAsync(
-    int endpointId,
-    Models.UpdateEndpointRequest body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `endpointId` | `int` | Template, Required | The Chargify id for the endpoint that should be updated |
-| `body` | [`UpdateEndpointRequest`](../../doc/models/update-endpoint-request.md) | Body, Optional | Used to Create or Update Endpoint |
-
-## Response Type
-
-[`Task<Models.EndpointResponse>`](../../doc/models/endpoint-response.md)
-
-## Example Usage
-
-```csharp
-int endpointId = 42;
-UpdateEndpointRequest body = new UpdateEndpointRequest
-{
-    Endpoint = new UpdateEndpoint
-    {
-        Url = "https://yout.site/webhooks/1/json.",
-        WebhookSubscriptions = new List<WebhookSubscription>
-        {
-            WebhookSubscription.PaymentFailure,
-            WebhookSubscription.PaymentSuccess,
-            WebhookSubscription.RefundFailure,
-        },
-    },
-};
-
-try
-{
-    EndpointResponse result = await webhooksController.UpdateEndpointAsync(
-        endpointId,
-        body
-    );
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
-# List Endpoints
-
-This method returns created endpoints for site.
-
-```csharp
-ListEndpointsAsync()
-```
-
-## Response Type
-
-[`Task<List<Models.Endpoint>>`](../../doc/models/endpoint.md)
-
-## Example Usage
-
-```csharp
-try
-{
-    List<Endpoint> result = await webhooksController.ListEndpointsAsync();
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-[
-  {
-    "id": 11,
-    "url": "https://foobar.com/webhooks",
-    "site_id": 1,
-    "status": "enabled",
-    "webhook_subscriptions": [
-      "payment_success",
-      "payment_failure"
-    ]
-  },
-  {
-    "id": 12,
-    "url": "https:/example.com/webhooks",
-    "site_id": 1,
-    "status": "enabled",
-    "webhook_subscriptions": [
-      "payment_success",
-      "payment_failure",
-      "refund_failure"
-    ]
   }
 ]
 ```
@@ -411,4 +214,201 @@ catch (ApiException e)
   "status": "ok"
 }
 ```
+
+
+# Create Endpoint
+
+The Chargify API allows you to create an endpoint and assign a list of webhooks subscriptions (events) to it.
+
+You can check available events here.
+[Event keys](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405357509645-Webhooks-Reference#example-payloads)
+
+```csharp
+CreateEndpointAsync(
+    Models.UpdateEndpointRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`UpdateEndpointRequest`](../../doc/models/update-endpoint-request.md) | Body, Optional | Used to Create or Update Endpoint |
+
+## Response Type
+
+[`Task<Models.EndpointResponse>`](../../doc/models/endpoint-response.md)
+
+## Example Usage
+
+```csharp
+UpdateEndpointRequest body = new UpdateEndpointRequest
+{
+    Endpoint = new UpdateEndpoint
+    {
+        Url = "https://your.site/webhooks",
+        WebhookSubscriptions = new List<WebhookSubscription>
+        {
+            WebhookSubscription.PaymentSuccess,
+            WebhookSubscription.PaymentFailure,
+        },
+    },
+};
+
+try
+{
+    EndpointResponse result = await webhooksController.CreateEndpointAsync(body);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "endpoint": {
+    "id": 1,
+    "url": "https://your.site/webhooks",
+    "site_id": 1,
+    "status": "enabled",
+    "webhook_subscriptions": [
+      "payment_success",
+      "payment_failure"
+    ]
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# List Endpoints
+
+This method returns created endpoints for site.
+
+```csharp
+ListEndpointsAsync()
+```
+
+## Response Type
+
+[`Task<List<Models.Endpoint>>`](../../doc/models/endpoint.md)
+
+## Example Usage
+
+```csharp
+try
+{
+    List<Endpoint> result = await webhooksController.ListEndpointsAsync();
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+[
+  {
+    "id": 11,
+    "url": "https://foobar.com/webhooks",
+    "site_id": 1,
+    "status": "enabled",
+    "webhook_subscriptions": [
+      "payment_success",
+      "payment_failure"
+    ]
+  },
+  {
+    "id": 12,
+    "url": "https:/example.com/webhooks",
+    "site_id": 1,
+    "status": "enabled",
+    "webhook_subscriptions": [
+      "payment_success",
+      "payment_failure",
+      "refund_failure"
+    ]
+  }
+]
+```
+
+
+# Update Endpoint
+
+You can update an Endpoint via the API with a PUT request to the resource endpoint.
+
+You can change the `url` of your endpoint which consumes webhooks or list of `webhook_subscriptions`.
+Check available [Event keys](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404448450317-Webhooks#configure-webhook-url).
+
+Always send a complete list of events which you want subscribe/watch.
+Sending an PUT request for existing endpoint with empty list of `webhook_subscriptions` will end with unsubscribe from all events.
+
+If you want unsubscribe from specific event, just send a list of `webhook_subscriptions` without the specific event key.
+
+```csharp
+UpdateEndpointAsync(
+    int endpointId,
+    Models.UpdateEndpointRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `endpointId` | `int` | Template, Required | The Chargify id for the endpoint that should be updated |
+| `body` | [`UpdateEndpointRequest`](../../doc/models/update-endpoint-request.md) | Body, Optional | Used to Create or Update Endpoint |
+
+## Response Type
+
+[`Task<Models.EndpointResponse>`](../../doc/models/endpoint-response.md)
+
+## Example Usage
+
+```csharp
+int endpointId = 42;
+UpdateEndpointRequest body = new UpdateEndpointRequest
+{
+    Endpoint = new UpdateEndpoint
+    {
+        Url = "https://yout.site/webhooks/1/json.",
+        WebhookSubscriptions = new List<WebhookSubscription>
+        {
+            WebhookSubscription.PaymentFailure,
+            WebhookSubscription.PaymentSuccess,
+            WebhookSubscription.RefundFailure,
+        },
+    },
+};
+
+try
+{
+    EndpointResponse result = await webhooksController.UpdateEndpointAsync(
+        endpointId,
+        body
+    );
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 

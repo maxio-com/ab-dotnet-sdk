@@ -34,49 +34,13 @@ namespace AdvancedBilling.Standard.Controllers
         internal SalesCommissionsController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
-        /// Endpoint returns sales rep list with details.
-        /// ## Modified Authentication Process.
-        /// The Sales Commission API differs from other Chargify API endpoints. This resource is associated with the seller itself. Up to now all available resources were at the level of the site, therefore creating the API Key per site was a sufficient solution. To share resources at the seller level, a new authentication method was introduced, which is user authentication. Creating an API Key for a user is a required step to correctly use the Sales Commission API, more details [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication).
-        /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Chargify support.
-        /// > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the List of Models.ListSaleRepItem response from the API call.</returns>
-        public List<Models.ListSaleRepItem> ListSalesReps(
-                Models.ListSalesRepsInput input)
-            => CoreHelper.RunTask(ListSalesRepsAsync(input));
-
-        /// <summary>
-        /// Endpoint returns sales rep list with details.
-        /// ## Modified Authentication Process.
-        /// The Sales Commission API differs from other Chargify API endpoints. This resource is associated with the seller itself. Up to now all available resources were at the level of the site, therefore creating the API Key per site was a sufficient solution. To share resources at the seller level, a new authentication method was introduced, which is user authentication. Creating an API Key for a user is a required step to correctly use the Sales Commission API, more details [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication).
-        /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Chargify support.
-        /// > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`.
-        /// </summary>
-        /// <param name="input">Object containing request parameters.</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the List of Models.ListSaleRepItem response from the API call.</returns>
-        public async Task<List<Models.ListSaleRepItem>> ListSalesRepsAsync(
-                Models.ListSalesRepsInput input,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<List<Models.ListSaleRepItem>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/sellers/{seller_id}/sales_reps.json")
-                  .WithAuth("global")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("seller_id", input.SellerId).Required())
-                      .Header(_header => _header.Setup("Authorization", input.Authorization))
-                      .Query(_query => _query.Setup("live_mode", input.LiveMode))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
+        /// <![CDATA[
         /// Endpoint returns subscriptions with associated sales reps.
         /// ## Modified Authentication Process.
         /// The Sales Commission API differs from other Chargify API endpoints. This resource is associated with the seller itself. Up to now all available resources were at the level of the site, therefore creating the API Key per site was a sufficient solution. To share resources at the seller level, a new authentication method was introduced, which is user authentication. Creating an API Key for a user is a required step to correctly use the Sales Commission API, more details [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication).
         /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Chargify support.
         /// > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`.
+        /// ]]>
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the List of Models.SaleRepSettings response from the API call.</returns>
@@ -85,11 +49,13 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListSalesCommissionSettingsAsync(input));
 
         /// <summary>
+        /// <![CDATA[
         /// Endpoint returns subscriptions with associated sales reps.
         /// ## Modified Authentication Process.
         /// The Sales Commission API differs from other Chargify API endpoints. This resource is associated with the seller itself. Up to now all available resources were at the level of the site, therefore creating the API Key per site was a sufficient solution. To share resources at the seller level, a new authentication method was introduced, which is user authentication. Creating an API Key for a user is a required step to correctly use the Sales Commission API, more details [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication).
         /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Chargify support.
         /// > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`.
+        /// ]]>
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -110,11 +76,55 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
+        /// <![CDATA[
+        /// Endpoint returns sales rep list with details.
+        /// ## Modified Authentication Process.
+        /// The Sales Commission API differs from other Chargify API endpoints. This resource is associated with the seller itself. Up to now all available resources were at the level of the site, therefore creating the API Key per site was a sufficient solution. To share resources at the seller level, a new authentication method was introduced, which is user authentication. Creating an API Key for a user is a required step to correctly use the Sales Commission API, more details [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication).
+        /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Chargify support.
+        /// > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`.
+        /// ]]>
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the List of Models.ListSaleRepItem response from the API call.</returns>
+        public List<Models.ListSaleRepItem> ListSalesReps(
+                Models.ListSalesRepsInput input)
+            => CoreHelper.RunTask(ListSalesRepsAsync(input));
+
+        /// <summary>
+        /// <![CDATA[
+        /// Endpoint returns sales rep list with details.
+        /// ## Modified Authentication Process.
+        /// The Sales Commission API differs from other Chargify API endpoints. This resource is associated with the seller itself. Up to now all available resources were at the level of the site, therefore creating the API Key per site was a sufficient solution. To share resources at the seller level, a new authentication method was introduced, which is user authentication. Creating an API Key for a user is a required step to correctly use the Sales Commission API, more details [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication).
+        /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Chargify support.
+        /// > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`.
+        /// ]]>
+        /// </summary>
+        /// <param name="input">Object containing request parameters.</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the List of Models.ListSaleRepItem response from the API call.</returns>
+        public async Task<List<Models.ListSaleRepItem>> ListSalesRepsAsync(
+                Models.ListSalesRepsInput input,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<List<Models.ListSaleRepItem>>()
+              .RequestBuilder(_requestBuilder => _requestBuilder
+                  .Setup(HttpMethod.Get, "/sellers/{seller_id}/sales_reps.json")
+                  .WithAuth("global")
+                  .Parameters(_parameters => _parameters
+                      .Template(_template => _template.Setup("seller_id", input.SellerId).Required())
+                      .Header(_header => _header.Setup("Authorization", input.Authorization))
+                      .Query(_query => _query.Setup("live_mode", input.LiveMode))
+                      .Query(_query => _query.Setup("page", input.Page))
+                      .Query(_query => _query.Setup("per_page", input.PerPage))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// <![CDATA[
         /// Endpoint returns sales rep and attached subscriptions details.
         /// ## Modified Authentication Process.
         /// The Sales Commission API differs from other Chargify API endpoints. This resource is associated with the seller itself. Up to now all available resources were at the level of the site, therefore creating the API Key per site was a sufficient solution. To share resources at the seller level, a new authentication method was introduced, which is user authentication. Creating an API Key for a user is a required step to correctly use the Sales Commission API, more details [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication).
         /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Chargify support.
         /// > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`.
+        /// ]]>
         /// </summary>
         /// <param name="sellerId">Required parameter: The Chargify id of your seller account.</param>
         /// <param name="salesRepId">Required parameter: The Chargify id of sales rep..</param>
@@ -133,11 +143,13 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ReadSalesRepAsync(sellerId, salesRepId, authorization, liveMode, page, perPage));
 
         /// <summary>
+        /// <![CDATA[
         /// Endpoint returns sales rep and attached subscriptions details.
         /// ## Modified Authentication Process.
         /// The Sales Commission API differs from other Chargify API endpoints. This resource is associated with the seller itself. Up to now all available resources were at the level of the site, therefore creating the API Key per site was a sufficient solution. To share resources at the seller level, a new authentication method was introduced, which is user authentication. Creating an API Key for a user is a required step to correctly use the Sales Commission API, more details [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication).
         /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Chargify support.
         /// > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`.
+        /// ]]>
         /// </summary>
         /// <param name="sellerId">Required parameter: The Chargify id of your seller account.</param>
         /// <param name="salesRepId">Required parameter: The Chargify id of sales rep..</param>

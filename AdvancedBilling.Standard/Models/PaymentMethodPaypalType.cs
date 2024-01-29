@@ -13,6 +13,7 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -34,8 +35,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="email">email.</param>
         /// <param name="type">type.</param>
         public PaymentMethodPaypalType(
-            string email = null,
-            string type = "paypal_account")
+            string email,
+            string type)
         {
             this.Email = email;
             this.Type = type;
@@ -44,15 +45,17 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets Email.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("email", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("email")]
+        [JsonRequired]
         public string Email { get; set; }
 
         /// <summary>
         /// Gets or sets Type.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonProperty("type")]
+        [JsonRequired]
         public string Type { get; set; }
 
         /// <inheritdoc/>

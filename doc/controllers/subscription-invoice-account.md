@@ -10,12 +10,47 @@ SubscriptionInvoiceAccountController subscriptionInvoiceAccountController = clie
 
 ## Methods
 
-* [Create Prepayment](../../doc/controllers/subscription-invoice-account.md#create-prepayment)
 * [Read Account Balances](../../doc/controllers/subscription-invoice-account.md#read-account-balances)
+* [Create Prepayment](../../doc/controllers/subscription-invoice-account.md#create-prepayment)
 * [List Prepayments](../../doc/controllers/subscription-invoice-account.md#list-prepayments)
 * [Issue Service Credit](../../doc/controllers/subscription-invoice-account.md#issue-service-credit)
 * [Deduct Service Credit](../../doc/controllers/subscription-invoice-account.md#deduct-service-credit)
 * [Refund Prepayment](../../doc/controllers/subscription-invoice-account.md#refund-prepayment)
+
+
+# Read Account Balances
+
+Returns the `balance_in_cents` of the Subscription's Pending Discount, Service Credit, and Prepayment accounts, as well as the sum of the Subscription's open, payable invoices.
+
+```csharp
+ReadAccountBalancesAsync(
+    int subscriptionId)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+
+## Response Type
+
+[`Task<Models.AccountBalances>`](../../doc/models/account-balances.md)
+
+## Example Usage
+
+```csharp
+int subscriptionId = 222;
+try
+{
+    AccountBalances result = await subscriptionInvoiceAccountController.ReadAccountBalancesAsync(subscriptionId);
+}
+catch (ApiException e)
+{
+    // TODO: Handle exception here
+    Console.WriteLine(e.Message);
+}
+```
 
 
 # Create Prepayment
@@ -87,41 +122,6 @@ catch (ApiException e)
     "starting_balance_in_cents": 0,
     "ending_balance_in_cents": -10000
   }
-}
-```
-
-
-# Read Account Balances
-
-Returns the `balance_in_cents` of the Subscription's Pending Discount, Service Credit, and Prepayment accounts, as well as the sum of the Subscription's open, payable invoices.
-
-```csharp
-ReadAccountBalancesAsync(
-    int subscriptionId)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-
-## Response Type
-
-[`Task<Models.AccountBalances>`](../../doc/models/account-balances.md)
-
-## Example Usage
-
-```csharp
-int subscriptionId = 222;
-try
-{
-    AccountBalances result = await subscriptionInvoiceAccountController.ReadAccountBalancesAsync(subscriptionId);
-}
-catch (ApiException e)
-{
-    // TODO: Handle exception here
-    Console.WriteLine(e.Message);
 }
 ```
 

@@ -13,6 +13,7 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
+    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -95,7 +96,7 @@ namespace AdvancedBilling.Standard.Models
             string billingCountry = null,
             string customerVaultToken = null,
             string billingAddress2 = null,
-            Models.PaymentType? paymentType = Models.PaymentType.CreditCard,
+            Models.PaymentType? paymentType = null,
             bool? disabled = null,
             string chargifyToken = null,
             int? siteGatewaySettingId = null,

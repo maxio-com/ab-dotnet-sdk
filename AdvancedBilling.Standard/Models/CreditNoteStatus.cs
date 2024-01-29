@@ -1,4 +1,4 @@
-// <copyright file="PaymentCollectionMethod.cs" company="APIMatic">
+// <copyright file="CreditNoteStatus.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
 namespace AdvancedBilling.Standard.Models
@@ -13,34 +13,22 @@ namespace AdvancedBilling.Standard.Models
     using Newtonsoft.Json;
 
     /// <summary>
-    /// PaymentCollectionMethod.
+    /// CreditNoteStatus.
     /// </summary>
 
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum PaymentCollectionMethod
+    public enum CreditNoteStatus
     {
         /// <summary>
-        /// Automatic.
+        /// Open.
         /// </summary>
-        [EnumMember(Value = "automatic")]
-        Automatic,
+        [EnumMember(Value = "open")]
+        Open,
 
         /// <summary>
-        /// Remittance.
+        /// Applied.
         /// </summary>
-        [EnumMember(Value = "remittance")]
-        Remittance,
-
-        /// <summary>
-        /// Prepaid.
-        /// </summary>
-        [EnumMember(Value = "prepaid")]
-        Prepaid,
-
-        /// <summary>
-        /// Invoice.
-        /// </summary>
-        [EnumMember(Value = "invoice")]
-        Invoice
+        [EnumMember(Value = "applied")]
+        Applied
     }
 }
