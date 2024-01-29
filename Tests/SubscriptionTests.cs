@@ -39,7 +39,7 @@ namespace AdvancedBillingTests
             {
                 CustomerId = customerResponse.Customer.Id,
                 ProductId = productResponse.Product.Id,
-                PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
+                PaymentCollectionMethod = CollectionMethod.Automatic,
                 PaymentProfileId = paymentProfileId,
                 DunningCommunicationDelayEnabled = false,
                 SkipBillingManifestTaxes = false
@@ -102,7 +102,7 @@ namespace AdvancedBillingTests
             {
                 CustomerId = customer.Customer.Id,
                 ProductId = product.Product.Id,
-                PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
+                PaymentCollectionMethod = CollectionMethod.Automatic,
                 PaymentProfileId = paymentProfileId,
                 DunningCommunicationDelayEnabled = false,
                 SkipBillingManifestTaxes = false,
@@ -145,7 +145,7 @@ namespace AdvancedBillingTests
             {
                 CustomerId = _fixture.Create<int>(),
                 ProductId = _fixture.Create<int>(),
-                PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
+                PaymentCollectionMethod = CollectionMethod.Automatic,
                 PaymentProfileId = _fixture.Create<int>(),
                 DunningCommunicationDelayEnabled = false,
                 SkipBillingManifestTaxes = false,
@@ -221,7 +221,7 @@ namespace AdvancedBillingTests
             {
                 CustomerId = customer.Customer.Id,
                 ProductId = product.Product.Id,
-                PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
+                PaymentCollectionMethod = CollectionMethod.Automatic,
                 PaymentProfileId = paymentProfileId,
                 DunningCommunicationDelayEnabled = false,
                 SkipBillingManifestTaxes = false,
@@ -282,7 +282,7 @@ namespace AdvancedBillingTests
             {
                 CustomerId = customerResponse.Customer.Id,
                 ProductId = productResponse.Product.Id,
-                PaymentCollectionMethod = PaymentCollectionMethod.Automatic,
+                PaymentCollectionMethod = CollectionMethod.Automatic,
                 PaymentProfileId = paymentProfileId,
                 DunningCommunicationDelayEnabled = false,
                 SkipBillingManifestTaxes = false
@@ -298,7 +298,7 @@ namespace AdvancedBillingTests
             subscription.Subscription.Id.Should().Be(subscriptionResponse.Subscription.Id);
             subscription.Subscription.Product.Id.Should().Be(productResponse.Product.Id);
             subscription.Subscription.Customer.Id.Should().Be(customerResponse.Customer.Id);
-            subscription.Subscription.PaymentCollectionMethod.Should().Be(PaymentCollectionMethod.Automatic);
+            subscription.Subscription.PaymentCollectionMethod.Should().Be(CollectionMethod.Automatic);
 
             await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfileId, productResponse, _client);
         }
