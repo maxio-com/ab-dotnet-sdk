@@ -32,21 +32,36 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="InvoiceCustomField"/> class.
         /// </summary>
-        /// <param name="name">name.</param>
-        /// <param name="mValue">value.</param>
         /// <param name="ownerId">owner_id.</param>
         /// <param name="ownerType">owner_type.</param>
+        /// <param name="name">name.</param>
+        /// <param name="mValue">value.</param>
+        /// <param name="metadatumId">metadatum_id.</param>
         public InvoiceCustomField(
+            int? ownerId = null,
+            Models.CustomFieldOwner? ownerType = null,
             string name = null,
             string mValue = null,
-            int? ownerId = null,
-            string ownerType = null)
+            int? metadatumId = null)
         {
-            this.Name = name;
-            this.MValue = mValue;
             this.OwnerId = ownerId;
             this.OwnerType = ownerType;
+            this.Name = name;
+            this.MValue = mValue;
+            this.MetadatumId = metadatumId;
         }
+
+        /// <summary>
+        /// Gets or sets OwnerId.
+        /// </summary>
+        [JsonProperty("owner_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? OwnerId { get; set; }
+
+        /// <summary>
+        /// Gets or sets OwnerType.
+        /// </summary>
+        [JsonProperty("owner_type", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.CustomFieldOwner? OwnerType { get; set; }
 
         /// <summary>
         /// Gets or sets Name.
@@ -61,16 +76,10 @@ namespace AdvancedBilling.Standard.Models
         public string MValue { get; set; }
 
         /// <summary>
-        /// Gets or sets OwnerId.
+        /// Gets or sets MetadatumId.
         /// </summary>
-        [JsonProperty("owner_id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? OwnerId { get; set; }
-
-        /// <summary>
-        /// Gets or sets OwnerType.
-        /// </summary>
-        [JsonProperty("owner_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string OwnerType { get; set; }
+        [JsonProperty("metadatum_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? MetadatumId { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -94,10 +103,11 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is InvoiceCustomField other &&                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
+            return obj is InvoiceCustomField other &&                ((this.OwnerId == null && other.OwnerId == null) || (this.OwnerId?.Equals(other.OwnerId) == true)) &&
+                ((this.OwnerType == null && other.OwnerType == null) || (this.OwnerType?.Equals(other.OwnerType) == true)) &&
+                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
                 ((this.MValue == null && other.MValue == null) || (this.MValue?.Equals(other.MValue) == true)) &&
-                ((this.OwnerId == null && other.OwnerId == null) || (this.OwnerId?.Equals(other.OwnerId) == true)) &&
-                ((this.OwnerType == null && other.OwnerType == null) || (this.OwnerType?.Equals(other.OwnerType) == true));
+                ((this.MetadatumId == null && other.MetadatumId == null) || (this.MetadatumId?.Equals(other.MetadatumId) == true));
         }
         
         /// <summary>
@@ -106,10 +116,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected void ToString(List<string> toStringOutput)
         {
+            toStringOutput.Add($"this.OwnerId = {(this.OwnerId == null ? "null" : this.OwnerId.ToString())}");
+            toStringOutput.Add($"this.OwnerType = {(this.OwnerType == null ? "null" : this.OwnerType.ToString())}");
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
             toStringOutput.Add($"this.MValue = {(this.MValue == null ? "null" : this.MValue)}");
-            toStringOutput.Add($"this.OwnerId = {(this.OwnerId == null ? "null" : this.OwnerId.ToString())}");
-            toStringOutput.Add($"this.OwnerType = {(this.OwnerType == null ? "null" : this.OwnerType)}");
+            toStringOutput.Add($"this.MetadatumId = {(this.MetadatumId == null ? "null" : this.MetadatumId.ToString())}");
         }
     }
 }

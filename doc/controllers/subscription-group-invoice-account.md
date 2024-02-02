@@ -12,8 +12,8 @@ SubscriptionGroupInvoiceAccountController subscriptionGroupInvoiceAccountControl
 
 * [Create Subscription Group Prepayment](../../doc/controllers/subscription-group-invoice-account.md#create-subscription-group-prepayment)
 * [List Prepayments for Subscription Group](../../doc/controllers/subscription-group-invoice-account.md#list-prepayments-for-subscription-group)
-* [Issue Subscription Group Service Credits](../../doc/controllers/subscription-group-invoice-account.md#issue-subscription-group-service-credits)
-* [Deduct Subscription Group Service Credits](../../doc/controllers/subscription-group-invoice-account.md#deduct-subscription-group-service-credits)
+* [Issue Subscription Group Service Credit](../../doc/controllers/subscription-group-invoice-account.md#issue-subscription-group-service-credit)
+* [Deduct Subscription Group Service Credit](../../doc/controllers/subscription-group-invoice-account.md#deduct-subscription-group-service-credit)
 
 
 # Create Subscription Group Prepayment
@@ -145,12 +145,12 @@ catch (ApiException e)
 | 404 | Not Found | `ApiException` |
 
 
-# Issue Subscription Group Service Credits
+# Issue Subscription Group Service Credit
 
 Credit can be issued for a subscription group identified by the group's `uid`. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
 
 ```csharp
-IssueSubscriptionGroupServiceCreditsAsync(
+IssueSubscriptionGroupServiceCreditAsync(
     string uid,
     Models.IssueServiceCreditRequest body = null)
 ```
@@ -181,7 +181,7 @@ IssueServiceCreditRequest body = new IssueServiceCreditRequest
 
 try
 {
-    ServiceCreditResponse result = await subscriptionGroupInvoiceAccountController.IssueSubscriptionGroupServiceCreditsAsync(
+    ServiceCreditResponse result = await subscriptionGroupInvoiceAccountController.IssueSubscriptionGroupServiceCreditAsync(
         uid,
         body
     );
@@ -214,12 +214,12 @@ catch (ApiException e)
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
-# Deduct Subscription Group Service Credits
+# Deduct Subscription Group Service Credit
 
 Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
 
 ```csharp
-DeductSubscriptionGroupServiceCreditsAsync(
+DeductSubscriptionGroupServiceCreditAsync(
     string uid,
     Models.DeductServiceCreditRequest body = null)
 ```
@@ -250,7 +250,7 @@ DeductServiceCreditRequest body = new DeductServiceCreditRequest
 
 try
 {
-    ServiceCredit result = await subscriptionGroupInvoiceAccountController.DeductSubscriptionGroupServiceCreditsAsync(
+    ServiceCredit result = await subscriptionGroupInvoiceAccountController.DeductSubscriptionGroupServiceCreditAsync(
         uid,
         body
     );

@@ -248,9 +248,9 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="handle">Required parameter: The handle of the component to find.</param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
-        public Models.ComponentResponse ReadComponentByHandle(
+        public Models.ComponentResponse FindComponent(
                 string handle)
-            => CoreHelper.RunTask(ReadComponentByHandleAsync(handle));
+            => CoreHelper.RunTask(FindComponentAsync(handle));
 
         /// <summary>
         /// This request will return information regarding a component having the handle you provide. You can identify your components with a handle so you don't have to save or reference the IDs we generate.
@@ -258,7 +258,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="handle">Required parameter: The handle of the component to find.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
-        public async Task<Models.ComponentResponse> ReadComponentByHandleAsync(
+        public async Task<Models.ComponentResponse> FindComponentAsync(
                 string handle,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ComponentResponse>()
@@ -276,10 +276,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="productFamilyId">Required parameter: The Chargify id of the product family to which the component belongs.</param>
         /// <param name="componentId">Required parameter: Either the Chargify id of the component or the handle for the component prefixed with `handle:`.</param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
-        public Models.ComponentResponse ReadComponentById(
+        public Models.ComponentResponse ReadComponent(
                 int productFamilyId,
                 string componentId)
-            => CoreHelper.RunTask(ReadComponentByIdAsync(productFamilyId, componentId));
+            => CoreHelper.RunTask(ReadComponentAsync(productFamilyId, componentId));
 
         /// <summary>
         /// This request will return information regarding a component from a specific product family.
@@ -289,7 +289,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="componentId">Required parameter: Either the Chargify id of the component or the handle for the component prefixed with `handle:`.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
-        public async Task<Models.ComponentResponse> ReadComponentByIdAsync(
+        public async Task<Models.ComponentResponse> ReadComponentAsync(
                 int productFamilyId,
                 string componentId,
                 CancellationToken cancellationToken = default)
@@ -455,10 +455,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="componentId">Required parameter: The Chargify id of the component to which the price point belongs.</param>
         /// <param name="pricePointId">Required parameter: The Chargify id of the price point.</param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
-        public Models.ComponentResponse UpdateDefaultPricePointForComponent(
+        public Models.ComponentResponse PromoteComponentPricePointToDefault(
                 int componentId,
                 int pricePointId)
-            => CoreHelper.RunTask(UpdateDefaultPricePointForComponentAsync(componentId, pricePointId));
+            => CoreHelper.RunTask(PromoteComponentPricePointToDefaultAsync(componentId, pricePointId));
 
         /// <summary>
         /// Sets a new default price point for the component. This new default will apply to all new subscriptions going forward - existing subscriptions will remain on their current price point.
@@ -469,7 +469,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="pricePointId">Required parameter: The Chargify id of the price point.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
-        public async Task<Models.ComponentResponse> UpdateDefaultPricePointForComponentAsync(
+        public async Task<Models.ComponentResponse> PromoteComponentPricePointToDefaultAsync(
                 int componentId,
                 int pricePointId,
                 CancellationToken cancellationToken = default)
@@ -592,10 +592,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="componentId">Required parameter: The Chargify id of the component for which you want to fetch price points..</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.ComponentPricePointsResponse response from the API call.</returns>
-        public Models.ComponentPricePointsResponse CreateComponentPricePoints(
+        public Models.ComponentPricePointsResponse BulkCreateComponentPricePoints(
                 string componentId,
                 Models.CreateComponentPricePointsRequest body = null)
-            => CoreHelper.RunTask(CreateComponentPricePointsAsync(componentId, body));
+            => CoreHelper.RunTask(BulkCreateComponentPricePointsAsync(componentId, body));
 
         /// <summary>
         /// Use this endpoint to create multiple component price points in one request.
@@ -604,7 +604,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentPricePointsResponse response from the API call.</returns>
-        public async Task<Models.ComponentPricePointsResponse> CreateComponentPricePointsAsync(
+        public async Task<Models.ComponentPricePointsResponse> BulkCreateComponentPricePointsAsync(
                 string componentId,
                 Models.CreateComponentPricePointsRequest body = null,
                 CancellationToken cancellationToken = default)

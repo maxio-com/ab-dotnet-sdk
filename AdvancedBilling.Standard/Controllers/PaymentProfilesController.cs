@@ -769,10 +769,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
         /// <returns>Returns the Models.PaymentProfileResponse response from the API call.</returns>
-        public Models.PaymentProfileResponse UpdateSubscriptionDefaultPaymentProfile(
+        public Models.PaymentProfileResponse ChangeSubscriptionDefaultPaymentProfile(
                 int subscriptionId,
                 int paymentProfileId)
-            => CoreHelper.RunTask(UpdateSubscriptionDefaultPaymentProfileAsync(subscriptionId, paymentProfileId));
+            => CoreHelper.RunTask(ChangeSubscriptionDefaultPaymentProfileAsync(subscriptionId, paymentProfileId));
 
         /// <summary>
         /// This will change the default payment profile on the subscription to the existing payment profile with the id specified.
@@ -782,7 +782,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.PaymentProfileResponse response from the API call.</returns>
-        public async Task<Models.PaymentProfileResponse> UpdateSubscriptionDefaultPaymentProfileAsync(
+        public async Task<Models.PaymentProfileResponse> ChangeSubscriptionDefaultPaymentProfileAsync(
                 int subscriptionId,
                 int paymentProfileId,
                 CancellationToken cancellationToken = default)
@@ -806,10 +806,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
         /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
         /// <returns>Returns the Models.PaymentProfileResponse response from the API call.</returns>
-        public Models.PaymentProfileResponse UpdateSubscriptionGroupDefaultPaymentProfile(
+        public Models.PaymentProfileResponse ChangeSubscriptionGroupDefaultPaymentProfile(
                 string uid,
                 int paymentProfileId)
-            => CoreHelper.RunTask(UpdateSubscriptionGroupDefaultPaymentProfileAsync(uid, paymentProfileId));
+            => CoreHelper.RunTask(ChangeSubscriptionGroupDefaultPaymentProfileAsync(uid, paymentProfileId));
 
         /// <summary>
         /// This will change the default payment profile on the subscription group to the existing payment profile with the id specified.
@@ -820,7 +820,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.PaymentProfileResponse response from the API call.</returns>
-        public async Task<Models.PaymentProfileResponse> UpdateSubscriptionGroupDefaultPaymentProfileAsync(
+        public async Task<Models.PaymentProfileResponse> ChangeSubscriptionGroupDefaultPaymentProfileAsync(
                 string uid,
                 int paymentProfileId,
                 CancellationToken cancellationToken = default)

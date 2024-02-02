@@ -103,7 +103,7 @@ namespace AdvancedBilling.Standard.Models
             List<Models.ProformaInvoiceTax> taxes = null,
             List<Models.ProformaInvoiceCredit> credits = null,
             List<Models.ProformaInvoicePayment> payments = null,
-            List<Models.ProformaCustomField> customFields = null,
+            List<Models.InvoiceCustomField> customFields = null,
             string publicUrl = null)
         {
             this.Uid = uid;
@@ -352,7 +352,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets CustomFields.
         /// </summary>
         [JsonProperty("custom_fields", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Models.ProformaCustomField> CustomFields { get; set; }
+        public List<Models.InvoiceCustomField> CustomFields { get; set; }
 
         /// <summary>
         /// Gets or sets PublicUrl.

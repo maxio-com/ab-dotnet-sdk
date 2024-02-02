@@ -12,7 +12,7 @@ OffersController offersController = client.OffersController;
 
 * [Create Offer](../../doc/controllers/offers.md#create-offer)
 * [List Offers](../../doc/controllers/offers.md#list-offers)
-* [Read Offers](../../doc/controllers/offers.md#read-offers)
+* [Read Offer](../../doc/controllers/offers.md#read-offer)
 * [Archive Offer](../../doc/controllers/offers.md#archive-offer)
 * [Unarchive Offer](../../doc/controllers/offers.md#unarchive-offer)
 
@@ -234,12 +234,12 @@ catch (ApiException e)
 ```
 
 
-# Read Offers
+# Read Offer
 
 This method allows you to list a specific offer's attributes. This is different than list all offers for a site, as it requires an `offer_id`.
 
 ```csharp
-ReadOffersAsync(
+ReadOfferAsync(
     int offerId)
 ```
 
@@ -259,7 +259,7 @@ ReadOffersAsync(
 int offerId = 130;
 try
 {
-    OfferResponse result = await offersController.ReadOffersAsync(offerId);
+    OfferResponse result = await offersController.ReadOfferAsync(offerId);
 }
 catch (ApiException e)
 {

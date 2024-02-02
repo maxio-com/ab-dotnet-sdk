@@ -120,10 +120,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.BulkComponentSPricePointAssignment response from the API call.</returns>
-        public Models.BulkComponentSPricePointAssignment UpdateSubscriptionComponentsPricePoints(
+        public Models.BulkComponentSPricePointAssignment BulkUpdateSubscriptionComponentsPricePoints(
                 int subscriptionId,
                 Models.BulkComponentSPricePointAssignment body = null)
-            => CoreHelper.RunTask(UpdateSubscriptionComponentsPricePointsAsync(subscriptionId, body));
+            => CoreHelper.RunTask(BulkUpdateSubscriptionComponentsPricePointsAsync(subscriptionId, body));
 
         /// <summary>
         /// Updates the price points on one or more of a subscription's components.
@@ -136,7 +136,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.BulkComponentSPricePointAssignment response from the API call.</returns>
-        public async Task<Models.BulkComponentSPricePointAssignment> UpdateSubscriptionComponentsPricePointsAsync(
+        public async Task<Models.BulkComponentSPricePointAssignment> BulkUpdateSubscriptionComponentsPricePointsAsync(
                 int subscriptionId,
                 Models.BulkComponentSPricePointAssignment body = null,
                 CancellationToken cancellationToken = default)
@@ -158,9 +158,9 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public Models.SubscriptionResponse ResetSubscriptionComponentsPricePoints(
+        public Models.SubscriptionResponse BulkResetSubscriptionComponentsPricePoints(
                 int subscriptionId)
-            => CoreHelper.RunTask(ResetSubscriptionComponentsPricePointsAsync(subscriptionId));
+            => CoreHelper.RunTask(BulkResetSubscriptionComponentsPricePointsAsync(subscriptionId));
 
         /// <summary>
         /// Resets all of a subscription's components to use the current default.
@@ -169,7 +169,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionResponse> ResetSubscriptionComponentsPricePointsAsync(
+        public async Task<Models.SubscriptionResponse> BulkResetSubscriptionComponentsPricePointsAsync(
                 int subscriptionId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionResponse>()
@@ -440,12 +440,12 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
         /// <param name="allocationId">Required parameter: The Chargify id of the allocation.</param>
         /// <param name="body">Optional parameter: Example: .</param>
-        public void UpdatePrepaidUsageAllocation(
+        public void UpdatePrepaidUsageAllocationExpirationDate(
                 int subscriptionId,
                 int componentId,
                 int allocationId,
                 Models.UpdateAllocationExpirationDate body = null)
-            => CoreHelper.RunVoidTask(UpdatePrepaidUsageAllocationAsync(subscriptionId, componentId, allocationId, body));
+            => CoreHelper.RunVoidTask(UpdatePrepaidUsageAllocationExpirationDateAsync(subscriptionId, componentId, allocationId, body));
 
         /// <summary>
         /// When the expiration interval options are selected on a prepaid usage component price point, all allocations will be created with an expiration date. This expiration date can be changed after the fact to allow for extending or shortening the allocation's active window.
@@ -462,7 +462,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the void response from the API call.</returns>
-        public async Task UpdatePrepaidUsageAllocationAsync(
+        public async Task UpdatePrepaidUsageAllocationExpirationDateAsync(
                 int subscriptionId,
                 int componentId,
                 int allocationId,
@@ -833,12 +833,12 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="apiHandle">Required parameter: Identifies the Stream for which the events should be published..</param>
         /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as a Chargify event data-store, use this parameter to indicate the data-store..</param>
         /// <param name="body">Optional parameter: Example: .</param>
-        public void RecordEvents(
+        public void BulkRecordEvents(
                 string subdomain,
                 string apiHandle,
                 string storeUid = null,
                 List<Models.EBBEvent> body = null)
-            => CoreHelper.RunVoidTask(RecordEventsAsync(subdomain, apiHandle, storeUid, body));
+            => CoreHelper.RunVoidTask(BulkRecordEventsAsync(subdomain, apiHandle, storeUid, body));
 
         /// <summary>
         /// Use this endpoint to record a collection of events.
@@ -851,7 +851,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the void response from the API call.</returns>
-        public async Task RecordEventsAsync(
+        public async Task BulkRecordEventsAsync(
                 string subdomain,
                 string apiHandle,
                 string storeUid = null,

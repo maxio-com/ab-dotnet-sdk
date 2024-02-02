@@ -277,10 +277,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="productId">Required parameter: The Chargify id of the product to which the price points belong.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.BulkCreateProductPricePointsResponse response from the API call.</returns>
-        public Models.BulkCreateProductPricePointsResponse CreateProductPricePoints(
+        public Models.BulkCreateProductPricePointsResponse BulkCreateProductPricePoints(
                 int productId,
                 Models.BulkCreateProductPricePointsRequest body = null)
-            => CoreHelper.RunTask(CreateProductPricePointsAsync(productId, body));
+            => CoreHelper.RunTask(BulkCreateProductPricePointsAsync(productId, body));
 
         /// <summary>
         /// Use this endpoint to create multiple product price points in one request.
@@ -289,7 +289,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.BulkCreateProductPricePointsResponse response from the API call.</returns>
-        public async Task<Models.BulkCreateProductPricePointsResponse> CreateProductPricePointsAsync(
+        public async Task<Models.BulkCreateProductPricePointsResponse> BulkCreateProductPricePointsAsync(
                 int productId,
                 Models.BulkCreateProductPricePointsRequest body = null,
                 CancellationToken cancellationToken = default)

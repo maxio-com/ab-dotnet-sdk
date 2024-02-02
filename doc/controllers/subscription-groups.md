@@ -16,8 +16,8 @@ SubscriptionGroupsController subscriptionGroupsController = client.SubscriptionG
 * [Read Subscription Group](../../doc/controllers/subscription-groups.md#read-subscription-group)
 * [Update Subscription Group Members](../../doc/controllers/subscription-groups.md#update-subscription-group-members)
 * [Delete Subscription Group](../../doc/controllers/subscription-groups.md#delete-subscription-group)
-* [Read Subscription Group by Subscription Id](../../doc/controllers/subscription-groups.md#read-subscription-group-by-subscription-id)
-* [Create Subscription Group Hierarchy](../../doc/controllers/subscription-groups.md#create-subscription-group-hierarchy)
+* [Find Subscription Group](../../doc/controllers/subscription-groups.md#find-subscription-group)
+* [Add Subscription to Group](../../doc/controllers/subscription-groups.md#add-subscription-to-group)
 * [Remove Subscription From Group](../../doc/controllers/subscription-groups.md#remove-subscription-from-group)
 
 
@@ -467,14 +467,14 @@ catch (ApiException e)
 | 404 | Not Found | `ApiException` |
 
 
-# Read Subscription Group by Subscription Id
+# Find Subscription Group
 
 Use this endpoint to find subscription group associated with subscription.
 
 If the subscription is not in a group endpoint will return 404 code.
 
 ```csharp
-ReadSubscriptionGroupBySubscriptionIdAsync(
+FindSubscriptionGroupAsync(
     string subscriptionId)
 ```
 
@@ -494,7 +494,7 @@ ReadSubscriptionGroupBySubscriptionIdAsync(
 string subscriptionId = "subscription_id0";
 try
 {
-    FullSubscriptionGroupResponse result = await subscriptionGroupsController.ReadSubscriptionGroupBySubscriptionIdAsync(subscriptionId);
+    FullSubscriptionGroupResponse result = await subscriptionGroupsController.FindSubscriptionGroupAsync(subscriptionId);
 }
 catch (ApiException e)
 {
@@ -551,7 +551,7 @@ catch (ApiException e)
 | 404 | Not Found | `ApiException` |
 
 
-# Create Subscription Group Hierarchy
+# Add Subscription to Group
 
 For sites making use of the [Relationship Billing](https://chargify.zendesk.com/hc/en-us/articles/4407737494171) and [Customer Hierarchy](https://chargify.zendesk.com/hc/en-us/articles/4407746683291) features, it is possible to add existing subscriptions to subscription groups.
 
@@ -569,7 +569,7 @@ To create a new subscription into a subscription group, please reference the fol
 [Create Subscription in a Subscription Group](https://developers.chargify.com/docs/api-docs/d571659cf0f24-create-subscription#subscription-in-a-subscription-group)
 
 ```csharp
-CreateSubscriptionGroupHierarchyAsync(
+AddSubscriptionToGroupAsync(
     int subscriptionId,
     Models.AddSubscriptionToAGroup body = null)
 ```
@@ -611,7 +611,7 @@ AddSubscriptionToAGroup body = new AddSubscriptionToAGroup
 
 try
 {
-    SubscriptionGroupResponse result = await subscriptionGroupsController.CreateSubscriptionGroupHierarchyAsync(
+    SubscriptionGroupResponse result = await subscriptionGroupsController.AddSubscriptionToGroupAsync(
         subscriptionId,
         body
     );

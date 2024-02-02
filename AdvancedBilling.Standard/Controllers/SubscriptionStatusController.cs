@@ -488,9 +488,9 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <returns>Returns the Models.DelayedCancellationResponse response from the API call.</returns>
-        public Models.DelayedCancellationResponse StopDelayedCancellation(
+        public Models.DelayedCancellationResponse CancelDelayedCancellation(
                 int subscriptionId)
-            => CoreHelper.RunTask(StopDelayedCancellationAsync(subscriptionId));
+            => CoreHelper.RunTask(CancelDelayedCancellationAsync(subscriptionId));
 
         /// <summary>
         /// Removing the delayed cancellation on a subscription will ensure that it doesn't get canceled at the end of the period that it is in. The request will reset the `cancel_at_end_of_period` flag to `false`.
@@ -499,7 +499,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.DelayedCancellationResponse response from the API call.</returns>
-        public async Task<Models.DelayedCancellationResponse> StopDelayedCancellationAsync(
+        public async Task<Models.DelayedCancellationResponse> CancelDelayedCancellationAsync(
                 int subscriptionId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.DelayedCancellationResponse>()

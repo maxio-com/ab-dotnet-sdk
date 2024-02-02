@@ -15,12 +15,12 @@ SubscriptionsController subscriptionsController = client.SubscriptionsController
 * [Update Subscription](../../doc/controllers/subscriptions.md#update-subscription)
 * [Read Subscription](../../doc/controllers/subscriptions.md#read-subscription)
 * [Override Subscription](../../doc/controllers/subscriptions.md#override-subscription)
-* [Read Subscription by Reference](../../doc/controllers/subscriptions.md#read-subscription-by-reference)
+* [Find Subscription](../../doc/controllers/subscriptions.md#find-subscription)
 * [Purge Subscription](../../doc/controllers/subscriptions.md#purge-subscription)
-* [Create Prepaid Subscription](../../doc/controllers/subscriptions.md#create-prepaid-subscription)
+* [Update Prepaid Subscription Configuration](../../doc/controllers/subscriptions.md#update-prepaid-subscription-configuration)
 * [Preview Subscription](../../doc/controllers/subscriptions.md#preview-subscription)
-* [Apply Coupon to Subscription](../../doc/controllers/subscriptions.md#apply-coupon-to-subscription)
-* [Delete Coupon From Subscription](../../doc/controllers/subscriptions.md#delete-coupon-from-subscription)
+* [Apply Coupons to Subscription](../../doc/controllers/subscriptions.md#apply-coupons-to-subscription)
+* [Remove Coupon From Subscription](../../doc/controllers/subscriptions.md#remove-coupon-from-subscription)
 * [Activate Subscription](../../doc/controllers/subscriptions.md#activate-subscription)
 
 
@@ -1392,12 +1392,12 @@ catch (ApiException e)
 | 422 | Unprocessable Entity (WebDAV) | [`SingleErrorResponseException`](../../doc/models/single-error-response-exception.md) |
 
 
-# Read Subscription by Reference
+# Find Subscription
 
 Use this endpoint to find a subscription by its reference.
 
 ```csharp
-ReadSubscriptionByReferenceAsync(
+FindSubscriptionAsync(
     string reference = null)
 ```
 
@@ -1416,7 +1416,7 @@ ReadSubscriptionByReferenceAsync(
 ```csharp
 try
 {
-    SubscriptionResponse result = await subscriptionsController.ReadSubscriptionByReferenceAsync();
+    SubscriptionResponse result = await subscriptionsController.FindSubscriptionAsync();
 }
 catch (ApiException e)
 {
@@ -1477,12 +1477,12 @@ catch (ApiException e)
 ```
 
 
-# Create Prepaid Subscription
+# Update Prepaid Subscription Configuration
 
 Use this endpoint to update a subscription's prepaid configuration.
 
 ```csharp
-CreatePrepaidSubscriptionAsync(
+UpdatePrepaidSubscriptionConfigurationAsync(
     int subscriptionId,
     Models.UpsertPrepaidConfigurationRequest body = null)
 ```
@@ -1515,7 +1515,7 @@ UpsertPrepaidConfigurationRequest body = new UpsertPrepaidConfigurationRequest
 
 try
 {
-    PrepaidConfigurationResponse result = await subscriptionsController.CreatePrepaidSubscriptionAsync(
+    PrepaidConfigurationResponse result = await subscriptionsController.UpdatePrepaidSubscriptionConfigurationAsync(
         subscriptionId,
         body
     );
@@ -1728,7 +1728,7 @@ catch (ApiException e)
 ```
 
 
-# Apply Coupon to Subscription
+# Apply Coupons to Subscription
 
 An existing subscription can accommodate multiple discounts/coupon codes. This is only applicable if each coupon is stackable. For more information on stackable coupons, we recommend reviewing our [coupon documentation.](https://chargify.zendesk.com/hc/en-us/articles/4407755909531#stackable-coupons)
 
@@ -1739,7 +1739,7 @@ Passing in a coupon code as a query parameter will add the code to the subscript
 For this reason, using this query parameter on this endpoint has been deprecated in favor of using the request body parameters as described below. When passing in request body parameters, the list of coupon codes will simply be added to any existing list of codes on the subscription.
 
 ```csharp
-ApplyCouponToSubscriptionAsync(
+ApplyCouponsToSubscriptionAsync(
     int subscriptionId,
     string code = null,
     Models.AddCouponsRequest body = null)
@@ -1772,7 +1772,7 @@ AddCouponsRequest body = new AddCouponsRequest
 
 try
 {
-    SubscriptionResponse result = await subscriptionsController.ApplyCouponToSubscriptionAsync(
+    SubscriptionResponse result = await subscriptionsController.ApplyCouponsToSubscriptionAsync(
         subscriptionId,
         null,
         body
@@ -1942,14 +1942,14 @@ catch (ApiException e)
 | 422 | Unprocessable Entity (WebDAV) | [`SubscriptionAddCouponErrorException`](../../doc/models/subscription-add-coupon-error-exception.md) |
 
 
-# Delete Coupon From Subscription
+# Remove Coupon From Subscription
 
 Use this endpoint to remove a coupon from an existing subscription.
 
 For more information on the expected behaviour of removing a coupon from a subscription, please see our documentation [here.](https://chargify.zendesk.com/hc/en-us/articles/4407896488987#removing-a-coupon)
 
 ```csharp
-DeleteCouponFromSubscriptionAsync(
+RemoveCouponFromSubscriptionAsync(
     int subscriptionId,
     string couponCode = null)
 ```
@@ -1971,7 +1971,7 @@ DeleteCouponFromSubscriptionAsync(
 int subscriptionId = 222;
 try
 {
-    string result = await subscriptionsController.DeleteCouponFromSubscriptionAsync(subscriptionId);
+    string result = await subscriptionsController.RemoveCouponFromSubscriptionAsync(subscriptionId);
 }
 catch (ApiException e)
 {

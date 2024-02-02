@@ -102,9 +102,9 @@ namespace AdvancedBilling.Standard.Controllers
         /// Removing the delayed cancellation on a subscription group will ensure that the subscriptions do not get canceled at the end of the period. The request will reset the `cancel_at_end_of_period` flag to false on each member in the group.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        public void StopDelayedCancellationForGroup(
+        public void CancelDelayedCancellationForGroup(
                 string uid)
-            => CoreHelper.RunVoidTask(StopDelayedCancellationForGroupAsync(uid));
+            => CoreHelper.RunVoidTask(CancelDelayedCancellationForGroupAsync(uid));
 
         /// <summary>
         /// Removing the delayed cancellation on a subscription group will ensure that the subscriptions do not get canceled at the end of the period. The request will reset the `cancel_at_end_of_period` flag to false on each member in the group.
@@ -112,7 +112,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the void response from the API call.</returns>
-        public async Task StopDelayedCancellationForGroupAsync(
+        public async Task CancelDelayedCancellationForGroupAsync(
                 string uid,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()

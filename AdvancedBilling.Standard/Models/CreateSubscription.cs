@@ -103,7 +103,7 @@ namespace AdvancedBilling.Standard.Models
             string netTerms = null,
             int? customerId = null,
             DateTimeOffset? nextBillingAt = null,
-            string initialBillingAt = null,
+            DateTimeOffset? initialBillingAt = null,
             int? storedCredentialTransactionId = null,
             int? salesRepId = null,
             int? paymentProfileId = null,
@@ -272,8 +272,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// (Optional) Set this attribute to a future date/time to create a subscription in the "Awaiting Signup" state, rather than "Active" or "Trialing". See the notes on “Date/Time Format” in our [subscription import documentation](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404863655821#date-format). In the "Awaiting Signup" state, a subscription behaves like any other. It can be canceled, allocated to, had its billing date changed. etc. When the initial_billing_at date hits, the subscription will transition to the expected state. If the product has a trial, the subscription will enter a trial, otherwise it will go active. Setup fees will be respected either before or after the trial, as configured on the price point. If the payment is due at the initial_billing_at and it fails the subscription will be immediately canceled. See further notes in the section on Delayed Signups.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("initial_billing_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string InitialBillingAt { get; set; }
+        public DateTimeOffset? InitialBillingAt { get; set; }
 
         /// <summary>
         /// For European sites subject to PSD2 and using 3D Secure, this can be used to reference a previous transaction for the customer. This will ensure the card will be charged successfully at renewal.
@@ -643,7 +644,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.NetTerms = {(this.NetTerms == null ? "null" : this.NetTerms)}");
             toStringOutput.Add($"this.CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
             toStringOutput.Add($"this.NextBillingAt = {(this.NextBillingAt == null ? "null" : this.NextBillingAt.ToString())}");
-            toStringOutput.Add($"this.InitialBillingAt = {(this.InitialBillingAt == null ? "null" : this.InitialBillingAt)}");
+            toStringOutput.Add($"this.InitialBillingAt = {(this.InitialBillingAt == null ? "null" : this.InitialBillingAt.ToString())}");
             toStringOutput.Add($"this.StoredCredentialTransactionId = {(this.StoredCredentialTransactionId == null ? "null" : this.StoredCredentialTransactionId.ToString())}");
             toStringOutput.Add($"this.SalesRepId = {(this.SalesRepId == null ? "null" : this.SalesRepId.ToString())}");
             toStringOutput.Add($"this.PaymentProfileId = {(this.PaymentProfileId == null ? "null" : this.PaymentProfileId.ToString())}");
