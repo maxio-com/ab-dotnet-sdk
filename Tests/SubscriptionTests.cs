@@ -17,6 +17,7 @@ namespace AdvancedBillingTests
         public async Task CreateSubscription_WithDummyData_ShouldFailWithAnyErrorMessage()
         {
             var subscription = _fixture.Create<CreateSubscription>();
+            subscription.CancellationMethod = null;
             var subscriptionRequest = new CreateSubscriptionRequest(subscription);
 
             await _client.Invoking(s => s.SubscriptionsController.CreateSubscriptionAsync(subscriptionRequest)).Should()
@@ -113,7 +114,7 @@ namespace AdvancedBillingTests
                         quantity: 10)
                 },
                 CouponCode = wrongCouponCode,
-                InitialBillingAt = initialBillingDate.ToString("yyyy-MM-dd")
+                InitialBillingAt = initialBillingDate
             };
 
             await _client.Invoking(c => c.SubscriptionsController.CreateSubscriptionAsync(
@@ -156,7 +157,7 @@ namespace AdvancedBillingTests
                         quantity: 10)
                 },
                 CouponCode = _fixture.Create<string>(),
-                InitialBillingAt = _fixture.Create<DateTime>().ToString("yyyy-MM-dd")
+                InitialBillingAt = _fixture.Create<DateTime>()
             };
 
             await invalidClient.Invoking(c => c.SubscriptionsController.CreateSubscriptionAsync(
@@ -232,7 +233,7 @@ namespace AdvancedBillingTests
                         quantity: 10)
                 },
                 CouponCode = couponCode,
-                InitialBillingAt = initialBillingDate.ToString("yyyy-MM-dd")
+                InitialBillingAt = initialBillingDate
             };
             var subscriptionResponse =
                 await _client.SubscriptionsController.CreateSubscriptionAsync(
