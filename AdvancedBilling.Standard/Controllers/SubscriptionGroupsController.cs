@@ -234,9 +234,9 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription associated with the subscription group.</param>
         /// <returns>Returns the Models.FullSubscriptionGroupResponse response from the API call.</returns>
-        public Models.FullSubscriptionGroupResponse ReadSubscriptionGroupBySubscriptionId(
+        public Models.FullSubscriptionGroupResponse FindSubscriptionGroup(
                 string subscriptionId)
-            => CoreHelper.RunTask(ReadSubscriptionGroupBySubscriptionIdAsync(subscriptionId));
+            => CoreHelper.RunTask(FindSubscriptionGroupAsync(subscriptionId));
 
         /// <summary>
         /// Use this endpoint to find subscription group associated with subscription.
@@ -245,7 +245,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription associated with the subscription group.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.FullSubscriptionGroupResponse response from the API call.</returns>
-        public async Task<Models.FullSubscriptionGroupResponse> ReadSubscriptionGroupBySubscriptionIdAsync(
+        public async Task<Models.FullSubscriptionGroupResponse> FindSubscriptionGroupAsync(
                 string subscriptionId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.FullSubscriptionGroupResponse>()
@@ -272,10 +272,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.SubscriptionGroupResponse response from the API call.</returns>
-        public Models.SubscriptionGroupResponse CreateSubscriptionGroupHierarchy(
+        public Models.SubscriptionGroupResponse AddSubscriptionToGroup(
                 int subscriptionId,
                 Models.AddSubscriptionToAGroup body = null)
-            => CoreHelper.RunTask(CreateSubscriptionGroupHierarchyAsync(subscriptionId, body));
+            => CoreHelper.RunTask(AddSubscriptionToGroupAsync(subscriptionId, body));
 
         /// <summary>
         /// For sites making use of the [Relationship Billing](https://chargify.zendesk.com/hc/en-us/articles/4407737494171) and [Customer Hierarchy](https://chargify.zendesk.com/hc/en-us/articles/4407746683291) features, it is possible to add existing subscriptions to subscription groups.
@@ -292,7 +292,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionGroupResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionGroupResponse> CreateSubscriptionGroupHierarchyAsync(
+        public async Task<Models.SubscriptionGroupResponse> AddSubscriptionToGroupAsync(
                 int subscriptionId,
                 Models.AddSubscriptionToAGroup body = null,
                 CancellationToken cancellationToken = default)

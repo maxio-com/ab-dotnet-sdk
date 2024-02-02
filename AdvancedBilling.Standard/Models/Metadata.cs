@@ -22,10 +22,18 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class Metadata
     {
+        private int? id;
+        private string mValue;
+        private int? resourceId;
         private string deletedAt;
+        private int? metafieldId;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
+            { "id", false },
+            { "value", false },
+            { "resource_id", false },
             { "deleted_at", false },
+            { "metafield_id", false },
         };
 
         /// <summary>
@@ -52,35 +60,87 @@ namespace AdvancedBilling.Standard.Models
             string deletedAt = null,
             int? metafieldId = null)
         {
-            this.Id = id;
-            this.MValue = mValue;
-            this.ResourceId = resourceId;
+            if (id != null)
+            {
+                this.Id = id;
+            }
+
+            if (mValue != null)
+            {
+                this.MValue = mValue;
+            }
+
+            if (resourceId != null)
+            {
+                this.ResourceId = resourceId;
+            }
+
             this.Name = name;
             if (deletedAt != null)
             {
                 this.DeletedAt = deletedAt;
             }
 
-            this.MetafieldId = metafieldId;
+            if (metafieldId != null)
+            {
+                this.MetafieldId = metafieldId;
+            }
+
         }
 
         /// <summary>
         /// Gets or sets Id.
         /// </summary>
-        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? Id { get; set; }
+        [JsonProperty("id")]
+        public int? Id
+        {
+            get
+            {
+                return this.id;
+            }
+
+            set
+            {
+                this.shouldSerialize["id"] = true;
+                this.id = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets MValue.
         /// </summary>
-        [JsonProperty("value", NullValueHandling = NullValueHandling.Ignore)]
-        public string MValue { get; set; }
+        [JsonProperty("value")]
+        public string MValue
+        {
+            get
+            {
+                return this.mValue;
+            }
+
+            set
+            {
+                this.shouldSerialize["value"] = true;
+                this.mValue = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets ResourceId.
         /// </summary>
-        [JsonProperty("resource_id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? ResourceId { get; set; }
+        [JsonProperty("resource_id")]
+        public int? ResourceId
+        {
+            get
+            {
+                return this.resourceId;
+            }
+
+            set
+            {
+                this.shouldSerialize["resource_id"] = true;
+                this.resourceId = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets Name.
@@ -109,8 +169,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets MetafieldId.
         /// </summary>
-        [JsonProperty("metafield_id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? MetafieldId { get; set; }
+        [JsonProperty("metafield_id")]
+        public int? MetafieldId
+        {
+            get
+            {
+                return this.metafieldId;
+            }
+
+            set
+            {
+                this.shouldSerialize["metafield_id"] = true;
+                this.metafieldId = value;
+            }
+        }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -125,9 +197,68 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serailized.
         /// </summary>
+        public void UnsetId()
+        {
+            this.shouldSerialize["id"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetMValue()
+        {
+            this.shouldSerialize["value"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetResourceId()
+        {
+            this.shouldSerialize["resource_id"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
         public void UnsetDeletedAt()
         {
             this.shouldSerialize["deleted_at"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetMetafieldId()
+        {
+            this.shouldSerialize["metafield_id"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeId()
+        {
+            return this.shouldSerialize["id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeMValue()
+        {
+            return this.shouldSerialize["value"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeResourceId()
+        {
+            return this.shouldSerialize["resource_id"];
         }
 
         /// <summary>
@@ -137,6 +268,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeDeletedAt()
         {
             return this.shouldSerialize["deleted_at"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeMetafieldId()
+        {
+            return this.shouldSerialize["metafield_id"];
         }
 
         /// <inheritdoc/>

@@ -35,8 +35,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="before">before.</param>
         /// <param name="after">after.</param>
         public CustomerCustomFieldsChange(
-            List<Models.ProformaCustomField> before = null,
-            List<Models.ProformaCustomField> after = null)
+            List<Models.InvoiceCustomField> before,
+            List<Models.InvoiceCustomField> after)
         {
             this.Before = before;
             this.After = after;
@@ -45,14 +45,16 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets Before.
         /// </summary>
-        [JsonProperty("before", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Models.ProformaCustomField> Before { get; set; }
+        [JsonProperty("before")]
+        [JsonRequired]
+        public List<Models.InvoiceCustomField> Before { get; set; }
 
         /// <summary>
         /// Gets or sets After.
         /// </summary>
-        [JsonProperty("after", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Models.ProformaCustomField> After { get; set; }
+        [JsonProperty("after")]
+        [JsonRequired]
+        public List<Models.InvoiceCustomField> After { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

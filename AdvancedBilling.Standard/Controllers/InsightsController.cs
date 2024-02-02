@@ -117,9 +117,9 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the Models.ListMRRResponse response from the API call.</returns>
         [Obsolete]
-        public Models.ListMRRResponse ReadMrrMovements(
-                Models.ReadMrrMovementsInput input)
-            => CoreHelper.RunTask(ReadMrrMovementsAsync(input));
+        public Models.ListMRRResponse ListMrrMovements(
+                Models.ListMrrMovementsInput input)
+            => CoreHelper.RunTask(ListMrrMovementsAsync(input));
 
         /// <summary>
         /// <![CDATA[
@@ -143,8 +143,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ListMRRResponse response from the API call.</returns>
         [Obsolete]
-        public async Task<Models.ListMRRResponse> ReadMrrMovementsAsync(
-                Models.ReadMrrMovementsInput input,
+        public async Task<Models.ListMRRResponse> ListMrrMovementsAsync(
+                Models.ListMrrMovementsInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ListMRRResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder

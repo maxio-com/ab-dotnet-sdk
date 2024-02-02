@@ -9,10 +9,10 @@
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `Payer` | [`CustomerPayerChange`](../../doc/models/customer-payer-change.md) | Optional | - |
-| `ShippingAddress` | [`CustomerShippingAddressChange`](../../doc/models/customer-shipping-address-change.md) | Optional | - |
-| `BillingAddress` | [`CustomerBillingAddressChange`](../../doc/models/customer-billing-address-change.md) | Optional | - |
-| `CustomFields` | [`CustomerCustomFieldsChange`](../../doc/models/customer-custom-fields-change.md) | Optional | - |
+| `Payer` | [`CustomerChangePayer`](../../doc/models/containers/customer-change-payer.md) | Optional | This is a container for one-of cases. |
+| `ShippingAddress` | [`CustomerChangeShippingAddress`](../../doc/models/containers/customer-change-shipping-address.md) | Optional | This is a container for one-of cases. |
+| `BillingAddress` | [`CustomerChangeBillingAddress`](../../doc/models/containers/customer-change-billing-address.md) | Optional | This is a container for one-of cases. |
+| `CustomFields` | [`CustomerChangeCustomFields`](../../doc/models/containers/customer-change-custom-fields.md) | Optional | This is a container for one-of cases. |
 
 ## Example (as JSON)
 
@@ -20,46 +20,55 @@
 {
   "payer": {
     "before": {
-      "key1": "val1",
-      "key2": "val2"
+      "first_name": "first_name0",
+      "last_name": "last_name8",
+      "organization": "organization4",
+      "email": "email6"
     },
     "after": {
-      "key1": "val1",
-      "key2": "val2"
+      "first_name": "first_name2",
+      "last_name": "last_name0",
+      "organization": "organization4",
+      "email": "email4"
     }
   },
   "shipping_address": {
     "before": {
-      "key1": "val1",
-      "key2": "val2"
+      "street": "street0",
+      "line2": "line24",
+      "city": "city0",
+      "state": "state6",
+      "zip": "zip4"
     },
     "after": {
-      "key1": "val1",
-      "key2": "val2"
+      "street": "street2",
+      "line2": "line26",
+      "city": "city8",
+      "state": "state2",
+      "zip": "zip4"
     }
   },
   "billing_address": {
     "before": {
-      "key1": "val1",
-      "key2": "val2"
+      "street": "street0",
+      "line2": "line24",
+      "city": "city0",
+      "state": "state6",
+      "zip": "zip4"
     },
     "after": {
-      "key1": "val1",
-      "key2": "val2"
+      "street": "street2",
+      "line2": "line26",
+      "city": "city8",
+      "state": "state2",
+      "zip": "zip4"
     }
   },
   "custom_fields": {
     "before": [
       {
         "owner_id": 26,
-        "owner_type": "owner_type2",
-        "name": "name0",
-        "value": "value2",
-        "metadatum_id": 26
-      },
-      {
-        "owner_id": 26,
-        "owner_type": "owner_type2",
+        "owner_type": "Customer",
         "name": "name0",
         "value": "value2",
         "metadatum_id": 26
@@ -68,21 +77,14 @@
     "after": [
       {
         "owner_id": 130,
-        "owner_type": "owner_type4",
+        "owner_type": "Customer",
         "name": "name2",
         "value": "value4",
         "metadatum_id": 130
       },
       {
         "owner_id": 130,
-        "owner_type": "owner_type4",
-        "name": "name2",
-        "value": "value4",
-        "metadatum_id": 130
-      },
-      {
-        "owner_id": 130,
-        "owner_type": "owner_type4",
+        "owner_type": "Customer",
         "name": "name2",
         "value": "value4",
         "metadatum_id": 130

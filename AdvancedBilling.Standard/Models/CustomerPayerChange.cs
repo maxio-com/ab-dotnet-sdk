@@ -35,8 +35,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="before">before.</param>
         /// <param name="after">after.</param>
         public CustomerPayerChange(
-            object before = null,
-            object after = null)
+            Models.InvoicePayerChange before,
+            Models.InvoicePayerChange after)
         {
             this.Before = before;
             this.After = after;
@@ -45,14 +45,16 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets Before.
         /// </summary>
-        [JsonProperty("before", NullValueHandling = NullValueHandling.Ignore)]
-        public object Before { get; set; }
+        [JsonProperty("before")]
+        [JsonRequired]
+        public Models.InvoicePayerChange Before { get; set; }
 
         /// <summary>
         /// Gets or sets After.
         /// </summary>
-        [JsonProperty("after", NullValueHandling = NullValueHandling.Ignore)]
-        public object After { get; set; }
+        [JsonProperty("after")]
+        [JsonRequired]
+        public Models.InvoicePayerChange After { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -86,8 +88,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"Before = {(this.Before == null ? "null" : this.Before.ToString())}");
-            toStringOutput.Add($"After = {(this.After == null ? "null" : this.After.ToString())}");
+            toStringOutput.Add($"this.Before = {(this.Before == null ? "null" : this.Before.ToString())}");
+            toStringOutput.Add($"this.After = {(this.After == null ? "null" : this.After.ToString())}");
         }
     }
 }

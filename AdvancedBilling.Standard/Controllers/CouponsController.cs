@@ -132,10 +132,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="productFamilyId">Optional parameter: The Chargify id of the product family to which the coupon belongs.</param>
         /// <param name="code">Optional parameter: The code of the coupon.</param>
         /// <returns>Returns the Models.CouponResponse response from the API call.</returns>
-        public Models.CouponResponse ReadCouponByCode(
+        public Models.CouponResponse FindCoupon(
                 int? productFamilyId = null,
                 string code = null)
-            => CoreHelper.RunTask(ReadCouponByCodeAsync(productFamilyId, code));
+            => CoreHelper.RunTask(FindCouponAsync(productFamilyId, code));
 
         /// <summary>
         /// You can search for a coupon via the API with the find method. By passing a code parameter, the find will attempt to locate a coupon that matches that code. If no coupon is found, a 404 is returned.
@@ -145,7 +145,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="code">Optional parameter: The code of the coupon.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.CouponResponse response from the API call.</returns>
-        public async Task<Models.CouponResponse> ReadCouponByCodeAsync(
+        public async Task<Models.CouponResponse> FindCouponAsync(
                 int? productFamilyId = null,
                 string code = null,
                 CancellationToken cancellationToken = default)
@@ -421,10 +421,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="couponId">Required parameter: The Chargify id of the coupon.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.CouponCurrencyResponse response from the API call.</returns>
-        public Models.CouponCurrencyResponse UpdateCouponCurrencyPrices(
+        public Models.CouponCurrencyResponse CreateOrUpdateCouponCurrencyPrices(
                 int couponId,
                 Models.CouponCurrencyRequest body = null)
-            => CoreHelper.RunTask(UpdateCouponCurrencyPricesAsync(couponId, body));
+            => CoreHelper.RunTask(CreateOrUpdateCouponCurrencyPricesAsync(couponId, body));
 
         /// <summary>
         /// This endpoint allows you to create and/or update currency prices for an existing coupon. Multiple prices can be created or updated in a single request but each of the currencies must be defined on the site level already and the coupon must be an amount-based coupon, not percentage.
@@ -434,7 +434,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.CouponCurrencyResponse response from the API call.</returns>
-        public async Task<Models.CouponCurrencyResponse> UpdateCouponCurrencyPricesAsync(
+        public async Task<Models.CouponCurrencyResponse> CreateOrUpdateCouponCurrencyPricesAsync(
                 int couponId,
                 Models.CouponCurrencyRequest body = null,
                 CancellationToken cancellationToken = default)

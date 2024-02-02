@@ -23,6 +23,14 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class ApplyPaymentEventData
     {
+        private int? parentInvoiceNumber;
+        private string remainingPrepaymentAmount;
+        private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
+        {
+            { "parent_invoice_number", false },
+            { "remaining_prepayment_amount", false },
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplyPaymentEventData"/> class.
         /// </summary>
@@ -39,13 +47,21 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="transactionTime">transaction_time.</param>
         /// <param name="paymentMethod">payment_method.</param>
         /// <param name="transactionId">transaction_id.</param>
+        /// <param name="parentInvoiceNumber">parent_invoice_number.</param>
+        /// <param name="remainingPrepaymentAmount">remaining_prepayment_amount.</param>
+        /// <param name="prepayment">prepayment.</param>
+        /// <param name="external">external.</param>
         public ApplyPaymentEventData(
             string memo,
             string originalAmount,
             string appliedAmount,
             DateTimeOffset transactionTime,
-            ApplyPaymentEventDataPaymentMethod paymentMethod,
-            int? transactionId = null)
+            InvoiceEventPayment paymentMethod,
+            int? transactionId = null,
+            int? parentInvoiceNumber = null,
+            string remainingPrepaymentAmount = null,
+            bool? prepayment = null,
+            bool? external = null)
         {
             this.Memo = memo;
             this.OriginalAmount = originalAmount;
@@ -53,6 +69,18 @@ namespace AdvancedBilling.Standard.Models
             this.TransactionTime = transactionTime;
             this.PaymentMethod = paymentMethod;
             this.TransactionId = transactionId;
+            if (parentInvoiceNumber != null)
+            {
+                this.ParentInvoiceNumber = parentInvoiceNumber;
+            }
+
+            if (remainingPrepaymentAmount != null)
+            {
+                this.RemainingPrepaymentAmount = remainingPrepaymentAmount;
+            }
+
+            this.Prepayment = prepayment;
+            this.External = external;
         }
 
         /// <summary>
@@ -92,13 +120,62 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("payment_method")]
         [JsonRequired]
-        public ApplyPaymentEventDataPaymentMethod PaymentMethod { get; set; }
+        public InvoiceEventPayment PaymentMethod { get; set; }
 
         /// <summary>
         /// The Chargify id of the original payment
         /// </summary>
         [JsonProperty("transaction_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? TransactionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets ParentInvoiceNumber.
+        /// </summary>
+        [JsonProperty("parent_invoice_number")]
+        public int? ParentInvoiceNumber
+        {
+            get
+            {
+                return this.parentInvoiceNumber;
+            }
+
+            set
+            {
+                this.shouldSerialize["parent_invoice_number"] = true;
+                this.parentInvoiceNumber = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets RemainingPrepaymentAmount.
+        /// </summary>
+        [JsonConverter(typeof(JsonStringConverter))]
+        [JsonProperty("remaining_prepayment_amount")]
+        public string RemainingPrepaymentAmount
+        {
+            get
+            {
+                return this.remainingPrepaymentAmount;
+            }
+
+            set
+            {
+                this.shouldSerialize["remaining_prepayment_amount"] = true;
+                this.remainingPrepaymentAmount = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets Prepayment.
+        /// </summary>
+        [JsonProperty("prepayment", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? Prepayment { get; set; }
+
+        /// <summary>
+        /// Gets or sets External.
+        /// </summary>
+        [JsonProperty("external", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? External { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -108,6 +185,40 @@ namespace AdvancedBilling.Standard.Models
             this.ToString(toStringOutput);
 
             return $"ApplyPaymentEventData : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetParentInvoiceNumber()
+        {
+            this.shouldSerialize["parent_invoice_number"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetRemainingPrepaymentAmount()
+        {
+            this.shouldSerialize["remaining_prepayment_amount"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeParentInvoiceNumber()
+        {
+            return this.shouldSerialize["parent_invoice_number"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeRemainingPrepaymentAmount()
+        {
+            return this.shouldSerialize["remaining_prepayment_amount"];
         }
 
         /// <inheritdoc/>
@@ -127,7 +238,11 @@ namespace AdvancedBilling.Standard.Models
                 ((this.AppliedAmount == null && other.AppliedAmount == null) || (this.AppliedAmount?.Equals(other.AppliedAmount) == true)) &&
                 this.TransactionTime.Equals(other.TransactionTime) &&
                 ((this.PaymentMethod == null && other.PaymentMethod == null) || (this.PaymentMethod?.Equals(other.PaymentMethod) == true)) &&
-                ((this.TransactionId == null && other.TransactionId == null) || (this.TransactionId?.Equals(other.TransactionId) == true));
+                ((this.TransactionId == null && other.TransactionId == null) || (this.TransactionId?.Equals(other.TransactionId) == true)) &&
+                ((this.ParentInvoiceNumber == null && other.ParentInvoiceNumber == null) || (this.ParentInvoiceNumber?.Equals(other.ParentInvoiceNumber) == true)) &&
+                ((this.RemainingPrepaymentAmount == null && other.RemainingPrepaymentAmount == null) || (this.RemainingPrepaymentAmount?.Equals(other.RemainingPrepaymentAmount) == true)) &&
+                ((this.Prepayment == null && other.Prepayment == null) || (this.Prepayment?.Equals(other.Prepayment) == true)) &&
+                ((this.External == null && other.External == null) || (this.External?.Equals(other.External) == true));
         }
         
         /// <summary>
@@ -142,6 +257,10 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.TransactionTime = {this.TransactionTime}");
             toStringOutput.Add($"PaymentMethod = {(this.PaymentMethod == null ? "null" : this.PaymentMethod.ToString())}");
             toStringOutput.Add($"this.TransactionId = {(this.TransactionId == null ? "null" : this.TransactionId.ToString())}");
+            toStringOutput.Add($"this.ParentInvoiceNumber = {(this.ParentInvoiceNumber == null ? "null" : this.ParentInvoiceNumber.ToString())}");
+            toStringOutput.Add($"this.RemainingPrepaymentAmount = {(this.RemainingPrepaymentAmount == null ? "null" : this.RemainingPrepaymentAmount)}");
+            toStringOutput.Add($"this.Prepayment = {(this.Prepayment == null ? "null" : this.Prepayment.ToString())}");
+            toStringOutput.Add($"this.External = {(this.External == null ? "null" : this.External.ToString())}");
         }
     }
 }

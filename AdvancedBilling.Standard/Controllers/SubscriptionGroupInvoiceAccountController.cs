@@ -107,10 +107,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.ServiceCreditResponse response from the API call.</returns>
-        public Models.ServiceCreditResponse IssueSubscriptionGroupServiceCredits(
+        public Models.ServiceCreditResponse IssueSubscriptionGroupServiceCredit(
                 string uid,
                 Models.IssueServiceCreditRequest body = null)
-            => CoreHelper.RunTask(IssueSubscriptionGroupServiceCreditsAsync(uid, body));
+            => CoreHelper.RunTask(IssueSubscriptionGroupServiceCreditAsync(uid, body));
 
         /// <summary>
         /// Credit can be issued for a subscription group identified by the group's `uid`. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
@@ -119,7 +119,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ServiceCreditResponse response from the API call.</returns>
-        public async Task<Models.ServiceCreditResponse> IssueSubscriptionGroupServiceCreditsAsync(
+        public async Task<Models.ServiceCreditResponse> IssueSubscriptionGroupServiceCreditAsync(
                 string uid,
                 Models.IssueServiceCreditRequest body = null,
                 CancellationToken cancellationToken = default)
@@ -141,10 +141,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.ServiceCredit response from the API call.</returns>
-        public Models.ServiceCredit DeductSubscriptionGroupServiceCredits(
+        public Models.ServiceCredit DeductSubscriptionGroupServiceCredit(
                 string uid,
                 Models.DeductServiceCreditRequest body = null)
-            => CoreHelper.RunTask(DeductSubscriptionGroupServiceCreditsAsync(uid, body));
+            => CoreHelper.RunTask(DeductSubscriptionGroupServiceCreditAsync(uid, body));
 
         /// <summary>
         /// Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
@@ -153,7 +153,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ServiceCredit response from the API call.</returns>
-        public async Task<Models.ServiceCredit> DeductSubscriptionGroupServiceCreditsAsync(
+        public async Task<Models.ServiceCredit> DeductSubscriptionGroupServiceCreditAsync(
                 string uid,
                 Models.DeductServiceCreditRequest body = null,
                 CancellationToken cancellationToken = default)

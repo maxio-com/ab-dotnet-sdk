@@ -108,9 +108,9 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
         /// <returns>Returns the Models.OfferResponse response from the API call.</returns>
-        public Models.OfferResponse ReadOffers(
+        public Models.OfferResponse ReadOffer(
                 int offerId)
-            => CoreHelper.RunTask(ReadOffersAsync(offerId));
+            => CoreHelper.RunTask(ReadOfferAsync(offerId));
 
         /// <summary>
         /// This method allows you to list a specific offer's attributes. This is different than list all offers for a site, as it requires an `offer_id`.
@@ -118,7 +118,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.OfferResponse response from the API call.</returns>
-        public async Task<Models.OfferResponse> ReadOffersAsync(
+        public async Task<Models.OfferResponse> ReadOfferAsync(
                 int offerId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.OfferResponse>()

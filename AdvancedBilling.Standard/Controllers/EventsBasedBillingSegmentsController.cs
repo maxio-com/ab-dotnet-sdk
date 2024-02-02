@@ -212,11 +212,11 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="pricePointId">Required parameter: ID or Handle for the Price Point belonging to the Component.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.ListSegmentsResponse response from the API call.</returns>
-        public Models.ListSegmentsResponse CreateSegments(
+        public Models.ListSegmentsResponse BulkCreateSegments(
                 string componentId,
                 string pricePointId,
                 Models.BulkCreateSegments body = null)
-            => CoreHelper.RunTask(CreateSegmentsAsync(componentId, pricePointId, body));
+            => CoreHelper.RunTask(BulkCreateSegmentsAsync(componentId, pricePointId, body));
 
         /// <summary>
         /// This endpoint allows you to create multiple segments in one request. The array of segments can contain up to `2000` records.
@@ -228,7 +228,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ListSegmentsResponse response from the API call.</returns>
-        public async Task<Models.ListSegmentsResponse> CreateSegmentsAsync(
+        public async Task<Models.ListSegmentsResponse> BulkCreateSegmentsAsync(
                 string componentId,
                 string pricePointId,
                 Models.BulkCreateSegments body = null,
@@ -256,11 +256,11 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="pricePointId">Required parameter: ID or Handle for the Price Point belonging to the Component.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.ListSegmentsResponse response from the API call.</returns>
-        public Models.ListSegmentsResponse UpdateSegments(
+        public Models.ListSegmentsResponse BulkUpdateSegments(
                 string componentId,
                 string pricePointId,
                 Models.BulkUpdateSegments body = null)
-            => CoreHelper.RunTask(UpdateSegmentsAsync(componentId, pricePointId, body));
+            => CoreHelper.RunTask(BulkUpdateSegmentsAsync(componentId, pricePointId, body));
 
         /// <summary>
         /// This endpoint allows you to update multiple segments in one request. The array of segments can contain up to `1000` records.
@@ -272,7 +272,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ListSegmentsResponse response from the API call.</returns>
-        public async Task<Models.ListSegmentsResponse> UpdateSegmentsAsync(
+        public async Task<Models.ListSegmentsResponse> BulkUpdateSegmentsAsync(
                 string componentId,
                 string pricePointId,
                 Models.BulkUpdateSegments body = null,

@@ -12,7 +12,7 @@ InsightsController insightsController = client.InsightsController;
 
 * [Read Site Stats](../../doc/controllers/insights.md#read-site-stats)
 * [Read Mrr](../../doc/controllers/insights.md#read-mrr)
-* [Read Mrr Movements](../../doc/controllers/insights.md#read-mrr-movements)
+* [List Mrr Movements](../../doc/controllers/insights.md#list-mrr-movements)
 * [List Mrr Per Subscription](../../doc/controllers/insights.md#list-mrr-per-subscription)
 
 
@@ -128,7 +128,7 @@ catch (ApiException e)
 ```
 
 
-# Read Mrr Movements
+# List Mrr Movements
 
 **This endpoint is deprecated.**
 
@@ -158,8 +158,8 @@ Usage includes revenue from:
 * Prepaid Usage Components
 
 ```csharp
-ReadMrrMovementsAsync(
-    Models.ReadMrrMovementsInput input)
+ListMrrMovementsAsync(
+    Models.ListMrrMovementsInput input)
 ```
 
 ## Parameters
@@ -178,7 +178,7 @@ ReadMrrMovementsAsync(
 ## Example Usage
 
 ```csharp
-ReadMrrMovementsInput readMrrMovementsInput = new ReadMrrMovementsInput
+ListMrrMovementsInput listMrrMovementsInput = new ListMrrMovementsInput
 {
     Page = 2,
     PerPage = 20,
@@ -186,7 +186,7 @@ ReadMrrMovementsInput readMrrMovementsInput = new ReadMrrMovementsInput
 
 try
 {
-    ListMRRResponse result = await insightsController.ReadMrrMovementsAsync(readMrrMovementsInput);
+    ListMRRResponse result = await insightsController.ListMrrMovementsAsync(listMrrMovementsInput);
 }
 catch (ApiException e)
 {

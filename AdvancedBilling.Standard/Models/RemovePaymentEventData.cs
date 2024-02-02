@@ -45,7 +45,7 @@ namespace AdvancedBilling.Standard.Models
             string memo,
             string appliedAmount,
             DateTimeOffset transactionTime,
-            RemovePaymentEventDataPaymentMethod paymentMethod,
+            InvoiceEventPayment paymentMethod,
             bool prepayment,
             string originalAmount = null)
         {
@@ -101,7 +101,7 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("payment_method")]
         [JsonRequired]
-        public RemovePaymentEventDataPaymentMethod PaymentMethod { get; set; }
+        public InvoiceEventPayment PaymentMethod { get; set; }
 
         /// <summary>
         /// The flag that shows whether the original payment was a prepayment or not

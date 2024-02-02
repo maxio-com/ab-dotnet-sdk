@@ -48,10 +48,10 @@ namespace AdvancedBilling.Standard.Models
             int? page = 1,
             int? perPage = 20,
             Models.BasicDateField? dateField = null,
-            string startDate = null,
-            string endDate = null,
-            string startDatetime = null,
-            string endDatetime = null,
+            DateTime? startDate = null,
+            DateTime? endDate = null,
+            DateTimeOffset? startDatetime = null,
+            DateTimeOffset? endDatetime = null,
             bool? withDeleted = null,
             List<int> resourceIds = null,
             Models.SortingDirection? direction = null)
@@ -98,26 +98,30 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The start date (format YYYY-MM-DD) with which to filter the date_field. Returns metadata with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified.
         /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("start_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         /// <summary>
         /// The end date (format YYYY-MM-DD) with which to filter the date_field. Returns metadata with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified.
         /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("end_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         /// <summary>
         /// The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns metadata with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("start_datetime", NullValueHandling = NullValueHandling.Ignore)]
-        public string StartDatetime { get; set; }
+        public DateTimeOffset? StartDatetime { get; set; }
 
         /// <summary>
         /// The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns metadata with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("end_datetime", NullValueHandling = NullValueHandling.Ignore)]
-        public string EndDatetime { get; set; }
+        public DateTimeOffset? EndDatetime { get; set; }
 
         /// <summary>
         /// Allow to fetch deleted metadata.
@@ -185,10 +189,10 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
             toStringOutput.Add($"this.DateField = {(this.DateField == null ? "null" : this.DateField.ToString())}");
-            toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate)}");
-            toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate)}");
-            toStringOutput.Add($"this.StartDatetime = {(this.StartDatetime == null ? "null" : this.StartDatetime)}");
-            toStringOutput.Add($"this.EndDatetime = {(this.EndDatetime == null ? "null" : this.EndDatetime)}");
+            toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate.ToString())}");
+            toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate.ToString())}");
+            toStringOutput.Add($"this.StartDatetime = {(this.StartDatetime == null ? "null" : this.StartDatetime.ToString())}");
+            toStringOutput.Add($"this.EndDatetime = {(this.EndDatetime == null ? "null" : this.EndDatetime.ToString())}");
             toStringOutput.Add($"this.WithDeleted = {(this.WithDeleted == null ? "null" : this.WithDeleted.ToString())}");
             toStringOutput.Add($"this.ResourceIds = {(this.ResourceIds == null ? "null" : $"[{string.Join(", ", this.ResourceIds)} ]")}");
             toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");

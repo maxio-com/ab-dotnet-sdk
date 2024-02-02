@@ -340,9 +340,9 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.MultiInvoicePaymentResponse response from the API call.</returns>
-        public Models.MultiInvoicePaymentResponse RecordExternalPaymentForInvoices(
+        public Models.MultiInvoicePaymentResponse RecordPaymentForMultipleInvoices(
                 Models.CreateMultiInvoicePaymentRequest body = null)
-            => CoreHelper.RunTask(RecordExternalPaymentForInvoicesAsync(body));
+            => CoreHelper.RunTask(RecordPaymentForMultipleInvoicesAsync(body));
 
         /// <summary>
         /// This API call should be used when you want to record an external payment against multiple invoices.
@@ -372,7 +372,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.MultiInvoicePaymentResponse response from the API call.</returns>
-        public async Task<Models.MultiInvoicePaymentResponse> RecordExternalPaymentForInvoicesAsync(
+        public async Task<Models.MultiInvoicePaymentResponse> RecordPaymentForMultipleInvoicesAsync(
                 Models.CreateMultiInvoicePaymentRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.MultiInvoicePaymentResponse>()
@@ -568,9 +568,9 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the Models.ConsolidatedInvoice response from the API call.</returns>
-        public Models.ConsolidatedInvoice ListInvoiceSegments(
-                Models.ListInvoiceSegmentsInput input)
-            => CoreHelper.RunTask(ListInvoiceSegmentsAsync(input));
+        public Models.ConsolidatedInvoice ListConsolidatedInvoiceSegments(
+                Models.ListConsolidatedInvoiceSegmentsInput input)
+            => CoreHelper.RunTask(ListConsolidatedInvoiceSegmentsAsync(input));
 
         /// <summary>
         /// Invoice segments returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, or `custom_fields`.
@@ -578,8 +578,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ConsolidatedInvoice response from the API call.</returns>
-        public async Task<Models.ConsolidatedInvoice> ListInvoiceSegmentsAsync(
-                Models.ListInvoiceSegmentsInput input,
+        public async Task<Models.ConsolidatedInvoice> ListConsolidatedInvoiceSegmentsAsync(
+                Models.ListConsolidatedInvoiceSegmentsInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ConsolidatedInvoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder

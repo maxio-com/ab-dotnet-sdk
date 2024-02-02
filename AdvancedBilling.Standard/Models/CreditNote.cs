@@ -66,8 +66,8 @@ namespace AdvancedBilling.Standard.Models
             int? subscriptionId = null,
             string number = null,
             int? sequenceNumber = null,
-            string issueDate = null,
-            string appliedDate = null,
+            DateTime? issueDate = null,
+            DateTime? appliedDate = null,
             Models.CreditNoteStatus? status = null,
             string currency = null,
             string memo = null,
@@ -160,18 +160,18 @@ namespace AdvancedBilling.Standard.Models
         /// Date the credit note was issued to the customer.  This is the date that the credit was made available for application, and may come before it is fully applied.
         /// The format is `"YYYY-MM-DD"`.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("issue_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string IssueDate { get; set; }
+        public DateTime? IssueDate { get; set; }
 
         /// <summary>
         /// Credit notes are applied to invoices to offset invoiced amounts - they reduce the amount due. This field is the date the credit note became fully applied to invoices.
         /// If the credit note has been partially applied, this field will not have a value until it has been fully applied.
         /// The format is `"YYYY-MM-DD"`.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("applied_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string AppliedDate { get; set; }
+        public DateTime? AppliedDate { get; set; }
 
         /// <summary>
         /// Current status of the credit note.
@@ -358,8 +358,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
             toStringOutput.Add($"this.Number = {(this.Number == null ? "null" : this.Number)}");
             toStringOutput.Add($"this.SequenceNumber = {(this.SequenceNumber == null ? "null" : this.SequenceNumber.ToString())}");
-            toStringOutput.Add($"this.IssueDate = {(this.IssueDate == null ? "null" : this.IssueDate)}");
-            toStringOutput.Add($"this.AppliedDate = {(this.AppliedDate == null ? "null" : this.AppliedDate)}");
+            toStringOutput.Add($"this.IssueDate = {(this.IssueDate == null ? "null" : this.IssueDate.ToString())}");
+            toStringOutput.Add($"this.AppliedDate = {(this.AppliedDate == null ? "null" : this.AppliedDate.ToString())}");
             toStringOutput.Add($"this.Status = {(this.Status == null ? "null" : this.Status.ToString())}");
             toStringOutput.Add($"this.Currency = {(this.Currency == null ? "null" : this.Currency)}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");

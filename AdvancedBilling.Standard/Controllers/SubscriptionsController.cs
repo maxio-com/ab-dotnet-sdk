@@ -1199,9 +1199,9 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="reference">Optional parameter: Subscription reference.</param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public Models.SubscriptionResponse ReadSubscriptionByReference(
+        public Models.SubscriptionResponse FindSubscription(
                 string reference = null)
-            => CoreHelper.RunTask(ReadSubscriptionByReferenceAsync(reference));
+            => CoreHelper.RunTask(FindSubscriptionAsync(reference));
 
         /// <summary>
         /// Use this endpoint to find a subscription by its reference.
@@ -1209,7 +1209,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="reference">Optional parameter: Subscription reference.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionResponse> ReadSubscriptionByReferenceAsync(
+        public async Task<Models.SubscriptionResponse> FindSubscriptionAsync(
                 string reference = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionResponse>()
@@ -1273,10 +1273,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.PrepaidConfigurationResponse response from the API call.</returns>
-        public Models.PrepaidConfigurationResponse CreatePrepaidSubscription(
+        public Models.PrepaidConfigurationResponse UpdatePrepaidSubscriptionConfiguration(
                 int subscriptionId,
                 Models.UpsertPrepaidConfigurationRequest body = null)
-            => CoreHelper.RunTask(CreatePrepaidSubscriptionAsync(subscriptionId, body));
+            => CoreHelper.RunTask(UpdatePrepaidSubscriptionConfigurationAsync(subscriptionId, body));
 
         /// <summary>
         /// Use this endpoint to update a subscription's prepaid configuration.
@@ -1285,7 +1285,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.PrepaidConfigurationResponse response from the API call.</returns>
-        public async Task<Models.PrepaidConfigurationResponse> CreatePrepaidSubscriptionAsync(
+        public async Task<Models.PrepaidConfigurationResponse> UpdatePrepaidSubscriptionConfigurationAsync(
                 int subscriptionId,
                 Models.UpsertPrepaidConfigurationRequest body = null,
                 CancellationToken cancellationToken = default)
@@ -1362,11 +1362,11 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="code">Optional parameter: A code for the coupon that would be applied to a subscription.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public Models.SubscriptionResponse ApplyCouponToSubscription(
+        public Models.SubscriptionResponse ApplyCouponsToSubscription(
                 int subscriptionId,
                 string code = null,
                 Models.AddCouponsRequest body = null)
-            => CoreHelper.RunTask(ApplyCouponToSubscriptionAsync(subscriptionId, code, body));
+            => CoreHelper.RunTask(ApplyCouponsToSubscriptionAsync(subscriptionId, code, body));
 
         /// <summary>
         /// An existing subscription can accommodate multiple discounts/coupon codes. This is only applicable if each coupon is stackable. For more information on stackable coupons, we recommend reviewing our [coupon documentation.](https://chargify.zendesk.com/hc/en-us/articles/4407755909531#stackable-coupons).
@@ -1379,7 +1379,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
-        public async Task<Models.SubscriptionResponse> ApplyCouponToSubscriptionAsync(
+        public async Task<Models.SubscriptionResponse> ApplyCouponsToSubscriptionAsync(
                 int subscriptionId,
                 string code = null,
                 Models.AddCouponsRequest body = null,
@@ -1404,10 +1404,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="couponCode">Optional parameter: The coupon code.</param>
         /// <returns>Returns the string response from the API call.</returns>
-        public string DeleteCouponFromSubscription(
+        public string RemoveCouponFromSubscription(
                 int subscriptionId,
                 string couponCode = null)
-            => CoreHelper.RunTask(DeleteCouponFromSubscriptionAsync(subscriptionId, couponCode));
+            => CoreHelper.RunTask(RemoveCouponFromSubscriptionAsync(subscriptionId, couponCode));
 
         /// <summary>
         /// Use this endpoint to remove a coupon from an existing subscription.
@@ -1417,7 +1417,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="couponCode">Optional parameter: The coupon code.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the string response from the API call.</returns>
-        public async Task<string> DeleteCouponFromSubscriptionAsync(
+        public async Task<string> RemoveCouponFromSubscriptionAsync(
                 int subscriptionId,
                 string couponCode = null,
                 CancellationToken cancellationToken = default)
