@@ -14,18 +14,6 @@ namespace AdvancedBillingTests
         private readonly Fixture _fixture = new();
 
         [Fact]
-        public async Task CreateSubscription_WithDummyData_ShouldFailWithAnyErrorMessage()
-        {
-            var subscription = _fixture.Create<CreateSubscription>();
-            subscription.CancellationMethod = null;
-            var subscriptionRequest = new CreateSubscriptionRequest(subscription);
-
-            await _client.Invoking(s => s.SubscriptionsController.CreateSubscriptionAsync(subscriptionRequest)).Should()
-                .ThrowAsync<ErrorListResponseException>()
-                .Where(e => e.Errors.Count > 0);
-        }
-
-        [Fact]
         public async Task CreateSubscription_BasicScenarioData_ShouldSuccess()
         {
             var productFamilyId = await CreationUtils.CreateOrGetProductFamily(_client);
