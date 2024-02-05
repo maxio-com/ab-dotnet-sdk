@@ -49,7 +49,7 @@ namespace AdvancedBilling.Standard.Models
             string bankName = null,
             string bankRoutingNumber = null,
             string bankAccountNumber = null,
-            Models.BankAccountType? bankAccountType = Models.BankAccountType.Checking,
+            Models.BankAccountType? bankAccountType = null,
             string bankBranchCode = null,
             string bankIban = null,
             Models.BankAccountHolderType? bankAccountHolderType = null,

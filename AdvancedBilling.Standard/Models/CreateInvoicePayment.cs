@@ -40,7 +40,7 @@ namespace AdvancedBilling.Standard.Models
         public CreateInvoicePayment(
             CreateInvoicePaymentAmount amount = null,
             string memo = null,
-            Models.InvoicePaymentMethodType? method = Models.InvoicePaymentMethodType.Other,
+            Models.InvoicePaymentMethodType? method = null,
             string details = null)
         {
             this.Amount = amount;
@@ -62,7 +62,7 @@ namespace AdvancedBilling.Standard.Models
         public string Memo { get; set; }
 
         /// <summary>
-        /// The type of payment method used.
+        /// The type of payment method used. Defaults to other.
         /// </summary>
         [JsonProperty("method", NullValueHandling = NullValueHandling.Ignore)]
         public Models.InvoicePaymentMethodType? Method { get; set; }

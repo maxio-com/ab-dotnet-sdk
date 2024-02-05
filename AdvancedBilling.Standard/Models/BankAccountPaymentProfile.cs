@@ -91,7 +91,7 @@ namespace AdvancedBilling.Standard.Models
             string customerVaultToken = null,
             string billingAddress2 = null,
             string bankName = null,
-            Models.BankAccountType? bankAccountType = Models.BankAccountType.Checking,
+            Models.BankAccountType? bankAccountType = null,
             Models.BankAccountHolderType? bankAccountHolderType = null,
             Models.PaymentType? paymentType = null,
             bool? verified = false,

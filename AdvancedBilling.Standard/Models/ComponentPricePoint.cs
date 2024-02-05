@@ -72,7 +72,7 @@ namespace AdvancedBilling.Standard.Models
             DateTimeOffset? createdAt = null,
             DateTimeOffset? updatedAt = null,
             List<Models.ComponentPrice> prices = null,
-            bool? useSiteExchangeRate = true,
+            bool? useSiteExchangeRate = null,
             int? subscriptionId = null,
             bool? taxIncluded = null,
             int? interval = null,
@@ -195,7 +195,7 @@ namespace AdvancedBilling.Standard.Models
         public List<Models.ComponentPrice> Prices { get; set; }
 
         /// <summary>
-        /// Whether to use the site level exchange rate or define your own prices for each currency if you have multiple currencies defined on the site.
+        /// Whether to use the site level exchange rate or define your own prices for each currency if you have multiple currencies defined on the site. Defaults to true during creation.
         /// </summary>
         [JsonProperty("use_site_exchange_rate", NullValueHandling = NullValueHandling.Ignore)]
         public bool? UseSiteExchangeRate { get; set; }

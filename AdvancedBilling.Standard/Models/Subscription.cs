@@ -212,7 +212,7 @@ namespace AdvancedBilling.Standard.Models
             DateTimeOffset? onHoldAt = null,
             bool? prepaidDunning = null,
             List<Models.SubscriptionIncludedCoupon> coupons = null,
-            bool? dunningCommunicationDelayEnabled = false,
+            bool? dunningCommunicationDelayEnabled = null,
             string dunningCommunicationDelayTimeZone = null,
             bool? receivesInvoiceEmails = null,
             string locale = null,

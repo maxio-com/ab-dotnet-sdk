@@ -54,7 +54,7 @@ namespace AdvancedBilling.Standard.Models
             string bankRoutingNumber = null,
             string bankIban = null,
             string bankBranchCode = null,
-            Models.BankAccountType? bankAccountType = Models.BankAccountType.Checking,
+            Models.BankAccountType? bankAccountType = null,
             Models.BankAccountHolderType? bankAccountHolderType = null,
             Models.PaymentType? paymentType = null,
             string billingAddress = null,
