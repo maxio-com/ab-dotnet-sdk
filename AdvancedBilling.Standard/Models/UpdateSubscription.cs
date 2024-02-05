@@ -27,7 +27,7 @@ namespace AdvancedBilling.Standard.Models
         private string dunningCommunicationDelayTimeZone;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
-            { "dunning_communication_delay_enabled", true },
+            { "dunning_communication_delay_enabled", false },
             { "dunning_communication_delay_time_zone", false },
         };
 
@@ -62,7 +62,7 @@ namespace AdvancedBilling.Standard.Models
             Models.CreditCardAttributes creditCardAttributes = null,
             string productHandle = null,
             int? productId = null,
-            bool? productChangeDelayed = false,
+            bool? productChangeDelayed = null,
             string nextProductId = null,
             string nextProductPricePointId = null,
             UpdateSubscriptionSnapDay snapDay = null,
@@ -74,7 +74,7 @@ namespace AdvancedBilling.Standard.Models
             string reference = null,
             Models.SubscriptionCustomPrice customPrice = null,
             List<Models.UpdateSubscriptionComponent> components = null,
-            bool? dunningCommunicationDelayEnabled = false,
+            bool? dunningCommunicationDelayEnabled = null,
             string dunningCommunicationDelayTimeZone = null)
         {
             this.CreditCardAttributes = creditCardAttributes;
@@ -92,7 +92,11 @@ namespace AdvancedBilling.Standard.Models
             this.Reference = reference;
             this.CustomPrice = customPrice;
             this.Components = components;
-            this.DunningCommunicationDelayEnabled = dunningCommunicationDelayEnabled;
+            if (dunningCommunicationDelayEnabled != null)
+            {
+                this.DunningCommunicationDelayEnabled = dunningCommunicationDelayEnabled;
+            }
+
             if (dunningCommunicationDelayTimeZone != null)
             {
                 this.DunningCommunicationDelayTimeZone = dunningCommunicationDelayTimeZone;

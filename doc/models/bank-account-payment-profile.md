@@ -25,7 +25,7 @@
 | `BankName` | `string` | Optional | The bank where the account resides |
 | `MaskedBankRoutingNumber` | `string` | Required | A string representation of the stored bank routing number with all but the last 4 digits marked with X’s (i.e. ‘XXXXXXX1111’). payment_type will be bank_account |
 | `MaskedBankAccountNumber` | `string` | Required | A string representation of the stored bank account number with all but the last 4 digits marked with X’s (i.e. ‘XXXXXXX1111’) |
-| `BankAccountType` | [`BankAccountType?`](../../doc/models/bank-account-type.md) | Optional | Defaults to checking<br>**Default**: `BankAccountType.checking` |
+| `BankAccountType` | [`BankAccountType?`](../../doc/models/bank-account-type.md) | Optional | Defaults to checking |
 | `BankAccountHolderType` | [`BankAccountHolderType?`](../../doc/models/bank-account-holder-type.md) | Optional | Defaults to personal |
 | `PaymentType` | [`PaymentType?`](../../doc/models/payment-type.md) | Optional | - |
 | `Verified` | `bool?` | Optional | denotes whether a bank account has been verified by providing the amounts of two small deposits made into the account<br>**Default**: `false` |
@@ -38,7 +38,6 @@
 {
   "masked_bank_routing_number": "masked_bank_routing_number8",
   "masked_bank_account_number": "masked_bank_account_number8",
-  "bank_account_type": "checking",
   "verified": false,
   "id": 188,
   "first_name": "first_name6",

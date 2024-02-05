@@ -36,7 +36,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="type">type.</param>
         public CreateInvoicePaymentRequest(
             Models.CreateInvoicePayment payment,
-            Models.InvoicePaymentType? type = Models.InvoicePaymentType.External)
+            Models.InvoicePaymentType? type = null)
         {
             this.Payment = payment;
             this.Type = type;
@@ -49,7 +49,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.CreateInvoicePayment Payment { get; set; }
 
         /// <summary>
-        /// The type of payment to be applied to an Invoice.
+        /// The type of payment to be applied to an Invoice. Defaults to external.
         /// </summary>
         [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
         public Models.InvoicePaymentType? Type { get; set; }

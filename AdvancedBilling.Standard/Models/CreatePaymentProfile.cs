@@ -101,7 +101,7 @@ namespace AdvancedBilling.Standard.Models
             string bankRoutingNumber = null,
             string bankAccountNumber = null,
             string bankBranchCode = null,
-            Models.BankAccountType? bankAccountType = Models.BankAccountType.Checking,
+            Models.BankAccountType? bankAccountType = null,
             Models.BankAccountHolderType? bankAccountHolderType = null,
             string lastFour = null)
         {
