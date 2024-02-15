@@ -42,7 +42,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="uncalculatedTaxes">uncalculated_taxes.</param>
         /// <param name="lineItems">line_items.</param>
         public RenewalPreview(
-            string nextAssessmentAt = null,
+            DateTimeOffset? nextAssessmentAt = null,
             long? subtotalInCents = null,
             long? totalTaxInCents = null,
             long? totalDiscountInCents = null,
@@ -66,8 +66,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The timestamp for the subscription’s next renewal
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("next_assessment_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string NextAssessmentAt { get; set; }
+        public DateTimeOffset? NextAssessmentAt { get; set; }
 
         /// <summary>
         /// An integer representing the amount of the total pre-tax, pre-discount charges that will be assessed at the next renewal
@@ -156,7 +157,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.NextAssessmentAt = {(this.NextAssessmentAt == null ? "null" : this.NextAssessmentAt)}");
+            toStringOutput.Add($"this.NextAssessmentAt = {(this.NextAssessmentAt == null ? "null" : this.NextAssessmentAt.ToString())}");
             toStringOutput.Add($"this.SubtotalInCents = {(this.SubtotalInCents == null ? "null" : this.SubtotalInCents.ToString())}");
             toStringOutput.Add($"this.TotalTaxInCents = {(this.TotalTaxInCents == null ? "null" : this.TotalTaxInCents.ToString())}");
             toStringOutput.Add($"this.TotalDiscountInCents = {(this.TotalDiscountInCents == null ? "null" : this.TotalDiscountInCents.ToString())}");

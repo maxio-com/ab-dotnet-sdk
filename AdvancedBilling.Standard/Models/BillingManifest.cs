@@ -47,8 +47,8 @@ namespace AdvancedBilling.Standard.Models
             long? totalDiscountInCents = null,
             long? totalTaxInCents = null,
             long? subtotalInCents = null,
-            string startDate = null,
-            string endDate = null,
+            DateTimeOffset? startDate = null,
+            DateTimeOffset? endDate = null,
             string periodType = null,
             long? existingBalanceInCents = null)
         {
@@ -96,14 +96,16 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets StartDate.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("start_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string StartDate { get; set; }
+        public DateTimeOffset? StartDate { get; set; }
 
         /// <summary>
         /// Gets or sets EndDate.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("end_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string EndDate { get; set; }
+        public DateTimeOffset? EndDate { get; set; }
 
         /// <summary>
         /// Gets or sets PeriodType.
@@ -161,8 +163,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.TotalDiscountInCents = {(this.TotalDiscountInCents == null ? "null" : this.TotalDiscountInCents.ToString())}");
             toStringOutput.Add($"this.TotalTaxInCents = {(this.TotalTaxInCents == null ? "null" : this.TotalTaxInCents.ToString())}");
             toStringOutput.Add($"this.SubtotalInCents = {(this.SubtotalInCents == null ? "null" : this.SubtotalInCents.ToString())}");
-            toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate)}");
-            toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate)}");
+            toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate.ToString())}");
+            toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate.ToString())}");
             toStringOutput.Add($"this.PeriodType = {(this.PeriodType == null ? "null" : this.PeriodType)}");
             toStringOutput.Add($"this.ExistingBalanceInCents = {(this.ExistingBalanceInCents == null ? "null" : this.ExistingBalanceInCents.ToString())}");
         }

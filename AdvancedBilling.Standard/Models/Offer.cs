@@ -23,7 +23,7 @@ namespace AdvancedBilling.Standard.Models
     public class Offer
     {
         private string description;
-        private string archivedAt;
+        private DateTimeOffset? archivedAt;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "description", false },
@@ -69,9 +69,9 @@ namespace AdvancedBilling.Standard.Models
             string name = null,
             string handle = null,
             string description = null,
-            string createdAt = null,
-            string updatedAt = null,
-            string archivedAt = null,
+            DateTimeOffset? createdAt = null,
+            DateTimeOffset? updatedAt = null,
+            DateTimeOffset? archivedAt = null,
             List<Models.OfferItem> offerItems = null,
             List<Models.OfferDiscount> offerDiscounts = null,
             string productFamilyName = null,
@@ -178,20 +178,23 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CreatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets UpdatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("updated_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string UpdatedAt { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets ArchivedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("archived_at")]
-        public string ArchivedAt
+        public DateTimeOffset? ArchivedAt
         {
             get
             {
@@ -339,9 +342,9 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
             toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
             toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
-            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt)}");
-            toStringOutput.Add($"this.ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt)}");
+            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
+            toStringOutput.Add($"this.ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt.ToString())}");
             toStringOutput.Add($"this.OfferItems = {(this.OfferItems == null ? "null" : $"[{string.Join(", ", this.OfferItems)} ]")}");
             toStringOutput.Add($"this.OfferDiscounts = {(this.OfferDiscounts == null ? "null" : $"[{string.Join(", ", this.OfferDiscounts)} ]")}");
             toStringOutput.Add($"this.ProductFamilyName = {(this.ProductFamilyName == null ? "null" : this.ProductFamilyName)}");

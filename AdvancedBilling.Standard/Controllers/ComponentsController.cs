@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
@@ -65,7 +64,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/product_families/{product_family_id}/metered_components.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
@@ -114,7 +113,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/product_families/{product_family_id}/quantity_based_components.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
@@ -153,7 +152,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/product_families/{product_family_id}/on_off_components.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
@@ -192,7 +191,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/product_families/{product_family_id}/prepaid_usage_components.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
@@ -233,7 +232,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/product_families/{product_family_id}/event_based_components.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
@@ -264,7 +263,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/components/lookup.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("handle", handle).Required())))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
@@ -296,7 +295,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/product_families/{product_family_id}/components/{component_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
                       .Template(_template => _template.Setup("component_id", componentId).Required())))
@@ -333,7 +332,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/product_families/{product_family_id}/components/{component_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
@@ -368,7 +367,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.Component>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/product_families/{product_family_id}/components/{component_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
                       .Template(_template => _template.Setup("component_id", componentId).Required())))
@@ -397,7 +396,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.ComponentResponse>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/components.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("start_date", input.StartDate))
@@ -438,7 +437,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/components/{component_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("component_id", componentId).Required())
@@ -476,7 +475,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/components/{component_id}/price_points/{price_point_id}/default.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("component_id", componentId))
                       .Template(_template => _template.Setup("price_point_id", pricePointId))))
@@ -503,7 +502,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.ComponentResponse>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/product_families/{product_family_id}/components.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_family_id", input.ProductFamilyId))
                       .Query(_query => _query.Setup("include_archived", input.IncludeArchived))
@@ -543,7 +542,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/components/{component_id}/price_points.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("component_id", componentId))
@@ -577,7 +576,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentPricePointsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/components/{component_id}/price_points.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("component_id", input.ComponentId))
                       .Query(_query => _query.Setup("currency_prices", input.CurrencyPrices))
@@ -611,7 +610,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentPricePointsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/components/{component_id}/price_points/bulk.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("component_id", componentId).Required())
@@ -653,7 +652,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/components/{component_id}/price_points/{price_point_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("component_id", componentId))
@@ -688,7 +687,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/components/{component_id}/price_points/{price_point_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("component_id", componentId))
                       .Template(_template => _template.Setup("price_point_id", pricePointId))))
@@ -721,7 +720,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/components/{component_id}/price_points/{price_point_id}/unarchive.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("component_id", componentId))
                       .Template(_template => _template.Setup("price_point_id", pricePointId))))
@@ -756,7 +755,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentCurrencyPricesResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/price_points/{price_point_id}/currency_prices.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("price_point_id", pricePointId))
@@ -792,7 +791,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ComponentCurrencyPricesResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/price_points/{price_point_id}/currency_prices.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("price_point_id", pricePointId))
@@ -822,7 +821,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ListComponentsPricePointsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/components_price_points.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("filter[date_field]", (input.FilterDateField.HasValue) ? ApiHelper.JsonSerialize(input.FilterDateField.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("filter[end_date]", input.FilterEndDate.HasValue ? input.FilterEndDate.Value.ToString("yyyy'-'MM'-'dd") : null))

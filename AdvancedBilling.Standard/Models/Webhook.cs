@@ -22,7 +22,7 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class Webhook
     {
-        private string acceptedAt;
+        private DateTimeOffset? acceptedAt;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "accepted_at", false },
@@ -52,12 +52,12 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="signatureHmacSha256">signature_hmac_sha_256.</param>
         public Webhook(
             string mEvent = null,
-            int? id = null,
-            string createdAt = null,
+            long? id = null,
+            DateTimeOffset? createdAt = null,
             string lastError = null,
-            string lastErrorAt = null,
-            string acceptedAt = null,
-            string lastSentAt = null,
+            DateTimeOffset? lastErrorAt = null,
+            DateTimeOffset? acceptedAt = null,
+            DateTimeOffset? lastSentAt = null,
             string lastSentUrl = null,
             bool? successful = null,
             string body = null,
@@ -92,13 +92,14 @@ namespace AdvancedBilling.Standard.Models
         /// The unique identifier for the webhooks (unique across all of Chargify). This is not changed on a retry/replay of the same webhook, so it may be used to avoid duplicate action for the same event.
         /// </summary>
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? Id { get; set; }
+        public long? Id { get; set; }
 
         /// <summary>
         /// Timestamp indicating when the webhook was created
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
         /// <summary>
         /// Text describing the status code and/or error from the last failed attempt to send the Webhook. When a webhook is retried and accepted, this field will be cleared.
@@ -109,14 +110,16 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Timestamp indicating when the last non-acceptance occurred. If a webhook is later resent and accepted, this field will be cleared.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("last_error_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string LastErrorAt { get; set; }
+        public DateTimeOffset? LastErrorAt { get; set; }
 
         /// <summary>
         /// Timestamp indicating when the webhook was accepted by the merchant endpoint. When a webhook is explicitly replayed by the merchant, this value will be cleared until it is accepted again.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("accepted_at")]
-        public string AcceptedAt
+        public DateTimeOffset? AcceptedAt
         {
             get
             {
@@ -133,8 +136,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Timestamp indicating when the most recent attempt was made to send the webhook
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("last_sent_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string LastSentAt { get; set; }
+        public DateTimeOffset? LastSentAt { get; set; }
 
         /// <summary>
         /// The url that the endpoint was last sent to.
@@ -227,11 +231,11 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.MEvent = {(this.MEvent == null ? "null" : this.MEvent)}");
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
+            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
             toStringOutput.Add($"this.LastError = {(this.LastError == null ? "null" : this.LastError)}");
-            toStringOutput.Add($"this.LastErrorAt = {(this.LastErrorAt == null ? "null" : this.LastErrorAt)}");
-            toStringOutput.Add($"this.AcceptedAt = {(this.AcceptedAt == null ? "null" : this.AcceptedAt)}");
-            toStringOutput.Add($"this.LastSentAt = {(this.LastSentAt == null ? "null" : this.LastSentAt)}");
+            toStringOutput.Add($"this.LastErrorAt = {(this.LastErrorAt == null ? "null" : this.LastErrorAt.ToString())}");
+            toStringOutput.Add($"this.AcceptedAt = {(this.AcceptedAt == null ? "null" : this.AcceptedAt.ToString())}");
+            toStringOutput.Add($"this.LastSentAt = {(this.LastSentAt == null ? "null" : this.LastSentAt.ToString())}");
             toStringOutput.Add($"this.LastSentUrl = {(this.LastSentUrl == null ? "null" : this.LastSentUrl)}");
             toStringOutput.Add($"this.Successful = {(this.Successful == null ? "null" : this.Successful.ToString())}");
             toStringOutput.Add($"this.Body = {(this.Body == null ? "null" : this.Body)}");

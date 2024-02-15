@@ -26,13 +26,13 @@ namespace AdvancedBilling.Standard.Models
         private double? amount;
         private int? amountInCents;
         private string productFamilyName;
-        private string endDate;
+        private DateTimeOffset? endDate;
         private string percentage;
         private int? durationPeriodCount;
         private int? durationInterval;
         private string durationIntervalUnit;
         private string durationIntervalSpan;
-        private string archivedAt;
+        private DateTimeOffset? archivedAt;
         private string conversionLimit;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
@@ -97,8 +97,8 @@ namespace AdvancedBilling.Standard.Models
             int? amountInCents = null,
             int? productFamilyId = null,
             string productFamilyName = null,
-            string startDate = null,
-            string endDate = null,
+            DateTimeOffset? startDate = null,
+            DateTimeOffset? endDate = null,
             string percentage = null,
             bool? recurring = null,
             Models.RecurringScheme? recurringScheme = null,
@@ -107,13 +107,13 @@ namespace AdvancedBilling.Standard.Models
             string durationIntervalUnit = null,
             string durationIntervalSpan = null,
             bool? allowNegativeBalance = null,
-            string archivedAt = null,
+            DateTimeOffset? archivedAt = null,
             string conversionLimit = null,
             bool? stackable = null,
             CouponCompoundingStrategy compoundingStrategy = null,
             bool? useSiteExchangeRate = null,
-            string createdAt = null,
-            string updatedAt = null,
+            DateTimeOffset? createdAt = null,
+            DateTimeOffset? updatedAt = null,
             Models.DiscountType? discountType = null,
             bool? excludeMidPeriodAllocations = null,
             bool? applyOnCancelAtEndOfPeriod = null,
@@ -281,14 +281,16 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets StartDate.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("start_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string StartDate { get; set; }
+        public DateTimeOffset? StartDate { get; set; }
 
         /// <summary>
         /// Gets or sets EndDate.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("end_date")]
-        public string EndDate
+        public DateTimeOffset? EndDate
         {
             get
             {
@@ -413,8 +415,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets ArchivedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("archived_at")]
-        public string ArchivedAt
+        public DateTimeOffset? ArchivedAt
         {
             get
             {
@@ -467,14 +470,16 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CreatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets UpdatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("updated_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string UpdatedAt { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets DiscountType.
@@ -754,8 +759,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
             toStringOutput.Add($"this.ProductFamilyId = {(this.ProductFamilyId == null ? "null" : this.ProductFamilyId.ToString())}");
             toStringOutput.Add($"this.ProductFamilyName = {(this.ProductFamilyName == null ? "null" : this.ProductFamilyName)}");
-            toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate)}");
-            toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate)}");
+            toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate.ToString())}");
+            toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate.ToString())}");
             toStringOutput.Add($"this.Percentage = {(this.Percentage == null ? "null" : this.Percentage)}");
             toStringOutput.Add($"this.Recurring = {(this.Recurring == null ? "null" : this.Recurring.ToString())}");
             toStringOutput.Add($"this.RecurringScheme = {(this.RecurringScheme == null ? "null" : this.RecurringScheme.ToString())}");
@@ -764,13 +769,13 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.DurationIntervalUnit = {(this.DurationIntervalUnit == null ? "null" : this.DurationIntervalUnit)}");
             toStringOutput.Add($"this.DurationIntervalSpan = {(this.DurationIntervalSpan == null ? "null" : this.DurationIntervalSpan)}");
             toStringOutput.Add($"this.AllowNegativeBalance = {(this.AllowNegativeBalance == null ? "null" : this.AllowNegativeBalance.ToString())}");
-            toStringOutput.Add($"this.ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt)}");
+            toStringOutput.Add($"this.ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt.ToString())}");
             toStringOutput.Add($"this.ConversionLimit = {(this.ConversionLimit == null ? "null" : this.ConversionLimit)}");
             toStringOutput.Add($"this.Stackable = {(this.Stackable == null ? "null" : this.Stackable.ToString())}");
             toStringOutput.Add($"CompoundingStrategy = {(this.CompoundingStrategy == null ? "null" : this.CompoundingStrategy.ToString())}");
             toStringOutput.Add($"this.UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
-            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt)}");
+            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
             toStringOutput.Add($"this.DiscountType = {(this.DiscountType == null ? "null" : this.DiscountType.ToString())}");
             toStringOutput.Add($"this.ExcludeMidPeriodAllocations = {(this.ExcludeMidPeriodAllocations == null ? "null" : this.ExcludeMidPeriodAllocations.ToString())}");
             toStringOutput.Add($"this.ApplyOnCancelAtEndOfPeriod = {(this.ApplyOnCancelAtEndOfPeriod == null ? "null" : this.ApplyOnCancelAtEndOfPeriod.ToString())}");

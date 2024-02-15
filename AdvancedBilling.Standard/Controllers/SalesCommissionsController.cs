@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
     using APIMatic.Core;
@@ -66,7 +65,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.SaleRepSettings>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/sellers/{seller_id}/sales_commission_settings.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("seller_id", input.SellerId).Required())
                       .Header(_header => _header.Setup("Authorization", input.Authorization))
@@ -108,7 +107,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.ListSaleRepItem>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/sellers/{seller_id}/sales_reps.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("seller_id", input.SellerId).Required())
                       .Header(_header => _header.Setup("Authorization", input.Authorization))
@@ -170,7 +169,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.SaleRep>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/sellers/{seller_id}/sales_reps/{sales_rep_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("seller_id", sellerId).Required())
                       .Template(_template => _template.Setup("sales_rep_id", salesRepId).Required())

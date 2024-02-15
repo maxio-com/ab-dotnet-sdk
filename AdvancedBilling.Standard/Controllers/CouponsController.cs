@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
@@ -77,7 +76,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CouponResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/product_families/{product_family_id}/coupons.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
@@ -109,7 +108,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.CouponResponse>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/product_families/{product_family_id}/coupons.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_family_id", input.ProductFamilyId))
                       .Query(_query => _query.Setup("page", input.Page))
@@ -152,7 +151,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CouponResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/coupons/find.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("product_family_id", productFamilyId))
                       .Query(_query => _query.Setup("code", code))))
@@ -189,7 +188,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CouponResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/product_families/{product_family_id}/coupons/{coupon_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
                       .Template(_template => _template.Setup("coupon_id", couponId))))
@@ -234,7 +233,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CouponResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/product_families/{product_family_id}/coupons/{coupon_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
@@ -271,7 +270,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CouponResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/product_families/{product_family_id}/coupons/{coupon_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
                       .Template(_template => _template.Setup("coupon_id", couponId))))
@@ -300,7 +299,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.CouponResponse>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/coupons.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))
@@ -345,7 +344,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.CouponUsage>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/product_families/{product_family_id}/coupons/{coupon_id}/usage.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
                       .Template(_template => _template.Setup("coupon_id", couponId))))
@@ -406,7 +405,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CouponResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/coupons/validate.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("code", code).Required())
                       .Query(_query => _query.Setup("product_family_id", productFamilyId))))
@@ -441,7 +440,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CouponCurrencyResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/coupons/{coupon_id}/currency_prices.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("coupon_id", couponId))
@@ -523,7 +522,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CouponSubcodesResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/coupons/{coupon_id}/codes.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("coupon_id", couponId))
@@ -551,7 +550,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CouponSubcodes>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/coupons/{coupon_id}/codes.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("coupon_id", input.CouponId))
                       .Query(_query => _query.Setup("page", input.Page))
@@ -595,7 +594,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CouponSubcodesResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/coupons/{coupon_id}/codes.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("coupon_id", couponId))
@@ -660,7 +659,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<VoidType>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/coupons/{coupon_id}/codes/{subcode}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("coupon_id", couponId))
                       .Template(_template => _template.Setup("subcode", subcode).Required())))

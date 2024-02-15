@@ -22,6 +22,16 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class ProformaInvoice
     {
+        private int? number;
+        private int? sequenceNumber;
+        private string publicUrl;
+        private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
+        {
+            { "number", false },
+            { "sequence_number", false },
+            { "public_url", false },
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ProformaInvoice"/> class.
         /// </summary>
@@ -75,8 +85,8 @@ namespace AdvancedBilling.Standard.Models
             int? subscriptionId = null,
             int? number = null,
             int? sequenceNumber = null,
-            string createdAt = null,
-            string deliveryDate = null,
+            DateTimeOffset? createdAt = null,
+            DateTime? deliveryDate = null,
             string status = null,
             string collectionMethod = null,
             string paymentInstructions = null,
@@ -110,8 +120,16 @@ namespace AdvancedBilling.Standard.Models
             this.SiteId = siteId;
             this.CustomerId = customerId;
             this.SubscriptionId = subscriptionId;
-            this.Number = number;
-            this.SequenceNumber = sequenceNumber;
+            if (number != null)
+            {
+                this.Number = number;
+            }
+
+            if (sequenceNumber != null)
+            {
+                this.SequenceNumber = sequenceNumber;
+            }
+
             this.CreatedAt = createdAt;
             this.DeliveryDate = deliveryDate;
             this.Status = status;
@@ -141,7 +159,11 @@ namespace AdvancedBilling.Standard.Models
             this.Credits = credits;
             this.Payments = payments;
             this.CustomFields = customFields;
-            this.PublicUrl = publicUrl;
+            if (publicUrl != null)
+            {
+                this.PublicUrl = publicUrl;
+            }
+
         }
 
         /// <summary>
@@ -171,26 +193,52 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets Number.
         /// </summary>
-        [JsonProperty("number", NullValueHandling = NullValueHandling.Ignore)]
-        public int? Number { get; set; }
+        [JsonProperty("number")]
+        public int? Number
+        {
+            get
+            {
+                return this.number;
+            }
+
+            set
+            {
+                this.shouldSerialize["number"] = true;
+                this.number = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets SequenceNumber.
         /// </summary>
-        [JsonProperty("sequence_number", NullValueHandling = NullValueHandling.Ignore)]
-        public int? SequenceNumber { get; set; }
+        [JsonProperty("sequence_number")]
+        public int? SequenceNumber
+        {
+            get
+            {
+                return this.sequenceNumber;
+            }
+
+            set
+            {
+                this.shouldSerialize["sequence_number"] = true;
+                this.sequenceNumber = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets CreatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets DeliveryDate.
         /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("delivery_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string DeliveryDate { get; set; }
+        public DateTime? DeliveryDate { get; set; }
 
         /// <summary>
         /// Gets or sets Status.
@@ -357,8 +405,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets PublicUrl.
         /// </summary>
-        [JsonProperty("public_url", NullValueHandling = NullValueHandling.Ignore)]
-        public string PublicUrl { get; set; }
+        [JsonProperty("public_url")]
+        public string PublicUrl
+        {
+            get
+            {
+                return this.publicUrl;
+            }
+
+            set
+            {
+                this.shouldSerialize["public_url"] = true;
+                this.publicUrl = value;
+            }
+        }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -368,6 +428,57 @@ namespace AdvancedBilling.Standard.Models
             this.ToString(toStringOutput);
 
             return $"ProformaInvoice : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetNumber()
+        {
+            this.shouldSerialize["number"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetSequenceNumber()
+        {
+            this.shouldSerialize["sequence_number"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetPublicUrl()
+        {
+            this.shouldSerialize["public_url"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeNumber()
+        {
+            return this.shouldSerialize["number"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeSequenceNumber()
+        {
+            return this.shouldSerialize["sequence_number"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializePublicUrl()
+        {
+            return this.shouldSerialize["public_url"];
         }
 
         /// <inheritdoc/>
@@ -432,8 +543,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
             toStringOutput.Add($"this.Number = {(this.Number == null ? "null" : this.Number.ToString())}");
             toStringOutput.Add($"this.SequenceNumber = {(this.SequenceNumber == null ? "null" : this.SequenceNumber.ToString())}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
-            toStringOutput.Add($"this.DeliveryDate = {(this.DeliveryDate == null ? "null" : this.DeliveryDate)}");
+            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"this.DeliveryDate = {(this.DeliveryDate == null ? "null" : this.DeliveryDate.ToString())}");
             toStringOutput.Add($"this.Status = {(this.Status == null ? "null" : this.Status)}");
             toStringOutput.Add($"this.CollectionMethod = {(this.CollectionMethod == null ? "null" : this.CollectionMethod)}");
             toStringOutput.Add($"this.PaymentInstructions = {(this.PaymentInstructions == null ? "null" : this.PaymentInstructions)}");

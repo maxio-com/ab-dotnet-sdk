@@ -51,9 +51,9 @@ namespace AdvancedBilling.Standard.Models
             string uid,
             string number,
             string role,
-            string dueDate,
-            string issueDate,
-            string paidDate,
+            DateTime dueDate,
+            DateTime issueDate,
+            DateTime paidDate,
             string dueAmount,
             string paidAmount,
             string taxAmount,
@@ -108,26 +108,26 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets DueDate.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("due_date")]
         [JsonRequired]
-        public string DueDate { get; set; }
+        public DateTime DueDate { get; set; }
 
         /// <summary>
         /// Gets or sets IssueDate.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("issue_date")]
         [JsonRequired]
-        public string IssueDate { get; set; }
+        public DateTime IssueDate { get; set; }
 
         /// <summary>
         /// Gets or sets PaidDate.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("paid_date")]
         [JsonRequired]
-        public string PaidDate { get; set; }
+        public DateTime PaidDate { get; set; }
 
         /// <summary>
         /// Gets or sets DueAmount.
@@ -225,9 +225,9 @@ namespace AdvancedBilling.Standard.Models
             return obj is InvoiceIssued other &&                ((this.Uid == null && other.Uid == null) || (this.Uid?.Equals(other.Uid) == true)) &&
                 ((this.Number == null && other.Number == null) || (this.Number?.Equals(other.Number) == true)) &&
                 ((this.Role == null && other.Role == null) || (this.Role?.Equals(other.Role) == true)) &&
-                ((this.DueDate == null && other.DueDate == null) || (this.DueDate?.Equals(other.DueDate) == true)) &&
-                ((this.IssueDate == null && other.IssueDate == null) || (this.IssueDate?.Equals(other.IssueDate) == true)) &&
-                ((this.PaidDate == null && other.PaidDate == null) || (this.PaidDate?.Equals(other.PaidDate) == true)) &&
+                this.DueDate.Equals(other.DueDate) &&
+                this.IssueDate.Equals(other.IssueDate) &&
+                this.PaidDate.Equals(other.PaidDate) &&
                 ((this.DueAmount == null && other.DueAmount == null) || (this.DueAmount?.Equals(other.DueAmount) == true)) &&
                 ((this.PaidAmount == null && other.PaidAmount == null) || (this.PaidAmount?.Equals(other.PaidAmount) == true)) &&
                 ((this.TaxAmount == null && other.TaxAmount == null) || (this.TaxAmount?.Equals(other.TaxAmount) == true)) &&
@@ -248,9 +248,9 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
             toStringOutput.Add($"this.Number = {(this.Number == null ? "null" : this.Number)}");
             toStringOutput.Add($"this.Role = {(this.Role == null ? "null" : this.Role)}");
-            toStringOutput.Add($"this.DueDate = {(this.DueDate == null ? "null" : this.DueDate)}");
-            toStringOutput.Add($"this.IssueDate = {(this.IssueDate == null ? "null" : this.IssueDate)}");
-            toStringOutput.Add($"this.PaidDate = {(this.PaidDate == null ? "null" : this.PaidDate)}");
+            toStringOutput.Add($"this.DueDate = {this.DueDate}");
+            toStringOutput.Add($"this.IssueDate = {this.IssueDate}");
+            toStringOutput.Add($"this.PaidDate = {this.PaidDate}");
             toStringOutput.Add($"this.DueAmount = {(this.DueAmount == null ? "null" : this.DueAmount)}");
             toStringOutput.Add($"this.PaidAmount = {(this.PaidAmount == null ? "null" : this.PaidAmount)}");
             toStringOutput.Add($"this.TaxAmount = {(this.TaxAmount == null ? "null" : this.TaxAmount)}");

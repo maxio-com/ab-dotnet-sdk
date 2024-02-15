@@ -40,7 +40,7 @@ namespace AdvancedBilling.Standard.Models
             string amount,
             string memo,
             string paymentDetails,
-            string paymentMethod)
+            Models.InvoicePaymentMethodType paymentMethod)
         {
             this.Amount = amount;
             this.Memo = memo;
@@ -67,10 +67,10 @@ namespace AdvancedBilling.Standard.Models
         public string PaymentDetails { get; set; }
 
         /// <summary>
-        /// Gets or sets PaymentMethod.
+        /// The type of payment method used. Defaults to other.
         /// </summary>
         [JsonProperty("payment_method")]
-        public string PaymentMethod { get; set; }
+        public Models.InvoicePaymentMethodType PaymentMethod { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -97,7 +97,7 @@ namespace AdvancedBilling.Standard.Models
             return obj is CreatePayment other &&                ((this.Amount == null && other.Amount == null) || (this.Amount?.Equals(other.Amount) == true)) &&
                 ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
                 ((this.PaymentDetails == null && other.PaymentDetails == null) || (this.PaymentDetails?.Equals(other.PaymentDetails) == true)) &&
-                ((this.PaymentMethod == null && other.PaymentMethod == null) || (this.PaymentMethod?.Equals(other.PaymentMethod) == true));
+                this.PaymentMethod.Equals(other.PaymentMethod);
         }
         
         /// <summary>
@@ -109,7 +109,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Amount = {(this.Amount == null ? "null" : this.Amount)}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.PaymentDetails = {(this.PaymentDetails == null ? "null" : this.PaymentDetails)}");
-            toStringOutput.Add($"this.PaymentMethod = {(this.PaymentMethod == null ? "null" : this.PaymentMethod)}");
+            toStringOutput.Add($"this.PaymentMethod = {this.PaymentMethod}");
         }
     }
 }

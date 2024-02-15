@@ -34,7 +34,7 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         /// <param name="expiresAt">expires_at.</param>
         public AllocationExpirationDate(
-            string expiresAt = null)
+            DateTimeOffset? expiresAt = null)
         {
             this.ExpiresAt = expiresAt;
         }
@@ -42,8 +42,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets ExpiresAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("expires_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string ExpiresAt { get; set; }
+        public DateTimeOffset? ExpiresAt { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -76,7 +77,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt)}");
+            toStringOutput.Add($"this.ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt.ToString())}");
         }
     }
 }

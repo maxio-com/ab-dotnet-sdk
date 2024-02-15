@@ -36,7 +36,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="cancelsAt">cancels_at.</param>
         public PendingCancellationChange(
             string cancellationState,
-            string cancelsAt)
+            DateTimeOffset cancelsAt)
         {
             this.CancellationState = cancellationState;
             this.CancelsAt = cancelsAt;
@@ -53,10 +53,10 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CancelsAt.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("cancels_at")]
         [JsonRequired]
-        public string CancelsAt { get; set; }
+        public DateTimeOffset CancelsAt { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -81,7 +81,7 @@ namespace AdvancedBilling.Standard.Models
                 return true;
             }
             return obj is PendingCancellationChange other &&                ((this.CancellationState == null && other.CancellationState == null) || (this.CancellationState?.Equals(other.CancellationState) == true)) &&
-                ((this.CancelsAt == null && other.CancelsAt == null) || (this.CancelsAt?.Equals(other.CancelsAt) == true));
+                this.CancelsAt.Equals(other.CancelsAt);
         }
         
         /// <summary>
@@ -91,7 +91,7 @@ namespace AdvancedBilling.Standard.Models
         protected void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.CancellationState = {(this.CancellationState == null ? "null" : this.CancellationState)}");
-            toStringOutput.Add($"this.CancelsAt = {(this.CancelsAt == null ? "null" : this.CancelsAt)}");
+            toStringOutput.Add($"this.CancelsAt = {this.CancelsAt}");
         }
     }
 }

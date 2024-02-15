@@ -42,9 +42,9 @@ namespace AdvancedBilling.Standard.Models
             string state,
             int subscriptionId,
             long revenueAtRiskInCents,
-            string createdAt,
+            DateTimeOffset createdAt,
             int attempts,
-            string lastAttemptedAt)
+            DateTimeOffset lastAttemptedAt)
         {
             this.State = state;
             this.SubscriptionId = subscriptionId;
@@ -75,8 +75,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CreatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at")]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets Attempts.
@@ -87,8 +88,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets LastAttemptedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("last_attempted_at")]
-        public string LastAttemptedAt { get; set; }
+        public DateTimeOffset LastAttemptedAt { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -115,9 +117,9 @@ namespace AdvancedBilling.Standard.Models
             return obj is DunnerData other &&                ((this.State == null && other.State == null) || (this.State?.Equals(other.State) == true)) &&
                 this.SubscriptionId.Equals(other.SubscriptionId) &&
                 this.RevenueAtRiskInCents.Equals(other.RevenueAtRiskInCents) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true)) &&
+                this.CreatedAt.Equals(other.CreatedAt) &&
                 this.Attempts.Equals(other.Attempts) &&
-                ((this.LastAttemptedAt == null && other.LastAttemptedAt == null) || (this.LastAttemptedAt?.Equals(other.LastAttemptedAt) == true));
+                this.LastAttemptedAt.Equals(other.LastAttemptedAt);
         }
         
         /// <summary>
@@ -129,9 +131,9 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.State = {(this.State == null ? "null" : this.State)}");
             toStringOutput.Add($"this.SubscriptionId = {this.SubscriptionId}");
             toStringOutput.Add($"this.RevenueAtRiskInCents = {this.RevenueAtRiskInCents}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
+            toStringOutput.Add($"this.CreatedAt = {this.CreatedAt}");
             toStringOutput.Add($"this.Attempts = {this.Attempts}");
-            toStringOutput.Add($"this.LastAttemptedAt = {(this.LastAttemptedAt == null ? "null" : this.LastAttemptedAt)}");
+            toStringOutput.Add($"this.LastAttemptedAt = {this.LastAttemptedAt}");
         }
     }
 }

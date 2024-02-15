@@ -16,10 +16,10 @@
 | `RevenueThisMonth` | `string` | Optional | - |
 | `RevenueThisYear` | `string` | Optional | - |
 | `TotalCanceledSubscriptions` | `int?` | Optional | - |
-| `TotalActiveSubscriptions` | `double?` | Optional | - |
-| `TotalPastDueSubscriptions` | `double?` | Optional | - |
-| `TotalUnpaidSubscriptions` | `double?` | Optional | - |
-| `TotalDunningSubscriptions` | `double?` | Optional | - |
+| `TotalActiveSubscriptions` | `int?` | Optional | - |
+| `TotalPastDueSubscriptions` | `int?` | Optional | - |
+| `TotalUnpaidSubscriptions` | `int?` | Optional | - |
+| `TotalDunningSubscriptions` | `int?` | Optional | - |
 
 ## Example (as JSON)
 

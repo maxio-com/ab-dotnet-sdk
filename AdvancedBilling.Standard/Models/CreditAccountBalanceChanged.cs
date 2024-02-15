@@ -42,7 +42,7 @@ namespace AdvancedBilling.Standard.Models
             long serviceCreditAccountBalanceInCents,
             long serviceCreditBalanceChangeInCents,
             string currencyCode,
-            string atTime)
+            DateTimeOffset atTime)
         {
             this.Reason = reason;
             this.ServiceCreditAccountBalanceInCents = serviceCreditAccountBalanceInCents;
@@ -84,10 +84,10 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets AtTime.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("at_time")]
         [JsonRequired]
-        public string AtTime { get; set; }
+        public DateTimeOffset AtTime { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -115,7 +115,7 @@ namespace AdvancedBilling.Standard.Models
                 this.ServiceCreditAccountBalanceInCents.Equals(other.ServiceCreditAccountBalanceInCents) &&
                 this.ServiceCreditBalanceChangeInCents.Equals(other.ServiceCreditBalanceChangeInCents) &&
                 ((this.CurrencyCode == null && other.CurrencyCode == null) || (this.CurrencyCode?.Equals(other.CurrencyCode) == true)) &&
-                ((this.AtTime == null && other.AtTime == null) || (this.AtTime?.Equals(other.AtTime) == true));
+                this.AtTime.Equals(other.AtTime);
         }
         
         /// <summary>
@@ -128,7 +128,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ServiceCreditAccountBalanceInCents = {this.ServiceCreditAccountBalanceInCents}");
             toStringOutput.Add($"this.ServiceCreditBalanceChangeInCents = {this.ServiceCreditBalanceChangeInCents}");
             toStringOutput.Add($"this.CurrencyCode = {(this.CurrencyCode == null ? "null" : this.CurrencyCode)}");
-            toStringOutput.Add($"this.AtTime = {(this.AtTime == null ? "null" : this.AtTime)}");
+            toStringOutput.Add($"this.AtTime = {this.AtTime}");
         }
     }
 }

@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Models.Containers;
@@ -60,7 +59,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProductPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/products/{product_id}/price_points.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_id", productId).Required())
@@ -90,7 +89,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ListProductPricePointsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/products/{product_id}/price_points.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_id", input.ProductId).Required())
                       .Query(_query => _query.Setup("page", input.Page))
@@ -130,7 +129,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProductPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/products/{product_id}/price_points/{price_point_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_id", productId).Required())
@@ -167,7 +166,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProductPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/products/{product_id}/price_points/{price_point_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_id", productId).Required())
                       .Template(_template => _template.Setup("price_point_id", pricePointId).Required())
@@ -199,7 +198,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProductPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/products/{product_id}/price_points/{price_point_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_id", productId).Required())
                       .Template(_template => _template.Setup("price_point_id", pricePointId).Required())))
@@ -232,7 +231,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProductPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(new HttpMethod("PATCH"), "/products/{product_id}/price_points/{price_point_id}/unarchive.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_id", productId))
                       .Template(_template => _template.Setup("price_point_id", pricePointId))))
@@ -265,7 +264,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProductResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(new HttpMethod("PATCH"), "/products/{product_id}/price_points/{price_point_id}/default.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_id", productId))
                       .Template(_template => _template.Setup("price_point_id", pricePointId))))
@@ -296,7 +295,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.BulkCreateProductPricePointsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/products/{product_id}/price_points/bulk.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_id", productId))
@@ -334,7 +333,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CurrencyPricesResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/product_price_points/{product_price_point_id}/currency_prices.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_price_point_id", productPricePointId))
@@ -372,7 +371,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CurrencyPricesResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/product_price_points/{product_price_point_id}/currency_prices.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_price_point_id", productPricePointId))
@@ -402,7 +401,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ListProductPricePointsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/products_price_points.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("filter[archived_at]", (input.FilterArchivedAt.HasValue) ? ApiHelper.JsonSerialize(input.FilterArchivedAt.Value).Trim('\"') : null))

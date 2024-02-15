@@ -12,7 +12,7 @@
 | `Id` | `int?` | Optional | - |
 | `EventType` | [`InvoiceEventType?`](../../doc/models/invoice-event-type.md) | Optional | Invoice Event Type |
 | `EventData` | [`InvoiceEventEventData`](../../doc/models/containers/invoice-event-event-data.md) | Optional | This is a container for any-of cases. |
-| `Timestamp` | `string` | Optional | - |
+| `Timestamp` | `DateTimeOffset?` | Optional | - |
 | `Invoice` | [`Invoice`](../../doc/models/invoice.md) | Optional | - |
 
 ## Example (as JSON)
@@ -42,7 +42,7 @@
       }
     ]
   },
-  "timestamp": "timestamp8",
+  "timestamp": "2016-03-13T12:52:32.123Z",
   "invoice": {
     "id": 166,
     "uid": "uid6",

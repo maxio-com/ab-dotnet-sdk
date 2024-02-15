@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
@@ -61,7 +60,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.ProformaInvoice>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/api_exports/proforma_invoices/{batch_id}/rows.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("batch_id", input.BatchId).Required())
                       .Query(_query => _query.Setup("per_page", input.PerPage))
@@ -97,7 +96,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.Invoice>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/api_exports/invoices/{batch_id}/rows.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("batch_id", input.BatchId).Required())
                       .Query(_query => _query.Setup("per_page", input.PerPage))
@@ -133,7 +132,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.Subscription>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/api_exports/subscriptions/{batch_id}/rows.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("batch_id", input.BatchId).Required())
                       .Query(_query => _query.Setup("per_page", input.PerPage))
@@ -160,7 +159,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.BatchJobResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/api_exports/proforma_invoices.json")
-                  .WithAuth("global"))
+                  .WithAuth("BasicAuth"))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
                   .ErrorCase("409", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SingleErrorResponseException(_reason, _context), true)))
@@ -182,7 +181,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.BatchJobResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/api_exports/invoices.json")
-                  .WithAuth("global"))
+                  .WithAuth("BasicAuth"))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
                   .ErrorCase("409", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SingleErrorResponseException(_reason, _context), true)))
@@ -204,7 +203,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.BatchJobResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/api_exports/subscriptions.json")
-                  .WithAuth("global"))
+                  .WithAuth("BasicAuth"))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("409", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SingleErrorResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
@@ -230,7 +229,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.BatchJobResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/api_exports/proforma_invoices/{batch_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("batch_id", batchId).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
@@ -258,7 +257,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.BatchJobResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/api_exports/invoices/{batch_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("batch_id", batchId).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
@@ -286,7 +285,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.BatchJobResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/api_exports/subscriptions/{batch_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("batch_id", batchId).Required())))
               .ResponseHandler(_responseHandler => _responseHandler

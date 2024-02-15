@@ -47,8 +47,8 @@ namespace AdvancedBilling.Standard.Models
             string uid,
             string number,
             string role,
-            string deliveryDate,
-            string createdAt,
+            DateTime deliveryDate,
+            DateTimeOffset createdAt,
             string dueAmount,
             string paidAmount,
             string taxAmount,
@@ -96,18 +96,18 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets DeliveryDate.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("delivery_date")]
         [JsonRequired]
-        public string DeliveryDate { get; set; }
+        public DateTime DeliveryDate { get; set; }
 
         /// <summary>
         /// Gets or sets CreatedAt.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at")]
         [JsonRequired]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets DueAmount.
@@ -181,8 +181,8 @@ namespace AdvancedBilling.Standard.Models
             return obj is ProformaInvoiceIssued other &&                ((this.Uid == null && other.Uid == null) || (this.Uid?.Equals(other.Uid) == true)) &&
                 ((this.Number == null && other.Number == null) || (this.Number?.Equals(other.Number) == true)) &&
                 ((this.Role == null && other.Role == null) || (this.Role?.Equals(other.Role) == true)) &&
-                ((this.DeliveryDate == null && other.DeliveryDate == null) || (this.DeliveryDate?.Equals(other.DeliveryDate) == true)) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true)) &&
+                this.DeliveryDate.Equals(other.DeliveryDate) &&
+                this.CreatedAt.Equals(other.CreatedAt) &&
                 ((this.DueAmount == null && other.DueAmount == null) || (this.DueAmount?.Equals(other.DueAmount) == true)) &&
                 ((this.PaidAmount == null && other.PaidAmount == null) || (this.PaidAmount?.Equals(other.PaidAmount) == true)) &&
                 ((this.TaxAmount == null && other.TaxAmount == null) || (this.TaxAmount?.Equals(other.TaxAmount) == true)) &&
@@ -200,8 +200,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
             toStringOutput.Add($"this.Number = {(this.Number == null ? "null" : this.Number)}");
             toStringOutput.Add($"this.Role = {(this.Role == null ? "null" : this.Role)}");
-            toStringOutput.Add($"this.DeliveryDate = {(this.DeliveryDate == null ? "null" : this.DeliveryDate)}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
+            toStringOutput.Add($"this.DeliveryDate = {this.DeliveryDate}");
+            toStringOutput.Add($"this.CreatedAt = {this.CreatedAt}");
             toStringOutput.Add($"this.DueAmount = {(this.DueAmount == null ? "null" : this.DueAmount)}");
             toStringOutput.Add($"this.PaidAmount = {(this.PaidAmount == null ? "null" : this.PaidAmount)}");
             toStringOutput.Add($"this.TaxAmount = {(this.TaxAmount == null ? "null" : this.TaxAmount)}");

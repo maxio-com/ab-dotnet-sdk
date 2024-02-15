@@ -22,7 +22,7 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class PortalManagementLink
     {
-        private string lastInviteSentAt;
+        private DateTimeOffset? lastInviteSentAt;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "last_invite_sent_at", false },
@@ -47,10 +47,10 @@ namespace AdvancedBilling.Standard.Models
         public PortalManagementLink(
             string url = null,
             int? fetchCount = null,
-            string createdAt = null,
-            string newLinkAvailableAt = null,
-            string expiresAt = null,
-            string lastInviteSentAt = null)
+            DateTimeOffset? createdAt = null,
+            DateTimeOffset? newLinkAvailableAt = null,
+            DateTimeOffset? expiresAt = null,
+            DateTimeOffset? lastInviteSentAt = null)
         {
             this.Url = url;
             this.FetchCount = fetchCount;
@@ -79,26 +79,30 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CreatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets NewLinkAvailableAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("new_link_available_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string NewLinkAvailableAt { get; set; }
+        public DateTimeOffset? NewLinkAvailableAt { get; set; }
 
         /// <summary>
         /// Gets or sets ExpiresAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("expires_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string ExpiresAt { get; set; }
+        public DateTimeOffset? ExpiresAt { get; set; }
 
         /// <summary>
         /// Gets or sets LastInviteSentAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("last_invite_sent_at")]
-        public string LastInviteSentAt
+        public DateTimeOffset? LastInviteSentAt
         {
             get
             {
@@ -167,10 +171,10 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.Url = {(this.Url == null ? "null" : this.Url)}");
             toStringOutput.Add($"this.FetchCount = {(this.FetchCount == null ? "null" : this.FetchCount.ToString())}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
-            toStringOutput.Add($"this.NewLinkAvailableAt = {(this.NewLinkAvailableAt == null ? "null" : this.NewLinkAvailableAt)}");
-            toStringOutput.Add($"this.ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt)}");
-            toStringOutput.Add($"this.LastInviteSentAt = {(this.LastInviteSentAt == null ? "null" : this.LastInviteSentAt)}");
+            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"this.NewLinkAvailableAt = {(this.NewLinkAvailableAt == null ? "null" : this.NewLinkAvailableAt.ToString())}");
+            toStringOutput.Add($"this.ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt.ToString())}");
+            toStringOutput.Add($"this.LastInviteSentAt = {(this.LastInviteSentAt == null ? "null" : this.LastInviteSentAt.ToString())}");
         }
     }
 }

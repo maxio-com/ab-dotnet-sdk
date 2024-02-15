@@ -49,7 +49,7 @@ namespace AdvancedBilling.Standard.Models
             long remainingAmountInCents,
             bool external,
             string memo,
-            string createdAt,
+            DateTimeOffset createdAt,
             long? refundedAmountInCents = null,
             string details = null,
             Models.PrepaymentMethod? paymentType = null)
@@ -123,8 +123,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CreatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at")]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -157,7 +158,7 @@ namespace AdvancedBilling.Standard.Models
                 this.External.Equals(other.External) &&
                 ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
                 ((this.PaymentType == null && other.PaymentType == null) || (this.PaymentType?.Equals(other.PaymentType) == true)) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true));
+                this.CreatedAt.Equals(other.CreatedAt);
         }
         
         /// <summary>
@@ -175,7 +176,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.External = {this.External}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
+            toStringOutput.Add($"this.CreatedAt = {this.CreatedAt}");
         }
     }
 }

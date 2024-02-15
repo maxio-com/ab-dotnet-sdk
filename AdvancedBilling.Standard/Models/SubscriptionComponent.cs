@@ -27,7 +27,7 @@ namespace AdvancedBilling.Standard.Models
         private string componentHandle;
         private Models.CreditType? upgradeCharge;
         private Models.CreditType? downgradeCredit;
-        private string archivedAt;
+        private DateTimeOffset? archivedAt;
         private int? pricePointId;
         private string pricePointHandle;
         private string pricePointName;
@@ -104,7 +104,7 @@ namespace AdvancedBilling.Standard.Models
             bool? recurring = null,
             Models.CreditType? upgradeCharge = null,
             Models.CreditType? downgradeCredit = null,
-            string archivedAt = null,
+            DateTimeOffset? archivedAt = null,
             int? pricePointId = null,
             string pricePointHandle = null,
             SubscriptionComponentPricePointType pricePointType = null,
@@ -337,8 +337,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets ArchivedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("archived_at")]
-        public string ArchivedAt
+        public DateTimeOffset? ArchivedAt
         {
             get
             {
@@ -750,7 +751,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Recurring = {(this.Recurring == null ? "null" : this.Recurring.ToString())}");
             toStringOutput.Add($"this.UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
             toStringOutput.Add($"this.DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
-            toStringOutput.Add($"this.ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt)}");
+            toStringOutput.Add($"this.ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt.ToString())}");
             toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
             toStringOutput.Add($"this.PricePointHandle = {(this.PricePointHandle == null ? "null" : this.PricePointHandle)}");
             toStringOutput.Add($"PricePointType = {(this.PricePointType == null ? "null" : this.PricePointType.ToString())}");

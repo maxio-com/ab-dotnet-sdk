@@ -1141,6 +1141,12 @@ catch (ApiException e)
 }
 ```
 
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
 
 # Record Payment for Multiple Invoices
 
@@ -1697,7 +1703,9 @@ catch (ApiException e)
       "product_id": 85,
       "product_version": 1,
       "component_id": 81,
-      "price_point_id": 165
+      "price_point_id": 165,
+      "billing_schedule_item_id": null,
+      "custom_item": false
     },
     {
       "uid": "cnli_8kjttvjcjx8b4",
@@ -1715,7 +1723,9 @@ catch (ApiException e)
       "product_id": 85,
       "product_version": 1,
       "component_id": null,
-      "price_point_id": null
+      "price_point_id": null,
+      "billing_schedule_item_id": null,
+      "custom_item": false
     },
     {
       "uid": "cnli_8kjttvjknzhx7",
@@ -1733,7 +1743,9 @@ catch (ApiException e)
       "product_id": 85,
       "product_version": 1,
       "component_id": 78,
-      "price_point_id": null
+      "price_point_id": null,
+      "billing_schedule_item_id": null,
+      "custom_item": false
     },
     {
       "uid": "cnli_8kjttvjnmh25w",
@@ -1751,7 +1763,9 @@ catch (ApiException e)
       "product_id": 85,
       "product_version": 1,
       "component_id": 79,
-      "price_point_id": null
+      "price_point_id": null,
+      "billing_schedule_item_id": null,
+      "custom_item": false
     },
     {
       "uid": "cnli_8kjttvjqn86kc",
@@ -1769,7 +1783,9 @@ catch (ApiException e)
       "product_id": 85,
       "product_version": 1,
       "component_id": 80,
-      "price_point_id": null
+      "price_point_id": null,
+      "billing_schedule_item_id": null,
+      "custom_item": false
     },
     {
       "uid": "cnli_8kjttvjtxxbdd",
@@ -1787,7 +1803,9 @@ catch (ApiException e)
       "product_id": 85,
       "product_version": 1,
       "component_id": 81,
-      "price_point_id": 165
+      "price_point_id": 165,
+      "billing_schedule_item_id": null,
+      "custom_item": false
     }
   ],
   "discounts": [
@@ -1925,7 +1943,7 @@ RecordPaymentForSubscriptionAsync(
 
 ## Response Type
 
-[`Task<Models.PaymentResponse>`](../../doc/models/payment-response.md)
+[`Task<Models.RecordPaymentResponse>`](../../doc/models/record-payment-response.md)
 
 ## Example Usage
 
@@ -1938,13 +1956,13 @@ RecordPaymentRequest body = new RecordPaymentRequest
         Amount = "10.0",
         Memo = "to pay the bills",
         PaymentDetails = "check number 8675309",
-        PaymentMethod = "check",
+        PaymentMethod = InvoicePaymentMethodType.Check,
     },
 };
 
 try
 {
-    PaymentResponse result = await invoicesController.RecordPaymentForSubscriptionAsync(
+    RecordPaymentResponse result = await invoicesController.RecordPaymentForSubscriptionAsync(
         subscriptionId,
         body
     );
@@ -1962,23 +1980,19 @@ catch (ApiException e)
 {
   "paid_invoices": [
     {
-      "invoice_uid": "xyz_012345678",
+      "invoice_id": "inv_bchyhr6z5grby",
       "status": "paid",
       "due_amount": "0.0",
       "paid_amount": "50.0"
     },
     {
-      "invoice_uid": "xyz_012345678",
+      "invoice_id": "inv_bchyhrgvyb6vm",
       "status": "paid",
       "due_amount": "0.0",
       "paid_amount": "50.0"
     }
   ],
-  "prepayment": {
-    "subscription_id": "123456",
-    "amount_in_cents": "5000",
-    "ending_balance_in_cents": "5000"
-  }
+  "prepayment": null
 }
 ```
 

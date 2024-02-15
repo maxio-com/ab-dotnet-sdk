@@ -38,7 +38,7 @@ namespace AdvancedBilling.Standard.Models
         public PublicKey(
             string publicKeyProp = null,
             bool? requiresSecurityToken = null,
-            string createdAt = null)
+            DateTimeOffset? createdAt = null)
         {
             this.PublicKeyProp = publicKeyProp;
             this.RequiresSecurityToken = requiresSecurityToken;
@@ -60,8 +60,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CreatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -98,7 +99,7 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.PublicKeyProp = {(this.PublicKeyProp == null ? "null" : this.PublicKeyProp)}");
             toStringOutput.Add($"this.RequiresSecurityToken = {(this.RequiresSecurityToken == null ? "null" : this.RequiresSecurityToken.ToString())}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
+            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
         }
     }
 }
