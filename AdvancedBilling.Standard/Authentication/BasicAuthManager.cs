@@ -121,7 +121,7 @@ namespace AdvancedBilling.Standard.Authentication
             /// Creates an object of the BasicAuthModel using the values provided for the builder.
             /// </summary>
             /// <returns>BasicAuthModel.</returns>
-            internal BasicAuthModel Build()
+            public BasicAuthModel Build()
             {
                 return new BasicAuthModel()
                 {
