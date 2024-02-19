@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
@@ -65,7 +64,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.Invoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/refunds.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("uid", uid).Required())
@@ -95,7 +94,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ListInvoicesResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/invoices.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("start_date", input.StartDate))
                       .Query(_query => _query.Setup("end_date", input.EndDate))
@@ -142,7 +141,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.Invoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/invoices/{uid}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("uid", uid).Required())))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
@@ -204,7 +203,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ListInvoiceEventsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/invoices/events.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("since_date", input.SinceDate))
                       .Query(_query => _query.Setup("since_id", input.SinceId))
@@ -306,11 +305,13 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.Invoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/payments.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("uid", uid).Required())
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -378,7 +379,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.MultiInvoicePaymentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/payments.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
@@ -409,7 +410,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ListCreditNotesResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/credit_notes.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("subscription_id", input.SubscriptionId))
                       .Query(_query => _query.Setup("page", input.Page))
@@ -442,7 +443,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CreditNote>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/credit_notes/{uid}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("uid", uid).Required())))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
@@ -455,8 +456,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.PaymentResponse response from the API call.</returns>
-        public Models.PaymentResponse RecordPaymentForSubscription(
+        /// <returns>Returns the Models.RecordPaymentResponse response from the API call.</returns>
+        public Models.RecordPaymentResponse RecordPaymentForSubscription(
                 int subscriptionId,
                 Models.RecordPaymentRequest body = null)
             => CoreHelper.RunTask(RecordPaymentForSubscriptionAsync(subscriptionId, body));
@@ -470,15 +471,15 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.PaymentResponse response from the API call.</returns>
-        public async Task<Models.PaymentResponse> RecordPaymentForSubscriptionAsync(
+        /// <returns>Returns the Models.RecordPaymentResponse response from the API call.</returns>
+        public async Task<Models.RecordPaymentResponse> RecordPaymentForSubscriptionAsync(
                 int subscriptionId,
                 Models.RecordPaymentRequest body = null,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.PaymentResponse>()
+            => await CreateApiCall<Models.RecordPaymentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/payments.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
@@ -520,7 +521,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.Invoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/reopen.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("uid", uid).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
@@ -553,7 +554,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.Invoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/void.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("uid", uid).Required())
@@ -584,7 +585,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ConsolidatedInvoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/invoices/{invoice_uid}/segments.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("invoice_uid", input.InvoiceUid).Required())
                       .Query(_query => _query.Setup("page", input.Page))
@@ -837,7 +838,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.InvoiceResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/invoices.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
@@ -874,7 +875,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<VoidType>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/deliveries.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("uid", uid).Required())
@@ -906,7 +907,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CustomerChangesPreviewResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/customer_information/preview.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("uid", uid).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
@@ -937,7 +938,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.Invoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/invoices/{uid}/customer_information.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("uid", uid).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
@@ -982,7 +983,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.Invoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/issue.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("uid", uid).Required())

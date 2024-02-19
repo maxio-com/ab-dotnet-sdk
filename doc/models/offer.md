@@ -18,9 +18,9 @@
 | `Name` | `string` | Optional | - |
 | `Handle` | `string` | Optional | - |
 | `Description` | `string` | Optional | - |
-| `CreatedAt` | `string` | Optional | - |
-| `UpdatedAt` | `string` | Optional | - |
-| `ArchivedAt` | `string` | Optional | - |
+| `CreatedAt` | `DateTimeOffset?` | Optional | - |
+| `UpdatedAt` | `DateTimeOffset?` | Optional | - |
+| `ArchivedAt` | `DateTimeOffset?` | Optional | - |
 | `OfferItems` | [`List<OfferItem>`](../../doc/models/offer-item.md) | Optional | - |
 | `OfferDiscounts` | [`List<OfferDiscount>`](../../doc/models/offer-discount.md) | Optional | - |
 | `ProductFamilyName` | `string` | Optional | - |

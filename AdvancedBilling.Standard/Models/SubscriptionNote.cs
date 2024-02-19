@@ -42,8 +42,8 @@ namespace AdvancedBilling.Standard.Models
             int? id = null,
             string body = null,
             int? subscriptionId = null,
-            string createdAt = null,
-            string updatedAt = null,
+            DateTimeOffset? createdAt = null,
+            DateTimeOffset? updatedAt = null,
             bool? sticky = null)
         {
             this.Id = id;
@@ -75,14 +75,16 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CreatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets UpdatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("updated_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string UpdatedAt { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets Sticky.
@@ -129,8 +131,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.Body = {(this.Body == null ? "null" : this.Body)}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
-            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt)}");
+            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
             toStringOutput.Add($"this.Sticky = {(this.Sticky == null ? "null" : this.Sticky.ToString())}");
         }
     }

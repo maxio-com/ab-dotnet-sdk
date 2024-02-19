@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
@@ -60,7 +59,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<VoidType>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscription_groups/{uid}/proforma_invoices.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("uid", uid).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
@@ -90,7 +89,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProformaInvoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/subscription_groups/{uid}/proforma_invoices.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("uid", uid).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
@@ -105,7 +104,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="proformaInvoiceUid">Required parameter: The uid of the proforma invoice.</param>
         /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
         public Models.ProformaInvoice ReadProformaInvoice(
-                int proformaInvoiceUid)
+                string proformaInvoiceUid)
             => CoreHelper.RunTask(ReadProformaInvoiceAsync(proformaInvoiceUid));
 
         /// <summary>
@@ -117,14 +116,14 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
         public async Task<Models.ProformaInvoice> ReadProformaInvoiceAsync(
-                int proformaInvoiceUid,
+                string proformaInvoiceUid,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ProformaInvoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/proforma_invoices/{proforma_invoice_uid}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("proforma_invoice_uid", proformaInvoiceUid))))
+                      .Template(_template => _template.Setup("proforma_invoice_uid", proformaInvoiceUid).Required())))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
@@ -156,7 +155,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProformaInvoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/proforma_invoices.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))))
               .ResponseHandler(_responseHandler => _responseHandler
@@ -167,8 +166,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// By default, proforma invoices returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, or `custom_fields`. To include breakdowns, pass the specific field as a key in the query with a value set to `true`.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
-        /// <returns>Returns the List of Models.ProformaInvoice response from the API call.</returns>
-        public List<Models.ProformaInvoice> ListProformaInvoices(
+        /// <returns>Returns the Models.ListProformaInvoicesResponse response from the API call.</returns>
+        public Models.ListProformaInvoicesResponse ListProformaInvoices(
                 Models.ListProformaInvoicesInput input)
             => CoreHelper.RunTask(ListProformaInvoicesAsync(input));
 
@@ -177,14 +176,14 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the List of Models.ProformaInvoice response from the API call.</returns>
-        public async Task<List<Models.ProformaInvoice>> ListProformaInvoicesAsync(
+        /// <returns>Returns the Models.ListProformaInvoicesResponse response from the API call.</returns>
+        public async Task<Models.ListProformaInvoicesResponse> ListProformaInvoicesAsync(
                 Models.ListProformaInvoicesInput input,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<List<Models.ProformaInvoice>>()
+            => await CreateApiCall<Models.ListProformaInvoicesResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/proforma_invoices.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("subscription_id", input.SubscriptionId))
                       .Query(_query => _query.Setup("start_date", input.StartDate))
@@ -234,7 +233,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProformaInvoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/proforma_invoices/{proforma_invoice_uid}/void.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("proforma_invoice_uid", proformaInvoiceUid).Required())
@@ -271,7 +270,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProformaInvoicePreview>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/proforma_invoices/preview.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))))
               .ResponseHandler(_responseHandler => _responseHandler
@@ -306,7 +305,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProformaInvoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/proforma_invoices.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
@@ -346,7 +345,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.SignupProformaPreviewResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/proforma_invoices/preview.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))

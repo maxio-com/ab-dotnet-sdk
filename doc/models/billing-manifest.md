@@ -14,8 +14,8 @@
 | `TotalDiscountInCents` | `long?` | Optional | - |
 | `TotalTaxInCents` | `long?` | Optional | - |
 | `SubtotalInCents` | `long?` | Optional | - |
-| `StartDate` | `string` | Optional | - |
-| `EndDate` | `string` | Optional | - |
+| `StartDate` | `DateTimeOffset?` | Optional | - |
+| `EndDate` | `DateTimeOffset?` | Optional | - |
 | `PeriodType` | `string` | Optional | - |
 | `ExistingBalanceInCents` | `long?` | Optional | - |
 

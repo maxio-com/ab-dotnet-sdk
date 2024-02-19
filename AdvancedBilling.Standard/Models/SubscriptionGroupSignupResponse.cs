@@ -50,7 +50,7 @@ namespace AdvancedBilling.Standard.Models
             int? paymentProfileId = null,
             List<int> subscriptionIds = null,
             int? primarySubscriptionId = null,
-            string nextAssessmentAt = null,
+            DateTimeOffset? nextAssessmentAt = null,
             string state = null,
             bool? cancelAtEndOfPeriod = null,
             List<Models.SubscriptionGroupItem> subscriptions = null,
@@ -108,8 +108,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets NextAssessmentAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("next_assessment_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string NextAssessmentAt { get; set; }
+        public DateTimeOffset? NextAssessmentAt { get; set; }
 
         /// <summary>
         /// Gets or sets State.
@@ -182,7 +183,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PaymentProfileId = {(this.PaymentProfileId == null ? "null" : this.PaymentProfileId.ToString())}");
             toStringOutput.Add($"this.SubscriptionIds = {(this.SubscriptionIds == null ? "null" : $"[{string.Join(", ", this.SubscriptionIds)} ]")}");
             toStringOutput.Add($"this.PrimarySubscriptionId = {(this.PrimarySubscriptionId == null ? "null" : this.PrimarySubscriptionId.ToString())}");
-            toStringOutput.Add($"this.NextAssessmentAt = {(this.NextAssessmentAt == null ? "null" : this.NextAssessmentAt)}");
+            toStringOutput.Add($"this.NextAssessmentAt = {(this.NextAssessmentAt == null ? "null" : this.NextAssessmentAt.ToString())}");
             toStringOutput.Add($"this.State = {(this.State == null ? "null" : this.State)}");
             toStringOutput.Add($"this.CancelAtEndOfPeriod = {(this.CancelAtEndOfPeriod == null ? "null" : this.CancelAtEndOfPeriod.ToString())}");
             toStringOutput.Add($"this.Subscriptions = {(this.Subscriptions == null ? "null" : $"[{string.Join(", ", this.Subscriptions)} ]")}");

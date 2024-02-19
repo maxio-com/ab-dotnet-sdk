@@ -996,7 +996,9 @@ UpdateSubscriptionRequest body = new UpdateSubscriptionRequest
             ExpirationMonth = "10",
             ExpirationYear = "2030",
         },
-        NextBillingAt = "2010-08-06T15:34:00Z",
+        NextBillingAt = DateTime.ParseExact("2010-08-06T15:34:00Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
     },
 };
 

@@ -52,7 +52,7 @@ namespace AdvancedBilling.Standard.Models
             string productHandle = null,
             string productPricePointHandle = null,
             Models.Proration proration = null,
-            string prorationDate = null)
+            DateTimeOffset? prorationDate = null)
         {
             this.ProductId = productId;
             this.ProductPricePointId = productPricePointId;
@@ -123,8 +123,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The date that the proration is calculated from for the preview
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("proration_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string ProrationDate { get; set; }
+        public DateTimeOffset? ProrationDate { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -175,7 +176,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ProductHandle = {(this.ProductHandle == null ? "null" : this.ProductHandle)}");
             toStringOutput.Add($"this.ProductPricePointHandle = {(this.ProductPricePointHandle == null ? "null" : this.ProductPricePointHandle)}");
             toStringOutput.Add($"this.Proration = {(this.Proration == null ? "null" : this.Proration.ToString())}");
-            toStringOutput.Add($"this.ProrationDate = {(this.ProrationDate == null ? "null" : this.ProrationDate)}");
+            toStringOutput.Add($"this.ProrationDate = {(this.ProrationDate == null ? "null" : this.ProrationDate.ToString())}");
         }
     }
 }

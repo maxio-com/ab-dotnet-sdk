@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
@@ -77,7 +76,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.CustomerResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/portal/customers/{customer_id}/enable.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("customer_id", customerId))
                       .Query(_query => _query.Setup("auto_invite", (autoInvite.HasValue) ? (int?)autoInvite.Value : null))))
@@ -118,7 +117,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.PortalManagementLink>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/portal/customers/{customer_id}/management_link.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("customer_id", customerId))))
               .ResponseHandler(_responseHandler => _responseHandler
@@ -159,7 +158,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ResentInvitation>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/portal/customers/{customer_id}/invitations/invite.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("customer_id", customerId))))
               .ResponseHandler(_responseHandler => _responseHandler
@@ -194,7 +193,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.RevokedInvitation>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/portal/customers/{customer_id}/invitations/revoke.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("customer_id", customerId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);

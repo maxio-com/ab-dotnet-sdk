@@ -55,8 +55,8 @@ namespace AdvancedBilling.Standard.Models
             SegmentSegmentProperty2Value segmentProperty2Value = null,
             SegmentSegmentProperty3Value segmentProperty3Value = null,
             SegmentSegmentProperty4Value segmentProperty4Value = null,
-            string createdAt = null,
-            string updatedAt = null,
+            DateTimeOffset? createdAt = null,
+            DateTimeOffset? updatedAt = null,
             List<Models.SegmentPrice> prices = null)
         {
             this.Id = id;
@@ -130,14 +130,16 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CreatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets UpdatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("updated_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string UpdatedAt { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets Prices.
@@ -196,8 +198,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"SegmentProperty2Value = {(this.SegmentProperty2Value == null ? "null" : this.SegmentProperty2Value.ToString())}");
             toStringOutput.Add($"SegmentProperty3Value = {(this.SegmentProperty3Value == null ? "null" : this.SegmentProperty3Value.ToString())}");
             toStringOutput.Add($"SegmentProperty4Value = {(this.SegmentProperty4Value == null ? "null" : this.SegmentProperty4Value.ToString())}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
-            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt)}");
+            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
             toStringOutput.Add($"this.Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
         }
     }

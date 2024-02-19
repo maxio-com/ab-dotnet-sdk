@@ -42,7 +42,7 @@ namespace AdvancedBilling.Standard.Models
             Models.SubscriptionGroupPaymentProfile paymentProfile = null,
             string paymentCollectionMethod = null,
             List<int> subscriptionIds = null,
-            string createdAt = null)
+            DateTimeOffset? createdAt = null)
         {
             this.CustomerId = customerId;
             this.PaymentProfile = paymentProfile;
@@ -78,8 +78,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CreatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -120,7 +121,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PaymentProfile = {(this.PaymentProfile == null ? "null" : this.PaymentProfile.ToString())}");
             toStringOutput.Add($"this.PaymentCollectionMethod = {(this.PaymentCollectionMethod == null ? "null" : this.PaymentCollectionMethod)}");
             toStringOutput.Add($"this.SubscriptionIds = {(this.SubscriptionIds == null ? "null" : $"[{string.Join(", ", this.SubscriptionIds)} ]")}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
+            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
         }
     }
 }

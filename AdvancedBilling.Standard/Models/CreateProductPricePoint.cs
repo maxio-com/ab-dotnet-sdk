@@ -115,7 +115,7 @@ namespace AdvancedBilling.Standard.Models
         public long? TrialPriceInCents { get; set; }
 
         /// <summary>
-        /// The numerical trial interval. i.e. an interval of ‘30’ coupled with an trial_interval_unit of day would mean this product price point would renew every 30 days
+        /// The numerical trial interval. i.e. an interval of ‘30’ coupled with a trial_interval_unit of day would mean this product price point trial would last 30 days.
         /// </summary>
         [JsonProperty("trial_interval", NullValueHandling = NullValueHandling.Ignore)]
         public int? TrialInterval { get; set; }
@@ -145,7 +145,7 @@ namespace AdvancedBilling.Standard.Models
         public bool? InitialChargeAfterTrial { get; set; }
 
         /// <summary>
-        /// The numerical expiration interval. i.e. an expiration_interval of ‘30’ coupled with an expiration_interval_unit of day would mean this product price point would expire every 30 days
+        /// The numerical expiration interval. i.e. an expiration_interval of ‘30’ coupled with an expiration_interval_unit of day would mean this product price point would expire after 30 days.
         /// </summary>
         [JsonProperty("expiration_interval", NullValueHandling = NullValueHandling.Ignore)]
         public int? ExpirationInterval { get; set; }

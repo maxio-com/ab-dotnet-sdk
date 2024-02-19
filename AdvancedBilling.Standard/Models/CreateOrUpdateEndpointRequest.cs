@@ -1,4 +1,4 @@
-// <copyright file="UpdateEndpointRequest.cs" company="APIMatic">
+// <copyright file="CreateOrUpdateEndpointRequest.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
 namespace AdvancedBilling.Standard.Models
@@ -18,23 +18,23 @@ namespace AdvancedBilling.Standard.Models
     using Newtonsoft.Json.Converters;
 
     /// <summary>
-    /// UpdateEndpointRequest.
+    /// CreateOrUpdateEndpointRequest.
     /// </summary>
-    public class UpdateEndpointRequest
+    public class CreateOrUpdateEndpointRequest
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateEndpointRequest"/> class.
+        /// Initializes a new instance of the <see cref="CreateOrUpdateEndpointRequest"/> class.
         /// </summary>
-        public UpdateEndpointRequest()
+        public CreateOrUpdateEndpointRequest()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateEndpointRequest"/> class.
+        /// Initializes a new instance of the <see cref="CreateOrUpdateEndpointRequest"/> class.
         /// </summary>
         /// <param name="endpoint">endpoint.</param>
-        public UpdateEndpointRequest(
-            Models.UpdateEndpoint endpoint)
+        public CreateOrUpdateEndpointRequest(
+            Models.CreateOrUpdateEndpoint endpoint)
         {
             this.Endpoint = endpoint;
         }
@@ -43,7 +43,7 @@ namespace AdvancedBilling.Standard.Models
         /// Used to Create or Update Endpoint
         /// </summary>
         [JsonProperty("endpoint")]
-        public Models.UpdateEndpoint Endpoint { get; set; }
+        public Models.CreateOrUpdateEndpoint Endpoint { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -52,7 +52,7 @@ namespace AdvancedBilling.Standard.Models
 
             this.ToString(toStringOutput);
 
-            return $"UpdateEndpointRequest : ({string.Join(", ", toStringOutput)})";
+            return $"CreateOrUpdateEndpointRequest : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
@@ -67,7 +67,7 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is UpdateEndpointRequest other &&                ((this.Endpoint == null && other.Endpoint == null) || (this.Endpoint?.Equals(other.Endpoint) == true));
+            return obj is CreateOrUpdateEndpointRequest other &&                ((this.Endpoint == null && other.Endpoint == null) || (this.Endpoint?.Equals(other.Endpoint) == true));
         }
         
         /// <summary>

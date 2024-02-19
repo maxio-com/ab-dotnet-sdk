@@ -46,8 +46,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="periodType">period_type.</param>
         /// <param name="existingBalanceInCents">existing_balance_in_cents.</param>
         public AllocationPreview(
-            string startDate = null,
-            string endDate = null,
+            DateTimeOffset? startDate = null,
+            DateTimeOffset? endDate = null,
             long? subtotalInCents = null,
             long? totalTaxInCents = null,
             long? totalDiscountInCents = null,
@@ -78,14 +78,16 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets StartDate.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("start_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string StartDate { get; set; }
+        public DateTimeOffset? StartDate { get; set; }
 
         /// <summary>
         /// Gets or sets EndDate.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("end_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string EndDate { get; set; }
+        public DateTimeOffset? EndDate { get; set; }
 
         /// <summary>
         /// Gets or sets SubtotalInCents.
@@ -196,8 +198,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate)}");
-            toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate)}");
+            toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate.ToString())}");
+            toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate.ToString())}");
             toStringOutput.Add($"this.SubtotalInCents = {(this.SubtotalInCents == null ? "null" : this.SubtotalInCents.ToString())}");
             toStringOutput.Add($"this.TotalTaxInCents = {(this.TotalTaxInCents == null ? "null" : this.TotalTaxInCents.ToString())}");
             toStringOutput.Add($"this.TotalDiscountInCents = {(this.TotalDiscountInCents == null ? "null" : this.TotalDiscountInCents.ToString())}");

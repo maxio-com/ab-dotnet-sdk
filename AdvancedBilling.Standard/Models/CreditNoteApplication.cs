@@ -39,7 +39,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="appliedAmount">applied_amount.</param>
         public CreditNoteApplication(
             string uid = null,
-            string transactionTime = null,
+            DateTimeOffset? transactionTime = null,
             string invoiceUid = null,
             string memo = null,
             string appliedAmount = null)
@@ -60,8 +60,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets TransactionTime.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("transaction_time", NullValueHandling = NullValueHandling.Ignore)]
-        public string TransactionTime { get; set; }
+        public DateTimeOffset? TransactionTime { get; set; }
 
         /// <summary>
         /// Gets or sets InvoiceUid.
@@ -117,7 +118,7 @@ namespace AdvancedBilling.Standard.Models
         protected void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
-            toStringOutput.Add($"this.TransactionTime = {(this.TransactionTime == null ? "null" : this.TransactionTime)}");
+            toStringOutput.Add($"this.TransactionTime = {(this.TransactionTime == null ? "null" : this.TransactionTime.ToString())}");
             toStringOutput.Add($"this.InvoiceUid = {(this.InvoiceUid == null ? "null" : this.InvoiceUid)}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.AppliedAmount = {(this.AppliedAmount == null ? "null" : this.AppliedAmount)}");

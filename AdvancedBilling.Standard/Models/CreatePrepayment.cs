@@ -41,7 +41,7 @@ namespace AdvancedBilling.Standard.Models
             double amount,
             string details,
             string memo,
-            Models.PrepaymentMethod method,
+            Models.CreatePrepaymentMethod method,
             int? paymentProfileId = null)
         {
             this.Amount = amount;
@@ -73,7 +73,7 @@ namespace AdvancedBilling.Standard.Models
         /// :- When the `method` specified is `"credit_card_on_file"`, the prepayment amount will be collected using the default credit card payment profile and applied to the prepayment account balance. This is especially useful for manual replenishment of prepaid subscriptions.
         /// </summary>
         [JsonProperty("method")]
-        public Models.PrepaymentMethod Method { get; set; }
+        public Models.CreatePrepaymentMethod Method { get; set; }
 
         /// <summary>
         /// Gets or sets PaymentProfileId.

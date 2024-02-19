@@ -25,7 +25,7 @@ namespace AdvancedBilling.Standard.Models
         private int? id;
         private string mValue;
         private int? resourceId;
-        private string deletedAt;
+        private DateTimeOffset? deletedAt;
         private int? metafieldId;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
@@ -57,7 +57,7 @@ namespace AdvancedBilling.Standard.Models
             string mValue = null,
             int? resourceId = null,
             string name = null,
-            string deletedAt = null,
+            DateTimeOffset? deletedAt = null,
             int? metafieldId = null)
         {
             if (id != null)
@@ -151,8 +151,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets DeletedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("deleted_at")]
-        public string DeletedAt
+        public DateTimeOffset? DeletedAt
         {
             get
             {
@@ -309,7 +310,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.MValue = {(this.MValue == null ? "null" : this.MValue)}");
             toStringOutput.Add($"this.ResourceId = {(this.ResourceId == null ? "null" : this.ResourceId.ToString())}");
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
-            toStringOutput.Add($"this.DeletedAt = {(this.DeletedAt == null ? "null" : this.DeletedAt)}");
+            toStringOutput.Add($"this.DeletedAt = {(this.DeletedAt == null ? "null" : this.DeletedAt.ToString())}");
             toStringOutput.Add($"this.MetafieldId = {(this.MetafieldId == null ? "null" : this.MetafieldId.ToString())}");
         }
     }

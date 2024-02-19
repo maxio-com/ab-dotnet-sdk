@@ -22,9 +22,9 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class BatchJob
     {
-        private string finishedAt;
+        private DateTimeOffset? finishedAt;
         private int? rowCount;
-        private string createdAt;
+        private DateTimeOffset? createdAt;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "finished_at", false },
@@ -49,9 +49,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="completed">completed.</param>
         public BatchJob(
             int? id = null,
-            string finishedAt = null,
+            DateTimeOffset? finishedAt = null,
             int? rowCount = null,
-            string createdAt = null,
+            DateTimeOffset? createdAt = null,
             string completed = null)
         {
             this.Id = id;
@@ -82,8 +82,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets FinishedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("finished_at")]
-        public string FinishedAt
+        public DateTimeOffset? FinishedAt
         {
             get
             {
@@ -118,8 +119,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CreatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at")]
-        public string CreatedAt
+        public DateTimeOffset? CreatedAt
         {
             get
             {
@@ -226,9 +228,9 @@ namespace AdvancedBilling.Standard.Models
         protected void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.FinishedAt = {(this.FinishedAt == null ? "null" : this.FinishedAt)}");
+            toStringOutput.Add($"this.FinishedAt = {(this.FinishedAt == null ? "null" : this.FinishedAt.ToString())}");
             toStringOutput.Add($"this.RowCount = {(this.RowCount == null ? "null" : this.RowCount.ToString())}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
+            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
             toStringOutput.Add($"this.Completed = {(this.Completed == null ? "null" : this.Completed)}");
         }
     }

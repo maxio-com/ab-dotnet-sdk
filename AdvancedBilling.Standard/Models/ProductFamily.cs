@@ -53,8 +53,8 @@ namespace AdvancedBilling.Standard.Models
             string handle = null,
             string accountingCode = null,
             string description = null,
-            string createdAt = null,
-            string updatedAt = null)
+            DateTimeOffset? createdAt = null,
+            DateTimeOffset? updatedAt = null)
         {
             this.Id = id;
             this.Name = name;
@@ -130,14 +130,16 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CreatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets UpdatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("updated_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string UpdatedAt { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -215,8 +217,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
             toStringOutput.Add($"this.AccountingCode = {(this.AccountingCode == null ? "null" : this.AccountingCode)}");
             toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
-            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt)}");
+            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
         }
     }
 }

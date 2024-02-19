@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
@@ -63,7 +62,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProductResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/product_families/{product_family_id}/products.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
@@ -93,7 +92,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProductResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/products/{product_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_id", productId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
@@ -131,7 +130,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProductResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/products/{product_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("product_id", productId))
@@ -163,7 +162,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProductResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/products/{product_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_id", productId))))
               .ResponseHandler(_responseHandler => _responseHandler
@@ -191,7 +190,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ProductResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/products/handle/{api_handle}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("api_handle", apiHandle).Required())))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
@@ -217,7 +216,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.ProductResponse>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/products.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("end_date", input.EndDate.HasValue ? input.EndDate.Value.ToString("yyyy'-'MM'-'dd") : null))

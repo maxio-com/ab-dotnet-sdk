@@ -189,10 +189,10 @@ ReplayWebhooksAsync(
 ```csharp
 ReplayWebhooksRequest body = new ReplayWebhooksRequest
 {
-    Ids = new List<int>
+    Ids = new List<long>
     {
-        123456789,
-        123456788,
+        123456789L,
+        123456788L,
     },
 };
 
@@ -225,14 +225,14 @@ You can check available events here.
 
 ```csharp
 CreateEndpointAsync(
-    Models.UpdateEndpointRequest body = null)
+    Models.CreateOrUpdateEndpointRequest body = null)
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `body` | [`UpdateEndpointRequest`](../../doc/models/update-endpoint-request.md) | Body, Optional | Used to Create or Update Endpoint |
+| `body` | [`CreateOrUpdateEndpointRequest`](../../doc/models/create-or-update-endpoint-request.md) | Body, Optional | Used to Create or Update Endpoint |
 
 ## Response Type
 
@@ -241,9 +241,9 @@ CreateEndpointAsync(
 ## Example Usage
 
 ```csharp
-UpdateEndpointRequest body = new UpdateEndpointRequest
+CreateOrUpdateEndpointRequest body = new CreateOrUpdateEndpointRequest
 {
-    Endpoint = new UpdateEndpoint
+    Endpoint = new CreateOrUpdateEndpoint
     {
         Url = "https://your.site/webhooks",
         WebhookSubscriptions = new List<WebhookSubscription>
@@ -359,7 +359,7 @@ If you want unsubscribe from specific event, just send a list of `webhook_subscr
 ```csharp
 UpdateEndpointAsync(
     int endpointId,
-    Models.UpdateEndpointRequest body = null)
+    Models.CreateOrUpdateEndpointRequest body = null)
 ```
 
 ## Parameters
@@ -367,7 +367,7 @@ UpdateEndpointAsync(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `endpointId` | `int` | Template, Required | The Chargify id for the endpoint that should be updated |
-| `body` | [`UpdateEndpointRequest`](../../doc/models/update-endpoint-request.md) | Body, Optional | Used to Create or Update Endpoint |
+| `body` | [`CreateOrUpdateEndpointRequest`](../../doc/models/create-or-update-endpoint-request.md) | Body, Optional | Used to Create or Update Endpoint |
 
 ## Response Type
 
@@ -377,9 +377,9 @@ UpdateEndpointAsync(
 
 ```csharp
 int endpointId = 42;
-UpdateEndpointRequest body = new UpdateEndpointRequest
+CreateOrUpdateEndpointRequest body = new CreateOrUpdateEndpointRequest
 {
-    Endpoint = new UpdateEndpoint
+    Endpoint = new CreateOrUpdateEndpoint
     {
         Url = "https://yout.site/webhooks/1/json.",
         WebhookSubscriptions = new List<WebhookSubscription>

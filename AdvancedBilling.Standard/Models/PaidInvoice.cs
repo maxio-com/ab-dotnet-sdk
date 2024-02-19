@@ -1,4 +1,4 @@
-// <copyright file="Payment.cs" company="APIMatic">
+// <copyright file="PaidInvoice.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
 namespace AdvancedBilling.Standard.Models
@@ -18,31 +18,31 @@ namespace AdvancedBilling.Standard.Models
     using Newtonsoft.Json.Converters;
 
     /// <summary>
-    /// Payment.
+    /// PaidInvoice.
     /// </summary>
-    public class Payment
+    public class PaidInvoice
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Payment"/> class.
+        /// Initializes a new instance of the <see cref="PaidInvoice"/> class.
         /// </summary>
-        public Payment()
+        public PaidInvoice()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Payment"/> class.
+        /// Initializes a new instance of the <see cref="PaidInvoice"/> class.
         /// </summary>
-        /// <param name="invoiceUid">invoice_uid.</param>
+        /// <param name="invoiceId">invoice_id.</param>
         /// <param name="status">status.</param>
         /// <param name="dueAmount">due_amount.</param>
         /// <param name="paidAmount">paid_amount.</param>
-        public Payment(
-            string invoiceUid = null,
+        public PaidInvoice(
+            string invoiceId = null,
             Models.InvoiceStatus? status = null,
             string dueAmount = null,
             string paidAmount = null)
         {
-            this.InvoiceUid = invoiceUid;
+            this.InvoiceId = invoiceId;
             this.Status = status;
             this.DueAmount = dueAmount;
             this.PaidAmount = paidAmount;
@@ -51,8 +51,8 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The uid of the paid invoice
         /// </summary>
-        [JsonProperty("invoice_uid", NullValueHandling = NullValueHandling.Ignore)]
-        public string InvoiceUid { get; set; }
+        [JsonProperty("invoice_id", NullValueHandling = NullValueHandling.Ignore)]
+        public string InvoiceId { get; set; }
 
         /// <summary>
         /// The current status of the invoice. See [Invoice Statuses](https://chargify.zendesk.com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
@@ -79,7 +79,7 @@ namespace AdvancedBilling.Standard.Models
 
             this.ToString(toStringOutput);
 
-            return $"Payment : ({string.Join(", ", toStringOutput)})";
+            return $"PaidInvoice : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
@@ -94,7 +94,7 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is Payment other &&                ((this.InvoiceUid == null && other.InvoiceUid == null) || (this.InvoiceUid?.Equals(other.InvoiceUid) == true)) &&
+            return obj is PaidInvoice other &&                ((this.InvoiceId == null && other.InvoiceId == null) || (this.InvoiceId?.Equals(other.InvoiceId) == true)) &&
                 ((this.Status == null && other.Status == null) || (this.Status?.Equals(other.Status) == true)) &&
                 ((this.DueAmount == null && other.DueAmount == null) || (this.DueAmount?.Equals(other.DueAmount) == true)) &&
                 ((this.PaidAmount == null && other.PaidAmount == null) || (this.PaidAmount?.Equals(other.PaidAmount) == true));
@@ -106,7 +106,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.InvoiceUid = {(this.InvoiceUid == null ? "null" : this.InvoiceUid)}");
+            toStringOutput.Add($"this.InvoiceId = {(this.InvoiceId == null ? "null" : this.InvoiceId)}");
             toStringOutput.Add($"this.Status = {(this.Status == null ? "null" : this.Status.ToString())}");
             toStringOutput.Add($"this.DueAmount = {(this.DueAmount == null ? "null" : this.DueAmount)}");
             toStringOutput.Add($"this.PaidAmount = {(this.PaidAmount == null ? "null" : this.PaidAmount)}");

@@ -15,6 +15,8 @@
 | `OriginalAmount` | `string` | Optional | - |
 | `AppliedAmount` | `string` | Optional | - |
 | `GatewayTransactionId` | `string` | Optional | The transaction ID for the refund as returned from the payment gateway |
+| `GatewayUsed` | `string` | Optional | - |
+| `GatewayHandle` | `string` | Optional | - |
 
 ## Example (as JSON)
 

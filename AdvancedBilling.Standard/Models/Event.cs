@@ -45,7 +45,7 @@ namespace AdvancedBilling.Standard.Models
             string key,
             string message,
             int customerId,
-            string createdAt,
+            DateTimeOffset createdAt,
             int? subscriptionId = null,
             EventEventSpecificData eventSpecificData = null)
         {
@@ -91,8 +91,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CreatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at")]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets EventSpecificData.
@@ -127,7 +128,7 @@ namespace AdvancedBilling.Standard.Models
                 ((this.Message == null && other.Message == null) || (this.Message?.Equals(other.Message) == true)) &&
                 ((this.SubscriptionId == null && other.SubscriptionId == null) || (this.SubscriptionId?.Equals(other.SubscriptionId) == true)) &&
                 this.CustomerId.Equals(other.CustomerId) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true)) &&
+                this.CreatedAt.Equals(other.CreatedAt) &&
                 ((this.EventSpecificData == null && other.EventSpecificData == null) || (this.EventSpecificData?.Equals(other.EventSpecificData) == true));
         }
         
@@ -142,7 +143,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Message = {(this.Message == null ? "null" : this.Message)}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
             toStringOutput.Add($"this.CustomerId = {this.CustomerId}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
+            toStringOutput.Add($"this.CreatedAt = {this.CreatedAt}");
             toStringOutput.Add($"EventSpecificData = {(this.EventSpecificData == null ? "null" : this.EventSpecificData.ToString())}");
         }
     }
