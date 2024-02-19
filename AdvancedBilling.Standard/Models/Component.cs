@@ -34,7 +34,7 @@ namespace AdvancedBilling.Standard.Models
         private string taxCode;
         private Models.CreditType? upgradeCharge;
         private Models.CreditType? downgradeCredit;
-        private string archivedAt;
+        private DateTimeOffset? archivedAt;
         private Models.ItemCategory? itemCategory;
         private bool? useSiteExchangeRate;
         private string accountingCode;
@@ -127,7 +127,7 @@ namespace AdvancedBilling.Standard.Models
             Models.CreditType? downgradeCredit = null,
             DateTimeOffset? createdAt = null,
             DateTimeOffset? updatedAt = null,
-            string archivedAt = null,
+            DateTimeOffset? archivedAt = null,
             bool? hideDateRangeOnInvoice = null,
             bool? allowFractionalQuantities = null,
             Models.ItemCategory? itemCategory = null,
@@ -522,8 +522,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Timestamp indicating when this component was archived
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("archived_at")]
-        public string ArchivedAt
+        public DateTimeOffset? ArchivedAt
         {
             get
             {
@@ -965,7 +966,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
             toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
-            toStringOutput.Add($"this.ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt)}");
+            toStringOutput.Add($"this.ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt.ToString())}");
             toStringOutput.Add($"this.HideDateRangeOnInvoice = {(this.HideDateRangeOnInvoice == null ? "null" : this.HideDateRangeOnInvoice.ToString())}");
             toStringOutput.Add($"this.AllowFractionalQuantities = {(this.AllowFractionalQuantities == null ? "null" : this.AllowFractionalQuantities.ToString())}");
             toStringOutput.Add($"this.ItemCategory = {(this.ItemCategory == null ? "null" : this.ItemCategory.ToString())}");

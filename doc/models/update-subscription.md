@@ -16,7 +16,7 @@
 | `NextProductId` | `string` | Optional | Set to an empty string to cancel a delayed product change. |
 | `NextProductPricePointId` | `string` | Optional | - |
 | `SnapDay` | [`UpdateSubscriptionSnapDay`](../../doc/models/containers/update-subscription-snap-day.md) | Optional | This is a container for one-of cases. |
-| `NextBillingAt` | `string` | Optional | - |
+| `NextBillingAt` | `DateTimeOffset?` | Optional | - |
 | `PaymentCollectionMethod` | `string` | Optional | - |
 | `ReceivesInvoiceEmails` | `bool?` | Optional | - |
 | `NetTerms` | [`UpdateSubscriptionNetTerms`](../../doc/models/containers/update-subscription-net-terms.md) | Optional | This is a container for one-of cases. |

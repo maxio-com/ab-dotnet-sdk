@@ -36,9 +36,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="amountInCents">amount_in_cents.</param>
         /// <param name="endingBalanceInCents">ending_balance_in_cents.</param>
         public InvoicePrePayment(
-            string subscriptionId = null,
-            string amountInCents = null,
-            string endingBalanceInCents = null)
+            int? subscriptionId = null,
+            long? amountInCents = null,
+            long? endingBalanceInCents = null)
         {
             this.SubscriptionId = subscriptionId;
             this.AmountInCents = amountInCents;
@@ -49,19 +49,19 @@ namespace AdvancedBilling.Standard.Models
         /// The subscription id for the prepayment account
         /// </summary>
         [JsonProperty("subscription_id", NullValueHandling = NullValueHandling.Ignore)]
-        public string SubscriptionId { get; set; }
+        public int? SubscriptionId { get; set; }
 
         /// <summary>
         /// The amount in cents of the prepayment that was created as a result of this payment.
         /// </summary>
         [JsonProperty("amount_in_cents", NullValueHandling = NullValueHandling.Ignore)]
-        public string AmountInCents { get; set; }
+        public long? AmountInCents { get; set; }
 
         /// <summary>
         /// The total balance of the prepayment account for this subscription including any prior prepayments
         /// </summary>
         [JsonProperty("ending_balance_in_cents", NullValueHandling = NullValueHandling.Ignore)]
-        public string EndingBalanceInCents { get; set; }
+        public long? EndingBalanceInCents { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -96,9 +96,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId)}");
-            toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents)}");
-            toStringOutput.Add($"this.EndingBalanceInCents = {(this.EndingBalanceInCents == null ? "null" : this.EndingBalanceInCents)}");
+            toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
+            toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
+            toStringOutput.Add($"this.EndingBalanceInCents = {(this.EndingBalanceInCents == null ? "null" : this.EndingBalanceInCents.ToString())}");
         }
     }
 }

@@ -51,10 +51,10 @@ namespace AdvancedBilling.Standard.Models
             string revenueThisMonth = null,
             string revenueThisYear = null,
             int? totalCanceledSubscriptions = null,
-            double? totalActiveSubscriptions = null,
-            double? totalPastDueSubscriptions = null,
-            double? totalUnpaidSubscriptions = null,
-            double? totalDunningSubscriptions = null)
+            int? totalActiveSubscriptions = null,
+            int? totalPastDueSubscriptions = null,
+            int? totalUnpaidSubscriptions = null,
+            int? totalDunningSubscriptions = null)
         {
             this.TotalSubscriptions = totalSubscriptions;
             this.SubscriptionsToday = subscriptionsToday;
@@ -115,25 +115,25 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets TotalActiveSubscriptions.
         /// </summary>
         [JsonProperty("total_active_subscriptions", NullValueHandling = NullValueHandling.Ignore)]
-        public double? TotalActiveSubscriptions { get; set; }
+        public int? TotalActiveSubscriptions { get; set; }
 
         /// <summary>
         /// Gets or sets TotalPastDueSubscriptions.
         /// </summary>
         [JsonProperty("total_past_due_subscriptions", NullValueHandling = NullValueHandling.Ignore)]
-        public double? TotalPastDueSubscriptions { get; set; }
+        public int? TotalPastDueSubscriptions { get; set; }
 
         /// <summary>
         /// Gets or sets TotalUnpaidSubscriptions.
         /// </summary>
         [JsonProperty("total_unpaid_subscriptions", NullValueHandling = NullValueHandling.Ignore)]
-        public double? TotalUnpaidSubscriptions { get; set; }
+        public int? TotalUnpaidSubscriptions { get; set; }
 
         /// <summary>
         /// Gets or sets TotalDunningSubscriptions.
         /// </summary>
         [JsonProperty("total_dunning_subscriptions", NullValueHandling = NullValueHandling.Ignore)]
-        public double? TotalDunningSubscriptions { get; set; }
+        public int? TotalDunningSubscriptions { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

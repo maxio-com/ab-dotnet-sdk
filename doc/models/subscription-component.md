@@ -24,7 +24,7 @@
 | `Recurring` | `bool?` | Optional | - |
 | `UpgradeCharge` | [`CreditType?`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.<br>Available values: `full`, `prorated`, `none`. |
 | `DowngradeCredit` | [`CreditType?`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.<br>Available values: `full`, `prorated`, `none`. |
-| `ArchivedAt` | `string` | Optional | - |
+| `ArchivedAt` | `DateTimeOffset?` | Optional | - |
 | `PricePointId` | `int?` | Optional | - |
 | `PricePointHandle` | `string` | Optional | - |
 | `PricePointType` | [`SubscriptionComponentPricePointType`](../../doc/models/containers/subscription-component-price-point-type.md) | Optional | This is a container for one-of cases. |

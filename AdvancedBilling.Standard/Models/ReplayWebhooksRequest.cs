@@ -34,7 +34,7 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         /// <param name="ids">ids.</param>
         public ReplayWebhooksRequest(
-            List<int> ids)
+            List<long> ids)
         {
             this.Ids = ids;
         }
@@ -43,7 +43,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Ids.
         /// </summary>
         [JsonProperty("ids")]
-        public List<int> Ids { get; set; }
+        public List<long> Ids { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

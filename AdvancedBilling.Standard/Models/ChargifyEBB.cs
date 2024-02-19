@@ -39,9 +39,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="subscriptionId">subscription_id.</param>
         /// <param name="subscriptionReference">subscription_reference.</param>
         public ChargifyEBB(
-            string timestamp = null,
+            DateTimeOffset? timestamp = null,
             string id = null,
-            string createdAt = null,
+            DateTimeOffset? createdAt = null,
             string uniquenessToken = null,
             int? subscriptionId = null,
             string subscriptionReference = null)
@@ -57,8 +57,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// This timestamp determines what billing period the event will be billed in. If your request payload does not include it, Chargify will add `chargify.timestamp` to the event payload and set the value to `now`.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("timestamp", NullValueHandling = NullValueHandling.Ignore)]
-        public string Timestamp { get; set; }
+        public DateTimeOffset? Timestamp { get; set; }
 
         /// <summary>
         /// A unique ID set by Chargify. Please note that this field is reserved. If `chargify.id` is present in the request payload, it will be overwritten.
@@ -69,8 +70,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// An ISO-8601 timestamp, set by Chargify at the time each event is recorded. Please note that this field is reserved. If `chargify.created_at` is present in the request payload, it will be overwritten.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
         /// <summary>
         /// User-defined string scoped per-stream. Duplicate events within a stream will be silently ignored. Tokens expire after 31 days.
@@ -128,9 +130,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Timestamp = {(this.Timestamp == null ? "null" : this.Timestamp)}");
+            toStringOutput.Add($"this.Timestamp = {(this.Timestamp == null ? "null" : this.Timestamp.ToString())}");
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id)}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
+            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
             toStringOutput.Add($"this.UniquenessToken = {(this.UniquenessToken == null ? "null" : this.UniquenessToken)}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
             toStringOutput.Add($"this.SubscriptionReference = {(this.SubscriptionReference == null ? "null" : this.SubscriptionReference)}");

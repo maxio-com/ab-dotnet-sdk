@@ -1,4 +1,4 @@
-// <copyright file="UpdateEndpoint.cs" company="APIMatic">
+// <copyright file="CreateOrUpdateEndpoint.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
 namespace AdvancedBilling.Standard.Models
@@ -18,23 +18,23 @@ namespace AdvancedBilling.Standard.Models
     using Newtonsoft.Json.Converters;
 
     /// <summary>
-    /// UpdateEndpoint.
+    /// CreateOrUpdateEndpoint.
     /// </summary>
-    public class UpdateEndpoint
+    public class CreateOrUpdateEndpoint
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateEndpoint"/> class.
+        /// Initializes a new instance of the <see cref="CreateOrUpdateEndpoint"/> class.
         /// </summary>
-        public UpdateEndpoint()
+        public CreateOrUpdateEndpoint()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateEndpoint"/> class.
+        /// Initializes a new instance of the <see cref="CreateOrUpdateEndpoint"/> class.
         /// </summary>
         /// <param name="url">url.</param>
         /// <param name="webhookSubscriptions">webhook_subscriptions.</param>
-        public UpdateEndpoint(
+        public CreateOrUpdateEndpoint(
             string url,
             List<Models.WebhookSubscription> webhookSubscriptions)
         {
@@ -61,7 +61,7 @@ namespace AdvancedBilling.Standard.Models
 
             this.ToString(toStringOutput);
 
-            return $"UpdateEndpoint : ({string.Join(", ", toStringOutput)})";
+            return $"CreateOrUpdateEndpoint : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
@@ -76,7 +76,7 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is UpdateEndpoint other &&                ((this.Url == null && other.Url == null) || (this.Url?.Equals(other.Url) == true)) &&
+            return obj is CreateOrUpdateEndpoint other &&                ((this.Url == null && other.Url == null) || (this.Url?.Equals(other.Url) == true)) &&
                 ((this.WebhookSubscriptions == null && other.WebhookSubscriptions == null) || (this.WebhookSubscriptions?.Equals(other.WebhookSubscriptions) == true));
         }
         

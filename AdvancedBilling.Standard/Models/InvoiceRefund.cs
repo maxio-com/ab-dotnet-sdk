@@ -23,9 +23,11 @@ namespace AdvancedBilling.Standard.Models
     public class InvoiceRefund
     {
         private string gatewayTransactionId;
+        private string gatewayHandle;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "gateway_transaction_id", false },
+            { "gateway_handle", false },
         };
 
         /// <summary>
@@ -44,13 +46,17 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="originalAmount">original_amount.</param>
         /// <param name="appliedAmount">applied_amount.</param>
         /// <param name="gatewayTransactionId">gateway_transaction_id.</param>
+        /// <param name="gatewayUsed">gateway_used.</param>
+        /// <param name="gatewayHandle">gateway_handle.</param>
         public InvoiceRefund(
             int? transactionId = null,
             int? paymentId = null,
             string memo = null,
             string originalAmount = null,
             string appliedAmount = null,
-            string gatewayTransactionId = null)
+            string gatewayTransactionId = null,
+            string gatewayUsed = null,
+            string gatewayHandle = null)
         {
             this.TransactionId = transactionId;
             this.PaymentId = paymentId;
@@ -60,6 +66,12 @@ namespace AdvancedBilling.Standard.Models
             if (gatewayTransactionId != null)
             {
                 this.GatewayTransactionId = gatewayTransactionId;
+            }
+
+            this.GatewayUsed = gatewayUsed;
+            if (gatewayHandle != null)
+            {
+                this.GatewayHandle = gatewayHandle;
             }
 
         }
@@ -112,6 +124,30 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// Gets or sets GatewayUsed.
+        /// </summary>
+        [JsonProperty("gateway_used", NullValueHandling = NullValueHandling.Ignore)]
+        public string GatewayUsed { get; set; }
+
+        /// <summary>
+        /// Gets or sets GatewayHandle.
+        /// </summary>
+        [JsonProperty("gateway_handle")]
+        public string GatewayHandle
+        {
+            get
+            {
+                return this.gatewayHandle;
+            }
+
+            set
+            {
+                this.shouldSerialize["gateway_handle"] = true;
+                this.gatewayHandle = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -131,12 +167,29 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetGatewayHandle()
+        {
+            this.shouldSerialize["gateway_handle"] = false;
+        }
+
+        /// <summary>
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
         public bool ShouldSerializeGatewayTransactionId()
         {
             return this.shouldSerialize["gateway_transaction_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeGatewayHandle()
+        {
+            return this.shouldSerialize["gateway_handle"];
         }
 
         /// <inheritdoc/>
@@ -156,7 +209,9 @@ namespace AdvancedBilling.Standard.Models
                 ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
                 ((this.OriginalAmount == null && other.OriginalAmount == null) || (this.OriginalAmount?.Equals(other.OriginalAmount) == true)) &&
                 ((this.AppliedAmount == null && other.AppliedAmount == null) || (this.AppliedAmount?.Equals(other.AppliedAmount) == true)) &&
-                ((this.GatewayTransactionId == null && other.GatewayTransactionId == null) || (this.GatewayTransactionId?.Equals(other.GatewayTransactionId) == true));
+                ((this.GatewayTransactionId == null && other.GatewayTransactionId == null) || (this.GatewayTransactionId?.Equals(other.GatewayTransactionId) == true)) &&
+                ((this.GatewayUsed == null && other.GatewayUsed == null) || (this.GatewayUsed?.Equals(other.GatewayUsed) == true)) &&
+                ((this.GatewayHandle == null && other.GatewayHandle == null) || (this.GatewayHandle?.Equals(other.GatewayHandle) == true));
         }
         
         /// <summary>
@@ -171,6 +226,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.OriginalAmount = {(this.OriginalAmount == null ? "null" : this.OriginalAmount)}");
             toStringOutput.Add($"this.AppliedAmount = {(this.AppliedAmount == null ? "null" : this.AppliedAmount)}");
             toStringOutput.Add($"this.GatewayTransactionId = {(this.GatewayTransactionId == null ? "null" : this.GatewayTransactionId)}");
+            toStringOutput.Add($"this.GatewayUsed = {(this.GatewayUsed == null ? "null" : this.GatewayUsed)}");
+            toStringOutput.Add($"this.GatewayHandle = {(this.GatewayHandle == null ? "null" : this.GatewayHandle)}");
         }
     }
 }

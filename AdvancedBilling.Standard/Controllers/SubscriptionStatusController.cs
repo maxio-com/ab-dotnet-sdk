@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
@@ -63,7 +62,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.SubscriptionResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/retry.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))))
               .ResponseHandler(_responseHandler => _responseHandler
@@ -95,7 +94,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.SubscriptionResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
@@ -130,7 +129,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.SubscriptionResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/resume.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Query(_query => _query.Setup("calendar_billing['resumption_charge']", (calendarBillingResumptionCharge.HasValue) ? ApiHelper.JsonSerialize(calendarBillingResumptionCharge.Value).Trim('\"') : "prorated"))))
@@ -167,7 +166,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.SubscriptionResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/hold.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
@@ -207,7 +206,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.SubscriptionResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/hold.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
@@ -435,7 +434,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.SubscriptionResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/reactivate.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
@@ -473,7 +472,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.DelayedCancellationResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/delayed_cancel.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
@@ -505,7 +504,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.DelayedCancellationResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/delayed_cancel.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))))
               .ResponseHandler(_responseHandler => _responseHandler
@@ -533,7 +532,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.SubscriptionResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/cancel_dunning.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
@@ -587,7 +586,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.RenewalPreviewResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/renewals/preview.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))

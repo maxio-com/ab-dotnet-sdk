@@ -50,10 +50,10 @@ namespace AdvancedBilling.Standard.Models
         PaypalAccount,
 
         /// <summary>
-        /// CreditCardOnFile.
+        /// CreditCard.
         /// </summary>
-        [EnumMember(Value = "credit_card_on_file")]
-        CreditCardOnFile,
+        [EnumMember(Value = "credit_card")]
+        CreditCard,
 
         /// <summary>
         /// Other.

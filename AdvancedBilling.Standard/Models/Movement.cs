@@ -42,7 +42,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="subscriptionId">subscription_id.</param>
         /// <param name="subscriberName">subscriber_name.</param>
         public Movement(
-            string timestamp = null,
+            DateTimeOffset? timestamp = null,
             long? amountInCents = null,
             string amountFormatted = null,
             string description = null,
@@ -66,8 +66,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets Timestamp.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("timestamp", NullValueHandling = NullValueHandling.Ignore)]
-        public string Timestamp { get; set; }
+        public DateTimeOffset? Timestamp { get; set; }
 
         /// <summary>
         /// Gets or sets AmountInCents.
@@ -156,7 +157,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Timestamp = {(this.Timestamp == null ? "null" : this.Timestamp)}");
+            toStringOutput.Add($"this.Timestamp = {(this.Timestamp == null ? "null" : this.Timestamp.ToString())}");
             toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
             toStringOutput.Add($"this.AmountFormatted = {(this.AmountFormatted == null ? "null" : this.AmountFormatted)}");
             toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");

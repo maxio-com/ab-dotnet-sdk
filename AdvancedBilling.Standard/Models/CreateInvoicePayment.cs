@@ -37,16 +37,19 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="memo">memo.</param>
         /// <param name="method">method.</param>
         /// <param name="details">details.</param>
+        /// <param name="paymentProfileId">payment_profile_id.</param>
         public CreateInvoicePayment(
             CreateInvoicePaymentAmount amount = null,
             string memo = null,
             Models.InvoicePaymentMethodType? method = null,
-            string details = null)
+            string details = null,
+            int? paymentProfileId = null)
         {
             this.Amount = amount;
             this.Memo = memo;
             this.Method = method;
             this.Details = details;
+            this.PaymentProfileId = paymentProfileId;
         }
 
         /// <summary>
@@ -73,6 +76,12 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("details", NullValueHandling = NullValueHandling.Ignore)]
         public string Details { get; set; }
 
+        /// <summary>
+        /// The ID of the payment profile to be used for the payment.
+        /// </summary>
+        [JsonProperty("payment_profile_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? PaymentProfileId { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -98,7 +107,8 @@ namespace AdvancedBilling.Standard.Models
             return obj is CreateInvoicePayment other &&                ((this.Amount == null && other.Amount == null) || (this.Amount?.Equals(other.Amount) == true)) &&
                 ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
                 ((this.Method == null && other.Method == null) || (this.Method?.Equals(other.Method) == true)) &&
-                ((this.Details == null && other.Details == null) || (this.Details?.Equals(other.Details) == true));
+                ((this.Details == null && other.Details == null) || (this.Details?.Equals(other.Details) == true)) &&
+                ((this.PaymentProfileId == null && other.PaymentProfileId == null) || (this.PaymentProfileId?.Equals(other.PaymentProfileId) == true));
         }
         
         /// <summary>
@@ -111,6 +121,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.Method = {(this.Method == null ? "null" : this.Method.ToString())}");
             toStringOutput.Add($"this.Details = {(this.Details == null ? "null" : this.Details)}");
+            toStringOutput.Add($"this.PaymentProfileId = {(this.PaymentProfileId == null ? "null" : this.PaymentProfileId.ToString())}");
         }
     }
 }

@@ -71,10 +71,10 @@ namespace AdvancedBilling.Standard.Models
             List<string> filterCurrencies = null,
             List<Models.SubscriptionStateFilter> filterSubscriptionStates = null,
             Models.SubscriptionListDateField? filterSubscriptionDateField = null,
-            string filterSubscriptionStartDate = null,
-            string filterSubscriptionStartDatetime = null,
-            string filterSubscriptionEndDate = null,
-            string filterSubscriptionEndDatetime = null)
+            DateTime? filterSubscriptionStartDate = null,
+            DateTimeOffset? filterSubscriptionStartDatetime = null,
+            DateTime? filterSubscriptionEndDate = null,
+            DateTimeOffset? filterSubscriptionEndDatetime = null)
         {
             this.Page = page;
             this.PerPage = perPage;
@@ -209,26 +209,30 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The start date (format YYYY-MM-DD) with which to filter the date_field. Returns components that belong to the subscription with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. To use this filter you also have to include the following param in the request `include=subscription`.
         /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("filter[subscription][start_date]", NullValueHandling = NullValueHandling.Ignore)]
-        public string FilterSubscriptionStartDate { get; set; }
+        public DateTime? FilterSubscriptionStartDate { get; set; }
 
         /// <summary>
         /// The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components that belong to the subscription with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of start_date. To use this filter you also have to include the following param in the request `include=subscription`.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("filter[subscription][start_datetime]", NullValueHandling = NullValueHandling.Ignore)]
-        public string FilterSubscriptionStartDatetime { get; set; }
+        public DateTimeOffset? FilterSubscriptionStartDatetime { get; set; }
 
         /// <summary>
         /// The end date (format YYYY-MM-DD) with which to filter the date_field. Returns components that belong to the subscription with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. To use this filter you also have to include the following param in the request `include=subscription`.
         /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("filter[subscription][end_date]", NullValueHandling = NullValueHandling.Ignore)]
-        public string FilterSubscriptionEndDate { get; set; }
+        public DateTime? FilterSubscriptionEndDate { get; set; }
 
         /// <summary>
         /// The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components that belong to the subscription with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of end_date. To use this filter you also have to include the following param in the request `include=subscription`.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("filter[subscription][end_datetime]", NullValueHandling = NullValueHandling.Ignore)]
-        public string FilterSubscriptionEndDatetime { get; set; }
+        public DateTimeOffset? FilterSubscriptionEndDatetime { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -298,10 +302,10 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.FilterCurrencies = {(this.FilterCurrencies == null ? "null" : $"[{string.Join(", ", this.FilterCurrencies)} ]")}");
             toStringOutput.Add($"this.FilterSubscriptionStates = {(this.FilterSubscriptionStates == null ? "null" : $"[{string.Join(", ", this.FilterSubscriptionStates)} ]")}");
             toStringOutput.Add($"this.FilterSubscriptionDateField = {(this.FilterSubscriptionDateField == null ? "null" : this.FilterSubscriptionDateField.ToString())}");
-            toStringOutput.Add($"this.FilterSubscriptionStartDate = {(this.FilterSubscriptionStartDate == null ? "null" : this.FilterSubscriptionStartDate)}");
-            toStringOutput.Add($"this.FilterSubscriptionStartDatetime = {(this.FilterSubscriptionStartDatetime == null ? "null" : this.FilterSubscriptionStartDatetime)}");
-            toStringOutput.Add($"this.FilterSubscriptionEndDate = {(this.FilterSubscriptionEndDate == null ? "null" : this.FilterSubscriptionEndDate)}");
-            toStringOutput.Add($"this.FilterSubscriptionEndDatetime = {(this.FilterSubscriptionEndDatetime == null ? "null" : this.FilterSubscriptionEndDatetime)}");
+            toStringOutput.Add($"this.FilterSubscriptionStartDate = {(this.FilterSubscriptionStartDate == null ? "null" : this.FilterSubscriptionStartDate.ToString())}");
+            toStringOutput.Add($"this.FilterSubscriptionStartDatetime = {(this.FilterSubscriptionStartDatetime == null ? "null" : this.FilterSubscriptionStartDatetime.ToString())}");
+            toStringOutput.Add($"this.FilterSubscriptionEndDate = {(this.FilterSubscriptionEndDate == null ? "null" : this.FilterSubscriptionEndDate.ToString())}");
+            toStringOutput.Add($"this.FilterSubscriptionEndDatetime = {(this.FilterSubscriptionEndDatetime == null ? "null" : this.FilterSubscriptionEndDatetime.ToString())}");
         }
     }
 }

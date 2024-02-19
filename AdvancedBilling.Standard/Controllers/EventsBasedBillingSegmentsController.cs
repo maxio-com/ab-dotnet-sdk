@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
@@ -65,7 +64,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.SegmentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/components/{component_id}/price_points/{price_point_id}/segments.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("component_id", componentId).Required())
@@ -101,7 +100,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ListSegmentsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/components/{component_id}/price_points/{price_point_id}/segments.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("component_id", input.ComponentId).Required())
                       .Template(_template => _template.Setup("price_point_id", input.PricePointId).Required())
@@ -151,7 +150,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.SegmentResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/components/{component_id}/price_points/{price_point_id}/segments/{id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("component_id", componentId).Required())
@@ -193,7 +192,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<VoidType>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/components/{component_id}/price_points/{price_point_id}/segments/{id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("component_id", componentId).Required())
                       .Template(_template => _template.Setup("price_point_id", pricePointId).Required())
@@ -236,7 +235,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ListSegmentsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/components/{component_id}/price_points/{price_point_id}/segments/bulk.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("component_id", componentId).Required())
@@ -280,7 +279,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ListSegmentsResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/components/{component_id}/price_points/{price_point_id}/segments/bulk.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("component_id", componentId).Required())

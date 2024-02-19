@@ -16,8 +16,8 @@
 | `Organization` | `string` | Optional | The organization of the customer |
 | `Reference` | `string` | Optional | The unique identifier used within your own application for this customer |
 | `Id` | `int?` | Optional | The customer ID in Chargify |
-| `CreatedAt` | `string` | Optional | The timestamp in which the customer object was created in Chargify |
-| `UpdatedAt` | `string` | Optional | The timestamp in which the customer object was last edited |
+| `CreatedAt` | `DateTimeOffset?` | Optional | The timestamp in which the customer object was created in Chargify |
+| `UpdatedAt` | `DateTimeOffset?` | Optional | The timestamp in which the customer object was last edited |
 | `Address` | `string` | Optional | The customer’s shipping street address (i.e. “123 Main St.”) |
 | `Address2` | `string` | Optional | Second line of the customer’s shipping address i.e. “Apt. 100” |
 | `City` | `string` | Optional | The customer’s shipping address city (i.e. “Boston”) |
@@ -28,9 +28,9 @@
 | `CountryName` | `string` | Optional | The customer's full name of country |
 | `Phone` | `string` | Optional | The phone number of the customer |
 | `Verified` | `bool?` | Optional | Is the customer verified to use ACH as a payment method. Available only on Authorize.Net gateway |
-| `PortalCustomerCreatedAt` | `string` | Optional | The timestamp of when the Billing Portal entry was created at for the customer |
-| `PortalInviteLastSentAt` | `string` | Optional | The timestamp of when the Billing Portal invite was last sent at |
-| `PortalInviteLastAcceptedAt` | `string` | Optional | The timestamp of when the Billing Portal invite was last accepted |
+| `PortalCustomerCreatedAt` | `DateTimeOffset?` | Optional | The timestamp of when the Billing Portal entry was created at for the customer |
+| `PortalInviteLastSentAt` | `DateTimeOffset?` | Optional | The timestamp of when the Billing Portal invite was last sent at |
+| `PortalInviteLastAcceptedAt` | `DateTimeOffset?` | Optional | The timestamp of when the Billing Portal invite was last accepted |
 | `TaxExempt` | `bool?` | Optional | The tax exempt status for the customer. Acceptable values are true or 1 for true and false or 0 for false. |
 | `VatNumber` | `string` | Optional | The VAT business identification number for the customer. This number is used to determine VAT tax opt out rules. It is not validated when added or updated on a customer record. Instead, it is validated via VIES before calculating taxes. Only valid business identification numbers will allow for VAT opt out. |
 | `ParentId` | `int?` | Optional | The parent ID in Chargify if applicable. Parent is another Customer object. |

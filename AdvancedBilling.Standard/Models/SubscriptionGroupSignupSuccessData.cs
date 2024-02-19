@@ -48,7 +48,7 @@ namespace AdvancedBilling.Standard.Models
             int paymentProfileId,
             List<int> subscriptionIds,
             int primarySubscriptionId,
-            string nextAssessmentAt,
+            DateTimeOffset nextAssessmentAt,
             string state,
             bool cancelAtEndOfPeriod)
         {
@@ -102,8 +102,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets NextAssessmentAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("next_assessment_at")]
-        public string NextAssessmentAt { get; set; }
+        public DateTimeOffset NextAssessmentAt { get; set; }
 
         /// <summary>
         /// Gets or sets State.
@@ -145,7 +146,7 @@ namespace AdvancedBilling.Standard.Models
                 this.PaymentProfileId.Equals(other.PaymentProfileId) &&
                 ((this.SubscriptionIds == null && other.SubscriptionIds == null) || (this.SubscriptionIds?.Equals(other.SubscriptionIds) == true)) &&
                 this.PrimarySubscriptionId.Equals(other.PrimarySubscriptionId) &&
-                ((this.NextAssessmentAt == null && other.NextAssessmentAt == null) || (this.NextAssessmentAt?.Equals(other.NextAssessmentAt) == true)) &&
+                this.NextAssessmentAt.Equals(other.NextAssessmentAt) &&
                 ((this.State == null && other.State == null) || (this.State?.Equals(other.State) == true)) &&
                 this.CancelAtEndOfPeriod.Equals(other.CancelAtEndOfPeriod);
         }
@@ -162,7 +163,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PaymentProfileId = {this.PaymentProfileId}");
             toStringOutput.Add($"this.SubscriptionIds = {(this.SubscriptionIds == null ? "null" : $"[{string.Join(", ", this.SubscriptionIds)} ]")}");
             toStringOutput.Add($"this.PrimarySubscriptionId = {this.PrimarySubscriptionId}");
-            toStringOutput.Add($"this.NextAssessmentAt = {(this.NextAssessmentAt == null ? "null" : this.NextAssessmentAt)}");
+            toStringOutput.Add($"this.NextAssessmentAt = {this.NextAssessmentAt}");
             toStringOutput.Add($"this.State = {(this.State == null ? "null" : this.State)}");
             toStringOutput.Add($"this.CancelAtEndOfPeriod = {this.CancelAtEndOfPeriod}");
         }

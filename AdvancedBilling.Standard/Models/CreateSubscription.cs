@@ -133,7 +133,7 @@ namespace AdvancedBilling.Standard.Models
             Models.UpsertPrepaidConfiguration prepaidConfiguration = null,
             DateTimeOffset? previousBillingAt = null,
             bool? importMrr = null,
-            string canceledAt = null,
+            DateTimeOffset? canceledAt = null,
             DateTimeOffset? activatedAt = null,
             Models.AgreementAcceptance agreementAcceptance = null,
             Models.ACHAgreement achAgreement = null,
@@ -455,8 +455,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CanceledAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("canceled_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CanceledAt { get; set; }
+        public DateTimeOffset? CanceledAt { get; set; }
 
         /// <summary>
         /// Gets or sets ActivatedAt.
@@ -674,7 +675,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PrepaidConfiguration = {(this.PrepaidConfiguration == null ? "null" : this.PrepaidConfiguration.ToString())}");
             toStringOutput.Add($"this.PreviousBillingAt = {(this.PreviousBillingAt == null ? "null" : this.PreviousBillingAt.ToString())}");
             toStringOutput.Add($"this.ImportMrr = {(this.ImportMrr == null ? "null" : this.ImportMrr.ToString())}");
-            toStringOutput.Add($"this.CanceledAt = {(this.CanceledAt == null ? "null" : this.CanceledAt)}");
+            toStringOutput.Add($"this.CanceledAt = {(this.CanceledAt == null ? "null" : this.CanceledAt.ToString())}");
             toStringOutput.Add($"this.ActivatedAt = {(this.ActivatedAt == null ? "null" : this.ActivatedAt.ToString())}");
             toStringOutput.Add($"this.AgreementAcceptance = {(this.AgreementAcceptance == null ? "null" : this.AgreementAcceptance.ToString())}");
             toStringOutput.Add($"this.AchAgreement = {(this.AchAgreement == null ? "null" : this.AchAgreement.ToString())}");

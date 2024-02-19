@@ -42,7 +42,7 @@ namespace AdvancedBilling.Standard.Models
             int? id = null,
             Models.InvoiceEventType? eventType = null,
             InvoiceEventEventData eventData = null,
-            string timestamp = null,
+            DateTimeOffset? timestamp = null,
             Models.Invoice invoice = null)
         {
             this.Id = id;
@@ -73,8 +73,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets Timestamp.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("timestamp", NullValueHandling = NullValueHandling.Ignore)]
-        public string Timestamp { get; set; }
+        public DateTimeOffset? Timestamp { get; set; }
 
         /// <summary>
         /// Gets or sets Invoice.
@@ -120,7 +121,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.EventType = {(this.EventType == null ? "null" : this.EventType.ToString())}");
             toStringOutput.Add($"EventData = {(this.EventData == null ? "null" : this.EventData.ToString())}");
-            toStringOutput.Add($"this.Timestamp = {(this.Timestamp == null ? "null" : this.Timestamp)}");
+            toStringOutput.Add($"this.Timestamp = {(this.Timestamp == null ? "null" : this.Timestamp.ToString())}");
             toStringOutput.Add($"this.Invoice = {(this.Invoice == null ? "null" : this.Invoice.ToString())}");
         }
     }

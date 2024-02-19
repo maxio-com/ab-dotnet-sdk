@@ -66,7 +66,7 @@ namespace AdvancedBilling.Standard.Models
             string nextProductId = null,
             string nextProductPricePointId = null,
             UpdateSubscriptionSnapDay snapDay = null,
-            string nextBillingAt = null,
+            DateTimeOffset? nextBillingAt = null,
             string paymentCollectionMethod = null,
             bool? receivesInvoiceEmails = null,
             UpdateSubscriptionNetTerms netTerms = null,
@@ -149,8 +149,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets NextBillingAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("next_billing_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string NextBillingAt { get; set; }
+        public DateTimeOffset? NextBillingAt { get; set; }
 
         /// <summary>
         /// Gets or sets PaymentCollectionMethod.
@@ -318,7 +319,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.NextProductId = {(this.NextProductId == null ? "null" : this.NextProductId)}");
             toStringOutput.Add($"this.NextProductPricePointId = {(this.NextProductPricePointId == null ? "null" : this.NextProductPricePointId)}");
             toStringOutput.Add($"SnapDay = {(this.SnapDay == null ? "null" : this.SnapDay.ToString())}");
-            toStringOutput.Add($"this.NextBillingAt = {(this.NextBillingAt == null ? "null" : this.NextBillingAt)}");
+            toStringOutput.Add($"this.NextBillingAt = {(this.NextBillingAt == null ? "null" : this.NextBillingAt.ToString())}");
             toStringOutput.Add($"this.PaymentCollectionMethod = {(this.PaymentCollectionMethod == null ? "null" : this.PaymentCollectionMethod)}");
             toStringOutput.Add($"this.ReceivesInvoiceEmails = {(this.ReceivesInvoiceEmails == null ? "null" : this.ReceivesInvoiceEmails.ToString())}");
             toStringOutput.Add($"NetTerms = {(this.NetTerms == null ? "null" : this.NetTerms.ToString())}");

@@ -10,9 +10,9 @@
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `Id` | `int?` | Optional | - |
-| `FinishedAt` | `string` | Optional | - |
+| `FinishedAt` | `DateTimeOffset?` | Optional | - |
 | `RowCount` | `int?` | Optional | - |
-| `CreatedAt` | `string` | Optional | - |
+| `CreatedAt` | `DateTimeOffset?` | Optional | - |
 | `Completed` | `string` | Optional | - |
 
 ## Example (as JSON)
@@ -20,9 +20,9 @@
 ```json
 {
   "id": 246,
-  "finished_at": "finished_at0",
+  "finished_at": "2016-03-13T12:52:32.123Z",
   "row_count": 254,
-  "created_at": "created_at6",
+  "created_at": "2016-03-13T12:52:32.123Z",
   "completed": "completed0"
 }
 ```

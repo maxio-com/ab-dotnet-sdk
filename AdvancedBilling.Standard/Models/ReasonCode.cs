@@ -45,8 +45,8 @@ namespace AdvancedBilling.Standard.Models
             string code = null,
             string description = null,
             int? position = null,
-            string createdAt = null,
-            string updatedAt = null)
+            DateTimeOffset? createdAt = null,
+            DateTimeOffset? updatedAt = null)
         {
             this.Id = id;
             this.SiteId = siteId;
@@ -90,14 +90,16 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CreatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets UpdatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("updated_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string UpdatedAt { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -141,8 +143,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Code = {(this.Code == null ? "null" : this.Code)}");
             toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
             toStringOutput.Add($"this.Position = {(this.Position == null ? "null" : this.Position.ToString())}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
-            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt)}");
+            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
         }
     }
 }

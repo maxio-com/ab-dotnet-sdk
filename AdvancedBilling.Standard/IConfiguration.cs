@@ -34,6 +34,11 @@ namespace AdvancedBilling.Standard
         IBasicAuthCredentials BasicAuthCredentials { get; }
 
         /// <summary>
+        /// Gets the credentials model to use with BasicAuth.
+        /// </summary>
+        BasicAuthModel BasicAuthModel { get; }
+
+        /// <summary>
         /// Gets the URL for a particular alias in the current environment and appends it with template parameters.
         /// </summary>
         /// <param name="alias">Default value:DEFAULT.</param>

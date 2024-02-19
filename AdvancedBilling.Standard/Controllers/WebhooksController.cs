@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
@@ -71,7 +70,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.WebhookResponse>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/webhooks.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("status", (input.Status.HasValue) ? ApiHelper.JsonSerialize(input.Status.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("since_date", input.SinceDate))
@@ -103,7 +102,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.EnableWebhooksResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/webhooks/settings.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
@@ -132,7 +131,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ReplayWebhooksResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/webhooks/replay.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
@@ -146,7 +145,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.EndpointResponse response from the API call.</returns>
         public Models.EndpointResponse CreateEndpoint(
-                Models.UpdateEndpointRequest body = null)
+                Models.CreateOrUpdateEndpointRequest body = null)
             => CoreHelper.RunTask(CreateEndpointAsync(body));
 
         /// <summary>
@@ -158,12 +157,12 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.EndpointResponse response from the API call.</returns>
         public async Task<Models.EndpointResponse> CreateEndpointAsync(
-                Models.UpdateEndpointRequest body = null,
+                Models.CreateOrUpdateEndpointRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.EndpointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/endpoints.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
@@ -187,7 +186,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<List<Models.Endpoint>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/endpoints.json")
-                  .WithAuth("global"))
+                  .WithAuth("BasicAuth"))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -203,7 +202,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <returns>Returns the Models.EndpointResponse response from the API call.</returns>
         public Models.EndpointResponse UpdateEndpoint(
                 int endpointId,
-                Models.UpdateEndpointRequest body = null)
+                Models.CreateOrUpdateEndpointRequest body = null)
             => CoreHelper.RunTask(UpdateEndpointAsync(endpointId, body));
 
         /// <summary>
@@ -220,12 +219,12 @@ namespace AdvancedBilling.Standard.Controllers
         /// <returns>Returns the Models.EndpointResponse response from the API call.</returns>
         public async Task<Models.EndpointResponse> UpdateEndpointAsync(
                 int endpointId,
-                Models.UpdateEndpointRequest body = null,
+                Models.CreateOrUpdateEndpointRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.EndpointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Put, "/endpoints/{endpoint_id}.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("endpoint_id", endpointId))

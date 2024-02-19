@@ -121,14 +121,14 @@ Proforma invoices are only available on Relationship Invoicing sites.
 
 ```csharp
 ReadProformaInvoiceAsync(
-    int proformaInvoiceUid)
+    string proformaInvoiceUid)
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `proformaInvoiceUid` | `int` | Template, Required | The uid of the proforma invoice |
+| `proformaInvoiceUid` | `string` | Template, Required | The uid of the proforma invoice |
 
 ## Response Type
 
@@ -137,7 +137,7 @@ ReadProformaInvoiceAsync(
 ## Example Usage
 
 ```csharp
-int proformaInvoiceUid = 242;
+string proformaInvoiceUid = "proforma_invoice_uid4";
 try
 {
     ProformaInvoice result = await proformaInvoicesController.ReadProformaInvoiceAsync(proformaInvoiceUid);
@@ -232,7 +232,7 @@ ListProformaInvoicesAsync(
 
 ## Response Type
 
-[`Task<List<Models.ProformaInvoice>>`](../../doc/models/proforma-invoice.md)
+[`Task<Models.ListProformaInvoicesResponse>`](../../doc/models/list-proforma-invoices-response.md)
 
 ## Example Usage
 
@@ -253,7 +253,7 @@ ListProformaInvoicesInput listProformaInvoicesInput = new ListProformaInvoicesIn
 
 try
 {
-    List<ProformaInvoice> result = await proformaInvoicesController.ListProformaInvoicesAsync(listProformaInvoicesInput);
+    ListProformaInvoicesResponse result = await proformaInvoicesController.ListProformaInvoicesAsync(listProformaInvoicesInput);
 }
 catch (ApiException e)
 {

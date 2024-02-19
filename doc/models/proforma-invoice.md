@@ -15,8 +15,8 @@
 | `SubscriptionId` | `int?` | Optional | - |
 | `Number` | `int?` | Optional | - |
 | `SequenceNumber` | `int?` | Optional | - |
-| `CreatedAt` | `string` | Optional | - |
-| `DeliveryDate` | `string` | Optional | - |
+| `CreatedAt` | `DateTimeOffset?` | Optional | - |
+| `DeliveryDate` | `DateTime?` | Optional | - |
 | `Status` | `string` | Optional | - |
 | `CollectionMethod` | `string` | Optional | - |
 | `PaymentInstructions` | `string` | Optional | - |

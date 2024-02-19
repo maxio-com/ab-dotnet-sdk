@@ -44,7 +44,7 @@ namespace AdvancedBilling.Standard.Models
             string currency = null,
             string currencySymbol = null,
             Models.Breakouts breakouts = null,
-            string atTime = null)
+            DateTimeOffset? atTime = null)
         {
             this.AmountInCents = amountInCents;
             this.AmountFormatted = amountFormatted;
@@ -87,8 +87,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// ISO8601 timestamp
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("at_time", NullValueHandling = NullValueHandling.Ignore)]
-        public string AtTime { get; set; }
+        public DateTimeOffset? AtTime { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -131,7 +132,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Currency = {(this.Currency == null ? "null" : this.Currency)}");
             toStringOutput.Add($"this.CurrencySymbol = {(this.CurrencySymbol == null ? "null" : this.CurrencySymbol)}");
             toStringOutput.Add($"this.Breakouts = {(this.Breakouts == null ? "null" : this.Breakouts.ToString())}");
-            toStringOutput.Add($"this.AtTime = {(this.AtTime == null ? "null" : this.AtTime)}");
+            toStringOutput.Add($"this.AtTime = {(this.AtTime == null ? "null" : this.AtTime.ToString())}");
         }
     }
 }

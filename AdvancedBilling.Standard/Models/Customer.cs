@@ -35,9 +35,9 @@ namespace AdvancedBilling.Standard.Models
         private string countryName;
         private string phone;
         private bool? verified;
-        private string portalCustomerCreatedAt;
-        private string portalInviteLastSentAt;
-        private string portalInviteLastAcceptedAt;
+        private DateTimeOffset? portalCustomerCreatedAt;
+        private DateTimeOffset? portalInviteLastSentAt;
+        private DateTimeOffset? portalInviteLastAcceptedAt;
         private string vatNumber;
         private int? parentId;
         private string locale;
@@ -111,8 +111,8 @@ namespace AdvancedBilling.Standard.Models
             string organization = null,
             string reference = null,
             int? id = null,
-            string createdAt = null,
-            string updatedAt = null,
+            DateTimeOffset? createdAt = null,
+            DateTimeOffset? updatedAt = null,
             string address = null,
             string address2 = null,
             string city = null,
@@ -123,9 +123,9 @@ namespace AdvancedBilling.Standard.Models
             string countryName = null,
             string phone = null,
             bool? verified = null,
-            string portalCustomerCreatedAt = null,
-            string portalInviteLastSentAt = null,
-            string portalInviteLastAcceptedAt = null,
+            DateTimeOffset? portalCustomerCreatedAt = null,
+            DateTimeOffset? portalInviteLastSentAt = null,
+            DateTimeOffset? portalInviteLastAcceptedAt = null,
             bool? taxExempt = null,
             string vatNumber = null,
             int? parentId = null,
@@ -322,14 +322,16 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The timestamp in which the customer object was created in Chargify
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
         /// <summary>
         /// The timestamp in which the customer object was last edited
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("updated_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string UpdatedAt { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
 
         /// <summary>
         /// The customer’s shipping street address (i.e. “123 Main St.”)
@@ -514,8 +516,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The timestamp of when the Billing Portal entry was created at for the customer
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("portal_customer_created_at")]
-        public string PortalCustomerCreatedAt
+        public DateTimeOffset? PortalCustomerCreatedAt
         {
             get
             {
@@ -532,8 +535,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The timestamp of when the Billing Portal invite was last sent at
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("portal_invite_last_sent_at")]
-        public string PortalInviteLastSentAt
+        public DateTimeOffset? PortalInviteLastSentAt
         {
             get
             {
@@ -550,8 +554,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The timestamp of when the Billing Portal invite was last accepted
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("portal_invite_last_accepted_at")]
-        public string PortalInviteLastAcceptedAt
+        public DateTimeOffset? PortalInviteLastAcceptedAt
         {
             get
             {
@@ -1047,8 +1052,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Organization = {(this.Organization == null ? "null" : this.Organization)}");
             toStringOutput.Add($"this.Reference = {(this.Reference == null ? "null" : this.Reference)}");
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
-            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt)}");
+            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
             toStringOutput.Add($"this.Address = {(this.Address == null ? "null" : this.Address)}");
             toStringOutput.Add($"this.Address2 = {(this.Address2 == null ? "null" : this.Address2)}");
             toStringOutput.Add($"this.City = {(this.City == null ? "null" : this.City)}");
@@ -1059,9 +1064,9 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.CountryName = {(this.CountryName == null ? "null" : this.CountryName)}");
             toStringOutput.Add($"this.Phone = {(this.Phone == null ? "null" : this.Phone)}");
             toStringOutput.Add($"this.Verified = {(this.Verified == null ? "null" : this.Verified.ToString())}");
-            toStringOutput.Add($"this.PortalCustomerCreatedAt = {(this.PortalCustomerCreatedAt == null ? "null" : this.PortalCustomerCreatedAt)}");
-            toStringOutput.Add($"this.PortalInviteLastSentAt = {(this.PortalInviteLastSentAt == null ? "null" : this.PortalInviteLastSentAt)}");
-            toStringOutput.Add($"this.PortalInviteLastAcceptedAt = {(this.PortalInviteLastAcceptedAt == null ? "null" : this.PortalInviteLastAcceptedAt)}");
+            toStringOutput.Add($"this.PortalCustomerCreatedAt = {(this.PortalCustomerCreatedAt == null ? "null" : this.PortalCustomerCreatedAt.ToString())}");
+            toStringOutput.Add($"this.PortalInviteLastSentAt = {(this.PortalInviteLastSentAt == null ? "null" : this.PortalInviteLastSentAt.ToString())}");
+            toStringOutput.Add($"this.PortalInviteLastAcceptedAt = {(this.PortalInviteLastAcceptedAt == null ? "null" : this.PortalInviteLastAcceptedAt.ToString())}");
             toStringOutput.Add($"this.TaxExempt = {(this.TaxExempt == null ? "null" : this.TaxExempt.ToString())}");
             toStringOutput.Add($"this.VatNumber = {(this.VatNumber == null ? "null" : this.VatNumber)}");
             toStringOutput.Add($"this.ParentId = {(this.ParentId == null ? "null" : this.ParentId.ToString())}");

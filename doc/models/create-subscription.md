@@ -51,7 +51,7 @@
 | `PrepaidConfiguration` | [`UpsertPrepaidConfiguration`](../../doc/models/upsert-prepaid-configuration.md) | Optional | - |
 | `PreviousBillingAt` | `DateTimeOffset?` | Optional | Providing a previous_billing_at that is in the past will set the current_period_starts_at when the subscription is created. It will also set activated_at if not explicitly passed during the subscription import. Can only be used if next_billing_at is also passed. Using this option will allow you to set the period start for the subscription so mid period component allocations have the correct prorated amount. |
 | `ImportMrr` | `bool?` | Optional | Setting this attribute to true will cause the subscription's MRR to be added to your MRR analytics immediately. For this value to be honored, a next_billing_at must be present and set to a future date. This key/value will not be returned in the subscription response body. |
-| `CanceledAt` | `string` | Optional | - |
+| `CanceledAt` | `DateTimeOffset?` | Optional | - |
 | `ActivatedAt` | `DateTimeOffset?` | Optional | - |
 | `AgreementAcceptance` | [`AgreementAcceptance`](../../doc/models/agreement-acceptance.md) | Optional | Required when creating a subscription with Maxio Payments. |
 | `AchAgreement` | [`ACHAgreement`](../../doc/models/ach-agreement.md) | Optional | (Optional) If passed, the proof of the authorized ACH agreement terms will be persisted. |

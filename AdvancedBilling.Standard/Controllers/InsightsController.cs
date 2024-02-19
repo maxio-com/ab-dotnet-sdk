@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Authentication;
     using AdvancedBilling.Standard.Exceptions;
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
@@ -60,7 +59,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.SiteSummary>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/stats.json")
-                  .WithAuth("global"))
+                  .WithAuth("BasicAuth"))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -90,7 +89,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.MRRResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/mrr.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("at_time", atTime.HasValue ? atTime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))
                       .Query(_query => _query.Setup("subscription_id", subscriptionId))))
@@ -149,7 +148,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.ListMRRResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/mrr_movements.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("subscription_id", input.SubscriptionId))
                       .Query(_query => _query.Setup("page", input.Page))
@@ -180,7 +179,7 @@ namespace AdvancedBilling.Standard.Controllers
             => await CreateApiCall<Models.SubscriptionMRRResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions_mrr.json")
-                  .WithAuth("global")
+                  .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("filter[subscription_ids]", input.FilterSubscriptionIds))
                       .Query(_query => _query.Setup("at_time", input.AtTime))

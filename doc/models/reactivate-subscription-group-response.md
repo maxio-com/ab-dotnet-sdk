@@ -15,7 +15,7 @@
 | `PaymentProfileId` | `int?` | Optional | - |
 | `SubscriptionIds` | `List<int>` | Optional | - |
 | `PrimarySubscriptionId` | `int?` | Optional | - |
-| `NextAssessmentAt` | `string` | Optional | - |
+| `NextAssessmentAt` | `DateTimeOffset?` | Optional | - |
 | `State` | `string` | Optional | - |
 | `CancelAtEndOfPeriod` | `bool?` | Optional | - |
 

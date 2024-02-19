@@ -50,7 +50,7 @@ namespace AdvancedBilling.Standard.Models
             bool? external = null,
             string memo = null,
             Models.PrepaymentMethod? paymentType = null,
-            string createdAt = null)
+            DateTimeOffset? createdAt = null)
         {
             this.Id = id;
             this.SubscriptionGroupUid = subscriptionGroupUid;
@@ -106,7 +106,7 @@ namespace AdvancedBilling.Standard.Models
         public string Memo { get; set; }
 
         /// <summary>
-        /// :- When the `method` specified is `"credit_card_on_file"`, the prepayment amount will be collected using the default credit card payment profile and applied to the prepayment account balance. This is especially useful for manual replenishment of prepaid subscriptions.
+        /// Gets or sets PaymentType.
         /// </summary>
         [JsonProperty("payment_type", NullValueHandling = NullValueHandling.Ignore)]
         public Models.PrepaymentMethod? PaymentType { get; set; }
@@ -114,8 +114,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CreatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -164,7 +165,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.External = {(this.External == null ? "null" : this.External.ToString())}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
+            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
         }
     }
 }

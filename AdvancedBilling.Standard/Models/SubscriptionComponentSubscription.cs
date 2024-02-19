@@ -36,7 +36,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="updatedAt">updated_at.</param>
         public SubscriptionComponentSubscription(
             Models.SubscriptionState? state = null,
-            string updatedAt = null)
+            DateTimeOffset? updatedAt = null)
         {
             this.State = state;
             this.UpdatedAt = updatedAt;
@@ -70,8 +70,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets UpdatedAt.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("updated_at", NullValueHandling = NullValueHandling.Ignore)]
-        public string UpdatedAt { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -106,7 +107,7 @@ namespace AdvancedBilling.Standard.Models
         protected void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.State = {(this.State == null ? "null" : this.State.ToString())}");
-            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt)}");
+            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
         }
     }
 }

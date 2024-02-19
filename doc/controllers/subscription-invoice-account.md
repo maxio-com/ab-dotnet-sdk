@@ -91,7 +91,7 @@ CreatePrepaymentRequest body = new CreatePrepaymentRequest
         Amount = 100,
         Details = "John Doe signup for $100",
         Memo = "Signup for $100",
-        Method = PrepaymentMethod.Check,
+        Method = CreatePrepaymentMethod.Check,
     },
 };
 

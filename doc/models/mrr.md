@@ -14,7 +14,7 @@
 | `Currency` | `string` | Optional | - |
 | `CurrencySymbol` | `string` | Optional | - |
 | `Breakouts` | [`Breakouts`](../../doc/models/breakouts.md) | Optional | - |
-| `AtTime` | `string` | Optional | ISO8601 timestamp |
+| `AtTime` | `DateTimeOffset?` | Optional | ISO8601 timestamp |
 
 ## Example (as JSON)
 
