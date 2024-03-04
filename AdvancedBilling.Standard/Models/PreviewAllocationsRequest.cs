@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// PreviewAllocationsRequest.
     /// </summary>
-    public class PreviewAllocationsRequest
+    public class PreviewAllocationsRequest : BaseModel
     {
         private Models.CreditType? upgradeCharge;
         private Models.CreditType? downgradeCredit;
@@ -181,12 +181,14 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Allocations = {(this.Allocations == null ? "null" : $"[{string.Join(", ", this.Allocations)} ]")}");
             toStringOutput.Add($"this.EffectiveProrationDate = {(this.EffectiveProrationDate == null ? "null" : this.EffectiveProrationDate.ToString())}");
             toStringOutput.Add($"this.UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
             toStringOutput.Add($"this.DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

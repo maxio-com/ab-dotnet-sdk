@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// BillingManifest.
     /// </summary>
-    public class BillingManifest
+    public class BillingManifest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BillingManifest"/> class.
@@ -156,7 +156,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.LineItems = {(this.LineItems == null ? "null" : $"[{string.Join(", ", this.LineItems)} ]")}");
             toStringOutput.Add($"this.TotalInCents = {(this.TotalInCents == null ? "null" : this.TotalInCents.ToString())}");
@@ -167,6 +167,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate.ToString())}");
             toStringOutput.Add($"this.PeriodType = {(this.PeriodType == null ? "null" : this.PeriodType)}");
             toStringOutput.Add($"this.ExistingBalanceInCents = {(this.ExistingBalanceInCents == null ? "null" : this.ExistingBalanceInCents.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

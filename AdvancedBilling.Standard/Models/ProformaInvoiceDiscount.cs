@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ProformaInvoiceDiscount.
     /// </summary>
-    public class ProformaInvoiceDiscount
+    public class ProformaInvoiceDiscount : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProformaInvoiceDiscount"/> class.
@@ -32,21 +32,27 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="ProformaInvoiceDiscount"/> class.
         /// </summary>
+        /// <param name="uid">uid.</param>
         /// <param name="title">title.</param>
+        /// <param name="code">code.</param>
         /// <param name="sourceType">source_type.</param>
         /// <param name="discountType">discount_type.</param>
         /// <param name="eligibleAmount">eligible_amount.</param>
         /// <param name="discountAmount">discount_amount.</param>
         /// <param name="lineItemBreakouts">line_item_breakouts.</param>
         public ProformaInvoiceDiscount(
+            string uid = null,
             string title = null,
-            string sourceType = null,
-            string discountType = null,
+            string code = null,
+            Models.ProformaInvoiceDiscountSourceType? sourceType = null,
+            Models.InvoiceDiscountType? discountType = null,
             string eligibleAmount = null,
             string discountAmount = null,
-            List<Models.ProformaInvoiceDiscountBreakout> lineItemBreakouts = null)
+            List<Models.InvoiceDiscountBreakout> lineItemBreakouts = null)
         {
+            this.Uid = uid;
             this.Title = title;
+            this.Code = code;
             this.SourceType = sourceType;
             this.DiscountType = discountType;
             this.EligibleAmount = eligibleAmount;
@@ -55,22 +61,34 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// Gets or sets Uid.
+        /// </summary>
+        [JsonProperty("uid", NullValueHandling = NullValueHandling.Ignore)]
+        public string Uid { get; set; }
+
+        /// <summary>
         /// Gets or sets Title.
         /// </summary>
         [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
         public string Title { get; set; }
 
         /// <summary>
+        /// Gets or sets Code.
+        /// </summary>
+        [JsonProperty("code", NullValueHandling = NullValueHandling.Ignore)]
+        public string Code { get; set; }
+
+        /// <summary>
         /// Gets or sets SourceType.
         /// </summary>
         [JsonProperty("source_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string SourceType { get; set; }
+        public Models.ProformaInvoiceDiscountSourceType? SourceType { get; set; }
 
         /// <summary>
         /// Gets or sets DiscountType.
         /// </summary>
         [JsonProperty("discount_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string DiscountType { get; set; }
+        public Models.InvoiceDiscountType? DiscountType { get; set; }
 
         /// <summary>
         /// Gets or sets EligibleAmount.
@@ -88,7 +106,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets LineItemBreakouts.
         /// </summary>
         [JsonProperty("line_item_breakouts", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Models.ProformaInvoiceDiscountBreakout> LineItemBreakouts { get; set; }
+        public List<Models.InvoiceDiscountBreakout> LineItemBreakouts { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -112,7 +130,9 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is ProformaInvoiceDiscount other &&                ((this.Title == null && other.Title == null) || (this.Title?.Equals(other.Title) == true)) &&
+            return obj is ProformaInvoiceDiscount other &&                ((this.Uid == null && other.Uid == null) || (this.Uid?.Equals(other.Uid) == true)) &&
+                ((this.Title == null && other.Title == null) || (this.Title?.Equals(other.Title) == true)) &&
+                ((this.Code == null && other.Code == null) || (this.Code?.Equals(other.Code) == true)) &&
                 ((this.SourceType == null && other.SourceType == null) || (this.SourceType?.Equals(other.SourceType) == true)) &&
                 ((this.DiscountType == null && other.DiscountType == null) || (this.DiscountType?.Equals(other.DiscountType) == true)) &&
                 ((this.EligibleAmount == null && other.EligibleAmount == null) || (this.EligibleAmount?.Equals(other.EligibleAmount) == true)) &&
@@ -124,14 +144,18 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
+            toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
             toStringOutput.Add($"this.Title = {(this.Title == null ? "null" : this.Title)}");
-            toStringOutput.Add($"this.SourceType = {(this.SourceType == null ? "null" : this.SourceType)}");
-            toStringOutput.Add($"this.DiscountType = {(this.DiscountType == null ? "null" : this.DiscountType)}");
+            toStringOutput.Add($"this.Code = {(this.Code == null ? "null" : this.Code)}");
+            toStringOutput.Add($"this.SourceType = {(this.SourceType == null ? "null" : this.SourceType.ToString())}");
+            toStringOutput.Add($"this.DiscountType = {(this.DiscountType == null ? "null" : this.DiscountType.ToString())}");
             toStringOutput.Add($"this.EligibleAmount = {(this.EligibleAmount == null ? "null" : this.EligibleAmount)}");
             toStringOutput.Add($"this.DiscountAmount = {(this.DiscountAmount == null ? "null" : this.DiscountAmount)}");
             toStringOutput.Add($"this.LineItemBreakouts = {(this.LineItemBreakouts == null ? "null" : $"[{string.Join(", ", this.LineItemBreakouts)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListCouponsForProductFamilyInput.
     /// </summary>
-    public class ListCouponsForProductFamilyInput
+    public class ListCouponsForProductFamilyInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListCouponsForProductFamilyInput"/> class.
@@ -190,7 +190,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ProductFamilyId = {this.ProductFamilyId}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
@@ -204,6 +204,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.FilterCodes = {(this.FilterCodes == null ? "null" : $"[{string.Join(", ", this.FilterCodes)} ]")}");
             toStringOutput.Add($"this.CurrencyPrices = {(this.CurrencyPrices == null ? "null" : this.CurrencyPrices.ToString())}");
             toStringOutput.Add($"this.FilterUseSiteExchangeRate = {(this.FilterUseSiteExchangeRate == null ? "null" : this.FilterUseSiteExchangeRate.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

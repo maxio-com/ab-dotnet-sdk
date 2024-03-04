@@ -20,13 +20,15 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// Customer1.
     /// </summary>
-    public class Customer1
+    public class Customer1 : BaseModel
     {
+        private int? chargifyId;
         private string organization;
         private string vatNumber;
         private string reference;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
+            { "chargify_id", false },
             { "organization", false },
             { "vat_number", false },
             { "reference", false },
@@ -58,7 +60,11 @@ namespace AdvancedBilling.Standard.Models
             string vatNumber = null,
             string reference = null)
         {
-            this.ChargifyId = chargifyId;
+            if (chargifyId != null)
+            {
+                this.ChargifyId = chargifyId;
+            }
+
             this.FirstName = firstName;
             this.LastName = lastName;
             if (organization != null)
@@ -82,8 +88,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets ChargifyId.
         /// </summary>
-        [JsonProperty("chargify_id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? ChargifyId { get; set; }
+        [JsonProperty("chargify_id")]
+        public int? ChargifyId
+        {
+            get
+            {
+                return this.chargifyId;
+            }
+
+            set
+            {
+                this.shouldSerialize["chargify_id"] = true;
+                this.chargifyId = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets FirstName.
@@ -170,6 +188,14 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serailized.
         /// </summary>
+        public void UnsetChargifyId()
+        {
+            this.shouldSerialize["chargify_id"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
         public void UnsetOrganization()
         {
             this.shouldSerialize["organization"] = false;
@@ -189,6 +215,15 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetReference()
         {
             this.shouldSerialize["reference"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeChargifyId()
+        {
+            return this.shouldSerialize["chargify_id"];
         }
 
         /// <summary>
@@ -243,7 +278,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ChargifyId = {(this.ChargifyId == null ? "null" : this.ChargifyId.ToString())}");
             toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : this.FirstName)}");
@@ -252,6 +287,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Email = {(this.Email == null ? "null" : this.Email)}");
             toStringOutput.Add($"this.VatNumber = {(this.VatNumber == null ? "null" : this.VatNumber)}");
             toStringOutput.Add($"this.Reference = {(this.Reference == null ? "null" : this.Reference)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

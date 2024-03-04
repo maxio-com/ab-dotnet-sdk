@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// PayerError.
     /// </summary>
-    public class PayerError
+    public class PayerError : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PayerError"/> class.
@@ -94,11 +94,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.LastName = {(this.LastName == null ? "null" : $"[{string.Join(", ", this.LastName)} ]")}");
             toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : $"[{string.Join(", ", this.FirstName)} ]")}");
             toStringOutput.Add($"this.Email = {(this.Email == null ? "null" : $"[{string.Join(", ", this.Email)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

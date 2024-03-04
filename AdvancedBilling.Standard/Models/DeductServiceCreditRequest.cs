@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// DeductServiceCreditRequest.
     /// </summary>
-    public class DeductServiceCreditRequest
+    public class DeductServiceCreditRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DeductServiceCreditRequest"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Deduction = {(this.Deduction == null ? "null" : this.Deduction.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

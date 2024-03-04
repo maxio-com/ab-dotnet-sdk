@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// UpsertPrepaidConfigurationRequest.
     /// </summary>
-    public class UpsertPrepaidConfigurationRequest
+    public class UpsertPrepaidConfigurationRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UpsertPrepaidConfigurationRequest"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PrepaidConfiguration = {(this.PrepaidConfiguration == null ? "null" : this.PrepaidConfiguration.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

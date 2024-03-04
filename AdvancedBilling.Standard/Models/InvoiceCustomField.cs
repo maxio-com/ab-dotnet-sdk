@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// InvoiceCustomField.
     /// </summary>
-    public class InvoiceCustomField
+    public class InvoiceCustomField : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="InvoiceCustomField"/> class.
@@ -114,13 +114,15 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.OwnerId = {(this.OwnerId == null ? "null" : this.OwnerId.ToString())}");
             toStringOutput.Add($"this.OwnerType = {(this.OwnerType == null ? "null" : this.OwnerType.ToString())}");
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
             toStringOutput.Add($"this.MValue = {(this.MValue == null ? "null" : this.MValue)}");
             toStringOutput.Add($"this.MetadatumId = {(this.MetadatumId == null ? "null" : this.MetadatumId.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

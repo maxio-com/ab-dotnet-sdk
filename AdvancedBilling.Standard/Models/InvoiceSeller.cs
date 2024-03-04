@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// InvoiceSeller.
     /// </summary>
-    public class InvoiceSeller
+    public class InvoiceSeller : BaseModel
     {
         private string logoUrl;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -143,12 +143,14 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
             toStringOutput.Add($"this.Address = {(this.Address == null ? "null" : this.Address.ToString())}");
             toStringOutput.Add($"this.Phone = {(this.Phone == null ? "null" : this.Phone)}");
             toStringOutput.Add($"this.LogoUrl = {(this.LogoUrl == null ? "null" : this.LogoUrl)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

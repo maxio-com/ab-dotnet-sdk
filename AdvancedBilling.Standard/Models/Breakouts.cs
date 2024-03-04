@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// Breakouts.
     /// </summary>
-    public class Breakouts
+    public class Breakouts : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Breakouts"/> class.
@@ -104,12 +104,14 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PlanAmountInCents = {(this.PlanAmountInCents == null ? "null" : this.PlanAmountInCents.ToString())}");
             toStringOutput.Add($"this.PlanAmountFormatted = {(this.PlanAmountFormatted == null ? "null" : this.PlanAmountFormatted)}");
             toStringOutput.Add($"this.UsageAmountInCents = {(this.UsageAmountInCents == null ? "null" : this.UsageAmountInCents.ToString())}");
             toStringOutput.Add($"this.UsageAmountFormatted = {(this.UsageAmountFormatted == null ? "null" : this.UsageAmountFormatted)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

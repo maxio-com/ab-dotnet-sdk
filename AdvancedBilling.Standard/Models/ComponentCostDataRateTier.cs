@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ComponentCostDataRateTier.
     /// </summary>
-    public class ComponentCostDataRateTier
+    public class ComponentCostDataRateTier : BaseModel
     {
         private int? endingQuantity;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -153,13 +153,15 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.StartingQuantity = {(this.StartingQuantity == null ? "null" : this.StartingQuantity.ToString())}");
             toStringOutput.Add($"this.EndingQuantity = {(this.EndingQuantity == null ? "null" : this.EndingQuantity.ToString())}");
             toStringOutput.Add($"this.Quantity = {(this.Quantity == null ? "null" : this.Quantity)}");
             toStringOutput.Add($"this.UnitPrice = {(this.UnitPrice == null ? "null" : this.UnitPrice)}");
             toStringOutput.Add($"this.Amount = {(this.Amount == null ? "null" : this.Amount)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

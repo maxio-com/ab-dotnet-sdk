@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListProductsForProductFamilyInput.
     /// </summary>
-    public class ListProductsForProductFamilyInput
+    public class ListProductsForProductFamilyInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListProductsForProductFamilyInput"/> class.
@@ -187,7 +187,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ProductFamilyId = {this.ProductFamilyId}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
@@ -201,6 +201,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Include = {(this.Include == null ? "null" : this.Include.ToString())}");
             toStringOutput.Add($"this.FilterPrepaidProductPricePointProductPricePointId = {(this.FilterPrepaidProductPricePointProductPricePointId == null ? "null" : this.FilterPrepaidProductPricePointProductPricePointId.ToString())}");
             toStringOutput.Add($"this.FilterUseSiteExchangeRate = {(this.FilterUseSiteExchangeRate == null ? "null" : this.FilterUseSiteExchangeRate.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

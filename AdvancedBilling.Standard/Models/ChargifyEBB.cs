@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ChargifyEBB.
     /// </summary>
-    public class ChargifyEBB
+    public class ChargifyEBB : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ChargifyEBB"/> class.
@@ -128,7 +128,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Timestamp = {(this.Timestamp == null ? "null" : this.Timestamp.ToString())}");
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id)}");
@@ -136,6 +136,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.UniquenessToken = {(this.UniquenessToken == null ? "null" : this.UniquenessToken)}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
             toStringOutput.Add($"this.SubscriptionReference = {(this.SubscriptionReference == null ? "null" : this.SubscriptionReference)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

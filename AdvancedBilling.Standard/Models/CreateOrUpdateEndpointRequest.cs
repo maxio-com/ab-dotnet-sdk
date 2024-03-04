@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateOrUpdateEndpointRequest.
     /// </summary>
-    public class CreateOrUpdateEndpointRequest
+    public class CreateOrUpdateEndpointRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateOrUpdateEndpointRequest"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Endpoint = {(this.Endpoint == null ? "null" : this.Endpoint.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

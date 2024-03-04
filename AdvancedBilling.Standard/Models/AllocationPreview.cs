@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// AllocationPreview.
     /// </summary>
-    public class AllocationPreview
+    public class AllocationPreview : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AllocationPreview"/> class.
@@ -196,7 +196,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate.ToString())}");
             toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate.ToString())}");
@@ -211,6 +211,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Allocations = {(this.Allocations == null ? "null" : $"[{string.Join(", ", this.Allocations)} ]")}");
             toStringOutput.Add($"this.PeriodType = {(this.PeriodType == null ? "null" : this.PeriodType)}");
             toStringOutput.Add($"this.ExistingBalanceInCents = {(this.ExistingBalanceInCents == null ? "null" : this.ExistingBalanceInCents.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

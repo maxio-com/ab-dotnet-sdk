@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListAllComponentPricePointsInput.
     /// </summary>
-    public class ListAllComponentPricePointsInput
+    public class ListAllComponentPricePointsInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListAllComponentPricePointsInput"/> class.
@@ -191,7 +191,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.FilterDateField = {(this.FilterDateField == null ? "null" : this.FilterDateField.ToString())}");
             toStringOutput.Add($"this.FilterEndDate = {(this.FilterEndDate == null ? "null" : this.FilterEndDate.ToString())}");
@@ -205,6 +205,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
             toStringOutput.Add($"this.FilterIds = {(this.FilterIds == null ? "null" : $"[{string.Join(", ", this.FilterIds)} ]")}");
             toStringOutput.Add($"this.FilterArchivedAt = {(this.FilterArchivedAt == null ? "null" : this.FilterArchivedAt.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

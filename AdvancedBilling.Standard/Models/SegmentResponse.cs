@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SegmentResponse.
     /// </summary>
-    public class SegmentResponse
+    public class SegmentResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SegmentResponse"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Segment = {(this.Segment == null ? "null" : this.Segment.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

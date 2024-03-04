@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// UpdateCurrencyPrice.
     /// </summary>
-    public class UpdateCurrencyPrice
+    public class UpdateCurrencyPrice : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateCurrencyPrice"/> class.
@@ -84,10 +84,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {this.Id}");
             toStringOutput.Add($"this.Price = {this.Price}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

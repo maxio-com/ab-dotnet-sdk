@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// IssueInvoiceRequest.
     /// </summary>
-    public class IssueInvoiceRequest
+    public class IssueInvoiceRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="IssueInvoiceRequest"/> class.
@@ -77,9 +77,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.OnFailedPayment = {(this.OnFailedPayment == null ? "null" : this.OnFailedPayment.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

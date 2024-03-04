@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// RefundPrepaymentBaseRefundError.
     /// </summary>
-    public class RefundPrepaymentBaseRefundError
+    public class RefundPrepaymentBaseRefundError : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RefundPrepaymentBaseRefundError"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Refund = {(this.Refund == null ? "null" : this.Refund.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

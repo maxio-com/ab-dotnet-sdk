@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CustomerCustomFieldsChange.
     /// </summary>
-    public class CustomerCustomFieldsChange
+    public class CustomerCustomFieldsChange : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomerCustomFieldsChange"/> class.
@@ -86,10 +86,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Before = {(this.Before == null ? "null" : $"[{string.Join(", ", this.Before)} ]")}");
             toStringOutput.Add($"this.After = {(this.After == null ? "null" : $"[{string.Join(", ", this.After)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

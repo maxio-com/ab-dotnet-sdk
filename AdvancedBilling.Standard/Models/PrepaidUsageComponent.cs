@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// PrepaidUsageComponent.
     /// </summary>
-    public class PrepaidUsageComponent
+    public class PrepaidUsageComponent : BaseModel
     {
         private Models.CreditType? upgradeCharge;
         private Models.CreditType? downgradeCredit;
@@ -361,7 +361,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
             toStringOutput.Add($"this.UnitName = {(this.UnitName == null ? "null" : this.UnitName)}");
@@ -385,6 +385,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.DisplayOnHostedPage = {(this.DisplayOnHostedPage == null ? "null" : this.DisplayOnHostedPage.ToString())}");
             toStringOutput.Add($"this.AllowFractionalQuantities = {(this.AllowFractionalQuantities == null ? "null" : this.AllowFractionalQuantities.ToString())}");
             toStringOutput.Add($"this.PublicSignupPageIds = {(this.PublicSignupPageIds == null ? "null" : $"[{string.Join(", ", this.PublicSignupPageIds)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

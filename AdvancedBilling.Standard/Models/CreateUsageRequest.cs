@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateUsageRequest.
     /// </summary>
-    public class CreateUsageRequest
+    public class CreateUsageRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateUsageRequest"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Usage = {(this.Usage == null ? "null" : this.Usage.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

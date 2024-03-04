@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateMultiInvoicePayment.
     /// </summary>
-    public class CreateMultiInvoicePayment
+    public class CreateMultiInvoicePayment : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateMultiInvoicePayment"/> class.
@@ -125,7 +125,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.Details = {(this.Details == null ? "null" : this.Details)}");
@@ -133,6 +133,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Amount = {(this.Amount == null ? "null" : this.Amount.ToString())}");
             toStringOutput.Add($"this.ReceivedOn = {(this.ReceivedOn == null ? "null" : this.ReceivedOn)}");
             toStringOutput.Add($"this.Applications = {(this.Applications == null ? "null" : $"[{string.Join(", ", this.Applications)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

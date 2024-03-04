@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListSubscriptionGroupsMeta.
     /// </summary>
-    public class ListSubscriptionGroupsMeta
+    public class ListSubscriptionGroupsMeta : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListSubscriptionGroupsMeta"/> class.
@@ -84,10 +84,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.CurrentPage = {(this.CurrentPage == null ? "null" : this.CurrentPage.ToString())}");
             toStringOutput.Add($"this.TotalCount = {(this.TotalCount == null ? "null" : this.TotalCount.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

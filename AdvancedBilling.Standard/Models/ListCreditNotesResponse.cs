@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListCreditNotesResponse.
     /// </summary>
-    public class ListCreditNotesResponse
+    public class ListCreditNotesResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListCreditNotesResponse"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.CreditNotes = {(this.CreditNotes == null ? "null" : $"[{string.Join(", ", this.CreditNotes)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

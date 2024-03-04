@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateProductFamily.
     /// </summary>
-    public class CreateProductFamily
+    public class CreateProductFamily : BaseModel
     {
         private string description;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -123,10 +123,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
             toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

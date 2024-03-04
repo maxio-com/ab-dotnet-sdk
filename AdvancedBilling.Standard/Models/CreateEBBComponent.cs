@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateEBBComponent.
     /// </summary>
-    public class CreateEBBComponent
+    public class CreateEBBComponent : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateEBBComponent"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.EventBasedComponent = {(this.EventBasedComponent == null ? "null" : this.EventBasedComponent.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

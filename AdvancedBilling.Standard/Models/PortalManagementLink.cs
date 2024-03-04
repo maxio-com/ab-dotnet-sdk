@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// PortalManagementLink.
     /// </summary>
-    public class PortalManagementLink
+    public class PortalManagementLink : BaseModel
     {
         private DateTimeOffset? lastInviteSentAt;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -167,7 +167,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Url = {(this.Url == null ? "null" : this.Url)}");
             toStringOutput.Add($"this.FetchCount = {(this.FetchCount == null ? "null" : this.FetchCount.ToString())}");
@@ -175,6 +175,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.NewLinkAvailableAt = {(this.NewLinkAvailableAt == null ? "null" : this.NewLinkAvailableAt.ToString())}");
             toStringOutput.Add($"this.ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt.ToString())}");
             toStringOutput.Add($"this.LastInviteSentAt = {(this.LastInviteSentAt == null ? "null" : this.LastInviteSentAt.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

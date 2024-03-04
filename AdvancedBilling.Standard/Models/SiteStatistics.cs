@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SiteStatistics.
     /// </summary>
-    public class SiteStatistics
+    public class SiteStatistics : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SiteStatistics"/> class.
@@ -174,7 +174,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.TotalSubscriptions = {(this.TotalSubscriptions == null ? "null" : this.TotalSubscriptions.ToString())}");
             toStringOutput.Add($"this.SubscriptionsToday = {(this.SubscriptionsToday == null ? "null" : this.SubscriptionsToday.ToString())}");
@@ -187,6 +187,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.TotalPastDueSubscriptions = {(this.TotalPastDueSubscriptions == null ? "null" : this.TotalPastDueSubscriptions.ToString())}");
             toStringOutput.Add($"this.TotalUnpaidSubscriptions = {(this.TotalUnpaidSubscriptions == null ? "null" : this.TotalUnpaidSubscriptions.ToString())}");
             toStringOutput.Add($"this.TotalDunningSubscriptions = {(this.TotalDunningSubscriptions == null ? "null" : this.TotalDunningSubscriptions.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

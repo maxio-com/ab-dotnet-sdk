@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListSalesRepsInput.
     /// </summary>
-    public class ListSalesRepsInput
+    public class ListSalesRepsInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListSalesRepsInput"/> class.
@@ -115,13 +115,15 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.SellerId = {(this.SellerId == null ? "null" : this.SellerId)}");
             toStringOutput.Add($"this.Authorization = {(this.Authorization == null ? "null" : this.Authorization)}");
             toStringOutput.Add($"this.LiveMode = {(this.LiveMode == null ? "null" : this.LiveMode.ToString())}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

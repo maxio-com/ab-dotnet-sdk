@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// EventResponse.
     /// </summary>
-    public class EventResponse
+    public class EventResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EventResponse"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.MEvent = {(this.MEvent == null ? "null" : this.MEvent.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

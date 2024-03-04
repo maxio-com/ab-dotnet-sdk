@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ResentInvitation.
     /// </summary>
-    public class ResentInvitation
+    public class ResentInvitation : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ResentInvitation"/> class.
@@ -104,12 +104,14 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.LastSentAt = {(this.LastSentAt == null ? "null" : this.LastSentAt)}");
             toStringOutput.Add($"this.LastAcceptedAt = {(this.LastAcceptedAt == null ? "null" : this.LastAcceptedAt)}");
             toStringOutput.Add($"this.SendInviteLinkText = {(this.SendInviteLinkText == null ? "null" : this.SendInviteLinkText)}");
             toStringOutput.Add($"this.UninvitedCount = {(this.UninvitedCount == null ? "null" : this.UninvitedCount.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

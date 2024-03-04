@@ -70,28 +70,34 @@ namespace AdvancedBilling.Standard.Controllers
         /// Only proforma invoices with a `consolidation_level` of parent are returned.
         /// By default, proforma invoices returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, `custom_fields`. To include breakdowns, pass the specific field as a key in the query with a value set to true.
         /// </summary>
-        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
-        public Models.ProformaInvoice ListSubscriptionGroupProformaInvoices(
-                string uid)
-            => CoreHelper.RunTask(ListSubscriptionGroupProformaInvoicesAsync(uid));
+        /// <param name="input">Object containing request parameters.</param>
+        /// <returns>Returns the Models.ListProformaInvoicesResponse response from the API call.</returns>
+        public Models.ListProformaInvoicesResponse ListSubscriptionGroupProformaInvoices(
+                Models.ListSubscriptionGroupProformaInvoicesInput input)
+            => CoreHelper.RunTask(ListSubscriptionGroupProformaInvoicesAsync(input));
 
         /// <summary>
         /// Only proforma invoices with a `consolidation_level` of parent are returned.
         /// By default, proforma invoices returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, `custom_fields`. To include breakdowns, pass the specific field as a key in the query with a value set to true.
         /// </summary>
-        /// <param name="uid">Required parameter: The uid of the subscription group.</param>
+        /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
-        public async Task<Models.ProformaInvoice> ListSubscriptionGroupProformaInvoicesAsync(
-                string uid,
+        /// <returns>Returns the Models.ListProformaInvoicesResponse response from the API call.</returns>
+        public async Task<Models.ListProformaInvoicesResponse> ListSubscriptionGroupProformaInvoicesAsync(
+                Models.ListSubscriptionGroupProformaInvoicesInput input,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ProformaInvoice>()
+            => await CreateApiCall<Models.ListProformaInvoicesResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/subscription_groups/{uid}/proforma_invoices.json")
                   .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("uid", uid).Required())))
+                      .Template(_template => _template.Setup("uid", input.Uid).Required())
+                      .Query(_query => _query.Setup("line_items", input.LineItems))
+                      .Query(_query => _query.Setup("discounts", input.Discounts))
+                      .Query(_query => _query.Setup("taxes", input.Taxes))
+                      .Query(_query => _query.Setup("credits", input.Credits))
+                      .Query(_query => _query.Setup("payments", input.Payments))
+                      .Query(_query => _query.Setup("custom_fields", input.CustomFields))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
@@ -250,8 +256,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// Alternatively, if you have some proforma invoices already, you may make a preview call to determine whether any billing information for the subscription's upcoming renewal has changed.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <returns>Returns the Models.ProformaInvoicePreview response from the API call.</returns>
-        public Models.ProformaInvoicePreview PreviewProformaInvoice(
+        /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
+        public Models.ProformaInvoice PreviewProformaInvoice(
                 int subscriptionId)
             => CoreHelper.RunTask(PreviewProformaInvoiceAsync(subscriptionId));
 
@@ -263,11 +269,11 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ProformaInvoicePreview response from the API call.</returns>
-        public async Task<Models.ProformaInvoicePreview> PreviewProformaInvoiceAsync(
+        /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
+        public async Task<Models.ProformaInvoice> PreviewProformaInvoiceAsync(
                 int subscriptionId,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ProformaInvoicePreview>()
+            => await CreateApiCall<Models.ProformaInvoice>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/proforma_invoices/preview.json")
                   .WithAuth("BasicAuth")
@@ -320,13 +326,13 @@ namespace AdvancedBilling.Standard.Controllers
         /// Pass a payload that resembles a subscription create or signup preview request. For example, you can specify components, coupons/a referral, offers, custom pricing, and an existing customer or payment profile to populate a shipping or billing address.
         /// A product and customer first name, last name, and email are the minimum requirements.
         /// </summary>
-        /// <param name="includeNextProformaInvoice">Optional parameter: Choose to include a proforma invoice preview for the first renewal.</param>
+        /// <param name="include">Optional parameter: Choose to include a proforma invoice preview for the first renewal. Use in query `include=next_proforma_invoice`..</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.SignupProformaPreviewResponse response from the API call.</returns>
         public Models.SignupProformaPreviewResponse PreviewSignupProformaInvoice(
-                string includeNextProformaInvoice = null,
+                Models.CreateSignupProformaPreviewInclude? include = null,
                 Models.CreateSubscriptionRequest body = null)
-            => CoreHelper.RunTask(PreviewSignupProformaInvoiceAsync(includeNextProformaInvoice, body));
+            => CoreHelper.RunTask(PreviewSignupProformaInvoiceAsync(include, body));
 
         /// <summary>
         /// This endpoint is only available for Relationship Invoicing sites. It cannot be used to create consolidated proforma invoice previews or preview prepaid subscriptions.
@@ -334,12 +340,12 @@ namespace AdvancedBilling.Standard.Controllers
         /// Pass a payload that resembles a subscription create or signup preview request. For example, you can specify components, coupons/a referral, offers, custom pricing, and an existing customer or payment profile to populate a shipping or billing address.
         /// A product and customer first name, last name, and email are the minimum requirements.
         /// </summary>
-        /// <param name="includeNextProformaInvoice">Optional parameter: Choose to include a proforma invoice preview for the first renewal.</param>
+        /// <param name="include">Optional parameter: Choose to include a proforma invoice preview for the first renewal. Use in query `include=next_proforma_invoice`..</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SignupProformaPreviewResponse response from the API call.</returns>
         public async Task<Models.SignupProformaPreviewResponse> PreviewSignupProformaInvoiceAsync(
-                string includeNextProformaInvoice = null,
+                Models.CreateSignupProformaPreviewInclude? include = null,
                 Models.CreateSubscriptionRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SignupProformaPreviewResponse>()
@@ -349,7 +355,7 @@ namespace AdvancedBilling.Standard.Controllers
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))
-                      .Query(_query => _query.Setup("include=next_proforma_invoice", includeNextProformaInvoice))))
+                      .Query(_query => _query.Setup("include", (include.HasValue) ? ApiHelper.JsonSerialize(include.Value).Trim('\"') : null))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("400", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ProformaBadRequestErrorResponseException(_reason, _context), true))
                   .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorArrayMapResponseException(_reason, _context), true)))

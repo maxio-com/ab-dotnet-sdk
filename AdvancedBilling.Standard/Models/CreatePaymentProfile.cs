@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreatePaymentProfile.
     /// </summary>
-    public class CreatePaymentProfile
+    public class CreatePaymentProfile : BaseModel
     {
         private string billingAddress2;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -424,7 +424,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ChargifyToken = {(this.ChargifyToken == null ? "null" : this.ChargifyToken)}");
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
@@ -458,6 +458,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.BankAccountType = {(this.BankAccountType == null ? "null" : this.BankAccountType.ToString())}");
             toStringOutput.Add($"this.BankAccountHolderType = {(this.BankAccountHolderType == null ? "null" : this.BankAccountHolderType.ToString())}");
             toStringOutput.Add($"this.LastFour = {(this.LastFour == null ? "null" : this.LastFour)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

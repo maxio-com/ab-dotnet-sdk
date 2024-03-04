@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListExportedInvoicesInput.
     /// </summary>
-    public class ListExportedInvoicesInput
+    public class ListExportedInvoicesInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListExportedInvoicesInput"/> class.
@@ -97,11 +97,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.BatchId = {(this.BatchId == null ? "null" : this.BatchId)}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

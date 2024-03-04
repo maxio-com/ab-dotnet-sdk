@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListWebhooksInput.
     /// </summary>
-    public class ListWebhooksInput
+    public class ListWebhooksInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListWebhooksInput"/> class.
@@ -136,7 +136,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Status = {(this.Status == null ? "null" : this.Status.ToString())}");
             toStringOutput.Add($"this.SinceDate = {(this.SinceDate == null ? "null" : this.SinceDate)}");
@@ -145,6 +145,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
             toStringOutput.Add($"this.Order = {(this.Order == null ? "null" : this.Order.ToString())}");
             toStringOutput.Add($"this.Subscription = {(this.Subscription == null ? "null" : this.Subscription.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// PublicKey.
     /// </summary>
-    public class PublicKey
+    public class PublicKey : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PublicKey"/> class.
@@ -95,11 +95,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PublicKeyProp = {(this.PublicKeyProp == null ? "null" : this.PublicKeyProp)}");
             toStringOutput.Add($"this.RequiresSecurityToken = {(this.RequiresSecurityToken == null ? "null" : this.RequiresSecurityToken.ToString())}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

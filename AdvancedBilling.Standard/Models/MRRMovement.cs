@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// MRRMovement.
     /// </summary>
-    public class MRRMovement
+    public class MRRMovement : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MRRMovement"/> class.
@@ -104,12 +104,14 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Amount = {(this.Amount == null ? "null" : this.Amount.ToString())}");
             toStringOutput.Add($"this.Category = {(this.Category == null ? "null" : this.Category)}");
             toStringOutput.Add($"this.SubscriberDelta = {(this.SubscriberDelta == null ? "null" : this.SubscriberDelta.ToString())}");
             toStringOutput.Add($"this.LeadDelta = {(this.LeadDelta == null ? "null" : this.LeadDelta.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

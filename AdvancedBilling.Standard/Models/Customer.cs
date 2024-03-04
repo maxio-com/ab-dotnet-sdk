@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// Customer.
     /// </summary>
-    public class Customer
+    public class Customer : BaseModel
     {
         private string ccEmails;
         private string organization;
@@ -1043,7 +1043,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : this.FirstName)}");
             toStringOutput.Add($"this.LastName = {(this.LastName == null ? "null" : this.LastName)}");
@@ -1072,6 +1072,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ParentId = {(this.ParentId == null ? "null" : this.ParentId.ToString())}");
             toStringOutput.Add($"this.Locale = {(this.Locale == null ? "null" : this.Locale)}");
             toStringOutput.Add($"this.DefaultSubscriptionGroupUid = {(this.DefaultSubscriptionGroupUid == null ? "null" : this.DefaultSubscriptionGroupUid)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

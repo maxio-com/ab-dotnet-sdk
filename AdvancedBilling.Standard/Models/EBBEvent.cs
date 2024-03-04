@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// EBBEvent.
     /// </summary>
-    public class EBBEvent
+    public class EBBEvent : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EBBEvent"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Chargify = {(this.Chargify == null ? "null" : this.Chargify.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

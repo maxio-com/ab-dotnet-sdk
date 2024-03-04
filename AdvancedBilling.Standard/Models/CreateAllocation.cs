@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateAllocation.
     /// </summary>
-    public class CreateAllocation
+    public class CreateAllocation : BaseModel
     {
         private Models.CreditType? downgradeCredit;
         private Models.CreditType? upgradeCharge;
@@ -287,7 +287,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Quantity = {this.Quantity}");
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
@@ -300,6 +300,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.InitiateDunning = {(this.InitiateDunning == null ? "null" : this.InitiateDunning.ToString())}");
             toStringOutput.Add($"PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
             toStringOutput.Add($"this.BillingSchedule = {(this.BillingSchedule == null ? "null" : this.BillingSchedule.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

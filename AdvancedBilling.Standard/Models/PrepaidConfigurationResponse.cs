@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// PrepaidConfigurationResponse.
     /// </summary>
-    public class PrepaidConfigurationResponse
+    public class PrepaidConfigurationResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PrepaidConfigurationResponse"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PrepaidConfiguration = {(this.PrepaidConfiguration == null ? "null" : this.PrepaidConfiguration.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

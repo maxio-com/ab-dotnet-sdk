@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SiteSummary.
     /// </summary>
-    public class SiteSummary
+    public class SiteSummary : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SiteSummary"/> class.
@@ -114,13 +114,15 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.SellerName = {(this.SellerName == null ? "null" : this.SellerName)}");
             toStringOutput.Add($"this.SiteName = {(this.SiteName == null ? "null" : this.SiteName)}");
             toStringOutput.Add($"this.SiteId = {(this.SiteId == null ? "null" : this.SiteId.ToString())}");
             toStringOutput.Add($"this.SiteCurrency = {(this.SiteCurrency == null ? "null" : this.SiteCurrency)}");
             toStringOutput.Add($"this.Stats = {(this.Stats == null ? "null" : this.Stats.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

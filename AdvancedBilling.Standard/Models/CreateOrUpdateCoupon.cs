@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateOrUpdateCoupon.
     /// </summary>
-    public class CreateOrUpdateCoupon
+    public class CreateOrUpdateCoupon : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateOrUpdateCoupon"/> class.
@@ -95,11 +95,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"Coupon = {(this.Coupon == null ? "null" : this.Coupon.ToString())}");
             toStringOutput.Add($"RestrictedProducts = {(this.RestrictedProducts == null ? "null" : this.RestrictedProducts.ToString())}");
             toStringOutput.Add($"RestrictedComponents = {(this.RestrictedComponents == null ? "null" : this.RestrictedComponents.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

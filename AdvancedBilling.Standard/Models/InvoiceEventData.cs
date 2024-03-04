@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// InvoiceEventData.
     /// </summary>
-    public class InvoiceEventData
+    public class InvoiceEventData : BaseModel
     {
         private int? parentInvoiceNumber;
         private string remainingPrepaymentAmount;
@@ -465,7 +465,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
             toStringOutput.Add($"this.CreditNoteNumber = {(this.CreditNoteNumber == null ? "null" : this.CreditNoteNumber)}");
@@ -499,6 +499,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.RefundId = {(this.RefundId == null ? "null" : this.RefundId.ToString())}");
             toStringOutput.Add($"this.IsAdvanceInvoice = {(this.IsAdvanceInvoice == null ? "null" : this.IsAdvanceInvoice.ToString())}");
             toStringOutput.Add($"this.Reason = {(this.Reason == null ? "null" : this.Reason)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

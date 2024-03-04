@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateOrUpdateEndpoint.
     /// </summary>
-    public class CreateOrUpdateEndpoint
+    public class CreateOrUpdateEndpoint : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateOrUpdateEndpoint"/> class.
@@ -84,10 +84,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Url = {(this.Url == null ? "null" : this.Url)}");
             toStringOutput.Add($"this.WebhookSubscriptions = {(this.WebhookSubscriptions == null ? "null" : $"[{string.Join(", ", this.WebhookSubscriptions)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// MetafieldScope.
     /// </summary>
-    public class MetafieldScope
+    public class MetafieldScope : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MetafieldScope"/> class.
@@ -134,7 +134,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Csv = {(this.Csv == null ? "null" : this.Csv.ToString())}");
             toStringOutput.Add($"this.Invoices = {(this.Invoices == null ? "null" : this.Invoices.ToString())}");
@@ -143,6 +143,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PublicShow = {(this.PublicShow == null ? "null" : this.PublicShow.ToString())}");
             toStringOutput.Add($"this.PublicEdit = {(this.PublicEdit == null ? "null" : this.PublicEdit.ToString())}");
             toStringOutput.Add($"this.Hosted = {(this.Hosted == null ? "null" : $"[{string.Join(", ", this.Hosted)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListCreditNotesInput.
     /// </summary>
-    public class ListCreditNotesInput
+    public class ListCreditNotesInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListCreditNotesInput"/> class.
@@ -146,7 +146,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
@@ -156,6 +156,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Taxes = {(this.Taxes == null ? "null" : this.Taxes.ToString())}");
             toStringOutput.Add($"this.Refunds = {(this.Refunds == null ? "null" : this.Refunds.ToString())}");
             toStringOutput.Add($"this.Applications = {(this.Applications == null ? "null" : this.Applications.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

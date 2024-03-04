@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SubscriptionPreviewResponse.
     /// </summary>
-    public class SubscriptionPreviewResponse
+    public class SubscriptionPreviewResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionPreviewResponse"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.SubscriptionPreview = {(this.SubscriptionPreview == null ? "null" : this.SubscriptionPreview.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

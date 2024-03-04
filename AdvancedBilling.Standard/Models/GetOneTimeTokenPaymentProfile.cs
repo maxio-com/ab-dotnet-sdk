@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// GetOneTimeTokenPaymentProfile.
     /// </summary>
-    public class GetOneTimeTokenPaymentProfile
+    public class GetOneTimeTokenPaymentProfile : BaseModel
     {
         private string id;
         private string customerId;
@@ -418,7 +418,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id)}");
             toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : this.FirstName)}");
@@ -441,6 +441,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.SiteGatewaySettingId = {this.SiteGatewaySettingId}");
             toStringOutput.Add($"this.CustomerVaultToken = {(this.CustomerVaultToken == null ? "null" : this.CustomerVaultToken)}");
             toStringOutput.Add($"this.GatewayHandle = {(this.GatewayHandle == null ? "null" : this.GatewayHandle)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

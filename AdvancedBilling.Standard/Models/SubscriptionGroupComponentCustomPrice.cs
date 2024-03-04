@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SubscriptionGroupComponentCustomPrice.
     /// </summary>
-    public class SubscriptionGroupComponentCustomPrice
+    public class SubscriptionGroupComponentCustomPrice : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionGroupComponentCustomPrice"/> class.
@@ -94,11 +94,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
             toStringOutput.Add($"this.Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
             toStringOutput.Add($"this.OveragePricing = {(this.OveragePricing == null ? "null" : $"[{string.Join(", ", this.OveragePricing)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

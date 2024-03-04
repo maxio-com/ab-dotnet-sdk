@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// RefundPrepaymentAggregatedError.
     /// </summary>
-    public class RefundPrepaymentAggregatedError
+    public class RefundPrepaymentAggregatedError : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RefundPrepaymentAggregatedError"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Refund = {(this.Refund == null ? "null" : this.Refund.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

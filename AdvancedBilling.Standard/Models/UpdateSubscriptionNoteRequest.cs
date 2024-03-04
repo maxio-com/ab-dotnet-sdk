@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// UpdateSubscriptionNoteRequest.
     /// </summary>
-    public class UpdateSubscriptionNoteRequest
+    public class UpdateSubscriptionNoteRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateSubscriptionNoteRequest"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Note = {(this.Note == null ? "null" : this.Note.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

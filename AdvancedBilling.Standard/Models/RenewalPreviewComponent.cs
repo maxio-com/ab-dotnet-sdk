@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// RenewalPreviewComponent.
     /// </summary>
-    public class RenewalPreviewComponent
+    public class RenewalPreviewComponent : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RenewalPreviewComponent"/> class.
@@ -100,11 +100,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"this.Quantity = {(this.Quantity == null ? "null" : this.Quantity.ToString())}");
             toStringOutput.Add($"PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

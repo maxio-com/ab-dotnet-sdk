@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ComponentCostData.
     /// </summary>
-    public class ComponentCostData
+    public class ComponentCostData : BaseModel
     {
         private int? componentCodeId;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -173,7 +173,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ComponentCodeId = {(this.ComponentCodeId == null ? "null" : this.ComponentCodeId.ToString())}");
             toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
@@ -182,6 +182,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Amount = {(this.Amount == null ? "null" : this.Amount)}");
             toStringOutput.Add($"this.PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
             toStringOutput.Add($"this.Tiers = {(this.Tiers == null ? "null" : $"[{string.Join(", ", this.Tiers)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

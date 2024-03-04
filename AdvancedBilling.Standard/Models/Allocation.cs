@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// Allocation.
     /// </summary>
-    public class Allocation
+    public class Allocation : BaseModel
     {
         private string componentHandle;
         private string memo;
@@ -69,6 +69,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="upgradeCharge">upgrade_charge.</param>
         /// <param name="downgradeCredit">downgrade_credit.</param>
         /// <param name="payment">payment.</param>
+        /// <param name="expiresAt">expires_at.</param>
+        /// <param name="usedQuantity">used_quantity.</param>
+        /// <param name="chargeId">charge_id.</param>
         public Allocation(
             int? allocationId = null,
             int? componentId = null,
@@ -91,7 +94,10 @@ namespace AdvancedBilling.Standard.Models
             bool? initiateDunning = null,
             Models.CreditType? upgradeCharge = null,
             Models.CreditType? downgradeCredit = null,
-            AllocationPayment payment = null)
+            AllocationPayment payment = null,
+            DateTimeOffset? expiresAt = null,
+            long? usedQuantity = null,
+            long? chargeId = null)
         {
             this.AllocationId = allocationId;
             this.ComponentId = componentId;
@@ -135,6 +141,9 @@ namespace AdvancedBilling.Standard.Models
                 this.Payment = payment;
             }
 
+            this.ExpiresAt = expiresAt;
+            this.UsedQuantity = usedQuantity;
+            this.ChargeId = chargeId;
         }
 
         /// <summary>
@@ -334,6 +343,25 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// Gets or sets ExpiresAt.
+        /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
+        [JsonProperty("expires_at", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset? ExpiresAt { get; set; }
+
+        /// <summary>
+        /// Gets or sets UsedQuantity.
+        /// </summary>
+        [JsonProperty("used_quantity", NullValueHandling = NullValueHandling.Ignore)]
+        public long? UsedQuantity { get; set; }
+
+        /// <summary>
+        /// Gets or sets ChargeId.
+        /// </summary>
+        [JsonProperty("charge_id", NullValueHandling = NullValueHandling.Ignore)]
+        public long? ChargeId { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -462,14 +490,17 @@ namespace AdvancedBilling.Standard.Models
                 ((this.InitiateDunning == null && other.InitiateDunning == null) || (this.InitiateDunning?.Equals(other.InitiateDunning) == true)) &&
                 ((this.UpgradeCharge == null && other.UpgradeCharge == null) || (this.UpgradeCharge?.Equals(other.UpgradeCharge) == true)) &&
                 ((this.DowngradeCredit == null && other.DowngradeCredit == null) || (this.DowngradeCredit?.Equals(other.DowngradeCredit) == true)) &&
-                ((this.Payment == null && other.Payment == null) || (this.Payment?.Equals(other.Payment) == true));
+                ((this.Payment == null && other.Payment == null) || (this.Payment?.Equals(other.Payment) == true)) &&
+                ((this.ExpiresAt == null && other.ExpiresAt == null) || (this.ExpiresAt?.Equals(other.ExpiresAt) == true)) &&
+                ((this.UsedQuantity == null && other.UsedQuantity == null) || (this.UsedQuantity?.Equals(other.UsedQuantity) == true)) &&
+                ((this.ChargeId == null && other.ChargeId == null) || (this.ChargeId?.Equals(other.ChargeId) == true));
         }
         
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.AllocationId = {(this.AllocationId == null ? "null" : this.AllocationId.ToString())}");
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
@@ -493,6 +524,11 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
             toStringOutput.Add($"this.DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
             toStringOutput.Add($"Payment = {(this.Payment == null ? "null" : this.Payment.ToString())}");
+            toStringOutput.Add($"this.ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt.ToString())}");
+            toStringOutput.Add($"this.UsedQuantity = {(this.UsedQuantity == null ? "null" : this.UsedQuantity.ToString())}");
+            toStringOutput.Add($"this.ChargeId = {(this.ChargeId == null ? "null" : this.ChargeId.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

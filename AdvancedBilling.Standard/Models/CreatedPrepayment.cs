@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreatedPrepayment.
     /// </summary>
-    public class CreatedPrepayment
+    public class CreatedPrepayment : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreatedPrepayment"/> class.
@@ -135,7 +135,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
@@ -144,6 +144,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
             toStringOutput.Add($"this.StartingBalanceInCents = {(this.StartingBalanceInCents == null ? "null" : this.StartingBalanceInCents.ToString())}");
             toStringOutput.Add($"this.EndingBalanceInCents = {(this.EndingBalanceInCents == null ? "null" : this.EndingBalanceInCents.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

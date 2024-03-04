@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SubscriptionComponentSubscription.
     /// </summary>
-    public class SubscriptionComponentSubscription
+    public class SubscriptionComponentSubscription : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionComponentSubscription"/> class.
@@ -104,10 +104,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.State = {(this.State == null ? "null" : this.State.ToString())}");
             toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

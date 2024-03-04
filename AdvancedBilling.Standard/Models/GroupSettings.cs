@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// GroupSettings.
     /// </summary>
-    public class GroupSettings
+    public class GroupSettings : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GroupSettings"/> class.
@@ -85,10 +85,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Target = {(this.Target == null ? "null" : this.Target.ToString())}");
             toStringOutput.Add($"this.Billing = {(this.Billing == null ? "null" : this.Billing.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

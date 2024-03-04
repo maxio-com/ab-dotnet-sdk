@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateSubscriptionGroup.
     /// </summary>
-    public class CreateSubscriptionGroup
+    public class CreateSubscriptionGroup : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateSubscriptionGroup"/> class.
@@ -85,10 +85,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
             toStringOutput.Add($"this.MemberIds = {(this.MemberIds == null ? "null" : $"[{string.Join(", ", this.MemberIds)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

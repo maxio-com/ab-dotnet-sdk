@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CustomFieldValueChange.
     /// </summary>
-    public class CustomFieldValueChange
+    public class CustomFieldValueChange : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomFieldValueChange"/> class.
@@ -144,7 +144,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.EventType = {(this.EventType == null ? "null" : this.EventType)}");
             toStringOutput.Add($"this.MetafieldName = {(this.MetafieldName == null ? "null" : this.MetafieldName)}");
@@ -153,6 +153,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.NewValue = {(this.NewValue == null ? "null" : this.NewValue)}");
             toStringOutput.Add($"this.ResourceType = {(this.ResourceType == null ? "null" : this.ResourceType)}");
             toStringOutput.Add($"this.ResourceId = {this.ResourceId}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

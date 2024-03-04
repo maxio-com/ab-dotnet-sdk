@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// IssueServiceCreditRequest.
     /// </summary>
-    public class IssueServiceCreditRequest
+    public class IssueServiceCreditRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="IssueServiceCreditRequest"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ServiceCredit = {(this.ServiceCredit == null ? "null" : this.ServiceCredit.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

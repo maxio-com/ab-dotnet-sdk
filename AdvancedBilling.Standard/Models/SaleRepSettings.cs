@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SaleRepSettings.
     /// </summary>
-    public class SaleRepSettings
+    public class SaleRepSettings : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SaleRepSettings"/> class.
@@ -134,7 +134,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.CustomerName = {(this.CustomerName == null ? "null" : this.CustomerName)}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
@@ -143,6 +143,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.SubscriptionMrr = {(this.SubscriptionMrr == null ? "null" : this.SubscriptionMrr)}");
             toStringOutput.Add($"this.SalesRepId = {(this.SalesRepId == null ? "null" : this.SalesRepId.ToString())}");
             toStringOutput.Add($"this.SalesRepName = {(this.SalesRepName == null ? "null" : this.SalesRepName)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateOrUpdateProductRequest.
     /// </summary>
-    public class CreateOrUpdateProductRequest
+    public class CreateOrUpdateProductRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateOrUpdateProductRequest"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Product = {(this.Product == null ? "null" : this.Product.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

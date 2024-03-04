@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListInvoiceEventsInput.
     /// </summary>
-    public class ListInvoiceEventsInput
+    public class ListInvoiceEventsInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListInvoiceEventsInput"/> class.
@@ -135,7 +135,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.SinceDate = {(this.SinceDate == null ? "null" : this.SinceDate)}");
             toStringOutput.Add($"this.SinceId = {(this.SinceId == null ? "null" : this.SinceId.ToString())}");
@@ -144,6 +144,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.InvoiceUid = {(this.InvoiceUid == null ? "null" : this.InvoiceUid)}");
             toStringOutput.Add($"this.WithChangeInvoiceStatus = {(this.WithChangeInvoiceStatus == null ? "null" : this.WithChangeInvoiceStatus)}");
             toStringOutput.Add($"this.EventTypes = {(this.EventTypes == null ? "null" : $"[{string.Join(", ", this.EventTypes)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

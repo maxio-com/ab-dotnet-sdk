@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// PrepaidSubscriptionBalanceChanged.
     /// </summary>
-    public class PrepaidSubscriptionBalanceChanged
+    public class PrepaidSubscriptionBalanceChanged : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PrepaidSubscriptionBalanceChanged"/> class.
@@ -109,12 +109,14 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Reason = {(this.Reason == null ? "null" : this.Reason)}");
             toStringOutput.Add($"this.CurrentAccountBalanceInCents = {this.CurrentAccountBalanceInCents}");
             toStringOutput.Add($"this.PrepaymentAccountBalanceInCents = {this.PrepaymentAccountBalanceInCents}");
             toStringOutput.Add($"this.CurrentUsageAmountInCents = {this.CurrentUsageAmountInCents}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

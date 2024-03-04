@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// BaseStringError.
     /// </summary>
-    public class BaseStringError
+    public class BaseStringError : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseStringError"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.MBase = {(this.MBase == null ? "null" : $"[{string.Join(", ", this.MBase)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

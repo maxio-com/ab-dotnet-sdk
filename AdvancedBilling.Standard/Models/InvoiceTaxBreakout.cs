@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// InvoiceTaxBreakout.
     /// </summary>
-    public class InvoiceTaxBreakout
+    public class InvoiceTaxBreakout : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="InvoiceTaxBreakout"/> class.
@@ -35,14 +35,17 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="uid">uid.</param>
         /// <param name="taxableAmount">taxable_amount.</param>
         /// <param name="taxAmount">tax_amount.</param>
+        /// <param name="taxExemptAmount">tax_exempt_amount.</param>
         public InvoiceTaxBreakout(
             string uid = null,
             string taxableAmount = null,
-            string taxAmount = null)
+            string taxAmount = null,
+            string taxExemptAmount = null)
         {
             this.Uid = uid;
             this.TaxableAmount = taxableAmount;
             this.TaxAmount = taxAmount;
+            this.TaxExemptAmount = taxExemptAmount;
         }
 
         /// <summary>
@@ -62,6 +65,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("tax_amount", NullValueHandling = NullValueHandling.Ignore)]
         public string TaxAmount { get; set; }
+
+        /// <summary>
+        /// Gets or sets TaxExemptAmount.
+        /// </summary>
+        [JsonProperty("tax_exempt_amount", NullValueHandling = NullValueHandling.Ignore)]
+        public string TaxExemptAmount { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -87,18 +96,22 @@ namespace AdvancedBilling.Standard.Models
             }
             return obj is InvoiceTaxBreakout other &&                ((this.Uid == null && other.Uid == null) || (this.Uid?.Equals(other.Uid) == true)) &&
                 ((this.TaxableAmount == null && other.TaxableAmount == null) || (this.TaxableAmount?.Equals(other.TaxableAmount) == true)) &&
-                ((this.TaxAmount == null && other.TaxAmount == null) || (this.TaxAmount?.Equals(other.TaxAmount) == true));
+                ((this.TaxAmount == null && other.TaxAmount == null) || (this.TaxAmount?.Equals(other.TaxAmount) == true)) &&
+                ((this.TaxExemptAmount == null && other.TaxExemptAmount == null) || (this.TaxExemptAmount?.Equals(other.TaxExemptAmount) == true));
         }
         
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
             toStringOutput.Add($"this.TaxableAmount = {(this.TaxableAmount == null ? "null" : this.TaxableAmount)}");
             toStringOutput.Add($"this.TaxAmount = {(this.TaxAmount == null ? "null" : this.TaxAmount)}");
+            toStringOutput.Add($"this.TaxExemptAmount = {(this.TaxExemptAmount == null ? "null" : this.TaxExemptAmount)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

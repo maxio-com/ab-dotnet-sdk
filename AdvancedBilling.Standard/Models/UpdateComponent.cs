@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// UpdateComponent.
     /// </summary>
-    public class UpdateComponent
+    public class UpdateComponent : BaseModel
     {
         private string description;
         private string accountingCode;
@@ -334,7 +334,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
@@ -345,6 +345,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ItemCategory = {(this.ItemCategory == null ? "null" : this.ItemCategory.ToString())}");
             toStringOutput.Add($"this.DisplayOnHostedPage = {(this.DisplayOnHostedPage == null ? "null" : this.DisplayOnHostedPage.ToString())}");
             toStringOutput.Add($"this.UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

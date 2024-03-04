@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ComponentAllocationChange.
     /// </summary>
-    public class ComponentAllocationChange
+    public class ComponentAllocationChange : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ComponentAllocationChange"/> class.
@@ -143,7 +143,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PreviousAllocation = {this.PreviousAllocation}");
             toStringOutput.Add($"this.NewAllocation = {this.NewAllocation}");
@@ -152,6 +152,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.AllocationId = {this.AllocationId}");
             toStringOutput.Add($"AllocatedQuantity = {(this.AllocatedQuantity == null ? "null" : this.AllocatedQuantity.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

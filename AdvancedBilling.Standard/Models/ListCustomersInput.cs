@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListCustomersInput.
     /// </summary>
-    public class ListCustomersInput
+    public class ListCustomersInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListCustomersInput"/> class.
@@ -157,7 +157,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
@@ -168,6 +168,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.StartDatetime = {(this.StartDatetime == null ? "null" : this.StartDatetime)}");
             toStringOutput.Add($"this.EndDatetime = {(this.EndDatetime == null ? "null" : this.EndDatetime)}");
             toStringOutput.Add($"this.Q = {(this.Q == null ? "null" : this.Q)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

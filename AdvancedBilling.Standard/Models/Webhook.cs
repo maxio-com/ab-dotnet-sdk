@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// Webhook.
     /// </summary>
-    public class Webhook
+    public class Webhook : BaseModel
     {
         private DateTimeOffset? acceptedAt;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -227,7 +227,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.MEvent = {(this.MEvent == null ? "null" : this.MEvent)}");
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
@@ -241,6 +241,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Body = {(this.Body == null ? "null" : this.Body)}");
             toStringOutput.Add($"this.Signature = {(this.Signature == null ? "null" : this.Signature)}");
             toStringOutput.Add($"this.SignatureHmacSha256 = {(this.SignatureHmacSha256 == null ? "null" : this.SignatureHmacSha256)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

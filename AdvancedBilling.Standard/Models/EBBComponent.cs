@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// EBBComponent.
     /// </summary>
-    public class EBBComponent
+    public class EBBComponent : BaseModel
     {
         private Models.CreditType? upgradeCharge;
         private Models.CreditType? downgradeCredit;
@@ -311,7 +311,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
             toStringOutput.Add($"this.UnitName = {(this.UnitName == null ? "null" : this.UnitName)}");
@@ -330,6 +330,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.EventBasedBillingMetricId = {this.EventBasedBillingMetricId}");
             toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

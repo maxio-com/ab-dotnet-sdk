@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ACHAgreement.
     /// </summary>
-    public class ACHAgreement
+    public class ACHAgreement : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ACHAgreement"/> class.
@@ -104,12 +104,14 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.AgreementTerms = {(this.AgreementTerms == null ? "null" : this.AgreementTerms)}");
             toStringOutput.Add($"this.AuthorizerFirstName = {(this.AuthorizerFirstName == null ? "null" : this.AuthorizerFirstName)}");
             toStringOutput.Add($"this.AuthorizerLastName = {(this.AuthorizerLastName == null ? "null" : this.AuthorizerLastName)}");
             toStringOutput.Add($"this.IpAddress = {(this.IpAddress == null ? "null" : this.IpAddress)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

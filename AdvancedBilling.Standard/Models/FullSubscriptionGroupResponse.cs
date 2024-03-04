@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// FullSubscriptionGroupResponse.
     /// </summary>
-    public class FullSubscriptionGroupResponse
+    public class FullSubscriptionGroupResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FullSubscriptionGroupResponse"/> class.
@@ -185,7 +185,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
             toStringOutput.Add($"this.Scheme = {(this.Scheme == null ? "null" : this.Scheme.ToString())}");
@@ -199,6 +199,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.CurrentBillingAmountInCents = {(this.CurrentBillingAmountInCents == null ? "null" : this.CurrentBillingAmountInCents.ToString())}");
             toStringOutput.Add($"this.Customer = {(this.Customer == null ? "null" : this.Customer.ToString())}");
             toStringOutput.Add($"this.AccountBalances = {(this.AccountBalances == null ? "null" : this.AccountBalances.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

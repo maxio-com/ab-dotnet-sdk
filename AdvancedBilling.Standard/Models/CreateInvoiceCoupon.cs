@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateInvoiceCoupon.
     /// </summary>
-    public class CreateInvoiceCoupon
+    public class CreateInvoiceCoupon : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateInvoiceCoupon"/> class.
@@ -125,7 +125,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Code = {(this.Code == null ? "null" : this.Code)}");
             toStringOutput.Add($"Percentage = {(this.Percentage == null ? "null" : this.Percentage.ToString())}");
@@ -133,6 +133,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
             toStringOutput.Add($"ProductFamilyId = {(this.ProductFamilyId == null ? "null" : this.ProductFamilyId.ToString())}");
             toStringOutput.Add($"this.CompoundingStrategy = {(this.CompoundingStrategy == null ? "null" : this.CompoundingStrategy.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

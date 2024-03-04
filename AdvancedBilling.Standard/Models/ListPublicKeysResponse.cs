@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListPublicKeysResponse.
     /// </summary>
-    public class ListPublicKeysResponse
+    public class ListPublicKeysResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListPublicKeysResponse"/> class.
@@ -84,10 +84,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ChargifyJsKeys = {(this.ChargifyJsKeys == null ? "null" : $"[{string.Join(", ", this.ChargifyJsKeys)} ]")}");
             toStringOutput.Add($"this.Meta = {(this.Meta == null ? "null" : this.Meta.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

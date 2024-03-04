@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// RemovePaymentEventData.
     /// </summary>
-    public class RemovePaymentEventData
+    public class RemovePaymentEventData : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RemovePaymentEventData"/> class.
@@ -145,7 +145,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.TransactionId = {this.TransactionId}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
@@ -154,6 +154,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.TransactionTime = {this.TransactionTime}");
             toStringOutput.Add($"PaymentMethod = {(this.PaymentMethod == null ? "null" : this.PaymentMethod.ToString())}");
             toStringOutput.Add($"this.Prepayment = {this.Prepayment}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

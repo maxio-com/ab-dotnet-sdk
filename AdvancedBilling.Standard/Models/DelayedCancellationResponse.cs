@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// DelayedCancellationResponse.
     /// </summary>
-    public class DelayedCancellationResponse
+    public class DelayedCancellationResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DelayedCancellationResponse"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Message = {(this.Message == null ? "null" : this.Message)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

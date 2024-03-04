@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ApplyPaymentEventData.
     /// </summary>
-    public class ApplyPaymentEventData
+    public class ApplyPaymentEventData : BaseModel
     {
         private int? parentInvoiceNumber;
         private string remainingPrepaymentAmount;
@@ -249,7 +249,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.OriginalAmount = {(this.OriginalAmount == null ? "null" : this.OriginalAmount)}");
@@ -261,6 +261,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.RemainingPrepaymentAmount = {(this.RemainingPrepaymentAmount == null ? "null" : this.RemainingPrepaymentAmount)}");
             toStringOutput.Add($"this.Prepayment = {(this.Prepayment == null ? "null" : this.Prepayment.ToString())}");
             toStringOutput.Add($"this.External = {(this.External == null ? "null" : this.External.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

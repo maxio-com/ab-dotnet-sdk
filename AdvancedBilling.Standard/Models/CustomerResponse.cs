@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CustomerResponse.
     /// </summary>
-    public class CustomerResponse
+    public class CustomerResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomerResponse"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Customer = {(this.Customer == null ? "null" : this.Customer.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// InvoicePaymentMethod.
     /// </summary>
-    public class InvoicePaymentMethod
+    public class InvoicePaymentMethod : BaseModel
     {
         private string lastFour;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -183,7 +183,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Details = {(this.Details == null ? "null" : this.Details)}");
             toStringOutput.Add($"this.Kind = {(this.Kind == null ? "null" : this.Kind)}");
@@ -193,6 +193,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.CardExpiration = {(this.CardExpiration == null ? "null" : this.CardExpiration)}");
             toStringOutput.Add($"this.LastFour = {(this.LastFour == null ? "null" : this.LastFour)}");
             toStringOutput.Add($"this.MaskedCardNumber = {(this.MaskedCardNumber == null ? "null" : this.MaskedCardNumber)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

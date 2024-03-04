@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// OfferSignupPage.
     /// </summary>
-    public class OfferSignupPage
+    public class OfferSignupPage : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="OfferSignupPage"/> class.
@@ -124,7 +124,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.Nickname = {(this.Nickname == null ? "null" : this.Nickname)}");
@@ -132,6 +132,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ReturnUrl = {(this.ReturnUrl == null ? "null" : this.ReturnUrl)}");
             toStringOutput.Add($"this.ReturnParams = {(this.ReturnParams == null ? "null" : this.ReturnParams)}");
             toStringOutput.Add($"this.Url = {(this.Url == null ? "null" : this.Url)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

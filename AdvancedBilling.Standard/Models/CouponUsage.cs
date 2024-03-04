@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CouponUsage.
     /// </summary>
-    public class CouponUsage
+    public class CouponUsage : BaseModel
     {
         private int? savings;
         private long? savingsInCents;
@@ -243,7 +243,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
@@ -252,6 +252,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.SavingsInCents = {(this.SavingsInCents == null ? "null" : this.SavingsInCents.ToString())}");
             toStringOutput.Add($"this.Revenue = {(this.Revenue == null ? "null" : this.Revenue.ToString())}");
             toStringOutput.Add($"this.RevenueInCents = {(this.RevenueInCents == null ? "null" : this.RevenueInCents.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

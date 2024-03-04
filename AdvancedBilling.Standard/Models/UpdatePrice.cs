@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// UpdatePrice.
     /// </summary>
-    public class UpdatePrice
+    public class UpdatePrice : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdatePrice"/> class.
@@ -115,13 +115,15 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"EndingQuantity = {(this.EndingQuantity == null ? "null" : this.EndingQuantity.ToString())}");
             toStringOutput.Add($"UnitPrice = {(this.UnitPrice == null ? "null" : this.UnitPrice.ToString())}");
             toStringOutput.Add($"this.Destroy = {(this.Destroy == null ? "null" : this.Destroy.ToString())}");
             toStringOutput.Add($"StartingQuantity = {(this.StartingQuantity == null ? "null" : this.StartingQuantity.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

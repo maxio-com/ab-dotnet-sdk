@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// IssueInvoiceEventData.
     /// </summary>
-    public class IssueInvoiceEventData
+    public class IssueInvoiceEventData : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="IssueInvoiceEventData"/> class.
@@ -126,13 +126,15 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ConsolidationLevel = {this.ConsolidationLevel}");
             toStringOutput.Add($"this.FromStatus = {this.FromStatus}");
             toStringOutput.Add($"this.ToStatus = {this.ToStatus}");
             toStringOutput.Add($"this.DueAmount = {(this.DueAmount == null ? "null" : this.DueAmount)}");
             toStringOutput.Add($"this.TotalAmount = {(this.TotalAmount == null ? "null" : this.TotalAmount)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

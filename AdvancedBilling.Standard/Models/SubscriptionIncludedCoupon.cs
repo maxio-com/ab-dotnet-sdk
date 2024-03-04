@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SubscriptionIncludedCoupon.
     /// </summary>
-    public class SubscriptionIncludedCoupon
+    public class SubscriptionIncludedCoupon : BaseModel
     {
         private string expiresAt;
         private long? amountInCents;
@@ -243,7 +243,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Code = {(this.Code == null ? "null" : this.Code)}");
             toStringOutput.Add($"this.UseCount = {(this.UseCount == null ? "null" : this.UseCount.ToString())}");
@@ -252,6 +252,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Recurring = {(this.Recurring == null ? "null" : this.Recurring.ToString())}");
             toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
             toStringOutput.Add($"this.Percentage = {(this.Percentage == null ? "null" : this.Percentage)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

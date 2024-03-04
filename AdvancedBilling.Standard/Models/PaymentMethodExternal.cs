@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// PaymentMethodExternal.
     /// </summary>
-    public class PaymentMethodExternal
+    public class PaymentMethodExternal : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PaymentMethodExternal"/> class.
@@ -109,12 +109,14 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Details = {(this.Details == null ? "null" : this.Details)}");
             toStringOutput.Add($"this.Kind = {(this.Kind == null ? "null" : this.Kind)}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.Type = {this.Type}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

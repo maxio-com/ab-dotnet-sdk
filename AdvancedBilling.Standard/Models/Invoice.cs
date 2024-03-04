@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// Invoice.
     /// </summary>
-    public class Invoice
+    public class Invoice : BaseModel
     {
         private DateTime? paidDate;
         private int? parentInvoiceId;
@@ -815,7 +815,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
@@ -869,6 +869,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.DisplaySettings = {(this.DisplaySettings == null ? "null" : this.DisplaySettings.ToString())}");
             toStringOutput.Add($"this.PublicUrl = {(this.PublicUrl == null ? "null" : this.PublicUrl)}");
             toStringOutput.Add($"this.PreviousBalanceData = {(this.PreviousBalanceData == null ? "null" : this.PreviousBalanceData.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

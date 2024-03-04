@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// InvoiceTax.
     /// </summary>
-    public class InvoiceTax
+    public class InvoiceTax : BaseModel
     {
         private string description;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -53,7 +53,7 @@ namespace AdvancedBilling.Standard.Models
             string uid = null,
             string title = null,
             string description = null,
-            string sourceType = null,
+            Models.ProformaInvoiceTaxSourceType? sourceType = null,
             int? sourceId = null,
             string percentage = null,
             string taxableAmount = null,
@@ -113,7 +113,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets SourceType.
         /// </summary>
         [JsonProperty("source_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string SourceType { get; set; }
+        public Models.ProformaInvoiceTaxSourceType? SourceType { get; set; }
 
         /// <summary>
         /// Gets or sets SourceId.
@@ -213,12 +213,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
             toStringOutput.Add($"this.Title = {(this.Title == null ? "null" : this.Title)}");
             toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
-            toStringOutput.Add($"this.SourceType = {(this.SourceType == null ? "null" : this.SourceType)}");
+            toStringOutput.Add($"this.SourceType = {(this.SourceType == null ? "null" : this.SourceType.ToString())}");
             toStringOutput.Add($"this.SourceId = {(this.SourceId == null ? "null" : this.SourceId.ToString())}");
             toStringOutput.Add($"this.Percentage = {(this.Percentage == null ? "null" : this.Percentage)}");
             toStringOutput.Add($"this.TaxableAmount = {(this.TaxableAmount == null ? "null" : this.TaxableAmount)}");
@@ -226,6 +226,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.TransactionId = {(this.TransactionId == null ? "null" : this.TransactionId.ToString())}");
             toStringOutput.Add($"this.LineItemBreakouts = {(this.LineItemBreakouts == null ? "null" : $"[{string.Join(", ", this.LineItemBreakouts)} ]")}");
             toStringOutput.Add($"this.TaxComponentBreakouts = {(this.TaxComponentBreakouts == null ? "null" : $"[{string.Join(", ", this.TaxComponentBreakouts)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -1,4 +1,4 @@
-// <copyright file="ComponentSPricePointAssignment.cs" company="APIMatic">
+// <copyright file="ComponentPricePointAssignment.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
 namespace AdvancedBilling.Standard.Models
@@ -19,25 +19,25 @@ namespace AdvancedBilling.Standard.Models
     using Newtonsoft.Json.Converters;
 
     /// <summary>
-    /// ComponentSPricePointAssignment.
+    /// ComponentPricePointAssignment.
     /// </summary>
-    public class ComponentSPricePointAssignment
+    public class ComponentPricePointAssignment : BaseModel
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ComponentSPricePointAssignment"/> class.
+        /// Initializes a new instance of the <see cref="ComponentPricePointAssignment"/> class.
         /// </summary>
-        public ComponentSPricePointAssignment()
+        public ComponentPricePointAssignment()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ComponentSPricePointAssignment"/> class.
+        /// Initializes a new instance of the <see cref="ComponentPricePointAssignment"/> class.
         /// </summary>
         /// <param name="componentId">component_id.</param>
         /// <param name="pricePoint">price_point.</param>
-        public ComponentSPricePointAssignment(
+        public ComponentPricePointAssignment(
             int? componentId = null,
-            ComponentSPricePointAssignmentPricePoint pricePoint = null)
+            ComponentPricePointAssignmentPricePoint pricePoint = null)
         {
             this.ComponentId = componentId;
             this.PricePoint = pricePoint;
@@ -53,7 +53,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets PricePoint.
         /// </summary>
         [JsonProperty("price_point", NullValueHandling = NullValueHandling.Ignore)]
-        public ComponentSPricePointAssignmentPricePoint PricePoint { get; set; }
+        public ComponentPricePointAssignmentPricePoint PricePoint { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -62,7 +62,7 @@ namespace AdvancedBilling.Standard.Models
 
             this.ToString(toStringOutput);
 
-            return $"ComponentSPricePointAssignment : ({string.Join(", ", toStringOutput)})";
+            return $"ComponentPricePointAssignment : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
@@ -77,7 +77,7 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is ComponentSPricePointAssignment other &&                ((this.ComponentId == null && other.ComponentId == null) || (this.ComponentId?.Equals(other.ComponentId) == true)) &&
+            return obj is ComponentPricePointAssignment other &&                ((this.ComponentId == null && other.ComponentId == null) || (this.ComponentId?.Equals(other.ComponentId) == true)) &&
                 ((this.PricePoint == null && other.PricePoint == null) || (this.PricePoint?.Equals(other.PricePoint) == true));
         }
         
@@ -85,10 +85,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"PricePoint = {(this.PricePoint == null ? "null" : this.PricePoint.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

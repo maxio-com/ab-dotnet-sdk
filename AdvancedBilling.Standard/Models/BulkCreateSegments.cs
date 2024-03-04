@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// BulkCreateSegments.
     /// </summary>
-    public class BulkCreateSegments
+    public class BulkCreateSegments : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BulkCreateSegments"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Segments = {(this.Segments == null ? "null" : $"[{string.Join(", ", this.Segments)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListSubscriptionComponentsForSiteInput.
     /// </summary>
-    public class ListSubscriptionComponentsForSiteInput
+    public class ListSubscriptionComponentsForSiteInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListSubscriptionComponentsForSiteInput"/> class.
@@ -283,7 +283,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
@@ -306,6 +306,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.FilterSubscriptionStartDatetime = {(this.FilterSubscriptionStartDatetime == null ? "null" : this.FilterSubscriptionStartDatetime.ToString())}");
             toStringOutput.Add($"this.FilterSubscriptionEndDate = {(this.FilterSubscriptionEndDate == null ? "null" : this.FilterSubscriptionEndDate.ToString())}");
             toStringOutput.Add($"this.FilterSubscriptionEndDatetime = {(this.FilterSubscriptionEndDatetime == null ? "null" : this.FilterSubscriptionEndDatetime.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

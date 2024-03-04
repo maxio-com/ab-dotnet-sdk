@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// UpdateProductPricePoint.
     /// </summary>
-    public class UpdateProductPricePoint
+    public class UpdateProductPricePoint : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateProductPricePoint"/> class.
@@ -84,10 +84,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
             toStringOutput.Add($"this.PriceInCents = {(this.PriceInCents == null ? "null" : this.PriceInCents.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CustomerChange.
     /// </summary>
-    public class CustomerChange
+    public class CustomerChange : BaseModel
     {
         private CustomerChangePayer payer;
         private CustomerChangeShippingAddress shippingAddress;
@@ -249,12 +249,14 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"Payer = {(this.Payer == null ? "null" : this.Payer.ToString())}");
             toStringOutput.Add($"ShippingAddress = {(this.ShippingAddress == null ? "null" : this.ShippingAddress.ToString())}");
             toStringOutput.Add($"BillingAddress = {(this.BillingAddress == null ? "null" : this.BillingAddress.ToString())}");
             toStringOutput.Add($"CustomFields = {(this.CustomFields == null ? "null" : this.CustomFields.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

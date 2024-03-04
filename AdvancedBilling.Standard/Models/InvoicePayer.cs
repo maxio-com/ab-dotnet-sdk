@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// InvoicePayer.
     /// </summary>
-    public class InvoicePayer
+    public class InvoicePayer : BaseModel
     {
         private string organization;
         private string vatNumber;
@@ -198,7 +198,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ChargifyId = {(this.ChargifyId == null ? "null" : this.ChargifyId.ToString())}");
             toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : this.FirstName)}");
@@ -206,6 +206,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Organization = {(this.Organization == null ? "null" : this.Organization)}");
             toStringOutput.Add($"this.Email = {(this.Email == null ? "null" : this.Email)}");
             toStringOutput.Add($"this.VatNumber = {(this.VatNumber == null ? "null" : this.VatNumber)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

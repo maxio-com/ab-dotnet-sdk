@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// InvoiceTaxComponentBreakout.
     /// </summary>
-    public class InvoiceTaxComponentBreakout
+    public class InvoiceTaxComponentBreakout : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="InvoiceTaxComponentBreakout"/> class.
@@ -104,12 +104,14 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.TaxRuleId = {(this.TaxRuleId == null ? "null" : this.TaxRuleId.ToString())}");
             toStringOutput.Add($"this.Percentage = {(this.Percentage == null ? "null" : this.Percentage)}");
             toStringOutput.Add($"this.CountryCode = {(this.CountryCode == null ? "null" : this.CountryCode)}");
             toStringOutput.Add($"this.SubdivisionCode = {(this.SubdivisionCode == null ? "null" : this.SubdivisionCode)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

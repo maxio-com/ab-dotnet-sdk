@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// BulkUpdateSegmentsItem.
     /// </summary>
-    public class BulkUpdateSegmentsItem
+    public class BulkUpdateSegmentsItem : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BulkUpdateSegmentsItem"/> class.
@@ -94,11 +94,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {this.Id}");
             toStringOutput.Add($"this.PricingScheme = {this.PricingScheme}");
             toStringOutput.Add($"this.Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

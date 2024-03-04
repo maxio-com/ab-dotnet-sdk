@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// PaymentProfileAttributes.
     /// </summary>
-    public class PaymentProfileAttributes
+    public class PaymentProfileAttributes : BaseModel
     {
         private string billingAddress2;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -354,7 +354,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ChargifyToken = {(this.ChargifyToken == null ? "null" : this.ChargifyToken)}");
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
@@ -381,6 +381,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.GatewayHandle = {(this.GatewayHandle == null ? "null" : this.GatewayHandle)}");
             toStringOutput.Add($"this.Cvv = {(this.Cvv == null ? "null" : this.Cvv)}");
             toStringOutput.Add($"this.LastFour = {(this.LastFour == null ? "null" : this.LastFour)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

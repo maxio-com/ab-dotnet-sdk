@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SaleRepItemMrr.
     /// </summary>
-    public class SaleRepItemMrr
+    public class SaleRepItemMrr : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SaleRepItemMrr"/> class.
@@ -94,11 +94,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Mrr = {(this.Mrr == null ? "null" : this.Mrr)}");
             toStringOutput.Add($"this.Usage = {(this.Usage == null ? "null" : this.Usage)}");
             toStringOutput.Add($"this.Recurring = {(this.Recurring == null ? "null" : this.Recurring)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

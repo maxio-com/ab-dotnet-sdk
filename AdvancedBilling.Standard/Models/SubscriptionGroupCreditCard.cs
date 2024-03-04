@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SubscriptionGroupCreditCard.
     /// </summary>
-    public class SubscriptionGroupCreditCard
+    public class SubscriptionGroupCreditCard : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionGroupCreditCard"/> class.
@@ -265,7 +265,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"FullNumber = {(this.FullNumber == null ? "null" : this.FullNumber.ToString())}");
             toStringOutput.Add($"ExpirationMonth = {(this.ExpirationMonth == null ? "null" : this.ExpirationMonth.ToString())}");
@@ -287,6 +287,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.CustomerVaultToken = {(this.CustomerVaultToken == null ? "null" : this.CustomerVaultToken)}");
             toStringOutput.Add($"this.Cvv = {(this.Cvv == null ? "null" : this.Cvv)}");
             toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

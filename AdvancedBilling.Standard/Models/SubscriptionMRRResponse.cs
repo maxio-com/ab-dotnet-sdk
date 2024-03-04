@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SubscriptionMRRResponse.
     /// </summary>
-    public class SubscriptionMRRResponse
+    public class SubscriptionMRRResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionMRRResponse"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.SubscriptionsMrr = {(this.SubscriptionsMrr == null ? "null" : $"[{string.Join(", ", this.SubscriptionsMrr)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

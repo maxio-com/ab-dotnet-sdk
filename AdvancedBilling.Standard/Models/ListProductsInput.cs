@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListProductsInput.
     /// </summary>
-    public class ListProductsInput
+    public class ListProductsInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListProductsInput"/> class.
@@ -181,7 +181,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.DateField = {(this.DateField == null ? "null" : this.DateField.ToString())}");
             toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate.ToString())}");
@@ -194,6 +194,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Include = {(this.Include == null ? "null" : this.Include.ToString())}");
             toStringOutput.Add($"this.FilterPrepaidProductPricePointProductPricePointId = {(this.FilterPrepaidProductPricePointProductPricePointId == null ? "null" : this.FilterPrepaidProductPricePointProductPricePointId.ToString())}");
             toStringOutput.Add($"this.FilterUseSiteExchangeRate = {(this.FilterUseSiteExchangeRate == null ? "null" : this.FilterUseSiteExchangeRate.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SignupProformaPreview.
     /// </summary>
-    public class SignupProformaPreview
+    public class SignupProformaPreview : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SignupProformaPreview"/> class.
@@ -84,10 +84,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.CurrentProformaInvoice = {(this.CurrentProformaInvoice == null ? "null" : this.CurrentProformaInvoice.ToString())}");
             toStringOutput.Add($"this.NextProformaInvoice = {(this.NextProformaInvoice == null ? "null" : this.NextProformaInvoice.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

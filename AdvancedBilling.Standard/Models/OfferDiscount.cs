@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// OfferDiscount.
     /// </summary>
-    public class OfferDiscount
+    public class OfferDiscount : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="OfferDiscount"/> class.
@@ -94,11 +94,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.CouponCode = {(this.CouponCode == null ? "null" : this.CouponCode)}");
             toStringOutput.Add($"this.CouponId = {(this.CouponId == null ? "null" : this.CouponId.ToString())}");
             toStringOutput.Add($"this.CouponName = {(this.CouponName == null ? "null" : this.CouponName)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

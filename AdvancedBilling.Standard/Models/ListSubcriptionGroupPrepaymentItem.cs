@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListSubcriptionGroupPrepaymentItem.
     /// </summary>
-    public class ListSubcriptionGroupPrepaymentItem
+    public class ListSubcriptionGroupPrepaymentItem : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListSubcriptionGroupPrepaymentItem"/> class.
@@ -155,7 +155,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.SubscriptionGroupUid = {(this.SubscriptionGroupUid == null ? "null" : this.SubscriptionGroupUid)}");
@@ -166,6 +166,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

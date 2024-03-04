@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// WebhookResponse.
     /// </summary>
-    public class WebhookResponse
+    public class WebhookResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="WebhookResponse"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Webhook = {(this.Webhook == null ? "null" : this.Webhook.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

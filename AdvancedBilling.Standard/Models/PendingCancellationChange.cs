@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// PendingCancellationChange.
     /// </summary>
-    public class PendingCancellationChange
+    public class PendingCancellationChange : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PendingCancellationChange"/> class.
@@ -88,10 +88,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.CancellationState = {(this.CancellationState == null ? "null" : this.CancellationState)}");
             toStringOutput.Add($"this.CancelsAt = {this.CancelsAt}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

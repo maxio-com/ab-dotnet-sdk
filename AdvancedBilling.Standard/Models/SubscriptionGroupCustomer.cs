@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SubscriptionGroupCustomer.
     /// </summary>
-    public class SubscriptionGroupCustomer
+    public class SubscriptionGroupCustomer : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionGroupCustomer"/> class.
@@ -114,13 +114,15 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : this.FirstName)}");
             toStringOutput.Add($"this.LastName = {(this.LastName == null ? "null" : this.LastName)}");
             toStringOutput.Add($"this.Organization = {(this.Organization == null ? "null" : this.Organization)}");
             toStringOutput.Add($"this.Email = {(this.Email == null ? "null" : this.Email)}");
             toStringOutput.Add($"this.Reference = {(this.Reference == null ? "null" : this.Reference)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

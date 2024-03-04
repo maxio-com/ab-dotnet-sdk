@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// InvoiceEventPayment.
     /// </summary>
     [JsonConverter(typeof(JsonSubtypes), "type")]
-    public class InvoiceEventPayment
+    public class InvoiceEventPayment : BaseModel
     {
         private string lastFour;
         private string details;
@@ -285,7 +285,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Type = {(this.Type == null ? "null" : this.Type)}");
             toStringOutput.Add($"this.MaskedAccountNumber = {(this.MaskedAccountNumber == null ? "null" : this.MaskedAccountNumber)}");
@@ -298,6 +298,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Kind = {(this.Kind == null ? "null" : this.Kind)}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.Email = {(this.Email == null ? "null" : this.Email)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }
