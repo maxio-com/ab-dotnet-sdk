@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// MeteredUsage.
     /// </summary>
-    public class MeteredUsage
+    public class MeteredUsage : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MeteredUsage"/> class.
@@ -133,7 +133,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PreviousUnitBalance = {(this.PreviousUnitBalance == null ? "null" : this.PreviousUnitBalance)}");
             toStringOutput.Add($"this.NewUnitBalance = {this.NewUnitBalance}");
@@ -141,6 +141,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ComponentId = {this.ComponentId}");
             toStringOutput.Add($"this.ComponentHandle = {(this.ComponentHandle == null ? "null" : this.ComponentHandle)}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

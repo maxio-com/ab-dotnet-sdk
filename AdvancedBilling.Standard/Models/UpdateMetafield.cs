@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// UpdateMetafield.
     /// </summary>
-    public class UpdateMetafield
+    public class UpdateMetafield : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateMetafield"/> class.
@@ -117,13 +117,15 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.CurrentName = {(this.CurrentName == null ? "null" : this.CurrentName)}");
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
             toStringOutput.Add($"this.Scope = {(this.Scope == null ? "null" : this.Scope.ToString())}");
             toStringOutput.Add($"this.InputType = {(this.InputType == null ? "null" : this.InputType.ToString())}");
             toStringOutput.Add($"this.MEnum = {(this.MEnum == null ? "null" : $"[{string.Join(", ", this.MEnum)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

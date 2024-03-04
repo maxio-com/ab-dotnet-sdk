@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// InvoiceLineItemPricingDetail.
     /// </summary>
-    public class InvoiceLineItemPricingDetail
+    public class InvoiceLineItemPricingDetail : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="InvoiceLineItemPricingDetail"/> class.
@@ -84,10 +84,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Label = {(this.Label == null ? "null" : this.Label)}");
             toStringOutput.Add($"this.Amount = {(this.Amount == null ? "null" : this.Amount)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

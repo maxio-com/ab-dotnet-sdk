@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreatePrepaymentResponse.
     /// </summary>
-    public class CreatePrepaymentResponse
+    public class CreatePrepaymentResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreatePrepaymentResponse"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Prepayment = {(this.Prepayment == null ? "null" : this.Prepayment.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

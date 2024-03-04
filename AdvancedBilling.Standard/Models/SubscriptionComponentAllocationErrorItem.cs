@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SubscriptionComponentAllocationErrorItem.
     /// </summary>
-    public class SubscriptionComponentAllocationErrorItem
+    public class SubscriptionComponentAllocationErrorItem : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionComponentAllocationErrorItem"/> class.
@@ -84,10 +84,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Kind = {(this.Kind == null ? "null" : this.Kind)}");
             toStringOutput.Add($"this.Message = {(this.Message == null ? "null" : this.Message)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

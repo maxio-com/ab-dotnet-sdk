@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateSegment.
     /// </summary>
-    public class CreateSegment
+    public class CreateSegment : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateSegment"/> class.
@@ -125,7 +125,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"SegmentProperty1Value = {(this.SegmentProperty1Value == null ? "null" : this.SegmentProperty1Value.ToString())}");
             toStringOutput.Add($"SegmentProperty2Value = {(this.SegmentProperty2Value == null ? "null" : this.SegmentProperty2Value.ToString())}");
@@ -133,6 +133,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"SegmentProperty4Value = {(this.SegmentProperty4Value == null ? "null" : this.SegmentProperty4Value.ToString())}");
             toStringOutput.Add($"this.PricingScheme = {this.PricingScheme}");
             toStringOutput.Add($"this.Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

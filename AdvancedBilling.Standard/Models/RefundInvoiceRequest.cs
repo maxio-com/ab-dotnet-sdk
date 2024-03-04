@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// RefundInvoiceRequest.
     /// </summary>
-    public class RefundInvoiceRequest
+    public class RefundInvoiceRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RefundInvoiceRequest"/> class.
@@ -75,9 +75,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"Refund = {(this.Refund == null ? "null" : this.Refund.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

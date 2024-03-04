@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SubscriptionGroupMemberError.
     /// </summary>
-    public class SubscriptionGroupMemberError
+    public class SubscriptionGroupMemberError : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionGroupMemberError"/> class.
@@ -94,11 +94,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.Type = {(this.Type == null ? "null" : this.Type)}");
             toStringOutput.Add($"this.Message = {(this.Message == null ? "null" : this.Message)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CancelGroupedSubscriptionsRequest.
     /// </summary>
-    public class CancelGroupedSubscriptionsRequest
+    public class CancelGroupedSubscriptionsRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CancelGroupedSubscriptionsRequest"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ChargeUnbilledUsage = {(this.ChargeUnbilledUsage == null ? "null" : this.ChargeUnbilledUsage.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

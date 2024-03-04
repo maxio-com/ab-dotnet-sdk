@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateMetadata.
     /// </summary>
-    public class CreateMetadata
+    public class CreateMetadata : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateMetadata"/> class.
@@ -84,10 +84,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
             toStringOutput.Add($"this.MValue = {(this.MValue == null ? "null" : this.MValue)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

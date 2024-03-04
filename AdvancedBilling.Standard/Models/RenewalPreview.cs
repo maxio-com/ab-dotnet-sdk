@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// RenewalPreview.
     /// </summary>
-    public class RenewalPreview
+    public class RenewalPreview : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RenewalPreview"/> class.
@@ -155,7 +155,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.NextAssessmentAt = {(this.NextAssessmentAt == null ? "null" : this.NextAssessmentAt.ToString())}");
             toStringOutput.Add($"this.SubtotalInCents = {(this.SubtotalInCents == null ? "null" : this.SubtotalInCents.ToString())}");
@@ -166,6 +166,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.TotalAmountDueInCents = {(this.TotalAmountDueInCents == null ? "null" : this.TotalAmountDueInCents.ToString())}");
             toStringOutput.Add($"this.UncalculatedTaxes = {(this.UncalculatedTaxes == null ? "null" : this.UncalculatedTaxes.ToString())}");
             toStringOutput.Add($"this.LineItems = {(this.LineItems == null ? "null" : $"[{string.Join(", ", this.LineItems)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

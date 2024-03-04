@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreatePrepaidComponent.
     /// </summary>
-    public class CreatePrepaidComponent
+    public class CreatePrepaidComponent : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreatePrepaidComponent"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PrepaidUsageComponent = {(this.PrepaidUsageComponent == null ? "null" : this.PrepaidUsageComponent.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

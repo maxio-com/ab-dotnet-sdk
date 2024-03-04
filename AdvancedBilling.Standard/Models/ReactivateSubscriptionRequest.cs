@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ReactivateSubscriptionRequest.
     /// </summary>
-    public class ReactivateSubscriptionRequest
+    public class ReactivateSubscriptionRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ReactivateSubscriptionRequest"/> class.
@@ -125,7 +125,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.CalendarBilling = {(this.CalendarBilling == null ? "null" : this.CalendarBilling.ToString())}");
             toStringOutput.Add($"this.IncludeTrial = {(this.IncludeTrial == null ? "null" : this.IncludeTrial.ToString())}");
@@ -133,6 +133,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.CouponCode = {(this.CouponCode == null ? "null" : this.CouponCode)}");
             toStringOutput.Add($"this.UseCreditsAndPrepayments = {(this.UseCreditsAndPrepayments == null ? "null" : this.UseCreditsAndPrepayments.ToString())}");
             toStringOutput.Add($"Resume = {(this.Resume == null ? "null" : this.Resume.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

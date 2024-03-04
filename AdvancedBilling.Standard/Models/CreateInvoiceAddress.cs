@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateInvoiceAddress.
     /// </summary>
-    public class CreateInvoiceAddress
+    public class CreateInvoiceAddress : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateInvoiceAddress"/> class.
@@ -154,7 +154,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : this.FirstName)}");
             toStringOutput.Add($"this.LastName = {(this.LastName == null ? "null" : this.LastName)}");
@@ -165,6 +165,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.State = {(this.State == null ? "null" : this.State)}");
             toStringOutput.Add($"this.Zip = {(this.Zip == null ? "null" : this.Zip)}");
             toStringOutput.Add($"this.Country = {(this.Country == null ? "null" : this.Country)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

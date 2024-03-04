@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// VoidInvoiceEventData.
     /// </summary>
-    public class VoidInvoiceEventData
+    public class VoidInvoiceEventData : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VoidInvoiceEventData"/> class.
@@ -131,7 +131,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"CreditNoteAttributes = {(this.CreditNoteAttributes == null ? "null" : this.CreditNoteAttributes.ToString())}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
@@ -139,6 +139,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.TransactionTime = {(this.TransactionTime == null ? "null" : this.TransactionTime.ToString())}");
             toStringOutput.Add($"this.IsAdvanceInvoice = {this.IsAdvanceInvoice}");
             toStringOutput.Add($"this.Reason = {(this.Reason == null ? "null" : this.Reason)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

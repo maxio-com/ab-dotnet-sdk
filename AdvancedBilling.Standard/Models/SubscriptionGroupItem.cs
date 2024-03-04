@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SubscriptionGroupItem.
     /// </summary>
-    public class SubscriptionGroupItem
+    public class SubscriptionGroupItem : BaseModel
     {
         private string reference;
         private string productHandle;
@@ -273,7 +273,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.Reference = {(this.Reference == null ? "null" : this.Reference)}");
@@ -285,6 +285,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.CouponCode = {(this.CouponCode == null ? "null" : this.CouponCode)}");
             toStringOutput.Add($"this.TotalRevenueInCents = {(this.TotalRevenueInCents == null ? "null" : this.TotalRevenueInCents.ToString())}");
             toStringOutput.Add($"this.BalanceInCents = {(this.BalanceInCents == null ? "null" : this.BalanceInCents.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// OriginInvoice.
     /// </summary>
-    public class OriginInvoice
+    public class OriginInvoice : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="OriginInvoice"/> class.
@@ -84,10 +84,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
             toStringOutput.Add($"this.Number = {(this.Number == null ? "null" : this.Number)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

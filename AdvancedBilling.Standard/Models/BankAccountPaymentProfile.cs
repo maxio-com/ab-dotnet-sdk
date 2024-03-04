@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// BankAccountPaymentProfile.
     /// </summary>
-    public class BankAccountPaymentProfile
+    public class BankAccountPaymentProfile : BaseModel
     {
         private string billingAddress;
         private string billingCity;
@@ -29,6 +29,7 @@ namespace AdvancedBilling.Standard.Models
         private string billingCountry;
         private string customerVaultToken;
         private string billingAddress2;
+        private int? siteGatewaySettingId;
         private string gatewayHandle;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
@@ -39,6 +40,7 @@ namespace AdvancedBilling.Standard.Models
             { "billing_country", false },
             { "customer_vault_token", false },
             { "billing_address_2", false },
+            { "site_gateway_setting_id", false },
             { "gateway_handle", false },
         };
 
@@ -146,7 +148,11 @@ namespace AdvancedBilling.Standard.Models
             this.BankAccountHolderType = bankAccountHolderType;
             this.PaymentType = paymentType;
             this.Verified = verified;
-            this.SiteGatewaySettingId = siteGatewaySettingId;
+            if (siteGatewaySettingId != null)
+            {
+                this.SiteGatewaySettingId = siteGatewaySettingId;
+            }
+
             if (gatewayHandle != null)
             {
                 this.GatewayHandle = gatewayHandle;
@@ -376,8 +382,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets SiteGatewaySettingId.
         /// </summary>
-        [JsonProperty("site_gateway_setting_id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? SiteGatewaySettingId { get; set; }
+        [JsonProperty("site_gateway_setting_id")]
+        public int? SiteGatewaySettingId
+        {
+            get
+            {
+                return this.siteGatewaySettingId;
+            }
+
+            set
+            {
+                this.shouldSerialize["site_gateway_setting_id"] = true;
+                this.siteGatewaySettingId = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets GatewayHandle.
@@ -467,6 +485,14 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serailized.
         /// </summary>
+        public void UnsetSiteGatewaySettingId()
+        {
+            this.shouldSerialize["site_gateway_setting_id"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
         public void UnsetGatewayHandle()
         {
             this.shouldSerialize["gateway_handle"] = false;
@@ -539,6 +565,15 @@ namespace AdvancedBilling.Standard.Models
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeSiteGatewaySettingId()
+        {
+            return this.shouldSerialize["site_gateway_setting_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
         public bool ShouldSerializeGatewayHandle()
         {
             return this.shouldSerialize["gateway_handle"];
@@ -584,7 +619,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : this.FirstName)}");
@@ -608,6 +643,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Verified = {(this.Verified == null ? "null" : this.Verified.ToString())}");
             toStringOutput.Add($"this.SiteGatewaySettingId = {(this.SiteGatewaySettingId == null ? "null" : this.SiteGatewaySettingId.ToString())}");
             toStringOutput.Add($"this.GatewayHandle = {(this.GatewayHandle == null ? "null" : this.GatewayHandle)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

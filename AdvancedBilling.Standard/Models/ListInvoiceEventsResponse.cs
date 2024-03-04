@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListInvoiceEventsResponse.
     /// </summary>
-    public class ListInvoiceEventsResponse
+    public class ListInvoiceEventsResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListInvoiceEventsResponse"/> class.
@@ -104,12 +104,14 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Events = {(this.Events == null ? "null" : $"[{string.Join(", ", this.Events)} ]")}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
             toStringOutput.Add($"this.TotalPages = {(this.TotalPages == null ? "null" : this.TotalPages.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

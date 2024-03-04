@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// DunnerData.
     /// </summary>
-    public class DunnerData
+    public class DunnerData : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DunnerData"/> class.
@@ -126,7 +126,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.State = {(this.State == null ? "null" : this.State)}");
             toStringOutput.Add($"this.SubscriptionId = {this.SubscriptionId}");
@@ -134,6 +134,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.CreatedAt = {this.CreatedAt}");
             toStringOutput.Add($"this.Attempts = {this.Attempts}");
             toStringOutput.Add($"this.LastAttemptedAt = {this.LastAttemptedAt}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

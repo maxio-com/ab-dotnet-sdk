@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SubscriptionGroupSignupError.
     /// </summary>
-    public class SubscriptionGroupSignupError
+    public class SubscriptionGroupSignupError : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionGroupSignupError"/> class.
@@ -124,7 +124,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"Subscriptions = {(this.Subscriptions == null ? "null" : this.Subscriptions.ToString())}");
             toStringOutput.Add($"this.PayerReference = {(this.PayerReference == null ? "null" : this.PayerReference)}");
@@ -132,6 +132,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.SubscriptionGroup = {(this.SubscriptionGroup == null ? "null" : $"[{string.Join(", ", this.SubscriptionGroup)} ]")}");
             toStringOutput.Add($"this.PaymentProfileId = {(this.PaymentProfileId == null ? "null" : this.PaymentProfileId)}");
             toStringOutput.Add($"this.PayerId = {(this.PayerId == null ? "null" : this.PayerId)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

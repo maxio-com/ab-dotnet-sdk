@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateComponentPricePointsRequest.
     /// </summary>
-    public class CreateComponentPricePointsRequest
+    public class CreateComponentPricePointsRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateComponentPricePointsRequest"/> class.
@@ -75,9 +75,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"PricePoints = {(this.PricePoints == null ? "null" : this.PricePoints.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

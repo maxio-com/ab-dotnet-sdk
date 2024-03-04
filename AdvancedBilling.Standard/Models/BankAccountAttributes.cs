@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// BankAccountAttributes.
     /// </summary>
-    public class BankAccountAttributes
+    public class BankAccountAttributes : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BankAccountAttributes"/> class.
@@ -184,7 +184,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ChargifyToken = {(this.ChargifyToken == null ? "null" : this.ChargifyToken)}");
             toStringOutput.Add($"this.BankName = {(this.BankName == null ? "null" : this.BankName)}");
@@ -198,6 +198,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.CurrentVault = {(this.CurrentVault == null ? "null" : this.CurrentVault.ToString())}");
             toStringOutput.Add($"this.VaultToken = {(this.VaultToken == null ? "null" : this.VaultToken)}");
             toStringOutput.Add($"this.CustomerVaultToken = {(this.CustomerVaultToken == null ? "null" : this.CustomerVaultToken)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

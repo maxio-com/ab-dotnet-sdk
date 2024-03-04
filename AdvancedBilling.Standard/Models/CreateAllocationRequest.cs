@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateAllocationRequest.
     /// </summary>
-    public class CreateAllocationRequest
+    public class CreateAllocationRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateAllocationRequest"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Allocation = {(this.Allocation == null ? "null" : this.Allocation.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ItemPricePointChanged.
     /// </summary>
-    public class ItemPricePointChanged
+    public class ItemPricePointChanged : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemPricePointChanged"/> class.
@@ -133,7 +133,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ItemId = {this.ItemId}");
             toStringOutput.Add($"this.ItemType = {(this.ItemType == null ? "null" : this.ItemType)}");
@@ -141,6 +141,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ItemName = {(this.ItemName == null ? "null" : this.ItemName)}");
             toStringOutput.Add($"this.PreviousPricePoint = {(this.PreviousPricePoint == null ? "null" : this.PreviousPricePoint.ToString())}");
             toStringOutput.Add($"this.CurrentPricePoint = {(this.CurrentPricePoint == null ? "null" : this.CurrentPricePoint.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

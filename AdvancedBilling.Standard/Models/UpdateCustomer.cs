@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// UpdateCustomer.
     /// </summary>
-    public class UpdateCustomer
+    public class UpdateCustomer : BaseModel
     {
         private int? parentId;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -283,7 +283,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : this.FirstName)}");
             toStringOutput.Add($"this.LastName = {(this.LastName == null ? "null" : this.LastName)}");
@@ -303,6 +303,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.TaxExempt = {(this.TaxExempt == null ? "null" : this.TaxExempt.ToString())}");
             toStringOutput.Add($"this.TaxExemptReason = {(this.TaxExemptReason == null ? "null" : this.TaxExemptReason)}");
             toStringOutput.Add($"this.ParentId = {(this.ParentId == null ? "null" : this.ParentId.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

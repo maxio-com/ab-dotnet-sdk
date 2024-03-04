@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// BillingSchedule.
     /// </summary>
-    public class BillingSchedule
+    public class BillingSchedule : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BillingSchedule"/> class.
@@ -75,9 +75,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.InitialBillingAt = {(this.InitialBillingAt == null ? "null" : this.InitialBillingAt.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// UpdateCurrencyPricesRequest.
     /// </summary>
-    public class UpdateCurrencyPricesRequest
+    public class UpdateCurrencyPricesRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateCurrencyPricesRequest"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.CurrencyPrices = {(this.CurrencyPrices == null ? "null" : $"[{string.Join(", ", this.CurrencyPrices)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

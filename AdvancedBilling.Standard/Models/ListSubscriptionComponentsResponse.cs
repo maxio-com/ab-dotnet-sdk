@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListSubscriptionComponentsResponse.
     /// </summary>
-    public class ListSubscriptionComponentsResponse
+    public class ListSubscriptionComponentsResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListSubscriptionComponentsResponse"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.SubscriptionsComponents = {(this.SubscriptionsComponents == null ? "null" : $"[{string.Join(", ", this.SubscriptionsComponents)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

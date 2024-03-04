@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// BankAccountResponse.
     /// </summary>
-    public class BankAccountResponse
+    public class BankAccountResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BankAccountResponse"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PaymentProfile = {(this.PaymentProfile == null ? "null" : this.PaymentProfile.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

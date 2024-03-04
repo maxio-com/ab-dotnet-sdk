@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// PrepaidUsageAllocationDetail.
     /// </summary>
-    public class PrepaidUsageAllocationDetail
+    public class PrepaidUsageAllocationDetail : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PrepaidUsageAllocationDetail"/> class.
@@ -94,11 +94,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.AllocationId = {(this.AllocationId == null ? "null" : this.AllocationId.ToString())}");
             toStringOutput.Add($"this.ChargeId = {(this.ChargeId == null ? "null" : this.ChargeId.ToString())}");
             toStringOutput.Add($"this.UsageQuantity = {(this.UsageQuantity == null ? "null" : this.UsageQuantity.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

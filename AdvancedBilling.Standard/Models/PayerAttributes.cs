@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// PayerAttributes.
     /// </summary>
-    public class PayerAttributes
+    public class PayerAttributes : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PayerAttributes"/> class.
@@ -244,7 +244,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : this.FirstName)}");
             toStringOutput.Add($"this.LastName = {(this.LastName == null ? "null" : this.LastName)}");
@@ -264,6 +264,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.TaxExempt = {(this.TaxExempt == null ? "null" : this.TaxExempt)}");
             toStringOutput.Add($"this.TaxExemptReason = {(this.TaxExemptReason == null ? "null" : this.TaxExemptReason)}");
             toStringOutput.Add($"Metafields = {(this.Metafields == null ? "null" : this.Metafields.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

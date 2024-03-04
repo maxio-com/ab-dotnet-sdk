@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ComponentPricePointErrorItem.
     /// </summary>
-    public class ComponentPricePointErrorItem
+    public class ComponentPricePointErrorItem : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ComponentPricePointErrorItem"/> class.
@@ -94,11 +94,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"this.Message = {(this.Message == null ? "null" : this.Message)}");
             toStringOutput.Add($"this.PricePoint = {(this.PricePoint == null ? "null" : this.PricePoint.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

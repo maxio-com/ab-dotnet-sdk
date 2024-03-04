@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateInvoiceItem.
     /// </summary>
-    public class CreateInvoiceItem
+    public class CreateInvoiceItem : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateInvoiceItem"/> class.
@@ -186,7 +186,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Title = {(this.Title == null ? "null" : this.Title)}");
             toStringOutput.Add($"Quantity = {(this.Quantity == null ? "null" : this.Quantity.ToString())}");
@@ -200,6 +200,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
             toStringOutput.Add($"ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
             toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

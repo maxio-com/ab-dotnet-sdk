@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ActivateSubscriptionRequest.
     /// </summary>
-    public class ActivateSubscriptionRequest
+    public class ActivateSubscriptionRequest : BaseModel
     {
         private bool? revertOnFailure;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -113,9 +113,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.RevertOnFailure = {(this.RevertOnFailure == null ? "null" : this.RevertOnFailure.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

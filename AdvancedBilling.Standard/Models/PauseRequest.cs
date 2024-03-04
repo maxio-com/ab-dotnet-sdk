@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// PauseRequest.
     /// </summary>
-    public class PauseRequest
+    public class PauseRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PauseRequest"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Hold = {(this.Hold == null ? "null" : this.Hold.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

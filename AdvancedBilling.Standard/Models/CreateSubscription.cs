@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateSubscription.
     /// </summary>
-    public class CreateSubscription
+    public class CreateSubscription : BaseModel
     {
         private bool? dunningCommunicationDelayEnabled;
         private string dunningCommunicationDelayTimeZone;
@@ -631,7 +631,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ProductHandle = {(this.ProductHandle == null ? "null" : this.ProductHandle)}");
             toStringOutput.Add($"this.ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
@@ -682,6 +682,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.DunningCommunicationDelayEnabled = {(this.DunningCommunicationDelayEnabled == null ? "null" : this.DunningCommunicationDelayEnabled.ToString())}");
             toStringOutput.Add($"this.DunningCommunicationDelayTimeZone = {(this.DunningCommunicationDelayTimeZone == null ? "null" : this.DunningCommunicationDelayTimeZone)}");
             toStringOutput.Add($"this.SkipBillingManifestTaxes = {(this.SkipBillingManifestTaxes == null ? "null" : this.SkipBillingManifestTaxes.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

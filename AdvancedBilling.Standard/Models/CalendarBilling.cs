@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CalendarBilling.
     /// </summary>
-    public class CalendarBilling
+    public class CalendarBilling : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarBilling"/> class.
@@ -85,10 +85,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"SnapDay = {(this.SnapDay == null ? "null" : this.SnapDay.ToString())}");
             toStringOutput.Add($"this.CalendarBillingFirstCharge = {(this.CalendarBillingFirstCharge == null ? "null" : this.CalendarBillingFirstCharge.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

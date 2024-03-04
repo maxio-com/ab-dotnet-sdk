@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateOrUpdatePercentageCoupon.
     /// </summary>
-    public class CreateOrUpdatePercentageCoupon
+    public class CreateOrUpdatePercentageCoupon : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateOrUpdatePercentageCoupon"/> class.
@@ -193,7 +193,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
             toStringOutput.Add($"this.Code = {(this.Code == null ? "null" : this.Code)}");
@@ -207,6 +207,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.CompoundingStrategy = {(this.CompoundingStrategy == null ? "null" : this.CompoundingStrategy.ToString())}");
             toStringOutput.Add($"this.ExcludeMidPeriodAllocations = {(this.ExcludeMidPeriodAllocations == null ? "null" : this.ExcludeMidPeriodAllocations.ToString())}");
             toStringOutput.Add($"this.ApplyOnCancelAtEndOfPeriod = {(this.ApplyOnCancelAtEndOfPeriod == null ? "null" : this.ApplyOnCancelAtEndOfPeriod.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -202,7 +202,7 @@ The `price_point` key can take either a:
 ```csharp
 BulkUpdateSubscriptionComponentsPricePointsAsync(
     int subscriptionId,
-    Models.BulkComponentSPricePointAssignment body = null)
+    Models.BulkComponentsPricePointAssignment body = null)
 ```
 
 ## Parameters
@@ -210,41 +210,41 @@ BulkUpdateSubscriptionComponentsPricePointsAsync(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `body` | [`BulkComponentSPricePointAssignment`](../../doc/models/bulk-component-s-price-point-assignment.md) | Body, Optional | - |
+| `body` | [`BulkComponentsPricePointAssignment`](../../doc/models/bulk-components-price-point-assignment.md) | Body, Optional | - |
 
 ## Response Type
 
-[`Task<Models.BulkComponentSPricePointAssignment>`](../../doc/models/bulk-component-s-price-point-assignment.md)
+[`Task<Models.BulkComponentsPricePointAssignment>`](../../doc/models/bulk-components-price-point-assignment.md)
 
 ## Example Usage
 
 ```csharp
 int subscriptionId = 222;
-BulkComponentSPricePointAssignment body = new BulkComponentSPricePointAssignment
+BulkComponentsPricePointAssignment body = new BulkComponentsPricePointAssignment
 {
-    Components = new List<Models.ComponentSPricePointAssignment>
+    Components = new List<Models.ComponentPricePointAssignment>
     {
-        new ComponentSPricePointAssignment
+        new ComponentPricePointAssignment
         {
             ComponentId = 997,
-            PricePoint = ComponentSPricePointAssignmentPricePoint.FromNumber(1022),
+            PricePoint = ComponentPricePointAssignmentPricePoint.FromNumber(1022),
         },
-        new ComponentSPricePointAssignment
+        new ComponentPricePointAssignment
         {
             ComponentId = 998,
-            PricePoint = ComponentSPricePointAssignmentPricePoint.FromString("wholesale-handle"),
+            PricePoint = ComponentPricePointAssignmentPricePoint.FromString("wholesale-handle"),
         },
-        new ComponentSPricePointAssignment
+        new ComponentPricePointAssignment
         {
             ComponentId = 999,
-            PricePoint = ComponentSPricePointAssignmentPricePoint.FromString("_default"),
+            PricePoint = ComponentPricePointAssignmentPricePoint.FromString("_default"),
         },
     },
 };
 
 try
 {
-    BulkComponentSPricePointAssignment result = await subscriptionComponentsController.BulkUpdateSubscriptionComponentsPricePointsAsync(
+    BulkComponentsPricePointAssignment result = await subscriptionComponentsController.BulkUpdateSubscriptionComponentsPricePointsAsync(
         subscriptionId,
         body
     );
@@ -321,7 +321,7 @@ catch (ApiException e)
 ```json
 {
   "subscription": {
-    "id": -80293620,
+    "id": 80293620,
     "state": "active",
     "trial_started_at": null,
     "trial_ended_at": null,
@@ -622,14 +622,28 @@ catch (ApiException e)
 [
   {
     "allocation": {
-      "memo": "moving to 7",
-      "timestamp": "2012-11-20T22:00:37Z",
-      "quantity": 7,
-      "previous_quantity": 3,
-      "component_id": 11960,
-      "subscription_id": 2585595,
-      "proration_upgrade_scheme": "no-prorate",
-      "proration_downgrade_scheme": "no-prorate"
+      "allocation_id": 2370199,
+      "component_id": 41028,
+      "subscription_id": 352827,
+      "quantity": 10,
+      "previous_quantity": 0,
+      "memo": "Recoding component allocation",
+      "timestamp": "2024-02-28T09:31:05Z",
+      "proration_upgrade_scheme": "full-price-attempt-capture",
+      "proration_downgrade_scheme": "no-prorate",
+      "price_point_id": 2957424,
+      "price_point_handle": "uuid:03190e20-b84a-013c-ca77-0286551bb34f",
+      "price_point_name": "Original",
+      "previous_price_point_id": 2957424,
+      "component_handle": "test-prepaid-component-4982065948",
+      "accrue_charge": false,
+      "upgrade_charge": "full",
+      "downgrade_credit": "none",
+      "created_at": "2024-02-28T04:31:05-05:00",
+      "initiate_dunning": false,
+      "expires_at": "2024-08-03T20:00:00-04:00",
+      "used_quantity": 5,
+      "charge_id": 11586076
     }
   },
   {
@@ -1013,6 +1027,7 @@ catch (ApiException e)
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | [`SubscriptionComponentAllocationErrorException`](../../doc/models/subscription-component-allocation-error-exception.md) |
 
 
@@ -1080,6 +1095,7 @@ catch (ApiException e)
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | [`SubscriptionComponentAllocationErrorException`](../../doc/models/subscription-component-allocation-error-exception.md) |
 
 

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListSubscriptionsInput.
     /// </summary>
-    public class ListSubscriptionsInput
+    public class ListSubscriptionsInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListSubscriptionsInput"/> class.
@@ -223,7 +223,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
@@ -240,6 +240,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
             toStringOutput.Add($"this.Sort = {(this.Sort == null ? "null" : this.Sort.ToString())}");
             toStringOutput.Add($"this.Include = {(this.Include == null ? "null" : $"[{string.Join(", ", this.Include)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

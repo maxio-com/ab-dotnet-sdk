@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ProductPricePointErrors.
     /// </summary>
-    public class ProductPricePointErrors
+    public class ProductPricePointErrors : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductPricePointErrors"/> class.
@@ -124,7 +124,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PricePoint = {(this.PricePoint == null ? "null" : this.PricePoint)}");
             toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : $"[{string.Join(", ", this.Interval)} ]")}");
@@ -132,6 +132,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : $"[{string.Join(", ", this.Name)} ]")}");
             toStringOutput.Add($"this.Price = {(this.Price == null ? "null" : $"[{string.Join(", ", this.Price)} ]")}");
             toStringOutput.Add($"this.PriceInCents = {(this.PriceInCents == null ? "null" : $"[{string.Join(", ", this.PriceInCents)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

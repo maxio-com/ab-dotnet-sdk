@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// RecordPaymentResponse.
     /// </summary>
-    public class RecordPaymentResponse
+    public class RecordPaymentResponse : BaseModel
     {
         private RecordPaymentResponsePrepayment prepayment;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -124,10 +124,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PaidInvoices = {(this.PaidInvoices == null ? "null" : $"[{string.Join(", ", this.PaidInvoices)} ]")}");
             toStringOutput.Add($"Prepayment = {(this.Prepayment == null ? "null" : this.Prepayment.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

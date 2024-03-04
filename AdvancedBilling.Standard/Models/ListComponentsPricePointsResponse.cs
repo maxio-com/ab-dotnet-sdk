@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListComponentsPricePointsResponse.
     /// </summary>
-    public class ListComponentsPricePointsResponse
+    public class ListComponentsPricePointsResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListComponentsPricePointsResponse"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PricePoints = {(this.PricePoints == null ? "null" : $"[{string.Join(", ", this.PricePoints)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

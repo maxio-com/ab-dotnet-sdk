@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// VoidInvoice.
     /// </summary>
-    public class VoidInvoice
+    public class VoidInvoice : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VoidInvoice"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Reason = {(this.Reason == null ? "null" : this.Reason)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

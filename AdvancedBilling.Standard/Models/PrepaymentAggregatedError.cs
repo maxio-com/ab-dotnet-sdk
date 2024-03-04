@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// PrepaymentAggregatedError.
     /// </summary>
-    public class PrepaymentAggregatedError
+    public class PrepaymentAggregatedError : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PrepaymentAggregatedError"/> class.
@@ -94,11 +94,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : $"[{string.Join(", ", this.AmountInCents)} ]")}");
             toStringOutput.Add($"this.MBase = {(this.MBase == null ? "null" : $"[{string.Join(", ", this.MBase)} ]")}");
             toStringOutput.Add($"this.External = {(this.External == null ? "null" : $"[{string.Join(", ", this.External)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

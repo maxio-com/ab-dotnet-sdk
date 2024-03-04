@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SubscriptionComponent.
     /// </summary>
-    public class SubscriptionComponent
+    public class SubscriptionComponent : BaseModel
     {
         private SubscriptionComponentPricingScheme pricingScheme;
         private string componentHandle;
@@ -734,7 +734,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
@@ -767,6 +767,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.DisplayOnHostedPage = {(this.DisplayOnHostedPage == null ? "null" : this.DisplayOnHostedPage.ToString())}");
             toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

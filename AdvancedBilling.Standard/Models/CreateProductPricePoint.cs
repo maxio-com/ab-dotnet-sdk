@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateProductPricePoint.
     /// </summary>
-    public class CreateProductPricePoint
+    public class CreateProductPricePoint : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateProductPricePoint"/> class.
@@ -204,7 +204,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
             toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
@@ -220,6 +220,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ExpirationInterval = {(this.ExpirationInterval == null ? "null" : this.ExpirationInterval.ToString())}");
             toStringOutput.Add($"this.ExpirationIntervalUnit = {(this.ExpirationIntervalUnit == null ? "null" : this.ExpirationIntervalUnit.ToString())}");
             toStringOutput.Add($"this.UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// AllocationExpirationDate.
     /// </summary>
-    public class AllocationExpirationDate
+    public class AllocationExpirationDate : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AllocationExpirationDate"/> class.
@@ -75,9 +75,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

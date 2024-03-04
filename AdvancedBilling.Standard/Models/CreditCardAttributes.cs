@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreditCardAttributes.
     /// </summary>
-    public class CreditCardAttributes
+    public class CreditCardAttributes : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreditCardAttributes"/> class.
@@ -94,11 +94,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.FullNumber = {(this.FullNumber == null ? "null" : this.FullNumber)}");
             toStringOutput.Add($"this.ExpirationMonth = {(this.ExpirationMonth == null ? "null" : this.ExpirationMonth)}");
             toStringOutput.Add($"this.ExpirationYear = {(this.ExpirationYear == null ? "null" : this.ExpirationYear)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

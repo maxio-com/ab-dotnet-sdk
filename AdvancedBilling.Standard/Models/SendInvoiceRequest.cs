@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SendInvoiceRequest.
     /// </summary>
-    public class SendInvoiceRequest
+    public class SendInvoiceRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SendInvoiceRequest"/> class.
@@ -94,11 +94,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.RecipientEmails = {(this.RecipientEmails == null ? "null" : $"[{string.Join(", ", this.RecipientEmails)} ]")}");
             toStringOutput.Add($"this.CcRecipientEmails = {(this.CcRecipientEmails == null ? "null" : $"[{string.Join(", ", this.CcRecipientEmails)} ]")}");
             toStringOutput.Add($"this.BccRecipientEmails = {(this.BccRecipientEmails == null ? "null" : $"[{string.Join(", ", this.BccRecipientEmails)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

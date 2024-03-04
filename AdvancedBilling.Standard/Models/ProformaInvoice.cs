@@ -20,13 +20,17 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ProformaInvoice.
     /// </summary>
-    public class ProformaInvoice
+    public class ProformaInvoice : BaseModel
     {
+        private int? customerId;
+        private int? subscriptionId;
         private int? number;
         private int? sequenceNumber;
         private string publicUrl;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
+            { "customer_id", false },
+            { "subscription_id", false },
             { "number", false },
             { "sequence_number", false },
             { "public_url", false },
@@ -87,14 +91,14 @@ namespace AdvancedBilling.Standard.Models
             int? sequenceNumber = null,
             DateTimeOffset? createdAt = null,
             DateTime? deliveryDate = null,
-            string status = null,
-            string collectionMethod = null,
+            Models.ProformaInvoiceStatus? status = null,
+            Models.CollectionMethod? collectionMethod = Models.CollectionMethod.Automatic,
             string paymentInstructions = null,
             string currency = null,
-            string consolidationLevel = null,
+            Models.InvoiceConsolidationLevel? consolidationLevel = null,
             string productName = null,
             string productFamilyName = null,
-            string role = null,
+            Models.ProformaInvoiceRole? role = null,
             Models.InvoiceSeller seller = null,
             Models.InvoiceCustomer customer = null,
             string memo = null,
@@ -118,8 +122,16 @@ namespace AdvancedBilling.Standard.Models
         {
             this.Uid = uid;
             this.SiteId = siteId;
-            this.CustomerId = customerId;
-            this.SubscriptionId = subscriptionId;
+            if (customerId != null)
+            {
+                this.CustomerId = customerId;
+            }
+
+            if (subscriptionId != null)
+            {
+                this.SubscriptionId = subscriptionId;
+            }
+
             if (number != null)
             {
                 this.Number = number;
@@ -181,14 +193,38 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CustomerId.
         /// </summary>
-        [JsonProperty("customer_id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? CustomerId { get; set; }
+        [JsonProperty("customer_id")]
+        public int? CustomerId
+        {
+            get
+            {
+                return this.customerId;
+            }
+
+            set
+            {
+                this.shouldSerialize["customer_id"] = true;
+                this.customerId = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets SubscriptionId.
         /// </summary>
-        [JsonProperty("subscription_id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? SubscriptionId { get; set; }
+        [JsonProperty("subscription_id")]
+        public int? SubscriptionId
+        {
+            get
+            {
+                return this.subscriptionId;
+            }
+
+            set
+            {
+                this.shouldSerialize["subscription_id"] = true;
+                this.subscriptionId = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets Number.
@@ -244,13 +280,13 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Status.
         /// </summary>
         [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
-        public string Status { get; set; }
+        public Models.ProformaInvoiceStatus? Status { get; set; }
 
         /// <summary>
-        /// Gets or sets CollectionMethod.
+        /// The type of payment collection to be used in the subscription. For legacy Statements Architecture valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid options are - `remittance`, `automatic`, `prepaid`.
         /// </summary>
         [JsonProperty("collection_method", NullValueHandling = NullValueHandling.Ignore)]
-        public string CollectionMethod { get; set; }
+        public Models.CollectionMethod? CollectionMethod { get; set; }
 
         /// <summary>
         /// Gets or sets PaymentInstructions.
@@ -265,10 +301,15 @@ namespace AdvancedBilling.Standard.Models
         public string Currency { get; set; }
 
         /// <summary>
-        /// Gets or sets ConsolidationLevel.
+        /// Consolidation level of the invoice, which is applicable to invoice consolidation.  It will hold one of the following values:
+        /// * "none": A normal invoice with no consolidation.
+        /// * "child": An invoice segment which has been combined into a consolidated invoice.
+        /// * "parent": A consolidated invoice, whose contents are composed of invoice segments.
+        /// "Parent" invoices do not have lines of their own, but they have subtotals and totals which aggregate the member invoice segments.
+        /// See also the [invoice consolidation documentation](https://chargify.zendesk.com/hc/en-us/articles/4407746391835).
         /// </summary>
         [JsonProperty("consolidation_level", NullValueHandling = NullValueHandling.Ignore)]
-        public string ConsolidationLevel { get; set; }
+        public Models.InvoiceConsolidationLevel? ConsolidationLevel { get; set; }
 
         /// <summary>
         /// Gets or sets ProductName.
@@ -283,10 +324,10 @@ namespace AdvancedBilling.Standard.Models
         public string ProductFamilyName { get; set; }
 
         /// <summary>
-        /// Gets or sets Role.
+        /// 'proforma' value is deprecated in favor of proforma_adhoc and proforma_automatic
         /// </summary>
         [JsonProperty("role", NullValueHandling = NullValueHandling.Ignore)]
-        public string Role { get; set; }
+        public Models.ProformaInvoiceRole? Role { get; set; }
 
         /// <summary>
         /// Information about the seller (merchant) listed on the masthead of the invoice.
@@ -433,6 +474,22 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serailized.
         /// </summary>
+        public void UnsetCustomerId()
+        {
+            this.shouldSerialize["customer_id"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetSubscriptionId()
+        {
+            this.shouldSerialize["subscription_id"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
         public void UnsetNumber()
         {
             this.shouldSerialize["number"] = false;
@@ -452,6 +509,24 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetPublicUrl()
         {
             this.shouldSerialize["public_url"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeCustomerId()
+        {
+            return this.shouldSerialize["customer_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeSubscriptionId()
+        {
+            return this.shouldSerialize["subscription_id"];
         }
 
         /// <summary>
@@ -535,7 +610,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
             toStringOutput.Add($"this.SiteId = {(this.SiteId == null ? "null" : this.SiteId.ToString())}");
@@ -545,14 +620,14 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.SequenceNumber = {(this.SequenceNumber == null ? "null" : this.SequenceNumber.ToString())}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
             toStringOutput.Add($"this.DeliveryDate = {(this.DeliveryDate == null ? "null" : this.DeliveryDate.ToString())}");
-            toStringOutput.Add($"this.Status = {(this.Status == null ? "null" : this.Status)}");
-            toStringOutput.Add($"this.CollectionMethod = {(this.CollectionMethod == null ? "null" : this.CollectionMethod)}");
+            toStringOutput.Add($"this.Status = {(this.Status == null ? "null" : this.Status.ToString())}");
+            toStringOutput.Add($"this.CollectionMethod = {(this.CollectionMethod == null ? "null" : this.CollectionMethod.ToString())}");
             toStringOutput.Add($"this.PaymentInstructions = {(this.PaymentInstructions == null ? "null" : this.PaymentInstructions)}");
             toStringOutput.Add($"this.Currency = {(this.Currency == null ? "null" : this.Currency)}");
-            toStringOutput.Add($"this.ConsolidationLevel = {(this.ConsolidationLevel == null ? "null" : this.ConsolidationLevel)}");
+            toStringOutput.Add($"this.ConsolidationLevel = {(this.ConsolidationLevel == null ? "null" : this.ConsolidationLevel.ToString())}");
             toStringOutput.Add($"this.ProductName = {(this.ProductName == null ? "null" : this.ProductName)}");
             toStringOutput.Add($"this.ProductFamilyName = {(this.ProductFamilyName == null ? "null" : this.ProductFamilyName)}");
-            toStringOutput.Add($"this.Role = {(this.Role == null ? "null" : this.Role)}");
+            toStringOutput.Add($"this.Role = {(this.Role == null ? "null" : this.Role.ToString())}");
             toStringOutput.Add($"this.Seller = {(this.Seller == null ? "null" : this.Seller.ToString())}");
             toStringOutput.Add($"this.Customer = {(this.Customer == null ? "null" : this.Customer.ToString())}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
@@ -573,6 +648,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Payments = {(this.Payments == null ? "null" : $"[{string.Join(", ", this.Payments)} ]")}");
             toStringOutput.Add($"this.CustomFields = {(this.CustomFields == null ? "null" : $"[{string.Join(", ", this.CustomFields)} ]")}");
             toStringOutput.Add($"this.PublicUrl = {(this.PublicUrl == null ? "null" : this.PublicUrl)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

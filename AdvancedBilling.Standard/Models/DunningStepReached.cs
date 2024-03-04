@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// DunningStepReached.
     /// </summary>
-    public class DunningStepReached
+    public class DunningStepReached : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DunningStepReached"/> class.
@@ -97,11 +97,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Dunner = {(this.Dunner == null ? "null" : this.Dunner.ToString())}");
             toStringOutput.Add($"this.CurrentStep = {(this.CurrentStep == null ? "null" : this.CurrentStep.ToString())}");
             toStringOutput.Add($"this.NextStep = {(this.NextStep == null ? "null" : this.NextStep.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

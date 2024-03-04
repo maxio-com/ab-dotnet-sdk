@@ -118,10 +118,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="body">Optional parameter: Example: .</param>
-        /// <returns>Returns the Models.BulkComponentSPricePointAssignment response from the API call.</returns>
-        public Models.BulkComponentSPricePointAssignment BulkUpdateSubscriptionComponentsPricePoints(
+        /// <returns>Returns the Models.BulkComponentsPricePointAssignment response from the API call.</returns>
+        public Models.BulkComponentsPricePointAssignment BulkUpdateSubscriptionComponentsPricePoints(
                 int subscriptionId,
-                Models.BulkComponentSPricePointAssignment body = null)
+                Models.BulkComponentsPricePointAssignment body = null)
             => CoreHelper.RunTask(BulkUpdateSubscriptionComponentsPricePointsAsync(subscriptionId, body));
 
         /// <summary>
@@ -134,12 +134,12 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.BulkComponentSPricePointAssignment response from the API call.</returns>
-        public async Task<Models.BulkComponentSPricePointAssignment> BulkUpdateSubscriptionComponentsPricePointsAsync(
+        /// <returns>Returns the Models.BulkComponentsPricePointAssignment response from the API call.</returns>
+        public async Task<Models.BulkComponentsPricePointAssignment> BulkUpdateSubscriptionComponentsPricePointsAsync(
                 int subscriptionId,
-                Models.BulkComponentSPricePointAssignment body = null,
+                Models.BulkComponentsPricePointAssignment body = null,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.BulkComponentSPricePointAssignment>()
+            => await CreateApiCall<Models.BulkComponentsPricePointAssignment>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/price_points.json")
                   .WithAuth("BasicAuth")
@@ -478,6 +478,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("allocation_id", allocationId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
                   .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionComponentAllocationErrorException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
@@ -531,6 +532,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("allocation_id", allocationId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
                   .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionComponentAllocationErrorException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 

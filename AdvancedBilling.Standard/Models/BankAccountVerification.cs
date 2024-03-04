@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// BankAccountVerification.
     /// </summary>
-    public class BankAccountVerification
+    public class BankAccountVerification : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BankAccountVerification"/> class.
@@ -84,10 +84,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Deposit1InCents = {(this.Deposit1InCents == null ? "null" : this.Deposit1InCents.ToString())}");
             toStringOutput.Add($"this.Deposit2InCents = {(this.Deposit2InCents == null ? "null" : this.Deposit2InCents.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

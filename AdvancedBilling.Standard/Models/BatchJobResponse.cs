@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// BatchJobResponse.
     /// </summary>
-    public class BatchJobResponse
+    public class BatchJobResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BatchJobResponse"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Batchjob = {(this.Batchjob == null ? "null" : this.Batchjob.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SubscriptionNote.
     /// </summary>
-    public class SubscriptionNote
+    public class SubscriptionNote : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionNote"/> class.
@@ -126,7 +126,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.Body = {(this.Body == null ? "null" : this.Body)}");
@@ -134,6 +134,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
             toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
             toStringOutput.Add($"this.Sticky = {(this.Sticky == null ? "null" : this.Sticky.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

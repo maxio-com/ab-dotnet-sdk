@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// RefundSuccess.
     /// </summary>
-    public class RefundSuccess
+    public class RefundSuccess : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RefundSuccess"/> class.
@@ -97,11 +97,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.RefundId = {this.RefundId}");
             toStringOutput.Add($"this.GatewayTransactionId = {this.GatewayTransactionId}");
             toStringOutput.Add($"this.ProductId = {this.ProductId}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

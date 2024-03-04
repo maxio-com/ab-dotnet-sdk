@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// PrepaidUsage.
     /// </summary>
-    public class PrepaidUsage
+    public class PrepaidUsage : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PrepaidUsage"/> class.
@@ -178,7 +178,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PreviousUnitBalance = {(this.PreviousUnitBalance == null ? "null" : this.PreviousUnitBalance)}");
             toStringOutput.Add($"this.PreviousOverageUnitBalance = {(this.PreviousOverageUnitBalance == null ? "null" : this.PreviousOverageUnitBalance)}");
@@ -190,6 +190,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ComponentHandle = {(this.ComponentHandle == null ? "null" : this.ComponentHandle)}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.AllocationDetails = {(this.AllocationDetails == null ? "null" : $"[{string.Join(", ", this.AllocationDetails)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

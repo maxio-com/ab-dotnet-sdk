@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SiteResponse.
     /// </summary>
-    public class SiteResponse
+    public class SiteResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SiteResponse"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Site = {(this.Site == null ? "null" : this.Site.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// AllocationPreviewLineItem.
     /// </summary>
-    public class AllocationPreviewLineItem
+    public class AllocationPreviewLineItem : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AllocationPreviewLineItem"/> class.
@@ -154,7 +154,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.TransactionType = {(this.TransactionType == null ? "null" : this.TransactionType.ToString())}");
             toStringOutput.Add($"this.Kind = {(this.Kind == null ? "null" : this.Kind.ToString())}");
@@ -165,6 +165,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"this.ComponentHandle = {(this.ComponentHandle == null ? "null" : this.ComponentHandle)}");
             toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

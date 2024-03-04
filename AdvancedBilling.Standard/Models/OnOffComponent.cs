@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// OnOffComponent.
     /// </summary>
-    public class OnOffComponent
+    public class OnOffComponent : BaseModel
     {
         private Models.CreditType? upgradeCharge;
         private Models.CreditType? downgradeCredit;
@@ -311,7 +311,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
             toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
@@ -330,6 +330,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PublicSignupPageIds = {(this.PublicSignupPageIds == null ? "null" : $"[{string.Join(", ", this.PublicSignupPageIds)} ]")}");
             toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

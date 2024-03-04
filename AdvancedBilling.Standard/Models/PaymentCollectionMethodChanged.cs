@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// PaymentCollectionMethodChanged.
     /// </summary>
-    public class PaymentCollectionMethodChanged
+    public class PaymentCollectionMethodChanged : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PaymentCollectionMethodChanged"/> class.
@@ -88,10 +88,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PreviousValue = {(this.PreviousValue == null ? "null" : this.PreviousValue)}");
             toStringOutput.Add($"this.CurrentValue = {(this.CurrentValue == null ? "null" : this.CurrentValue)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

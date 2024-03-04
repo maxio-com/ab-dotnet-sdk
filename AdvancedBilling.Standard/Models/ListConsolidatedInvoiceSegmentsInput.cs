@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListConsolidatedInvoiceSegmentsInput.
     /// </summary>
-    public class ListConsolidatedInvoiceSegmentsInput
+    public class ListConsolidatedInvoiceSegmentsInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListConsolidatedInvoiceSegmentsInput"/> class.
@@ -106,12 +106,14 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.InvoiceUid = {(this.InvoiceUid == null ? "null" : this.InvoiceUid)}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
             toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

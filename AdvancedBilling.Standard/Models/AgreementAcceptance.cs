@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// AgreementAcceptance.
     /// </summary>
-    public class AgreementAcceptance
+    public class AgreementAcceptance : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AgreementAcceptance"/> class.
@@ -124,7 +124,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.IpAddress = {(this.IpAddress == null ? "null" : this.IpAddress)}");
             toStringOutput.Add($"this.TermsUrl = {(this.TermsUrl == null ? "null" : this.TermsUrl)}");
@@ -132,6 +132,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ReturnRefundPolicyUrl = {(this.ReturnRefundPolicyUrl == null ? "null" : this.ReturnRefundPolicyUrl)}");
             toStringOutput.Add($"this.DeliveryPolicyUrl = {(this.DeliveryPolicyUrl == null ? "null" : this.DeliveryPolicyUrl)}");
             toStringOutput.Add($"this.SecureCheckoutPolicyUrl = {(this.SecureCheckoutPolicyUrl == null ? "null" : this.SecureCheckoutPolicyUrl)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

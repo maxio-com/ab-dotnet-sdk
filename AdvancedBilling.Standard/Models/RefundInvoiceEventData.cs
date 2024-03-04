@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// RefundInvoiceEventData.
     /// </summary>
-    public class RefundInvoiceEventData
+    public class RefundInvoiceEventData : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RefundInvoiceEventData"/> class.
@@ -169,7 +169,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ApplyCredit = {this.ApplyCredit}");
             toStringOutput.Add($"this.ConsolidationLevel = {(this.ConsolidationLevel == null ? "null" : this.ConsolidationLevel.ToString())}");
@@ -180,6 +180,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.RefundAmount = {(this.RefundAmount == null ? "null" : this.RefundAmount)}");
             toStringOutput.Add($"this.RefundId = {this.RefundId}");
             toStringOutput.Add($"this.TransactionTime = {this.TransactionTime}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

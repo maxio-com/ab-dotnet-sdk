@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SubscriptionMigrationPreview.
     /// </summary>
-    public class SubscriptionMigrationPreview
+    public class SubscriptionMigrationPreview : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionMigrationPreview"/> class.
@@ -104,12 +104,14 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ProratedAdjustmentInCents = {(this.ProratedAdjustmentInCents == null ? "null" : this.ProratedAdjustmentInCents.ToString())}");
             toStringOutput.Add($"this.ChargeInCents = {(this.ChargeInCents == null ? "null" : this.ChargeInCents.ToString())}");
             toStringOutput.Add($"this.PaymentDueInCents = {(this.PaymentDueInCents == null ? "null" : this.PaymentDueInCents.ToString())}");
             toStringOutput.Add($"this.CreditAppliedInCents = {(this.CreditAppliedInCents == null ? "null" : this.CreditAppliedInCents.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

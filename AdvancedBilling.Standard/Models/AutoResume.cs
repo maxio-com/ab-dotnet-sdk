@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// AutoResume.
     /// </summary>
-    public class AutoResume
+    public class AutoResume : BaseModel
     {
         private DateTimeOffset? automaticallyResumeAt;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -114,9 +114,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.AutomaticallyResumeAt = {(this.AutomaticallyResumeAt == null ? "null" : this.AutomaticallyResumeAt.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

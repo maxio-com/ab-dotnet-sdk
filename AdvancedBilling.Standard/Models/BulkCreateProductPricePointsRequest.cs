@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// BulkCreateProductPricePointsRequest.
     /// </summary>
-    public class BulkCreateProductPricePointsRequest
+    public class BulkCreateProductPricePointsRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BulkCreateProductPricePointsRequest"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PricePoints = {(this.PricePoints == null ? "null" : $"[{string.Join(", ", this.PricePoints)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

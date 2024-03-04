@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// UpdateReasonCode.
     /// </summary>
-    public class UpdateReasonCode
+    public class UpdateReasonCode : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateReasonCode"/> class.
@@ -94,11 +94,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Code = {(this.Code == null ? "null" : this.Code)}");
             toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
             toStringOutput.Add($"this.Position = {(this.Position == null ? "null" : this.Position.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

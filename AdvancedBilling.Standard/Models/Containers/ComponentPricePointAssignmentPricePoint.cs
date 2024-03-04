@@ -9,22 +9,22 @@ namespace AdvancedBilling.Standard.Models.Containers
     /// This is a container class for one-of types.
     /// </summary>
     [JsonConverter(
-        typeof(UnionTypeConverter<ComponentSPricePointAssignmentPricePoint>),
+        typeof(UnionTypeConverter<ComponentPricePointAssignmentPricePoint>),
         new Type[] {
             typeof(MStringCase),
             typeof(NumberCase)
         },
         true
     )]
-    public abstract class ComponentSPricePointAssignmentPricePoint
+    public abstract class ComponentPricePointAssignmentPricePoint
     {
         /// <summary>
         /// This is String case.
         /// </summary>
         /// <returns>
-        /// The ComponentSPricePointAssignmentPricePoint instance, wrapping the provided string value.
+        /// The ComponentPricePointAssignmentPricePoint instance, wrapping the provided string value.
         /// </returns>
-        public static ComponentSPricePointAssignmentPricePoint FromString(string mString)
+        public static ComponentPricePointAssignmentPricePoint FromString(string mString)
         {
             return new MStringCase().Set(mString);
         }
@@ -33,9 +33,9 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// This is Number case.
         /// </summary>
         /// <returns>
-        /// The ComponentSPricePointAssignmentPricePoint instance, wrapping the provided int value.
+        /// The ComponentPricePointAssignmentPricePoint instance, wrapping the provided int value.
         /// </returns>
-        public static ComponentSPricePointAssignmentPricePoint FromNumber(int number)
+        public static ComponentPricePointAssignmentPricePoint FromNumber(int number)
         {
             return new NumberCase().Set(number);
         }
@@ -51,7 +51,7 @@ namespace AdvancedBilling.Standard.Models.Containers
         public abstract T Match<T>(Func<string, T> mString, Func<int, T> number);
 
         [JsonConverter(typeof(UnionTypeCaseConverter<MStringCase, string>), JTokenType.String, JTokenType.Null)]
-        private sealed class MStringCase : ComponentSPricePointAssignmentPricePoint, ICaseValue<MStringCase, string>
+        private sealed class MStringCase : ComponentPricePointAssignmentPricePoint, ICaseValue<MStringCase, string>
         {
             public string _value;
 
@@ -78,7 +78,7 @@ namespace AdvancedBilling.Standard.Models.Containers
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<NumberCase, int>), JTokenType.Integer)]
-        private sealed class NumberCase : ComponentSPricePointAssignmentPricePoint, ICaseValue<NumberCase, int>
+        private sealed class NumberCase : ComponentPricePointAssignmentPricePoint, ICaseValue<NumberCase, int>
         {
             public int _value;
 

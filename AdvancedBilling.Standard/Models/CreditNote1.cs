@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreditNote1.
     /// </summary>
-    public class CreditNote1
+    public class CreditNote1 : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreditNote1"/> class.
@@ -340,7 +340,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
             toStringOutput.Add($"this.SiteId = {(this.SiteId == null ? "null" : this.SiteId.ToString())}");
@@ -369,6 +369,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Applications = {(this.Applications == null ? "null" : $"[{string.Join(", ", this.Applications)} ]")}");
             toStringOutput.Add($"this.Refunds = {(this.Refunds == null ? "null" : $"[{string.Join(", ", this.Refunds)} ]")}");
             toStringOutput.Add($"this.OriginInvoices = {(this.OriginInvoices == null ? "null" : $"[{string.Join(", ", this.OriginInvoices)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

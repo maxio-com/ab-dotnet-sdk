@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// OrganizationAddress.
     /// </summary>
-    public class OrganizationAddress
+    public class OrganizationAddress : BaseModel
     {
         private string street;
         private string line2;
@@ -428,7 +428,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Street = {(this.Street == null ? "null" : this.Street)}");
             toStringOutput.Add($"this.Line2 = {(this.Line2 == null ? "null" : this.Line2)}");
@@ -438,6 +438,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Country = {(this.Country == null ? "null" : this.Country)}");
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
             toStringOutput.Add($"this.Phone = {(this.Phone == null ? "null" : this.Phone)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

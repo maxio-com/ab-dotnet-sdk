@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// PaymentMethodBankAccount.
     /// </summary>
-    public class PaymentMethodBankAccount
+    public class PaymentMethodBankAccount : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PaymentMethodBankAccount"/> class.
@@ -99,11 +99,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.MaskedAccountNumber = {(this.MaskedAccountNumber == null ? "null" : this.MaskedAccountNumber)}");
             toStringOutput.Add($"this.MaskedRoutingNumber = {(this.MaskedRoutingNumber == null ? "null" : this.MaskedRoutingNumber)}");
             toStringOutput.Add($"this.Type = {this.Type}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

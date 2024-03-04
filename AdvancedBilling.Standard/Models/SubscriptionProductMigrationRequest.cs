@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SubscriptionProductMigrationRequest.
     /// </summary>
-    public class SubscriptionProductMigrationRequest
+    public class SubscriptionProductMigrationRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionProductMigrationRequest"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Migration = {(this.Migration == null ? "null" : this.Migration.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

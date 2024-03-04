@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListPrepaymentsForSubscriptionGroupInput.
     /// </summary>
-    public class ListPrepaymentsForSubscriptionGroupInput
+    public class ListPrepaymentsForSubscriptionGroupInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListPrepaymentsForSubscriptionGroupInput"/> class.
@@ -133,7 +133,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
             toStringOutput.Add($"this.FilterDateField = {(this.FilterDateField == null ? "null" : this.FilterDateField.ToString())}");
@@ -141,6 +141,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.FilterStartDate = {(this.FilterStartDate == null ? "null" : this.FilterStartDate.ToString())}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

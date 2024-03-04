@@ -1,4 +1,4 @@
-// <copyright file="BulkComponentSPricePointAssignment.cs" company="APIMatic">
+// <copyright file="BulkComponentsPricePointAssignment.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
 namespace AdvancedBilling.Standard.Models
@@ -18,23 +18,23 @@ namespace AdvancedBilling.Standard.Models
     using Newtonsoft.Json.Converters;
 
     /// <summary>
-    /// BulkComponentSPricePointAssignment.
+    /// BulkComponentsPricePointAssignment.
     /// </summary>
-    public class BulkComponentSPricePointAssignment
+    public class BulkComponentsPricePointAssignment : BaseModel
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BulkComponentSPricePointAssignment"/> class.
+        /// Initializes a new instance of the <see cref="BulkComponentsPricePointAssignment"/> class.
         /// </summary>
-        public BulkComponentSPricePointAssignment()
+        public BulkComponentsPricePointAssignment()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BulkComponentSPricePointAssignment"/> class.
+        /// Initializes a new instance of the <see cref="BulkComponentsPricePointAssignment"/> class.
         /// </summary>
         /// <param name="components">components.</param>
-        public BulkComponentSPricePointAssignment(
-            List<Models.ComponentSPricePointAssignment> components = null)
+        public BulkComponentsPricePointAssignment(
+            List<Models.ComponentPricePointAssignment> components = null)
         {
             this.Components = components;
         }
@@ -43,7 +43,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Components.
         /// </summary>
         [JsonProperty("components", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Models.ComponentSPricePointAssignment> Components { get; set; }
+        public List<Models.ComponentPricePointAssignment> Components { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -52,7 +52,7 @@ namespace AdvancedBilling.Standard.Models
 
             this.ToString(toStringOutput);
 
-            return $"BulkComponentSPricePointAssignment : ({string.Join(", ", toStringOutput)})";
+            return $"BulkComponentsPricePointAssignment : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
@@ -67,16 +67,18 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is BulkComponentSPricePointAssignment other &&                ((this.Components == null && other.Components == null) || (this.Components?.Equals(other.Components) == true));
+            return obj is BulkComponentsPricePointAssignment other &&                ((this.Components == null && other.Components == null) || (this.Components?.Equals(other.Components) == true));
         }
         
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Components = {(this.Components == null ? "null" : $"[{string.Join(", ", this.Components)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

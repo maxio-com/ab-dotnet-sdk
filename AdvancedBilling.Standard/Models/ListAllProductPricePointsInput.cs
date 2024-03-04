@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListAllProductPricePointsInput.
     /// </summary>
-    public class ListAllProductPricePointsInput
+    public class ListAllProductPricePointsInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListAllProductPricePointsInput"/> class.
@@ -191,7 +191,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
             toStringOutput.Add($"this.FilterArchivedAt = {(this.FilterArchivedAt == null ? "null" : this.FilterArchivedAt.ToString())}");
@@ -205,6 +205,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Include = {(this.Include == null ? "null" : this.Include.ToString())}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

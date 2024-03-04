@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SegmentPrice.
     /// </summary>
-    public class SegmentPrice
+    public class SegmentPrice : BaseModel
     {
         private int? endingQuantity;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -183,7 +183,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
@@ -193,6 +193,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
             toStringOutput.Add($"this.FormattedUnitPrice = {(this.FormattedUnitPrice == null ? "null" : this.FormattedUnitPrice)}");
             toStringOutput.Add($"this.SegmentId = {(this.SegmentId == null ? "null" : this.SegmentId.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// InvoicePayerChange.
     /// </summary>
-    public class InvoicePayerChange
+    public class InvoicePayerChange : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="InvoicePayerChange"/> class.
@@ -104,12 +104,14 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : this.FirstName)}");
             toStringOutput.Add($"this.LastName = {(this.LastName == null ? "null" : this.LastName)}");
             toStringOutput.Add($"this.Organization = {(this.Organization == null ? "null" : this.Organization)}");
             toStringOutput.Add($"this.Email = {(this.Email == null ? "null" : this.Email)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListMetadataForResourceTypeInput.
     /// </summary>
-    public class ListMetadataForResourceTypeInput
+    public class ListMetadataForResourceTypeInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListMetadataForResourceTypeInput"/> class.
@@ -183,7 +183,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ResourceType = {this.ResourceType}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
@@ -196,6 +196,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.WithDeleted = {(this.WithDeleted == null ? "null" : this.WithDeleted.ToString())}");
             toStringOutput.Add($"this.ResourceIds = {(this.ResourceIds == null ? "null" : $"[{string.Join(", ", this.ResourceIds)} ]")}");
             toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

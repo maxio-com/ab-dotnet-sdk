@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// GroupBilling.
     /// </summary>
-    public class GroupBilling
+    public class GroupBilling : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GroupBilling"/> class.
@@ -94,11 +94,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Accrue = {(this.Accrue == null ? "null" : this.Accrue.ToString())}");
             toStringOutput.Add($"this.AlignDate = {(this.AlignDate == null ? "null" : this.AlignDate.ToString())}");
             toStringOutput.Add($"this.Prorate = {(this.Prorate == null ? "null" : this.Prorate.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

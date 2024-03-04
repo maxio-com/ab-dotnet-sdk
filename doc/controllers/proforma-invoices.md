@@ -76,7 +76,7 @@ By default, proforma invoices returned on the index will only include totals, no
 
 ```csharp
 ListSubscriptionGroupProformaInvoicesAsync(
-    string uid)
+    Models.ListSubscriptionGroupProformaInvoicesInput input)
 ```
 
 ## Parameters
@@ -84,18 +84,34 @@ ListSubscriptionGroupProformaInvoicesAsync(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `uid` | `string` | Template, Required | The uid of the subscription group |
+| `lineItems` | `bool?` | Query, Optional | Include line items data |
+| `discounts` | `bool?` | Query, Optional | Include discounts data |
+| `taxes` | `bool?` | Query, Optional | Include taxes data |
+| `credits` | `bool?` | Query, Optional | Include credits data |
+| `payments` | `bool?` | Query, Optional | Include payments data |
+| `customFields` | `bool?` | Query, Optional | Include custom fields data |
 
 ## Response Type
 
-[`Task<Models.ProformaInvoice>`](../../doc/models/proforma-invoice.md)
+[`Task<Models.ListProformaInvoicesResponse>`](../../doc/models/list-proforma-invoices-response.md)
 
 ## Example Usage
 
 ```csharp
-string uid = "uid0";
+ListSubscriptionGroupProformaInvoicesInput listSubscriptionGroupProformaInvoicesInput = new ListSubscriptionGroupProformaInvoicesInput
+{
+    Uid = "uid0",
+    LineItems = false,
+    Discounts = false,
+    Taxes = false,
+    Credits = false,
+    Payments = false,
+    CustomFields = false,
+};
+
 try
 {
-    ProformaInvoice result = await proformaInvoicesController.ListSubscriptionGroupProformaInvoicesAsync(uid);
+    ListProformaInvoicesResponse result = await proformaInvoicesController.ListSubscriptionGroupProformaInvoicesAsync(listSubscriptionGroupProformaInvoicesInput);
 }
 catch (ApiException e)
 {
@@ -219,7 +235,7 @@ ListProformaInvoicesAsync(
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
 | `startDate` | `string` | Query, Optional | The beginning date range for the invoice's Due Date, in the YYYY-MM-DD format. |
 | `endDate` | `string` | Query, Optional | The ending date range for the invoice's Due Date, in the YYYY-MM-DD format. |
-| `status` | [`InvoiceStatus?`](../../doc/models/invoice-status.md) | Query, Optional | The current status of the invoice.  Allowed Values: draft, open, paid, pending, voided |
+| `status` | [`ProformaInvoiceStatus?`](../../doc/models/proforma-invoice-status.md) | Query, Optional | The current status of the invoice.  Allowed Values: draft, open, paid, pending, voided |
 | `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
 | `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
 | `direction` | [`Direction?`](../../doc/models/direction.md) | Query, Optional | The sort direction of the returned invoices. |
@@ -338,7 +354,7 @@ PreviewProformaInvoiceAsync(
 
 ## Response Type
 
-[`Task<Models.ProformaInvoicePreview>`](../../doc/models/proforma-invoice-preview.md)
+[`Task<Models.ProformaInvoice>`](../../doc/models/proforma-invoice.md)
 
 ## Example Usage
 
@@ -346,7 +362,7 @@ PreviewProformaInvoiceAsync(
 int subscriptionId = 222;
 try
 {
-    ProformaInvoicePreview result = await proformaInvoicesController.PreviewProformaInvoiceAsync(subscriptionId);
+    ProformaInvoice result = await proformaInvoicesController.PreviewProformaInvoiceAsync(subscriptionId);
 }
 catch (ApiException e)
 {
@@ -436,7 +452,7 @@ A product and customer first name, last name, and email are the minimum requirem
 
 ```csharp
 PreviewSignupProformaInvoiceAsync(
-    string includeNextProformaInvoice = null,
+    Models.CreateSignupProformaPreviewInclude? include = null,
     Models.CreateSubscriptionRequest body = null)
 ```
 
@@ -444,7 +460,7 @@ PreviewSignupProformaInvoiceAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `includeNextProformaInvoice` | `string` | Query, Optional | Choose to include a proforma invoice preview for the first renewal |
+| `include` | [`CreateSignupProformaPreviewInclude?`](../../doc/models/create-signup-proforma-preview-include.md) | Query, Optional | Choose to include a proforma invoice preview for the first renewal. Use in query `include=next_proforma_invoice`. |
 | `body` | [`CreateSubscriptionRequest`](../../doc/models/create-subscription-request.md) | Body, Optional | - |
 
 ## Response Type

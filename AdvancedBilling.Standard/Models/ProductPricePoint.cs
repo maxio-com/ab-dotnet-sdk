@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ProductPricePoint.
     /// </summary>
-    public class ProductPricePoint
+    public class ProductPricePoint : BaseModel
     {
         private DateTimeOffset? archivedAt;
         private int? subscriptionId;
@@ -381,7 +381,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
@@ -407,6 +407,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.TaxIncluded = {(this.TaxIncluded == null ? "null" : this.TaxIncluded.ToString())}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
             toStringOutput.Add($"this.CurrencyPrices = {(this.CurrencyPrices == null ? "null" : $"[{string.Join(", ", this.CurrencyPrices)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

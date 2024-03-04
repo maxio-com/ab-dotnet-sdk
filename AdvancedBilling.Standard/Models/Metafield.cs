@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// Metafield.
     /// </summary>
-    public class Metafield
+    public class Metafield : BaseModel
     {
         private MetafieldEnum mEnum;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -164,7 +164,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
@@ -172,6 +172,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.DataCount = {(this.DataCount == null ? "null" : this.DataCount.ToString())}");
             toStringOutput.Add($"this.InputType = {(this.InputType == null ? "null" : this.InputType.ToString())}");
             toStringOutput.Add($"MEnum = {(this.MEnum == null ? "null" : this.MEnum.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

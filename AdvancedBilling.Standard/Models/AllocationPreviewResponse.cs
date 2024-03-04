@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// AllocationPreviewResponse.
     /// </summary>
-    public class AllocationPreviewResponse
+    public class AllocationPreviewResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AllocationPreviewResponse"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.AllocationPreview = {(this.AllocationPreview == null ? "null" : this.AllocationPreview.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateProductCurrencyPrice.
     /// </summary>
-    public class CreateProductCurrencyPrice
+    public class CreateProductCurrencyPrice : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateProductCurrencyPrice"/> class.
@@ -94,11 +94,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Currency = {(this.Currency == null ? "null" : this.Currency)}");
             toStringOutput.Add($"this.Price = {this.Price}");
             toStringOutput.Add($"this.Role = {this.Role}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

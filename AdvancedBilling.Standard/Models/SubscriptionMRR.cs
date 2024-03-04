@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SubscriptionMRR.
     /// </summary>
-    public class SubscriptionMRR
+    public class SubscriptionMRR : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionMRR"/> class.
@@ -94,11 +94,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.SubscriptionId = {this.SubscriptionId}");
             toStringOutput.Add($"this.MrrAmountInCents = {this.MrrAmountInCents}");
             toStringOutput.Add($"this.Breakouts = {(this.Breakouts == null ? "null" : this.Breakouts.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

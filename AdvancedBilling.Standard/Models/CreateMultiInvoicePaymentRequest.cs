@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateMultiInvoicePaymentRequest.
     /// </summary>
-    public class CreateMultiInvoicePaymentRequest
+    public class CreateMultiInvoicePaymentRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateMultiInvoicePaymentRequest"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Payment = {(this.Payment == null ? "null" : this.Payment.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

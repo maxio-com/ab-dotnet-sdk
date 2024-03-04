@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ProformaInvoiceTax.
     /// </summary>
-    public class ProformaInvoiceTax
+    public class ProformaInvoiceTax : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProformaInvoiceTax"/> class.
@@ -42,11 +42,11 @@ namespace AdvancedBilling.Standard.Models
         public ProformaInvoiceTax(
             string uid = null,
             string title = null,
-            string sourceType = null,
+            Models.ProformaInvoiceTaxSourceType? sourceType = null,
             string percentage = null,
             string taxableAmount = null,
             string taxAmount = null,
-            List<Models.ProformaInvoiceTaxBreakout> lineItemBreakouts = null)
+            List<Models.InvoiceTaxBreakout> lineItemBreakouts = null)
         {
             this.Uid = uid;
             this.Title = title;
@@ -73,7 +73,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets SourceType.
         /// </summary>
         [JsonProperty("source_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string SourceType { get; set; }
+        public Models.ProformaInvoiceTaxSourceType? SourceType { get; set; }
 
         /// <summary>
         /// Gets or sets Percentage.
@@ -97,7 +97,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets LineItemBreakouts.
         /// </summary>
         [JsonProperty("line_item_breakouts", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Models.ProformaInvoiceTaxBreakout> LineItemBreakouts { get; set; }
+        public List<Models.InvoiceTaxBreakout> LineItemBreakouts { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -134,15 +134,17 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
             toStringOutput.Add($"this.Title = {(this.Title == null ? "null" : this.Title)}");
-            toStringOutput.Add($"this.SourceType = {(this.SourceType == null ? "null" : this.SourceType)}");
+            toStringOutput.Add($"this.SourceType = {(this.SourceType == null ? "null" : this.SourceType.ToString())}");
             toStringOutput.Add($"this.Percentage = {(this.Percentage == null ? "null" : this.Percentage)}");
             toStringOutput.Add($"this.TaxableAmount = {(this.TaxableAmount == null ? "null" : this.TaxableAmount)}");
             toStringOutput.Add($"this.TaxAmount = {(this.TaxAmount == null ? "null" : this.TaxAmount)}");
             toStringOutput.Add($"this.LineItemBreakouts = {(this.LineItemBreakouts == null ? "null" : $"[{string.Join(", ", this.LineItemBreakouts)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

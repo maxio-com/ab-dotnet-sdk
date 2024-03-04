@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CouponRestriction.
     /// </summary>
-    public class CouponRestriction
+    public class CouponRestriction : BaseModel
     {
         private string handle;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -153,13 +153,15 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.ItemType = {(this.ItemType == null ? "null" : this.ItemType.ToString())}");
             toStringOutput.Add($"this.ItemId = {(this.ItemId == null ? "null" : this.ItemId.ToString())}");
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
             toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

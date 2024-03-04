@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// Proration.
     /// </summary>
-    public class Proration
+    public class Proration : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Proration"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PreservePeriod = {(this.PreservePeriod == null ? "null" : this.PreservePeriod.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

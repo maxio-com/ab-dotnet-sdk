@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListProformaInvoicesInput.
     /// </summary>
-    public class ListProformaInvoicesInput
+    public class ListProformaInvoicesInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListProformaInvoicesInput"/> class.
@@ -49,7 +49,7 @@ namespace AdvancedBilling.Standard.Models
             int subscriptionId,
             string startDate = null,
             string endDate = null,
-            Models.InvoiceStatus? status = null,
+            Models.ProformaInvoiceStatus? status = null,
             int? page = 1,
             int? perPage = 20,
             Models.Direction? direction = Models.Direction.Desc,
@@ -97,7 +97,7 @@ namespace AdvancedBilling.Standard.Models
         /// The current status of the invoice.  Allowed Values: draft, open, paid, pending, voided
         /// </summary>
         [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.InvoiceStatus? Status { get; set; }
+        public Models.ProformaInvoiceStatus? Status { get; set; }
 
         /// <summary>
         /// Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.
@@ -196,7 +196,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.SubscriptionId = {this.SubscriptionId}");
             toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate)}");
@@ -211,6 +211,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Credits = {(this.Credits == null ? "null" : this.Credits.ToString())}");
             toStringOutput.Add($"this.Payments = {(this.Payments == null ? "null" : this.Payments.ToString())}");
             toStringOutput.Add($"this.CustomFields = {(this.CustomFields == null ? "null" : this.CustomFields.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

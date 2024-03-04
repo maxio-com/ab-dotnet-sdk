@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreditAccountBalanceChanged.
     /// </summary>
-    public class CreditAccountBalanceChanged
+    public class CreditAccountBalanceChanged : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreditAccountBalanceChanged"/> class.
@@ -122,13 +122,15 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Reason = {(this.Reason == null ? "null" : this.Reason)}");
             toStringOutput.Add($"this.ServiceCreditAccountBalanceInCents = {this.ServiceCreditAccountBalanceInCents}");
             toStringOutput.Add($"this.ServiceCreditBalanceChangeInCents = {this.ServiceCreditBalanceChangeInCents}");
             toStringOutput.Add($"this.CurrencyCode = {(this.CurrencyCode == null ? "null" : this.CurrencyCode)}");
             toStringOutput.Add($"this.AtTime = {this.AtTime}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// EnableWebhooksRequest.
     /// </summary>
-    public class EnableWebhooksRequest
+    public class EnableWebhooksRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EnableWebhooksRequest"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.WebhooksEnabled = {this.WebhooksEnabled}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

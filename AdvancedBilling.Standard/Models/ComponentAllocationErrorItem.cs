@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ComponentAllocationErrorItem.
     /// </summary>
-    public class ComponentAllocationErrorItem
+    public class ComponentAllocationErrorItem : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ComponentAllocationErrorItem"/> class.
@@ -104,12 +104,14 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"this.Message = {(this.Message == null ? "null" : this.Message)}");
             toStringOutput.Add($"this.Kind = {(this.Kind == null ? "null" : this.Kind)}");
             toStringOutput.Add($"this.On = {(this.On == null ? "null" : this.On)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

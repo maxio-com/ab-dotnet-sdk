@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateQuantityBasedComponent.
     /// </summary>
-    public class CreateQuantityBasedComponent
+    public class CreateQuantityBasedComponent : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateQuantityBasedComponent"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.QuantityBasedComponent = {(this.QuantityBasedComponent == null ? "null" : this.QuantityBasedComponent.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

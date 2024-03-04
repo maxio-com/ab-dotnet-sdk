@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListCouponsInput.
     /// </summary>
-    public class ListCouponsInput
+    public class ListCouponsInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListCouponsInput"/> class.
@@ -234,7 +234,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
@@ -252,6 +252,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.FilterStartDatetime = {(this.FilterStartDatetime == null ? "null" : this.FilterStartDatetime.ToString())}");
             toStringOutput.Add($"this.FilterDateField = {(this.FilterDateField == null ? "null" : this.FilterDateField.ToString())}");
             toStringOutput.Add($"this.FilterUseSiteExchangeRate = {(this.FilterUseSiteExchangeRate == null ? "null" : this.FilterUseSiteExchangeRate.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

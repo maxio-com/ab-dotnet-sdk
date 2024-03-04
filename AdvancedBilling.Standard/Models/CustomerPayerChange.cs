@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CustomerPayerChange.
     /// </summary>
-    public class CustomerPayerChange
+    public class CustomerPayerChange : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomerPayerChange"/> class.
@@ -86,10 +86,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Before = {(this.Before == null ? "null" : this.Before.ToString())}");
             toStringOutput.Add($"this.After = {(this.After == null ? "null" : this.After.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

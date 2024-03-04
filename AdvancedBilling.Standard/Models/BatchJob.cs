@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// BatchJob.
     /// </summary>
-    public class BatchJob
+    public class BatchJob : BaseModel
     {
         private DateTimeOffset? finishedAt;
         private int? rowCount;
@@ -225,13 +225,15 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.FinishedAt = {(this.FinishedAt == null ? "null" : this.FinishedAt.ToString())}");
             toStringOutput.Add($"this.RowCount = {(this.RowCount == null ? "null" : this.RowCount.ToString())}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
             toStringOutput.Add($"this.Completed = {(this.Completed == null ? "null" : this.Completed)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

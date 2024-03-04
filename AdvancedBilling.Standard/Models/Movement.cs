@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// Movement.
     /// </summary>
-    public class Movement
+    public class Movement : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Movement"/> class.
@@ -155,7 +155,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Timestamp = {(this.Timestamp == null ? "null" : this.Timestamp.ToString())}");
             toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
@@ -166,6 +166,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.LineItems = {(this.LineItems == null ? "null" : $"[{string.Join(", ", this.LineItems)} ]")}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
             toStringOutput.Add($"this.SubscriberName = {(this.SubscriberName == null ? "null" : this.SubscriberName)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

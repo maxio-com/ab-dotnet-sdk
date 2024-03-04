@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// TaxConfiguration.
     /// </summary>
-    public class TaxConfiguration
+    public class TaxConfiguration : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TaxConfiguration"/> class.
@@ -94,11 +94,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Kind = {(this.Kind == null ? "null" : this.Kind.ToString())}");
             toStringOutput.Add($"this.DestinationAddress = {(this.DestinationAddress == null ? "null" : this.DestinationAddress.ToString())}");
             toStringOutput.Add($"this.FullyConfigured = {(this.FullyConfigured == null ? "null" : this.FullyConfigured.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

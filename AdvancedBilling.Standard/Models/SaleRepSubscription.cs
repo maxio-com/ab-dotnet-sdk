@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SaleRepSubscription.
     /// </summary>
-    public class SaleRepSubscription
+    public class SaleRepSubscription : BaseModel
     {
         private string churnDate;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -203,7 +203,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.SiteName = {(this.SiteName == null ? "null" : this.SiteName)}");
@@ -215,6 +215,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Recurring = {(this.Recurring == null ? "null" : this.Recurring)}");
             toStringOutput.Add($"this.LastPayment = {(this.LastPayment == null ? "null" : this.LastPayment)}");
             toStringOutput.Add($"this.ChurnDate = {(this.ChurnDate == null ? "null" : this.ChurnDate)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

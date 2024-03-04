@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// UpdateMetadata.
     /// </summary>
-    public class UpdateMetadata
+    public class UpdateMetadata : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateMetadata"/> class.
@@ -94,11 +94,13 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.CurrentName = {(this.CurrentName == null ? "null" : this.CurrentName)}");
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
             toStringOutput.Add($"this.MValue = {(this.MValue == null ? "null" : this.MValue)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

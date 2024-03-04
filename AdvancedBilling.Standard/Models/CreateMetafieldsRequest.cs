@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// CreateMetafieldsRequest.
     /// </summary>
-    public class CreateMetafieldsRequest
+    public class CreateMetafieldsRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateMetafieldsRequest"/> class.
@@ -75,9 +75,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"Metafields = {(this.Metafields == null ? "null" : this.Metafields.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

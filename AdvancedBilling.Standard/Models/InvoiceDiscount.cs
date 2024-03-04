@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// InvoiceDiscount.
     /// </summary>
-    public class InvoiceDiscount
+    public class InvoiceDiscount : BaseModel
     {
         private string description;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -55,9 +55,9 @@ namespace AdvancedBilling.Standard.Models
             string title = null,
             string description = null,
             string code = null,
-            string sourceType = null,
+            Models.InvoiceDiscountSourceType? sourceType = null,
             int? sourceId = null,
-            string discountType = null,
+            Models.InvoiceDiscountType? discountType = null,
             string percentage = null,
             string eligibleAmount = null,
             string discountAmount = null,
@@ -122,7 +122,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets SourceType.
         /// </summary>
         [JsonProperty("source_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string SourceType { get; set; }
+        public Models.InvoiceDiscountSourceType? SourceType { get; set; }
 
         /// <summary>
         /// Gets or sets SourceId.
@@ -134,7 +134,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets DiscountType.
         /// </summary>
         [JsonProperty("discount_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string DiscountType { get; set; }
+        public Models.InvoiceDiscountType? DiscountType { get; set; }
 
         /// <summary>
         /// Gets or sets Percentage.
@@ -223,20 +223,22 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
             toStringOutput.Add($"this.Title = {(this.Title == null ? "null" : this.Title)}");
             toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
             toStringOutput.Add($"this.Code = {(this.Code == null ? "null" : this.Code)}");
-            toStringOutput.Add($"this.SourceType = {(this.SourceType == null ? "null" : this.SourceType)}");
+            toStringOutput.Add($"this.SourceType = {(this.SourceType == null ? "null" : this.SourceType.ToString())}");
             toStringOutput.Add($"this.SourceId = {(this.SourceId == null ? "null" : this.SourceId.ToString())}");
-            toStringOutput.Add($"this.DiscountType = {(this.DiscountType == null ? "null" : this.DiscountType)}");
+            toStringOutput.Add($"this.DiscountType = {(this.DiscountType == null ? "null" : this.DiscountType.ToString())}");
             toStringOutput.Add($"this.Percentage = {(this.Percentage == null ? "null" : this.Percentage)}");
             toStringOutput.Add($"this.EligibleAmount = {(this.EligibleAmount == null ? "null" : this.EligibleAmount)}");
             toStringOutput.Add($"this.DiscountAmount = {(this.DiscountAmount == null ? "null" : this.DiscountAmount)}");
             toStringOutput.Add($"this.TransactionId = {(this.TransactionId == null ? "null" : this.TransactionId.ToString())}");
             toStringOutput.Add($"this.LineItemBreakouts = {(this.LineItemBreakouts == null ? "null" : $"[{string.Join(", ", this.LineItemBreakouts)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

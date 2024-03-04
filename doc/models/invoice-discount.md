@@ -13,9 +13,9 @@
 | `Title` | `string` | Optional | - |
 | `Description` | `string` | Optional | - |
 | `Code` | `string` | Optional | - |
-| `SourceType` | `string` | Optional | - |
+| `SourceType` | [`InvoiceDiscountSourceType?`](../../doc/models/invoice-discount-source-type.md) | Optional | - |
 | `SourceId` | `int?` | Optional | - |
-| `DiscountType` | `string` | Optional | - |
+| `DiscountType` | [`InvoiceDiscountType?`](../../doc/models/invoice-discount-type.md) | Optional | - |
 | `Percentage` | `string` | Optional | - |
 | `EligibleAmount` | `string` | Optional | - |
 | `DiscountAmount` | `string` | Optional | - |
@@ -30,7 +30,7 @@
   "title": "title4",
   "description": "description0",
   "code": "code8",
-  "source_type": "source_type0"
+  "source_type": "Coupon"
 }
 ```
 

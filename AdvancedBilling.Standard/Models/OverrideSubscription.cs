@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// OverrideSubscription.
     /// </summary>
-    public class OverrideSubscription
+    public class OverrideSubscription : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="OverrideSubscription"/> class.
@@ -118,13 +118,15 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ActivatedAt = {(this.ActivatedAt == null ? "null" : this.ActivatedAt.ToString())}");
             toStringOutput.Add($"this.CanceledAt = {(this.CanceledAt == null ? "null" : this.CanceledAt.ToString())}");
             toStringOutput.Add($"this.CancellationMessage = {(this.CancellationMessage == null ? "null" : this.CancellationMessage)}");
             toStringOutput.Add($"this.ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt.ToString())}");
             toStringOutput.Add($"this.CurrentPeriodStartsAt = {(this.CurrentPeriodStartsAt == null ? "null" : this.CurrentPeriodStartsAt.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

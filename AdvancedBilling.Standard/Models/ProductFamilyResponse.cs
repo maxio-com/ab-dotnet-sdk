@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ProductFamilyResponse.
     /// </summary>
-    public class ProductFamilyResponse
+    public class ProductFamilyResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductFamilyResponse"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ProductFamily = {(this.ProductFamily == null ? "null" : this.ProductFamily.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

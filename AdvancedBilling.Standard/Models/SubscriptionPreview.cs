@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SubscriptionPreview.
     /// </summary>
-    public class SubscriptionPreview
+    public class SubscriptionPreview : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionPreview"/> class.
@@ -84,10 +84,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.CurrentBillingManifest = {(this.CurrentBillingManifest == null ? "null" : this.CurrentBillingManifest.ToString())}");
             toStringOutput.Add($"this.NextBillingManifest = {(this.NextBillingManifest == null ? "null" : this.NextBillingManifest.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

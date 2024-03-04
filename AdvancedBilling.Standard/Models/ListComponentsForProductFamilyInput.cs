@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListComponentsForProductFamilyInput.
     /// </summary>
-    public class ListComponentsForProductFamilyInput
+    public class ListComponentsForProductFamilyInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListComponentsForProductFamilyInput"/> class.
@@ -176,7 +176,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ProductFamilyId = {this.ProductFamilyId}");
             toStringOutput.Add($"this.IncludeArchived = {(this.IncludeArchived == null ? "null" : this.IncludeArchived.ToString())}");
@@ -189,6 +189,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate)}");
             toStringOutput.Add($"this.StartDatetime = {(this.StartDatetime == null ? "null" : this.StartDatetime)}");
             toStringOutput.Add($"this.FilterUseSiteExchangeRate = {(this.FilterUseSiteExchangeRate == null ? "null" : this.FilterUseSiteExchangeRate.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

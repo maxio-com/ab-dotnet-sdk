@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// Refund.
     /// </summary>
-    public class Refund
+    public class Refund : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Refund"/> class.
@@ -135,7 +135,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Amount = {(this.Amount == null ? "null" : this.Amount)}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
@@ -144,6 +144,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ApplyCredit = {(this.ApplyCredit == null ? "null" : this.ApplyCredit.ToString())}");
             toStringOutput.Add($"this.VoidInvoice = {(this.VoidInvoice == null ? "null" : this.VoidInvoice.ToString())}");
             toStringOutput.Add($"SegmentUids = {(this.SegmentUids == null ? "null" : this.SegmentUids.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

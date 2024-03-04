@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// InvoiceLineItem.
     /// </summary>
-    public class InvoiceLineItem
+    public class InvoiceLineItem : BaseModel
     {
         private int? productId;
         private int? productVersion;
@@ -70,6 +70,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="componentCostData">component_cost_data.</param>
         /// <param name="productPricePointId">product_price_point_id.</param>
         /// <param name="customItem">custom_item.</param>
+        /// <param name="kind">kind.</param>
         public InvoiceLineItem(
             string uid = null,
             string title = null,
@@ -91,7 +92,8 @@ namespace AdvancedBilling.Standard.Models
             bool? hide = null,
             InvoiceLineItemComponentCostData2 componentCostData = null,
             int? productPricePointId = null,
-            bool? customItem = null)
+            bool? customItem = null,
+            string kind = null)
         {
             this.Uid = uid;
             this.Title = title;
@@ -138,6 +140,7 @@ namespace AdvancedBilling.Standard.Models
             }
 
             this.CustomItem = customItem;
+            this.Kind = kind;
         }
 
         /// <summary>
@@ -353,6 +356,12 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("custom_item", NullValueHandling = NullValueHandling.Ignore)]
         public bool? CustomItem { get; set; }
 
+        /// <summary>
+        /// Gets or sets Kind.
+        /// </summary>
+        [JsonProperty("kind", NullValueHandling = NullValueHandling.Ignore)]
+        public string Kind { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -497,14 +506,15 @@ namespace AdvancedBilling.Standard.Models
                 ((this.Hide == null && other.Hide == null) || (this.Hide?.Equals(other.Hide) == true)) &&
                 ((this.ComponentCostData == null && other.ComponentCostData == null) || (this.ComponentCostData?.Equals(other.ComponentCostData) == true)) &&
                 ((this.ProductPricePointId == null && other.ProductPricePointId == null) || (this.ProductPricePointId?.Equals(other.ProductPricePointId) == true)) &&
-                ((this.CustomItem == null && other.CustomItem == null) || (this.CustomItem?.Equals(other.CustomItem) == true));
+                ((this.CustomItem == null && other.CustomItem == null) || (this.CustomItem?.Equals(other.CustomItem) == true)) &&
+                ((this.Kind == null && other.Kind == null) || (this.Kind?.Equals(other.Kind) == true));
         }
         
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
             toStringOutput.Add($"this.Title = {(this.Title == null ? "null" : this.Title)}");
@@ -527,6 +537,9 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"ComponentCostData = {(this.ComponentCostData == null ? "null" : this.ComponentCostData.ToString())}");
             toStringOutput.Add($"this.ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
             toStringOutput.Add($"this.CustomItem = {(this.CustomItem == null ? "null" : this.CustomItem.ToString())}");
+            toStringOutput.Add($"this.Kind = {(this.Kind == null ? "null" : this.Kind)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

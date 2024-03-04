@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SubscriptionGroupPrepaymentResponse.
     /// </summary>
-    public class SubscriptionGroupPrepaymentResponse
+    public class SubscriptionGroupPrepaymentResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionGroupPrepaymentResponse"/> class.
@@ -114,13 +114,15 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
             toStringOutput.Add($"this.EndingBalanceInCents = {(this.EndingBalanceInCents == null ? "null" : this.EndingBalanceInCents.ToString())}");
             toStringOutput.Add($"this.EntryType = {(this.EntryType == null ? "null" : this.EntryType.ToString())}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// InvoicePreviousBalance.
     /// </summary>
-    public class InvoicePreviousBalance
+    public class InvoicePreviousBalance : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="InvoicePreviousBalance"/> class.
@@ -85,10 +85,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.CapturedAt = {(this.CapturedAt == null ? "null" : this.CapturedAt.ToString())}");
             toStringOutput.Add($"this.Invoices = {(this.Invoices == null ? "null" : $"[{string.Join(", ", this.Invoices)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

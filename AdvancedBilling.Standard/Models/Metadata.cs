@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// Metadata.
     /// </summary>
-    public class Metadata
+    public class Metadata : BaseModel
     {
         private int? id;
         private string mValue;
@@ -304,7 +304,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.MValue = {(this.MValue == null ? "null" : this.MValue)}");
@@ -312,6 +312,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
             toStringOutput.Add($"this.DeletedAt = {(this.DeletedAt == null ? "null" : this.DeletedAt.ToString())}");
             toStringOutput.Add($"this.MetafieldId = {(this.MetafieldId == null ? "null" : this.MetafieldId.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

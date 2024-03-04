@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ListSegmentsForPricePointInput.
     /// </summary>
-    public class ListSegmentsForPricePointInput
+    public class ListSegmentsForPricePointInput : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListSegmentsForPricePointInput"/> class.
@@ -146,7 +146,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId)}");
             toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId)}");
@@ -156,6 +156,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.FilterSegmentProperty2Value = {(this.FilterSegmentProperty2Value == null ? "null" : this.FilterSegmentProperty2Value)}");
             toStringOutput.Add($"this.FilterSegmentProperty3Value = {(this.FilterSegmentProperty3Value == null ? "null" : this.FilterSegmentProperty3Value)}");
             toStringOutput.Add($"this.FilterSegmentProperty4Value = {(this.FilterSegmentProperty4Value == null ? "null" : this.FilterSegmentProperty4Value)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

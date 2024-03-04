@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// MovementLineItem.
     /// </summary>
-    public class MovementLineItem
+    public class MovementLineItem : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MovementLineItem"/> class.
@@ -154,7 +154,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
@@ -165,6 +165,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Quantity = {(this.Quantity == null ? "null" : this.Quantity.ToString())}");
             toStringOutput.Add($"this.PrevQuantity = {(this.PrevQuantity == null ? "null" : this.PrevQuantity.ToString())}");
             toStringOutput.Add($"this.Recurring = {(this.Recurring == null ? "null" : this.Recurring.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

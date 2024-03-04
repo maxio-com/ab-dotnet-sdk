@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// DunningStepData.
     /// </summary>
-    public class DunningStepData
+    public class DunningStepData : BaseModel
     {
         private string emailBody;
         private string emailSubject;
@@ -253,7 +253,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.DayThreshold = {this.DayThreshold}");
             toStringOutput.Add($"this.Action = {(this.Action == null ? "null" : this.Action)}");
@@ -263,6 +263,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.SendBccEmail = {this.SendBccEmail}");
             toStringOutput.Add($"this.SendSms = {this.SendSms}");
             toStringOutput.Add($"this.SmsBody = {(this.SmsBody == null ? "null" : this.SmsBody)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

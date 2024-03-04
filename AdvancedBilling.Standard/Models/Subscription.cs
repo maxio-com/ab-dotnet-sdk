@@ -21,7 +21,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// Subscription.
     /// </summary>
-    public class Subscription
+    public class Subscription : BaseModel
     {
         private DateTimeOffset? trialStartedAt;
         private DateTimeOffset? trialEndedAt;
@@ -1778,7 +1778,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.State = {(this.State == null ? "null" : this.State.ToString())}");
@@ -1842,6 +1842,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PrepaymentBalanceInCents = {(this.PrepaymentBalanceInCents == null ? "null" : this.PrepaymentBalanceInCents.ToString())}");
             toStringOutput.Add($"this.PrepaidConfiguration = {(this.PrepaidConfiguration == null ? "null" : this.PrepaidConfiguration.ToString())}");
             toStringOutput.Add($"this.SelfServicePageToken = {(this.SelfServicePageToken == null ? "null" : this.SelfServicePageToken)}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

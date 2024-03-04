@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// AddCouponsRequest.
     /// </summary>
-    public class AddCouponsRequest
+    public class AddCouponsRequest : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AddCouponsRequest"/> class.
@@ -74,9 +74,11 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Codes = {(this.Codes == null ? "null" : $"[{string.Join(", ", this.Codes)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

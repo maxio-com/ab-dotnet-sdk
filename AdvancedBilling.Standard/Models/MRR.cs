@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// MRR.
     /// </summary>
-    public class MRR
+    public class MRR : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MRR"/> class.
@@ -125,7 +125,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
             toStringOutput.Add($"this.AmountFormatted = {(this.AmountFormatted == null ? "null" : this.AmountFormatted)}");
@@ -133,6 +133,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.CurrencySymbol = {(this.CurrencySymbol == null ? "null" : this.CurrencySymbol)}");
             toStringOutput.Add($"this.Breakouts = {(this.Breakouts == null ? "null" : this.Breakouts.ToString())}");
             toStringOutput.Add($"this.AtTime = {(this.AtTime == null ? "null" : this.AtTime.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

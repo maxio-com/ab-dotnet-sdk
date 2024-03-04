@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// UpsertPrepaidConfiguration.
     /// </summary>
-    public class UpsertPrepaidConfiguration
+    public class UpsertPrepaidConfiguration : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UpsertPrepaidConfiguration"/> class.
@@ -104,12 +104,14 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.InitialFundingAmountInCents = {(this.InitialFundingAmountInCents == null ? "null" : this.InitialFundingAmountInCents.ToString())}");
             toStringOutput.Add($"this.ReplenishToAmountInCents = {(this.ReplenishToAmountInCents == null ? "null" : this.ReplenishToAmountInCents.ToString())}");
             toStringOutput.Add($"this.AutoReplenish = {(this.AutoReplenish == null ? "null" : this.AutoReplenish.ToString())}");
             toStringOutput.Add($"this.ReplenishThresholdAmountInCents = {(this.ReplenishThresholdAmountInCents == null ? "null" : this.ReplenishThresholdAmountInCents.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

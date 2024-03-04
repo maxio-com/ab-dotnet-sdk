@@ -13,7 +13,7 @@
 | `Key` | `string` | Required | **Constraints**: *Minimum Length*: `1` |
 | `Message` | `string` | Required | **Constraints**: *Minimum Length*: `1` |
 | `SubscriptionId` | `int?` | Required | - |
-| `CustomerId` | `int` | Required | - |
+| `CustomerId` | `int?` | Required | - |
 | `CreatedAt` | `DateTimeOffset` | Required | - |
 | `EventSpecificData` | [`EventEventSpecificData`](../../doc/models/containers/event-event-specific-data.md) | Required | This is a container for one-of cases. |
 

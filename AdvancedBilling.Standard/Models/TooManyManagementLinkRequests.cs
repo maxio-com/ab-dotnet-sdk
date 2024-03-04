@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// TooManyManagementLinkRequests.
     /// </summary>
-    public class TooManyManagementLinkRequests
+    public class TooManyManagementLinkRequests : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TooManyManagementLinkRequests"/> class.
@@ -85,10 +85,12 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Error = {(this.Error == null ? "null" : this.Error)}");
             toStringOutput.Add($"this.NewLinkAvailableAt = {this.NewLinkAvailableAt}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

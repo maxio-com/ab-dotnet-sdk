@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// Offer.
     /// </summary>
-    public class Offer
+    public class Offer : BaseModel
     {
         private string description;
         private DateTimeOffset? archivedAt;
@@ -331,7 +331,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.SiteId = {(this.SiteId == null ? "null" : this.SiteId.ToString())}");
@@ -352,6 +352,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ProductPricePointName = {(this.ProductPricePointName == null ? "null" : this.ProductPricePointName)}");
             toStringOutput.Add($"this.ProductPriceInCents = {(this.ProductPriceInCents == null ? "null" : this.ProductPriceInCents.ToString())}");
             toStringOutput.Add($"this.OfferSignupPages = {(this.OfferSignupPages == null ? "null" : $"[{string.Join(", ", this.OfferSignupPages)} ]")}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

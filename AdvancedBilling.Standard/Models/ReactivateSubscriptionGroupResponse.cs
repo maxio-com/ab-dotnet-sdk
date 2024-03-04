@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// ReactivateSubscriptionGroupResponse.
     /// </summary>
-    public class ReactivateSubscriptionGroupResponse
+    public class ReactivateSubscriptionGroupResponse : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ReactivateSubscriptionGroupResponse"/> class.
@@ -155,7 +155,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
             toStringOutput.Add($"this.Scheme = {(this.Scheme == null ? "null" : this.Scheme.ToString())}");
@@ -166,6 +166,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.NextAssessmentAt = {(this.NextAssessmentAt == null ? "null" : this.NextAssessmentAt.ToString())}");
             toStringOutput.Add($"this.State = {(this.State == null ? "null" : this.State)}");
             toStringOutput.Add($"this.CancelAtEndOfPeriod = {(this.CancelAtEndOfPeriod == null ? "null" : this.CancelAtEndOfPeriod.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// SubscriptionProductMigration.
     /// </summary>
-    public class SubscriptionProductMigration
+    public class SubscriptionProductMigration : BaseModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionProductMigration"/> class.
@@ -154,7 +154,7 @@ namespace AdvancedBilling.Standard.Models
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
-        protected void ToString(List<string> toStringOutput)
+        protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
             toStringOutput.Add($"this.ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
@@ -165,6 +165,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ProductHandle = {(this.ProductHandle == null ? "null" : this.ProductHandle)}");
             toStringOutput.Add($"this.ProductPricePointHandle = {(this.ProductPricePointHandle == null ? "null" : this.ProductPricePointHandle)}");
             toStringOutput.Add($"this.Proration = {(this.Proration == null ? "null" : this.Proration.ToString())}");
+
+            base.ToString(toStringOutput);
         }
     }
 }
