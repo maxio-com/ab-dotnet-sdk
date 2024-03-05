@@ -45,6 +45,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="compoundingStrategy">compounding_strategy.</param>
         /// <param name="excludeMidPeriodAllocations">exclude_mid_period_allocations.</param>
         /// <param name="applyOnCancelAtEndOfPeriod">apply_on_cancel_at_end_of_period.</param>
+        /// <param name="applyOnSubscriptionExpiration">apply_on_subscription_expiration.</param>
         public CreateOrUpdatePercentageCoupon(
             string name,
             string code,
@@ -57,7 +58,8 @@ namespace AdvancedBilling.Standard.Models
             bool? stackable = null,
             Models.CompoundingStrategy? compoundingStrategy = null,
             bool? excludeMidPeriodAllocations = null,
-            bool? applyOnCancelAtEndOfPeriod = null)
+            bool? applyOnCancelAtEndOfPeriod = null,
+            bool? applyOnSubscriptionExpiration = null)
         {
             this.Name = name;
             this.Code = code;
@@ -71,6 +73,7 @@ namespace AdvancedBilling.Standard.Models
             this.CompoundingStrategy = compoundingStrategy;
             this.ExcludeMidPeriodAllocations = excludeMidPeriodAllocations;
             this.ApplyOnCancelAtEndOfPeriod = applyOnCancelAtEndOfPeriod;
+            this.ApplyOnSubscriptionExpiration = applyOnSubscriptionExpiration;
         }
 
         /// <summary>
@@ -153,6 +156,12 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("apply_on_cancel_at_end_of_period", NullValueHandling = NullValueHandling.Ignore)]
         public bool? ApplyOnCancelAtEndOfPeriod { get; set; }
 
+        /// <summary>
+        /// Gets or sets ApplyOnSubscriptionExpiration.
+        /// </summary>
+        [JsonProperty("apply_on_subscription_expiration", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? ApplyOnSubscriptionExpiration { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -186,7 +195,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.Stackable == null && other.Stackable == null) || (this.Stackable?.Equals(other.Stackable) == true)) &&
                 ((this.CompoundingStrategy == null && other.CompoundingStrategy == null) || (this.CompoundingStrategy?.Equals(other.CompoundingStrategy) == true)) &&
                 ((this.ExcludeMidPeriodAllocations == null && other.ExcludeMidPeriodAllocations == null) || (this.ExcludeMidPeriodAllocations?.Equals(other.ExcludeMidPeriodAllocations) == true)) &&
-                ((this.ApplyOnCancelAtEndOfPeriod == null && other.ApplyOnCancelAtEndOfPeriod == null) || (this.ApplyOnCancelAtEndOfPeriod?.Equals(other.ApplyOnCancelAtEndOfPeriod) == true));
+                ((this.ApplyOnCancelAtEndOfPeriod == null && other.ApplyOnCancelAtEndOfPeriod == null) || (this.ApplyOnCancelAtEndOfPeriod?.Equals(other.ApplyOnCancelAtEndOfPeriod) == true)) &&
+                ((this.ApplyOnSubscriptionExpiration == null && other.ApplyOnSubscriptionExpiration == null) || (this.ApplyOnSubscriptionExpiration?.Equals(other.ApplyOnSubscriptionExpiration) == true));
         }
         
         /// <summary>
@@ -207,6 +217,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.CompoundingStrategy = {(this.CompoundingStrategy == null ? "null" : this.CompoundingStrategy.ToString())}");
             toStringOutput.Add($"this.ExcludeMidPeriodAllocations = {(this.ExcludeMidPeriodAllocations == null ? "null" : this.ExcludeMidPeriodAllocations.ToString())}");
             toStringOutput.Add($"this.ApplyOnCancelAtEndOfPeriod = {(this.ApplyOnCancelAtEndOfPeriod == null ? "null" : this.ApplyOnCancelAtEndOfPeriod.ToString())}");
+            toStringOutput.Add($"this.ApplyOnSubscriptionExpiration = {(this.ApplyOnSubscriptionExpiration == null ? "null" : this.ApplyOnSubscriptionExpiration.ToString())}");
 
             base.ToString(toStringOutput);
         }

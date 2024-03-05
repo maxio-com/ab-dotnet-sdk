@@ -37,6 +37,7 @@
 | `DiscountType` | [`DiscountType?`](../../doc/models/discount-type.md) | Optional | - |
 | `ExcludeMidPeriodAllocations` | `bool?` | Optional | - |
 | `ApplyOnCancelAtEndOfPeriod` | `bool?` | Optional | - |
+| `ApplyOnSubscriptionExpiration` | `bool?` | Optional | - |
 | `CouponRestrictions` | [`List<CouponRestriction>`](../../doc/models/coupon-restriction.md) | Optional | - |
 
 ## Example (as JSON)
