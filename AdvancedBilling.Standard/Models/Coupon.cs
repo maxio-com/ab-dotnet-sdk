@@ -87,6 +87,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="discountType">discount_type.</param>
         /// <param name="excludeMidPeriodAllocations">exclude_mid_period_allocations.</param>
         /// <param name="applyOnCancelAtEndOfPeriod">apply_on_cancel_at_end_of_period.</param>
+        /// <param name="applyOnSubscriptionExpiration">apply_on_subscription_expiration.</param>
         /// <param name="couponRestrictions">coupon_restrictions.</param>
         public Coupon(
             int? id = null,
@@ -117,6 +118,7 @@ namespace AdvancedBilling.Standard.Models
             Models.DiscountType? discountType = null,
             bool? excludeMidPeriodAllocations = null,
             bool? applyOnCancelAtEndOfPeriod = null,
+            bool? applyOnSubscriptionExpiration = null,
             List<Models.CouponRestriction> couponRestrictions = null)
         {
             this.Id = id;
@@ -191,6 +193,7 @@ namespace AdvancedBilling.Standard.Models
             this.DiscountType = discountType;
             this.ExcludeMidPeriodAllocations = excludeMidPeriodAllocations;
             this.ApplyOnCancelAtEndOfPeriod = applyOnCancelAtEndOfPeriod;
+            this.ApplyOnSubscriptionExpiration = applyOnSubscriptionExpiration;
             this.CouponRestrictions = couponRestrictions;
         }
 
@@ -500,6 +503,12 @@ namespace AdvancedBilling.Standard.Models
         public bool? ApplyOnCancelAtEndOfPeriod { get; set; }
 
         /// <summary>
+        /// Gets or sets ApplyOnSubscriptionExpiration.
+        /// </summary>
+        [JsonProperty("apply_on_subscription_expiration", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? ApplyOnSubscriptionExpiration { get; set; }
+
+        /// <summary>
         /// Gets or sets CouponRestrictions.
         /// </summary>
         [JsonProperty("coupon_restrictions", NullValueHandling = NullValueHandling.Ignore)]
@@ -742,6 +751,7 @@ namespace AdvancedBilling.Standard.Models
                 ((this.DiscountType == null && other.DiscountType == null) || (this.DiscountType?.Equals(other.DiscountType) == true)) &&
                 ((this.ExcludeMidPeriodAllocations == null && other.ExcludeMidPeriodAllocations == null) || (this.ExcludeMidPeriodAllocations?.Equals(other.ExcludeMidPeriodAllocations) == true)) &&
                 ((this.ApplyOnCancelAtEndOfPeriod == null && other.ApplyOnCancelAtEndOfPeriod == null) || (this.ApplyOnCancelAtEndOfPeriod?.Equals(other.ApplyOnCancelAtEndOfPeriod) == true)) &&
+                ((this.ApplyOnSubscriptionExpiration == null && other.ApplyOnSubscriptionExpiration == null) || (this.ApplyOnSubscriptionExpiration?.Equals(other.ApplyOnSubscriptionExpiration) == true)) &&
                 ((this.CouponRestrictions == null && other.CouponRestrictions == null) || (this.CouponRestrictions?.Equals(other.CouponRestrictions) == true));
         }
         
@@ -779,6 +789,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.DiscountType = {(this.DiscountType == null ? "null" : this.DiscountType.ToString())}");
             toStringOutput.Add($"this.ExcludeMidPeriodAllocations = {(this.ExcludeMidPeriodAllocations == null ? "null" : this.ExcludeMidPeriodAllocations.ToString())}");
             toStringOutput.Add($"this.ApplyOnCancelAtEndOfPeriod = {(this.ApplyOnCancelAtEndOfPeriod == null ? "null" : this.ApplyOnCancelAtEndOfPeriod.ToString())}");
+            toStringOutput.Add($"this.ApplyOnSubscriptionExpiration = {(this.ApplyOnSubscriptionExpiration == null ? "null" : this.ApplyOnSubscriptionExpiration.ToString())}");
             toStringOutput.Add($"this.CouponRestrictions = {(this.CouponRestrictions == null ? "null" : $"[{string.Join(", ", this.CouponRestrictions)} ]")}");
 
             base.ToString(toStringOutput);
