@@ -12,7 +12,6 @@ namespace AdvancedBilling.Standard.Models
     using System.Threading.Tasks;
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
     using JsonSubTypes;
     using Newtonsoft.Json;
@@ -36,7 +35,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="subscriptionId">subscription_id.</param>
         /// <param name="memberIds">member_ids.</param>
         public CreateSubscriptionGroup(
-            CreateSubscriptionGroupSubscriptionId subscriptionId,
+            int subscriptionId,
             List<int> memberIds = null)
         {
             this.SubscriptionId = subscriptionId;
@@ -47,7 +46,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets SubscriptionId.
         /// </summary>
         [JsonProperty("subscription_id")]
-        public CreateSubscriptionGroupSubscriptionId SubscriptionId { get; set; }
+        public int SubscriptionId { get; set; }
 
         /// <summary>
         /// Gets or sets MemberIds.
@@ -77,7 +76,7 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is CreateSubscriptionGroup other &&                ((this.SubscriptionId == null && other.SubscriptionId == null) || (this.SubscriptionId?.Equals(other.SubscriptionId) == true)) &&
+            return obj is CreateSubscriptionGroup other &&                this.SubscriptionId.Equals(other.SubscriptionId) &&
                 ((this.MemberIds == null && other.MemberIds == null) || (this.MemberIds?.Equals(other.MemberIds) == true));
         }
         
@@ -87,7 +86,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
+            toStringOutput.Add($"this.SubscriptionId = {this.SubscriptionId}");
             toStringOutput.Add($"this.MemberIds = {(this.MemberIds == null ? "null" : $"[{string.Join(", ", this.MemberIds)} ]")}");
 
             base.ToString(toStringOutput);

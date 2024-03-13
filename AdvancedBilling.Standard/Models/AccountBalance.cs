@@ -22,6 +22,14 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class AccountBalance : BaseModel
     {
+        private long? automaticBalanceInCents;
+        private long? remittanceBalanceInCents;
+        private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
+        {
+            { "automatic_balance_in_cents", false },
+            { "remittance_balance_in_cents", false },
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AccountBalance"/> class.
         /// </summary>
@@ -33,10 +41,24 @@ namespace AdvancedBilling.Standard.Models
         /// Initializes a new instance of the <see cref="AccountBalance"/> class.
         /// </summary>
         /// <param name="balanceInCents">balance_in_cents.</param>
+        /// <param name="automaticBalanceInCents">automatic_balance_in_cents.</param>
+        /// <param name="remittanceBalanceInCents">remittance_balance_in_cents.</param>
         public AccountBalance(
-            long? balanceInCents = null)
+            long? balanceInCents = null,
+            long? automaticBalanceInCents = null,
+            long? remittanceBalanceInCents = null)
         {
             this.BalanceInCents = balanceInCents;
+            if (automaticBalanceInCents != null)
+            {
+                this.AutomaticBalanceInCents = automaticBalanceInCents;
+            }
+
+            if (remittanceBalanceInCents != null)
+            {
+                this.RemittanceBalanceInCents = remittanceBalanceInCents;
+            }
+
         }
 
         /// <summary>
@@ -44,6 +66,42 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("balance_in_cents", NullValueHandling = NullValueHandling.Ignore)]
         public long? BalanceInCents { get; set; }
+
+        /// <summary>
+        /// The automatic balance in cents.
+        /// </summary>
+        [JsonProperty("automatic_balance_in_cents")]
+        public long? AutomaticBalanceInCents
+        {
+            get
+            {
+                return this.automaticBalanceInCents;
+            }
+
+            set
+            {
+                this.shouldSerialize["automatic_balance_in_cents"] = true;
+                this.automaticBalanceInCents = value;
+            }
+        }
+
+        /// <summary>
+        /// The remittance balance in cents.
+        /// </summary>
+        [JsonProperty("remittance_balance_in_cents")]
+        public long? RemittanceBalanceInCents
+        {
+            get
+            {
+                return this.remittanceBalanceInCents;
+            }
+
+            set
+            {
+                this.shouldSerialize["remittance_balance_in_cents"] = true;
+                this.remittanceBalanceInCents = value;
+            }
+        }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -53,6 +111,40 @@ namespace AdvancedBilling.Standard.Models
             this.ToString(toStringOutput);
 
             return $"AccountBalance : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetAutomaticBalanceInCents()
+        {
+            this.shouldSerialize["automatic_balance_in_cents"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetRemittanceBalanceInCents()
+        {
+            this.shouldSerialize["remittance_balance_in_cents"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeAutomaticBalanceInCents()
+        {
+            return this.shouldSerialize["automatic_balance_in_cents"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeRemittanceBalanceInCents()
+        {
+            return this.shouldSerialize["remittance_balance_in_cents"];
         }
 
         /// <inheritdoc/>
@@ -67,7 +159,9 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is AccountBalance other &&                ((this.BalanceInCents == null && other.BalanceInCents == null) || (this.BalanceInCents?.Equals(other.BalanceInCents) == true));
+            return obj is AccountBalance other &&                ((this.BalanceInCents == null && other.BalanceInCents == null) || (this.BalanceInCents?.Equals(other.BalanceInCents) == true)) &&
+                ((this.AutomaticBalanceInCents == null && other.AutomaticBalanceInCents == null) || (this.AutomaticBalanceInCents?.Equals(other.AutomaticBalanceInCents) == true)) &&
+                ((this.RemittanceBalanceInCents == null && other.RemittanceBalanceInCents == null) || (this.RemittanceBalanceInCents?.Equals(other.RemittanceBalanceInCents) == true));
         }
         
         /// <summary>
@@ -77,6 +171,8 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.BalanceInCents = {(this.BalanceInCents == null ? "null" : this.BalanceInCents.ToString())}");
+            toStringOutput.Add($"this.AutomaticBalanceInCents = {(this.AutomaticBalanceInCents == null ? "null" : this.AutomaticBalanceInCents.ToString())}");
+            toStringOutput.Add($"this.RemittanceBalanceInCents = {(this.RemittanceBalanceInCents == null ? "null" : this.RemittanceBalanceInCents.ToString())}");
 
             base.ToString(toStringOutput);
         }

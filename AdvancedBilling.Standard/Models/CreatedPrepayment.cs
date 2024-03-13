@@ -40,7 +40,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="startingBalanceInCents">starting_balance_in_cents.</param>
         /// <param name="endingBalanceInCents">ending_balance_in_cents.</param>
         public CreatedPrepayment(
-            int? id = null,
+            long? id = null,
             int? subscriptionId = null,
             long? amountInCents = null,
             string memo = null,
@@ -61,7 +61,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Id.
         /// </summary>
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? Id { get; set; }
+        public long? Id { get; set; }
 
         /// <summary>
         /// Gets or sets SubscriptionId.

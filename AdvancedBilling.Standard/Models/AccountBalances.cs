@@ -33,16 +33,19 @@ namespace AdvancedBilling.Standard.Models
         /// Initializes a new instance of the <see cref="AccountBalances"/> class.
         /// </summary>
         /// <param name="openInvoices">open_invoices.</param>
+        /// <param name="pendingInvoices">pending_invoices.</param>
         /// <param name="pendingDiscounts">pending_discounts.</param>
         /// <param name="serviceCredits">service_credits.</param>
         /// <param name="prepayments">prepayments.</param>
         public AccountBalances(
             Models.AccountBalance openInvoices = null,
+            Models.AccountBalance pendingInvoices = null,
             Models.AccountBalance pendingDiscounts = null,
             Models.AccountBalance serviceCredits = null,
             Models.AccountBalance prepayments = null)
         {
             this.OpenInvoices = openInvoices;
+            this.PendingInvoices = pendingInvoices;
             this.PendingDiscounts = pendingDiscounts;
             this.ServiceCredits = serviceCredits;
             this.Prepayments = prepayments;
@@ -53,6 +56,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("open_invoices", NullValueHandling = NullValueHandling.Ignore)]
         public Models.AccountBalance OpenInvoices { get; set; }
+
+        /// <summary>
+        /// The balance, in cents, of the sum of the subscription's  pending, payable invoices.
+        /// </summary>
+        [JsonProperty("pending_invoices", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.AccountBalance PendingInvoices { get; set; }
 
         /// <summary>
         /// The balance, in cents, of the subscription's Pending Discount account.
@@ -95,6 +104,7 @@ namespace AdvancedBilling.Standard.Models
                 return true;
             }
             return obj is AccountBalances other &&                ((this.OpenInvoices == null && other.OpenInvoices == null) || (this.OpenInvoices?.Equals(other.OpenInvoices) == true)) &&
+                ((this.PendingInvoices == null && other.PendingInvoices == null) || (this.PendingInvoices?.Equals(other.PendingInvoices) == true)) &&
                 ((this.PendingDiscounts == null && other.PendingDiscounts == null) || (this.PendingDiscounts?.Equals(other.PendingDiscounts) == true)) &&
                 ((this.ServiceCredits == null && other.ServiceCredits == null) || (this.ServiceCredits?.Equals(other.ServiceCredits) == true)) &&
                 ((this.Prepayments == null && other.Prepayments == null) || (this.Prepayments?.Equals(other.Prepayments) == true));
@@ -107,6 +117,7 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.OpenInvoices = {(this.OpenInvoices == null ? "null" : this.OpenInvoices.ToString())}");
+            toStringOutput.Add($"this.PendingInvoices = {(this.PendingInvoices == null ? "null" : this.PendingInvoices.ToString())}");
             toStringOutput.Add($"this.PendingDiscounts = {(this.PendingDiscounts == null ? "null" : this.PendingDiscounts.ToString())}");
             toStringOutput.Add($"this.ServiceCredits = {(this.ServiceCredits == null ? "null" : this.ServiceCredits.ToString())}");
             toStringOutput.Add($"this.Prepayments = {(this.Prepayments == null ? "null" : this.Prepayments.ToString())}");

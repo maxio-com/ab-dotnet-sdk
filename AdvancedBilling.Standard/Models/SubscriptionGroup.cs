@@ -40,7 +40,7 @@ namespace AdvancedBilling.Standard.Models
         public SubscriptionGroup(
             int? customerId = null,
             Models.SubscriptionGroupPaymentProfile paymentProfile = null,
-            string paymentCollectionMethod = null,
+            Models.CollectionMethod? paymentCollectionMethod = Models.CollectionMethod.Automatic,
             List<int> subscriptionIds = null,
             DateTimeOffset? createdAt = null)
         {
@@ -64,10 +64,10 @@ namespace AdvancedBilling.Standard.Models
         public Models.SubscriptionGroupPaymentProfile PaymentProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets PaymentCollectionMethod.
+        /// The type of payment collection to be used in the subscription. For legacy Statements Architecture valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid options are - `remittance`, `automatic`, `prepaid`.
         /// </summary>
         [JsonProperty("payment_collection_method", NullValueHandling = NullValueHandling.Ignore)]
-        public string PaymentCollectionMethod { get; set; }
+        public Models.CollectionMethod? PaymentCollectionMethod { get; set; }
 
         /// <summary>
         /// Gets or sets SubscriptionIds.
@@ -119,7 +119,7 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
             toStringOutput.Add($"this.PaymentProfile = {(this.PaymentProfile == null ? "null" : this.PaymentProfile.ToString())}");
-            toStringOutput.Add($"this.PaymentCollectionMethod = {(this.PaymentCollectionMethod == null ? "null" : this.PaymentCollectionMethod)}");
+            toStringOutput.Add($"this.PaymentCollectionMethod = {(this.PaymentCollectionMethod == null ? "null" : this.PaymentCollectionMethod.ToString())}");
             toStringOutput.Add($"this.SubscriptionIds = {(this.SubscriptionIds == null ? "null" : $"[{string.Join(", ", this.SubscriptionIds)} ]")}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
 

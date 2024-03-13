@@ -9,14 +9,14 @@
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `SubscriptionId` | [`CreateSubscriptionGroupSubscriptionId`](../../doc/models/containers/create-subscription-group-subscription-id.md) | Required | This is a container for one-of cases. |
+| `SubscriptionId` | `int` | Required | - |
 | `MemberIds` | `List<int>` | Optional | - |
 
 ## Example (as JSON)
 
 ```json
 {
-  "subscription_id": "String7",
+  "subscription_id": 38,
   "member_ids": [
     162
   ]

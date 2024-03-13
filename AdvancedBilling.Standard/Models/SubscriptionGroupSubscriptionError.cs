@@ -36,16 +36,28 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="productPricePointId">product_price_point_id.</param>
         /// <param name="paymentProfile">payment_profile.</param>
         /// <param name="paymentProfileChargifyToken">payment_profile.chargify_token.</param>
+        /// <param name="mBase">base.</param>
+        /// <param name="paymentProfileExpirationMonth">payment_profile.expiration_month.</param>
+        /// <param name="paymentProfileExpirationYear">payment_profile.expiration_year.</param>
+        /// <param name="paymentProfileFullNumber">payment_profile.full_number.</param>
         public SubscriptionGroupSubscriptionError(
             List<string> product = null,
             List<string> productPricePointId = null,
             List<string> paymentProfile = null,
-            List<string> paymentProfileChargifyToken = null)
+            List<string> paymentProfileChargifyToken = null,
+            List<string> mBase = null,
+            List<string> paymentProfileExpirationMonth = null,
+            List<string> paymentProfileExpirationYear = null,
+            List<string> paymentProfileFullNumber = null)
         {
             this.Product = product;
             this.ProductPricePointId = productPricePointId;
             this.PaymentProfile = paymentProfile;
             this.PaymentProfileChargifyToken = paymentProfileChargifyToken;
+            this.MBase = mBase;
+            this.PaymentProfileExpirationMonth = paymentProfileExpirationMonth;
+            this.PaymentProfileExpirationYear = paymentProfileExpirationYear;
+            this.PaymentProfileFullNumber = paymentProfileFullNumber;
         }
 
         /// <summary>
@@ -72,6 +84,30 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("payment_profile.chargify_token", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> PaymentProfileChargifyToken { get; set; }
 
+        /// <summary>
+        /// Gets or sets MBase.
+        /// </summary>
+        [JsonProperty("base", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> MBase { get; set; }
+
+        /// <summary>
+        /// Gets or sets PaymentProfileExpirationMonth.
+        /// </summary>
+        [JsonProperty("payment_profile.expiration_month", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> PaymentProfileExpirationMonth { get; set; }
+
+        /// <summary>
+        /// Gets or sets PaymentProfileExpirationYear.
+        /// </summary>
+        [JsonProperty("payment_profile.expiration_year", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> PaymentProfileExpirationYear { get; set; }
+
+        /// <summary>
+        /// Gets or sets PaymentProfileFullNumber.
+        /// </summary>
+        [JsonProperty("payment_profile.full_number", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> PaymentProfileFullNumber { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -97,7 +133,11 @@ namespace AdvancedBilling.Standard.Models
             return obj is SubscriptionGroupSubscriptionError other &&                ((this.Product == null && other.Product == null) || (this.Product?.Equals(other.Product) == true)) &&
                 ((this.ProductPricePointId == null && other.ProductPricePointId == null) || (this.ProductPricePointId?.Equals(other.ProductPricePointId) == true)) &&
                 ((this.PaymentProfile == null && other.PaymentProfile == null) || (this.PaymentProfile?.Equals(other.PaymentProfile) == true)) &&
-                ((this.PaymentProfileChargifyToken == null && other.PaymentProfileChargifyToken == null) || (this.PaymentProfileChargifyToken?.Equals(other.PaymentProfileChargifyToken) == true));
+                ((this.PaymentProfileChargifyToken == null && other.PaymentProfileChargifyToken == null) || (this.PaymentProfileChargifyToken?.Equals(other.PaymentProfileChargifyToken) == true)) &&
+                ((this.MBase == null && other.MBase == null) || (this.MBase?.Equals(other.MBase) == true)) &&
+                ((this.PaymentProfileExpirationMonth == null && other.PaymentProfileExpirationMonth == null) || (this.PaymentProfileExpirationMonth?.Equals(other.PaymentProfileExpirationMonth) == true)) &&
+                ((this.PaymentProfileExpirationYear == null && other.PaymentProfileExpirationYear == null) || (this.PaymentProfileExpirationYear?.Equals(other.PaymentProfileExpirationYear) == true)) &&
+                ((this.PaymentProfileFullNumber == null && other.PaymentProfileFullNumber == null) || (this.PaymentProfileFullNumber?.Equals(other.PaymentProfileFullNumber) == true));
         }
         
         /// <summary>
@@ -110,6 +150,10 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ProductPricePointId = {(this.ProductPricePointId == null ? "null" : $"[{string.Join(", ", this.ProductPricePointId)} ]")}");
             toStringOutput.Add($"this.PaymentProfile = {(this.PaymentProfile == null ? "null" : $"[{string.Join(", ", this.PaymentProfile)} ]")}");
             toStringOutput.Add($"this.PaymentProfileChargifyToken = {(this.PaymentProfileChargifyToken == null ? "null" : $"[{string.Join(", ", this.PaymentProfileChargifyToken)} ]")}");
+            toStringOutput.Add($"this.MBase = {(this.MBase == null ? "null" : $"[{string.Join(", ", this.MBase)} ]")}");
+            toStringOutput.Add($"this.PaymentProfileExpirationMonth = {(this.PaymentProfileExpirationMonth == null ? "null" : $"[{string.Join(", ", this.PaymentProfileExpirationMonth)} ]")}");
+            toStringOutput.Add($"this.PaymentProfileExpirationYear = {(this.PaymentProfileExpirationYear == null ? "null" : $"[{string.Join(", ", this.PaymentProfileExpirationYear)} ]")}");
+            toStringOutput.Add($"this.PaymentProfileFullNumber = {(this.PaymentProfileFullNumber == null ? "null" : $"[{string.Join(", ", this.PaymentProfileFullNumber)} ]")}");
 
             base.ToString(toStringOutput);
         }
