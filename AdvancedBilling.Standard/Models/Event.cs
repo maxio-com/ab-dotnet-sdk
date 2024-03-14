@@ -41,7 +41,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="customerId">customer_id.</param>
         /// <param name="eventSpecificData">event_specific_data.</param>
         public Event(
-            int id,
+            long id,
             string key,
             string message,
             DateTimeOffset createdAt,
@@ -62,7 +62,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Id.
         /// </summary>
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Gets or sets Key.

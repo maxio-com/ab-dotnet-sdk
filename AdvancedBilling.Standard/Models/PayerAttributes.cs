@@ -66,7 +66,7 @@ namespace AdvancedBilling.Standard.Models
             string phone = null,
             string locale = null,
             string vatNumber = null,
-            string taxExempt = null,
+            bool? taxExempt = null,
             string taxExemptReason = null,
             Dictionary<string, string> metafields = null)
         {
@@ -184,7 +184,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets TaxExempt.
         /// </summary>
         [JsonProperty("tax_exempt", NullValueHandling = NullValueHandling.Ignore)]
-        public string TaxExempt { get; set; }
+        public bool? TaxExempt { get; set; }
 
         /// <summary>
         /// Gets or sets TaxExemptReason.
@@ -261,7 +261,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Phone = {(this.Phone == null ? "null" : this.Phone)}");
             toStringOutput.Add($"this.Locale = {(this.Locale == null ? "null" : this.Locale)}");
             toStringOutput.Add($"this.VatNumber = {(this.VatNumber == null ? "null" : this.VatNumber)}");
-            toStringOutput.Add($"this.TaxExempt = {(this.TaxExempt == null ? "null" : this.TaxExempt)}");
+            toStringOutput.Add($"this.TaxExempt = {(this.TaxExempt == null ? "null" : this.TaxExempt.ToString())}");
             toStringOutput.Add($"this.TaxExemptReason = {(this.TaxExemptReason == null ? "null" : this.TaxExemptReason)}");
             toStringOutput.Add($"Metafields = {(this.Metafields == null ? "null" : this.Metafields.ToString())}");
 

@@ -9,12 +9,12 @@
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `Id` | `int?` | Optional | - |
-| `SubscriptionId` | `int?` | Optional | - |
-| `AmountInCents` | `long?` | Optional | - |
+| `Id` | `long?` | Optional | **Constraints**: `>= 1` |
+| `SubscriptionId` | `int?` | Optional | **Constraints**: `>= 1` |
+| `AmountInCents` | `long?` | Optional | **Constraints**: `>= 0.01` |
 | `Memo` | `string` | Optional | - |
 | `CreatedAt` | `DateTimeOffset?` | Optional | - |
-| `StartingBalanceInCents` | `long?` | Optional | - |
+| `StartingBalanceInCents` | `long?` | Optional | **Constraints**: `>= 0` |
 | `EndingBalanceInCents` | `long?` | Optional | - |
 
 ## Example (as JSON)

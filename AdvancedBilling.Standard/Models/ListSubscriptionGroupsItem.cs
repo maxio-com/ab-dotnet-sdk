@@ -42,6 +42,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="state">state.</param>
         /// <param name="cancelAtEndOfPeriod">cancel_at_end_of_period.</param>
         /// <param name="accountBalances">account_balances.</param>
+        /// <param name="groupType">group_type.</param>
         public ListSubscriptionGroupsItem(
             string uid = null,
             int? scheme = null,
@@ -52,7 +53,8 @@ namespace AdvancedBilling.Standard.Models
             DateTimeOffset? nextAssessmentAt = null,
             string state = null,
             bool? cancelAtEndOfPeriod = null,
-            Models.SubscriptionGroupBalances accountBalances = null)
+            Models.SubscriptionGroupBalances accountBalances = null,
+            Models.GroupType? groupType = null)
         {
             this.Uid = uid;
             this.Scheme = scheme;
@@ -64,6 +66,7 @@ namespace AdvancedBilling.Standard.Models
             this.State = state;
             this.CancelAtEndOfPeriod = cancelAtEndOfPeriod;
             this.AccountBalances = accountBalances;
+            this.GroupType = groupType;
         }
 
         /// <summary>
@@ -127,6 +130,12 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("account_balances", NullValueHandling = NullValueHandling.Ignore)]
         public Models.SubscriptionGroupBalances AccountBalances { get; set; }
 
+        /// <summary>
+        /// Gets or sets GroupType.
+        /// </summary>
+        [JsonProperty("group_type", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.GroupType? GroupType { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -158,7 +167,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.NextAssessmentAt == null && other.NextAssessmentAt == null) || (this.NextAssessmentAt?.Equals(other.NextAssessmentAt) == true)) &&
                 ((this.State == null && other.State == null) || (this.State?.Equals(other.State) == true)) &&
                 ((this.CancelAtEndOfPeriod == null && other.CancelAtEndOfPeriod == null) || (this.CancelAtEndOfPeriod?.Equals(other.CancelAtEndOfPeriod) == true)) &&
-                ((this.AccountBalances == null && other.AccountBalances == null) || (this.AccountBalances?.Equals(other.AccountBalances) == true));
+                ((this.AccountBalances == null && other.AccountBalances == null) || (this.AccountBalances?.Equals(other.AccountBalances) == true)) &&
+                ((this.GroupType == null && other.GroupType == null) || (this.GroupType?.Equals(other.GroupType) == true));
         }
         
         /// <summary>
@@ -177,6 +187,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.State = {(this.State == null ? "null" : this.State)}");
             toStringOutput.Add($"this.CancelAtEndOfPeriod = {(this.CancelAtEndOfPeriod == null ? "null" : this.CancelAtEndOfPeriod.ToString())}");
             toStringOutput.Add($"this.AccountBalances = {(this.AccountBalances == null ? "null" : this.AccountBalances.ToString())}");
+            toStringOutput.Add($"this.GroupType = {(this.GroupType == null ? "null" : this.GroupType.ToString())}");
 
             base.ToString(toStringOutput);
         }

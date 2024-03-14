@@ -96,7 +96,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SingleStringErrorResponseException(_reason, _context), true)))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionGroupCreateErrorResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace AdvancedBilling.Standard.Controllers
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("include", input.Include))))
+                      .Query(_query => _query.Setup("include[]", input.Include?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -137,10 +137,12 @@ namespace AdvancedBilling.Standard.Controllers
         /// Current billing amount for the subscription group is not returned by default. If this information is desired, the `include[]=current_billing_amount_in_cents` parameter must be provided with the request.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
+        /// <param name="include">Optional parameter: Allows including additional data in the response. Use in query: `include[]=current_billing_amount_in_cents`..</param>
         /// <returns>Returns the Models.FullSubscriptionGroupResponse response from the API call.</returns>
         public Models.FullSubscriptionGroupResponse ReadSubscriptionGroup(
-                string uid)
-            => CoreHelper.RunTask(ReadSubscriptionGroupAsync(uid));
+                string uid,
+                List<Models.SubscriptionGroupInclude> include = null)
+            => CoreHelper.RunTask(ReadSubscriptionGroupAsync(uid, include));
 
         /// <summary>
         /// Use this endpoint to find subscription group details.
@@ -148,17 +150,20 @@ namespace AdvancedBilling.Standard.Controllers
         /// Current billing amount for the subscription group is not returned by default. If this information is desired, the `include[]=current_billing_amount_in_cents` parameter must be provided with the request.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
+        /// <param name="include">Optional parameter: Allows including additional data in the response. Use in query: `include[]=current_billing_amount_in_cents`..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.FullSubscriptionGroupResponse response from the API call.</returns>
         public async Task<Models.FullSubscriptionGroupResponse> ReadSubscriptionGroupAsync(
                 string uid,
+                List<Models.SubscriptionGroupInclude> include = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.FullSubscriptionGroupResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/subscription_groups/{uid}.json")
                   .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("uid", uid).Required())))
+                      .Template(_template => _template.Setup("uid", uid).Required())
+                      .Query(_query => _query.Setup("include[]", include?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
