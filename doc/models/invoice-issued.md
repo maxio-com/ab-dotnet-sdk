@@ -12,9 +12,9 @@
 | `Uid` | `string` | Required | - |
 | `Number` | `string` | Required | - |
 | `Role` | `string` | Required | - |
-| `DueDate` | `DateTime` | Required | - |
-| `IssueDate` | `DateTime` | Required | - |
-| `PaidDate` | `DateTime` | Required | - |
+| `DueDate` | `DateTime?` | Required | - |
+| `IssueDate` | `string` | Required | Invoice issue date. Can be an empty string if value is missing. |
+| `PaidDate` | `string` | Required | Paid date. Can be an empty string if value is missing. |
 | `DueAmount` | `string` | Required | - |
 | `PaidAmount` | `string` | Required | - |
 | `TaxAmount` | `string` | Required | - |
@@ -33,8 +33,8 @@
   "number": "number8",
   "role": "role2",
   "due_date": "2016-03-13",
-  "issue_date": "2016-03-13",
-  "paid_date": "2016-03-13",
+  "issue_date": "issue_date0",
+  "paid_date": "paid_date6",
   "due_amount": "due_amount6",
   "paid_amount": "paid_amount4",
   "tax_amount": "tax_amount2",
