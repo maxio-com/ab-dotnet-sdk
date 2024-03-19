@@ -35,7 +35,6 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="uid">uid.</param>
         /// <param name="number">number.</param>
         /// <param name="role">role.</param>
-        /// <param name="dueDate">due_date.</param>
         /// <param name="issueDate">issue_date.</param>
         /// <param name="paidDate">paid_date.</param>
         /// <param name="dueAmount">due_amount.</param>
@@ -47,13 +46,13 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="productName">product_name.</param>
         /// <param name="consolidationLevel">consolidation_level.</param>
         /// <param name="lineItems">line_items.</param>
+        /// <param name="dueDate">due_date.</param>
         public InvoiceIssued(
             string uid,
             string number,
             string role,
-            DateTime dueDate,
-            DateTime issueDate,
-            DateTime paidDate,
+            string issueDate,
+            string paidDate,
             string dueAmount,
             string paidAmount,
             string taxAmount,
@@ -62,7 +61,8 @@ namespace AdvancedBilling.Standard.Models
             string statusAmount,
             string productName,
             string consolidationLevel,
-            List<Models.InvoiceLineItemEventData> lineItems)
+            List<Models.InvoiceLineItemEventData> lineItems,
+            DateTime? dueDate = null)
         {
             this.Uid = uid;
             this.Number = number;
@@ -109,25 +109,24 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets DueDate.
         /// </summary>
         [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
-        [JsonProperty("due_date")]
-        [JsonRequired]
-        public DateTime DueDate { get; set; }
+        [JsonProperty("due_date", NullValueHandling = NullValueHandling.Include)]
+        public DateTime? DueDate { get; set; }
 
         /// <summary>
-        /// Gets or sets IssueDate.
+        /// Invoice issue date. Can be an empty string if value is missing.
         /// </summary>
-        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
+        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("issue_date")]
         [JsonRequired]
-        public DateTime IssueDate { get; set; }
+        public string IssueDate { get; set; }
 
         /// <summary>
-        /// Gets or sets PaidDate.
+        /// Paid date. Can be an empty string if value is missing.
         /// </summary>
-        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
+        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("paid_date")]
         [JsonRequired]
-        public DateTime PaidDate { get; set; }
+        public string PaidDate { get; set; }
 
         /// <summary>
         /// Gets or sets DueAmount.
@@ -225,9 +224,9 @@ namespace AdvancedBilling.Standard.Models
             return obj is InvoiceIssued other &&                ((this.Uid == null && other.Uid == null) || (this.Uid?.Equals(other.Uid) == true)) &&
                 ((this.Number == null && other.Number == null) || (this.Number?.Equals(other.Number) == true)) &&
                 ((this.Role == null && other.Role == null) || (this.Role?.Equals(other.Role) == true)) &&
-                this.DueDate.Equals(other.DueDate) &&
-                this.IssueDate.Equals(other.IssueDate) &&
-                this.PaidDate.Equals(other.PaidDate) &&
+                ((this.DueDate == null && other.DueDate == null) || (this.DueDate?.Equals(other.DueDate) == true)) &&
+                ((this.IssueDate == null && other.IssueDate == null) || (this.IssueDate?.Equals(other.IssueDate) == true)) &&
+                ((this.PaidDate == null && other.PaidDate == null) || (this.PaidDate?.Equals(other.PaidDate) == true)) &&
                 ((this.DueAmount == null && other.DueAmount == null) || (this.DueAmount?.Equals(other.DueAmount) == true)) &&
                 ((this.PaidAmount == null && other.PaidAmount == null) || (this.PaidAmount?.Equals(other.PaidAmount) == true)) &&
                 ((this.TaxAmount == null && other.TaxAmount == null) || (this.TaxAmount?.Equals(other.TaxAmount) == true)) &&
@@ -248,9 +247,9 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
             toStringOutput.Add($"this.Number = {(this.Number == null ? "null" : this.Number)}");
             toStringOutput.Add($"this.Role = {(this.Role == null ? "null" : this.Role)}");
-            toStringOutput.Add($"this.DueDate = {this.DueDate}");
-            toStringOutput.Add($"this.IssueDate = {this.IssueDate}");
-            toStringOutput.Add($"this.PaidDate = {this.PaidDate}");
+            toStringOutput.Add($"this.DueDate = {(this.DueDate == null ? "null" : this.DueDate.ToString())}");
+            toStringOutput.Add($"this.IssueDate = {(this.IssueDate == null ? "null" : this.IssueDate)}");
+            toStringOutput.Add($"this.PaidDate = {(this.PaidDate == null ? "null" : this.PaidDate)}");
             toStringOutput.Add($"this.DueAmount = {(this.DueAmount == null ? "null" : this.DueAmount)}");
             toStringOutput.Add($"this.PaidAmount = {(this.PaidAmount == null ? "null" : this.PaidAmount)}");
             toStringOutput.Add($"this.TaxAmount = {(this.TaxAmount == null ? "null" : this.TaxAmount)}");
