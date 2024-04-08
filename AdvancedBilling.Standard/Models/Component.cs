@@ -12,7 +12,6 @@ namespace AdvancedBilling.Standard.Models
     using System.Threading.Tasks;
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
     using JsonSubTypes;
     using Newtonsoft.Json;
@@ -24,7 +23,7 @@ namespace AdvancedBilling.Standard.Models
     public class Component : BaseModel
     {
         private string handle;
-        private ComponentPricingScheme pricingScheme;
+        private Models.PricingScheme? pricingScheme;
         private string unitPrice;
         private long? pricePerUnitInCents;
         private string description;
@@ -105,7 +104,7 @@ namespace AdvancedBilling.Standard.Models
             int? id = null,
             string name = null,
             string handle = null,
-            ComponentPricingScheme pricingScheme = null,
+            Models.PricingScheme? pricingScheme = null,
             string unitName = null,
             string unitPrice = null,
             int? productFamilyId = null,
@@ -267,7 +266,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets PricingScheme.
         /// </summary>
         [JsonProperty("pricing_scheme")]
-        public ComponentPricingScheme PricingScheme
+        public Models.PricingScheme? PricingScheme
         {
             get
             {
@@ -944,7 +943,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
             toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
-            toStringOutput.Add($"PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
+            toStringOutput.Add($"this.PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
             toStringOutput.Add($"this.UnitName = {(this.UnitName == null ? "null" : this.UnitName)}");
             toStringOutput.Add($"this.UnitPrice = {(this.UnitPrice == null ? "null" : this.UnitPrice)}");
             toStringOutput.Add($"this.ProductFamilyId = {(this.ProductFamilyId == null ? "null" : this.ProductFamilyId.ToString())}");

@@ -577,9 +577,6 @@ catch (ApiException e)
       "price_point_id": null
     }
   ],
-  "discounts": [],
-  "taxes": [],
-  "credits": [],
   "payments": [
     {
       "transaction_time": "2018-07-26T15:22:02Z",
@@ -597,8 +594,6 @@ catch (ApiException e)
       "prepayment": false
     }
   ],
-  "refunds": [],
-  "custom_fields": [],
   "public_url": "https://www.chargifypay.com/invoice/inv_8jzrw74xq8kxr?token=fb6kpjz5rcr2vttyjs4rcv6y"
 }
 ```
@@ -747,7 +742,6 @@ catch (ApiException e)
           "organization": null,
           "email": "evan4@example.com"
         },
-        "recipient_emails": [],
         "net_terms": 0,
         "memo": "Thanks for your business! If you have any questions, please contact your account manager.",
         "billing_address": {
@@ -1013,8 +1007,6 @@ catch (ApiException e)
         "total_amount": "168.61",
         "paid_amount": "168.61",
         "due_amount": "0.0",
-        "credits": [],
-        "refunds": [],
         "payments": [
           {
             "memo": "Non-Resumable Canceled On Purpose - Standard Plan: Renewal payment",
@@ -1032,7 +1024,6 @@ catch (ApiException e)
             "prepayment": false
           }
         ],
-        "custom_fields": [],
         "display_settings": {
           "hide_zero_subtotal_lines": false,
           "include_discounts_on_lines": false
@@ -2742,12 +2733,6 @@ catch (ApiException e)
         "price_point_id": null
       }
     ],
-    "discounts": [],
-    "taxes": [],
-    "credits": [],
-    "payments": [],
-    "refunds": [],
-    "custom_fields": [],
     "public_url": "https://www.test-chargifypay.com/invoice/inv_98nbmb93gxjz8?token=rmfmwvbdy4xmyw5f29j5gc6x"
   }
 }

@@ -35,6 +35,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="subscriptionId">subscription_id.</param>
         /// <param name="dateField">date_field.</param>
         /// <param name="direction">direction.</param>
+        /// <param name="filter">filter.</param>
         /// <param name="endDate">end_date.</param>
         /// <param name="endDatetime">end_datetime.</param>
         /// <param name="pricePointIds">price_point_ids.</param>
@@ -43,12 +44,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="startDate">start_date.</param>
         /// <param name="startDatetime">start_datetime.</param>
         /// <param name="include">include.</param>
-        /// <param name="filterUseSiteExchangeRate">filter[use_site_exchange_rate].</param>
-        /// <param name="filterCurrencies">filter[currencies].</param>
         public ListSubscriptionComponentsInput(
             int subscriptionId,
             Models.SubscriptionListDateField? dateField = null,
             Models.SortingDirection? direction = null,
+            Models.ListSubscriptionComponentsFilter filter = null,
             string endDate = null,
             string endDatetime = null,
             Models.IncludeNotNull? pricePointIds = null,
@@ -56,13 +56,12 @@ namespace AdvancedBilling.Standard.Models
             Models.ListSubscriptionComponentsSort? sort = null,
             string startDate = null,
             string startDatetime = null,
-            Models.ListSubscriptionComponentsInclude? include = null,
-            bool? filterUseSiteExchangeRate = null,
-            List<string> filterCurrencies = null)
+            Models.ListSubscriptionComponentsInclude? include = null)
         {
             this.SubscriptionId = subscriptionId;
             this.DateField = dateField;
             this.Direction = direction;
+            this.Filter = filter;
             this.EndDate = endDate;
             this.EndDatetime = endDatetime;
             this.PricePointIds = pricePointIds;
@@ -71,8 +70,6 @@ namespace AdvancedBilling.Standard.Models
             this.StartDate = startDate;
             this.StartDatetime = startDatetime;
             this.Include = include;
-            this.FilterUseSiteExchangeRate = filterUseSiteExchangeRate;
-            this.FilterCurrencies = filterCurrencies;
         }
 
         /// <summary>
@@ -93,6 +90,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("direction", NullValueHandling = NullValueHandling.Ignore)]
         public Models.SortingDirection? Direction { get; set; }
+
+        /// <summary>
+        /// Filter to use for List Subscription Components operation
+        /// </summary>
+        [JsonProperty("filter", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.ListSubscriptionComponentsFilter Filter { get; set; }
 
         /// <summary>
         /// The end date (format YYYY-MM-DD) with which to filter the date_field. Returns components with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified.
@@ -142,18 +145,6 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("include", NullValueHandling = NullValueHandling.Ignore)]
         public Models.ListSubscriptionComponentsInclude? Include { get; set; }
 
-        /// <summary>
-        /// Allows fetching components allocation with matching use_site_exchange_rate based on provided value. Use in query `filter[use_site_exchange_rate]=true`.
-        /// </summary>
-        [JsonProperty("filter[use_site_exchange_rate]", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? FilterUseSiteExchangeRate { get; set; }
-
-        /// <summary>
-        /// Allows fetching components allocation with matching currency based on provided values. Use in query `filter[currencies]=EUR,USD`.
-        /// </summary>
-        [JsonProperty("filter[currencies]", NullValueHandling = NullValueHandling.Ignore)]
-        public List<string> FilterCurrencies { get; set; }
-
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -179,6 +170,7 @@ namespace AdvancedBilling.Standard.Models
             return obj is ListSubscriptionComponentsInput other &&                this.SubscriptionId.Equals(other.SubscriptionId) &&
                 ((this.DateField == null && other.DateField == null) || (this.DateField?.Equals(other.DateField) == true)) &&
                 ((this.Direction == null && other.Direction == null) || (this.Direction?.Equals(other.Direction) == true)) &&
+                ((this.Filter == null && other.Filter == null) || (this.Filter?.Equals(other.Filter) == true)) &&
                 ((this.EndDate == null && other.EndDate == null) || (this.EndDate?.Equals(other.EndDate) == true)) &&
                 ((this.EndDatetime == null && other.EndDatetime == null) || (this.EndDatetime?.Equals(other.EndDatetime) == true)) &&
                 ((this.PricePointIds == null && other.PricePointIds == null) || (this.PricePointIds?.Equals(other.PricePointIds) == true)) &&
@@ -186,9 +178,7 @@ namespace AdvancedBilling.Standard.Models
                 ((this.Sort == null && other.Sort == null) || (this.Sort?.Equals(other.Sort) == true)) &&
                 ((this.StartDate == null && other.StartDate == null) || (this.StartDate?.Equals(other.StartDate) == true)) &&
                 ((this.StartDatetime == null && other.StartDatetime == null) || (this.StartDatetime?.Equals(other.StartDatetime) == true)) &&
-                ((this.Include == null && other.Include == null) || (this.Include?.Equals(other.Include) == true)) &&
-                ((this.FilterUseSiteExchangeRate == null && other.FilterUseSiteExchangeRate == null) || (this.FilterUseSiteExchangeRate?.Equals(other.FilterUseSiteExchangeRate) == true)) &&
-                ((this.FilterCurrencies == null && other.FilterCurrencies == null) || (this.FilterCurrencies?.Equals(other.FilterCurrencies) == true));
+                ((this.Include == null && other.Include == null) || (this.Include?.Equals(other.Include) == true));
         }
         
         /// <summary>
@@ -200,6 +190,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.SubscriptionId = {this.SubscriptionId}");
             toStringOutput.Add($"this.DateField = {(this.DateField == null ? "null" : this.DateField.ToString())}");
             toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
+            toStringOutput.Add($"this.Filter = {(this.Filter == null ? "null" : this.Filter.ToString())}");
             toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate)}");
             toStringOutput.Add($"this.EndDatetime = {(this.EndDatetime == null ? "null" : this.EndDatetime)}");
             toStringOutput.Add($"this.PricePointIds = {(this.PricePointIds == null ? "null" : this.PricePointIds.ToString())}");
@@ -208,8 +199,6 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate)}");
             toStringOutput.Add($"this.StartDatetime = {(this.StartDatetime == null ? "null" : this.StartDatetime)}");
             toStringOutput.Add($"this.Include = {(this.Include == null ? "null" : this.Include.ToString())}");
-            toStringOutput.Add($"this.FilterUseSiteExchangeRate = {(this.FilterUseSiteExchangeRate == null ? "null" : this.FilterUseSiteExchangeRate.ToString())}");
-            toStringOutput.Add($"this.FilterCurrencies = {(this.FilterCurrencies == null ? "null" : $"[{string.Join(", ", this.FilterCurrencies)} ]")}");
 
             base.ToString(toStringOutput);
         }

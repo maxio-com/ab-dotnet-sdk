@@ -34,39 +34,36 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         /// <param name="productFamilyId">product_family_id.</param>
         /// <param name="includeArchived">include_archived.</param>
-        /// <param name="filterIds">filter[ids].</param>
         /// <param name="page">page.</param>
         /// <param name="perPage">per_page.</param>
+        /// <param name="filter">filter.</param>
         /// <param name="dateField">date_field.</param>
         /// <param name="endDate">end_date.</param>
         /// <param name="endDatetime">end_datetime.</param>
         /// <param name="startDate">start_date.</param>
         /// <param name="startDatetime">start_datetime.</param>
-        /// <param name="filterUseSiteExchangeRate">filter[use_site_exchange_rate].</param>
         public ListComponentsForProductFamilyInput(
             int productFamilyId,
             bool? includeArchived = null,
-            List<int> filterIds = null,
             int? page = 1,
             int? perPage = 20,
+            Models.ListComponentsFilter filter = null,
             Models.BasicDateField? dateField = null,
             string endDate = null,
             string endDatetime = null,
             string startDate = null,
-            string startDatetime = null,
-            bool? filterUseSiteExchangeRate = null)
+            string startDatetime = null)
         {
             this.ProductFamilyId = productFamilyId;
             this.IncludeArchived = includeArchived;
-            this.FilterIds = filterIds;
             this.Page = page;
             this.PerPage = perPage;
+            this.Filter = filter;
             this.DateField = dateField;
             this.EndDate = endDate;
             this.EndDatetime = endDatetime;
             this.StartDate = startDate;
             this.StartDatetime = startDatetime;
-            this.FilterUseSiteExchangeRate = filterUseSiteExchangeRate;
         }
 
         /// <summary>
@@ -82,12 +79,6 @@ namespace AdvancedBilling.Standard.Models
         public bool? IncludeArchived { get; set; }
 
         /// <summary>
-        /// Allows fetching components with matching id based on provided value. Use in query `filter[ids]=1,2`.
-        /// </summary>
-        [JsonProperty("filter[ids]", NullValueHandling = NullValueHandling.Ignore)]
-        public List<int> FilterIds { get; set; }
-
-        /// <summary>
         /// Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.
         /// Use in query `page=1`.
         /// </summary>
@@ -100,6 +91,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("per_page", NullValueHandling = NullValueHandling.Ignore)]
         public int? PerPage { get; set; }
+
+        /// <summary>
+        /// Filter to use for List Components operations
+        /// </summary>
+        [JsonProperty("filter", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.ListComponentsFilter Filter { get; set; }
 
         /// <summary>
         /// The type of filter you would like to apply to your search. Use in query `date_field=created_at`.
@@ -131,12 +128,6 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("start_datetime", NullValueHandling = NullValueHandling.Ignore)]
         public string StartDatetime { get; set; }
 
-        /// <summary>
-        /// Allows fetching components with matching use_site_exchange_rate based on provided value (refers to default price point). Use in query `filter[use_site_exchange_rate]=true`.
-        /// </summary>
-        [JsonProperty("filter[use_site_exchange_rate]", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? FilterUseSiteExchangeRate { get; set; }
-
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -161,15 +152,14 @@ namespace AdvancedBilling.Standard.Models
             }
             return obj is ListComponentsForProductFamilyInput other &&                this.ProductFamilyId.Equals(other.ProductFamilyId) &&
                 ((this.IncludeArchived == null && other.IncludeArchived == null) || (this.IncludeArchived?.Equals(other.IncludeArchived) == true)) &&
-                ((this.FilterIds == null && other.FilterIds == null) || (this.FilterIds?.Equals(other.FilterIds) == true)) &&
                 ((this.Page == null && other.Page == null) || (this.Page?.Equals(other.Page) == true)) &&
                 ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true)) &&
+                ((this.Filter == null && other.Filter == null) || (this.Filter?.Equals(other.Filter) == true)) &&
                 ((this.DateField == null && other.DateField == null) || (this.DateField?.Equals(other.DateField) == true)) &&
                 ((this.EndDate == null && other.EndDate == null) || (this.EndDate?.Equals(other.EndDate) == true)) &&
                 ((this.EndDatetime == null && other.EndDatetime == null) || (this.EndDatetime?.Equals(other.EndDatetime) == true)) &&
                 ((this.StartDate == null && other.StartDate == null) || (this.StartDate?.Equals(other.StartDate) == true)) &&
-                ((this.StartDatetime == null && other.StartDatetime == null) || (this.StartDatetime?.Equals(other.StartDatetime) == true)) &&
-                ((this.FilterUseSiteExchangeRate == null && other.FilterUseSiteExchangeRate == null) || (this.FilterUseSiteExchangeRate?.Equals(other.FilterUseSiteExchangeRate) == true));
+                ((this.StartDatetime == null && other.StartDatetime == null) || (this.StartDatetime?.Equals(other.StartDatetime) == true));
         }
         
         /// <summary>
@@ -180,15 +170,14 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.ProductFamilyId = {this.ProductFamilyId}");
             toStringOutput.Add($"this.IncludeArchived = {(this.IncludeArchived == null ? "null" : this.IncludeArchived.ToString())}");
-            toStringOutput.Add($"this.FilterIds = {(this.FilterIds == null ? "null" : $"[{string.Join(", ", this.FilterIds)} ]")}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
+            toStringOutput.Add($"this.Filter = {(this.Filter == null ? "null" : this.Filter.ToString())}");
             toStringOutput.Add($"this.DateField = {(this.DateField == null ? "null" : this.DateField.ToString())}");
             toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate)}");
             toStringOutput.Add($"this.EndDatetime = {(this.EndDatetime == null ? "null" : this.EndDatetime)}");
             toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate)}");
             toStringOutput.Add($"this.StartDatetime = {(this.StartDatetime == null ? "null" : this.StartDatetime)}");
-            toStringOutput.Add($"this.FilterUseSiteExchangeRate = {(this.FilterUseSiteExchangeRate == null ? "null" : this.FilterUseSiteExchangeRate.ToString())}");
 
             base.ToString(toStringOutput);
         }

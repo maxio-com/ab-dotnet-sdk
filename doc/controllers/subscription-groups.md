@@ -202,7 +202,11 @@ ListSubscriptionGroupsInput listSubscriptionGroupsInput = new ListSubscriptionGr
 {
     Page = 2,
     PerPage = 50,
-Liquid error: Value cannot be null. (Parameter 'key')};
+    Include = new List<SubscriptionGroupsListInclude>
+    {
+        SubscriptionGroupsListInclude.AccountBalances,
+    },
+};
 
 try
 {
@@ -283,9 +287,17 @@ ReadSubscriptionGroupAsync(
 
 ```csharp
 string uid = "uid0";
-Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')try
+List<SubscriptionGroupInclude> include = new List<SubscriptionGroupInclude>
 {
-    FullSubscriptionGroupResponse result = await subscriptionGroupsController.ReadSubscriptionGroupAsync(uid);
+    SubscriptionGroupInclude.CurrentBillingAmountInCents,
+};
+
+try
+{
+    FullSubscriptionGroupResponse result = await subscriptionGroupsController.ReadSubscriptionGroupAsync(
+        uid,
+        include
+    );
 }
 catch (ApiException e)
 {
@@ -340,7 +352,7 @@ catch (ApiException e)
 # Update Subscription Group Members
 
 Use this endpoint to update subscription group members.
-`"member_ids": []` should contain an array of both subscription IDs to set as group members and subscription IDs already present in the groups. Not including them will result in removing them from subscription group. To clean up members, just leave the array empty.
+`"member_ids"` should contain an array of both subscription IDs to set as group members and subscription IDs already present in the groups. Not including them will result in removing them from subscription group. To clean up members, just leave the array empty.
 
 ```csharp
 UpdateSubscriptionGroupMembersAsync(

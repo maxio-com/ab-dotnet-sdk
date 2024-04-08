@@ -97,6 +97,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("subscription_id", input.SubscriptionId))
                       .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("filter", input.Filter))
                       .Query(_query => _query.Setup("end_date", input.EndDate))
                       .Query(_query => _query.Setup("end_datetime", input.EndDatetime))
                       .Query(_query => _query.Setup("price_point_ids", (input.PricePointIds.HasValue) ? ApiHelper.JsonSerialize(input.PricePointIds.Value).Trim('\"') : null))
@@ -104,9 +105,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("sort", (input.Sort.HasValue) ? ApiHelper.JsonSerialize(input.Sort.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("start_date", input.StartDate))
                       .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
-                      .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("filter[use_site_exchange_rate]", input.FilterUseSiteExchangeRate))
-                      .Query(_query => _query.Setup("filter[currencies]", input.FilterCurrencies))))
+                      .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -897,6 +896,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("per_page", input.PerPage))
                       .Query(_query => _query.Setup("sort", (input.Sort.HasValue) ? ApiHelper.JsonSerialize(input.Sort.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("filter", input.Filter))
                       .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("start_date", input.StartDate))
                       .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
@@ -905,15 +905,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("subscription_ids", input.SubscriptionIds))
                       .Query(_query => _query.Setup("price_point_ids", (input.PricePointIds.HasValue) ? ApiHelper.JsonSerialize(input.PricePointIds.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("product_family_ids", input.ProductFamilyIds))
-                      .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("filter[use_site_exchange_rate]", input.FilterUseSiteExchangeRate))
-                      .Query(_query => _query.Setup("filter[currencies]", input.FilterCurrencies))
-                      .Query(_query => _query.Setup("filter[subscription][states]", input.FilterSubscriptionStates?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))
-                      .Query(_query => _query.Setup("filter[subscription][date_field]", (input.FilterSubscriptionDateField.HasValue) ? ApiHelper.JsonSerialize(input.FilterSubscriptionDateField.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("filter[subscription][start_date]", input.FilterSubscriptionStartDate.HasValue ? input.FilterSubscriptionStartDate.Value.ToString("yyyy'-'MM'-'dd") : null))
-                      .Query(_query => _query.Setup("filter[subscription][start_datetime]", input.FilterSubscriptionStartDatetime.HasValue ? input.FilterSubscriptionStartDatetime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))
-                      .Query(_query => _query.Setup("filter[subscription][end_date]", input.FilterSubscriptionEndDate.HasValue ? input.FilterSubscriptionEndDate.Value.ToString("yyyy'-'MM'-'dd") : null))
-                      .Query(_query => _query.Setup("filter[subscription][end_datetime]", input.FilterSubscriptionEndDatetime.HasValue ? input.FilterSubscriptionEndDatetime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))))
+                      .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

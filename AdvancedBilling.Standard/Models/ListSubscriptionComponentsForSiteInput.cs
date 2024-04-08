@@ -36,6 +36,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="perPage">per_page.</param>
         /// <param name="sort">sort.</param>
         /// <param name="direction">direction.</param>
+        /// <param name="filter">filter.</param>
         /// <param name="dateField">date_field.</param>
         /// <param name="startDate">start_date.</param>
         /// <param name="startDatetime">start_datetime.</param>
@@ -45,19 +46,12 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="pricePointIds">price_point_ids.</param>
         /// <param name="productFamilyIds">product_family_ids.</param>
         /// <param name="include">include.</param>
-        /// <param name="filterUseSiteExchangeRate">filter[use_site_exchange_rate].</param>
-        /// <param name="filterCurrencies">filter[currencies].</param>
-        /// <param name="filterSubscriptionStates">filter[subscription][states].</param>
-        /// <param name="filterSubscriptionDateField">filter[subscription][date_field].</param>
-        /// <param name="filterSubscriptionStartDate">filter[subscription][start_date].</param>
-        /// <param name="filterSubscriptionStartDatetime">filter[subscription][start_datetime].</param>
-        /// <param name="filterSubscriptionEndDate">filter[subscription][end_date].</param>
-        /// <param name="filterSubscriptionEndDatetime">filter[subscription][end_datetime].</param>
         public ListSubscriptionComponentsForSiteInput(
             int? page = 1,
             int? perPage = 20,
             Models.ListSubscriptionComponentsSort? sort = null,
             Models.SortingDirection? direction = null,
+            Models.ListSubscriptionComponentsForSiteFilter filter = null,
             Models.SubscriptionListDateField? dateField = null,
             string startDate = null,
             string startDatetime = null,
@@ -66,20 +60,13 @@ namespace AdvancedBilling.Standard.Models
             List<int> subscriptionIds = null,
             Models.IncludeNotNull? pricePointIds = null,
             List<int> productFamilyIds = null,
-            Models.ListSubscriptionComponentsInclude? include = null,
-            bool? filterUseSiteExchangeRate = null,
-            List<string> filterCurrencies = null,
-            List<Models.SubscriptionStateFilter> filterSubscriptionStates = null,
-            Models.SubscriptionListDateField? filterSubscriptionDateField = null,
-            DateTime? filterSubscriptionStartDate = null,
-            DateTimeOffset? filterSubscriptionStartDatetime = null,
-            DateTime? filterSubscriptionEndDate = null,
-            DateTimeOffset? filterSubscriptionEndDatetime = null)
+            Models.ListSubscriptionComponentsInclude? include = null)
         {
             this.Page = page;
             this.PerPage = perPage;
             this.Sort = sort;
             this.Direction = direction;
+            this.Filter = filter;
             this.DateField = dateField;
             this.StartDate = startDate;
             this.StartDatetime = startDatetime;
@@ -89,14 +76,6 @@ namespace AdvancedBilling.Standard.Models
             this.PricePointIds = pricePointIds;
             this.ProductFamilyIds = productFamilyIds;
             this.Include = include;
-            this.FilterUseSiteExchangeRate = filterUseSiteExchangeRate;
-            this.FilterCurrencies = filterCurrencies;
-            this.FilterSubscriptionStates = filterSubscriptionStates;
-            this.FilterSubscriptionDateField = filterSubscriptionDateField;
-            this.FilterSubscriptionStartDate = filterSubscriptionStartDate;
-            this.FilterSubscriptionStartDatetime = filterSubscriptionStartDatetime;
-            this.FilterSubscriptionEndDate = filterSubscriptionEndDate;
-            this.FilterSubscriptionEndDatetime = filterSubscriptionEndDatetime;
         }
 
         /// <summary>
@@ -125,6 +104,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("direction", NullValueHandling = NullValueHandling.Ignore)]
         public Models.SortingDirection? Direction { get; set; }
+
+        /// <summary>
+        /// Filter to use for List Subscription Components For Site operation
+        /// </summary>
+        [JsonProperty("filter", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.ListSubscriptionComponentsForSiteFilter Filter { get; set; }
 
         /// <summary>
         /// The type of filter you'd like to apply to your search. Use in query: `date_field=updated_at`.
@@ -180,60 +165,6 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("include", NullValueHandling = NullValueHandling.Ignore)]
         public Models.ListSubscriptionComponentsInclude? Include { get; set; }
 
-        /// <summary>
-        /// Allows fetching components allocation with matching use_site_exchange_rate based on provided value. Use in query `filter[use_site_exchange_rate]=true`.
-        /// </summary>
-        [JsonProperty("filter[use_site_exchange_rate]", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? FilterUseSiteExchangeRate { get; set; }
-
-        /// <summary>
-        /// Allows fetching components allocation with matching currency based on provided values. Use in query `filter[currencies]=USD,EUR`.
-        /// </summary>
-        [JsonProperty("filter[currencies]", NullValueHandling = NullValueHandling.Ignore)]
-        public List<string> FilterCurrencies { get; set; }
-
-        /// <summary>
-        /// <![CDATA[
-        /// Allows fetching components allocations that belong to the subscription with matching states based on provided values. To use this filter you also have to include the following param in the request `include=subscription`. Use in query `filter[subscription][states]=active,canceled&include=subscription`.
-        /// ]]>
-        /// </summary>
-        [JsonProperty("filter[subscription][states]", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Models.SubscriptionStateFilter> FilterSubscriptionStates { get; set; }
-
-        /// <summary>
-        /// The type of filter you'd like to apply to your search. To use this filter you also have to include the following param in the request `include=subscription`.
-        /// </summary>
-        [JsonProperty("filter[subscription][date_field]", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.SubscriptionListDateField? FilterSubscriptionDateField { get; set; }
-
-        /// <summary>
-        /// The start date (format YYYY-MM-DD) with which to filter the date_field. Returns components that belong to the subscription with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. To use this filter you also have to include the following param in the request `include=subscription`.
-        /// </summary>
-        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
-        [JsonProperty("filter[subscription][start_date]", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime? FilterSubscriptionStartDate { get; set; }
-
-        /// <summary>
-        /// The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components that belong to the subscription with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of start_date. To use this filter you also have to include the following param in the request `include=subscription`.
-        /// </summary>
-        [JsonConverter(typeof(IsoDateTimeConverter))]
-        [JsonProperty("filter[subscription][start_datetime]", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTimeOffset? FilterSubscriptionStartDatetime { get; set; }
-
-        /// <summary>
-        /// The end date (format YYYY-MM-DD) with which to filter the date_field. Returns components that belong to the subscription with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. To use this filter you also have to include the following param in the request `include=subscription`.
-        /// </summary>
-        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
-        [JsonProperty("filter[subscription][end_date]", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime? FilterSubscriptionEndDate { get; set; }
-
-        /// <summary>
-        /// The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components that belong to the subscription with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of end_date. To use this filter you also have to include the following param in the request `include=subscription`.
-        /// </summary>
-        [JsonConverter(typeof(IsoDateTimeConverter))]
-        [JsonProperty("filter[subscription][end_datetime]", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTimeOffset? FilterSubscriptionEndDatetime { get; set; }
-
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -260,6 +191,7 @@ namespace AdvancedBilling.Standard.Models
                 ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true)) &&
                 ((this.Sort == null && other.Sort == null) || (this.Sort?.Equals(other.Sort) == true)) &&
                 ((this.Direction == null && other.Direction == null) || (this.Direction?.Equals(other.Direction) == true)) &&
+                ((this.Filter == null && other.Filter == null) || (this.Filter?.Equals(other.Filter) == true)) &&
                 ((this.DateField == null && other.DateField == null) || (this.DateField?.Equals(other.DateField) == true)) &&
                 ((this.StartDate == null && other.StartDate == null) || (this.StartDate?.Equals(other.StartDate) == true)) &&
                 ((this.StartDatetime == null && other.StartDatetime == null) || (this.StartDatetime?.Equals(other.StartDatetime) == true)) &&
@@ -268,15 +200,7 @@ namespace AdvancedBilling.Standard.Models
                 ((this.SubscriptionIds == null && other.SubscriptionIds == null) || (this.SubscriptionIds?.Equals(other.SubscriptionIds) == true)) &&
                 ((this.PricePointIds == null && other.PricePointIds == null) || (this.PricePointIds?.Equals(other.PricePointIds) == true)) &&
                 ((this.ProductFamilyIds == null && other.ProductFamilyIds == null) || (this.ProductFamilyIds?.Equals(other.ProductFamilyIds) == true)) &&
-                ((this.Include == null && other.Include == null) || (this.Include?.Equals(other.Include) == true)) &&
-                ((this.FilterUseSiteExchangeRate == null && other.FilterUseSiteExchangeRate == null) || (this.FilterUseSiteExchangeRate?.Equals(other.FilterUseSiteExchangeRate) == true)) &&
-                ((this.FilterCurrencies == null && other.FilterCurrencies == null) || (this.FilterCurrencies?.Equals(other.FilterCurrencies) == true)) &&
-                ((this.FilterSubscriptionStates == null && other.FilterSubscriptionStates == null) || (this.FilterSubscriptionStates?.Equals(other.FilterSubscriptionStates) == true)) &&
-                ((this.FilterSubscriptionDateField == null && other.FilterSubscriptionDateField == null) || (this.FilterSubscriptionDateField?.Equals(other.FilterSubscriptionDateField) == true)) &&
-                ((this.FilterSubscriptionStartDate == null && other.FilterSubscriptionStartDate == null) || (this.FilterSubscriptionStartDate?.Equals(other.FilterSubscriptionStartDate) == true)) &&
-                ((this.FilterSubscriptionStartDatetime == null && other.FilterSubscriptionStartDatetime == null) || (this.FilterSubscriptionStartDatetime?.Equals(other.FilterSubscriptionStartDatetime) == true)) &&
-                ((this.FilterSubscriptionEndDate == null && other.FilterSubscriptionEndDate == null) || (this.FilterSubscriptionEndDate?.Equals(other.FilterSubscriptionEndDate) == true)) &&
-                ((this.FilterSubscriptionEndDatetime == null && other.FilterSubscriptionEndDatetime == null) || (this.FilterSubscriptionEndDatetime?.Equals(other.FilterSubscriptionEndDatetime) == true));
+                ((this.Include == null && other.Include == null) || (this.Include?.Equals(other.Include) == true));
         }
         
         /// <summary>
@@ -289,6 +213,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
             toStringOutput.Add($"this.Sort = {(this.Sort == null ? "null" : this.Sort.ToString())}");
             toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
+            toStringOutput.Add($"this.Filter = {(this.Filter == null ? "null" : this.Filter.ToString())}");
             toStringOutput.Add($"this.DateField = {(this.DateField == null ? "null" : this.DateField.ToString())}");
             toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate)}");
             toStringOutput.Add($"this.StartDatetime = {(this.StartDatetime == null ? "null" : this.StartDatetime)}");
@@ -298,14 +223,6 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PricePointIds = {(this.PricePointIds == null ? "null" : this.PricePointIds.ToString())}");
             toStringOutput.Add($"this.ProductFamilyIds = {(this.ProductFamilyIds == null ? "null" : $"[{string.Join(", ", this.ProductFamilyIds)} ]")}");
             toStringOutput.Add($"this.Include = {(this.Include == null ? "null" : this.Include.ToString())}");
-            toStringOutput.Add($"this.FilterUseSiteExchangeRate = {(this.FilterUseSiteExchangeRate == null ? "null" : this.FilterUseSiteExchangeRate.ToString())}");
-            toStringOutput.Add($"this.FilterCurrencies = {(this.FilterCurrencies == null ? "null" : $"[{string.Join(", ", this.FilterCurrencies)} ]")}");
-            toStringOutput.Add($"this.FilterSubscriptionStates = {(this.FilterSubscriptionStates == null ? "null" : $"[{string.Join(", ", this.FilterSubscriptionStates)} ]")}");
-            toStringOutput.Add($"this.FilterSubscriptionDateField = {(this.FilterSubscriptionDateField == null ? "null" : this.FilterSubscriptionDateField.ToString())}");
-            toStringOutput.Add($"this.FilterSubscriptionStartDate = {(this.FilterSubscriptionStartDate == null ? "null" : this.FilterSubscriptionStartDate.ToString())}");
-            toStringOutput.Add($"this.FilterSubscriptionStartDatetime = {(this.FilterSubscriptionStartDatetime == null ? "null" : this.FilterSubscriptionStartDatetime.ToString())}");
-            toStringOutput.Add($"this.FilterSubscriptionEndDate = {(this.FilterSubscriptionEndDate == null ? "null" : this.FilterSubscriptionEndDate.ToString())}");
-            toStringOutput.Add($"this.FilterSubscriptionEndDatetime = {(this.FilterSubscriptionEndDatetime == null ? "null" : this.FilterSubscriptionEndDatetime.ToString())}");
 
             base.ToString(toStringOutput);
         }

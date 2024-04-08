@@ -907,7 +907,11 @@ ListSubscriptionsInput listSubscriptionsInput = new ListSubscriptionsInput
         provider: CultureInfo.InvariantCulture,
         DateTimeStyles.RoundtripKind),
     Sort = SubscriptionSort.SignupDate,
-Liquid error: Value cannot be null. (Parameter 'key')};
+    Include = new List<SubscriptionListInclude>
+    {
+        SubscriptionListInclude.SelfServicePageToken,
+    },
+};
 
 try
 {
@@ -1162,9 +1166,18 @@ ReadSubscriptionAsync(
 
 ```csharp
 int subscriptionId = 222;
-Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')try
+List<SubscriptionInclude> include = new List<SubscriptionInclude>
 {
-    SubscriptionResponse result = await subscriptionsController.ReadSubscriptionAsync(subscriptionId);
+    SubscriptionInclude.Coupons,
+    SubscriptionInclude.SelfServicePageToken,
+};
+
+try
+{
+    SubscriptionResponse result = await subscriptionsController.ReadSubscriptionAsync(
+        subscriptionId,
+        include
+    );
 }
 catch (ApiException e)
 {
@@ -1464,11 +1477,18 @@ PurgeSubscriptionAsync(
 ```csharp
 int subscriptionId = 222;
 int ack = 252;
-Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')try
+List<SubscriptionPurgeType> cascade = new List<SubscriptionPurgeType>
+{
+    SubscriptionPurgeType.Customer,
+    SubscriptionPurgeType.PaymentProfile,
+};
+
+try
 {
     await subscriptionsController.PurgeSubscriptionAsync(
         subscriptionId,
-        ack
+        ack,
+        cascade
     );
 }
 catch (ApiException e)

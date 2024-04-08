@@ -1,4 +1,4 @@
-// <copyright file="ListSubscriptionGroupPrepaymentDateField.cs" company="APIMatic">
+// <copyright file="ListPrepaymentDateField.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
 namespace AdvancedBilling.Standard.Models
@@ -13,11 +13,11 @@ namespace AdvancedBilling.Standard.Models
     using Newtonsoft.Json;
 
     /// <summary>
-    /// ListSubscriptionGroupPrepaymentDateField.
+    /// ListPrepaymentDateField.
     /// </summary>
 
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum ListSubscriptionGroupPrepaymentDateField
+    public enum ListPrepaymentDateField
     {
         /// <summary>
         /// CreatedAt.

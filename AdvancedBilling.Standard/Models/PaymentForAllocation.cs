@@ -69,7 +69,6 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets Memo.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("memo", NullValueHandling = NullValueHandling.Ignore)]
         public string Memo { get; set; }
 

@@ -12,7 +12,6 @@ namespace AdvancedBilling.Standard.Models
     using System.Threading.Tasks;
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
     using JsonSubTypes;
     using Newtonsoft.Json;
@@ -25,7 +24,7 @@ namespace AdvancedBilling.Standard.Models
     {
         private DateTimeOffset? archivedAt;
         private int? interval;
-        private ComponentPricePointIntervalUnit intervalUnit;
+        private Models.IntervalUnit? intervalUnit;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "archived_at", false },
@@ -76,7 +75,7 @@ namespace AdvancedBilling.Standard.Models
             int? subscriptionId = null,
             bool? taxIncluded = null,
             int? interval = null,
-            ComponentPricePointIntervalUnit intervalUnit = null,
+            Models.IntervalUnit? intervalUnit = null,
             List<Models.ComponentCurrencyPrice> currencyPrices = null)
         {
             this.Id = id;
@@ -234,7 +233,7 @@ namespace AdvancedBilling.Standard.Models
         /// A string representing the interval unit for this component price point, either month or day. This property is only available for sites with Multifrequency enabled.
         /// </summary>
         [JsonProperty("interval_unit")]
-        public ComponentPricePointIntervalUnit IntervalUnit
+        public Models.IntervalUnit? IntervalUnit
         {
             get
             {
@@ -367,7 +366,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
             toStringOutput.Add($"this.TaxIncluded = {(this.TaxIncluded == null ? "null" : this.TaxIncluded.ToString())}");
             toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
-            toStringOutput.Add($"IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
+            toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
             toStringOutput.Add($"this.CurrencyPrices = {(this.CurrencyPrices == null ? "null" : $"[{string.Join(", ", this.CurrencyPrices)} ]")}");
 
             base.ToString(toStringOutput);

@@ -1009,7 +1009,7 @@ namespace AdvancedBilling.Standard.Controllers
         public async Task<List<Models.SubscriptionResponse>> ListSubscriptionsAsync(
                 Models.ListSubscriptionsInput input,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<List<Models.SubscriptionResponse>>()
+            => await CreateApiCall<List<Models.SubscriptionResponse>>(ArraySerialization.UnIndexed)
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions.json")
                   .WithAuth("BasicAuth")
@@ -1028,7 +1028,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("metadata", input.Metadata))
                       .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("sort", (input.Sort.HasValue) ? ApiHelper.JsonSerialize(input.Sort.Value).Trim('\"') : "signup_date"))
-                      .Query(_query => _query.Setup("include[]", input.Include?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+                      .Query(_query => _query.Setup("include", input.Include?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -1131,13 +1131,13 @@ namespace AdvancedBilling.Standard.Controllers
                 int subscriptionId,
                 List<Models.SubscriptionInclude> include = null,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.SubscriptionResponse>(ArraySerialization.Plain)
+            => await CreateApiCall<Models.SubscriptionResponse>(ArraySerialization.UnIndexed)
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}.json")
                   .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Query(_query => _query.Setup("include[]", include?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+                      .Query(_query => _query.Setup("include", include?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -1256,14 +1256,14 @@ namespace AdvancedBilling.Standard.Controllers
                 int ack,
                 List<Models.SubscriptionPurgeType> cascade = null,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>(ArraySerialization.Plain)
+            => await CreateApiCall<VoidType>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/purge.json")
                   .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Query(_query => _query.Setup("ack", ack))
-                      .Query(_query => _query.Setup("cascade[]", cascade?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+                      .Query(_query => _query.Setup("cascade", cascade?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>

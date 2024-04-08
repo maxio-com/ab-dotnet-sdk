@@ -46,14 +46,12 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Before.
         /// </summary>
         [JsonProperty("before")]
-        [JsonRequired]
         public Models.InvoicePayerChange Before { get; set; }
 
         /// <summary>
         /// Gets or sets After.
         /// </summary>
         [JsonProperty("after")]
-        [JsonRequired]
         public Models.InvoicePayerChange After { get; set; }
 
         /// <inheritdoc/>

@@ -106,10 +106,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("price_point_id", input.PricePointId).Required())
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("filter[segment_property_1_value]", input.FilterSegmentProperty1Value))
-                      .Query(_query => _query.Setup("filter[segment_property_2_value]", input.FilterSegmentProperty2Value))
-                      .Query(_query => _query.Setup("filter[segment_property_3_value]", input.FilterSegmentProperty3Value))
-                      .Query(_query => _query.Setup("filter[segment_property_4_value]", input.FilterSegmentProperty4Value))))
+                      .Query(_query => _query.Setup("filter", input.Filter))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
                   .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new EventBasedBillingListSegmentsErrorsException(_reason, _context), true)))

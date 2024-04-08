@@ -23,7 +23,7 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class SubscriptionComponent : BaseModel
     {
-        private SubscriptionComponentPricingScheme pricingScheme;
+        private Models.PricingScheme? pricingScheme;
         private string componentHandle;
         private Models.CreditType? upgradeCharge;
         private Models.CreditType? downgradeCredit;
@@ -97,7 +97,7 @@ namespace AdvancedBilling.Standard.Models
             int? unitBalance = null,
             string currency = null,
             SubscriptionComponentAllocatedQuantity allocatedQuantity = null,
-            SubscriptionComponentPricingScheme pricingScheme = null,
+            Models.PricingScheme? pricingScheme = null,
             int? componentId = null,
             string componentHandle = null,
             int? subscriptionId = null,
@@ -246,7 +246,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets PricingScheme.
         /// </summary>
         [JsonProperty("pricing_scheme")]
-        public SubscriptionComponentPricingScheme PricingScheme
+        public Models.PricingScheme? PricingScheme
         {
             get
             {
@@ -744,7 +744,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.UnitBalance = {(this.UnitBalance == null ? "null" : this.UnitBalance.ToString())}");
             toStringOutput.Add($"this.Currency = {(this.Currency == null ? "null" : this.Currency)}");
             toStringOutput.Add($"AllocatedQuantity = {(this.AllocatedQuantity == null ? "null" : this.AllocatedQuantity.ToString())}");
-            toStringOutput.Add($"PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
+            toStringOutput.Add($"this.PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"this.ComponentHandle = {(this.ComponentHandle == null ? "null" : this.ComponentHandle)}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");

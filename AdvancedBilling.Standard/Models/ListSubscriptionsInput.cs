@@ -46,7 +46,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="metadata">metadata.</param>
         /// <param name="direction">direction.</param>
         /// <param name="sort">sort.</param>
-        /// <param name="include">include[].</param>
+        /// <param name="include">include.</param>
         public ListSubscriptionsInput(
             int? page = 1,
             int? perPage = 20,
@@ -177,7 +177,7 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Allows including additional data in the response. Use in query: `include[]=self_service_page_token`.
         /// </summary>
-        [JsonProperty("include[]", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("include", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.SubscriptionListInclude> Include { get; set; }
 
         /// <inheritdoc/>
