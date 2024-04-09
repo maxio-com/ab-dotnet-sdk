@@ -12,7 +12,6 @@ namespace AdvancedBilling.Standard.Models
     using System.Threading.Tasks;
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
     using JsonSubTypes;
     using Newtonsoft.Json;
@@ -23,10 +22,10 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class CustomerChange : BaseModel
     {
-        private CustomerChangePayer payer;
-        private CustomerChangeShippingAddress shippingAddress;
-        private CustomerChangeBillingAddress billingAddress;
-        private CustomerChangeCustomFields customFields;
+        private Models.CustomerPayerChange payer;
+        private Models.AddressChange shippingAddress;
+        private Models.AddressChange billingAddress;
+        private Models.CustomerCustomFieldsChange customFields;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "payer", false },
@@ -50,10 +49,10 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="billingAddress">billing_address.</param>
         /// <param name="customFields">custom_fields.</param>
         public CustomerChange(
-            CustomerChangePayer payer = null,
-            CustomerChangeShippingAddress shippingAddress = null,
-            CustomerChangeBillingAddress billingAddress = null,
-            CustomerChangeCustomFields customFields = null)
+            Models.CustomerPayerChange payer = null,
+            Models.AddressChange shippingAddress = null,
+            Models.AddressChange billingAddress = null,
+            Models.CustomerCustomFieldsChange customFields = null)
         {
             if (payer != null)
             {
@@ -81,7 +80,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Payer.
         /// </summary>
         [JsonProperty("payer")]
-        public CustomerChangePayer Payer
+        public Models.CustomerPayerChange Payer
         {
             get
             {
@@ -99,7 +98,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets ShippingAddress.
         /// </summary>
         [JsonProperty("shipping_address")]
-        public CustomerChangeShippingAddress ShippingAddress
+        public Models.AddressChange ShippingAddress
         {
             get
             {
@@ -117,7 +116,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets BillingAddress.
         /// </summary>
         [JsonProperty("billing_address")]
-        public CustomerChangeBillingAddress BillingAddress
+        public Models.AddressChange BillingAddress
         {
             get
             {
@@ -135,7 +134,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets CustomFields.
         /// </summary>
         [JsonProperty("custom_fields")]
-        public CustomerChangeCustomFields CustomFields
+        public Models.CustomerCustomFieldsChange CustomFields
         {
             get
             {
@@ -251,10 +250,10 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"Payer = {(this.Payer == null ? "null" : this.Payer.ToString())}");
-            toStringOutput.Add($"ShippingAddress = {(this.ShippingAddress == null ? "null" : this.ShippingAddress.ToString())}");
-            toStringOutput.Add($"BillingAddress = {(this.BillingAddress == null ? "null" : this.BillingAddress.ToString())}");
-            toStringOutput.Add($"CustomFields = {(this.CustomFields == null ? "null" : this.CustomFields.ToString())}");
+            toStringOutput.Add($"this.Payer = {(this.Payer == null ? "null" : this.Payer.ToString())}");
+            toStringOutput.Add($"this.ShippingAddress = {(this.ShippingAddress == null ? "null" : this.ShippingAddress.ToString())}");
+            toStringOutput.Add($"this.BillingAddress = {(this.BillingAddress == null ? "null" : this.BillingAddress.ToString())}");
+            toStringOutput.Add($"this.CustomFields = {(this.CustomFields == null ? "null" : this.CustomFields.ToString())}");
 
             base.ToString(toStringOutput);
         }

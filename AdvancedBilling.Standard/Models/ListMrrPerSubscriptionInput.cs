@@ -32,19 +32,19 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="ListMrrPerSubscriptionInput"/> class.
         /// </summary>
-        /// <param name="filterSubscriptionIds">filter[subscription_ids].</param>
+        /// <param name="filter">filter.</param>
         /// <param name="atTime">at_time.</param>
         /// <param name="page">page.</param>
         /// <param name="perPage">per_page.</param>
         /// <param name="direction">direction.</param>
         public ListMrrPerSubscriptionInput(
-            List<int> filterSubscriptionIds = null,
+            Models.ListMrrFilter filter = null,
             string atTime = null,
             int? page = 1,
             int? perPage = 20,
             Models.Direction? direction = null)
         {
-            this.FilterSubscriptionIds = filterSubscriptionIds;
+            this.Filter = filter;
             this.AtTime = atTime;
             this.Page = page;
             this.PerPage = perPage;
@@ -52,10 +52,10 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Submit ids in order to limit results. Use in query: `filter[subscription_ids]=1,2,3`.
+        /// Filter to use for List MRR per subscription operation
         /// </summary>
-        [JsonProperty("filter[subscription_ids]", NullValueHandling = NullValueHandling.Ignore)]
-        public List<int> FilterSubscriptionIds { get; set; }
+        [JsonProperty("filter", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.ListMrrFilter Filter { get; set; }
 
         /// <summary>
         /// Submit a timestamp in ISO8601 format to request MRR for a historic time. Use in query: `at_time=2022-01-10T10:00:00-05:00`.
@@ -105,7 +105,7 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is ListMrrPerSubscriptionInput other &&                ((this.FilterSubscriptionIds == null && other.FilterSubscriptionIds == null) || (this.FilterSubscriptionIds?.Equals(other.FilterSubscriptionIds) == true)) &&
+            return obj is ListMrrPerSubscriptionInput other &&                ((this.Filter == null && other.Filter == null) || (this.Filter?.Equals(other.Filter) == true)) &&
                 ((this.AtTime == null && other.AtTime == null) || (this.AtTime?.Equals(other.AtTime) == true)) &&
                 ((this.Page == null && other.Page == null) || (this.Page?.Equals(other.Page) == true)) &&
                 ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true)) &&
@@ -118,7 +118,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.FilterSubscriptionIds = {(this.FilterSubscriptionIds == null ? "null" : $"[{string.Join(", ", this.FilterSubscriptionIds)} ]")}");
+            toStringOutput.Add($"this.Filter = {(this.Filter == null ? "null" : this.Filter.ToString())}");
             toStringOutput.Add($"this.AtTime = {(this.AtTime == null ? "null" : this.AtTime)}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");

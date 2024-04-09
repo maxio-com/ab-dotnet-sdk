@@ -120,7 +120,6 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Unique identifier for the credit note. It is generated automatically by Chargify and has the prefix "cn_" followed by alphanumeric characters.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("uid", NullValueHandling = NullValueHandling.Ignore)]
         public string Uid { get; set; }
 
@@ -146,7 +145,6 @@ namespace AdvancedBilling.Standard.Models
         /// A unique, identifying string that appears on the credit note and in places it is referenced.
         /// While the UID is long and not appropriate to show to customers, the number is usually shorter and consumable by the customer and the merchant alike.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("number", NullValueHandling = NullValueHandling.Ignore)]
         public string Number { get; set; }
 
@@ -182,14 +180,12 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The ISO 4217 currency code (3 character string) representing the currency of the credit note amount fields.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("currency", NullValueHandling = NullValueHandling.Ignore)]
         public string Currency { get; set; }
 
         /// <summary>
         /// The memo printed on credit note, which is a description of the reason for the credit.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("memo", NullValueHandling = NullValueHandling.Ignore)]
         public string Memo { get; set; }
 
@@ -220,42 +216,36 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Subtotal of the credit note, which is the sum of all line items before discounts or taxes. Note that this is a positive amount representing the credit back to the customer.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("subtotal_amount", NullValueHandling = NullValueHandling.Ignore)]
         public string SubtotalAmount { get; set; }
 
         /// <summary>
         /// Total discount applied to the credit note. Note that this is a positive amount representing the discount amount being credited back to the customer (i.e. a credit on an earlier discount). For example, if the original purchase was $1.00 and the original discount was $0.10, a credit of $0.50 of the original purchase (half) would have a discount credit of $0.05 (also half).
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("discount_amount", NullValueHandling = NullValueHandling.Ignore)]
         public string DiscountAmount { get; set; }
 
         /// <summary>
         /// Total tax of the credit note. Note that this is a positive amount representing a previously taxex amount being credited back to the customer (i.e. a credit of an earlier tax). For example, if the original purchase was $1.00 and the original tax was $0.10, a credit of $0.50 of the original purchase (half) would also have a tax credit of $0.05 (also half).
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("tax_amount", NullValueHandling = NullValueHandling.Ignore)]
         public string TaxAmount { get; set; }
 
         /// <summary>
         /// The credit note total, which is `subtotal_amount - discount_amount + tax_amount`.'
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("total_amount", NullValueHandling = NullValueHandling.Ignore)]
         public string TotalAmount { get; set; }
 
         /// <summary>
         /// The amount of the credit note that has already been applied to invoices.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("applied_amount", NullValueHandling = NullValueHandling.Ignore)]
         public string AppliedAmount { get; set; }
 
         /// <summary>
         /// The amount of the credit note remaining to be applied to invoices, which is `total_amount - applied_amount`.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("remaining_amount", NullValueHandling = NullValueHandling.Ignore)]
         public string RemainingAmount { get; set; }
 

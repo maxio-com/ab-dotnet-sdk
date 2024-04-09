@@ -12,7 +12,6 @@ namespace AdvancedBilling.Standard.Models
     using System.Threading.Tasks;
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
     using JsonSubTypes;
     using Newtonsoft.Json;
@@ -27,7 +26,7 @@ namespace AdvancedBilling.Standard.Models
         private int? productVersion;
         private int? componentId;
         private int? pricePointId;
-        private InvoiceLineItemComponentCostData2 componentCostData;
+        private Models.InvoiceLineItemComponentCostData componentCostData;
         private int? productPricePointId;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
@@ -90,7 +89,7 @@ namespace AdvancedBilling.Standard.Models
             int? componentId = null,
             int? pricePointId = null,
             bool? hide = null,
-            InvoiceLineItemComponentCostData2 componentCostData = null,
+            Models.InvoiceLineItemComponentCostData componentCostData = null,
             int? productPricePointId = null,
             bool? customItem = null,
             string kind = null)
@@ -318,7 +317,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets ComponentCostData.
         /// </summary>
         [JsonProperty("component_cost_data")]
-        public InvoiceLineItemComponentCostData2 ComponentCostData
+        public Models.InvoiceLineItemComponentCostData ComponentCostData
         {
             get
             {
@@ -534,7 +533,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
             toStringOutput.Add($"this.Hide = {(this.Hide == null ? "null" : this.Hide.ToString())}");
-            toStringOutput.Add($"ComponentCostData = {(this.ComponentCostData == null ? "null" : this.ComponentCostData.ToString())}");
+            toStringOutput.Add($"this.ComponentCostData = {(this.ComponentCostData == null ? "null" : this.ComponentCostData.ToString())}");
             toStringOutput.Add($"this.ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
             toStringOutput.Add($"this.CustomItem = {(this.CustomItem == null ? "null" : this.CustomItem.ToString())}");
             toStringOutput.Add($"this.Kind = {(this.Kind == null ? "null" : this.Kind)}");

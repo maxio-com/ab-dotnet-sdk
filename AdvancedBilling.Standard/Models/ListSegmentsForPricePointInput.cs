@@ -36,28 +36,19 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="pricePointId">price_point_id.</param>
         /// <param name="page">page.</param>
         /// <param name="perPage">per_page.</param>
-        /// <param name="filterSegmentProperty1Value">filter[segment_property_1_value].</param>
-        /// <param name="filterSegmentProperty2Value">filter[segment_property_2_value].</param>
-        /// <param name="filterSegmentProperty3Value">filter[segment_property_3_value].</param>
-        /// <param name="filterSegmentProperty4Value">filter[segment_property_4_value].</param>
+        /// <param name="filter">filter.</param>
         public ListSegmentsForPricePointInput(
             string componentId,
             string pricePointId,
             int? page = 1,
             int? perPage = 30,
-            string filterSegmentProperty1Value = null,
-            string filterSegmentProperty2Value = null,
-            string filterSegmentProperty3Value = null,
-            string filterSegmentProperty4Value = null)
+            Models.ListSegmentsFilter filter = null)
         {
             this.ComponentId = componentId;
             this.PricePointId = pricePointId;
             this.Page = page;
             this.PerPage = perPage;
-            this.FilterSegmentProperty1Value = filterSegmentProperty1Value;
-            this.FilterSegmentProperty2Value = filterSegmentProperty2Value;
-            this.FilterSegmentProperty3Value = filterSegmentProperty3Value;
-            this.FilterSegmentProperty4Value = filterSegmentProperty4Value;
+            this.Filter = filter;
         }
 
         /// <summary>
@@ -87,28 +78,10 @@ namespace AdvancedBilling.Standard.Models
         public int? PerPage { get; set; }
 
         /// <summary>
-        /// The value passed here would be used to filter segments. Pass a value related to `segment_property_1` on attached Metric. If empty string is passed, this filter would be rejected. Use in query `filter[segment_property_1_value]=EU`.
+        /// Filter to use for List Segments for a Price Point operation
         /// </summary>
-        [JsonProperty("filter[segment_property_1_value]", NullValueHandling = NullValueHandling.Ignore)]
-        public string FilterSegmentProperty1Value { get; set; }
-
-        /// <summary>
-        /// The value passed here would be used to filter segments. Pass a value related to `segment_property_2` on attached Metric. If empty string is passed, this filter would be rejected.
-        /// </summary>
-        [JsonProperty("filter[segment_property_2_value]", NullValueHandling = NullValueHandling.Ignore)]
-        public string FilterSegmentProperty2Value { get; set; }
-
-        /// <summary>
-        /// The value passed here would be used to filter segments. Pass a value related to `segment_property_3` on attached Metric. If empty string is passed, this filter would be rejected.
-        /// </summary>
-        [JsonProperty("filter[segment_property_3_value]", NullValueHandling = NullValueHandling.Ignore)]
-        public string FilterSegmentProperty3Value { get; set; }
-
-        /// <summary>
-        /// The value passed here would be used to filter segments. Pass a value related to `segment_property_4` on attached Metric. If empty string is passed, this filter would be rejected.
-        /// </summary>
-        [JsonProperty("filter[segment_property_4_value]", NullValueHandling = NullValueHandling.Ignore)]
-        public string FilterSegmentProperty4Value { get; set; }
+        [JsonProperty("filter", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.ListSegmentsFilter Filter { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -136,10 +109,7 @@ namespace AdvancedBilling.Standard.Models
                 ((this.PricePointId == null && other.PricePointId == null) || (this.PricePointId?.Equals(other.PricePointId) == true)) &&
                 ((this.Page == null && other.Page == null) || (this.Page?.Equals(other.Page) == true)) &&
                 ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true)) &&
-                ((this.FilterSegmentProperty1Value == null && other.FilterSegmentProperty1Value == null) || (this.FilterSegmentProperty1Value?.Equals(other.FilterSegmentProperty1Value) == true)) &&
-                ((this.FilterSegmentProperty2Value == null && other.FilterSegmentProperty2Value == null) || (this.FilterSegmentProperty2Value?.Equals(other.FilterSegmentProperty2Value) == true)) &&
-                ((this.FilterSegmentProperty3Value == null && other.FilterSegmentProperty3Value == null) || (this.FilterSegmentProperty3Value?.Equals(other.FilterSegmentProperty3Value) == true)) &&
-                ((this.FilterSegmentProperty4Value == null && other.FilterSegmentProperty4Value == null) || (this.FilterSegmentProperty4Value?.Equals(other.FilterSegmentProperty4Value) == true));
+                ((this.Filter == null && other.Filter == null) || (this.Filter?.Equals(other.Filter) == true));
         }
         
         /// <summary>
@@ -152,10 +122,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId)}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
-            toStringOutput.Add($"this.FilterSegmentProperty1Value = {(this.FilterSegmentProperty1Value == null ? "null" : this.FilterSegmentProperty1Value)}");
-            toStringOutput.Add($"this.FilterSegmentProperty2Value = {(this.FilterSegmentProperty2Value == null ? "null" : this.FilterSegmentProperty2Value)}");
-            toStringOutput.Add($"this.FilterSegmentProperty3Value = {(this.FilterSegmentProperty3Value == null ? "null" : this.FilterSegmentProperty3Value)}");
-            toStringOutput.Add($"this.FilterSegmentProperty4Value = {(this.FilterSegmentProperty4Value == null ? "null" : this.FilterSegmentProperty4Value)}");
+            toStringOutput.Add($"this.Filter = {(this.Filter == null ? "null" : this.Filter.ToString())}");
 
             base.ToString(toStringOutput);
         }

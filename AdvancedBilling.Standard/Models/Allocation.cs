@@ -27,7 +27,7 @@ namespace AdvancedBilling.Standard.Models
         private string memo;
         private Models.CreditType? upgradeCharge;
         private Models.CreditType? downgradeCredit;
-        private AllocationPayment payment;
+        private Models.PaymentForAllocation payment;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "component_handle", false },
@@ -94,7 +94,7 @@ namespace AdvancedBilling.Standard.Models
             bool? initiateDunning = null,
             Models.CreditType? upgradeCharge = null,
             Models.CreditType? downgradeCredit = null,
-            AllocationPayment payment = null,
+            Models.PaymentForAllocation payment = null,
             DateTimeOffset? expiresAt = null,
             long? usedQuantity = null,
             long? chargeId = null)
@@ -329,7 +329,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Payment.
         /// </summary>
         [JsonProperty("payment")]
-        public AllocationPayment Payment
+        public Models.PaymentForAllocation Payment
         {
             get
             {
@@ -523,7 +523,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.InitiateDunning = {(this.InitiateDunning == null ? "null" : this.InitiateDunning.ToString())}");
             toStringOutput.Add($"this.UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
             toStringOutput.Add($"this.DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
-            toStringOutput.Add($"Payment = {(this.Payment == null ? "null" : this.Payment.ToString())}");
+            toStringOutput.Add($"this.Payment = {(this.Payment == null ? "null" : this.Payment.ToString())}");
             toStringOutput.Add($"this.ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt.ToString())}");
             toStringOutput.Add($"this.UsedQuantity = {(this.UsedQuantity == null ? "null" : this.UsedQuantity.ToString())}");
             toStringOutput.Add($"this.ChargeId = {(this.ChargeId == null ? "null" : this.ChargeId.ToString())}");

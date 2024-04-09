@@ -17,6 +17,7 @@ namespace AdvancedBilling.Standard.Controllers
     using AdvancedBilling.Standard.Http.Client;
     using AdvancedBilling.Standard.Utilities;
     using APIMatic.Core;
+    using APIMatic.Core.Http.Configuration;
     using APIMatic.Core.Types;
     using APIMatic.Core.Utilities;
     using APIMatic.Core.Utilities.Date.Xml;
@@ -121,14 +122,14 @@ namespace AdvancedBilling.Standard.Controllers
         public async Task<Models.ListSubscriptionGroupsResponse> ListSubscriptionGroupsAsync(
                 Models.ListSubscriptionGroupsInput input,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ListSubscriptionGroupsResponse>()
+            => await CreateApiCall<Models.ListSubscriptionGroupsResponse>(ArraySerialization.UnIndexed)
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/subscription_groups.json")
                   .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("include[]", input.Include?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+                      .Query(_query => _query.Setup("include", input.Include?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -157,18 +158,18 @@ namespace AdvancedBilling.Standard.Controllers
                 string uid,
                 List<Models.SubscriptionGroupInclude> include = null,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.FullSubscriptionGroupResponse>()
+            => await CreateApiCall<Models.FullSubscriptionGroupResponse>(ArraySerialization.UnIndexed)
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/subscription_groups/{uid}.json")
                   .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("uid", uid).Required())
-                      .Query(_query => _query.Setup("include[]", include?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+                      .Query(_query => _query.Setup("include", include?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Use this endpoint to update subscription group members.
-        /// `"member_ids": []` should contain an array of both subscription IDs to set as group members and subscription IDs already present in the groups. Not including them will result in removing them from subscription group. To clean up members, just leave the array empty.
+        /// `"member_ids"` should contain an array of both subscription IDs to set as group members and subscription IDs already present in the groups. Not including them will result in removing them from subscription group. To clean up members, just leave the array empty.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
         /// <param name="body">Optional parameter: Example: .</param>
@@ -180,7 +181,7 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// Use this endpoint to update subscription group members.
-        /// `"member_ids": []` should contain an array of both subscription IDs to set as group members and subscription IDs already present in the groups. Not including them will result in removing them from subscription group. To clean up members, just leave the array empty.
+        /// `"member_ids"` should contain an array of both subscription IDs to set as group members and subscription IDs already present in the groups. Not including them will result in removing them from subscription group. To clean up members, just leave the array empty.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
         /// <param name="body">Optional parameter: Example: .</param>

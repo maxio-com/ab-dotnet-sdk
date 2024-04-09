@@ -40,8 +40,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="includeArchived">include_archived.</param>
         /// <param name="page">page.</param>
         /// <param name="perPage">per_page.</param>
-        /// <param name="filterIds">filter[ids].</param>
-        /// <param name="filterUseSiteExchangeRate">filter[use_site_exchange_rate].</param>
+        /// <param name="filter">filter.</param>
         public ListComponentsInput(
             Models.BasicDateField? dateField = null,
             string startDate = null,
@@ -51,8 +50,7 @@ namespace AdvancedBilling.Standard.Models
             bool? includeArchived = null,
             int? page = 1,
             int? perPage = 20,
-            List<string> filterIds = null,
-            bool? filterUseSiteExchangeRate = null)
+            Models.ListComponentsFilter filter = null)
         {
             this.DateField = dateField;
             this.StartDate = startDate;
@@ -62,8 +60,7 @@ namespace AdvancedBilling.Standard.Models
             this.IncludeArchived = includeArchived;
             this.Page = page;
             this.PerPage = perPage;
-            this.FilterIds = filterIds;
-            this.FilterUseSiteExchangeRate = filterUseSiteExchangeRate;
+            this.Filter = filter;
         }
 
         /// <summary>
@@ -117,16 +114,10 @@ namespace AdvancedBilling.Standard.Models
         public int? PerPage { get; set; }
 
         /// <summary>
-        /// Allows fetching components with matching id based on provided value. Use in query `filter[ids]=1,2,3`.
+        /// Filter to use for List Components operations
         /// </summary>
-        [JsonProperty("filter[ids]", NullValueHandling = NullValueHandling.Ignore)]
-        public List<string> FilterIds { get; set; }
-
-        /// <summary>
-        /// Allows fetching components with matching use_site_exchange_rate based on provided value (refers to default price point). Use in query `filter[use_site_exchange_rate]=true`.
-        /// </summary>
-        [JsonProperty("filter[use_site_exchange_rate]", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? FilterUseSiteExchangeRate { get; set; }
+        [JsonProperty("filter", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.ListComponentsFilter Filter { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -158,8 +149,7 @@ namespace AdvancedBilling.Standard.Models
                 ((this.IncludeArchived == null && other.IncludeArchived == null) || (this.IncludeArchived?.Equals(other.IncludeArchived) == true)) &&
                 ((this.Page == null && other.Page == null) || (this.Page?.Equals(other.Page) == true)) &&
                 ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true)) &&
-                ((this.FilterIds == null && other.FilterIds == null) || (this.FilterIds?.Equals(other.FilterIds) == true)) &&
-                ((this.FilterUseSiteExchangeRate == null && other.FilterUseSiteExchangeRate == null) || (this.FilterUseSiteExchangeRate?.Equals(other.FilterUseSiteExchangeRate) == true));
+                ((this.Filter == null && other.Filter == null) || (this.Filter?.Equals(other.Filter) == true));
         }
         
         /// <summary>
@@ -176,8 +166,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.IncludeArchived = {(this.IncludeArchived == null ? "null" : this.IncludeArchived.ToString())}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
-            toStringOutput.Add($"this.FilterIds = {(this.FilterIds == null ? "null" : $"[{string.Join(", ", this.FilterIds)} ]")}");
-            toStringOutput.Add($"this.FilterUseSiteExchangeRate = {(this.FilterUseSiteExchangeRate == null ? "null" : this.FilterUseSiteExchangeRate.ToString())}");
+            toStringOutput.Add($"this.Filter = {(this.Filter == null ? "null" : this.Filter.ToString())}");
 
             base.ToString(toStringOutput);
         }

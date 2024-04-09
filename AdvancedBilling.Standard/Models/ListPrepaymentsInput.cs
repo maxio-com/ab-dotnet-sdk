@@ -35,23 +35,17 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="subscriptionId">subscription_id.</param>
         /// <param name="page">page.</param>
         /// <param name="perPage">per_page.</param>
-        /// <param name="filterDateField">filter[date_field].</param>
-        /// <param name="filterStartDate">filter[start_date].</param>
-        /// <param name="filterEndDate">filter[end_date].</param>
+        /// <param name="filter">filter.</param>
         public ListPrepaymentsInput(
             int subscriptionId,
             int? page = 1,
             int? perPage = 20,
-            Models.BasicDateField? filterDateField = null,
-            DateTime? filterStartDate = null,
-            DateTime? filterEndDate = null)
+            Models.ListPrepaymentsFilter filter = null)
         {
             this.SubscriptionId = subscriptionId;
             this.Page = page;
             this.PerPage = perPage;
-            this.FilterDateField = filterDateField;
-            this.FilterStartDate = filterStartDate;
-            this.FilterEndDate = filterEndDate;
+            this.Filter = filter;
         }
 
         /// <summary>
@@ -75,24 +69,10 @@ namespace AdvancedBilling.Standard.Models
         public int? PerPage { get; set; }
 
         /// <summary>
-        /// The type of filter you would like to apply to your search. created_at - Time when prepayment was created. application_at - Time when prepayment was applied to invoice. Use in query `filter[date_field]=created_at`.
+        /// Filter to use for List Prepayments operations
         /// </summary>
-        [JsonProperty("filter[date_field]", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.BasicDateField? FilterDateField { get; set; }
-
-        /// <summary>
-        /// The start date (format YYYY-MM-DD) with which to filter the date_field. Returns prepayments with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. Use in query `filter[start_date]=2011-12-15`.
-        /// </summary>
-        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
-        [JsonProperty("filter[start_date]", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime? FilterStartDate { get; set; }
-
-        /// <summary>
-        /// The end date (format YYYY-MM-DD) with which to filter the date_field. Returns prepayments with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. Use in query `filter[end_date]=2011-12-15`.
-        /// </summary>
-        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
-        [JsonProperty("filter[end_date]", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime? FilterEndDate { get; set; }
+        [JsonProperty("filter", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.ListPrepaymentsFilter Filter { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -119,9 +99,7 @@ namespace AdvancedBilling.Standard.Models
             return obj is ListPrepaymentsInput other &&                this.SubscriptionId.Equals(other.SubscriptionId) &&
                 ((this.Page == null && other.Page == null) || (this.Page?.Equals(other.Page) == true)) &&
                 ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true)) &&
-                ((this.FilterDateField == null && other.FilterDateField == null) || (this.FilterDateField?.Equals(other.FilterDateField) == true)) &&
-                ((this.FilterStartDate == null && other.FilterStartDate == null) || (this.FilterStartDate?.Equals(other.FilterStartDate) == true)) &&
-                ((this.FilterEndDate == null && other.FilterEndDate == null) || (this.FilterEndDate?.Equals(other.FilterEndDate) == true));
+                ((this.Filter == null && other.Filter == null) || (this.Filter?.Equals(other.Filter) == true));
         }
         
         /// <summary>
@@ -133,9 +111,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.SubscriptionId = {this.SubscriptionId}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
-            toStringOutput.Add($"this.FilterDateField = {(this.FilterDateField == null ? "null" : this.FilterDateField.ToString())}");
-            toStringOutput.Add($"this.FilterStartDate = {(this.FilterStartDate == null ? "null" : this.FilterStartDate.ToString())}");
-            toStringOutput.Add($"this.FilterEndDate = {(this.FilterEndDate == null ? "null" : this.FilterEndDate.ToString())}");
+            toStringOutput.Add($"this.Filter = {(this.Filter == null ? "null" : this.Filter.ToString())}");
 
             base.ToString(toStringOutput);
         }

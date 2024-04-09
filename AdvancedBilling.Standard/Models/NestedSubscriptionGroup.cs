@@ -51,7 +51,6 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The UID for the group
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("uid", NullValueHandling = NullValueHandling.Ignore)]
         public string Uid { get; set; }
 

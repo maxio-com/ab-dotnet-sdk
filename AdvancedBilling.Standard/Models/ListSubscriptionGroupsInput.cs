@@ -34,7 +34,7 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         /// <param name="page">page.</param>
         /// <param name="perPage">per_page.</param>
-        /// <param name="include">include[].</param>
+        /// <param name="include">include.</param>
         public ListSubscriptionGroupsInput(
             int? page = 1,
             int? perPage = 20,
@@ -63,7 +63,7 @@ namespace AdvancedBilling.Standard.Models
         /// A list of additional information to include in the response. The following values are supported:
         /// - `account_balances`: Account balance information for the subscription groups. Use in query: `include[]=account_balances`
         /// </summary>
-        [JsonProperty("include[]", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("include", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.SubscriptionGroupsListInclude> Include { get; set; }
 
         /// <inheritdoc/>

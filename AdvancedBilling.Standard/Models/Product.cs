@@ -12,7 +12,6 @@ namespace AdvancedBilling.Standard.Models
     using System.Threading.Tasks;
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
     using JsonSubTypes;
     using Newtonsoft.Json;
@@ -27,11 +26,11 @@ namespace AdvancedBilling.Standard.Models
         private string description;
         private string accountingCode;
         private int? expirationInterval;
-        private ProductExpirationIntervalUnit expirationIntervalUnit;
+        private Models.ExtendedIntervalUnit? expirationIntervalUnit;
         private long? initialChargeInCents;
         private long? trialPriceInCents;
         private int? trialInterval;
-        private ProductTrialIntervalUnit trialIntervalUnit;
+        private Models.IntervalUnit? trialIntervalUnit;
         private DateTimeOffset? archivedAt;
         private string returnParams;
         private string updateReturnUrl;
@@ -116,7 +115,7 @@ namespace AdvancedBilling.Standard.Models
             string accountingCode = null,
             bool? requestCreditCard = null,
             int? expirationInterval = null,
-            ProductExpirationIntervalUnit expirationIntervalUnit = null,
+            Models.ExtendedIntervalUnit? expirationIntervalUnit = null,
             DateTimeOffset? createdAt = null,
             DateTimeOffset? updatedAt = null,
             long? priceInCents = null,
@@ -125,7 +124,7 @@ namespace AdvancedBilling.Standard.Models
             long? initialChargeInCents = null,
             long? trialPriceInCents = null,
             int? trialInterval = null,
-            ProductTrialIntervalUnit trialIntervalUnit = null,
+            Models.IntervalUnit? trialIntervalUnit = null,
             DateTimeOffset? archivedAt = null,
             bool? requireCreditCard = null,
             string returnParams = null,
@@ -348,7 +347,7 @@ namespace AdvancedBilling.Standard.Models
         /// A string representing the expiration interval unit for this product, either month or day
         /// </summary>
         [JsonProperty("expiration_interval_unit")]
-        public ProductExpirationIntervalUnit ExpirationIntervalUnit
+        public Models.ExtendedIntervalUnit? ExpirationIntervalUnit
         {
             get
             {
@@ -452,7 +451,7 @@ namespace AdvancedBilling.Standard.Models
         /// A string representing the trial interval unit for this product, either month or day
         /// </summary>
         [JsonProperty("trial_interval_unit")]
-        public ProductTrialIntervalUnit TrialIntervalUnit
+        public Models.IntervalUnit? TrialIntervalUnit
         {
             get
             {
@@ -1046,7 +1045,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.AccountingCode = {(this.AccountingCode == null ? "null" : this.AccountingCode)}");
             toStringOutput.Add($"this.RequestCreditCard = {(this.RequestCreditCard == null ? "null" : this.RequestCreditCard.ToString())}");
             toStringOutput.Add($"this.ExpirationInterval = {(this.ExpirationInterval == null ? "null" : this.ExpirationInterval.ToString())}");
-            toStringOutput.Add($"ExpirationIntervalUnit = {(this.ExpirationIntervalUnit == null ? "null" : this.ExpirationIntervalUnit.ToString())}");
+            toStringOutput.Add($"this.ExpirationIntervalUnit = {(this.ExpirationIntervalUnit == null ? "null" : this.ExpirationIntervalUnit.ToString())}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
             toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
             toStringOutput.Add($"this.PriceInCents = {(this.PriceInCents == null ? "null" : this.PriceInCents.ToString())}");
@@ -1055,7 +1054,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.InitialChargeInCents = {(this.InitialChargeInCents == null ? "null" : this.InitialChargeInCents.ToString())}");
             toStringOutput.Add($"this.TrialPriceInCents = {(this.TrialPriceInCents == null ? "null" : this.TrialPriceInCents.ToString())}");
             toStringOutput.Add($"this.TrialInterval = {(this.TrialInterval == null ? "null" : this.TrialInterval.ToString())}");
-            toStringOutput.Add($"TrialIntervalUnit = {(this.TrialIntervalUnit == null ? "null" : this.TrialIntervalUnit.ToString())}");
+            toStringOutput.Add($"this.TrialIntervalUnit = {(this.TrialIntervalUnit == null ? "null" : this.TrialIntervalUnit.ToString())}");
             toStringOutput.Add($"this.ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt.ToString())}");
             toStringOutput.Add($"this.RequireCreditCard = {(this.RequireCreditCard == null ? "null" : this.RequireCreditCard.ToString())}");
             toStringOutput.Add($"this.ReturnParams = {(this.ReturnParams == null ? "null" : this.ReturnParams)}");

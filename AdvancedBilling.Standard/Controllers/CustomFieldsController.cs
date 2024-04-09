@@ -273,7 +273,7 @@ namespace AdvancedBilling.Standard.Controllers
         public async Task<Models.PaginatedMetadata> ListMetadataAsync(
                 Models.ListMetadataInput input,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.PaginatedMetadata>(ArraySerialization.Plain)
+            => await CreateApiCall<Models.PaginatedMetadata>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/{resource_type}/{resource_id}/metadata.json")
                   .WithAuth("BasicAuth")
@@ -382,7 +382,7 @@ namespace AdvancedBilling.Standard.Controllers
                 string name = null,
                 List<string> names = null,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>(ArraySerialization.Plain)
+            => await CreateApiCall<VoidType>(ArraySerialization.UnIndexed)
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/{resource_type}/{resource_id}/metadata.json")
                   .WithAuth("BasicAuth")
@@ -390,7 +390,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("resource_type", ApiHelper.JsonSerialize(resourceType).Trim('\"')))
                       .Template(_template => _template.Setup("resource_id", resourceId))
                       .Query(_query => _query.Setup("name", name))
-                      .Query(_query => _query.Setup("names[]", names))))
+                      .Query(_query => _query.Setup("names", names))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
@@ -429,7 +429,7 @@ namespace AdvancedBilling.Standard.Controllers
         public async Task<Models.PaginatedMetadata> ListMetadataForResourceTypeAsync(
                 Models.ListMetadataForResourceTypeInput input,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.PaginatedMetadata>()
+            => await CreateApiCall<Models.PaginatedMetadata>(ArraySerialization.UnIndexed)
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Get, "/{resource_type}/metadata.json")
                   .WithAuth("BasicAuth")
@@ -443,7 +443,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("start_datetime", input.StartDatetime.HasValue ? input.StartDatetime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))
                       .Query(_query => _query.Setup("end_datetime", input.EndDatetime.HasValue ? input.EndDatetime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))
                       .Query(_query => _query.Setup("with_deleted", input.WithDeleted))
-                      .Query(_query => _query.Setup("resource_ids[]", input.ResourceIds))
+                      .Query(_query => _query.Setup("resource_ids", input.ResourceIds))
                       .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }

@@ -111,7 +111,6 @@ catch (ApiException e)
   {
     "name": "Color",
     "scope": {
-      "hosted": [],
       "csv": "0",
       "statements": "0",
       "invoices": "0",
@@ -124,7 +123,6 @@ catch (ApiException e)
   {
     "name": "Brand",
     "scope": {
-      "hosted": [],
       "csv": "0",
       "statements": "0",
       "invoices": "0",
@@ -543,7 +541,7 @@ DeleteMetadataAsync(
 ```csharp
 ResourceType resourceType = ResourceType.Subscriptions;
 int resourceId = 60;
-Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')try
+try
 {
     await customFieldsController.DeleteMetadataAsync(
         resourceType,
@@ -614,7 +612,7 @@ ListMetadataForResourceTypeInput listMetadataForResourceTypeInput = new ListMeta
     Page = 2,
     PerPage = 50,
     DateField = BasicDateField.UpdatedAt,
-Liquid error: Value cannot be null. (Parameter 'key')};
+};
 
 try
 {

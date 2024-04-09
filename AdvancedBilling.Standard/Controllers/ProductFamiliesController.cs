@@ -60,14 +60,13 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))
                       .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
+                      .Query(_query => _query.Setup("filter", input.Filter))
                       .Query(_query => _query.Setup("start_date", input.StartDate))
                       .Query(_query => _query.Setup("end_date", input.EndDate))
                       .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
                       .Query(_query => _query.Setup("end_datetime", input.EndDatetime))
                       .Query(_query => _query.Setup("include_archived", input.IncludeArchived))
-                      .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("filter[prepaid_product_price_point][product_price_point_id]", (input.FilterPrepaidProductPricePointProductPricePointId.HasValue) ? ApiHelper.JsonSerialize(input.FilterPrepaidProductPricePointProductPricePointId.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("filter[use_site_exchange_rate]", input.FilterUseSiteExchangeRate))))
+                      .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);

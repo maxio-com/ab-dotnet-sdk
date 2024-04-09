@@ -12,7 +12,6 @@ namespace AdvancedBilling.Standard.Models
     using System.Threading.Tasks;
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
     using JsonSubTypes;
     using Newtonsoft.Json;
@@ -23,7 +22,7 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class RecordPaymentResponse : BaseModel
     {
-        private RecordPaymentResponsePrepayment prepayment;
+        private Models.InvoicePrePayment prepayment;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "prepayment", false },
@@ -43,7 +42,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="prepayment">prepayment.</param>
         public RecordPaymentResponse(
             List<Models.PaidInvoice> paidInvoices = null,
-            RecordPaymentResponsePrepayment prepayment = null)
+            Models.InvoicePrePayment prepayment = null)
         {
             this.PaidInvoices = paidInvoices;
             if (prepayment != null)
@@ -63,7 +62,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Prepayment.
         /// </summary>
         [JsonProperty("prepayment")]
-        public RecordPaymentResponsePrepayment Prepayment
+        public Models.InvoicePrePayment Prepayment
         {
             get
             {
@@ -127,7 +126,7 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PaidInvoices = {(this.PaidInvoices == null ? "null" : $"[{string.Join(", ", this.PaidInvoices)} ]")}");
-            toStringOutput.Add($"Prepayment = {(this.Prepayment == null ? "null" : this.Prepayment.ToString())}");
+            toStringOutput.Add($"this.Prepayment = {(this.Prepayment == null ? "null" : this.Prepayment.ToString())}");
 
             base.ToString(toStringOutput);
         }

@@ -12,7 +12,6 @@ namespace AdvancedBilling.Standard.Models
     using System.Threading.Tasks;
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
     using JsonSubTypes;
     using Newtonsoft.Json;
@@ -33,7 +32,7 @@ namespace AdvancedBilling.Standard.Models
         private DateTimeOffset? delayedCancelAt;
         private string couponCode;
         private string snapDay;
-        private SubscriptionGroup2 mGroup;
+        private Models.NestedSubscriptionGroup mGroup;
         private string paymentType;
         private string referralCode;
         private int? nextProductId;
@@ -189,7 +188,7 @@ namespace AdvancedBilling.Standard.Models
             Models.Customer customer = null,
             Models.Product product = null,
             Models.CreditCardPaymentProfile creditCard = null,
-            SubscriptionGroup2 mGroup = null,
+            Models.NestedSubscriptionGroup mGroup = null,
             Models.BankAccountPaymentProfile bankAccount = null,
             string paymentType = null,
             string referralCode = null,
@@ -735,7 +734,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets MGroup.
         /// </summary>
         [JsonProperty("group")]
-        public SubscriptionGroup2 MGroup
+        public Models.NestedSubscriptionGroup MGroup
         {
             get
             {
@@ -945,7 +944,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The balance in cents plus the estimated renewal amount in cents.
+        /// The balance in cents plus the estimated renewal amount in cents. Returned ONLY for readSubscription operation as it's compute intensive operation.
         /// </summary>
         [JsonProperty("current_billing_amount_in_cents", NullValueHandling = NullValueHandling.Ignore)]
         public long? CurrentBillingAmountInCents { get; set; }
@@ -1809,7 +1808,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Customer = {(this.Customer == null ? "null" : this.Customer.ToString())}");
             toStringOutput.Add($"this.Product = {(this.Product == null ? "null" : this.Product.ToString())}");
             toStringOutput.Add($"this.CreditCard = {(this.CreditCard == null ? "null" : this.CreditCard.ToString())}");
-            toStringOutput.Add($"MGroup = {(this.MGroup == null ? "null" : this.MGroup.ToString())}");
+            toStringOutput.Add($"this.MGroup = {(this.MGroup == null ? "null" : this.MGroup.ToString())}");
             toStringOutput.Add($"this.BankAccount = {(this.BankAccount == null ? "null" : this.BankAccount.ToString())}");
             toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType)}");
             toStringOutput.Add($"this.ReferralCode = {(this.ReferralCode == null ? "null" : this.ReferralCode)}");

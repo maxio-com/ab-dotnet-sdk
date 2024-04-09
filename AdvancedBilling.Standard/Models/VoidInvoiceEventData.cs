@@ -12,7 +12,6 @@ namespace AdvancedBilling.Standard.Models
     using System.Threading.Tasks;
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
     using JsonSubTypes;
     using Newtonsoft.Json;
@@ -42,7 +41,7 @@ namespace AdvancedBilling.Standard.Models
         public VoidInvoiceEventData(
             bool isAdvanceInvoice,
             string reason,
-            VoidInvoiceEventDataCreditNoteAttributes creditNoteAttributes = null,
+            Models.CreditNote creditNoteAttributes = null,
             string memo = null,
             string appliedAmount = null,
             DateTimeOffset? transactionTime = null)
@@ -59,7 +58,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets CreditNoteAttributes.
         /// </summary>
         [JsonProperty("credit_note_attributes", NullValueHandling = NullValueHandling.Include)]
-        public VoidInvoiceEventDataCreditNoteAttributes CreditNoteAttributes { get; set; }
+        public Models.CreditNote CreditNoteAttributes { get; set; }
 
         /// <summary>
         /// The memo provided during invoice voiding.
@@ -133,7 +132,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"CreditNoteAttributes = {(this.CreditNoteAttributes == null ? "null" : this.CreditNoteAttributes.ToString())}");
+            toStringOutput.Add($"this.CreditNoteAttributes = {(this.CreditNoteAttributes == null ? "null" : this.CreditNoteAttributes.ToString())}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.AppliedAmount = {(this.AppliedAmount == null ? "null" : this.AppliedAmount)}");
             toStringOutput.Add($"this.TransactionTime = {(this.TransactionTime == null ? "null" : this.TransactionTime.ToString())}");

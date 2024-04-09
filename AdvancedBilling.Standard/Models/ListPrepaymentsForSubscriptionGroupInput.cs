@@ -33,25 +33,19 @@ namespace AdvancedBilling.Standard.Models
         /// Initializes a new instance of the <see cref="ListPrepaymentsForSubscriptionGroupInput"/> class.
         /// </summary>
         /// <param name="uid">uid.</param>
-        /// <param name="filterDateField">filter[date_field].</param>
-        /// <param name="filterEndDate">filter[end_date].</param>
-        /// <param name="filterStartDate">filter[start_date].</param>
         /// <param name="page">page.</param>
         /// <param name="perPage">per_page.</param>
+        /// <param name="filter">filter.</param>
         public ListPrepaymentsForSubscriptionGroupInput(
             string uid,
-            Models.ListSubscriptionGroupPrepaymentDateField? filterDateField = null,
-            DateTime? filterEndDate = null,
-            DateTime? filterStartDate = null,
             int? page = 1,
-            int? perPage = 20)
+            int? perPage = 20,
+            Models.ListPrepaymentsFilter filter = null)
         {
             this.Uid = uid;
-            this.FilterDateField = filterDateField;
-            this.FilterEndDate = filterEndDate;
-            this.FilterStartDate = filterStartDate;
             this.Page = page;
             this.PerPage = perPage;
+            this.Filter = filter;
         }
 
         /// <summary>
@@ -59,31 +53,6 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("uid")]
         public string Uid { get; set; }
-
-        /// <summary>
-        /// The type of filter you would like to apply to your search.
-        /// Use in query: `filter[date_field]=created_at`.
-        /// </summary>
-        [JsonProperty("filter[date_field]", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.ListSubscriptionGroupPrepaymentDateField? FilterDateField { get; set; }
-
-        /// <summary>
-        /// The end date (format YYYY-MM-DD) with which to filter the date_field.
-        /// Returns prepayments with a timestamp up to and including 11:59:59PM in your site's time zone on the date specified.
-        /// Use in query: `filter[end_date]=2011-12-15`.
-        /// </summary>
-        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
-        [JsonProperty("filter[end_date]", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime? FilterEndDate { get; set; }
-
-        /// <summary>
-        /// The start date (format YYYY-MM-DD) with which to filter the date_field.
-        /// Returns prepayments with a timestamp at or after midnight (12:00:00 AM) in your site's time zone on the date specified.
-        /// Use in query: `filter[start_date]=2011-12-15`.
-        /// </summary>
-        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
-        [JsonProperty("filter[start_date]", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime? FilterStartDate { get; set; }
 
         /// <summary>
         /// Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.
@@ -98,6 +67,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("per_page", NullValueHandling = NullValueHandling.Ignore)]
         public int? PerPage { get; set; }
+
+        /// <summary>
+        /// Filter to use for List Prepayments operations
+        /// </summary>
+        [JsonProperty("filter", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.ListPrepaymentsFilter Filter { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -122,11 +97,9 @@ namespace AdvancedBilling.Standard.Models
                 return true;
             }
             return obj is ListPrepaymentsForSubscriptionGroupInput other &&                ((this.Uid == null && other.Uid == null) || (this.Uid?.Equals(other.Uid) == true)) &&
-                ((this.FilterDateField == null && other.FilterDateField == null) || (this.FilterDateField?.Equals(other.FilterDateField) == true)) &&
-                ((this.FilterEndDate == null && other.FilterEndDate == null) || (this.FilterEndDate?.Equals(other.FilterEndDate) == true)) &&
-                ((this.FilterStartDate == null && other.FilterStartDate == null) || (this.FilterStartDate?.Equals(other.FilterStartDate) == true)) &&
                 ((this.Page == null && other.Page == null) || (this.Page?.Equals(other.Page) == true)) &&
-                ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true));
+                ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true)) &&
+                ((this.Filter == null && other.Filter == null) || (this.Filter?.Equals(other.Filter) == true));
         }
         
         /// <summary>
@@ -136,11 +109,9 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
-            toStringOutput.Add($"this.FilterDateField = {(this.FilterDateField == null ? "null" : this.FilterDateField.ToString())}");
-            toStringOutput.Add($"this.FilterEndDate = {(this.FilterEndDate == null ? "null" : this.FilterEndDate.ToString())}");
-            toStringOutput.Add($"this.FilterStartDate = {(this.FilterStartDate == null ? "null" : this.FilterStartDate.ToString())}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
+            toStringOutput.Add($"this.Filter = {(this.Filter == null ? "null" : this.Filter.ToString())}");
 
             base.ToString(toStringOutput);
         }

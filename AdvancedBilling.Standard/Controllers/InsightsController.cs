@@ -181,7 +181,7 @@ namespace AdvancedBilling.Standard.Controllers
                   .Setup(HttpMethod.Get, "/subscriptions_mrr.json")
                   .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("filter[subscription_ids]", input.FilterSubscriptionIds))
+                      .Query(_query => _query.Setup("filter", input.Filter))
                       .Query(_query => _query.Setup("at_time", input.AtTime))
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))

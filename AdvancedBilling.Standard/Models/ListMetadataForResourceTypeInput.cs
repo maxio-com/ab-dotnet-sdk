@@ -41,7 +41,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="startDatetime">start_datetime.</param>
         /// <param name="endDatetime">end_datetime.</param>
         /// <param name="withDeleted">with_deleted.</param>
-        /// <param name="resourceIds">resource_ids[].</param>
+        /// <param name="resourceIds">resource_ids.</param>
         /// <param name="direction">direction.</param>
         public ListMetadataForResourceTypeInput(
             Models.ResourceType resourceType,
@@ -134,7 +134,7 @@ namespace AdvancedBilling.Standard.Models
         /// Allow to fetch metadata for multiple records based on provided ids. Use in query: `resource_ids[]=122&resource_ids[]=123&resource_ids[]=124`.
         /// ]]>
         /// </summary>
-        [JsonProperty("resource_ids[]", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("resource_ids", NullValueHandling = NullValueHandling.Ignore)]
         public List<int> ResourceIds { get; set; }
 
         /// <summary>
