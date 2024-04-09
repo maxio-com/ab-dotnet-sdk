@@ -124,24 +124,31 @@ namespace AdvancedBillingTests
                     new ListSubscriptionComponentsForSiteInput {
                         Filter = new ListSubscriptionComponentsForSiteFilter {
                             Subscription = new SubscriptionFilter {
+                                DateField = SubscriptionListDateField.UpdatedAt,
                                 StartDate = DateTime.Today.AddYears(-1)
                             }
                         },
-                        ProductFamilyIds = new List<int>() { productFamilyId.Value }
+                        ProductFamilyIds = new List<int>() { productFamilyId.Value },
+                        SubscriptionIds = new List<int>() { subscriptionResponse.Subscription.Id.Value },
+                        Include = ListSubscriptionComponentsInclude.Subscription
                     }
                 );
             filteredComponentsResponse1.SubscriptionsComponents.Count.Should().Be(1);
-            filteredComponentsResponse1.SubscriptionsComponents[0].Id.Should().Be(quantityComponentResponse.Component.Id);
+            filteredComponentsResponse1.SubscriptionsComponents[0].ComponentId.Should()
+                .Be(quantityComponentResponse.Component.Id);
 
             var filteredComponentsResponse2 =
                 await _client.SubscriptionComponentsController.ListSubscriptionComponentsForSiteAsync(
                     new ListSubscriptionComponentsForSiteInput {
                         Filter = new ListSubscriptionComponentsForSiteFilter {
                             Subscription = new SubscriptionFilter {
+                                DateField = SubscriptionListDateField.UpdatedAt,
                                 EndDate = DateTime.Today.AddYears(-1)
                             }
                         },
-                        ProductFamilyIds = new List<int>() { productFamilyId.Value }
+                        ProductFamilyIds = new List<int>() { productFamilyId.Value },
+                        SubscriptionIds = new List<int>() { subscriptionResponse.Subscription.Id.Value },
+                        Include = ListSubscriptionComponentsInclude.Subscription
                     }
                 );
             filteredComponentsResponse2.SubscriptionsComponents.Count.Should().Be(0);
