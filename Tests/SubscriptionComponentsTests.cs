@@ -76,6 +76,78 @@ namespace AdvancedBillingTests
         }
 
         [Fact]
+        public async Task ListSubscriptionComponents_UsingInputFilters_ReturnsFilteredData()
+        {
+            var productFamilyId = await CreationUtils.CreateOrGetProductFamily(_client);
+
+            var productResponse = await CreationUtils.CreateProduct(productFamilyId, _client);
+
+            var customerResponse = await CreationUtils.CreateCustomer(_client);
+
+            var paymentProfileId = await CreationUtils.CreatePaymentProfile(customerResponse.Customer.Id, _client);
+
+            var randomString = TestUtils.GenerateRandomString(6);
+
+            var quantityComponent = new QuantityBasedComponent($"widget{randomString}", $"widget {randomString}",
+                PricingScheme.PerUnit, unitPrice: QuantityBasedComponentUnitPrice.FromString("10"));
+
+            var quantityComponentResponse = await _client.ComponentsController.CreateQuantityBasedComponentAsync(
+                (int)productFamilyId,
+                new CreateQuantityBasedComponent(quantityComponent));
+
+            quantityComponentResponse.Component.Id.Should().NotBeNull();
+
+            var subscription = new CreateSubscription
+            {
+                CustomerId = customerResponse.Customer.Id,
+                ProductId = productResponse.Product.Id,
+                PaymentCollectionMethod = CollectionMethod.Automatic,
+                PaymentProfileId = paymentProfileId,
+                DunningCommunicationDelayEnabled = false,
+                SkipBillingManifestTaxes = false,
+                Components = new List<CreateSubscriptionComponent>() {
+                    new CreateSubscriptionComponent {
+                        ComponentId = CreateSubscriptionComponentComponentId
+                            .FromNumber(quantityComponentResponse.Component.Id.Value),
+                        AllocatedQuantity = CreateSubscriptionComponentAllocatedQuantity.FromNumber(2)
+                    }
+                }
+            };
+
+            var subscriptionResponse =
+                await _client.SubscriptionsController.CreateSubscriptionAsync(
+                    new CreateSubscriptionRequest(subscription));
+            subscriptionResponse.Subscription.Id.Should().NotBeNull();
+
+            var filteredComponentsResponse1 =
+                await _client.SubscriptionComponentsController.ListSubscriptionComponentsForSiteAsync(
+                    new ListSubscriptionComponentsForSiteInput {
+                        Filter = new ListSubscriptionComponentsForSiteFilter {
+                            Subscription = new SubscriptionFilter {
+                                StartDate = DateTime.Today.AddYears(-1)
+                            }
+                        },
+                        ProductFamilyIds = new List<int>() { productFamilyId.Value }
+                    }
+                );
+            filteredComponentsResponse1.SubscriptionsComponents.Count.Should().Be(1);
+            filteredComponentsResponse1.SubscriptionsComponents[0].Id.Should().Be(quantityComponentResponse.Component.Id);
+
+            var filteredComponentsResponse2 =
+                await _client.SubscriptionComponentsController.ListSubscriptionComponentsForSiteAsync(
+                    new ListSubscriptionComponentsForSiteInput {
+                        Filter = new ListSubscriptionComponentsForSiteFilter {
+                            Subscription = new SubscriptionFilter {
+                                EndDate = DateTime.Today.AddYears(-1)
+                            }
+                        },
+                        ProductFamilyIds = new List<int>() { productFamilyId.Value }
+                    }
+                );
+            filteredComponentsResponse2.SubscriptionsComponents.Count.Should().Be(0);
+        }
+
+        [Fact]
         public async Task AllocateComponents_DoubleQuantityForAllocations_UpgradeChargeProratedQualityCanBeRead()
         {
             var productFamilyId = await CreationUtils.CreateOrGetProductFamily(_client);
