@@ -22,11 +22,13 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class ComponentPricePoint : BaseModel
     {
+        private string handle;
         private DateTimeOffset? archivedAt;
         private int? interval;
         private Models.IntervalUnit? intervalUnit;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
+            { "handle", false },
             { "archived_at", false },
             { "interval", false },
             { "interval_unit", false },
@@ -84,7 +86,11 @@ namespace AdvancedBilling.Standard.Models
             this.Name = name;
             this.PricingScheme = pricingScheme;
             this.ComponentId = componentId;
-            this.Handle = handle;
+            if (handle != null)
+            {
+                this.Handle = handle;
+            }
+
             if (archivedAt != null)
             {
                 this.ArchivedAt = archivedAt;
@@ -151,8 +157,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets Handle.
         /// </summary>
-        [JsonProperty("handle", NullValueHandling = NullValueHandling.Ignore)]
-        public string Handle { get; set; }
+        [JsonProperty("handle")]
+        public string Handle
+        {
+            get
+            {
+                return this.handle;
+            }
+
+            set
+            {
+                this.shouldSerialize["handle"] = true;
+                this.handle = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets ArchivedAt.
@@ -266,6 +284,14 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serailized.
         /// </summary>
+        public void UnsetHandle()
+        {
+            this.shouldSerialize["handle"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
         public void UnsetArchivedAt()
         {
             this.shouldSerialize["archived_at"] = false;
@@ -285,6 +311,15 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetIntervalUnit()
         {
             this.shouldSerialize["interval_unit"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeHandle()
+        {
+            return this.shouldSerialize["handle"];
         }
 
         /// <summary>

@@ -30,6 +30,7 @@ namespace AdvancedBilling.Standard.Models
         private int? defaultPricePointId;
         private List<Models.ComponentPrice> overagePrices;
         private List<Models.ComponentPrice> prices;
+        private string pricePointsUrl;
         private string taxCode;
         private Models.CreditType? upgradeCharge;
         private Models.CreditType? downgradeCredit;
@@ -47,6 +48,7 @@ namespace AdvancedBilling.Standard.Models
             { "default_price_point_id", false },
             { "overage_prices", false },
             { "prices", false },
+            { "price_points_url", false },
             { "tax_code", false },
             { "upgrade_charge", false },
             { "downgrade_credit", false },
@@ -185,7 +187,11 @@ namespace AdvancedBilling.Standard.Models
             }
 
             this.PricePointCount = pricePointCount;
-            this.PricePointsUrl = pricePointsUrl;
+            if (pricePointsUrl != null)
+            {
+                this.PricePointsUrl = pricePointsUrl;
+            }
+
             this.DefaultPricePointName = defaultPricePointName;
             if (taxCode != null)
             {
@@ -433,8 +439,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// URL that points to the location to read the existing price points via GET request
         /// </summary>
-        [JsonProperty("price_points_url", NullValueHandling = NullValueHandling.Ignore)]
-        public string PricePointsUrl { get; set; }
+        [JsonProperty("price_points_url")]
+        public string PricePointsUrl
+        {
+            get
+            {
+                return this.pricePointsUrl;
+            }
+
+            set
+            {
+                this.shouldSerialize["price_points_url"] = true;
+                this.pricePointsUrl = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets DefaultPricePointName.
@@ -698,6 +716,14 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serailized.
         /// </summary>
+        public void UnsetPricePointsUrl()
+        {
+            this.shouldSerialize["price_points_url"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
         public void UnsetTaxCode()
         {
             this.shouldSerialize["tax_code"] = false;
@@ -821,6 +847,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializePrices()
         {
             return this.shouldSerialize["prices"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializePricePointsUrl()
+        {
+            return this.shouldSerialize["price_points_url"];
         }
 
         /// <summary>

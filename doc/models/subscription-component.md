@@ -27,7 +27,7 @@
 | `ArchivedAt` | `DateTimeOffset?` | Optional | - |
 | `PricePointId` | `int?` | Optional | - |
 | `PricePointHandle` | `string` | Optional | - |
-| `PricePointType` | [`SubscriptionComponentPricePointType`](../../doc/models/containers/subscription-component-price-point-type.md) | Optional | This is a container for one-of cases. |
+| `PricePointType` | [`PricePointType?`](../../doc/models/price-point-type.md) | Optional | - |
 | `PricePointName` | `string` | Optional | - |
 | `ProductFamilyId` | `int?` | Optional | - |
 | `ProductFamilyHandle` | `string` | Optional | - |
@@ -37,6 +37,7 @@
 | `Description` | `string` | Optional | - |
 | `AllowFractionalQuantities` | `bool?` | Optional | - |
 | `Subscription` | [`SubscriptionComponentSubscription`](../../doc/models/subscription-component-subscription.md) | Optional | An optional object, will be returned if provided `include=subscription` query param. |
+| `HistoricUsages` | [`List<HistoricUsage>`](../../doc/models/historic-usage.md) | Optional | - |
 | `DisplayOnHostedPage` | `bool?` | Optional | - |
 | `Interval` | `int?` | Optional | The numerical interval. i.e. an interval of '30' coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. |
 | `IntervalUnit` | [`IntervalUnit?`](../../doc/models/interval-unit.md) | Optional | A string representing the interval unit for this component price point, either month or day. This property is only available for sites with Multifrequency enabled. |

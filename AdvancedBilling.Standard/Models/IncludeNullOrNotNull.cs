@@ -1,4 +1,4 @@
-// <copyright file="ListSubscriptionComponentsInclude.cs" company="APIMatic">
+// <copyright file="IncludeNullOrNotNull.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
 namespace AdvancedBilling.Standard.Models
@@ -13,22 +13,22 @@ namespace AdvancedBilling.Standard.Models
     using Newtonsoft.Json;
 
     /// <summary>
-    /// ListSubscriptionComponentsInclude.
+    /// IncludeNullOrNotNull.
     /// </summary>
 
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum ListSubscriptionComponentsInclude
+    public enum IncludeNullOrNotNull
     {
         /// <summary>
-        /// Subscription.
+        /// NotNull.
         /// </summary>
-        [EnumMember(Value = "subscription")]
-        Subscription,
+        [EnumMember(Value = "not_null")]
+        NotNull,
 
         /// <summary>
-        /// HistoricUsages.
+        /// Null.
         /// </summary>
-        [EnumMember(Value = "historic_usages")]
-        HistoricUsages
+        [EnumMember(Value = "null")]
+        Null
     }
 }

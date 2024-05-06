@@ -22,13 +22,17 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class Subscription : BaseModel
     {
+        private DateTimeOffset? currentPeriodEndsAt;
+        private DateTimeOffset? nextAssessmentAt;
         private DateTimeOffset? trialStartedAt;
         private DateTimeOffset? trialEndedAt;
+        private DateTimeOffset? activatedAt;
         private DateTimeOffset? expiresAt;
         private string cancellationMessage;
         private Models.CancellationMethod? cancellationMethod;
         private bool? cancelAtEndOfPeriod;
         private DateTimeOffset? canceledAt;
+        private DateTimeOffset? currentPeriodStartedAt;
         private DateTimeOffset? delayedCancelAt;
         private string couponCode;
         private string snapDay;
@@ -52,15 +56,20 @@ namespace AdvancedBilling.Standard.Models
         private bool? receivesInvoiceEmails;
         private string locale;
         private DateTimeOffset? scheduledCancellationAt;
+        private Models.PrepaidConfiguration prepaidConfiguration;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
+            { "current_period_ends_at", false },
+            { "next_assessment_at", false },
             { "trial_started_at", false },
             { "trial_ended_at", false },
+            { "activated_at", false },
             { "expires_at", false },
             { "cancellation_message", false },
             { "cancellation_method", false },
             { "cancel_at_end_of_period", false },
             { "canceled_at", false },
+            { "current_period_started_at", false },
             { "delayed_cancel_at", false },
             { "coupon_code", false },
             { "snap_day", false },
@@ -84,6 +93,7 @@ namespace AdvancedBilling.Standard.Models
             { "receives_invoice_emails", false },
             { "locale", false },
             { "scheduled_cancellation_at", false },
+            { "prepaid_configuration", false },
         };
 
         /// <summary>
@@ -228,8 +238,16 @@ namespace AdvancedBilling.Standard.Models
             this.TotalRevenueInCents = totalRevenueInCents;
             this.ProductPriceInCents = productPriceInCents;
             this.ProductVersionNumber = productVersionNumber;
-            this.CurrentPeriodEndsAt = currentPeriodEndsAt;
-            this.NextAssessmentAt = nextAssessmentAt;
+            if (currentPeriodEndsAt != null)
+            {
+                this.CurrentPeriodEndsAt = currentPeriodEndsAt;
+            }
+
+            if (nextAssessmentAt != null)
+            {
+                this.NextAssessmentAt = nextAssessmentAt;
+            }
+
             if (trialStartedAt != null)
             {
                 this.TrialStartedAt = trialStartedAt;
@@ -240,7 +258,11 @@ namespace AdvancedBilling.Standard.Models
                 this.TrialEndedAt = trialEndedAt;
             }
 
-            this.ActivatedAt = activatedAt;
+            if (activatedAt != null)
+            {
+                this.ActivatedAt = activatedAt;
+            }
+
             if (expiresAt != null)
             {
                 this.ExpiresAt = expiresAt;
@@ -268,7 +290,11 @@ namespace AdvancedBilling.Standard.Models
                 this.CanceledAt = canceledAt;
             }
 
-            this.CurrentPeriodStartedAt = currentPeriodStartedAt;
+            if (currentPeriodStartedAt != null)
+            {
+                this.CurrentPeriodStartedAt = currentPeriodStartedAt;
+            }
+
             this.PreviousState = previousState;
             this.SignupPaymentId = signupPaymentId;
             this.SignupRevenue = signupRevenue;
@@ -402,7 +428,11 @@ namespace AdvancedBilling.Standard.Models
 
             this.CreditBalanceInCents = creditBalanceInCents;
             this.PrepaymentBalanceInCents = prepaymentBalanceInCents;
-            this.PrepaidConfiguration = prepaidConfiguration;
+            if (prepaidConfiguration != null)
+            {
+                this.PrepaidConfiguration = prepaidConfiguration;
+            }
+
             this.SelfServicePageToken = selfServicePageToken;
         }
 
@@ -465,15 +495,39 @@ namespace AdvancedBilling.Standard.Models
         /// Timestamp relating to the end of the current (recurring) period (i.e.,when the next regularly scheduled attempted charge will occur)
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
-        [JsonProperty("current_period_ends_at", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTimeOffset? CurrentPeriodEndsAt { get; set; }
+        [JsonProperty("current_period_ends_at")]
+        public DateTimeOffset? CurrentPeriodEndsAt
+        {
+            get
+            {
+                return this.currentPeriodEndsAt;
+            }
+
+            set
+            {
+                this.shouldSerialize["current_period_ends_at"] = true;
+                this.currentPeriodEndsAt = value;
+            }
+        }
 
         /// <summary>
         /// Timestamp that indicates when capture of payment will be tried or,retried. This value will usually track the current_period_ends_at, but,will diverge if a renewal payment fails and must be retried. In that,case, the current_period_ends_at will advance to the end of the next,period (time doesn’t stop because a payment was missed) but the,next_assessment_at will be scheduled for the auto-retry time (i.e. 24,hours in the future, in some cases)
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
-        [JsonProperty("next_assessment_at", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTimeOffset? NextAssessmentAt { get; set; }
+        [JsonProperty("next_assessment_at")]
+        public DateTimeOffset? NextAssessmentAt
+        {
+            get
+            {
+                return this.nextAssessmentAt;
+            }
+
+            set
+            {
+                this.shouldSerialize["next_assessment_at"] = true;
+                this.nextAssessmentAt = value;
+            }
+        }
 
         /// <summary>
         /// Timestamp for when the trial period (if any) began
@@ -517,8 +571,20 @@ namespace AdvancedBilling.Standard.Models
         /// Timestamp for when the subscription began (i.e. when it came out of trial, or when it began in the case of no trial)
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
-        [JsonProperty("activated_at", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTimeOffset? ActivatedAt { get; set; }
+        [JsonProperty("activated_at")]
+        public DateTimeOffset? ActivatedAt
+        {
+            get
+            {
+                return this.activatedAt;
+            }
+
+            set
+            {
+                this.shouldSerialize["activated_at"] = true;
+                this.activatedAt = value;
+            }
+        }
 
         /// <summary>
         /// Timestamp giving the expiration date of this subscription (if any)
@@ -630,8 +696,20 @@ namespace AdvancedBilling.Standard.Models
         /// Timestamp relating to the start of the current (recurring) period
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
-        [JsonProperty("current_period_started_at", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTimeOffset? CurrentPeriodStartedAt { get; set; }
+        [JsonProperty("current_period_started_at")]
+        public DateTimeOffset? CurrentPeriodStartedAt
+        {
+            get
+            {
+                return this.currentPeriodStartedAt;
+            }
+
+            set
+            {
+                this.shouldSerialize["current_period_started_at"] = true;
+                this.currentPeriodStartedAt = value;
+            }
+        }
 
         /// <summary>
         /// Only valid for webhook payloads The previous state for webhooks that have indicated a change in state. For normal API calls, this will always be the same as the state (current state)
@@ -1168,8 +1246,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets PrepaidConfiguration.
         /// </summary>
-        [JsonProperty("prepaid_configuration", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.PrepaidConfiguration PrepaidConfiguration { get; set; }
+        [JsonProperty("prepaid_configuration")]
+        public Models.PrepaidConfiguration PrepaidConfiguration
+        {
+            get
+            {
+                return this.prepaidConfiguration;
+            }
+
+            set
+            {
+                this.shouldSerialize["prepaid_configuration"] = true;
+                this.prepaidConfiguration = value;
+            }
+        }
 
         /// <summary>
         /// Returned only for list/read Subscription operation when `include[]=self_service_page_token` parameter is provided.
@@ -1190,6 +1280,22 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serailized.
         /// </summary>
+        public void UnsetCurrentPeriodEndsAt()
+        {
+            this.shouldSerialize["current_period_ends_at"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetNextAssessmentAt()
+        {
+            this.shouldSerialize["next_assessment_at"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
         public void UnsetTrialStartedAt()
         {
             this.shouldSerialize["trial_started_at"] = false;
@@ -1201,6 +1307,14 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetTrialEndedAt()
         {
             this.shouldSerialize["trial_ended_at"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetActivatedAt()
+        {
+            this.shouldSerialize["activated_at"] = false;
         }
 
         /// <summary>
@@ -1241,6 +1355,14 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetCanceledAt()
         {
             this.shouldSerialize["canceled_at"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetCurrentPeriodStartedAt()
+        {
+            this.shouldSerialize["current_period_started_at"] = false;
         }
 
         /// <summary>
@@ -1428,6 +1550,32 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetPrepaidConfiguration()
+        {
+            this.shouldSerialize["prepaid_configuration"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeCurrentPeriodEndsAt()
+        {
+            return this.shouldSerialize["current_period_ends_at"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeNextAssessmentAt()
+        {
+            return this.shouldSerialize["next_assessment_at"];
+        }
+
+        /// <summary>
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
@@ -1443,6 +1591,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeTrialEndedAt()
         {
             return this.shouldSerialize["trial_ended_at"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeActivatedAt()
+        {
+            return this.shouldSerialize["activated_at"];
         }
 
         /// <summary>
@@ -1488,6 +1645,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeCanceledAt()
         {
             return this.shouldSerialize["canceled_at"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeCurrentPeriodStartedAt()
+        {
+            return this.shouldSerialize["current_period_started_at"];
         }
 
         /// <summary>
@@ -1695,6 +1861,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeScheduledCancellationAt()
         {
             return this.shouldSerialize["scheduled_cancellation_at"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializePrepaidConfiguration()
+        {
+            return this.shouldSerialize["prepaid_configuration"];
         }
 
         /// <inheritdoc/>

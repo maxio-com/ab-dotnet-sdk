@@ -33,14 +33,14 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="RefundPrepayment"/> class.
         /// </summary>
-        /// <param name="amountInCents">amount_in_cents.</param>
         /// <param name="amount">amount.</param>
         /// <param name="memo">memo.</param>
+        /// <param name="amountInCents">amount_in_cents.</param>
         /// <param name="external">external.</param>
         public RefundPrepayment(
-            long amountInCents,
             RefundPrepaymentAmount amount,
             string memo,
+            long? amountInCents = null,
             bool? external = null)
         {
             this.AmountInCents = amountInCents;
@@ -52,8 +52,8 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// `amount` is not required if you pass `amount_in_cents`.
         /// </summary>
-        [JsonProperty("amount_in_cents")]
-        public long AmountInCents { get; set; }
+        [JsonProperty("amount_in_cents", NullValueHandling = NullValueHandling.Include)]
+        public long? AmountInCents { get; set; }
 
         /// <summary>
         /// `amount_in_cents` is not required if you pass `amount`.
@@ -95,7 +95,7 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is RefundPrepayment other &&                this.AmountInCents.Equals(other.AmountInCents) &&
+            return obj is RefundPrepayment other &&                ((this.AmountInCents == null && other.AmountInCents == null) || (this.AmountInCents?.Equals(other.AmountInCents) == true)) &&
                 ((this.Amount == null && other.Amount == null) || (this.Amount?.Equals(other.Amount) == true)) &&
                 ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
                 ((this.External == null && other.External == null) || (this.External?.Equals(other.External) == true));
@@ -107,7 +107,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.AmountInCents = {this.AmountInCents}");
+            toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
             toStringOutput.Add($"Amount = {(this.Amount == null ? "null" : this.Amount.ToString())}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.External = {(this.External == null ? "null" : this.External.ToString())}");

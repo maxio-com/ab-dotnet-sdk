@@ -34,6 +34,7 @@ namespace AdvancedBilling.Standard.Models
         private DateTimeOffset? archivedAt;
         private string returnParams;
         private string updateReturnUrl;
+        private bool? initialChargeAfterTrial;
         private string updateReturnParams;
         private string taxCode;
         private bool? useSiteExchangeRate;
@@ -53,6 +54,7 @@ namespace AdvancedBilling.Standard.Models
             { "archived_at", false },
             { "return_params", false },
             { "update_return_url", false },
+            { "initial_charge_after_trial", false },
             { "update_return_params", false },
             { "tax_code", false },
             { "use_site_exchange_rate", false },
@@ -216,7 +218,11 @@ namespace AdvancedBilling.Standard.Models
                 this.UpdateReturnUrl = updateReturnUrl;
             }
 
-            this.InitialChargeAfterTrial = initialChargeAfterTrial;
+            if (initialChargeAfterTrial != null)
+            {
+                this.InitialChargeAfterTrial = initialChargeAfterTrial;
+            }
+
             this.VersionNumber = versionNumber;
             if (updateReturnParams != null)
             {
@@ -535,8 +541,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets InitialChargeAfterTrial.
         /// </summary>
-        [JsonProperty("initial_charge_after_trial", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? InitialChargeAfterTrial { get; set; }
+        [JsonProperty("initial_charge_after_trial")]
+        public bool? InitialChargeAfterTrial
+        {
+            get
+            {
+                return this.initialChargeAfterTrial;
+            }
+
+            set
+            {
+                this.shouldSerialize["initial_charge_after_trial"] = true;
+                this.initialChargeAfterTrial = value;
+            }
+        }
 
         /// <summary>
         /// The version of the product
@@ -791,6 +809,14 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serailized.
         /// </summary>
+        public void UnsetInitialChargeAfterTrial()
+        {
+            this.shouldSerialize["initial_charge_after_trial"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
         public void UnsetUpdateReturnParams()
         {
             this.shouldSerialize["update_return_params"] = false;
@@ -934,6 +960,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeUpdateReturnUrl()
         {
             return this.shouldSerialize["update_return_url"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeInitialChargeAfterTrial()
+        {
+            return this.shouldSerialize["initial_charge_after_trial"];
         }
 
         /// <summary>
