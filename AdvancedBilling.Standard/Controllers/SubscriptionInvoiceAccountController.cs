@@ -160,6 +160,8 @@ namespace AdvancedBilling.Standard.Controllers
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ApiException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -192,7 +194,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ApiException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -205,7 +207,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <returns>Returns the Models.PrepaymentResponse response from the API call.</returns>
         public Models.PrepaymentResponse RefundPrepayment(
                 int subscriptionId,
-                string prepaymentId,
+                long prepaymentId,
                 Models.RefundPrepaymentRequest body = null)
             => CoreHelper.RunTask(RefundPrepaymentAsync(subscriptionId, prepaymentId, body));
 
@@ -220,7 +222,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <returns>Returns the Models.PrepaymentResponse response from the API call.</returns>
         public async Task<Models.PrepaymentResponse> RefundPrepaymentAsync(
                 int subscriptionId,
-                string prepaymentId,
+                long prepaymentId,
                 Models.RefundPrepaymentRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.PrepaymentResponse>()
@@ -230,12 +232,12 @@ namespace AdvancedBilling.Standard.Controllers
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("prepayment_id", prepaymentId).Required())
+                      .Template(_template => _template.Setup("prepayment_id", prepaymentId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
                   .ErrorCase("400", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new RefundPrepaymentBaseErrorsResponseException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new RefundPrepaymentAggregatedErrorsResponseException(_reason, _context), true)))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ApiException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

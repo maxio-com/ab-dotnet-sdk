@@ -22,6 +22,16 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class BillingManifest : BaseModel
     {
+        private DateTimeOffset? startDate;
+        private DateTimeOffset? endDate;
+        private string periodType;
+        private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
+        {
+            { "start_date", false },
+            { "end_date", false },
+            { "period_type", false },
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BillingManifest"/> class.
         /// </summary>
@@ -57,9 +67,21 @@ namespace AdvancedBilling.Standard.Models
             this.TotalDiscountInCents = totalDiscountInCents;
             this.TotalTaxInCents = totalTaxInCents;
             this.SubtotalInCents = subtotalInCents;
-            this.StartDate = startDate;
-            this.EndDate = endDate;
-            this.PeriodType = periodType;
+            if (startDate != null)
+            {
+                this.StartDate = startDate;
+            }
+
+            if (endDate != null)
+            {
+                this.EndDate = endDate;
+            }
+
+            if (periodType != null)
+            {
+                this.PeriodType = periodType;
+            }
+
             this.ExistingBalanceInCents = existingBalanceInCents;
         }
 
@@ -97,21 +119,57 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets StartDate.
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
-        [JsonProperty("start_date", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTimeOffset? StartDate { get; set; }
+        [JsonProperty("start_date")]
+        public DateTimeOffset? StartDate
+        {
+            get
+            {
+                return this.startDate;
+            }
+
+            set
+            {
+                this.shouldSerialize["start_date"] = true;
+                this.startDate = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets EndDate.
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
-        [JsonProperty("end_date", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTimeOffset? EndDate { get; set; }
+        [JsonProperty("end_date")]
+        public DateTimeOffset? EndDate
+        {
+            get
+            {
+                return this.endDate;
+            }
+
+            set
+            {
+                this.shouldSerialize["end_date"] = true;
+                this.endDate = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets PeriodType.
         /// </summary>
-        [JsonProperty("period_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string PeriodType { get; set; }
+        [JsonProperty("period_type")]
+        public string PeriodType
+        {
+            get
+            {
+                return this.periodType;
+            }
+
+            set
+            {
+                this.shouldSerialize["period_type"] = true;
+                this.periodType = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets ExistingBalanceInCents.
@@ -127,6 +185,57 @@ namespace AdvancedBilling.Standard.Models
             this.ToString(toStringOutput);
 
             return $"BillingManifest : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetStartDate()
+        {
+            this.shouldSerialize["start_date"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetEndDate()
+        {
+            this.shouldSerialize["end_date"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetPeriodType()
+        {
+            this.shouldSerialize["period_type"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeStartDate()
+        {
+            return this.shouldSerialize["start_date"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeEndDate()
+        {
+            return this.shouldSerialize["end_date"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializePeriodType()
+        {
+            return this.shouldSerialize["period_type"];
         }
 
         /// <inheritdoc/>

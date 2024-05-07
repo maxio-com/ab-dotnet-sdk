@@ -48,7 +48,7 @@ namespace AdvancedBilling.Standard.Models
             DateTimeOffset? endDatetime = null,
             List<Models.PricePointType> type = null,
             List<int> ids = null,
-            Models.IncludeNotNull? archivedAt = null)
+            Models.IncludeNullOrNotNull? archivedAt = null)
         {
             this.DateField = dateField;
             this.StartDate = startDate;
@@ -110,7 +110,7 @@ namespace AdvancedBilling.Standard.Models
         /// Allows fetching price points only if archived_at is present or not. Use in query: `filter[archived_at]=not_null`.
         /// </summary>
         [JsonProperty("archived_at", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.IncludeNotNull? ArchivedAt { get; set; }
+        public Models.IncludeNullOrNotNull? ArchivedAt { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

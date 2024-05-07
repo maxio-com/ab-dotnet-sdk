@@ -56,7 +56,7 @@ namespace AdvancedBilling.Standard.Models
             Models.ListSubscriptionComponentsSort? sort = null,
             string startDate = null,
             string startDatetime = null,
-            Models.ListSubscriptionComponentsInclude? include = null)
+            List<Models.ListSubscriptionComponentsInclude> include = null)
         {
             this.SubscriptionId = subscriptionId;
             this.DateField = dateField;
@@ -140,10 +140,10 @@ namespace AdvancedBilling.Standard.Models
         public string StartDatetime { get; set; }
 
         /// <summary>
-        /// Allows including additional data in the response. Use in query `include=subscription`.
+        /// Allows including additional data in the response. Use in query `include=subscription,historic_usages`.
         /// </summary>
         [JsonProperty("include", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.ListSubscriptionComponentsInclude? Include { get; set; }
+        public List<Models.ListSubscriptionComponentsInclude> Include { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -198,7 +198,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Sort = {(this.Sort == null ? "null" : this.Sort.ToString())}");
             toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate)}");
             toStringOutput.Add($"this.StartDatetime = {(this.StartDatetime == null ? "null" : this.StartDatetime)}");
-            toStringOutput.Add($"this.Include = {(this.Include == null ? "null" : this.Include.ToString())}");
+            toStringOutput.Add($"this.Include = {(this.Include == null ? "null" : $"[{string.Join(", ", this.Include)} ]")}");
 
             base.ToString(toStringOutput);
         }

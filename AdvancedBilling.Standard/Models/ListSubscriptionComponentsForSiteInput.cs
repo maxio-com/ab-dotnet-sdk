@@ -160,7 +160,7 @@ namespace AdvancedBilling.Standard.Models
         public List<int> ProductFamilyIds { get; set; }
 
         /// <summary>
-        /// Allows including additional data in the response. Use in query `include=subscription`.
+        /// Allows including additional data in the response. Use in query `include=subscription,historic_usages`.
         /// </summary>
         [JsonProperty("include", NullValueHandling = NullValueHandling.Ignore)]
         public Models.ListSubscriptionComponentsInclude? Include { get; set; }

@@ -30,6 +30,7 @@ namespace AdvancedBilling.Standard.Models
         private DateTimeOffset? archivedAt;
         private int? pricePointId;
         private string pricePointHandle;
+        private Models.PricePointType? pricePointType;
         private string pricePointName;
         private bool? useSiteExchangeRate;
         private string description;
@@ -42,6 +43,7 @@ namespace AdvancedBilling.Standard.Models
             { "archived_at", false },
             { "price_point_id", false },
             { "price_point_handle", false },
+            { "price_point_type", false },
             { "price_point_name", false },
             { "use_site_exchange_rate", false },
             { "description", false },
@@ -85,6 +87,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="description">description.</param>
         /// <param name="allowFractionalQuantities">allow_fractional_quantities.</param>
         /// <param name="subscription">subscription.</param>
+        /// <param name="historicUsages">historic_usages.</param>
         /// <param name="displayOnHostedPage">display_on_hosted_page.</param>
         /// <param name="interval">interval.</param>
         /// <param name="intervalUnit">interval_unit.</param>
@@ -107,7 +110,7 @@ namespace AdvancedBilling.Standard.Models
             DateTimeOffset? archivedAt = null,
             int? pricePointId = null,
             string pricePointHandle = null,
-            SubscriptionComponentPricePointType pricePointType = null,
+            Models.PricePointType? pricePointType = null,
             string pricePointName = null,
             int? productFamilyId = null,
             string productFamilyHandle = null,
@@ -117,6 +120,7 @@ namespace AdvancedBilling.Standard.Models
             string description = null,
             bool? allowFractionalQuantities = null,
             Models.SubscriptionComponentSubscription subscription = null,
+            List<Models.HistoricUsage> historicUsages = null,
             bool? displayOnHostedPage = null,
             int? interval = null,
             Models.IntervalUnit? intervalUnit = null)
@@ -167,7 +171,11 @@ namespace AdvancedBilling.Standard.Models
                 this.PricePointHandle = pricePointHandle;
             }
 
-            this.PricePointType = pricePointType;
+            if (pricePointType != null)
+            {
+                this.PricePointType = pricePointType;
+            }
+
             if (pricePointName != null)
             {
                 this.PricePointName = pricePointName;
@@ -189,6 +197,7 @@ namespace AdvancedBilling.Standard.Models
 
             this.AllowFractionalQuantities = allowFractionalQuantities;
             this.Subscription = subscription;
+            this.HistoricUsages = historicUsages;
             this.DisplayOnHostedPage = displayOnHostedPage;
             this.Interval = interval;
             this.IntervalUnit = intervalUnit;
@@ -392,8 +401,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets PricePointType.
         /// </summary>
-        [JsonProperty("price_point_type", NullValueHandling = NullValueHandling.Ignore)]
-        public SubscriptionComponentPricePointType PricePointType { get; set; }
+        [JsonProperty("price_point_type")]
+        public Models.PricePointType? PricePointType
+        {
+            get
+            {
+                return this.pricePointType;
+            }
+
+            set
+            {
+                this.shouldSerialize["price_point_type"] = true;
+                this.pricePointType = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets PricePointName.
@@ -488,6 +509,12 @@ namespace AdvancedBilling.Standard.Models
         public Models.SubscriptionComponentSubscription Subscription { get; set; }
 
         /// <summary>
+        /// Gets or sets HistoricUsages.
+        /// </summary>
+        [JsonProperty("historic_usages", NullValueHandling = NullValueHandling.Ignore)]
+        public List<Models.HistoricUsage> HistoricUsages { get; set; }
+
+        /// <summary>
         /// Gets or sets DisplayOnHostedPage.
         /// </summary>
         [JsonProperty("display_on_hosted_page", NullValueHandling = NullValueHandling.Ignore)]
@@ -569,6 +596,14 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetPricePointHandle()
         {
             this.shouldSerialize["price_point_handle"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetPricePointType()
+        {
+            this.shouldSerialize["price_point_type"] = false;
         }
 
         /// <summary>
@@ -662,6 +697,15 @@ namespace AdvancedBilling.Standard.Models
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializePricePointType()
+        {
+            return this.shouldSerialize["price_point_type"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
         public bool ShouldSerializePricePointName()
         {
             return this.shouldSerialize["price_point_name"];
@@ -725,6 +769,7 @@ namespace AdvancedBilling.Standard.Models
                 ((this.Description == null && other.Description == null) || (this.Description?.Equals(other.Description) == true)) &&
                 ((this.AllowFractionalQuantities == null && other.AllowFractionalQuantities == null) || (this.AllowFractionalQuantities?.Equals(other.AllowFractionalQuantities) == true)) &&
                 ((this.Subscription == null && other.Subscription == null) || (this.Subscription?.Equals(other.Subscription) == true)) &&
+                ((this.HistoricUsages == null && other.HistoricUsages == null) || (this.HistoricUsages?.Equals(other.HistoricUsages) == true)) &&
                 ((this.DisplayOnHostedPage == null && other.DisplayOnHostedPage == null) || (this.DisplayOnHostedPage?.Equals(other.DisplayOnHostedPage) == true)) &&
                 ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
                 ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true));
@@ -754,7 +799,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt.ToString())}");
             toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
             toStringOutput.Add($"this.PricePointHandle = {(this.PricePointHandle == null ? "null" : this.PricePointHandle)}");
-            toStringOutput.Add($"PricePointType = {(this.PricePointType == null ? "null" : this.PricePointType.ToString())}");
+            toStringOutput.Add($"this.PricePointType = {(this.PricePointType == null ? "null" : this.PricePointType.ToString())}");
             toStringOutput.Add($"this.PricePointName = {(this.PricePointName == null ? "null" : this.PricePointName)}");
             toStringOutput.Add($"this.ProductFamilyId = {(this.ProductFamilyId == null ? "null" : this.ProductFamilyId.ToString())}");
             toStringOutput.Add($"this.ProductFamilyHandle = {(this.ProductFamilyHandle == null ? "null" : this.ProductFamilyHandle)}");
@@ -764,6 +809,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
             toStringOutput.Add($"this.AllowFractionalQuantities = {(this.AllowFractionalQuantities == null ? "null" : this.AllowFractionalQuantities.ToString())}");
             toStringOutput.Add($"this.Subscription = {(this.Subscription == null ? "null" : this.Subscription.ToString())}");
+            toStringOutput.Add($"this.HistoricUsages = {(this.HistoricUsages == null ? "null" : $"[{string.Join(", ", this.HistoricUsages)} ]")}");
             toStringOutput.Add($"this.DisplayOnHostedPage = {(this.DisplayOnHostedPage == null ? "null" : this.DisplayOnHostedPage.ToString())}");
             toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");

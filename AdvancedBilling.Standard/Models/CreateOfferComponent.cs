@@ -33,12 +33,15 @@ namespace AdvancedBilling.Standard.Models
         /// Initializes a new instance of the <see cref="CreateOfferComponent"/> class.
         /// </summary>
         /// <param name="componentId">component_id.</param>
+        /// <param name="pricePointId">price_point_id.</param>
         /// <param name="startingQuantity">starting_quantity.</param>
         public CreateOfferComponent(
             int? componentId = null,
+            int? pricePointId = null,
             int? startingQuantity = null)
         {
             this.ComponentId = componentId;
+            this.PricePointId = pricePointId;
             this.StartingQuantity = startingQuantity;
         }
 
@@ -47,6 +50,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("component_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? ComponentId { get; set; }
+
+        /// <summary>
+        /// Gets or sets PricePointId.
+        /// </summary>
+        [JsonProperty("price_point_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? PricePointId { get; set; }
 
         /// <summary>
         /// Gets or sets StartingQuantity.
@@ -77,6 +86,7 @@ namespace AdvancedBilling.Standard.Models
                 return true;
             }
             return obj is CreateOfferComponent other &&                ((this.ComponentId == null && other.ComponentId == null) || (this.ComponentId?.Equals(other.ComponentId) == true)) &&
+                ((this.PricePointId == null && other.PricePointId == null) || (this.PricePointId?.Equals(other.PricePointId) == true)) &&
                 ((this.StartingQuantity == null && other.StartingQuantity == null) || (this.StartingQuantity?.Equals(other.StartingQuantity) == true));
         }
         
@@ -87,6 +97,7 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
+            toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
             toStringOutput.Add($"this.StartingQuantity = {(this.StartingQuantity == null ? "null" : this.StartingQuantity.ToString())}");
 
             base.ToString(toStringOutput);

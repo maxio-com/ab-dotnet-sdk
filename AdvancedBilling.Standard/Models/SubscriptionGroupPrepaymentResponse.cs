@@ -22,6 +22,12 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class SubscriptionGroupPrepaymentResponse : BaseModel
     {
+        private string memo;
+        private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
+        {
+            { "memo", false },
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionGroupPrepaymentResponse"/> class.
         /// </summary>
@@ -48,7 +54,11 @@ namespace AdvancedBilling.Standard.Models
             this.AmountInCents = amountInCents;
             this.EndingBalanceInCents = endingBalanceInCents;
             this.EntryType = entryType;
-            this.Memo = memo;
+            if (memo != null)
+            {
+                this.Memo = memo;
+            }
+
         }
 
         /// <summary>
@@ -78,8 +88,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// A memo attached to the entry.
         /// </summary>
-        [JsonProperty("memo", NullValueHandling = NullValueHandling.Ignore)]
-        public string Memo { get; set; }
+        [JsonProperty("memo")]
+        public string Memo
+        {
+            get
+            {
+                return this.memo;
+            }
+
+            set
+            {
+                this.shouldSerialize["memo"] = true;
+                this.memo = value;
+            }
+        }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -89,6 +111,23 @@ namespace AdvancedBilling.Standard.Models
             this.ToString(toStringOutput);
 
             return $"SubscriptionGroupPrepaymentResponse : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetMemo()
+        {
+            this.shouldSerialize["memo"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeMemo()
+        {
+            return this.shouldSerialize["memo"];
         }
 
         /// <inheritdoc/>

@@ -22,10 +22,28 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class ProductPricePoint : BaseModel
     {
+        private string handle;
+        private long? trialPriceInCents;
+        private int? trialInterval;
+        private Models.IntervalUnit? trialIntervalUnit;
+        private bool? introductoryOffer;
+        private long? initialChargeInCents;
+        private bool? initialChargeAfterTrial;
+        private int? expirationInterval;
+        private Models.IntervalUnit? expirationIntervalUnit;
         private DateTimeOffset? archivedAt;
         private int? subscriptionId;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
+            { "handle", false },
+            { "trial_price_in_cents", false },
+            { "trial_interval", false },
+            { "trial_interval_unit", false },
+            { "introductory_offer", false },
+            { "initial_charge_in_cents", false },
+            { "initial_charge_after_trial", false },
+            { "expiration_interval", false },
+            { "expiration_interval_unit", false },
             { "archived_at", false },
             { "subscription_id", false },
         };
@@ -92,19 +110,55 @@ namespace AdvancedBilling.Standard.Models
         {
             this.Id = id;
             this.Name = name;
-            this.Handle = handle;
+            if (handle != null)
+            {
+                this.Handle = handle;
+            }
+
             this.PriceInCents = priceInCents;
             this.Interval = interval;
             this.IntervalUnit = intervalUnit;
-            this.TrialPriceInCents = trialPriceInCents;
-            this.TrialInterval = trialInterval;
-            this.TrialIntervalUnit = trialIntervalUnit;
+            if (trialPriceInCents != null)
+            {
+                this.TrialPriceInCents = trialPriceInCents;
+            }
+
+            if (trialInterval != null)
+            {
+                this.TrialInterval = trialInterval;
+            }
+
+            if (trialIntervalUnit != null)
+            {
+                this.TrialIntervalUnit = trialIntervalUnit;
+            }
+
             this.TrialType = trialType;
-            this.IntroductoryOffer = introductoryOffer;
-            this.InitialChargeInCents = initialChargeInCents;
-            this.InitialChargeAfterTrial = initialChargeAfterTrial;
-            this.ExpirationInterval = expirationInterval;
-            this.ExpirationIntervalUnit = expirationIntervalUnit;
+            if (introductoryOffer != null)
+            {
+                this.IntroductoryOffer = introductoryOffer;
+            }
+
+            if (initialChargeInCents != null)
+            {
+                this.InitialChargeInCents = initialChargeInCents;
+            }
+
+            if (initialChargeAfterTrial != null)
+            {
+                this.InitialChargeAfterTrial = initialChargeAfterTrial;
+            }
+
+            if (expirationInterval != null)
+            {
+                this.ExpirationInterval = expirationInterval;
+            }
+
+            if (expirationIntervalUnit != null)
+            {
+                this.ExpirationIntervalUnit = expirationIntervalUnit;
+            }
+
             this.ProductId = productId;
             if (archivedAt != null)
             {
@@ -139,8 +193,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The product price point API handle
         /// </summary>
-        [JsonProperty("handle", NullValueHandling = NullValueHandling.Ignore)]
-        public string Handle { get; set; }
+        [JsonProperty("handle")]
+        public string Handle
+        {
+            get
+            {
+                return this.handle;
+            }
+
+            set
+            {
+                this.shouldSerialize["handle"] = true;
+                this.handle = value;
+            }
+        }
 
         /// <summary>
         /// The product price point price, in integer cents
@@ -163,20 +229,56 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The product price point trial price, in integer cents
         /// </summary>
-        [JsonProperty("trial_price_in_cents", NullValueHandling = NullValueHandling.Ignore)]
-        public long? TrialPriceInCents { get; set; }
+        [JsonProperty("trial_price_in_cents")]
+        public long? TrialPriceInCents
+        {
+            get
+            {
+                return this.trialPriceInCents;
+            }
+
+            set
+            {
+                this.shouldSerialize["trial_price_in_cents"] = true;
+                this.trialPriceInCents = value;
+            }
+        }
 
         /// <summary>
         /// The numerical trial interval. i.e. an interval of ‘30’ coupled with a trial_interval_unit of day would mean this product price point trial would last 30 days
         /// </summary>
-        [JsonProperty("trial_interval", NullValueHandling = NullValueHandling.Ignore)]
-        public int? TrialInterval { get; set; }
+        [JsonProperty("trial_interval")]
+        public int? TrialInterval
+        {
+            get
+            {
+                return this.trialInterval;
+            }
+
+            set
+            {
+                this.shouldSerialize["trial_interval"] = true;
+                this.trialInterval = value;
+            }
+        }
 
         /// <summary>
         /// A string representing the trial interval unit for this product price point, either month or day
         /// </summary>
-        [JsonProperty("trial_interval_unit", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.IntervalUnit? TrialIntervalUnit { get; set; }
+        [JsonProperty("trial_interval_unit")]
+        public Models.IntervalUnit? TrialIntervalUnit
+        {
+            get
+            {
+                return this.trialIntervalUnit;
+            }
+
+            set
+            {
+                this.shouldSerialize["trial_interval_unit"] = true;
+                this.trialIntervalUnit = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets TrialType.
@@ -187,32 +289,92 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// reserved for future use
         /// </summary>
-        [JsonProperty("introductory_offer", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? IntroductoryOffer { get; set; }
+        [JsonProperty("introductory_offer")]
+        public bool? IntroductoryOffer
+        {
+            get
+            {
+                return this.introductoryOffer;
+            }
+
+            set
+            {
+                this.shouldSerialize["introductory_offer"] = true;
+                this.introductoryOffer = value;
+            }
+        }
 
         /// <summary>
         /// The product price point initial charge, in integer cents
         /// </summary>
-        [JsonProperty("initial_charge_in_cents", NullValueHandling = NullValueHandling.Ignore)]
-        public long? InitialChargeInCents { get; set; }
+        [JsonProperty("initial_charge_in_cents")]
+        public long? InitialChargeInCents
+        {
+            get
+            {
+                return this.initialChargeInCents;
+            }
+
+            set
+            {
+                this.shouldSerialize["initial_charge_in_cents"] = true;
+                this.initialChargeInCents = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets InitialChargeAfterTrial.
         /// </summary>
-        [JsonProperty("initial_charge_after_trial", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? InitialChargeAfterTrial { get; set; }
+        [JsonProperty("initial_charge_after_trial")]
+        public bool? InitialChargeAfterTrial
+        {
+            get
+            {
+                return this.initialChargeAfterTrial;
+            }
+
+            set
+            {
+                this.shouldSerialize["initial_charge_after_trial"] = true;
+                this.initialChargeAfterTrial = value;
+            }
+        }
 
         /// <summary>
         /// The numerical expiration interval. i.e. an expiration_interval of ‘30’ coupled with an expiration_interval_unit of day would mean this product price point would expire after 30 days
         /// </summary>
-        [JsonProperty("expiration_interval", NullValueHandling = NullValueHandling.Ignore)]
-        public int? ExpirationInterval { get; set; }
+        [JsonProperty("expiration_interval")]
+        public int? ExpirationInterval
+        {
+            get
+            {
+                return this.expirationInterval;
+            }
+
+            set
+            {
+                this.shouldSerialize["expiration_interval"] = true;
+                this.expirationInterval = value;
+            }
+        }
 
         /// <summary>
         /// A string representing the expiration interval unit for this product price point, either month or day
         /// </summary>
-        [JsonProperty("expiration_interval_unit", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.IntervalUnit? ExpirationIntervalUnit { get; set; }
+        [JsonProperty("expiration_interval_unit")]
+        public Models.IntervalUnit? ExpirationIntervalUnit
+        {
+            get
+            {
+                return this.expirationIntervalUnit;
+            }
+
+            set
+            {
+                this.shouldSerialize["expiration_interval_unit"] = true;
+                this.expirationIntervalUnit = value;
+            }
+        }
 
         /// <summary>
         /// The product id this price point belongs to
@@ -308,6 +470,78 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serailized.
         /// </summary>
+        public void UnsetHandle()
+        {
+            this.shouldSerialize["handle"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetTrialPriceInCents()
+        {
+            this.shouldSerialize["trial_price_in_cents"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetTrialInterval()
+        {
+            this.shouldSerialize["trial_interval"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetTrialIntervalUnit()
+        {
+            this.shouldSerialize["trial_interval_unit"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetIntroductoryOffer()
+        {
+            this.shouldSerialize["introductory_offer"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetInitialChargeInCents()
+        {
+            this.shouldSerialize["initial_charge_in_cents"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetInitialChargeAfterTrial()
+        {
+            this.shouldSerialize["initial_charge_after_trial"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetExpirationInterval()
+        {
+            this.shouldSerialize["expiration_interval"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetExpirationIntervalUnit()
+        {
+            this.shouldSerialize["expiration_interval_unit"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
         public void UnsetArchivedAt()
         {
             this.shouldSerialize["archived_at"] = false;
@@ -319,6 +553,87 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetSubscriptionId()
         {
             this.shouldSerialize["subscription_id"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeHandle()
+        {
+            return this.shouldSerialize["handle"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeTrialPriceInCents()
+        {
+            return this.shouldSerialize["trial_price_in_cents"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeTrialInterval()
+        {
+            return this.shouldSerialize["trial_interval"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeTrialIntervalUnit()
+        {
+            return this.shouldSerialize["trial_interval_unit"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeIntroductoryOffer()
+        {
+            return this.shouldSerialize["introductory_offer"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeInitialChargeInCents()
+        {
+            return this.shouldSerialize["initial_charge_in_cents"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeInitialChargeAfterTrial()
+        {
+            return this.shouldSerialize["initial_charge_after_trial"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeExpirationInterval()
+        {
+            return this.shouldSerialize["expiration_interval"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeExpirationIntervalUnit()
+        {
+            return this.shouldSerialize["expiration_interval_unit"];
         }
 
         /// <summary>

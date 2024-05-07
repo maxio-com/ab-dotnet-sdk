@@ -37,7 +37,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="memo">memo.</param>
         public IssueServiceCredit(
             IssueServiceCreditAmount amount,
-            string memo)
+            string memo = null)
         {
             this.Amount = amount;
             this.Memo = memo;
@@ -52,7 +52,7 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets Memo.
         /// </summary>
-        [JsonProperty("memo")]
+        [JsonProperty("memo", NullValueHandling = NullValueHandling.Ignore)]
         public string Memo { get; set; }
 
         /// <inheritdoc/>

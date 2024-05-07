@@ -123,7 +123,7 @@ ListSubscriptionComponentsAsync(
 | `sort` | [`ListSubscriptionComponentsSort?`](../../doc/models/list-subscription-components-sort.md) | Query, Optional | The attribute by which to sort. Use in query `sort=updated_at`. |
 | `startDate` | `string` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns components with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
 | `startDatetime` | `string` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of start_date. |
-| `include` | [`ListSubscriptionComponentsInclude?`](../../doc/models/list-subscription-components-include.md) | Query, Optional | Allows including additional data in the response. Use in query `include=subscription`. |
+| `include` | [`List<ListSubscriptionComponentsInclude>`](../../doc/models/list-subscription-components-include.md) | Query, Optional | Allows including additional data in the response. Use in query `include=subscription,historic_usages`. |
 
 ## Response Type
 
@@ -152,7 +152,11 @@ ListSubscriptionComponentsInput listSubscriptionComponentsInput = new ListSubscr
         3,
     },
     Sort = ListSubscriptionComponentsSort.UpdatedAt,
-    Include = ListSubscriptionComponentsInclude.Subscription,
+    Include = new List<ListSubscriptionComponentsInclude>
+    {
+        ListSubscriptionComponentsInclude.Subscription,
+        ListSubscriptionComponentsInclude.HistoricUsages,
+    },
 };
 
 try
@@ -1587,7 +1591,7 @@ ListSubscriptionComponentsForSiteAsync(
 | `subscriptionIds` | `List<int>` | Query, Optional | Allows fetching components allocation with matching subscription id based on provided ids. Use in query `subscription_ids=1,2,3`. |
 | `pricePointIds` | [`IncludeNotNull?`](../../doc/models/include-not-null.md) | Query, Optional | Allows fetching components allocation only if price point id is present. Use in query `price_point_ids=not_null`. |
 | `productFamilyIds` | `List<int>` | Query, Optional | Allows fetching components allocation with matching product family id based on provided ids. Use in query `product_family_ids=1,2,3`. |
-| `include` | [`ListSubscriptionComponentsInclude?`](../../doc/models/list-subscription-components-include.md) | Query, Optional | Allows including additional data in the response. Use in query `include=subscription`. |
+| `include` | [`ListSubscriptionComponentsInclude?`](../../doc/models/list-subscription-components-include.md) | Query, Optional | Allows including additional data in the response. Use in query `include=subscription,historic_usages`. |
 
 ## Response Type
 

@@ -30,7 +30,7 @@
 | `ArchivedAt` | `DateTimeOffset?` | Optional | - |
 | `ConversionLimit` | `string` | Optional | - |
 | `Stackable` | `bool?` | Optional | - |
-| `CompoundingStrategy` | [`CouponCompoundingStrategy`](../../doc/models/containers/coupon-compounding-strategy.md) | Optional | This is a container for any-of cases. |
+| `CompoundingStrategy` | [`CompoundingStrategy?`](../../doc/models/compounding-strategy.md) | Optional | - |
 | `UseSiteExchangeRate` | `bool?` | Optional | - |
 | `CreatedAt` | `DateTimeOffset?` | Optional | - |
 | `UpdatedAt` | `DateTimeOffset?` | Optional | - |

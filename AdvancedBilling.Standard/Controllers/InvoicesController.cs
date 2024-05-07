@@ -121,7 +121,19 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
+        /// <![CDATA[
         /// Use this endpoint to retrieve the details for an invoice.
+        /// ## PDF Invoice retrieval.
+        /// Individual PDF Invoices can be retrieved by using the "Accept" header application/pdf or appending .pdf as the format portion of the URL:.
+        /// ```curl -u <api_key>:x -H.
+        /// Accept:application/pdf -H.
+        /// https://acme.chargify.com/invoices/inv_8gd8tdhtd3hgr.pdf > output_file.pdf.
+        /// URL: `https://<subdomain>.chargify.com/invoices/<uid>.<format>`.
+        /// Method: GET.
+        /// Required parameters: `uid`.
+        /// Response: A single Invoice.
+        /// ```.
+        /// ]]>
         /// </summary>
         /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
         /// <returns>Returns the Models.Invoice response from the API call.</returns>
@@ -130,7 +142,19 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ReadInvoiceAsync(uid));
 
         /// <summary>
+        /// <![CDATA[
         /// Use this endpoint to retrieve the details for an invoice.
+        /// ## PDF Invoice retrieval.
+        /// Individual PDF Invoices can be retrieved by using the "Accept" header application/pdf or appending .pdf as the format portion of the URL:.
+        /// ```curl -u <api_key>:x -H.
+        /// Accept:application/pdf -H.
+        /// https://acme.chargify.com/invoices/inv_8gd8tdhtd3hgr.pdf > output_file.pdf.
+        /// URL: `https://<subdomain>.chargify.com/invoices/<uid>.<format>`.
+        /// Method: GET.
+        /// Required parameters: `uid`.
+        /// Response: A single Invoice.
+        /// ```.
+        /// ]]>
         /// </summary>
         /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>

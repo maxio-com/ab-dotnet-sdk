@@ -23,6 +23,12 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class Usage : BaseModel
     {
+        private string memo;
+        private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
+        {
+            { "memo", false },
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Usage"/> class.
         /// </summary>
@@ -54,7 +60,11 @@ namespace AdvancedBilling.Standard.Models
             int? subscriptionId = null)
         {
             this.Id = id;
-            this.Memo = memo;
+            if (memo != null)
+            {
+                this.Memo = memo;
+            }
+
             this.CreatedAt = createdAt;
             this.PricePointId = pricePointId;
             this.Quantity = quantity;
@@ -73,8 +83,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets Memo.
         /// </summary>
-        [JsonProperty("memo", NullValueHandling = NullValueHandling.Ignore)]
-        public string Memo { get; set; }
+        [JsonProperty("memo")]
+        public string Memo
+        {
+            get
+            {
+                return this.memo;
+            }
+
+            set
+            {
+                this.shouldSerialize["memo"] = true;
+                this.memo = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets CreatedAt.
@@ -127,6 +149,23 @@ namespace AdvancedBilling.Standard.Models
             this.ToString(toStringOutput);
 
             return $"Usage : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetMemo()
+        {
+            this.shouldSerialize["memo"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeMemo()
+        {
+            return this.shouldSerialize["memo"];
         }
 
         /// <inheritdoc/>

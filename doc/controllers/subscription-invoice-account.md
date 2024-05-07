@@ -239,7 +239,6 @@ IssueServiceCreditRequest body = new IssueServiceCreditRequest
     ServiceCredit = new IssueServiceCredit
     {
         Amount = IssueServiceCreditAmount.FromString("1"),
-        Memo = "Courtesy credit",
     },
 };
 
@@ -268,6 +267,12 @@ catch (ApiException e)
   "memo": "Credit to group account"
 }
 ```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | `ApiException` |
 
 
 # Deduct Service Credit
@@ -322,7 +327,7 @@ catch (ApiException e)
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+| 422 | Unprocessable Entity (WebDAV) | `ApiException` |
 
 
 # Refund Prepayment
@@ -334,7 +339,7 @@ The amount may be passed either as a decimal, with `amount`, or an integer in ce
 ```csharp
 RefundPrepaymentAsync(
     int subscriptionId,
-    string prepaymentId,
+    long prepaymentId,
     Models.RefundPrepaymentRequest body = null)
 ```
 
@@ -343,7 +348,7 @@ RefundPrepaymentAsync(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `prepaymentId` | `string` | Template, Required | id of prepayment |
+| `prepaymentId` | `long` | Template, Required | id of prepayment |
 | `body` | [`RefundPrepaymentRequest`](../../doc/models/refund-prepayment-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -354,7 +359,7 @@ RefundPrepaymentAsync(
 
 ```csharp
 int subscriptionId = 222;
-string prepaymentId = "prepayment_id8";
+long prepaymentId = 228L;
 try
 {
     PrepaymentResponse result = await subscriptionInvoiceAccountController.RefundPrepaymentAsync(
@@ -375,5 +380,5 @@ catch (ApiException e)
 |  --- | --- | --- |
 | 400 | Bad Request | [`RefundPrepaymentBaseErrorsResponseException`](../../doc/models/refund-prepayment-base-errors-response-exception.md) |
 | 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity | [`RefundPrepaymentAggregatedErrorsResponseException`](../../doc/models/refund-prepayment-aggregated-errors-response-exception.md) |
+| 422 | Unprocessable Entity | `ApiException` |
 

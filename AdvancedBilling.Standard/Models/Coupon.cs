@@ -12,7 +12,6 @@ namespace AdvancedBilling.Standard.Models
     using System.Threading.Tasks;
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
     using JsonSubTypes;
     using Newtonsoft.Json;
@@ -34,6 +33,7 @@ namespace AdvancedBilling.Standard.Models
         private string durationIntervalSpan;
         private DateTimeOffset? archivedAt;
         private string conversionLimit;
+        private Models.CompoundingStrategy? compoundingStrategy;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "amount", false },
@@ -47,6 +47,7 @@ namespace AdvancedBilling.Standard.Models
             { "duration_interval_span", false },
             { "archived_at", false },
             { "conversion_limit", false },
+            { "compounding_strategy", false },
         };
 
         /// <summary>
@@ -111,7 +112,7 @@ namespace AdvancedBilling.Standard.Models
             DateTimeOffset? archivedAt = null,
             string conversionLimit = null,
             bool? stackable = null,
-            CouponCompoundingStrategy compoundingStrategy = null,
+            Models.CompoundingStrategy? compoundingStrategy = null,
             bool? useSiteExchangeRate = null,
             DateTimeOffset? createdAt = null,
             DateTimeOffset? updatedAt = null,
@@ -186,7 +187,11 @@ namespace AdvancedBilling.Standard.Models
             }
 
             this.Stackable = stackable;
-            this.CompoundingStrategy = compoundingStrategy;
+            if (compoundingStrategy != null)
+            {
+                this.CompoundingStrategy = compoundingStrategy;
+            }
+
             this.UseSiteExchangeRate = useSiteExchangeRate;
             this.CreatedAt = createdAt;
             this.UpdatedAt = updatedAt;
@@ -461,8 +466,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets CompoundingStrategy.
         /// </summary>
-        [JsonProperty("compounding_strategy", NullValueHandling = NullValueHandling.Ignore)]
-        public CouponCompoundingStrategy CompoundingStrategy { get; set; }
+        [JsonProperty("compounding_strategy")]
+        public Models.CompoundingStrategy? CompoundingStrategy
+        {
+            get
+            {
+                return this.compoundingStrategy;
+            }
+
+            set
+            {
+                this.shouldSerialize["compounding_strategy"] = true;
+                this.compoundingStrategy = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets UseSiteExchangeRate.
@@ -613,6 +630,14 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetCompoundingStrategy()
+        {
+            this.shouldSerialize["compounding_strategy"] = false;
+        }
+
+        /// <summary>
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
@@ -711,6 +736,15 @@ namespace AdvancedBilling.Standard.Models
             return this.shouldSerialize["conversion_limit"];
         }
 
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeCompoundingStrategy()
+        {
+            return this.shouldSerialize["compounding_strategy"];
+        }
+
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
@@ -782,7 +816,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt.ToString())}");
             toStringOutput.Add($"this.ConversionLimit = {(this.ConversionLimit == null ? "null" : this.ConversionLimit)}");
             toStringOutput.Add($"this.Stackable = {(this.Stackable == null ? "null" : this.Stackable.ToString())}");
-            toStringOutput.Add($"CompoundingStrategy = {(this.CompoundingStrategy == null ? "null" : this.CompoundingStrategy.ToString())}");
+            toStringOutput.Add($"this.CompoundingStrategy = {(this.CompoundingStrategy == null ? "null" : this.CompoundingStrategy.ToString())}");
             toStringOutput.Add($"this.UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
             toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
