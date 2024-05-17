@@ -82,7 +82,7 @@ namespace AdvancedBillingTests
             voidInvoiceResponse.Uid.Should().NotBeNull();
             
             // sometimes some events are missing
-            Thread.Sleep(500);
+            Thread.Sleep(1500);
 
             var invoiceEventsResponse = await _client.InvoicesController.ListInvoiceEventsAsync(
                 new ListInvoiceEventsInput(
