@@ -13,7 +13,7 @@ namespace AdvancedBillingTests
             var builder = new AdvancedBillingClient.Builder();
             builder.BasicAuthCredentials(new BasicAuthModel.Builder(username, accessToken).Build());
             builder.Environment(Environment.Production);
-            builder.Domain("staging-chargify.com");
+            builder.Domain("chargify.com");
             builder.Subdomain("dotnet-sdk");
 
             return builder.Build();
