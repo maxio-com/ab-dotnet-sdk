@@ -8,13 +8,15 @@ namespace AdvancedBillingTests
     {
         public static AdvancedBillingClient GetClient()
         {
-            var accessToken = System.Environment.GetEnvironmentVariable("TEST_ACCESS_TOKEN");
-            var username = System.Environment.GetEnvironmentVariable("TEST_USERNAME");
+            var apiKey = System.Environment.GetEnvironmentVariable("TEST_API_KEY");
+            var password = System.Environment.GetEnvironmentVariable("TEST_PASSWORD");
+            var domain = System.Environment.GetEnvironmentVariable("TEST_DOMAIN");
+            var subdomain = System.Environment.GetEnvironmentVariable("TEST_SUBDOMAIN");
             var builder = new AdvancedBillingClient.Builder();
-            builder.BasicAuthCredentials(new BasicAuthModel.Builder(username, accessToken).Build());
+            builder.BasicAuthCredentials(new BasicAuthModel.Builder(apiKey, password).Build());
             builder.Environment(Environment.Production);
-            builder.Domain("chargify.com");
-            builder.Subdomain("dotnet-sdk");
+            builder.Domain(domain);
+            builder.Subdomain(subdomain);
 
             return builder.Build();
         }

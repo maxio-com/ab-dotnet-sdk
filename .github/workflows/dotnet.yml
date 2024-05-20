@@ -30,7 +30,9 @@ jobs:
       run: dotnet build AdvancedBilling.sln --no-restore
     - name: Restore dependencies on AdvancedBilling Tests
       run: dotnet restore AdvancedBillingTests.sln
-    - run: export TEST_ACCESS_TOKEN=${{ env.TEST_ACCESS_TOKEN }}
-    - run: export TEST_USERNAME=${{ env.TEST_USERNAME }}
+    - run: export TEST_ACCESS_TOKEN=${{ env.TEST_API_KEY }}
+    - run: export TEST_USERNAME=${{ env.TEST_PASSWORD }}
+    - run: export TEST_USERNAME=${{ env.TEST_DOMAIN }}
+    - run: export TEST_USERNAME=${{ env.TEST_SUBDOMAIN }}
     - name: Test
       run: dotnet test AdvancedBillingTests.sln --verbosity normal
