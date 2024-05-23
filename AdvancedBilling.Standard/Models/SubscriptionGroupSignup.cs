@@ -45,7 +45,7 @@ namespace AdvancedBilling.Standard.Models
             int? paymentProfileId = null,
             int? payerId = null,
             string payerReference = null,
-            Models.CollectionMethod? paymentCollectionMethod = Models.CollectionMethod.Automatic,
+            Models.CollectionMethod? paymentCollectionMethod = null,
             Models.PayerAttributes payerAttributes = null,
             Models.SubscriptionGroupCreditCard creditCardAttributes = null,
             Models.SubscriptionGroupBankAccount bankAccountAttributes = null)

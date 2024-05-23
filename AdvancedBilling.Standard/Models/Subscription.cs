@@ -194,8 +194,8 @@ namespace AdvancedBilling.Standard.Models
             DateTimeOffset? delayedCancelAt = null,
             string couponCode = null,
             string snapDay = null,
-            Models.CollectionMethod? paymentCollectionMethod = Models.CollectionMethod.Automatic,
-            Models.Customer customer = null,
+            Models.CollectionMethod? paymentCollectionMethod = null,
+            Models.Customer1 customer = null,
             Models.Product product = null,
             Models.CreditCardPaymentProfile creditCard = null,
             Models.NestedSubscriptionGroup mGroup = null,
@@ -794,7 +794,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Customer.
         /// </summary>
         [JsonProperty("customer", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.Customer Customer { get; set; }
+        public Models.Customer1 Customer { get; set; }
 
         /// <summary>
         /// Gets or sets Product.

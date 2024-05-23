@@ -98,7 +98,7 @@ namespace AdvancedBilling.Standard.Models
             Models.SubscriptionCustomPrice customPrice = null,
             string couponCode = null,
             List<string> couponCodes = null,
-            Models.CollectionMethod? paymentCollectionMethod = Models.CollectionMethod.Automatic,
+            Models.CollectionMethod? paymentCollectionMethod = null,
             string receivesInvoiceEmails = null,
             string netTerms = null,
             int? customerId = null,

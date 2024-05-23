@@ -54,7 +54,7 @@ namespace AdvancedBilling.Standard.Models
             Models.SubscriptionState? state = null,
             bool? cancelAtEndOfPeriod = null,
             List<Models.SubscriptionGroupItem> subscriptions = null,
-            Models.CollectionMethod? paymentCollectionMethod = Models.CollectionMethod.Automatic)
+            Models.CollectionMethod? paymentCollectionMethod = null)
         {
             this.Uid = uid;
             this.Scheme = scheme;

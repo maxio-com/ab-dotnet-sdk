@@ -117,7 +117,7 @@ namespace AdvancedBilling.Standard.Models
             Models.InvoiceStatus? status = null,
             Models.InvoiceRole? role = null,
             int? parentInvoiceId = null,
-            Models.CollectionMethod? collectionMethod = Models.CollectionMethod.Automatic,
+            Models.CollectionMethod? collectionMethod = null,
             string paymentInstructions = null,
             string currency = null,
             Models.InvoiceConsolidationLevel? consolidationLevel = null,
@@ -334,7 +334,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The current status of the invoice. See [Invoice Statuses](https://chargify.zendesk.com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
+        /// The current status of the invoice. See [Invoice Statuses](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405078794253-Introduction-to-Invoices#invoice-statuses) for more.
         /// </summary>
         [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
         public Models.InvoiceStatus? Status { get; set; }

@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `Customer` | [`Customer`](../../doc/models/customer.md) | Required | - |
+| `Customer` | [`Customer1`](../../doc/models/customer-1.md) | Required | - |
 
 ## Example (as JSON)
 

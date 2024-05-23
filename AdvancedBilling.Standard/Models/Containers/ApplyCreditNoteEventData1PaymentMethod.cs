@@ -8,7 +8,7 @@ namespace AdvancedBilling.Standard.Models.Containers
     /// This is a container class for any-of types.
     /// </summary>
     [JsonConverter(
-        typeof(UnionTypeConverter<InvoiceEventDataPaymentMethod>),
+        typeof(UnionTypeConverter<ApplyCreditNoteEventData1PaymentMethod>),
         new Type[] {
             typeof(PaymentMethodApplePayCase),
             typeof(PaymentMethodBankAccountCase),
@@ -18,15 +18,15 @@ namespace AdvancedBilling.Standard.Models.Containers
         },
         false
     )]
-    public abstract class InvoiceEventDataPaymentMethod
+    public abstract class ApplyCreditNoteEventData1PaymentMethod
     {
         /// <summary>
         /// This is Payment Method Apple Pay case.
         /// </summary>
         /// <returns>
-        /// The InvoiceEventDataPaymentMethod instance, wrapping the provided PaymentMethodApplePay value.
+        /// The ApplyCreditNoteEventData1PaymentMethod instance, wrapping the provided PaymentMethodApplePay value.
         /// </returns>
-        public static InvoiceEventDataPaymentMethod FromPaymentMethodApplePay(PaymentMethodApplePay paymentMethodApplePay)
+        public static ApplyCreditNoteEventData1PaymentMethod FromPaymentMethodApplePay(PaymentMethodApplePay paymentMethodApplePay)
         {
             return new PaymentMethodApplePayCase().Set(paymentMethodApplePay);
         }
@@ -35,9 +35,9 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// This is Payment Method Bank Account case.
         /// </summary>
         /// <returns>
-        /// The InvoiceEventDataPaymentMethod instance, wrapping the provided PaymentMethodBankAccount value.
+        /// The ApplyCreditNoteEventData1PaymentMethod instance, wrapping the provided PaymentMethodBankAccount value.
         /// </returns>
-        public static InvoiceEventDataPaymentMethod FromPaymentMethodBankAccount(PaymentMethodBankAccount paymentMethodBankAccount)
+        public static ApplyCreditNoteEventData1PaymentMethod FromPaymentMethodBankAccount(PaymentMethodBankAccount paymentMethodBankAccount)
         {
             return new PaymentMethodBankAccountCase().Set(paymentMethodBankAccount);
         }
@@ -46,9 +46,9 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// This is Payment Method Credit Card case.
         /// </summary>
         /// <returns>
-        /// The InvoiceEventDataPaymentMethod instance, wrapping the provided PaymentMethodCreditCard value.
+        /// The ApplyCreditNoteEventData1PaymentMethod instance, wrapping the provided PaymentMethodCreditCard value.
         /// </returns>
-        public static InvoiceEventDataPaymentMethod FromPaymentMethodCreditCard(PaymentMethodCreditCard paymentMethodCreditCard)
+        public static ApplyCreditNoteEventData1PaymentMethod FromPaymentMethodCreditCard(PaymentMethodCreditCard paymentMethodCreditCard)
         {
             return new PaymentMethodCreditCardCase().Set(paymentMethodCreditCard);
         }
@@ -57,9 +57,9 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// This is Payment Method External case.
         /// </summary>
         /// <returns>
-        /// The InvoiceEventDataPaymentMethod instance, wrapping the provided PaymentMethodExternal value.
+        /// The ApplyCreditNoteEventData1PaymentMethod instance, wrapping the provided PaymentMethodExternal value.
         /// </returns>
-        public static InvoiceEventDataPaymentMethod FromPaymentMethodExternal(PaymentMethodExternal paymentMethodExternal)
+        public static ApplyCreditNoteEventData1PaymentMethod FromPaymentMethodExternal(PaymentMethodExternal paymentMethodExternal)
         {
             return new PaymentMethodExternalCase().Set(paymentMethodExternal);
         }
@@ -68,9 +68,9 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// This is Payment Method Paypal case.
         /// </summary>
         /// <returns>
-        /// The InvoiceEventDataPaymentMethod instance, wrapping the provided PaymentMethodPaypal value.
+        /// The ApplyCreditNoteEventData1PaymentMethod instance, wrapping the provided PaymentMethodPaypal value.
         /// </returns>
-        public static InvoiceEventDataPaymentMethod FromPaymentMethodPaypal(PaymentMethodPaypal paymentMethodPaypal)
+        public static ApplyCreditNoteEventData1PaymentMethod FromPaymentMethodPaypal(PaymentMethodPaypal paymentMethodPaypal)
         {
             return new PaymentMethodPaypalCase().Set(paymentMethodPaypal);
         }
@@ -91,7 +91,7 @@ namespace AdvancedBilling.Standard.Models.Containers
             Func<PaymentMethodPaypal, T> paymentMethodPaypal);
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PaymentMethodApplePayCase, PaymentMethodApplePay>))]
-        private sealed class PaymentMethodApplePayCase : InvoiceEventDataPaymentMethod, ICaseValue<PaymentMethodApplePayCase, PaymentMethodApplePay>
+        private sealed class PaymentMethodApplePayCase : ApplyCreditNoteEventData1PaymentMethod, ICaseValue<PaymentMethodApplePayCase, PaymentMethodApplePay>
         {
             public PaymentMethodApplePay _value;
 
@@ -123,7 +123,7 @@ namespace AdvancedBilling.Standard.Models.Containers
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PaymentMethodBankAccountCase, PaymentMethodBankAccount>))]
-        private sealed class PaymentMethodBankAccountCase : InvoiceEventDataPaymentMethod, ICaseValue<PaymentMethodBankAccountCase, PaymentMethodBankAccount>
+        private sealed class PaymentMethodBankAccountCase : ApplyCreditNoteEventData1PaymentMethod, ICaseValue<PaymentMethodBankAccountCase, PaymentMethodBankAccount>
         {
             public PaymentMethodBankAccount _value;
 
@@ -155,7 +155,7 @@ namespace AdvancedBilling.Standard.Models.Containers
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PaymentMethodCreditCardCase, PaymentMethodCreditCard>))]
-        private sealed class PaymentMethodCreditCardCase : InvoiceEventDataPaymentMethod, ICaseValue<PaymentMethodCreditCardCase, PaymentMethodCreditCard>
+        private sealed class PaymentMethodCreditCardCase : ApplyCreditNoteEventData1PaymentMethod, ICaseValue<PaymentMethodCreditCardCase, PaymentMethodCreditCard>
         {
             public PaymentMethodCreditCard _value;
 
@@ -187,7 +187,7 @@ namespace AdvancedBilling.Standard.Models.Containers
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PaymentMethodExternalCase, PaymentMethodExternal>))]
-        private sealed class PaymentMethodExternalCase : InvoiceEventDataPaymentMethod, ICaseValue<PaymentMethodExternalCase, PaymentMethodExternal>
+        private sealed class PaymentMethodExternalCase : ApplyCreditNoteEventData1PaymentMethod, ICaseValue<PaymentMethodExternalCase, PaymentMethodExternal>
         {
             public PaymentMethodExternal _value;
 
@@ -219,7 +219,7 @@ namespace AdvancedBilling.Standard.Models.Containers
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PaymentMethodPaypalCase, PaymentMethodPaypal>))]
-        private sealed class PaymentMethodPaypalCase : InvoiceEventDataPaymentMethod, ICaseValue<PaymentMethodPaypalCase, PaymentMethodPaypal>
+        private sealed class PaymentMethodPaypalCase : ApplyCreditNoteEventData1PaymentMethod, ICaseValue<PaymentMethodPaypalCase, PaymentMethodPaypal>
         {
             public PaymentMethodPaypal _value;
 

@@ -105,7 +105,8 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("sort", (input.Sort.HasValue) ? ApiHelper.JsonSerialize(input.Sort.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("start_date", input.StartDate))
                       .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
-                      .Query(_query => _query.Setup("include", input.Include?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+                      .Query(_query => _query.Setup("include", input.Include?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))
+                      .Query(_query => _query.Setup("in_use", input.InUse))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>

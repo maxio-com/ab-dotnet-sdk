@@ -40,7 +40,7 @@ namespace AdvancedBilling.Standard.Models
         public SubscriptionGroup(
             int? customerId = null,
             Models.SubscriptionGroupPaymentProfile paymentProfile = null,
-            Models.CollectionMethod? paymentCollectionMethod = Models.CollectionMethod.Automatic,
+            Models.CollectionMethod? paymentCollectionMethod = null,
             List<int> subscriptionIds = null,
             DateTimeOffset? createdAt = null)
         {

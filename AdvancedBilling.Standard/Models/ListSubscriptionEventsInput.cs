@@ -43,8 +43,8 @@ namespace AdvancedBilling.Standard.Models
             int subscriptionId,
             int? page = 1,
             int? perPage = 20,
-            int? sinceId = null,
-            int? maxId = null,
+            long? sinceId = null,
+            long? maxId = null,
             Models.Direction? direction = Models.Direction.Desc,
             List<Models.EventType> filter = null)
         {
@@ -81,13 +81,13 @@ namespace AdvancedBilling.Standard.Models
         /// Returns events with an id greater than or equal to the one specified
         /// </summary>
         [JsonProperty("since_id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? SinceId { get; set; }
+        public long? SinceId { get; set; }
 
         /// <summary>
         /// Returns events with an id less than or equal to the one specified
         /// </summary>
         [JsonProperty("max_id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? MaxId { get; set; }
+        public long? MaxId { get; set; }
 
         /// <summary>
         /// The sort direction of the returned events.

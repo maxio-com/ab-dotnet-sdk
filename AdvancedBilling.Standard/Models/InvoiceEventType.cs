@@ -50,6 +50,12 @@ namespace AdvancedBilling.Standard.Models
         ApplyDebitNote,
 
         /// <summary>
+        /// CreateDebitNote.
+        /// </summary>
+        [EnumMember(Value = "create_debit_note")]
+        CreateDebitNote,
+
+        /// <summary>
         /// RefundInvoice.
         /// </summary>
         [EnumMember(Value = "refund_invoice")]

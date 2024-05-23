@@ -12,7 +12,6 @@ namespace AdvancedBilling.Standard.Models
     using System.Threading.Tasks;
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
     using JsonSubTypes;
     using Newtonsoft.Json;
@@ -21,6 +20,7 @@ namespace AdvancedBilling.Standard.Models
     /// <summary>
     /// InvoiceEvent.
     /// </summary>
+    [JsonConverter(typeof(JsonSubtypes), "event_type")]
     public class InvoiceEvent : BaseModel
     {
         /// <summary>
@@ -28,47 +28,36 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         public InvoiceEvent()
         {
+            this.EventType = "Invoice Event";
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InvoiceEvent"/> class.
         /// </summary>
-        /// <param name="id">id.</param>
         /// <param name="eventType">event_type.</param>
-        /// <param name="eventData">event_data.</param>
+        /// <param name="id">id.</param>
         /// <param name="timestamp">timestamp.</param>
         /// <param name="invoice">invoice.</param>
+        /// <param name="eventData">event_data.</param>
         public InvoiceEvent(
-            int? id = null,
-            Models.InvoiceEventType? eventType = null,
-            InvoiceEventEventData eventData = null,
+            string eventType = "Invoice Event",
+            long? id = null,
             DateTimeOffset? timestamp = null,
-            Models.Invoice invoice = null)
+            Models.Invoice1 invoice = null,
+            Models.ApplyCreditNoteEventData1 eventData = null)
         {
             this.Id = id;
-            this.EventType = eventType;
-            this.EventData = eventData;
             this.Timestamp = timestamp;
             this.Invoice = invoice;
+            this.EventType = eventType;
+            this.EventData = eventData;
         }
 
         /// <summary>
         /// Gets or sets Id.
         /// </summary>
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? Id { get; set; }
-
-        /// <summary>
-        /// Invoice Event Type
-        /// </summary>
-        [JsonProperty("event_type", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.InvoiceEventType? EventType { get; set; }
-
-        /// <summary>
-        /// The event data is the data that, when combined with the command, results in the output invoice found in the invoice field.
-        /// </summary>
-        [JsonProperty("event_data", NullValueHandling = NullValueHandling.Ignore)]
-        public InvoiceEventEventData EventData { get; set; }
+        public long? Id { get; set; }
 
         /// <summary>
         /// Gets or sets Timestamp.
@@ -81,7 +70,19 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Invoice.
         /// </summary>
         [JsonProperty("invoice", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.Invoice Invoice { get; set; }
+        public Models.Invoice1 Invoice { get; set; }
+
+        /// <summary>
+        /// Gets or sets EventType.
+        /// </summary>
+        [JsonProperty("event_type", NullValueHandling = NullValueHandling.Ignore)]
+        public string EventType { get; set; }
+
+        /// <summary>
+        /// Example schema for an `apply_credit_note` event
+        /// </summary>
+        [JsonProperty("event_data", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.ApplyCreditNoteEventData1 EventData { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -106,10 +107,10 @@ namespace AdvancedBilling.Standard.Models
                 return true;
             }
             return obj is InvoiceEvent other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.EventType == null && other.EventType == null) || (this.EventType?.Equals(other.EventType) == true)) &&
-                ((this.EventData == null && other.EventData == null) || (this.EventData?.Equals(other.EventData) == true)) &&
                 ((this.Timestamp == null && other.Timestamp == null) || (this.Timestamp?.Equals(other.Timestamp) == true)) &&
-                ((this.Invoice == null && other.Invoice == null) || (this.Invoice?.Equals(other.Invoice) == true));
+                ((this.Invoice == null && other.Invoice == null) || (this.Invoice?.Equals(other.Invoice) == true)) &&
+                ((this.EventType == null && other.EventType == null) || (this.EventType?.Equals(other.EventType) == true)) &&
+                ((this.EventData == null && other.EventData == null) || (this.EventData?.Equals(other.EventData) == true));
         }
         
         /// <summary>
@@ -119,10 +120,10 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.EventType = {(this.EventType == null ? "null" : this.EventType.ToString())}");
-            toStringOutput.Add($"EventData = {(this.EventData == null ? "null" : this.EventData.ToString())}");
             toStringOutput.Add($"this.Timestamp = {(this.Timestamp == null ? "null" : this.Timestamp.ToString())}");
             toStringOutput.Add($"this.Invoice = {(this.Invoice == null ? "null" : this.Invoice.ToString())}");
+            toStringOutput.Add($"this.EventType = {(this.EventType == null ? "null" : this.EventType)}");
+            toStringOutput.Add($"this.EventData = {(this.EventData == null ? "null" : this.EventData.ToString())}");
 
             base.ToString(toStringOutput);
         }

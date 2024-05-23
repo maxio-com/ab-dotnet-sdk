@@ -36,7 +36,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="customer">customer.</param>
         public SubscriptionGroupSignupSuccess(
             Models.SubscriptionGroupSignupSuccessData subscriptionGroup,
-            Models.Customer customer)
+            Models.Customer1 customer)
         {
             this.SubscriptionGroup = subscriptionGroup;
             this.Customer = customer;
@@ -54,7 +54,7 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("customer")]
         [JsonRequired]
-        public Models.Customer Customer { get; set; }
+        public Models.Customer1 Customer { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

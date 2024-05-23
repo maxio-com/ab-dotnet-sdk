@@ -72,7 +72,7 @@ namespace AdvancedBilling.Standard.Models
             string currency = null,
             string memo = null,
             Models.Seller seller = null,
-            Models.Customer1 customer = null,
+            Models.Customer customer = null,
             Models.BillingAddress billingAddress = null,
             Models.ShippingAddress shippingAddress = null,
             string subtotalAmount = null,
@@ -199,7 +199,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Customer.
         /// </summary>
         [JsonProperty("customer", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.Customer1 Customer { get; set; }
+        public Models.Customer Customer { get; set; }
 
         /// <summary>
         /// Gets or sets BillingAddress.

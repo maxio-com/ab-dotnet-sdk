@@ -508,6 +508,7 @@ namespace AdvancedBilling.Standard
                 return this;
             }
 
+
            
 
             /// <summary>
@@ -516,7 +517,6 @@ namespace AdvancedBilling.Standard
             /// <returns>AdvancedBillingClient.</returns>
             public AdvancedBillingClient Build()
             {
-
                 if (basicAuthModel.Username == null || basicAuthModel.Password == null)
                 {
                     basicAuthModel = null;

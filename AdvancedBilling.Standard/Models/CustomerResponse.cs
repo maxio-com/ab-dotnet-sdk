@@ -34,7 +34,7 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         /// <param name="customer">customer.</param>
         public CustomerResponse(
-            Models.Customer customer)
+            Models.Customer1 customer)
         {
             this.Customer = customer;
         }
@@ -43,7 +43,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Customer.
         /// </summary>
         [JsonProperty("customer")]
-        public Models.Customer Customer { get; set; }
+        public Models.Customer1 Customer { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

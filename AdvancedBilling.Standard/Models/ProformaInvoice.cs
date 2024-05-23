@@ -92,7 +92,7 @@ namespace AdvancedBilling.Standard.Models
             DateTimeOffset? createdAt = null,
             DateTime? deliveryDate = null,
             Models.ProformaInvoiceStatus? status = null,
-            Models.CollectionMethod? collectionMethod = Models.CollectionMethod.Automatic,
+            Models.CollectionMethod? collectionMethod = null,
             string paymentInstructions = null,
             string currency = null,
             Models.InvoiceConsolidationLevel? consolidationLevel = null,

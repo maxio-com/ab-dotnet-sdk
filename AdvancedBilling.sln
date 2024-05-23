@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvancedBilling.Standard", "AdvancedBilling.Standard/AdvancedBilling.Standard.csproj", "{68abfe38-6fbb-47ae-9312-a297b9acc9e5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvancedBilling.Standard", "AdvancedBilling.Standard/AdvancedBilling.Standard.csproj", "{f23f5faf-7118-4862-89e7-d042dce5af81}"
 EndProject
 Global
     GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -10,10 +10,10 @@ Global
         Release|Any CPU = Release|Any CPU
     EndGlobalSection
     GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {68abfe38-6fbb-47ae-9312-a297b9acc9e5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {68abfe38-6fbb-47ae-9312-a297b9acc9e5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {68abfe38-6fbb-47ae-9312-a297b9acc9e5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {68abfe38-6fbb-47ae-9312-a297b9acc9e5}.Release|Any CPU.Build.0 = Release|Any CPU
+        {f23f5faf-7118-4862-89e7-d042dce5af81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {f23f5faf-7118-4862-89e7-d042dce5af81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {f23f5faf-7118-4862-89e7-d042dce5af81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {f23f5faf-7118-4862-89e7-d042dce5af81}.Release|Any CPU.Build.0 = Release|Any CPU
     EndGlobalSection
     GlobalSection(SolutionProperties) = preSolution
         HideSolutionNode = FALSE

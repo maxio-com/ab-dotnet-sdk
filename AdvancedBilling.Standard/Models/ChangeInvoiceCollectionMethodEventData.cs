@@ -45,17 +45,13 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The previous collection method of the invoice.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("from_collection_method")]
-        [JsonRequired]
         public string FromCollectionMethod { get; set; }
 
         /// <summary>
         /// The new collection method of the invoice.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("to_collection_method")]
-        [JsonRequired]
         public string ToCollectionMethod { get; set; }
 
         /// <inheritdoc/>

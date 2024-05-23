@@ -67,7 +67,6 @@ namespace AdvancedBilling.Standard.Models
         /// If true, credit was created and applied it to the invoice.
         /// </summary>
         [JsonProperty("apply_credit")]
-        [JsonRequired]
         public bool ApplyCredit { get; set; }
 
         /// <summary>
@@ -85,20 +84,17 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets CreditNoteAttributes.
         /// </summary>
         [JsonProperty("credit_note_attributes")]
-        [JsonRequired]
         public Models.CreditNote CreditNoteAttributes { get; set; }
 
         /// <summary>
         /// The refund memo.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("memo", NullValueHandling = NullValueHandling.Ignore)]
         public string Memo { get; set; }
 
         /// <summary>
         /// The full, original amount of the refund.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("original_amount", NullValueHandling = NullValueHandling.Ignore)]
         public string OriginalAmount { get; set; }
 
@@ -106,22 +102,18 @@ namespace AdvancedBilling.Standard.Models
         /// The ID of the payment transaction to be refunded.
         /// </summary>
         [JsonProperty("payment_id")]
-        [JsonRequired]
         public int PaymentId { get; set; }
 
         /// <summary>
         /// The amount of the refund.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("refund_amount")]
-        [JsonRequired]
         public string RefundAmount { get; set; }
 
         /// <summary>
         /// The ID of the refund transaction.
         /// </summary>
         [JsonProperty("refund_id")]
-        [JsonRequired]
         public int RefundId { get; set; }
 
         /// <summary>
@@ -129,7 +121,6 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("transaction_time")]
-        [JsonRequired]
         public DateTimeOffset TransactionTime { get; set; }
 
         /// <inheritdoc/>

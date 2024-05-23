@@ -318,13 +318,13 @@ namespace AdvancedBilling.Standard.Models
         public string BankRoutingNumber { get; set; }
 
         /// <summary>
-        /// (Required when creating with ACH, GoCardless, Stripe BECS Direct Debit and bank_iban is blank) The customerʼs bank account number
+        /// (Required when creating with ACH, GoCardless, Stripe BECS or BACS Direct Debit, and bank_iban is blank) The customerʼs bank account number
         /// </summary>
         [JsonProperty("bank_account_number", NullValueHandling = NullValueHandling.Ignore)]
         public string BankAccountNumber { get; set; }
 
         /// <summary>
-        /// (Optional when creating with GoCardless, required with Stripe BECS Direct Debit) Branch code. Alternatively, an IBAN can be provided
+        /// (Optional when creating with GoCardless, required with Stripe BECS or BACS Direct Debit) Branch/Sort code. Alternatively, an IBAN can be provided
         /// </summary>
         [JsonProperty("bank_branch_code", NullValueHandling = NullValueHandling.Ignore)]
         public string BankBranchCode { get; set; }
