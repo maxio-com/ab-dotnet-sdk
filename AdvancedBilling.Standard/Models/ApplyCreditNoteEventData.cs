@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
-    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -22,6 +21,12 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class ApplyCreditNoteEventData : BaseModel
     {
+        private string memo;
+        private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
+        {
+            { "memo", false },
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplyCreditNoteEventData"/> class.
         /// </summary>
@@ -60,7 +65,11 @@ namespace AdvancedBilling.Standard.Models
             this.OriginalAmount = originalAmount;
             this.AppliedAmount = appliedAmount;
             this.TransactionTime = transactionTime;
-            this.Memo = memo;
+            if (memo != null)
+            {
+                this.Memo = memo;
+            }
+
             this.Role = role;
             this.ConsolidatedInvoice = consolidatedInvoice;
             this.AppliedCreditNotes = appliedCreditNotes;
@@ -69,41 +78,31 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Unique identifier for the credit note application. It is generated automatically by Chargify and has the prefix "cdt_" followed by alphanumeric characters.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("uid")]
-        [JsonRequired]
         public string Uid { get; set; }
 
         /// <summary>
         /// A unique, identifying string that appears on the credit note and in places it is referenced.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("credit_note_number")]
-        [JsonRequired]
         public string CreditNoteNumber { get; set; }
 
         /// <summary>
         /// Unique identifier for the credit note. It is generated automatically by Chargify and has the prefix "cn_" followed by alphanumeric characters.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("credit_note_uid")]
-        [JsonRequired]
         public string CreditNoteUid { get; set; }
 
         /// <summary>
         /// The full, original amount of the credit note.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("original_amount")]
-        [JsonRequired]
         public string OriginalAmount { get; set; }
 
         /// <summary>
         /// The amount of the credit note applied to invoice.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("applied_amount")]
-        [JsonRequired]
         public string AppliedAmount { get; set; }
 
         /// <summary>
@@ -116,14 +115,24 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The credit note memo.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("memo", NullValueHandling = NullValueHandling.Ignore)]
-        public string Memo { get; set; }
+        [JsonProperty("memo")]
+        public string Memo
+        {
+            get
+            {
+                return this.memo;
+            }
+
+            set
+            {
+                this.shouldSerialize["memo"] = true;
+                this.memo = value;
+            }
+        }
 
         /// <summary>
         /// The role of the credit note (e.g. 'general')
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("role", NullValueHandling = NullValueHandling.Ignore)]
         public string Role { get; set; }
 
@@ -147,6 +156,23 @@ namespace AdvancedBilling.Standard.Models
             this.ToString(toStringOutput);
 
             return $"ApplyCreditNoteEventData : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetMemo()
+        {
+            this.shouldSerialize["memo"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeMemo()
+        {
+            return this.shouldSerialize["memo"];
         }
 
         /// <inheritdoc/>

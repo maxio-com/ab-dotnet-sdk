@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
-    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -45,7 +44,7 @@ namespace AdvancedBilling.Standard.Models
             int? paymentProfileId = null,
             int? payerId = null,
             string payerReference = null,
-            Models.CollectionMethod? paymentCollectionMethod = Models.CollectionMethod.Automatic,
+            Models.CollectionMethod? paymentCollectionMethod = null,
             Models.PayerAttributes payerAttributes = null,
             Models.SubscriptionGroupCreditCard creditCardAttributes = null,
             Models.SubscriptionGroupBankAccount bankAccountAttributes = null)

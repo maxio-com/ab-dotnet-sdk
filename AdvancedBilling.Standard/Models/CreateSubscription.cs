@@ -14,7 +14,6 @@ namespace AdvancedBilling.Standard.Models
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
-    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -98,7 +97,7 @@ namespace AdvancedBilling.Standard.Models
             Models.SubscriptionCustomPrice customPrice = null,
             string couponCode = null,
             List<string> couponCodes = null,
-            Models.CollectionMethod? paymentCollectionMethod = Models.CollectionMethod.Automatic,
+            Models.CollectionMethod? paymentCollectionMethod = null,
             string receivesInvoiceEmails = null,
             string netTerms = null,
             int? customerId = null,

@@ -14,7 +14,6 @@ namespace AdvancedBilling.Standard.Models
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
-    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -41,6 +40,7 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplyPaymentEventData"/> class.
         /// </summary>
+        /// <param name="consolidationLevel">consolidation_level.</param>
         /// <param name="memo">memo.</param>
         /// <param name="originalAmount">original_amount.</param>
         /// <param name="appliedAmount">applied_amount.</param>
@@ -52,6 +52,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="prepayment">prepayment.</param>
         /// <param name="external">external.</param>
         public ApplyPaymentEventData(
+            Models.InvoiceConsolidationLevel consolidationLevel,
             string memo,
             string originalAmount,
             string appliedAmount,
@@ -63,6 +64,7 @@ namespace AdvancedBilling.Standard.Models
             bool? prepayment = null,
             bool? external = null)
         {
+            this.ConsolidationLevel = consolidationLevel;
             this.Memo = memo;
             this.OriginalAmount = originalAmount;
             this.AppliedAmount = appliedAmount;
@@ -84,27 +86,27 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// Gets or sets ConsolidationLevel.
+        /// </summary>
+        [JsonProperty("consolidation_level")]
+        public Models.InvoiceConsolidationLevel ConsolidationLevel { get; set; }
+
+        /// <summary>
         /// The payment memo
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("memo")]
-        [JsonRequired]
         public string Memo { get; set; }
 
         /// <summary>
         /// The full, original amount of the payment transaction as a string in full units. Incoming payments can be split amongst several invoices, which will result in a `applied_amount` less than the `original_amount`. Example: A $100.99 payment, of which $40.11 is applied to this invoice, will have an `original_amount` of `"100.99"`.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("original_amount")]
-        [JsonRequired]
         public string OriginalAmount { get; set; }
 
         /// <summary>
         /// The amount of the payment applied to this invoice. Incoming payments can be split amongst several invoices, which will result in a `applied_amount` less than the `original_amount`. Example: A $100.99 payment, of which $40.11 is applied to this invoice, will have an `applied_amount` of `"40.11"`.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("applied_amount")]
-        [JsonRequired]
         public string AppliedAmount { get; set; }
 
         /// <summary>
@@ -112,14 +114,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("transaction_time")]
-        [JsonRequired]
         public DateTimeOffset TransactionTime { get; set; }
 
         /// <summary>
         /// A nested data structure detailing the method of payment
         /// </summary>
         [JsonProperty("payment_method")]
-        [JsonRequired]
         public InvoiceEventPayment PaymentMethod { get; set; }
 
         /// <summary>
@@ -149,7 +149,6 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets RemainingPrepaymentAmount.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("remaining_prepayment_amount")]
         public string RemainingPrepaymentAmount
         {
@@ -233,7 +232,8 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is ApplyPaymentEventData other &&                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
+            return obj is ApplyPaymentEventData other &&                this.ConsolidationLevel.Equals(other.ConsolidationLevel) &&
+                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
                 ((this.OriginalAmount == null && other.OriginalAmount == null) || (this.OriginalAmount?.Equals(other.OriginalAmount) == true)) &&
                 ((this.AppliedAmount == null && other.AppliedAmount == null) || (this.AppliedAmount?.Equals(other.AppliedAmount) == true)) &&
                 this.TransactionTime.Equals(other.TransactionTime) &&
@@ -251,6 +251,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
+            toStringOutput.Add($"this.ConsolidationLevel = {this.ConsolidationLevel}");
             toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
             toStringOutput.Add($"this.OriginalAmount = {(this.OriginalAmount == null ? "null" : this.OriginalAmount)}");
             toStringOutput.Add($"this.AppliedAmount = {(this.AppliedAmount == null ? "null" : this.AppliedAmount)}");

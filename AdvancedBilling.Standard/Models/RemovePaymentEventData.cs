@@ -14,7 +14,6 @@ namespace AdvancedBilling.Standard.Models
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
-    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -62,30 +61,24 @@ namespace AdvancedBilling.Standard.Models
         /// Transaction ID of the original payment that was removed
         /// </summary>
         [JsonProperty("transaction_id")]
-        [JsonRequired]
         public int TransactionId { get; set; }
 
         /// <summary>
         /// Memo of the original payment
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("memo")]
-        [JsonRequired]
         public string Memo { get; set; }
 
         /// <summary>
         /// Full amount of the original payment
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("original_amount", NullValueHandling = NullValueHandling.Ignore)]
         public string OriginalAmount { get; set; }
 
         /// <summary>
         /// Applied amount of the original payment
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("applied_amount")]
-        [JsonRequired]
         public string AppliedAmount { get; set; }
 
         /// <summary>
@@ -93,21 +86,18 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("transaction_time")]
-        [JsonRequired]
         public DateTimeOffset TransactionTime { get; set; }
 
         /// <summary>
         /// A nested data structure detailing the method of payment
         /// </summary>
         [JsonProperty("payment_method")]
-        [JsonRequired]
         public InvoiceEventPayment PaymentMethod { get; set; }
 
         /// <summary>
         /// The flag that shows whether the original payment was a prepayment or not
         /// </summary>
         [JsonProperty("prepayment")]
-        [JsonRequired]
         public bool Prepayment { get; set; }
 
         /// <inheritdoc/>

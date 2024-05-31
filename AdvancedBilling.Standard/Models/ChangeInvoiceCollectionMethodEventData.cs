@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
-    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -45,17 +44,13 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The previous collection method of the invoice.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("from_collection_method")]
-        [JsonRequired]
         public string FromCollectionMethod { get; set; }
 
         /// <summary>
         /// The new collection method of the invoice.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("to_collection_method")]
-        [JsonRequired]
         public string ToCollectionMethod { get; set; }
 
         /// <inheritdoc/>

@@ -16,7 +16,6 @@ namespace AdvancedBilling.Standard.Exceptions
     using AdvancedBilling.Standard.Models;
     using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
-    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 

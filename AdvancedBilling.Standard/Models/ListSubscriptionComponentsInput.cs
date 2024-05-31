@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
-    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -44,6 +43,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="startDate">start_date.</param>
         /// <param name="startDatetime">start_datetime.</param>
         /// <param name="include">include.</param>
+        /// <param name="inUse">in_use.</param>
         public ListSubscriptionComponentsInput(
             int subscriptionId,
             Models.SubscriptionListDateField? dateField = null,
@@ -56,7 +56,8 @@ namespace AdvancedBilling.Standard.Models
             Models.ListSubscriptionComponentsSort? sort = null,
             string startDate = null,
             string startDatetime = null,
-            List<Models.ListSubscriptionComponentsInclude> include = null)
+            List<Models.ListSubscriptionComponentsInclude> include = null,
+            bool? inUse = null)
         {
             this.SubscriptionId = subscriptionId;
             this.DateField = dateField;
@@ -70,6 +71,7 @@ namespace AdvancedBilling.Standard.Models
             this.StartDate = startDate;
             this.StartDatetime = startDatetime;
             this.Include = include;
+            this.InUse = inUse;
         }
 
         /// <summary>
@@ -145,6 +147,12 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("include", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.ListSubscriptionComponentsInclude> Include { get; set; }
 
+        /// <summary>
+        /// If in_use is set to true, it returns only components that are currently in use. However, if it's set to false or not provided, it returns all components connected with the subscription.
+        /// </summary>
+        [JsonProperty("in_use", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? InUse { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -178,7 +186,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.Sort == null && other.Sort == null) || (this.Sort?.Equals(other.Sort) == true)) &&
                 ((this.StartDate == null && other.StartDate == null) || (this.StartDate?.Equals(other.StartDate) == true)) &&
                 ((this.StartDatetime == null && other.StartDatetime == null) || (this.StartDatetime?.Equals(other.StartDatetime) == true)) &&
-                ((this.Include == null && other.Include == null) || (this.Include?.Equals(other.Include) == true));
+                ((this.Include == null && other.Include == null) || (this.Include?.Equals(other.Include) == true)) &&
+                ((this.InUse == null && other.InUse == null) || (this.InUse?.Equals(other.InUse) == true));
         }
         
         /// <summary>
@@ -199,6 +208,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate)}");
             toStringOutput.Add($"this.StartDatetime = {(this.StartDatetime == null ? "null" : this.StartDatetime)}");
             toStringOutput.Add($"this.Include = {(this.Include == null ? "null" : $"[{string.Join(", ", this.Include)} ]")}");
+            toStringOutput.Add($"this.InUse = {(this.InUse == null ? "null" : this.InUse.ToString())}");
 
             base.ToString(toStringOutput);
         }

@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
-    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -54,7 +53,7 @@ namespace AdvancedBilling.Standard.Models
             Models.SubscriptionState? state = null,
             bool? cancelAtEndOfPeriod = null,
             List<Models.SubscriptionGroupItem> subscriptions = null,
-            Models.CollectionMethod? paymentCollectionMethod = Models.CollectionMethod.Automatic)
+            Models.CollectionMethod? paymentCollectionMethod = null)
         {
             this.Uid = uid;
             this.Scheme = scheme;

@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
-    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -60,37 +59,30 @@ namespace AdvancedBilling.Standard.Models
         /// See also the [invoice consolidation documentation](https://chargify.zendesk.com/hc/en-us/articles/4407746391835).
         /// </summary>
         [JsonProperty("consolidation_level")]
-        [JsonRequired]
         public Models.InvoiceConsolidationLevel ConsolidationLevel { get; set; }
 
         /// <summary>
-        /// The status of the invoice before event occurence. See [Invoice Statuses](https://chargify.zendesk.com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
+        /// The status of the invoice before event occurrence. See [Invoice Statuses](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405078794253-Introduction-to-Invoices#invoice-statusess) for more.
         /// </summary>
         [JsonProperty("from_status")]
-        [JsonRequired]
         public Models.InvoiceStatus FromStatus { get; set; }
 
         /// <summary>
-        /// The status of the invoice after event occurence. See [Invoice Statuses](https://chargify.zendesk.com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
+        /// The status of the invoice after event occurrence. See [Invoice Statuses](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405078794253-Introduction-to-Invoices#invoice-statusess) for more.
         /// </summary>
         [JsonProperty("to_status")]
-        [JsonRequired]
         public Models.InvoiceStatus ToStatus { get; set; }
 
         /// <summary>
         /// Amount due on the invoice, which is `total_amount - credit_amount - paid_amount`.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("due_amount")]
-        [JsonRequired]
         public string DueAmount { get; set; }
 
         /// <summary>
         /// The invoice total, which is `subtotal_amount - discount_amount + tax_amount`.'
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("total_amount")]
-        [JsonRequired]
         public string TotalAmount { get; set; }
 
         /// <inheritdoc/>
