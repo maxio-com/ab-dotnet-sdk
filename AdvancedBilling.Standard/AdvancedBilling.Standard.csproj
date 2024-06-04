@@ -34,7 +34,6 @@ Maxio integrates directly into your product, so you can seamlessly manage your p
   <ItemGroup>
     <PackageReference Include= "APIMatic.Core" Version= "0.3.*" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="JsonSubTypes" Version="2.0.1" />
     <None Include="..\README.md" Pack="true" PackagePath="\"/>
     <None Include="..\LICENSE" Pack="true" PackagePath="\"/>
   </ItemGroup>

@@ -87,6 +87,7 @@ namespace AdvancedBillingTests
             var invoiceEventsResponse = await _client.InvoicesController.ListInvoiceEventsAsync(
                 new ListInvoiceEventsInput(
                     sinceDate: DateTime.Now.AddDays(-1).ToString(CultureInfo.InvariantCulture),
+                    invoiceUid: invoiceResponse.Invoice.Uid,
                     eventTypes: new List<InvoiceEventType>()
                     {
                         InvoiceEventType.VoidInvoice
@@ -95,13 +96,39 @@ namespace AdvancedBillingTests
             invoiceEventsResponse.Events.Count.Should().BeGreaterOrEqualTo(1);
 
             var singleEvent = invoiceEventsResponse.Events.FirstOrDefault();
-
             singleEvent.Should().NotBeNull();
+            VoidInvoiceEvent voidInvoiceEvent = CastInvoiceEvent<VoidInvoiceEvent>(singleEvent);
 
-            singleEvent.EventType.Should().Be(InvoiceEventType.VoidInvoice);
+            voidInvoiceEvent.EventType.Should().Be(InvoiceEventType.VoidInvoice);
+            voidInvoiceEvent.Id.Should().BeGreaterThan(0);
+            voidInvoiceEvent.Timestamp.Should().BeAfter(DateTimeOffset.Now.AddYears(-1));
+            
+            voidInvoiceEvent.EventData.Should().NotBeNull();
+            voidInvoiceEvent.EventData.IsAdvanceInvoice.Should().BeTrue();
+            voidInvoiceEvent.EventData.Reason.Should().Be("Duplicate invoice");
+            voidInvoiceEvent.EventData.CreditNoteAttributes.Should().NotBeNull();
+            voidInvoiceEvent.EventData.Memo.Should().StartWith("Credit for remainder of fully voided invoice");
+            voidInvoiceEvent.EventData.AppliedAmount.Should().Be("750.0");
+            voidInvoiceEvent.EventData.TransactionTime.Should().BeAfter(DateTimeOffset.Now.AddYears(-1));
 
+            voidInvoiceEvent.Invoice.Uid.Should().Be(invoiceResponse.Invoice.Uid);
+            
             await CleanupUtils.ExecuteBasicSubscriptionCleanup(subscriptionResponse, customerResponse, paymentProfileId,
                 productResponse, _client);
+        }
+        
+        private T CastInvoiceEvent<T>(InvoiceEvent invoiceEvent)
+        {
+            Object o = invoiceEvent.Match<Object>(applyDebitNoteEvent: @event => @event, applyPaymentEvent: @event => @event,
+                backportInvoiceEvent: @event => @event, issueInvoiceEvent: @event => @event,
+                refundInvoiceEvent: @event => @event, voidInvoiceEvent: @event => @event,
+                voidRemainderEvent: @event => @event, failedPaymentEvent: @event => @event,
+                removePaymentEvent: @event => @event, changeInvoiceStatusEvent: @event => @event,
+                changeChargebackStatusEvent: @event => @event, applyCreditNoteEvent: @event => @event,
+                createCreditNoteEvent: @event => @event, changeInvoiceCollectionMethodEvent: @event => @event,
+                createDebitNoteEvent: @event => @event);
+            o.Should().BeOfType(typeof(T));
+            return (T) o;
         }
 
         [Fact]

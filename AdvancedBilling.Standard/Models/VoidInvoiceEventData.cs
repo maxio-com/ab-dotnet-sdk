@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
-    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -63,14 +62,12 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The memo provided during invoice voiding.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("memo", NullValueHandling = NullValueHandling.Include)]
         public string Memo { get; set; }
 
         /// <summary>
         /// The amount of the void.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("applied_amount", NullValueHandling = NullValueHandling.Include)]
         public string AppliedAmount { get; set; }
 
@@ -85,15 +82,12 @@ namespace AdvancedBilling.Standard.Models
         /// If true, the invoice is an advance invoice.
         /// </summary>
         [JsonProperty("is_advance_invoice")]
-        [JsonRequired]
         public bool IsAdvanceInvoice { get; set; }
 
         /// <summary>
         /// The reason for the void.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("reason")]
-        [JsonRequired]
         public string Reason { get; set; }
 
         /// <inheritdoc/>

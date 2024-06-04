@@ -12,8 +12,8 @@ namespace AdvancedBilling.Standard.Models
     using System.Threading.Tasks;
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
+    using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
-    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -37,7 +37,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="perPage">per_page.</param>
         /// <param name="totalPages">total_pages.</param>
         public ListInvoiceEventsResponse(
-            List<Models.InvoiceEvent> events = null,
+            List<InvoiceEvent> events = null,
             int? page = null,
             int? perPage = null,
             int? totalPages = null)
@@ -52,7 +52,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Events.
         /// </summary>
         [JsonProperty("events", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Models.InvoiceEvent> Events { get; set; }
+        public List<InvoiceEvent> Events { get; set; }
 
         /// <summary>
         /// Gets or sets Page.
@@ -106,7 +106,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Events = {(this.Events == null ? "null" : $"[{string.Join(", ", this.Events)} ]")}");
+            toStringOutput.Add($"Events = {(this.Events == null ? "null" : this.Events.ToString())}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
             toStringOutput.Add($"this.TotalPages = {(this.TotalPages == null ? "null" : this.TotalPages.ToString())}");

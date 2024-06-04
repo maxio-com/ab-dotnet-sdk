@@ -14,7 +14,6 @@ namespace AdvancedBilling.Standard.Models
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Models.Containers;
     using AdvancedBilling.Standard.Utilities;
-    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -44,8 +43,8 @@ namespace AdvancedBilling.Standard.Models
         public ListUsagesInput(
             int subscriptionId,
             ListUsagesInputComponentId componentId,
-            int? sinceId = null,
-            int? maxId = null,
+            long? sinceId = null,
+            long? maxId = null,
             DateTime? sinceDate = null,
             DateTime? untilDate = null,
             int? page = 1,
@@ -77,13 +76,13 @@ namespace AdvancedBilling.Standard.Models
         /// Returns usages with an id greater than or equal to the one specified
         /// </summary>
         [JsonProperty("since_id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? SinceId { get; set; }
+        public long? SinceId { get; set; }
 
         /// <summary>
         /// Returns usages with an id less than or equal to the one specified
         /// </summary>
         [JsonProperty("max_id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? MaxId { get; set; }
+        public long? MaxId { get; set; }
 
         /// <summary>
         /// Returns usages with a created_at date greater than or equal to midnight (12:00 AM) on the date specified.

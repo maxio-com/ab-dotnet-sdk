@@ -13,7 +13,6 @@ namespace AdvancedBilling.Standard.Models
     using APIMatic.Core.Utilities.Converters;
     using AdvancedBilling.Standard;
     using AdvancedBilling.Standard.Utilities;
-    using JsonSubTypes;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
@@ -52,23 +51,18 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets CreditNoteAttributes.
         /// </summary>
         [JsonProperty("credit_note_attributes")]
-        [JsonRequired]
         public Models.CreditNote CreditNoteAttributes { get; set; }
 
         /// <summary>
         /// The memo provided during invoice remainder voiding.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("memo")]
-        [JsonRequired]
         public string Memo { get; set; }
 
         /// <summary>
         /// The amount of the void.
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("applied_amount")]
-        [JsonRequired]
         public string AppliedAmount { get; set; }
 
         /// <summary>
@@ -76,7 +70,6 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("transaction_time")]
-        [JsonRequired]
         public DateTimeOffset TransactionTime { get; set; }
 
         /// <inheritdoc/>
