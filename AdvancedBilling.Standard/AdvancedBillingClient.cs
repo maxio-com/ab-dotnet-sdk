@@ -39,12 +39,13 @@ namespace AdvancedBilling.Standard
         };
 
         private readonly GlobalConfiguration globalConfiguration;
-        private const string userAgent = "AB SDK DotNet:3.0.0 on OS {os-info}";
+        private const string userAgent = "AB SDK DotNet:4.0.0 on OS {os-info}";
         private readonly Lazy<APIExportsController> aPIExports;
         private readonly Lazy<AdvanceInvoiceController> advanceInvoice;
         private readonly Lazy<BillingPortalController> billingPortal;
         private readonly Lazy<CouponsController> coupons;
         private readonly Lazy<ComponentsController> components;
+        private readonly Lazy<ComponentPricePointsController> componentPricePoints;
         private readonly Lazy<CustomersController> customers;
         private readonly Lazy<CustomFieldsController> customFields;
         private readonly Lazy<EventsController> events;
@@ -109,6 +110,8 @@ namespace AdvancedBilling.Standard
                 () => new CouponsController(globalConfiguration));
             this.components = new Lazy<ComponentsController>(
                 () => new ComponentsController(globalConfiguration));
+            this.componentPricePoints = new Lazy<ComponentPricePointsController>(
+                () => new ComponentPricePointsController(globalConfiguration));
             this.customers = new Lazy<CustomersController>(
                 () => new CustomersController(globalConfiguration));
             this.customFields = new Lazy<CustomFieldsController>(
@@ -187,6 +190,11 @@ namespace AdvancedBilling.Standard
         /// Gets ComponentsController controller.
         /// </summary>
         public ComponentsController ComponentsController => this.components.Value;
+
+        /// <summary>
+        /// Gets ComponentPricePointsController controller.
+        /// </summary>
+        public ComponentPricePointsController ComponentPricePointsController => this.componentPricePoints.Value;
 
         /// <summary>
         /// Gets CustomersController controller.

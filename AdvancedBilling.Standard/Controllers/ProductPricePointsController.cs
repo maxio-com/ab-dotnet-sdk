@@ -102,8 +102,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// Use this endpoint to update a product price point.
         /// Note: Custom product price points are not able to be updated.
         /// </summary>
-        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`.</param>
+        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
+        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-price-point-handle` for a string handle..</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
         public Models.ProductPricePointResponse UpdateProductPricePoint(
@@ -116,8 +116,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// Use this endpoint to update a product price point.
         /// Note: Custom product price points are not able to be updated.
         /// </summary>
-        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`.</param>
+        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
+        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-price-point-handle` for a string handle..</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
@@ -138,10 +138,10 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this endpoint to retrieve details for a specific product price point.
+        /// Use this endpoint to retrieve details for a specific product price point. You can achieve this by using either the product price point ID or handle.
         /// </summary>
-        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`.</param>
+        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
+        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-price-point-handle` for a string handle..</param>
         /// <param name="currencyPrices">Optional parameter: When fetching a product's price points, if you have defined multiple currencies at the site level, you can optionally pass the ?currency_prices=true query param to include an array of currency price data in the response. If the product price point is set to use_site_exchange_rate: true, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency..</param>
         /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
         public Models.ProductPricePointResponse ReadProductPricePoint(
@@ -151,10 +151,10 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ReadProductPricePointAsync(productId, pricePointId, currencyPrices));
 
         /// <summary>
-        /// Use this endpoint to retrieve details for a specific product price point.
+        /// Use this endpoint to retrieve details for a specific product price point. You can achieve this by using either the product price point ID or handle.
         /// </summary>
-        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`.</param>
+        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
+        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-price-point-handle` for a string handle..</param>
         /// <param name="currencyPrices">Optional parameter: When fetching a product's price points, if you have defined multiple currencies at the site level, you can optionally pass the ?currency_prices=true query param to include an array of currency price data in the response. If the product price point is set to use_site_exchange_rate: true, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
@@ -176,8 +176,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Use this endpoint to archive a product price point.
         /// </summary>
-        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`.</param>
+        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
+        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-price-point-handle` for a string handle..</param>
         /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
         public Models.ProductPricePointResponse ArchiveProductPricePoint(
                 ArchiveProductPricePointProductId productId,
@@ -187,8 +187,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Use this endpoint to archive a product price point.
         /// </summary>
-        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`.</param>
+        /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
+        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-price-point-handle` for a string handle..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
         public async Task<Models.ProductPricePointResponse> ArchiveProductPricePointAsync(

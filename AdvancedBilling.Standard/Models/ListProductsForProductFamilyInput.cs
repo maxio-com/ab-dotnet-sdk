@@ -43,7 +43,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="includeArchived">include_archived.</param>
         /// <param name="include">include.</param>
         public ListProductsForProductFamilyInput(
-            int productFamilyId,
+            string productFamilyId,
             int? page = 1,
             int? perPage = 20,
             Models.BasicDateField? dateField = null,
@@ -69,10 +69,10 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The Chargify id of the product family to which the product belongs
+        /// Either the product family's id or its handle prefixed with `handle:`
         /// </summary>
         [JsonProperty("product_family_id")]
-        public int ProductFamilyId { get; set; }
+        public string ProductFamilyId { get; set; }
 
         /// <summary>
         /// Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.
@@ -159,7 +159,7 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is ListProductsForProductFamilyInput other &&                this.ProductFamilyId.Equals(other.ProductFamilyId) &&
+            return obj is ListProductsForProductFamilyInput other &&                ((this.ProductFamilyId == null && other.ProductFamilyId == null) || (this.ProductFamilyId?.Equals(other.ProductFamilyId) == true)) &&
                 ((this.Page == null && other.Page == null) || (this.Page?.Equals(other.Page) == true)) &&
                 ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true)) &&
                 ((this.DateField == null && other.DateField == null) || (this.DateField?.Equals(other.DateField) == true)) &&
@@ -178,7 +178,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ProductFamilyId = {this.ProductFamilyId}");
+            toStringOutput.Add($"this.ProductFamilyId = {(this.ProductFamilyId == null ? "null" : this.ProductFamilyId)}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
             toStringOutput.Add($"this.DateField = {(this.DateField == null ? "null" : this.DateField.ToString())}");
