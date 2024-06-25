@@ -27,7 +27,7 @@ Use this method to create a product within your Chargify site.
 
 ```csharp
 CreateProductAsync(
-    int productFamilyId,
+    string productFamilyId,
     Models.CreateOrUpdateProductRequest body = null)
 ```
 
@@ -35,7 +35,7 @@ CreateProductAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the product belongs |
+| `productFamilyId` | `string` | Template, Required | Either the product family's id or its handle prefixed with `handle:` |
 | `body` | [`CreateOrUpdateProductRequest`](../../doc/models/create-or-update-product-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -45,7 +45,7 @@ CreateProductAsync(
 ## Example Usage
 
 ```csharp
-int productFamilyId = 140;
+string productFamilyId = "product_family_id4";
 CreateOrUpdateProductRequest body = new CreateOrUpdateProductRequest
 {
     Product = new CreateOrUpdateProduct

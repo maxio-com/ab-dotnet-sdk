@@ -8,7 +8,7 @@ The following parameters are configurable for the API Client:
 | `Subdomain` | `string` | The subdomain for your Chargify site.<br>*Default*: `"subdomain"` |
 | `Domain` | `string` | The Chargify server domain.<br>*Default*: `"chargify.com"` |
 | `Environment` | `Environment` | The API environment. <br> **Default: `Environment.Production`** |
-| `Timeout` | `TimeSpan` | Http client timeout.<br>*Default*: `TimeSpan.FromSeconds(30)` |
+| `Timeout` | `TimeSpan` | Http client timeout.<br>*Default*: `TimeSpan.FromSeconds(120)` |
 | `BasicAuthCredentials` | [`BasicAuthCredentials`]($a/basic-authentication.md) | The Credentials Setter for Basic Authentication |
 
 The API client can be initialized as follows:
@@ -40,6 +40,7 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 | BillingPortalController | Gets BillingPortalController controller. |
 | CouponsController | Gets CouponsController controller. |
 | ComponentsController | Gets ComponentsController controller. |
+| ComponentPricePointsController | Gets ComponentPricePointsController controller. |
 | CustomersController | Gets CustomersController controller. |
 | CustomFieldsController | Gets CustomFieldsController controller. |
 | EventsController | Gets EventsController controller. |

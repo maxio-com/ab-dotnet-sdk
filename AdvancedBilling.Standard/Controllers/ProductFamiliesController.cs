@@ -56,7 +56,7 @@ namespace AdvancedBilling.Standard.Controllers
                   .Setup(HttpMethod.Get, "/product_families/{product_family_id}/products.json")
                   .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("product_family_id", input.ProductFamilyId))
+                      .Template(_template => _template.Setup("product_family_id", input.ProductFamilyId).Required())
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))
                       .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))

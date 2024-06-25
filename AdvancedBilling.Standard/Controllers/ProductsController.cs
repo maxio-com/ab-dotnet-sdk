@@ -38,11 +38,11 @@ namespace AdvancedBilling.Standard.Controllers
         /// + [Products Documentation](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405561405709).
         /// + [Changing a Subscription's Product](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404225334669-Product-Changes-Migrations).
         /// </summary>
-        /// <param name="productFamilyId">Required parameter: The Chargify id of the product family to which the product belongs.</param>
+        /// <param name="productFamilyId">Required parameter: Either the product family's id or its handle prefixed with `handle:`.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
         public Models.ProductResponse CreateProduct(
-                int productFamilyId,
+                string productFamilyId,
                 Models.CreateOrUpdateProductRequest body = null)
             => CoreHelper.RunTask(CreateProductAsync(productFamilyId, body));
 
@@ -51,12 +51,12 @@ namespace AdvancedBilling.Standard.Controllers
         /// + [Products Documentation](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405561405709).
         /// + [Changing a Subscription's Product](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404225334669-Product-Changes-Migrations).
         /// </summary>
-        /// <param name="productFamilyId">Required parameter: The Chargify id of the product family to which the product belongs.</param>
+        /// <param name="productFamilyId">Required parameter: Either the product family's id or its handle prefixed with `handle:`.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
         public async Task<Models.ProductResponse> CreateProductAsync(
-                int productFamilyId,
+                string productFamilyId,
                 Models.CreateOrUpdateProductRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ProductResponse>()
@@ -65,7 +65,7 @@ namespace AdvancedBilling.Standard.Controllers
                   .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("product_family_id", productFamilyId))
+                      .Template(_template => _template.Setup("product_family_id", productFamilyId).Required())
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
                   .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
