@@ -59,7 +59,7 @@ namespace AdvancedBillingTests.Utils
                 _fixture.Create<int>(), IntervalUnit.Day);
 
             var productResponse =
-                await client.ProductsController.CreateProductAsync((int)productFamilyId,
+                await client.ProductsController.CreateProductAsync(productFamilyId.ToString(),
                     new CreateOrUpdateProductRequest(productInfo));
 
             productResponse.Product.Id.Should().NotBeNull();
