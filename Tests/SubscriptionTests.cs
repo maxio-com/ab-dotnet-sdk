@@ -55,8 +55,8 @@ namespace AdvancedBillingTests
             var meteredComponent = new MeteredComponent($"ApiCalls{randomString}", $"api call {randomString}",
                 PricingScheme.PerUnit, unitPrice: MeteredComponentUnitPrice.FromString("1"));
 
-            var componentResponse = await _client.ComponentsController.CreateMeteredComponentAsync((int)productFamilyId,
-               new CreateMeteredComponent(meteredComponent));
+            var componentResponse = await _client.ComponentsController
+                .CreateMeteredComponentAsync(productFamilyId.ToString(), new CreateMeteredComponent(meteredComponent));
 
             componentResponse.Component.Id.Should().NotBeNull();
 
@@ -167,16 +167,16 @@ namespace AdvancedBillingTests
                 PricingScheme.PerUnit, unitPrice: QuantityBasedComponentUnitPrice.FromPrecision(1));
 
             var restrictedComponentResponse = await _client.ComponentsController.CreateQuantityBasedComponentAsync(
-                (int)productFamilyId,
-                    new CreateQuantityBasedComponent(quantityComponent));
+                productFamilyId.ToString(),
+                new CreateQuantityBasedComponent(quantityComponent));
 
             restrictedComponentResponse.Component.Id.Should().NotBeNull();
 
             var meteredComponent = new MeteredComponent($"ApiCalls{randomString}", $"api call {randomString}",
                 PricingScheme.PerUnit, unitPrice: MeteredComponentUnitPrice.FromString("1"));
 
-            var componentResponse = await _client.ComponentsController.CreateMeteredComponentAsync((int)productFamilyId,
-               new CreateMeteredComponent(meteredComponent));
+            var componentResponse = await _client.ComponentsController
+                .CreateMeteredComponentAsync(productFamilyId.ToString(), new CreateMeteredComponent(meteredComponent));
 
             componentResponse.Component.Id.Should().NotBeNull();
 

@@ -42,7 +42,8 @@ namespace AdvancedBillingTests
             var onOffComponent = new OnOffComponent($"247Support{randomString}",
                 unitPrice: OnOffComponentUnitPrice.FromString("100"));
 
-            var onOffComponentResponse = await _client.ComponentsController.CreateOnOffComponentAsync((int)productFamilyId, new CreateOnOffComponent(onOffComponent));
+            var onOffComponentResponse = await _client.ComponentsController
+                .CreateOnOffComponentAsync(productFamilyId.ToString(), new CreateOnOffComponent(onOffComponent));
 
             onOffComponentResponse.Component.Id.Should().NotBeNull();
 
@@ -92,7 +93,7 @@ namespace AdvancedBillingTests
                 PricingScheme.PerUnit, unitPrice: QuantityBasedComponentUnitPrice.FromString("10"));
 
             var quantityComponentResponse = await _client.ComponentsController.CreateQuantityBasedComponentAsync(
-                (int)productFamilyId,
+                productFamilyId.ToString(),
                 new CreateQuantityBasedComponent(quantityComponent));
 
             quantityComponentResponse.Component.Id.Should().NotBeNull();
@@ -187,7 +188,7 @@ namespace AdvancedBillingTests
                 allowFractionalQuantities: true);
 
             var quantityComponentResponse = await _client.ComponentsController.CreateQuantityBasedComponentAsync(
-                (int)productFamilyId,
+                productFamilyId.ToString(),
                 new CreateQuantityBasedComponent(quantityComponent));
 
             quantityComponentResponse.Component.Id.Should().NotBeNull();
@@ -195,8 +196,8 @@ namespace AdvancedBillingTests
             var onOffComponent = new OnOffComponent($"247Support{randomString}",
                 unitPrice: OnOffComponentUnitPrice.FromString("100"));
 
-            var onOffComponentResponse = await _client.ComponentsController.CreateOnOffComponentAsync((int)productFamilyId,
-                new CreateOnOffComponent(onOffComponent));
+            var onOffComponentResponse = await _client.ComponentsController
+                .CreateOnOffComponentAsync(productFamilyId.ToString(), new CreateOnOffComponent(onOffComponent));
 
             onOffComponentResponse.Component.Id.Should().NotBeNull();
 
