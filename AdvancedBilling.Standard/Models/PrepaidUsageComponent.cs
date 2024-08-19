@@ -24,10 +24,12 @@ namespace AdvancedBilling.Standard.Models
     {
         private Models.CreditType? upgradeCharge;
         private Models.CreditType? downgradeCredit;
+        private Models.ExpirationIntervalUnit? expirationIntervalUnit;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "upgrade_charge", false },
             { "downgrade_credit", false },
+            { "expiration_interval_unit", false },
         };
 
         /// <summary>
@@ -81,7 +83,7 @@ namespace AdvancedBilling.Standard.Models
             bool? rolloverPrepaidRemainder = null,
             bool? renewPrepaidAllocation = null,
             double? expirationInterval = null,
-            Models.IntervalUnit? expirationIntervalUnit = null,
+            Models.ExpirationIntervalUnit? expirationIntervalUnit = null,
             bool? displayOnHostedPage = null,
             bool? allowFractionalQuantities = null,
             List<int> publicSignupPageIds = null)
@@ -112,7 +114,11 @@ namespace AdvancedBilling.Standard.Models
             this.RolloverPrepaidRemainder = rolloverPrepaidRemainder;
             this.RenewPrepaidAllocation = renewPrepaidAllocation;
             this.ExpirationInterval = expirationInterval;
-            this.ExpirationIntervalUnit = expirationIntervalUnit;
+            if (expirationIntervalUnit != null)
+            {
+                this.ExpirationIntervalUnit = expirationIntervalUnit;
+            }
+
             this.DisplayOnHostedPage = displayOnHostedPage;
             this.AllowFractionalQuantities = allowFractionalQuantities;
             this.PublicSignupPageIds = publicSignupPageIds;
@@ -155,7 +161,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.PricingScheme? PricingScheme { get; set; }
 
         /// <summary>
-        /// (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket Rules](https://chargify.zendesk.com/hc/en-us/articles/4407755865883#general-price-bracket-rules) for an overview of how price brackets work for different pricing schemes.
+        /// (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket Rules](https://maxio.zendesk.com/hc/en-us/articles/24261149166733-Component-Pricing-Schemes#price-bracket-rules) for an overview of how price brackets work for different pricing schemes.
         /// </summary>
         [JsonProperty("prices", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.Price> Prices { get; set; }
@@ -255,8 +261,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets ExpirationIntervalUnit.
         /// </summary>
-        [JsonProperty("expiration_interval_unit", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.IntervalUnit? ExpirationIntervalUnit { get; set; }
+        [JsonProperty("expiration_interval_unit")]
+        public Models.ExpirationIntervalUnit? ExpirationIntervalUnit
+        {
+            get
+            {
+                return this.expirationIntervalUnit;
+            }
+
+            set
+            {
+                this.shouldSerialize["expiration_interval_unit"] = true;
+                this.expirationIntervalUnit = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets DisplayOnHostedPage.
@@ -303,6 +321,14 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetExpirationIntervalUnit()
+        {
+            this.shouldSerialize["expiration_interval_unit"] = false;
+        }
+
+        /// <summary>
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
@@ -318,6 +344,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeDowngradeCredit()
         {
             return this.shouldSerialize["downgrade_credit"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeExpirationIntervalUnit()
+        {
+            return this.shouldSerialize["expiration_interval_unit"];
         }
 
         /// <inheritdoc/>

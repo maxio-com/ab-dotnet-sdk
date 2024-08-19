@@ -279,7 +279,7 @@ namespace AdvancedBilling.Standard.Models
         public List<Models.InvoiceRefund> Refunds { get; set; }
 
         /// <summary>
-        /// An array of origin invoices for the credit note. Learn more about [Origin Invoice from our docs](https://chargify.zendesk.com/hc/en-us/articles/4407753036699#origin-invoices)
+        /// An array of origin invoices for the credit note. Learn more about [Origin Invoice from our docs](https://maxio.zendesk.com/hc/en-us/articles/24252261284749-Credit-Notes-Proration#origin-invoices)
         /// </summary>
         [JsonProperty("origin_invoices", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.OriginInvoice> OriginInvoices { get; set; }

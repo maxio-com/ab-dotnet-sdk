@@ -17,6 +17,7 @@
 | `GatewayTransactionId` | `string` | Optional | The transaction ID for the refund as returned from the payment gateway |
 | `GatewayUsed` | `string` | Optional | - |
 | `GatewayHandle` | `string` | Optional | - |
+| `AchLateReject` | `bool?` | Optional | - |
 
 ## Example (as JSON)
 

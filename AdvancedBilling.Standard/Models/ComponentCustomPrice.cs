@@ -21,6 +21,12 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class ComponentCustomPrice : BaseModel
     {
+        private Models.IntervalUnit? intervalUnit;
+        private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
+        {
+            { "interval_unit", false },
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ComponentCustomPrice"/> class.
         /// </summary>
@@ -31,21 +37,34 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="ComponentCustomPrice"/> class.
         /// </summary>
+        /// <param name="prices">prices.</param>
+        /// <param name="taxIncluded">tax_included.</param>
         /// <param name="pricingScheme">pricing_scheme.</param>
         /// <param name="interval">interval.</param>
         /// <param name="intervalUnit">interval_unit.</param>
-        /// <param name="prices">prices.</param>
         public ComponentCustomPrice(
+            List<Models.Price> prices,
+            bool? taxIncluded = null,
             Models.PricingScheme? pricingScheme = null,
             int? interval = null,
-            Models.IntervalUnit? intervalUnit = null,
-            List<Models.Price> prices = null)
+            Models.IntervalUnit? intervalUnit = null)
         {
+            this.TaxIncluded = taxIncluded;
             this.PricingScheme = pricingScheme;
             this.Interval = interval;
-            this.IntervalUnit = intervalUnit;
+            if (intervalUnit != null)
+            {
+                this.IntervalUnit = intervalUnit;
+            }
+
             this.Prices = prices;
         }
+
+        /// <summary>
+        /// Whether or not the price point includes tax
+        /// </summary>
+        [JsonProperty("tax_included", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? TaxIncluded { get; set; }
 
         /// <summary>
         /// Omit for On/Off components
@@ -62,13 +81,25 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// A string representing the interval unit for this component price point, either month or day. This property is only available for sites with Multifrequency enabled.
         /// </summary>
-        [JsonProperty("interval_unit", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.IntervalUnit? IntervalUnit { get; set; }
+        [JsonProperty("interval_unit")]
+        public Models.IntervalUnit? IntervalUnit
+        {
+            get
+            {
+                return this.intervalUnit;
+            }
+
+            set
+            {
+                this.shouldSerialize["interval_unit"] = true;
+                this.intervalUnit = value;
+            }
+        }
 
         /// <summary>
         /// On/off components only need one price bracket starting at 1
         /// </summary>
-        [JsonProperty("prices", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("prices")]
         public List<Models.Price> Prices { get; set; }
 
         /// <inheritdoc/>
@@ -79,6 +110,23 @@ namespace AdvancedBilling.Standard.Models
             this.ToString(toStringOutput);
 
             return $"ComponentCustomPrice : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetIntervalUnit()
+        {
+            this.shouldSerialize["interval_unit"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeIntervalUnit()
+        {
+            return this.shouldSerialize["interval_unit"];
         }
 
         /// <inheritdoc/>
@@ -93,7 +141,8 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is ComponentCustomPrice other &&                ((this.PricingScheme == null && other.PricingScheme == null) || (this.PricingScheme?.Equals(other.PricingScheme) == true)) &&
+            return obj is ComponentCustomPrice other &&                ((this.TaxIncluded == null && other.TaxIncluded == null) || (this.TaxIncluded?.Equals(other.TaxIncluded) == true)) &&
+                ((this.PricingScheme == null && other.PricingScheme == null) || (this.PricingScheme?.Equals(other.PricingScheme) == true)) &&
                 ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
                 ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true)) &&
                 ((this.Prices == null && other.Prices == null) || (this.Prices?.Equals(other.Prices) == true));
@@ -105,6 +154,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
+            toStringOutput.Add($"this.TaxIncluded = {(this.TaxIncluded == null ? "null" : this.TaxIncluded.ToString())}");
             toStringOutput.Add($"this.PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
             toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");

@@ -58,7 +58,7 @@ namespace AdvancedBilling.Standard.Models
             SubscriptionGroupCreditCardExpirationYear expirationYear = null,
             string chargifyToken = null,
             string vaultToken = null,
-            Models.CurrentVault? currentVault = null,
+            Models.CreditCardVault? currentVault = null,
             string gatewayHandle = null,
             string firstName = null,
             string lastName = null,
@@ -130,7 +130,7 @@ namespace AdvancedBilling.Standard.Models
         /// The vault that stores the payment profile with the provided `vault_token`. Use `bogus` for testing.
         /// </summary>
         [JsonProperty("current_vault", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.CurrentVault? CurrentVault { get; set; }
+        public Models.CreditCardVault? CurrentVault { get; set; }
 
         /// <summary>
         /// Gets or sets GatewayHandle.

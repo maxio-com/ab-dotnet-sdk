@@ -55,10 +55,11 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="CreditCardPaymentProfile"/> class.
         /// </summary>
-        /// <param name="maskedCardNumber">masked_card_number.</param>
+        /// <param name="paymentType">payment_type.</param>
         /// <param name="id">id.</param>
         /// <param name="firstName">first_name.</param>
         /// <param name="lastName">last_name.</param>
+        /// <param name="maskedCardNumber">masked_card_number.</param>
         /// <param name="cardType">card_type.</param>
         /// <param name="expirationMonth">expiration_month.</param>
         /// <param name="expirationYear">expiration_year.</param>
@@ -72,21 +73,21 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="billingCountry">billing_country.</param>
         /// <param name="customerVaultToken">customer_vault_token.</param>
         /// <param name="billingAddress2">billing_address_2.</param>
-        /// <param name="paymentType">payment_type.</param>
         /// <param name="disabled">disabled.</param>
         /// <param name="chargifyToken">chargify_token.</param>
         /// <param name="siteGatewaySettingId">site_gateway_setting_id.</param>
         /// <param name="gatewayHandle">gateway_handle.</param>
         public CreditCardPaymentProfile(
-            string maskedCardNumber,
+            Models.PaymentType paymentType,
             int? id = null,
             string firstName = null,
             string lastName = null,
+            string maskedCardNumber = null,
             Models.CardType? cardType = null,
             int? expirationMonth = null,
             int? expirationYear = null,
             int? customerId = null,
-            Models.CurrentVault? currentVault = null,
+            Models.CreditCardVault? currentVault = null,
             string vaultToken = null,
             string billingAddress = null,
             string billingCity = null,
@@ -95,7 +96,6 @@ namespace AdvancedBilling.Standard.Models
             string billingCountry = null,
             string customerVaultToken = null,
             string billingAddress2 = null,
-            Models.PaymentType? paymentType = null,
             bool? disabled = null,
             string chargifyToken = null,
             int? siteGatewaySettingId = null,
@@ -188,9 +188,8 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// A string representation of the credit card number with all but the last 4 digits masked with X’s (i.e. ‘XXXX-XXXX-XXXX-1234’).
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
-        [JsonProperty("masked_card_number")]
-        [JsonRequired]
+        [JsonConverter(typeof(JsonStringConverter))]
+        [JsonProperty("masked_card_number", NullValueHandling = NullValueHandling.Ignore)]
         public string MaskedCardNumber { get; set; }
 
         /// <summary>
@@ -221,7 +220,7 @@ namespace AdvancedBilling.Standard.Models
         /// The vault that stores the payment profile with the provided `vault_token`. Use `bogus` for testing.
         /// </summary>
         [JsonProperty("current_vault", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.CurrentVault? CurrentVault { get; set; }
+        public Models.CreditCardVault? CurrentVault { get; set; }
 
         /// <summary>
         /// The “token” provided by your vault storage for an already stored payment profile.
@@ -378,8 +377,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets PaymentType.
         /// </summary>
-        [JsonProperty("payment_type", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.PaymentType? PaymentType { get; set; }
+        [JsonProperty("payment_type")]
+        [JsonRequired]
+        public Models.PaymentType PaymentType { get; set; }
 
         /// <summary>
         /// Gets or sets Disabled.
@@ -640,7 +640,7 @@ namespace AdvancedBilling.Standard.Models
                 ((this.BillingCountry == null && other.BillingCountry == null) || (this.BillingCountry?.Equals(other.BillingCountry) == true)) &&
                 ((this.CustomerVaultToken == null && other.CustomerVaultToken == null) || (this.CustomerVaultToken?.Equals(other.CustomerVaultToken) == true)) &&
                 ((this.BillingAddress2 == null && other.BillingAddress2 == null) || (this.BillingAddress2?.Equals(other.BillingAddress2) == true)) &&
-                ((this.PaymentType == null && other.PaymentType == null) || (this.PaymentType?.Equals(other.PaymentType) == true)) &&
+                this.PaymentType.Equals(other.PaymentType) &&
                 ((this.Disabled == null && other.Disabled == null) || (this.Disabled?.Equals(other.Disabled) == true)) &&
                 ((this.ChargifyToken == null && other.ChargifyToken == null) || (this.ChargifyToken?.Equals(other.ChargifyToken) == true)) &&
                 ((this.SiteGatewaySettingId == null && other.SiteGatewaySettingId == null) || (this.SiteGatewaySettingId?.Equals(other.SiteGatewaySettingId) == true)) &&
@@ -670,7 +670,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.BillingCountry = {(this.BillingCountry == null ? "null" : this.BillingCountry)}");
             toStringOutput.Add($"this.CustomerVaultToken = {(this.CustomerVaultToken == null ? "null" : this.CustomerVaultToken)}");
             toStringOutput.Add($"this.BillingAddress2 = {(this.BillingAddress2 == null ? "null" : this.BillingAddress2)}");
-            toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
+            toStringOutput.Add($"this.PaymentType = {this.PaymentType}");
             toStringOutput.Add($"this.Disabled = {(this.Disabled == null ? "null" : this.Disabled.ToString())}");
             toStringOutput.Add($"this.ChargifyToken = {(this.ChargifyToken == null ? "null" : this.ChargifyToken)}");
             toStringOutput.Add($"this.SiteGatewaySettingId = {(this.SiteGatewaySettingId == null ? "null" : this.SiteGatewaySettingId.ToString())}");

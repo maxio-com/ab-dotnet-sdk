@@ -35,7 +35,7 @@ namespace AdvancedBilling.Standard.Controllers
         internal ProductPricePointsController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
-        /// [Product Price Point Documentation](https://chargify.zendesk.com/hc/en-us/articles/4407755824155).
+        /// [Product Price Point Documentation](https://maxio.zendesk.com/hc/en-us/articles/24261111947789-Product-Price-Points).
         /// </summary>
         /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
         /// <param name="body">Optional parameter: Example: .</param>
@@ -46,7 +46,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(CreateProductPricePointAsync(productId, body));
 
         /// <summary>
-        /// [Product Price Point Documentation](https://chargify.zendesk.com/hc/en-us/articles/4407755824155).
+        /// [Product Price Point Documentation](https://maxio.zendesk.com/hc/en-us/articles/24261111947789-Product-Price-Points).
         /// </summary>
         /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
         /// <param name="body">Optional parameter: Example: .</param>
@@ -209,8 +209,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Use this endpoint to unarchive an archived product price point.
         /// </summary>
-        /// <param name="productId">Required parameter: The Chargify id of the product to which the price point belongs.</param>
-        /// <param name="pricePointId">Required parameter: The Chargify id of the product price point.</param>
+        /// <param name="productId">Required parameter: The Advanced Billing id of the product to which the price point belongs.</param>
+        /// <param name="pricePointId">Required parameter: The Advanced Billing id of the product price point.</param>
         /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
         public Models.ProductPricePointResponse UnarchiveProductPricePoint(
                 int productId,
@@ -220,8 +220,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Use this endpoint to unarchive an archived product price point.
         /// </summary>
-        /// <param name="productId">Required parameter: The Chargify id of the product to which the price point belongs.</param>
-        /// <param name="pricePointId">Required parameter: The Chargify id of the product price point.</param>
+        /// <param name="productId">Required parameter: The Advanced Billing id of the product to which the price point belongs.</param>
+        /// <param name="pricePointId">Required parameter: The Advanced Billing id of the product price point.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
         public async Task<Models.ProductPricePointResponse> UnarchiveProductPricePointAsync(
@@ -241,8 +241,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// Use this endpoint to make a product price point the default for the product.
         /// Note: Custom product price points are not able to be set as the default for a product.
         /// </summary>
-        /// <param name="productId">Required parameter: The Chargify id of the product to which the price point belongs.</param>
-        /// <param name="pricePointId">Required parameter: The Chargify id of the product price point.</param>
+        /// <param name="productId">Required parameter: The Advanced Billing id of the product to which the price point belongs.</param>
+        /// <param name="pricePointId">Required parameter: The Advanced Billing id of the product price point.</param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
         public Models.ProductResponse PromoteProductPricePointToDefault(
                 int productId,
@@ -253,8 +253,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// Use this endpoint to make a product price point the default for the product.
         /// Note: Custom product price points are not able to be set as the default for a product.
         /// </summary>
-        /// <param name="productId">Required parameter: The Chargify id of the product to which the price point belongs.</param>
-        /// <param name="pricePointId">Required parameter: The Chargify id of the product price point.</param>
+        /// <param name="productId">Required parameter: The Advanced Billing id of the product to which the price point belongs.</param>
+        /// <param name="pricePointId">Required parameter: The Advanced Billing id of the product price point.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
         public async Task<Models.ProductResponse> PromoteProductPricePointToDefaultAsync(
@@ -273,7 +273,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Use this endpoint to create multiple product price points in one request.
         /// </summary>
-        /// <param name="productId">Required parameter: The Chargify id of the product to which the price points belong.</param>
+        /// <param name="productId">Required parameter: The Advanced Billing id of the product to which the price points belong.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.BulkCreateProductPricePointsResponse response from the API call.</returns>
         public Models.BulkCreateProductPricePointsResponse BulkCreateProductPricePoints(
@@ -284,7 +284,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Use this endpoint to create multiple product price points in one request.
         /// </summary>
-        /// <param name="productId">Required parameter: The Chargify id of the product to which the price points belong.</param>
+        /// <param name="productId">Required parameter: The Advanced Billing id of the product to which the price points belong.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.BulkCreateProductPricePointsResponse response from the API call.</returns>
@@ -309,7 +309,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// When creating currency prices, they need to mirror the structure of your primary pricing. If the product price point defines a trial and/or setup fee, each currency must also define a trial and/or setup fee.
         /// Note: Currency Prices are not able to be created for custom product price points.
         /// </summary>
-        /// <param name="productPricePointId">Required parameter: The Chargify id of the product price point.</param>
+        /// <param name="productPricePointId">Required parameter: The Advanced Billing id of the product price point.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.CurrencyPricesResponse response from the API call.</returns>
         public Models.CurrencyPricesResponse CreateProductCurrencyPrices(
@@ -322,7 +322,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// When creating currency prices, they need to mirror the structure of your primary pricing. If the product price point defines a trial and/or setup fee, each currency must also define a trial and/or setup fee.
         /// Note: Currency Prices are not able to be created for custom product price points.
         /// </summary>
-        /// <param name="productPricePointId">Required parameter: The Chargify id of the product price point.</param>
+        /// <param name="productPricePointId">Required parameter: The Advanced Billing id of the product price point.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.CurrencyPricesResponse response from the API call.</returns>
@@ -347,7 +347,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// When updating the pricing, it needs to mirror the structure of your primary pricing. If the product price point defines a trial and/or setup fee, each currency must also define a trial and/or setup fee.
         /// Note: Currency Prices are not able to be updated for custom product price points.
         /// </summary>
-        /// <param name="productPricePointId">Required parameter: The Chargify id of the product price point.</param>
+        /// <param name="productPricePointId">Required parameter: The Advanced Billing id of the product price point.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.CurrencyPricesResponse response from the API call.</returns>
         public Models.CurrencyPricesResponse UpdateProductCurrencyPrices(
@@ -360,7 +360,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// When updating the pricing, it needs to mirror the structure of your primary pricing. If the product price point defines a trial and/or setup fee, each currency must also define a trial and/or setup fee.
         /// Note: Currency Prices are not able to be updated for custom product price points.
         /// </summary>
-        /// <param name="productPricePointId">Required parameter: The Chargify id of the product price point.</param>
+        /// <param name="productPricePointId">Required parameter: The Advanced Billing id of the product price point.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.CurrencyPricesResponse response from the API call.</returns>

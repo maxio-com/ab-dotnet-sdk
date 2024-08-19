@@ -25,7 +25,7 @@ namespace AdvancedBilling.Standard.Models
         private string description;
         private string accountingCode;
         private int? expirationInterval;
-        private Models.ExtendedIntervalUnit? expirationIntervalUnit;
+        private Models.ExpirationIntervalUnit? expirationIntervalUnit;
         private long? initialChargeInCents;
         private long? trialPriceInCents;
         private int? trialInterval;
@@ -116,7 +116,7 @@ namespace AdvancedBilling.Standard.Models
             string accountingCode = null,
             bool? requestCreditCard = null,
             int? expirationInterval = null,
-            Models.ExtendedIntervalUnit? expirationIntervalUnit = null,
+            Models.ExpirationIntervalUnit? expirationIntervalUnit = null,
             DateTimeOffset? createdAt = null,
             DateTimeOffset? updatedAt = null,
             long? priceInCents = null,
@@ -349,10 +349,10 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// A string representing the expiration interval unit for this product, either month or day
+        /// A string representing the expiration interval unit for this product, either month, day or never
         /// </summary>
         [JsonProperty("expiration_interval_unit")]
-        public Models.ExtendedIntervalUnit? ExpirationIntervalUnit
+        public Models.ExpirationIntervalUnit? ExpirationIntervalUnit
         {
             get
             {

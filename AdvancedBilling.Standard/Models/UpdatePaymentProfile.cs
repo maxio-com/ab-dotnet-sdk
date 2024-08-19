@@ -57,7 +57,7 @@ namespace AdvancedBilling.Standard.Models
             Models.CardType? cardType = null,
             string expirationMonth = null,
             string expirationYear = null,
-            Models.CurrentVault? currentVault = null,
+            Models.AllVaults? currentVault = null,
             string billingAddress = null,
             string billingCity = null,
             string billingState = null,
@@ -124,7 +124,7 @@ namespace AdvancedBilling.Standard.Models
         /// The vault that stores the payment profile with the provided `vault_token`. Use `bogus` for testing.
         /// </summary>
         [JsonProperty("current_vault", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.CurrentVault? CurrentVault { get; set; }
+        public Models.AllVaults? CurrentVault { get; set; }
 
         /// <summary>
         /// The credit card or bank account billing street address (i.e. 123 Main St.). This value is merely passed through to the payment gateway.

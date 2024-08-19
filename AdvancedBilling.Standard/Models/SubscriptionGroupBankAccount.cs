@@ -168,7 +168,7 @@ namespace AdvancedBilling.Standard.Models
         public string ChargifyToken { get; set; }
 
         /// <summary>
-        /// The vault that stores the payment profile with the provided vault_token.
+        /// The vault that stores the payment profile with the provided vault_token. Use `bogus` for testing.
         /// </summary>
         [JsonProperty("current_vault", NullValueHandling = NullValueHandling.Ignore)]
         public Models.BankAccountVault? CurrentVault { get; set; }

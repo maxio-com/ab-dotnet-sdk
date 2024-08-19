@@ -66,7 +66,7 @@ namespace AdvancedBilling.Standard.Models
         public PaymentProfileAttributes(
             string chargifyToken = null,
             int? id = null,
-            string paymentType = null,
+            Models.PaymentType? paymentType = null,
             string firstName = null,
             string lastName = null,
             string maskedCardNumber = null,
@@ -80,7 +80,7 @@ namespace AdvancedBilling.Standard.Models
             string billingState = null,
             string billingCountry = null,
             string billingZip = null,
-            Models.CurrentVault? currentVault = null,
+            Models.AllVaults? currentVault = null,
             string vaultToken = null,
             string customerVaultToken = null,
             int? customerId = null,
@@ -122,7 +122,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// (Optional) Token received after sending billing informations using chargify.js. This token must be passed as a sole attribute of `payment_profile_attributes` (i.e. tok_9g6hw85pnpt6knmskpwp4ttt)
+        /// (Optional) Token received after sending billing information using chargify.js. This token must be passed as a sole attribute of `payment_profile_attributes` (i.e. tok_9g6hw85pnpt6knmskpwp4ttt)
         /// </summary>
         [JsonProperty("chargify_token", NullValueHandling = NullValueHandling.Ignore)]
         public string ChargifyToken { get; set; }
@@ -137,7 +137,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets PaymentType.
         /// </summary>
         [JsonProperty("payment_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string PaymentType { get; set; }
+        public Models.PaymentType? PaymentType { get; set; }
 
         /// <summary>
         /// (Optional) First name on card or bank account. If omitted, the first_name from customer attributes will be used.
@@ -233,7 +233,7 @@ namespace AdvancedBilling.Standard.Models
         /// (Optional, used only for Subscription Import) The vault that stores the payment profile with the provided vault_token.
         /// </summary>
         [JsonProperty("current_vault", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.CurrentVault? CurrentVault { get; set; }
+        public Models.AllVaults? CurrentVault { get; set; }
 
         /// <summary>
         /// (Optional, used only for Subscription Import) The “token” provided by your vault storage for an already stored payment profile
@@ -357,7 +357,7 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.ChargifyToken = {(this.ChargifyToken == null ? "null" : this.ChargifyToken)}");
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType)}");
+            toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
             toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : this.FirstName)}");
             toStringOutput.Add($"this.LastName = {(this.LastName == null ? "null" : this.LastName)}");
             toStringOutput.Add($"this.MaskedCardNumber = {(this.MaskedCardNumber == null ? "null" : this.MaskedCardNumber)}");

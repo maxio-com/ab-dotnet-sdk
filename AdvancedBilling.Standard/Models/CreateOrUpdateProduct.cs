@@ -21,6 +21,14 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class CreateOrUpdateProduct : BaseModel
     {
+        private Models.IntervalUnit? trialIntervalUnit;
+        private Models.ExpirationIntervalUnit? expirationIntervalUnit;
+        private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
+        {
+            { "trial_interval_unit", false },
+            { "expiration_interval_unit", false },
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateOrUpdateProduct"/> class.
         /// </summary>
@@ -61,7 +69,7 @@ namespace AdvancedBilling.Standard.Models
             Models.IntervalUnit? trialIntervalUnit = null,
             string trialType = null,
             int? expirationInterval = null,
-            Models.IntervalUnit? expirationIntervalUnit = null,
+            Models.ExpirationIntervalUnit? expirationIntervalUnit = null,
             bool? autoCreateSignupPage = null,
             string taxCode = null)
         {
@@ -75,10 +83,18 @@ namespace AdvancedBilling.Standard.Models
             this.IntervalUnit = intervalUnit;
             this.TrialPriceInCents = trialPriceInCents;
             this.TrialInterval = trialInterval;
-            this.TrialIntervalUnit = trialIntervalUnit;
+            if (trialIntervalUnit != null)
+            {
+                this.TrialIntervalUnit = trialIntervalUnit;
+            }
+
             this.TrialType = trialType;
             this.ExpirationInterval = expirationInterval;
-            this.ExpirationIntervalUnit = expirationIntervalUnit;
+            if (expirationIntervalUnit != null)
+            {
+                this.ExpirationIntervalUnit = expirationIntervalUnit;
+            }
+
             this.AutoCreateSignupPage = autoCreateSignupPage;
             this.TaxCode = taxCode;
         }
@@ -146,8 +162,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// A string representing the trial interval unit for this product, either month or day
         /// </summary>
-        [JsonProperty("trial_interval_unit", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.IntervalUnit? TrialIntervalUnit { get; set; }
+        [JsonProperty("trial_interval_unit")]
+        public Models.IntervalUnit? TrialIntervalUnit
+        {
+            get
+            {
+                return this.trialIntervalUnit;
+            }
+
+            set
+            {
+                this.shouldSerialize["trial_interval_unit"] = true;
+                this.trialIntervalUnit = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets TrialType.
@@ -162,10 +190,22 @@ namespace AdvancedBilling.Standard.Models
         public int? ExpirationInterval { get; set; }
 
         /// <summary>
-        /// A string representing the expiration interval unit for this product, either month or day
+        /// A string representing the expiration interval unit for this product, either month, day or never
         /// </summary>
-        [JsonProperty("expiration_interval_unit", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.IntervalUnit? ExpirationIntervalUnit { get; set; }
+        [JsonProperty("expiration_interval_unit")]
+        public Models.ExpirationIntervalUnit? ExpirationIntervalUnit
+        {
+            get
+            {
+                return this.expirationIntervalUnit;
+            }
+
+            set
+            {
+                this.shouldSerialize["expiration_interval_unit"] = true;
+                this.expirationIntervalUnit = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets AutoCreateSignupPage.
@@ -187,6 +227,40 @@ namespace AdvancedBilling.Standard.Models
             this.ToString(toStringOutput);
 
             return $"CreateOrUpdateProduct : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetTrialIntervalUnit()
+        {
+            this.shouldSerialize["trial_interval_unit"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetExpirationIntervalUnit()
+        {
+            this.shouldSerialize["expiration_interval_unit"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeTrialIntervalUnit()
+        {
+            return this.shouldSerialize["trial_interval_unit"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeExpirationIntervalUnit()
+        {
+            return this.shouldSerialize["expiration_interval_unit"];
         }
 
         /// <inheritdoc/>

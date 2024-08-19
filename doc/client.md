@@ -5,11 +5,11 @@ The following parameters are configurable for the API Client:
 
 | Parameter | Type | Description |
 |  --- | --- | --- |
-| `Subdomain` | `string` | The subdomain for your Chargify site.<br>*Default*: `"subdomain"` |
-| `Domain` | `string` | The Chargify server domain.<br>*Default*: `"chargify.com"` |
+| `Subdomain` | `string` | The subdomain for your Advanced Billing site.<br>*Default*: `"subdomain"` |
+| `Domain` | `string` | The Advanced Billing server domain.<br>*Default*: `"chargify.com"` |
 | `Environment` | `Environment` | The API environment. <br> **Default: `Environment.Production`** |
 | `Timeout` | `TimeSpan` | Http client timeout.<br>*Default*: `TimeSpan.FromSeconds(120)` |
-| `BasicAuthCredentials` | [`BasicAuthCredentials`]($a/basic-authentication.md) | The Credentials Setter for Basic Authentication |
+| `BasicAuthCredentials` | [`BasicAuthCredentials`](auth/basic-authentication.md) | The Credentials Setter for Basic Authentication |
 
 The API client can be initialized as follows:
 
@@ -75,9 +75,9 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 | HttpClientConfiguration | Gets the configuration of the Http Client associated with this client. | [`IHttpClientConfiguration`](http-client-configuration.md) |
 | Timeout | Http client timeout. | `TimeSpan` |
 | Environment | Current API environment. | `Environment` |
-| Subdomain | The subdomain for your Chargify site. | `string` |
-| Domain | The Chargify server domain. | `string` |
-| BasicAuthCredentials | Gets the credentials to use with BasicAuth. | [`IBasicAuthCredentials`]($a/basic-authentication.md) |
+| Subdomain | The subdomain for your Advanced Billing site. | `string` |
+| Domain | The Advanced Billing server domain. | `string` |
+| BasicAuthCredentials | Gets the credentials to use with BasicAuth. | [`IBasicAuthCredentials`](auth/basic-authentication.md) |
 
 ### Methods
 
@@ -97,7 +97,7 @@ Class to build instances of Maxio Advanced BillingClient.
 | `HttpClientConfiguration(Action<`[`HttpClientConfiguration.Builder`](http-client-configuration-builder.md)`> action)` | Gets the configuration of the Http Client associated with this client. | `Builder` |
 | `Timeout(TimeSpan timeout)` | Http client timeout. | `Builder` |
 | `Environment(Environment environment)` | Current API environment. | `Builder` |
-| `Subdomain(string subdomain)` | The subdomain for your Chargify site. | `Builder` |
-| `Domain(string domain)` | The Chargify server domain. | `Builder` |
+| `Subdomain(string subdomain)` | The subdomain for your Advanced Billing site. | `Builder` |
+| `Domain(string domain)` | The Advanced Billing server domain. | `Builder` |
 | `BasicAuthCredentials(Action<BasicAuthModel.Builder> action)` | Sets credentials for BasicAuth. | `Builder` |
 

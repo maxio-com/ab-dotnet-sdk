@@ -26,6 +26,7 @@ namespace AdvancedBilling.Standard.Models
         private string timestamp;
         private Models.CreditType? upgradeCharge;
         private Models.CreditType? downgradeCredit;
+        private Models.IntervalUnit? intervalUnit;
         private string componentHandle;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
@@ -33,6 +34,7 @@ namespace AdvancedBilling.Standard.Models
             { "timestamp", false },
             { "upgrade_charge", false },
             { "downgrade_credit", false },
+            { "interval_unit", false },
             { "component_handle", false },
         };
 
@@ -113,7 +115,11 @@ namespace AdvancedBilling.Standard.Models
 
             this.PricePointId = pricePointId;
             this.Interval = interval;
-            this.IntervalUnit = intervalUnit;
+            if (intervalUnit != null)
+            {
+                this.IntervalUnit = intervalUnit;
+            }
+
             this.PreviousPricePointId = previousPricePointId;
             this.PricePointHandle = pricePointHandle;
             this.PricePointName = pricePointName;
@@ -255,8 +261,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// A string representing the interval unit for this component price point, either month or day. This property is only available for sites with Multifrequency enabled.
         /// </summary>
-        [JsonProperty("interval_unit", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.IntervalUnit? IntervalUnit { get; set; }
+        [JsonProperty("interval_unit")]
+        public Models.IntervalUnit? IntervalUnit
+        {
+            get
+            {
+                return this.intervalUnit;
+            }
+
+            set
+            {
+                this.shouldSerialize["interval_unit"] = true;
+                this.intervalUnit = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets PreviousPricePointId.
@@ -339,6 +357,14 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serailized.
         /// </summary>
+        public void UnsetIntervalUnit()
+        {
+            this.shouldSerialize["interval_unit"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
         public void UnsetComponentHandle()
         {
             this.shouldSerialize["component_handle"] = false;
@@ -378,6 +404,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeDowngradeCredit()
         {
             return this.shouldSerialize["downgrade_credit"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeIntervalUnit()
+        {
+            return this.shouldSerialize["interval_unit"];
         }
 
         /// <summary>

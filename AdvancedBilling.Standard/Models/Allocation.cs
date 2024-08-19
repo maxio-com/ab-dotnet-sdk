@@ -24,6 +24,7 @@ namespace AdvancedBilling.Standard.Models
     {
         private string componentHandle;
         private string memo;
+        private Models.IntervalUnit? intervalUnit;
         private Models.CreditType? upgradeCharge;
         private Models.CreditType? downgradeCredit;
         private Models.PaymentForAllocation payment;
@@ -31,6 +32,7 @@ namespace AdvancedBilling.Standard.Models
         {
             { "component_handle", false },
             { "memo", false },
+            { "interval_unit", false },
             { "upgrade_charge", false },
             { "downgrade_credit", false },
             { "payment", false },
@@ -121,7 +123,11 @@ namespace AdvancedBilling.Standard.Models
             this.PricePointName = pricePointName;
             this.PricePointHandle = pricePointHandle;
             this.Interval = interval;
-            this.IntervalUnit = intervalUnit;
+            if (intervalUnit != null)
+            {
+                this.IntervalUnit = intervalUnit;
+            }
+
             this.PreviousPricePointId = previousPricePointId;
             this.AccrueCharge = accrueCharge;
             this.InitiateDunning = initiateDunning;
@@ -264,8 +270,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// A string representing the interval unit for this component price point, either month or day. This property is only available for sites with Multifrequency enabled.
         /// </summary>
-        [JsonProperty("interval_unit", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.IntervalUnit? IntervalUnit { get; set; }
+        [JsonProperty("interval_unit")]
+        public Models.IntervalUnit? IntervalUnit
+        {
+            get
+            {
+                return this.intervalUnit;
+            }
+
+            set
+            {
+                this.shouldSerialize["interval_unit"] = true;
+                this.intervalUnit = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets PreviousPricePointId.
@@ -390,6 +408,14 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serailized.
         /// </summary>
+        public void UnsetIntervalUnit()
+        {
+            this.shouldSerialize["interval_unit"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
         public void UnsetUpgradeCharge()
         {
             this.shouldSerialize["upgrade_charge"] = false;
@@ -427,6 +453,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeMemo()
         {
             return this.shouldSerialize["memo"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeIntervalUnit()
+        {
+            return this.shouldSerialize["interval_unit"];
         }
 
         /// <summary>

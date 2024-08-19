@@ -36,10 +36,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// # Reason Codes Intro.
         /// ReasonCodes are a way to gain a high level view of why your customers are cancelling the subcription to your product or service.
-        /// Add a set of churn reason codes to be displayed in-app and/or the Chargify Billing Portal. As your subscribers decide to cancel their subscription, learn why they decided to cancel.
+        /// Add a set of churn reason codes to be displayed in-app and/or the Maxio Billing Portal. As your subscribers decide to cancel their subscription, learn why they decided to cancel.
         /// ## Reason Code Documentation.
-        /// Full documentation on how Reason Codes operate within Chargify can be located under the following links.
-        /// [Churn Reason Codes](https://chargify.zendesk.com/hc/en-us/articles/4407896775579#churn-reason-codes).
+        /// Full documentation on how Reason Codes operate within Advanced Billing can be located under the following links.
+        /// [Churn Reason Codes](https://maxio.zendesk.com/hc/en-us/articles/24286647554701-Churn-Reason-Codes).
         /// ## Create Reason Code.
         /// This method gives a merchant the option to create a reason codes for a given Site.
         /// </summary>
@@ -52,10 +52,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// # Reason Codes Intro.
         /// ReasonCodes are a way to gain a high level view of why your customers are cancelling the subcription to your product or service.
-        /// Add a set of churn reason codes to be displayed in-app and/or the Chargify Billing Portal. As your subscribers decide to cancel their subscription, learn why they decided to cancel.
+        /// Add a set of churn reason codes to be displayed in-app and/or the Maxio Billing Portal. As your subscribers decide to cancel their subscription, learn why they decided to cancel.
         /// ## Reason Code Documentation.
-        /// Full documentation on how Reason Codes operate within Chargify can be located under the following links.
-        /// [Churn Reason Codes](https://chargify.zendesk.com/hc/en-us/articles/4407896775579#churn-reason-codes).
+        /// Full documentation on how Reason Codes operate within Advanced Billing can be located under the following links.
+        /// [Churn Reason Codes](https://maxio.zendesk.com/hc/en-us/articles/24286647554701-Churn-Reason-Codes).
         /// ## Create Reason Code.
         /// This method gives a merchant the option to create a reason codes for a given Site.
         /// </summary>
@@ -106,7 +106,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// This method gives a merchant the option to retrieve a list of a particular code for a given Site by providing the unique numerical ID of the code.
         /// </summary>
-        /// <param name="reasonCodeId">Required parameter: The Chargify id of the reason code.</param>
+        /// <param name="reasonCodeId">Required parameter: The Advanced Billing id of the reason code.</param>
         /// <returns>Returns the Models.ReasonCodeResponse response from the API call.</returns>
         public Models.ReasonCodeResponse ReadReasonCode(
                 int reasonCodeId)
@@ -115,7 +115,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// This method gives a merchant the option to retrieve a list of a particular code for a given Site by providing the unique numerical ID of the code.
         /// </summary>
-        /// <param name="reasonCodeId">Required parameter: The Chargify id of the reason code.</param>
+        /// <param name="reasonCodeId">Required parameter: The Advanced Billing id of the reason code.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ReasonCodeResponse response from the API call.</returns>
         public async Task<Models.ReasonCodeResponse> ReadReasonCodeAsync(
@@ -134,7 +134,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// This method gives a merchant the option to update an existing reason code for a given site.
         /// </summary>
-        /// <param name="reasonCodeId">Required parameter: The Chargify id of the reason code.</param>
+        /// <param name="reasonCodeId">Required parameter: The Advanced Billing id of the reason code.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.ReasonCodeResponse response from the API call.</returns>
         public Models.ReasonCodeResponse UpdateReasonCode(
@@ -145,7 +145,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// This method gives a merchant the option to update an existing reason code for a given site.
         /// </summary>
-        /// <param name="reasonCodeId">Required parameter: The Chargify id of the reason code.</param>
+        /// <param name="reasonCodeId">Required parameter: The Advanced Billing id of the reason code.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ReasonCodeResponse response from the API call.</returns>
@@ -168,7 +168,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// This method gives a merchant the option to delete one reason code from the Churn Reason Codes. This code will be immediately removed. This action is not reversable.
         /// </summary>
-        /// <param name="reasonCodeId">Required parameter: The Chargify id of the reason code.</param>
+        /// <param name="reasonCodeId">Required parameter: The Advanced Billing id of the reason code.</param>
         /// <returns>Returns the Models.ReasonCodesJsonResponse response from the API call.</returns>
         public Models.ReasonCodesJsonResponse DeleteReasonCode(
                 int reasonCodeId)
@@ -177,7 +177,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// This method gives a merchant the option to delete one reason code from the Churn Reason Codes. This code will be immediately removed. This action is not reversable.
         /// </summary>
-        /// <param name="reasonCodeId">Required parameter: The Chargify id of the reason code.</param>
+        /// <param name="reasonCodeId">Required parameter: The Advanced Billing id of the reason code.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ReasonCodesJsonResponse response from the API call.</returns>
         public async Task<Models.ReasonCodesJsonResponse> DeleteReasonCodeAsync(

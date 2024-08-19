@@ -48,6 +48,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="transactionId">transaction_id.</param>
         /// <param name="lineItemBreakouts">line_item_breakouts.</param>
         /// <param name="taxComponentBreakouts">tax_component_breakouts.</param>
+        /// <param name="euVat">eu_vat.</param>
+        /// <param name="type">type.</param>
+        /// <param name="taxExemptAmount">tax_exempt_amount.</param>
         public InvoiceTax(
             string uid = null,
             string title = null,
@@ -59,7 +62,10 @@ namespace AdvancedBilling.Standard.Models
             string taxAmount = null,
             int? transactionId = null,
             List<Models.InvoiceTaxBreakout> lineItemBreakouts = null,
-            List<Models.InvoiceTaxComponentBreakout> taxComponentBreakouts = null)
+            List<Models.InvoiceTaxComponentBreakout> taxComponentBreakouts = null,
+            bool? euVat = null,
+            string type = null,
+            string taxExemptAmount = null)
         {
             this.Uid = uid;
             this.Title = title;
@@ -76,6 +82,9 @@ namespace AdvancedBilling.Standard.Models
             this.TransactionId = transactionId;
             this.LineItemBreakouts = lineItemBreakouts;
             this.TaxComponentBreakouts = taxComponentBreakouts;
+            this.EuVat = euVat;
+            this.Type = type;
+            this.TaxExemptAmount = taxExemptAmount;
         }
 
         /// <summary>
@@ -156,6 +165,24 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("tax_component_breakouts", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.InvoiceTaxComponentBreakout> TaxComponentBreakouts { get; set; }
 
+        /// <summary>
+        /// Gets or sets EuVat.
+        /// </summary>
+        [JsonProperty("eu_vat", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? EuVat { get; set; }
+
+        /// <summary>
+        /// Gets or sets Type.
+        /// </summary>
+        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets TaxExemptAmount.
+        /// </summary>
+        [JsonProperty("tax_exempt_amount", NullValueHandling = NullValueHandling.Ignore)]
+        public string TaxExemptAmount { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -205,7 +232,10 @@ namespace AdvancedBilling.Standard.Models
                 ((this.TaxAmount == null && other.TaxAmount == null) || (this.TaxAmount?.Equals(other.TaxAmount) == true)) &&
                 ((this.TransactionId == null && other.TransactionId == null) || (this.TransactionId?.Equals(other.TransactionId) == true)) &&
                 ((this.LineItemBreakouts == null && other.LineItemBreakouts == null) || (this.LineItemBreakouts?.Equals(other.LineItemBreakouts) == true)) &&
-                ((this.TaxComponentBreakouts == null && other.TaxComponentBreakouts == null) || (this.TaxComponentBreakouts?.Equals(other.TaxComponentBreakouts) == true));
+                ((this.TaxComponentBreakouts == null && other.TaxComponentBreakouts == null) || (this.TaxComponentBreakouts?.Equals(other.TaxComponentBreakouts) == true)) &&
+                ((this.EuVat == null && other.EuVat == null) || (this.EuVat?.Equals(other.EuVat) == true)) &&
+                ((this.Type == null && other.Type == null) || (this.Type?.Equals(other.Type) == true)) &&
+                ((this.TaxExemptAmount == null && other.TaxExemptAmount == null) || (this.TaxExemptAmount?.Equals(other.TaxExemptAmount) == true));
         }
         
         /// <summary>
@@ -225,6 +255,9 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.TransactionId = {(this.TransactionId == null ? "null" : this.TransactionId.ToString())}");
             toStringOutput.Add($"this.LineItemBreakouts = {(this.LineItemBreakouts == null ? "null" : $"[{string.Join(", ", this.LineItemBreakouts)} ]")}");
             toStringOutput.Add($"this.TaxComponentBreakouts = {(this.TaxComponentBreakouts == null ? "null" : $"[{string.Join(", ", this.TaxComponentBreakouts)} ]")}");
+            toStringOutput.Add($"this.EuVat = {(this.EuVat == null ? "null" : this.EuVat.ToString())}");
+            toStringOutput.Add($"this.Type = {(this.Type == null ? "null" : this.Type)}");
+            toStringOutput.Add($"this.TaxExemptAmount = {(this.TaxExemptAmount == null ? "null" : this.TaxExemptAmount)}");
 
             base.ToString(toStringOutput);
         }

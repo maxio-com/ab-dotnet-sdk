@@ -54,7 +54,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.ResourceType ResourceType { get; set; }
 
         /// <summary>
-        /// The Chargify id of the customer or the subscription for which the metadata applies
+        /// The Advanced Billing id of the customer or the subscription for which the metadata applies
         /// </summary>
         [JsonProperty("resource_id")]
         public int ResourceId { get; set; }

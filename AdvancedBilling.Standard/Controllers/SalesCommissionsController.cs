@@ -37,7 +37,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Endpoint returns subscriptions with associated sales reps.
         /// ## Modified Authentication Process.
         /// The Sales Commission API differs from other Chargify API endpoints. This resource is associated with the seller itself. Up to now all available resources were at the level of the site, therefore creating the API Key per site was a sufficient solution. To share resources at the seller level, a new authentication method was introduced, which is user authentication. Creating an API Key for a user is a required step to correctly use the Sales Commission API, more details [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication).
-        /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Chargify support.
+        /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Maxio support.
         /// > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`.
         /// ]]>
         /// </summary>
@@ -52,7 +52,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Endpoint returns subscriptions with associated sales reps.
         /// ## Modified Authentication Process.
         /// The Sales Commission API differs from other Chargify API endpoints. This resource is associated with the seller itself. Up to now all available resources were at the level of the site, therefore creating the API Key per site was a sufficient solution. To share resources at the seller level, a new authentication method was introduced, which is user authentication. Creating an API Key for a user is a required step to correctly use the Sales Commission API, more details [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication).
-        /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Chargify support.
+        /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Maxio support.
         /// > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`.
         /// ]]>
         /// </summary>
@@ -79,7 +79,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Endpoint returns sales rep list with details.
         /// ## Modified Authentication Process.
         /// The Sales Commission API differs from other Chargify API endpoints. This resource is associated with the seller itself. Up to now all available resources were at the level of the site, therefore creating the API Key per site was a sufficient solution. To share resources at the seller level, a new authentication method was introduced, which is user authentication. Creating an API Key for a user is a required step to correctly use the Sales Commission API, more details [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication).
-        /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Chargify support.
+        /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Maxio support.
         /// > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`.
         /// ]]>
         /// </summary>
@@ -94,7 +94,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Endpoint returns sales rep list with details.
         /// ## Modified Authentication Process.
         /// The Sales Commission API differs from other Chargify API endpoints. This resource is associated with the seller itself. Up to now all available resources were at the level of the site, therefore creating the API Key per site was a sufficient solution. To share resources at the seller level, a new authentication method was introduced, which is user authentication. Creating an API Key for a user is a required step to correctly use the Sales Commission API, more details [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication).
-        /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Chargify support.
+        /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Maxio support.
         /// > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`.
         /// ]]>
         /// </summary>
@@ -121,12 +121,12 @@ namespace AdvancedBilling.Standard.Controllers
         /// Endpoint returns sales rep and attached subscriptions details.
         /// ## Modified Authentication Process.
         /// The Sales Commission API differs from other Chargify API endpoints. This resource is associated with the seller itself. Up to now all available resources were at the level of the site, therefore creating the API Key per site was a sufficient solution. To share resources at the seller level, a new authentication method was introduced, which is user authentication. Creating an API Key for a user is a required step to correctly use the Sales Commission API, more details [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication).
-        /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Chargify support.
+        /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Maxio support.
         /// > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`.
         /// ]]>
         /// </summary>
         /// <param name="sellerId">Required parameter: The Chargify id of your seller account.</param>
-        /// <param name="salesRepId">Required parameter: The Chargify id of sales rep..</param>
+        /// <param name="salesRepId">Required parameter: The Advanced Billing id of sales rep..</param>
         /// <param name="authorization">Optional parameter: For authorization use user API key. See details [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication)..</param>
         /// <param name="liveMode">Optional parameter: This parameter indicates if records should be fetched from live mode sites. Default value is true..</param>
         /// <param name="page">Optional parameter: Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned. Use in query `page=1`..</param>
@@ -146,12 +146,12 @@ namespace AdvancedBilling.Standard.Controllers
         /// Endpoint returns sales rep and attached subscriptions details.
         /// ## Modified Authentication Process.
         /// The Sales Commission API differs from other Chargify API endpoints. This resource is associated with the seller itself. Up to now all available resources were at the level of the site, therefore creating the API Key per site was a sufficient solution. To share resources at the seller level, a new authentication method was introduced, which is user authentication. Creating an API Key for a user is a required step to correctly use the Sales Commission API, more details [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication).
-        /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Chargify support.
+        /// Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Maxio support.
         /// > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`.
         /// ]]>
         /// </summary>
         /// <param name="sellerId">Required parameter: The Chargify id of your seller account.</param>
-        /// <param name="salesRepId">Required parameter: The Chargify id of sales rep..</param>
+        /// <param name="salesRepId">Required parameter: The Advanced Billing id of sales rep..</param>
         /// <param name="authorization">Optional parameter: For authorization use user API key. See details [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication)..</param>
         /// <param name="liveMode">Optional parameter: This parameter indicates if records should be fetched from live mode sites. Default value is true..</param>
         /// <param name="page">Optional parameter: Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned. Use in query `page=1`..</param>
@@ -173,10 +173,10 @@ namespace AdvancedBilling.Standard.Controllers
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("seller_id", sellerId).Required())
                       .Template(_template => _template.Setup("sales_rep_id", salesRepId).Required())
-                      .Header(_header => _header.Setup("Authorization", (authorization != null) ? authorization : "Bearer <<apiKey>>"))
+                      .Header(_header => _header.Setup("Authorization", authorization ?? "Bearer <<apiKey>>"))
                       .Query(_query => _query.Setup("live_mode", liveMode))
-                      .Query(_query => _query.Setup("page", (page != null) ? page : 1))
-                      .Query(_query => _query.Setup("per_page", (perPage != null) ? perPage : 100))))
+                      .Query(_query => _query.Setup("page", page ?? 1))
+                      .Query(_query => _query.Setup("per_page", perPage ?? 100))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

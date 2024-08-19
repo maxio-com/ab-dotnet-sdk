@@ -16,7 +16,7 @@
 | `AccountingCode` | `string` | Optional | E.g. Internal ID or SKU Number |
 | `RequestCreditCard` | `bool?` | Optional | Deprecated value that can be ignored unless you have legacy hosted pages. For Public Signup Page users, please read this attribute from under the signup page. |
 | `ExpirationInterval` | `int?` | Optional | A numerical interval for the length a subscription to this product will run before it expires. See the description of interval for a description of how this value is coupled with an interval unit to calculate the full interval |
-| `ExpirationIntervalUnit` | [`ExtendedIntervalUnit?`](../../doc/models/extended-interval-unit.md) | Optional | A string representing the expiration interval unit for this product, either month or day |
+| `ExpirationIntervalUnit` | [`ExpirationIntervalUnit?`](../../doc/models/expiration-interval-unit.md) | Optional | A string representing the expiration interval unit for this product, either month, day or never |
 | `CreatedAt` | `DateTimeOffset?` | Optional | Timestamp indicating when this product was created |
 | `UpdatedAt` | `DateTimeOffset?` | Optional | Timestamp indicating when this product was last updated |
 | `PriceInCents` | `long?` | Optional | The product price, in integer cents |

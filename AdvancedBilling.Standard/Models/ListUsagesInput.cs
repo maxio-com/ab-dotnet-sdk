@@ -67,7 +67,7 @@ namespace AdvancedBilling.Standard.Models
         public int SubscriptionId { get; set; }
 
         /// <summary>
-        /// Either the Chargify id for the component or the component's handle prefixed by `handle:`
+        /// Either the Advanced Billing id for the component or the component's handle prefixed by `handle:`
         /// </summary>
         [JsonProperty("component_id")]
         public ListUsagesInputComponentId ComponentId { get; set; }

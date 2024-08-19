@@ -23,10 +23,12 @@ namespace AdvancedBilling.Standard.Models
     {
         private string gatewayTransactionId;
         private string gatewayHandle;
+        private bool? achLateReject;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "gateway_transaction_id", false },
             { "gateway_handle", false },
+            { "ach_late_reject", false },
         };
 
         /// <summary>
@@ -47,6 +49,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="gatewayTransactionId">gateway_transaction_id.</param>
         /// <param name="gatewayUsed">gateway_used.</param>
         /// <param name="gatewayHandle">gateway_handle.</param>
+        /// <param name="achLateReject">ach_late_reject.</param>
         public InvoiceRefund(
             int? transactionId = null,
             int? paymentId = null,
@@ -55,7 +58,8 @@ namespace AdvancedBilling.Standard.Models
             string appliedAmount = null,
             string gatewayTransactionId = null,
             string gatewayUsed = null,
-            string gatewayHandle = null)
+            string gatewayHandle = null,
+            bool? achLateReject = null)
         {
             this.TransactionId = transactionId;
             this.PaymentId = paymentId;
@@ -71,6 +75,11 @@ namespace AdvancedBilling.Standard.Models
             if (gatewayHandle != null)
             {
                 this.GatewayHandle = gatewayHandle;
+            }
+
+            if (achLateReject != null)
+            {
+                this.AchLateReject = achLateReject;
             }
 
         }
@@ -147,6 +156,24 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// Gets or sets AchLateReject.
+        /// </summary>
+        [JsonProperty("ach_late_reject")]
+        public bool? AchLateReject
+        {
+            get
+            {
+                return this.achLateReject;
+            }
+
+            set
+            {
+                this.shouldSerialize["ach_late_reject"] = true;
+                this.achLateReject = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -174,6 +201,14 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetAchLateReject()
+        {
+            this.shouldSerialize["ach_late_reject"] = false;
+        }
+
+        /// <summary>
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
@@ -189,6 +224,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeGatewayHandle()
         {
             return this.shouldSerialize["gateway_handle"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeAchLateReject()
+        {
+            return this.shouldSerialize["ach_late_reject"];
         }
 
         /// <inheritdoc/>
@@ -210,7 +254,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.AppliedAmount == null && other.AppliedAmount == null) || (this.AppliedAmount?.Equals(other.AppliedAmount) == true)) &&
                 ((this.GatewayTransactionId == null && other.GatewayTransactionId == null) || (this.GatewayTransactionId?.Equals(other.GatewayTransactionId) == true)) &&
                 ((this.GatewayUsed == null && other.GatewayUsed == null) || (this.GatewayUsed?.Equals(other.GatewayUsed) == true)) &&
-                ((this.GatewayHandle == null && other.GatewayHandle == null) || (this.GatewayHandle?.Equals(other.GatewayHandle) == true));
+                ((this.GatewayHandle == null && other.GatewayHandle == null) || (this.GatewayHandle?.Equals(other.GatewayHandle) == true)) &&
+                ((this.AchLateReject == null && other.AchLateReject == null) || (this.AchLateReject?.Equals(other.AchLateReject) == true));
         }
         
         /// <summary>
@@ -227,6 +272,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.GatewayTransactionId = {(this.GatewayTransactionId == null ? "null" : this.GatewayTransactionId)}");
             toStringOutput.Add($"this.GatewayUsed = {(this.GatewayUsed == null ? "null" : this.GatewayUsed)}");
             toStringOutput.Add($"this.GatewayHandle = {(this.GatewayHandle == null ? "null" : this.GatewayHandle)}");
+            toStringOutput.Add($"this.AchLateReject = {(this.AchLateReject == null ? "null" : this.AchLateReject.ToString())}");
 
             base.ToString(toStringOutput);
         }

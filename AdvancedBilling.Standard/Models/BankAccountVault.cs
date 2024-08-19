@@ -20,33 +20,51 @@ namespace AdvancedBilling.Standard.Models
     public enum BankAccountVault
     {
         /// <summary>
-        /// Bogus.
-        /// </summary>
-        [EnumMember(Value = "bogus")]
-        Bogus,
-
-        /// <summary>
         /// Authorizenet.
         /// </summary>
         [EnumMember(Value = "authorizenet")]
         Authorizenet,
 
         /// <summary>
-        /// StripeConnect.
+        /// BlueSnap.
         /// </summary>
-        [EnumMember(Value = "stripe_connect")]
-        StripeConnect,
+        [EnumMember(Value = "blue_snap")]
+        BlueSnap,
 
         /// <summary>
-        /// BraintreeBlue.
+        /// Bogus.
         /// </summary>
-        [EnumMember(Value = "braintree_blue")]
-        BraintreeBlue,
+        [EnumMember(Value = "bogus")]
+        Bogus,
+
+        /// <summary>
+        /// Forte.
+        /// </summary>
+        [EnumMember(Value = "forte")]
+        Forte,
 
         /// <summary>
         /// Gocardless.
         /// </summary>
         [EnumMember(Value = "gocardless")]
-        Gocardless
+        Gocardless,
+
+        /// <summary>
+        /// MaxioPayments.
+        /// </summary>
+        [EnumMember(Value = "maxio_payments")]
+        MaxioPayments,
+
+        /// <summary>
+        /// Maxp.
+        /// </summary>
+        [EnumMember(Value = "maxp")]
+        Maxp,
+
+        /// <summary>
+        /// StripeConnect.
+        /// </summary>
+        [EnumMember(Value = "stripe_connect")]
+        StripeConnect
     }
 }

@@ -53,8 +53,8 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="BankAccountPaymentProfile"/> class.
         /// </summary>
-        /// <param name="maskedBankRoutingNumber">masked_bank_routing_number.</param>
         /// <param name="maskedBankAccountNumber">masked_bank_account_number.</param>
+        /// <param name="paymentType">payment_type.</param>
         /// <param name="id">id.</param>
         /// <param name="firstName">first_name.</param>
         /// <param name="lastName">last_name.</param>
@@ -69,15 +69,15 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="customerVaultToken">customer_vault_token.</param>
         /// <param name="billingAddress2">billing_address_2.</param>
         /// <param name="bankName">bank_name.</param>
+        /// <param name="maskedBankRoutingNumber">masked_bank_routing_number.</param>
         /// <param name="bankAccountType">bank_account_type.</param>
         /// <param name="bankAccountHolderType">bank_account_holder_type.</param>
-        /// <param name="paymentType">payment_type.</param>
         /// <param name="verified">verified.</param>
         /// <param name="siteGatewaySettingId">site_gateway_setting_id.</param>
         /// <param name="gatewayHandle">gateway_handle.</param>
         public BankAccountPaymentProfile(
-            string maskedBankRoutingNumber,
             string maskedBankAccountNumber,
+            Models.PaymentType paymentType,
             int? id = null,
             string firstName = null,
             string lastName = null,
@@ -92,9 +92,9 @@ namespace AdvancedBilling.Standard.Models
             string customerVaultToken = null,
             string billingAddress2 = null,
             string bankName = null,
+            string maskedBankRoutingNumber = null,
             Models.BankAccountType? bankAccountType = null,
             Models.BankAccountHolderType? bankAccountHolderType = null,
-            Models.PaymentType? paymentType = null,
             bool? verified = false,
             int? siteGatewaySettingId = null,
             string gatewayHandle = null)
@@ -186,7 +186,7 @@ namespace AdvancedBilling.Standard.Models
         public int? CustomerId { get; set; }
 
         /// <summary>
-        /// The vault that stores the payment profile with the provided vault_token.
+        /// The vault that stores the payment profile with the provided vault_token. Use `bogus` for testing.
         /// </summary>
         [JsonProperty("current_vault", NullValueHandling = NullValueHandling.Ignore)]
         public Models.BankAccountVault? CurrentVault { get; set; }
@@ -341,9 +341,8 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// A string representation of the stored bank routing number with all but the last 4 digits marked with X’s (i.e. ‘XXXXXXX1111’). payment_type will be bank_account
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
-        [JsonProperty("masked_bank_routing_number")]
-        [JsonRequired]
+        [JsonConverter(typeof(JsonStringConverter))]
+        [JsonProperty("masked_bank_routing_number", NullValueHandling = NullValueHandling.Ignore)]
         public string MaskedBankRoutingNumber { get; set; }
 
         /// <summary>
@@ -369,8 +368,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets PaymentType.
         /// </summary>
-        [JsonProperty("payment_type", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.PaymentType? PaymentType { get; set; }
+        [JsonProperty("payment_type")]
+        [JsonRequired]
+        public Models.PaymentType PaymentType { get; set; }
 
         /// <summary>
         /// denotes whether a bank account has been verified by providing the amounts of two small deposits made into the account
@@ -608,7 +608,7 @@ namespace AdvancedBilling.Standard.Models
                 ((this.MaskedBankAccountNumber == null && other.MaskedBankAccountNumber == null) || (this.MaskedBankAccountNumber?.Equals(other.MaskedBankAccountNumber) == true)) &&
                 ((this.BankAccountType == null && other.BankAccountType == null) || (this.BankAccountType?.Equals(other.BankAccountType) == true)) &&
                 ((this.BankAccountHolderType == null && other.BankAccountHolderType == null) || (this.BankAccountHolderType?.Equals(other.BankAccountHolderType) == true)) &&
-                ((this.PaymentType == null && other.PaymentType == null) || (this.PaymentType?.Equals(other.PaymentType) == true)) &&
+                this.PaymentType.Equals(other.PaymentType) &&
                 ((this.Verified == null && other.Verified == null) || (this.Verified?.Equals(other.Verified) == true)) &&
                 ((this.SiteGatewaySettingId == null && other.SiteGatewaySettingId == null) || (this.SiteGatewaySettingId?.Equals(other.SiteGatewaySettingId) == true)) &&
                 ((this.GatewayHandle == null && other.GatewayHandle == null) || (this.GatewayHandle?.Equals(other.GatewayHandle) == true));
@@ -638,7 +638,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.MaskedBankAccountNumber = {(this.MaskedBankAccountNumber == null ? "null" : this.MaskedBankAccountNumber)}");
             toStringOutput.Add($"this.BankAccountType = {(this.BankAccountType == null ? "null" : this.BankAccountType.ToString())}");
             toStringOutput.Add($"this.BankAccountHolderType = {(this.BankAccountHolderType == null ? "null" : this.BankAccountHolderType.ToString())}");
-            toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
+            toStringOutput.Add($"this.PaymentType = {this.PaymentType}");
             toStringOutput.Add($"this.Verified = {(this.Verified == null ? "null" : this.Verified.ToString())}");
             toStringOutput.Add($"this.SiteGatewaySettingId = {(this.SiteGatewaySettingId == null ? "null" : this.SiteGatewaySettingId.ToString())}");
             toStringOutput.Add($"this.GatewayHandle = {(this.GatewayHandle == null ? "null" : this.GatewayHandle)}");

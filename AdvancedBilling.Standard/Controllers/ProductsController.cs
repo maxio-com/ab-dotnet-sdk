@@ -34,9 +34,9 @@ namespace AdvancedBilling.Standard.Controllers
         internal ProductsController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
-        /// Use this method to create a product within your Chargify site.
-        /// + [Products Documentation](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405561405709).
-        /// + [Changing a Subscription's Product](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404225334669-Product-Changes-Migrations).
+        /// Use this method to create a product within your Advanced Billing site.
+        /// + [Products Documentation](https://maxio.zendesk.com/hc/en-us/articles/24261090117645-Products-Overview).
+        /// + [Changing a Subscription's Product](https://maxio.zendesk.com/hc/en-us/articles/24252069837581-Product-Changes-and-Migrations).
         /// </summary>
         /// <param name="productFamilyId">Required parameter: Either the product family's id or its handle prefixed with `handle:`.</param>
         /// <param name="body">Optional parameter: Example: .</param>
@@ -47,9 +47,9 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(CreateProductAsync(productFamilyId, body));
 
         /// <summary>
-        /// Use this method to create a product within your Chargify site.
-        /// + [Products Documentation](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405561405709).
-        /// + [Changing a Subscription's Product](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404225334669-Product-Changes-Migrations).
+        /// Use this method to create a product within your Advanced Billing site.
+        /// + [Products Documentation](https://maxio.zendesk.com/hc/en-us/articles/24261090117645-Products-Overview).
+        /// + [Changing a Subscription's Product](https://maxio.zendesk.com/hc/en-us/articles/24252069837581-Product-Changes-and-Migrations).
         /// </summary>
         /// <param name="productFamilyId">Required parameter: Either the product family's id or its handle prefixed with `handle:`.</param>
         /// <param name="body">Optional parameter: Example: .</param>
@@ -72,18 +72,18 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This endpoint allows you to read the current details of a product that you've created in Chargify.
+        /// This endpoint allows you to read the current details of a product that you've created in Advanced Billing.
         /// </summary>
-        /// <param name="productId">Required parameter: The Chargify id of the product.</param>
+        /// <param name="productId">Required parameter: The Advanced Billing id of the product.</param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
         public Models.ProductResponse ReadProduct(
                 int productId)
             => CoreHelper.RunTask(ReadProductAsync(productId));
 
         /// <summary>
-        /// This endpoint allows you to read the current details of a product that you've created in Chargify.
+        /// This endpoint allows you to read the current details of a product that you've created in Advanced Billing.
         /// </summary>
-        /// <param name="productId">Required parameter: The Chargify id of the product.</param>
+        /// <param name="productId">Required parameter: The Advanced Billing id of the product.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
         public async Task<Models.ProductResponse> ReadProductAsync(
@@ -104,7 +104,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ### Product Price Point.
         /// Updating a product using this endpoint will create a new price point and set it as the default price point for this product. If you should like to update an existing product price point, that must be done separately.
         /// </summary>
-        /// <param name="productId">Required parameter: The Chargify id of the product.</param>
+        /// <param name="productId">Required parameter: The Advanced Billing id of the product.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
         public Models.ProductResponse UpdateProduct(
@@ -119,7 +119,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ### Product Price Point.
         /// Updating a product using this endpoint will create a new price point and set it as the default price point for this product. If you should like to update an existing product price point, that must be done separately.
         /// </summary>
-        /// <param name="productId">Required parameter: The Chargify id of the product.</param>
+        /// <param name="productId">Required parameter: The Advanced Billing id of the product.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
@@ -143,7 +143,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Sending a DELETE request to this endpoint will archive the product. All current subscribers will be unffected; their subscription/purchase will continue to be charged monthly.
         /// This will restrict the option to chose the product for purchase via the Billing Portal, as well as disable Public Signup Pages for the product.
         /// </summary>
-        /// <param name="productId">Required parameter: The Chargify id of the product.</param>
+        /// <param name="productId">Required parameter: The Advanced Billing id of the product.</param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
         public Models.ProductResponse ArchiveProduct(
                 int productId)
@@ -153,7 +153,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Sending a DELETE request to this endpoint will archive the product. All current subscribers will be unffected; their subscription/purchase will continue to be charged monthly.
         /// This will restrict the option to chose the product for purchase via the Billing Portal, as well as disable Public Signup Pages for the product.
         /// </summary>
-        /// <param name="productId">Required parameter: The Chargify id of the product.</param>
+        /// <param name="productId">Required parameter: The Advanced Billing id of the product.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
         public async Task<Models.ProductResponse> ArchiveProductAsync(

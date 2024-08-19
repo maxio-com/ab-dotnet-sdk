@@ -25,7 +25,7 @@ ProductPricePointsController productPricePointsController = client.ProductPriceP
 
 # Create Product Price Point
 
-[Product Price Point Documentation](https://chargify.zendesk.com/hc/en-us/articles/4407755824155)
+[Product Price Point Documentation](https://maxio.zendesk.com/hc/en-us/articles/24261111947789-Product-Price-Points)
 
 ```csharp
 CreateProductPricePointAsync(
@@ -65,7 +65,7 @@ CreateProductPricePointRequest body = new CreateProductPricePointRequest
         InitialChargeInCents = 120000L,
         InitialChargeAfterTrial = false,
         ExpirationInterval = 12,
-        ExpirationIntervalUnit = IntervalUnit.Month,
+        ExpirationIntervalUnit = ExpirationIntervalUnit.Month,
     },
 };
 
@@ -437,8 +437,8 @@ UnarchiveProductPricePointAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `productId` | `int` | Template, Required | The Chargify id of the product to which the price point belongs |
-| `pricePointId` | `int` | Template, Required | The Chargify id of the product price point |
+| `productId` | `int` | Template, Required | The Advanced Billing id of the product to which the price point belongs |
+| `pricePointId` | `int` | Template, Required | The Advanced Billing id of the product price point |
 
 ## Response Type
 
@@ -507,8 +507,8 @@ PromoteProductPricePointToDefaultAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `productId` | `int` | Template, Required | The Chargify id of the product to which the price point belongs |
-| `pricePointId` | `int` | Template, Required | The Chargify id of the product price point |
+| `productId` | `int` | Template, Required | The Advanced Billing id of the product to which the price point belongs |
+| `pricePointId` | `int` | Template, Required | The Advanced Billing id of the product price point |
 
 ## Response Type
 
@@ -601,7 +601,7 @@ BulkCreateProductPricePointsAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `productId` | `int` | Template, Required | The Chargify id of the product to which the price points belong |
+| `productId` | `int` | Template, Required | The Advanced Billing id of the product to which the price points belong |
 | `body` | [`BulkCreateProductPricePointsRequest`](../../doc/models/bulk-create-product-price-points-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -630,7 +630,7 @@ BulkCreateProductPricePointsRequest body = new BulkCreateProductPricePointsReque
             InitialChargeInCents = 120000L,
             InitialChargeAfterTrial = false,
             ExpirationInterval = 12,
-            ExpirationIntervalUnit = IntervalUnit.Month,
+            ExpirationIntervalUnit = ExpirationIntervalUnit.Month,
         },
         new CreateProductPricePoint
         {
@@ -646,7 +646,7 @@ BulkCreateProductPricePointsRequest body = new BulkCreateProductPricePointsReque
             InitialChargeInCents = 120000L,
             InitialChargeAfterTrial = false,
             ExpirationInterval = 12,
-            ExpirationIntervalUnit = IntervalUnit.Month,
+            ExpirationIntervalUnit = ExpirationIntervalUnit.Month,
         },
     },
 };
@@ -719,7 +719,7 @@ CreateProductCurrencyPricesAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `productPricePointId` | `int` | Template, Required | The Chargify id of the product price point |
+| `productPricePointId` | `int` | Template, Required | The Advanced Billing id of the product price point |
 | `body` | [`CreateProductCurrencyPricesRequest`](../../doc/models/create-product-currency-prices-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -811,7 +811,7 @@ UpdateProductCurrencyPricesAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `productPricePointId` | `int` | Template, Required | The Chargify id of the product price point |
+| `productPricePointId` | `int` | Template, Required | The Advanced Billing id of the product price point |
 | `body` | [`UpdateCurrencyPricesRequest`](../../doc/models/update-currency-prices-request.md) | Body, Optional | - |
 
 ## Response Type

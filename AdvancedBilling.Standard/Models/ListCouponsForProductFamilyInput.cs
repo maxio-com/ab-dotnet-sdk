@@ -51,7 +51,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The Chargify id of the product family to which the coupon belongs
+        /// The Advanced Billing id of the product family to which the coupon belongs
         /// </summary>
         [JsonProperty("product_family_id")]
         public int ProductFamilyId { get; set; }

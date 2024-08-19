@@ -72,8 +72,8 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This method will create a Product Family within your Chargify site. Create a Product Family to act as a container for your products, components and coupons.
-        /// Full documentation on how Product Families operate within the Chargify UI can be located [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405369633421).
+        /// This method will create a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components and coupons.
+        /// Full documentation on how Product Families operate within the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24261098936205-Product-Families).
         /// </summary>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.ProductFamilyResponse response from the API call.</returns>
@@ -82,8 +82,8 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(CreateProductFamilyAsync(body));
 
         /// <summary>
-        /// This method will create a Product Family within your Chargify site. Create a Product Family to act as a container for your products, components and coupons.
-        /// Full documentation on how Product Families operate within the Chargify UI can be located [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405369633421).
+        /// This method will create a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components and coupons.
+        /// Full documentation on how Product Families operate within the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24261098936205-Product-Families).
         /// </summary>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -136,7 +136,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// This method allows to retrieve a Product Family via the `product_family_id`. The response will contain a Product Family object.
         /// The product family can be specified either with the id number, or with the `handle:my-family` format.
         /// </summary>
-        /// <param name="id">Required parameter: The Chargify id of the product family.</param>
+        /// <param name="id">Required parameter: The Advanced Billing id of the product family.</param>
         /// <returns>Returns the Models.ProductFamilyResponse response from the API call.</returns>
         public Models.ProductFamilyResponse ReadProductFamily(
                 int id)
@@ -146,7 +146,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// This method allows to retrieve a Product Family via the `product_family_id`. The response will contain a Product Family object.
         /// The product family can be specified either with the id number, or with the `handle:my-family` format.
         /// </summary>
-        /// <param name="id">Required parameter: The Chargify id of the product family.</param>
+        /// <param name="id">Required parameter: The Advanced Billing id of the product family.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProductFamilyResponse response from the API call.</returns>
         public async Task<Models.ProductFamilyResponse> ReadProductFamilyAsync(

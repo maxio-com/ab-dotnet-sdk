@@ -99,6 +99,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="displaySettings">display_settings.</param>
         /// <param name="publicUrl">public_url.</param>
         /// <param name="previousBalanceData">previous_balance_data.</param>
+        /// <param name="publicUrlExpiresOn">public_url_expires_on.</param>
         public Invoice(
             long? id = null,
             string uid = null,
@@ -151,7 +152,8 @@ namespace AdvancedBilling.Standard.Models
             List<Models.InvoiceCustomField> customFields = null,
             Models.InvoiceDisplaySettings displaySettings = null,
             string publicUrl = null,
-            Models.InvoicePreviousBalance previousBalanceData = null)
+            Models.InvoicePreviousBalance previousBalanceData = null,
+            DateTime? publicUrlExpiresOn = null)
         {
             this.Id = id;
             this.Uid = uid;
@@ -229,6 +231,7 @@ namespace AdvancedBilling.Standard.Models
             this.DisplaySettings = displaySettings;
             this.PublicUrl = publicUrl;
             this.PreviousBalanceData = previousBalanceData;
+            this.PublicUrlExpiresOn = publicUrlExpiresOn;
         }
 
         /// <summary>
@@ -333,7 +336,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The current status of the invoice. See [Invoice Statuses](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405078794253-Introduction-to-Invoices#invoice-statuses) for more.
+        /// The current status of the invoice. See [Invoice Statuses](https://maxio.zendesk.com/hc/en-us/articles/24252287829645-Advanced-Billing-Invoices-Overview#invoice-statuses) for more.
         /// </summary>
         [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
         public Models.InvoiceStatus? Status { get; set; }
@@ -386,7 +389,7 @@ namespace AdvancedBilling.Standard.Models
         /// * "child": An invoice segment which has been combined into a consolidated invoice.
         /// * "parent": A consolidated invoice, whose contents are composed of invoice segments.
         /// "Parent" invoices do not have lines of their own, but they have subtotals and totals which aggregate the member invoice segments.
-        /// See also the [invoice consolidation documentation](https://chargify.zendesk.com/hc/en-us/articles/4407746391835).
+        /// See also the [invoice consolidation documentation](https://maxio.zendesk.com/hc/en-us/articles/24252269909389-Invoice-Consolidation).
         /// </summary>
         [JsonProperty("consolidation_level", NullValueHandling = NullValueHandling.Ignore)]
         public Models.InvoiceConsolidationLevel? ConsolidationLevel { get; set; }
@@ -632,6 +635,13 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("previous_balance_data", NullValueHandling = NullValueHandling.Ignore)]
         public Models.InvoicePreviousBalance PreviousBalanceData { get; set; }
 
+        /// <summary>
+        /// The format is `"YYYY-MM-DD"`.
+        /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
+        [JsonProperty("public_url_expires_on", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? PublicUrlExpiresOn { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -807,7 +817,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.CustomFields == null && other.CustomFields == null) || (this.CustomFields?.Equals(other.CustomFields) == true)) &&
                 ((this.DisplaySettings == null && other.DisplaySettings == null) || (this.DisplaySettings?.Equals(other.DisplaySettings) == true)) &&
                 ((this.PublicUrl == null && other.PublicUrl == null) || (this.PublicUrl?.Equals(other.PublicUrl) == true)) &&
-                ((this.PreviousBalanceData == null && other.PreviousBalanceData == null) || (this.PreviousBalanceData?.Equals(other.PreviousBalanceData) == true));
+                ((this.PreviousBalanceData == null && other.PreviousBalanceData == null) || (this.PreviousBalanceData?.Equals(other.PreviousBalanceData) == true)) &&
+                ((this.PublicUrlExpiresOn == null && other.PublicUrlExpiresOn == null) || (this.PublicUrlExpiresOn?.Equals(other.PublicUrlExpiresOn) == true));
         }
         
         /// <summary>
@@ -868,6 +879,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.DisplaySettings = {(this.DisplaySettings == null ? "null" : this.DisplaySettings.ToString())}");
             toStringOutput.Add($"this.PublicUrl = {(this.PublicUrl == null ? "null" : this.PublicUrl)}");
             toStringOutput.Add($"this.PreviousBalanceData = {(this.PreviousBalanceData == null ? "null" : this.PreviousBalanceData.ToString())}");
+            toStringOutput.Add($"this.PublicUrlExpiresOn = {(this.PublicUrlExpiresOn == null ? "null" : this.PublicUrlExpiresOn.ToString())}");
 
             base.ToString(toStringOutput);
         }

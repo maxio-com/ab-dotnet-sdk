@@ -60,7 +60,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The subscription's Chargify id
+        /// The subscription's Advanced Billing id
         /// </summary>
         [JsonProperty("subscription_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? SubscriptionId { get; set; }

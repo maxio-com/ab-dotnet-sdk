@@ -21,6 +21,12 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class CreateProductPricePoint : BaseModel
     {
+        private Models.ExpirationIntervalUnit? expirationIntervalUnit;
+        private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
+        {
+            { "expiration_interval_unit", false },
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateProductPricePoint"/> class.
         /// </summary>
@@ -58,7 +64,7 @@ namespace AdvancedBilling.Standard.Models
             long? initialChargeInCents = null,
             bool? initialChargeAfterTrial = null,
             int? expirationInterval = null,
-            Models.IntervalUnit? expirationIntervalUnit = null,
+            Models.ExpirationIntervalUnit? expirationIntervalUnit = null,
             bool? useSiteExchangeRate = true)
         {
             this.Name = name;
@@ -73,7 +79,11 @@ namespace AdvancedBilling.Standard.Models
             this.InitialChargeInCents = initialChargeInCents;
             this.InitialChargeAfterTrial = initialChargeAfterTrial;
             this.ExpirationInterval = expirationInterval;
-            this.ExpirationIntervalUnit = expirationIntervalUnit;
+            if (expirationIntervalUnit != null)
+            {
+                this.ExpirationIntervalUnit = expirationIntervalUnit;
+            }
+
             this.UseSiteExchangeRate = useSiteExchangeRate;
         }
 
@@ -150,10 +160,22 @@ namespace AdvancedBilling.Standard.Models
         public int? ExpirationInterval { get; set; }
 
         /// <summary>
-        /// A string representing the expiration interval unit for this product price point, either month or day
+        /// A string representing the expiration interval unit for this product price point, either month, day or never
         /// </summary>
-        [JsonProperty("expiration_interval_unit", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.IntervalUnit? ExpirationIntervalUnit { get; set; }
+        [JsonProperty("expiration_interval_unit")]
+        public Models.ExpirationIntervalUnit? ExpirationIntervalUnit
+        {
+            get
+            {
+                return this.expirationIntervalUnit;
+            }
+
+            set
+            {
+                this.shouldSerialize["expiration_interval_unit"] = true;
+                this.expirationIntervalUnit = value;
+            }
+        }
 
         /// <summary>
         /// Whether or not to use the site's exchange rate or define your own pricing when your site has multiple currencies defined.
@@ -169,6 +191,23 @@ namespace AdvancedBilling.Standard.Models
             this.ToString(toStringOutput);
 
             return $"CreateProductPricePoint : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetExpirationIntervalUnit()
+        {
+            this.shouldSerialize["expiration_interval_unit"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeExpirationIntervalUnit()
+        {
+            return this.shouldSerialize["expiration_interval_unit"];
         }
 
         /// <inheritdoc/>
