@@ -39,7 +39,7 @@ namespace AdvancedBilling.Standard
         };
 
         private readonly GlobalConfiguration globalConfiguration;
-        private const string userAgent = "AB SDK DotNet:4.0.0 on OS {os-info}";
+        private const string userAgent = "AB SDK DotNet:5.0.0 on OS {os-info}";
         private readonly Lazy<APIExportsController> aPIExports;
         private readonly Lazy<AdvanceInvoiceController> advanceInvoice;
         private readonly Lazy<BillingPortalController> billingPortal;
@@ -339,13 +339,13 @@ namespace AdvancedBilling.Standard
 
         /// <summary>
         /// Gets Subdomain.
-        /// The subdomain for your Chargify site.
+        /// The subdomain for your Advanced Billing site.
         /// </summary>
         public string Subdomain { get; }
 
         /// <summary>
         /// Gets Domain.
-        /// The Chargify server domain.
+        /// The Advanced Billing server domain.
         /// </summary>
         public string Domain { get; }
 

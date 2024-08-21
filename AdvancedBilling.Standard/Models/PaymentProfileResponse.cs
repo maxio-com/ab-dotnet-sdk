@@ -34,7 +34,7 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         /// <param name="paymentProfile">payment_profile.</param>
         public PaymentProfileResponse(
-            PaymentProfileResponsePaymentProfile paymentProfile)
+            PaymentProfile paymentProfile)
         {
             this.PaymentProfile = paymentProfile;
         }
@@ -43,7 +43,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets PaymentProfile.
         /// </summary>
         [JsonProperty("payment_profile")]
-        public PaymentProfileResponsePaymentProfile PaymentProfile { get; set; }
+        public PaymentProfile PaymentProfile { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

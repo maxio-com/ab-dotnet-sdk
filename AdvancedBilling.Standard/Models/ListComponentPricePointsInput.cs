@@ -51,7 +51,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The Chargify id of the component
+        /// The Advanced Billing id of the component
         /// </summary>
         [JsonProperty("component_id")]
         public int ComponentId { get; set; }

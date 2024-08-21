@@ -24,10 +24,12 @@ namespace AdvancedBilling.Standard.Models
     {
         private Models.CreditType? upgradeCharge;
         private Models.CreditType? downgradeCredit;
+        private Models.IntervalUnit? intervalUnit;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "upgrade_charge", false },
             { "downgrade_credit", false },
+            { "interval_unit", false },
         };
 
         /// <summary>
@@ -109,7 +111,11 @@ namespace AdvancedBilling.Standard.Models
             this.AllowFractionalQuantities = allowFractionalQuantities;
             this.PublicSignupPageIds = publicSignupPageIds;
             this.Interval = interval;
-            this.IntervalUnit = intervalUnit;
+            if (intervalUnit != null)
+            {
+                this.IntervalUnit = intervalUnit;
+            }
+
         }
 
         /// <summary>
@@ -149,7 +155,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.PricingScheme PricingScheme { get; set; }
 
         /// <summary>
-        /// (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket Rules](https://chargify.zendesk.com/hc/en-us/articles/4407755865883#price-bracket-rules) for an overview of how price brackets work for different pricing schemes.
+        /// (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket Rules](https://maxio.zendesk.com/hc/en-us/articles/24261149166733-Component-Pricing-Schemes#price-bracket-rules) for an overview of how price brackets work for different pricing schemes.
         /// </summary>
         [JsonProperty("prices", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.Price> Prices { get; set; }
@@ -255,8 +261,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// A string representing the interval unit for this component's default price point, either month or day. This property is only available for sites with Multifrequency enabled.
         /// </summary>
-        [JsonProperty("interval_unit", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.IntervalUnit? IntervalUnit { get; set; }
+        [JsonProperty("interval_unit")]
+        public Models.IntervalUnit? IntervalUnit
+        {
+            get
+            {
+                return this.intervalUnit;
+            }
+
+            set
+            {
+                this.shouldSerialize["interval_unit"] = true;
+                this.intervalUnit = value;
+            }
+        }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -285,6 +303,14 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetIntervalUnit()
+        {
+            this.shouldSerialize["interval_unit"] = false;
+        }
+
+        /// <summary>
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
@@ -300,6 +326,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeDowngradeCredit()
         {
             return this.shouldSerialize["downgrade_credit"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeIntervalUnit()
+        {
+            return this.shouldSerialize["interval_unit"];
         }
 
         /// <inheritdoc/>

@@ -71,7 +71,7 @@ namespace AdvancedBilling.Standard.Models
             Models.CardType cardType,
             double expirationMonth,
             double expirationYear,
-            Models.CurrentVault currentVault,
+            Models.CreditCardVault currentVault,
             string vaultToken,
             string billingAddress,
             string billingCity,
@@ -202,7 +202,7 @@ namespace AdvancedBilling.Standard.Models
         /// The vault that stores the payment profile with the provided `vault_token`. Use `bogus` for testing.
         /// </summary>
         [JsonProperty("current_vault")]
-        public Models.CurrentVault CurrentVault { get; set; }
+        public Models.CreditCardVault CurrentVault { get; set; }
 
         /// <summary>
         /// Gets or sets VaultToken.

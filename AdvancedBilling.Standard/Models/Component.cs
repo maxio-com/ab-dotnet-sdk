@@ -37,6 +37,7 @@ namespace AdvancedBilling.Standard.Models
         private Models.ItemCategory? itemCategory;
         private bool? useSiteExchangeRate;
         private string accountingCode;
+        private Models.IntervalUnit? intervalUnit;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "handle", false },
@@ -55,6 +56,7 @@ namespace AdvancedBilling.Standard.Models
             { "item_category", false },
             { "use_site_exchange_rate", false },
             { "accounting_code", false },
+            { "interval_unit", false },
         };
 
         /// <summary>
@@ -234,7 +236,11 @@ namespace AdvancedBilling.Standard.Models
 
             this.EventBasedBillingMetricId = eventBasedBillingMetricId;
             this.Interval = interval;
-            this.IntervalUnit = intervalUnit;
+            if (intervalUnit != null)
+            {
+                this.IntervalUnit = intervalUnit;
+            }
+
         }
 
         /// <summary>
@@ -635,8 +641,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// A string representing the interval unit for this component's default price point, either month or day. This property is only available for sites with Multifrequency enabled.
         /// </summary>
-        [JsonProperty("interval_unit", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.IntervalUnit? IntervalUnit { get; set; }
+        [JsonProperty("interval_unit")]
+        public Models.IntervalUnit? IntervalUnit
+        {
+            get
+            {
+                return this.intervalUnit;
+            }
+
+            set
+            {
+                this.shouldSerialize["interval_unit"] = true;
+                this.intervalUnit = value;
+            }
+        }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -774,6 +792,14 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetAccountingCode()
         {
             this.shouldSerialize["accounting_code"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetIntervalUnit()
+        {
+            this.shouldSerialize["interval_unit"] = false;
         }
 
         /// <summary>
@@ -918,6 +944,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeAccountingCode()
         {
             return this.shouldSerialize["accounting_code"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeIntervalUnit()
+        {
+            return this.shouldSerialize["interval_unit"];
         }
 
         /// <inheritdoc/>

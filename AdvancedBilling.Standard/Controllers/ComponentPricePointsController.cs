@@ -36,11 +36,11 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// Sets a new default price point for the component. This new default will apply to all new subscriptions going forward - existing subscriptions will remain on their current price point.
-        /// See [Price Points Documentation](https://chargify.zendesk.com/hc/en-us/articles/4407755865883#price-points) for more information on price points and moving subscriptions between price points.
+        /// See [Price Points Documentation](https://maxio.zendesk.com/hc/en-us/articles/24261191737101-Price-Points-Components) for more information on price points and moving subscriptions between price points.
         /// Note: Custom price points are not able to be set as the default for a component.
         /// </summary>
-        /// <param name="componentId">Required parameter: The Chargify id of the component to which the price point belongs.</param>
-        /// <param name="pricePointId">Required parameter: The Chargify id of the price point.</param>
+        /// <param name="componentId">Required parameter: The Advanced Billing id of the component to which the price point belongs.</param>
+        /// <param name="pricePointId">Required parameter: The Advanced Billing id of the price point.</param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
         public Models.ComponentResponse PromoteComponentPricePointToDefault(
                 int componentId,
@@ -49,11 +49,11 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// Sets a new default price point for the component. This new default will apply to all new subscriptions going forward - existing subscriptions will remain on their current price point.
-        /// See [Price Points Documentation](https://chargify.zendesk.com/hc/en-us/articles/4407755865883#price-points) for more information on price points and moving subscriptions between price points.
+        /// See [Price Points Documentation](https://maxio.zendesk.com/hc/en-us/articles/24261191737101-Price-Points-Components) for more information on price points and moving subscriptions between price points.
         /// Note: Custom price points are not able to be set as the default for a component.
         /// </summary>
-        /// <param name="componentId">Required parameter: The Chargify id of the component to which the price point belongs.</param>
-        /// <param name="pricePointId">Required parameter: The Chargify id of the price point.</param>
+        /// <param name="componentId">Required parameter: The Advanced Billing id of the component to which the price point belongs.</param>
+        /// <param name="pricePointId">Required parameter: The Advanced Billing id of the price point.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
         public async Task<Models.ComponentResponse> PromoteComponentPricePointToDefaultAsync(
@@ -72,7 +72,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// This endpoint can be used to create a new price point for an existing component.
         /// </summary>
-        /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
+        /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.ComponentPricePointResponse response from the API call.</returns>
         public Models.ComponentPricePointResponse CreateComponentPricePoint(
@@ -83,7 +83,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// This endpoint can be used to create a new price point for an existing component.
         /// </summary>
-        /// <param name="componentId">Required parameter: The Chargify id of the component.</param>
+        /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentPricePointResponse response from the API call.</returns>
@@ -140,7 +140,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Use this endpoint to create multiple component price points in one request.
         /// </summary>
-        /// <param name="componentId">Required parameter: The Chargify id of the component for which you want to fetch price points..</param>
+        /// <param name="componentId">Required parameter: The Advanced Billing id of the component for which you want to fetch price points..</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.ComponentPricePointsResponse response from the API call.</returns>
         public Models.ComponentPricePointsResponse BulkCreateComponentPricePoints(
@@ -151,7 +151,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Use this endpoint to create multiple component price points in one request.
         /// </summary>
-        /// <param name="componentId">Required parameter: The Chargify id of the component for which you want to fetch price points..</param>
+        /// <param name="componentId">Required parameter: The Advanced Billing id of the component for which you want to fetch price points..</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentPricePointsResponse response from the API call.</returns>
@@ -281,8 +281,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Use this endpoint to unarchive a component price point.
         /// </summary>
-        /// <param name="componentId">Required parameter: The Chargify id of the component to which the price point belongs.</param>
-        /// <param name="pricePointId">Required parameter: The Chargify id of the price point.</param>
+        /// <param name="componentId">Required parameter: The Advanced Billing id of the component to which the price point belongs.</param>
+        /// <param name="pricePointId">Required parameter: The Advanced Billing id of the price point.</param>
         /// <returns>Returns the Models.ComponentPricePointResponse response from the API call.</returns>
         public Models.ComponentPricePointResponse UnarchiveComponentPricePoint(
                 int componentId,
@@ -292,8 +292,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Use this endpoint to unarchive a component price point.
         /// </summary>
-        /// <param name="componentId">Required parameter: The Chargify id of the component to which the price point belongs.</param>
-        /// <param name="pricePointId">Required parameter: The Chargify id of the price point.</param>
+        /// <param name="componentId">Required parameter: The Advanced Billing id of the component to which the price point belongs.</param>
+        /// <param name="pricePointId">Required parameter: The Advanced Billing id of the price point.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentPricePointResponse response from the API call.</returns>
         public async Task<Models.ComponentPricePointResponse> UnarchiveComponentPricePointAsync(
@@ -314,7 +314,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// When creating currency prices, they need to mirror the structure of your primary pricing. For each price level defined on the component price point, there should be a matching price level created in the given currency.
         /// Note: Currency Prices are not able to be created for custom price points.
         /// </summary>
-        /// <param name="pricePointId">Required parameter: The Chargify id of the price point.</param>
+        /// <param name="pricePointId">Required parameter: The Advanced Billing id of the price point.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.ComponentCurrencyPricesResponse response from the API call.</returns>
         public Models.ComponentCurrencyPricesResponse CreateCurrencyPrices(
@@ -327,7 +327,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// When creating currency prices, they need to mirror the structure of your primary pricing. For each price level defined on the component price point, there should be a matching price level created in the given currency.
         /// Note: Currency Prices are not able to be created for custom price points.
         /// </summary>
-        /// <param name="pricePointId">Required parameter: The Chargify id of the price point.</param>
+        /// <param name="pricePointId">Required parameter: The Advanced Billing id of the price point.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentCurrencyPricesResponse response from the API call.</returns>
@@ -351,7 +351,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// This endpoint allows you to update currency prices for a given currency that has been defined on the site level in your settings.
         /// Note: Currency Prices are not able to be updated for custom price points.
         /// </summary>
-        /// <param name="pricePointId">Required parameter: The Chargify id of the price point.</param>
+        /// <param name="pricePointId">Required parameter: The Advanced Billing id of the price point.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.ComponentCurrencyPricesResponse response from the API call.</returns>
         public Models.ComponentCurrencyPricesResponse UpdateCurrencyPrices(
@@ -363,7 +363,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// This endpoint allows you to update currency prices for a given currency that has been defined on the site level in your settings.
         /// Note: Currency Prices are not able to be updated for custom price points.
         /// </summary>
-        /// <param name="pricePointId">Required parameter: The Chargify id of the price point.</param>
+        /// <param name="pricePointId">Required parameter: The Advanced Billing id of the price point.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentCurrencyPricesResponse response from the API call.</returns>

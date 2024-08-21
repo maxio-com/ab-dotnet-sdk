@@ -14,7 +14,7 @@
 | `ExpirationYear` | [`SubscriptionGroupCreditCardExpirationYear`](../../doc/models/containers/subscription-group-credit-card-expiration-year.md) | Optional | This is a container for one-of cases. |
 | `ChargifyToken` | `string` | Optional | - |
 | `VaultToken` | `string` | Optional | - |
-| `CurrentVault` | [`CurrentVault?`](../../doc/models/current-vault.md) | Optional | The vault that stores the payment profile with the provided `vault_token`. Use `bogus` for testing. |
+| `CurrentVault` | [`CreditCardVault?`](../../doc/models/credit-card-vault.md) | Optional | The vault that stores the payment profile with the provided `vault_token`. Use `bogus` for testing. |
 | `GatewayHandle` | `string` | Optional | - |
 | `FirstName` | `string` | Optional | - |
 | `LastName` | `string` | Optional | - |

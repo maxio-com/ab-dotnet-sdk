@@ -45,7 +45,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The Chargify id of the coupon
+        /// The Advanced Billing id of the coupon
         /// </summary>
         [JsonProperty("coupon_id")]
         public int CouponId { get; set; }

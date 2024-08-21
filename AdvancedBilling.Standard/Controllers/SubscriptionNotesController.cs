@@ -37,7 +37,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ## How to Use Subscription Notes.
         /// Notes allow you to record information about a particular Subscription in a free text format.
         /// If you have structured data such as birth date, color, etc., consider using Metadata instead.
-        /// Full documentation on how to use Notes in the Chargify UI can be located [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404434903181-Subscription-Summary#notes).
+        /// Full documentation on how to use Notes in the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24251712214413-Subscription-Summary-Overview).
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="body">Optional parameter: Example: .</param>
@@ -52,7 +52,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ## How to Use Subscription Notes.
         /// Notes allow you to record information about a particular Subscription in a free text format.
         /// If you have structured data such as birth date, color, etc., consider using Metadata instead.
-        /// Full documentation on how to use Notes in the Chargify UI can be located [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404434903181-Subscription-Summary#notes).
+        /// Full documentation on how to use Notes in the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24251712214413-Subscription-Summary-Overview).
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="body">Optional parameter: Example: .</param>
@@ -104,7 +104,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Once you have obtained the ID of the note you wish to read, use this method to show a particular note attached to a subscription.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="noteId">Required parameter: The Chargify id of the note.</param>
+        /// <param name="noteId">Required parameter: The Advanced Billing id of the note.</param>
         /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
         public Models.SubscriptionNoteResponse ReadSubscriptionNote(
                 int subscriptionId,
@@ -115,7 +115,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Once you have obtained the ID of the note you wish to read, use this method to show a particular note attached to a subscription.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="noteId">Required parameter: The Chargify id of the note.</param>
+        /// <param name="noteId">Required parameter: The Advanced Billing id of the note.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
         public async Task<Models.SubscriptionNoteResponse> ReadSubscriptionNoteAsync(
@@ -135,7 +135,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Use the following method to update a note for a Subscription.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="noteId">Required parameter: The Chargify id of the note.</param>
+        /// <param name="noteId">Required parameter: The Advanced Billing id of the note.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
         public Models.SubscriptionNoteResponse UpdateSubscriptionNote(
@@ -148,7 +148,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Use the following method to update a note for a Subscription.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="noteId">Required parameter: The Chargify id of the note.</param>
+        /// <param name="noteId">Required parameter: The Advanced Billing id of the note.</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
@@ -172,7 +172,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Use the following method to delete a note for a Subscription.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="noteId">Required parameter: The Chargify id of the note.</param>
+        /// <param name="noteId">Required parameter: The Advanced Billing id of the note.</param>
         public void DeleteSubscriptionNote(
                 int subscriptionId,
                 int noteId)
@@ -182,7 +182,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Use the following method to delete a note for a Subscription.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="noteId">Required parameter: The Chargify id of the note.</param>
+        /// <param name="noteId">Required parameter: The Advanced Billing id of the note.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the void response from the API call.</returns>
         public async Task DeleteSubscriptionNoteAsync(

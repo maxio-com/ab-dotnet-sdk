@@ -29,7 +29,7 @@ namespace AdvancedBilling.Standard.Models
         private long? initialChargeInCents;
         private bool? initialChargeAfterTrial;
         private int? expirationInterval;
-        private Models.IntervalUnit? expirationIntervalUnit;
+        private Models.ExpirationIntervalUnit? expirationIntervalUnit;
         private DateTimeOffset? archivedAt;
         private int? subscriptionId;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -96,7 +96,7 @@ namespace AdvancedBilling.Standard.Models
             long? initialChargeInCents = null,
             bool? initialChargeAfterTrial = null,
             int? expirationInterval = null,
-            Models.IntervalUnit? expirationIntervalUnit = null,
+            Models.ExpirationIntervalUnit? expirationIntervalUnit = null,
             int? productId = null,
             DateTimeOffset? archivedAt = null,
             DateTimeOffset? createdAt = null,
@@ -358,10 +358,10 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// A string representing the expiration interval unit for this product price point, either month or day
+        /// A string representing the expiration interval unit for this product price point, either month, day or never
         /// </summary>
         [JsonProperty("expiration_interval_unit")]
-        public Models.IntervalUnit? ExpirationIntervalUnit
+        public Models.ExpirationIntervalUnit? ExpirationIntervalUnit
         {
             get
             {

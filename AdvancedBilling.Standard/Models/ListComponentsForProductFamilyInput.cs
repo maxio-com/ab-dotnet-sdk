@@ -66,7 +66,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The Chargify id of the product family
+        /// The Advanced Billing id of the product family
         /// </summary>
         [JsonProperty("product_family_id")]
         public int ProductFamilyId { get; set; }

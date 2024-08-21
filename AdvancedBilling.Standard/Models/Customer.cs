@@ -41,6 +41,7 @@ namespace AdvancedBilling.Standard.Models
         private int? parentId;
         private string locale;
         private string defaultSubscriptionGroupUid;
+        private string salesforceId;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "cc_emails", false },
@@ -63,6 +64,7 @@ namespace AdvancedBilling.Standard.Models
             { "parent_id", false },
             { "locale", false },
             { "default_subscription_group_uid", false },
+            { "salesforce_id", false },
         };
 
         /// <summary>
@@ -102,6 +104,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="parentId">parent_id.</param>
         /// <param name="locale">locale.</param>
         /// <param name="defaultSubscriptionGroupUid">default_subscription_group_uid.</param>
+        /// <param name="salesforceId">salesforce_id.</param>
         public Customer(
             string firstName = null,
             string lastName = null,
@@ -129,7 +132,8 @@ namespace AdvancedBilling.Standard.Models
             string vatNumber = null,
             int? parentId = null,
             string locale = null,
-            string defaultSubscriptionGroupUid = null)
+            string defaultSubscriptionGroupUid = null,
+            string salesforceId = null)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
@@ -236,6 +240,11 @@ namespace AdvancedBilling.Standard.Models
             if (defaultSubscriptionGroupUid != null)
             {
                 this.DefaultSubscriptionGroupUid = defaultSubscriptionGroupUid;
+            }
+
+            if (salesforceId != null)
+            {
+                this.SalesforceId = salesforceId;
             }
 
         }
@@ -647,6 +656,24 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// The Salesforce ID for the customer
+        /// </summary>
+        [JsonProperty("salesforce_id")]
+        public string SalesforceId
+        {
+            get
+            {
+                return this.salesforceId;
+            }
+
+            set
+            {
+                this.shouldSerialize["salesforce_id"] = true;
+                this.salesforceId = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -815,6 +842,14 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetDefaultSubscriptionGroupUid()
         {
             this.shouldSerialize["default_subscription_group_uid"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetSalesforceId()
+        {
+            this.shouldSerialize["salesforce_id"] = false;
         }
 
         /// <summary>
@@ -997,6 +1032,15 @@ namespace AdvancedBilling.Standard.Models
             return this.shouldSerialize["default_subscription_group_uid"];
         }
 
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeSalesforceId()
+        {
+            return this.shouldSerialize["salesforce_id"];
+        }
+
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
@@ -1035,7 +1079,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.VatNumber == null && other.VatNumber == null) || (this.VatNumber?.Equals(other.VatNumber) == true)) &&
                 ((this.ParentId == null && other.ParentId == null) || (this.ParentId?.Equals(other.ParentId) == true)) &&
                 ((this.Locale == null && other.Locale == null) || (this.Locale?.Equals(other.Locale) == true)) &&
-                ((this.DefaultSubscriptionGroupUid == null && other.DefaultSubscriptionGroupUid == null) || (this.DefaultSubscriptionGroupUid?.Equals(other.DefaultSubscriptionGroupUid) == true));
+                ((this.DefaultSubscriptionGroupUid == null && other.DefaultSubscriptionGroupUid == null) || (this.DefaultSubscriptionGroupUid?.Equals(other.DefaultSubscriptionGroupUid) == true)) &&
+                ((this.SalesforceId == null && other.SalesforceId == null) || (this.SalesforceId?.Equals(other.SalesforceId) == true));
         }
         
         /// <summary>
@@ -1071,6 +1116,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ParentId = {(this.ParentId == null ? "null" : this.ParentId.ToString())}");
             toStringOutput.Add($"this.Locale = {(this.Locale == null ? "null" : this.Locale)}");
             toStringOutput.Add($"this.DefaultSubscriptionGroupUid = {(this.DefaultSubscriptionGroupUid == null ? "null" : this.DefaultSubscriptionGroupUid)}");
+            toStringOutput.Add($"this.SalesforceId = {(this.SalesforceId == null ? "null" : this.SalesforceId)}");
 
             base.ToString(toStringOutput);
         }

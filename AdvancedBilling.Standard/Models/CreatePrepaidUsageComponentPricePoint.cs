@@ -21,6 +21,12 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class CreatePrepaidUsageComponentPricePoint : BaseModel
     {
+        private Models.ExpirationIntervalUnit? expirationIntervalUnit;
+        private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
+        {
+            { "expiration_interval_unit", false },
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CreatePrepaidUsageComponentPricePoint"/> class.
         /// </summary>
@@ -51,7 +57,7 @@ namespace AdvancedBilling.Standard.Models
             bool? rolloverPrepaidRemainder = null,
             bool? renewPrepaidAllocation = null,
             double? expirationInterval = null,
-            Models.IntervalUnit? expirationIntervalUnit = null)
+            Models.ExpirationIntervalUnit? expirationIntervalUnit = null)
         {
             this.Name = name;
             this.Handle = handle;
@@ -62,7 +68,11 @@ namespace AdvancedBilling.Standard.Models
             this.RolloverPrepaidRemainder = rolloverPrepaidRemainder;
             this.RenewPrepaidAllocation = renewPrepaidAllocation;
             this.ExpirationInterval = expirationInterval;
-            this.ExpirationIntervalUnit = expirationIntervalUnit;
+            if (expirationIntervalUnit != null)
+            {
+                this.ExpirationIntervalUnit = expirationIntervalUnit;
+            }
+
         }
 
         /// <summary>
@@ -126,10 +136,22 @@ namespace AdvancedBilling.Standard.Models
         public double? ExpirationInterval { get; set; }
 
         /// <summary>
-        /// Gets or sets ExpirationIntervalUnit.
+        /// A string representing the expiration interval unit for this component, either month or day
         /// </summary>
-        [JsonProperty("expiration_interval_unit", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.IntervalUnit? ExpirationIntervalUnit { get; set; }
+        [JsonProperty("expiration_interval_unit")]
+        public Models.ExpirationIntervalUnit? ExpirationIntervalUnit
+        {
+            get
+            {
+                return this.expirationIntervalUnit;
+            }
+
+            set
+            {
+                this.shouldSerialize["expiration_interval_unit"] = true;
+                this.expirationIntervalUnit = value;
+            }
+        }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -139,6 +161,23 @@ namespace AdvancedBilling.Standard.Models
             this.ToString(toStringOutput);
 
             return $"CreatePrepaidUsageComponentPricePoint : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetExpirationIntervalUnit()
+        {
+            this.shouldSerialize["expiration_interval_unit"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeExpirationIntervalUnit()
+        {
+            return this.shouldSerialize["expiration_interval_unit"];
         }
 
         /// <inheritdoc/>

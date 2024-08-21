@@ -22,6 +22,12 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class SubscriptionCustomPrice : BaseModel
     {
+        private Models.ExpirationIntervalUnit? expirationIntervalUnit;
+        private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
+        {
+            { "expiration_interval_unit", false },
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionCustomPrice"/> class.
         /// </summary>
@@ -34,9 +40,9 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         /// <param name="priceInCents">price_in_cents.</param>
         /// <param name="interval">interval.</param>
-        /// <param name="intervalUnit">interval_unit.</param>
         /// <param name="name">name.</param>
         /// <param name="handle">handle.</param>
+        /// <param name="intervalUnit">interval_unit.</param>
         /// <param name="trialPriceInCents">trial_price_in_cents.</param>
         /// <param name="trialInterval">trial_interval.</param>
         /// <param name="trialIntervalUnit">trial_interval_unit.</param>
@@ -48,16 +54,16 @@ namespace AdvancedBilling.Standard.Models
         public SubscriptionCustomPrice(
             SubscriptionCustomPricePriceInCents priceInCents,
             SubscriptionCustomPriceInterval interval,
-            Models.IntervalUnit intervalUnit,
             string name = null,
             string handle = null,
+            Models.IntervalUnit? intervalUnit = null,
             SubscriptionCustomPriceTrialPriceInCents trialPriceInCents = null,
             SubscriptionCustomPriceTrialInterval trialInterval = null,
             Models.IntervalUnit? trialIntervalUnit = null,
             SubscriptionCustomPriceInitialChargeInCents initialChargeInCents = null,
             bool? initialChargeAfterTrial = null,
             SubscriptionCustomPriceExpirationInterval expirationInterval = null,
-            Models.IntervalUnit? expirationIntervalUnit = null,
+            Models.ExpirationIntervalUnit? expirationIntervalUnit = null,
             bool? taxIncluded = null)
         {
             this.Name = name;
@@ -71,7 +77,11 @@ namespace AdvancedBilling.Standard.Models
             this.InitialChargeInCents = initialChargeInCents;
             this.InitialChargeAfterTrial = initialChargeAfterTrial;
             this.ExpirationInterval = expirationInterval;
-            this.ExpirationIntervalUnit = expirationIntervalUnit;
+            if (expirationIntervalUnit != null)
+            {
+                this.ExpirationIntervalUnit = expirationIntervalUnit;
+            }
+
             this.TaxIncluded = taxIncluded;
         }
 
@@ -102,8 +112,8 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Required if using `custom_price` attribute.
         /// </summary>
-        [JsonProperty("interval_unit")]
-        public Models.IntervalUnit IntervalUnit { get; set; }
+        [JsonProperty("interval_unit", NullValueHandling = NullValueHandling.Include)]
+        public Models.IntervalUnit? IntervalUnit { get; set; }
 
         /// <summary>
         /// (Optional)
@@ -144,8 +154,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// (Optional)
         /// </summary>
-        [JsonProperty("expiration_interval_unit", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.IntervalUnit? ExpirationIntervalUnit { get; set; }
+        [JsonProperty("expiration_interval_unit")]
+        public Models.ExpirationIntervalUnit? ExpirationIntervalUnit
+        {
+            get
+            {
+                return this.expirationIntervalUnit;
+            }
+
+            set
+            {
+                this.shouldSerialize["expiration_interval_unit"] = true;
+                this.expirationIntervalUnit = value;
+            }
+        }
 
         /// <summary>
         /// (Optional)
@@ -161,6 +183,23 @@ namespace AdvancedBilling.Standard.Models
             this.ToString(toStringOutput);
 
             return $"SubscriptionCustomPrice : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetExpirationIntervalUnit()
+        {
+            this.shouldSerialize["expiration_interval_unit"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeExpirationIntervalUnit()
+        {
+            return this.shouldSerialize["expiration_interval_unit"];
         }
 
         /// <inheritdoc/>
@@ -179,7 +218,7 @@ namespace AdvancedBilling.Standard.Models
                 ((this.Handle == null && other.Handle == null) || (this.Handle?.Equals(other.Handle) == true)) &&
                 ((this.PriceInCents == null && other.PriceInCents == null) || (this.PriceInCents?.Equals(other.PriceInCents) == true)) &&
                 ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
-                this.IntervalUnit.Equals(other.IntervalUnit) &&
+                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true)) &&
                 ((this.TrialPriceInCents == null && other.TrialPriceInCents == null) || (this.TrialPriceInCents?.Equals(other.TrialPriceInCents) == true)) &&
                 ((this.TrialInterval == null && other.TrialInterval == null) || (this.TrialInterval?.Equals(other.TrialInterval) == true)) &&
                 ((this.TrialIntervalUnit == null && other.TrialIntervalUnit == null) || (this.TrialIntervalUnit?.Equals(other.TrialIntervalUnit) == true)) &&
@@ -200,7 +239,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
             toStringOutput.Add($"PriceInCents = {(this.PriceInCents == null ? "null" : this.PriceInCents.ToString())}");
             toStringOutput.Add($"Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
-            toStringOutput.Add($"this.IntervalUnit = {this.IntervalUnit}");
+            toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
             toStringOutput.Add($"TrialPriceInCents = {(this.TrialPriceInCents == null ? "null" : this.TrialPriceInCents.ToString())}");
             toStringOutput.Add($"TrialInterval = {(this.TrialInterval == null ? "null" : this.TrialInterval.ToString())}");
             toStringOutput.Add($"this.TrialIntervalUnit = {(this.TrialIntervalUnit == null ? "null" : this.TrialIntervalUnit.ToString())}");

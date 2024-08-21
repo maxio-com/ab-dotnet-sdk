@@ -1,4 +1,4 @@
-// <copyright file="ExtendedIntervalUnit.cs" company="APIMatic">
+// <copyright file="ApplePayVault.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
 namespace AdvancedBilling.Standard.Models
@@ -13,28 +13,16 @@ namespace AdvancedBilling.Standard.Models
     using Newtonsoft.Json;
 
     /// <summary>
-    /// ExtendedIntervalUnit.
+    /// ApplePayVault.
     /// </summary>
 
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum ExtendedIntervalUnit
+    public enum ApplePayVault
     {
         /// <summary>
-        /// Day.
+        /// BraintreeBlue.
         /// </summary>
-        [EnumMember(Value = "day")]
-        Day,
-
-        /// <summary>
-        /// Month.
-        /// </summary>
-        [EnumMember(Value = "month")]
-        Month,
-
-        /// <summary>
-        /// Never.
-        /// </summary>
-        [EnumMember(Value = "never")]
-        Never
+        [EnumMember(Value = "braintree_blue")]
+        BraintreeBlue
     }
 }

@@ -19,12 +19,12 @@ namespace AdvancedBilling.Standard
         Environment Environment { get; }
 
         /// <summary>
-        /// Gets The subdomain for your Chargify site.
+        /// Gets The subdomain for your Advanced Billing site.
         /// </summary>
         string Subdomain { get; }
 
         /// <summary>
-        /// Gets The Chargify server domain.
+        /// Gets The Advanced Billing server domain.
         /// </summary>
         string Domain { get; }
 

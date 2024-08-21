@@ -95,7 +95,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.WebhookOrder? Order { get; set; }
 
         /// <summary>
-        /// The Chargify id of a subscription you'd like to filter for
+        /// The Advanced Billing id of a subscription you'd like to filter for
         /// </summary>
         [JsonProperty("subscription", NullValueHandling = NullValueHandling.Ignore)]
         public int? Subscription { get; set; }

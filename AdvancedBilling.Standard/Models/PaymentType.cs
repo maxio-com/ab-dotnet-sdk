@@ -35,6 +35,12 @@ namespace AdvancedBilling.Standard.Models
         /// PaypalAccount.
         /// </summary>
         [EnumMember(Value = "paypal_account")]
-        PaypalAccount
+        PaypalAccount,
+
+        /// <summary>
+        /// ApplePay.
+        /// </summary>
+        [EnumMember(Value = "apple_pay")]
+        ApplePay
     }
 }

@@ -1,4 +1,4 @@
-// <copyright file="CurrentVault.cs" company="APIMatic">
+// <copyright file="AllVaults.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
 namespace AdvancedBilling.Standard.Models
@@ -13,11 +13,11 @@ namespace AdvancedBilling.Standard.Models
     using Newtonsoft.Json;
 
     /// <summary>
-    /// CurrentVault.
+    /// AllVaults.
     /// </summary>
 
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum CurrentVault
+    public enum AllVaults
     {
         /// <summary>
         /// Adyen.
@@ -30,12 +30,6 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [EnumMember(Value = "authorizenet")]
         Authorizenet,
-
-        /// <summary>
-        /// Avalara.
-        /// </summary>
-        [EnumMember(Value = "avalara")]
-        Avalara,
 
         /// <summary>
         /// Beanstream.
@@ -54,6 +48,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [EnumMember(Value = "bogus")]
         Bogus,
+
+        /// <summary>
+        /// Braintree1.
+        /// </summary>
+        [EnumMember(Value = "braintree1")]
+        Braintree1,
 
         /// <summary>
         /// BraintreeBlue.
@@ -84,6 +84,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [EnumMember(Value = "eway")]
         Eway,
+
+        /// <summary>
+        /// EwayRapid.
+        /// </summary>
+        [EnumMember(Value = "eway_rapid")]
+        EwayRapid,
 
         /// <summary>
         /// EwayRapidStd.
@@ -122,6 +128,12 @@ namespace AdvancedBilling.Standard.Models
         MaxioPayments,
 
         /// <summary>
+        /// Maxp.
+        /// </summary>
+        [EnumMember(Value = "maxp")]
+        Maxp,
+
+        /// <summary>
         /// Moduslink.
         /// </summary>
         [EnumMember(Value = "moduslink")]
@@ -152,6 +164,24 @@ namespace AdvancedBilling.Standard.Models
         PaymentExpress,
 
         /// <summary>
+        /// Paymill.
+        /// </summary>
+        [EnumMember(Value = "paymill")]
+        Paymill,
+
+        /// <summary>
+        /// Paypal.
+        /// </summary>
+        [EnumMember(Value = "paypal")]
+        Paypal,
+
+        /// <summary>
+        /// PaypalComplete.
+        /// </summary>
+        [EnumMember(Value = "paypal_complete")]
+        PaypalComplete,
+
+        /// <summary>
         /// Pin.
         /// </summary>
         [EnumMember(Value = "pin")]
@@ -162,6 +192,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [EnumMember(Value = "square")]
         Square,
+
+        /// <summary>
+        /// Stripe.
+        /// </summary>
+        [EnumMember(Value = "stripe")]
+        Stripe,
 
         /// <summary>
         /// StripeConnect.
@@ -179,6 +215,12 @@ namespace AdvancedBilling.Standard.Models
         /// Unipaas.
         /// </summary>
         [EnumMember(Value = "unipaas")]
-        Unipaas
+        Unipaas,
+
+        /// <summary>
+        /// Wirecard.
+        /// </summary>
+        [EnumMember(Value = "wirecard")]
+        Wirecard
     }
 }

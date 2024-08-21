@@ -28,7 +28,8 @@ namespace AdvancedBillingTests.Utils
                 await client.PaymentProfilesController.CreatePaymentProfileAsync(
                     new CreatePaymentProfileRequest(paymentProfile));
 
-            var paymentProfileId = paymentProfileResponse.PaymentProfile.Match(x => x.Id, y => y.Id);
+            var paymentProfileId = paymentProfileResponse.PaymentProfile.Match(applePayPP => applePayPP.Id,
+                bankAccountPP => bankAccountPP.Id, creditCardPP => creditCardPP.Id, payPalPP => payPalPP.Id);
 
             paymentProfileId.Should().NotBeNull();
 

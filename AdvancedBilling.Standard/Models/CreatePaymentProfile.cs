@@ -87,7 +87,7 @@ namespace AdvancedBilling.Standard.Models
             string billingState = null,
             string billingCountry = null,
             string billingZip = null,
-            Models.CurrentVault? currentVault = null,
+            Models.AllVaults? currentVault = null,
             string vaultToken = null,
             string customerVaultToken = null,
             int? customerId = null,
@@ -254,7 +254,7 @@ namespace AdvancedBilling.Standard.Models
         /// The vault that stores the payment profile with the provided `vault_token`. Use `bogus` for testing.
         /// </summary>
         [JsonProperty("current_vault", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.CurrentVault? CurrentVault { get; set; }
+        public Models.AllVaults? CurrentVault { get; set; }
 
         /// <summary>
         /// The “token” provided by your vault storage for an already stored payment profile

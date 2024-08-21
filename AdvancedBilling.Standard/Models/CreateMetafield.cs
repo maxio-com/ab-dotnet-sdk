@@ -67,7 +67,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.MetafieldInput? InputType { get; set; }
 
         /// <summary>
-        /// Only applicable when input_type is radio or dropdown
+        /// Only applicable when input_type is radio or dropdown. Empty strings will not be submitted.
         /// </summary>
         [JsonConverter(typeof(CoreListConverter), typeof(JsonStringConverter))]
         [JsonProperty("enum", NullValueHandling = NullValueHandling.Ignore)]

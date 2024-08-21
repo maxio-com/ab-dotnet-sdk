@@ -22,9 +22,11 @@ namespace AdvancedBilling.Standard.Models
     public class CreateCustomer : BaseModel
     {
         private int? parentId;
+        private string salesforceId;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "parent_id", false },
+            { "salesforce_id", false },
         };
 
         /// <summary>
@@ -55,6 +57,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="taxExempt">tax_exempt.</param>
         /// <param name="taxExemptReason">tax_exempt_reason.</param>
         /// <param name="parentId">parent_id.</param>
+        /// <param name="salesforceId">salesforce_id.</param>
         public CreateCustomer(
             string firstName,
             string lastName,
@@ -73,7 +76,8 @@ namespace AdvancedBilling.Standard.Models
             string vatNumber = null,
             bool? taxExempt = null,
             string taxExemptReason = null,
-            int? parentId = null)
+            int? parentId = null,
+            string salesforceId = null)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
@@ -95,6 +99,11 @@ namespace AdvancedBilling.Standard.Models
             if (parentId != null)
             {
                 this.ParentId = parentId;
+            }
+
+            if (salesforceId != null)
+            {
+                this.SalesforceId = salesforceId;
             }
 
         }
@@ -219,6 +228,24 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// The Salesforce ID of the customer
+        /// </summary>
+        [JsonProperty("salesforce_id")]
+        public string SalesforceId
+        {
+            get
+            {
+                return this.salesforceId;
+            }
+
+            set
+            {
+                this.shouldSerialize["salesforce_id"] = true;
+                this.salesforceId = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -238,12 +265,29 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetSalesforceId()
+        {
+            this.shouldSerialize["salesforce_id"] = false;
+        }
+
+        /// <summary>
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
         public bool ShouldSerializeParentId()
         {
             return this.shouldSerialize["parent_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeSalesforceId()
+        {
+            return this.shouldSerialize["salesforce_id"];
         }
 
         /// <inheritdoc/>
@@ -275,7 +319,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.VatNumber == null && other.VatNumber == null) || (this.VatNumber?.Equals(other.VatNumber) == true)) &&
                 ((this.TaxExempt == null && other.TaxExempt == null) || (this.TaxExempt?.Equals(other.TaxExempt) == true)) &&
                 ((this.TaxExemptReason == null && other.TaxExemptReason == null) || (this.TaxExemptReason?.Equals(other.TaxExemptReason) == true)) &&
-                ((this.ParentId == null && other.ParentId == null) || (this.ParentId?.Equals(other.ParentId) == true));
+                ((this.ParentId == null && other.ParentId == null) || (this.ParentId?.Equals(other.ParentId) == true)) &&
+                ((this.SalesforceId == null && other.SalesforceId == null) || (this.SalesforceId?.Equals(other.SalesforceId) == true));
         }
         
         /// <summary>
@@ -302,6 +347,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.TaxExempt = {(this.TaxExempt == null ? "null" : this.TaxExempt.ToString())}");
             toStringOutput.Add($"this.TaxExemptReason = {(this.TaxExemptReason == null ? "null" : this.TaxExemptReason)}");
             toStringOutput.Add($"this.ParentId = {(this.ParentId == null ? "null" : this.ParentId.ToString())}");
+            toStringOutput.Add($"this.SalesforceId = {(this.SalesforceId == null ? "null" : this.SalesforceId)}");
 
             base.ToString(toStringOutput);
         }
