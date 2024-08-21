@@ -23,10 +23,12 @@ namespace AdvancedBilling.Standard.Models
     {
         private int? parentId;
         private bool? verified;
+        private string salesforceId;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "parent_id", false },
             { "verified", false },
+            { "salesforce_id", false },
         };
 
         /// <summary>
@@ -58,6 +60,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="taxExemptReason">tax_exempt_reason.</param>
         /// <param name="parentId">parent_id.</param>
         /// <param name="verified">verified.</param>
+        /// <param name="salesforceId">salesforce_id.</param>
         public UpdateCustomer(
             string firstName = null,
             string lastName = null,
@@ -77,7 +80,8 @@ namespace AdvancedBilling.Standard.Models
             bool? taxExempt = null,
             string taxExemptReason = null,
             int? parentId = null,
-            bool? verified = null)
+            bool? verified = null,
+            string salesforceId = null)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
@@ -104,6 +108,11 @@ namespace AdvancedBilling.Standard.Models
             if (verified != null)
             {
                 this.Verified = verified;
+            }
+
+            if (salesforceId != null)
+            {
+                this.SalesforceId = salesforceId;
             }
 
         }
@@ -246,6 +255,24 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// The Salesforce ID of the customer
+        /// </summary>
+        [JsonProperty("salesforce_id")]
+        public string SalesforceId
+        {
+            get
+            {
+                return this.salesforceId;
+            }
+
+            set
+            {
+                this.shouldSerialize["salesforce_id"] = true;
+                this.salesforceId = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -273,6 +300,14 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetSalesforceId()
+        {
+            this.shouldSerialize["salesforce_id"] = false;
+        }
+
+        /// <summary>
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
@@ -288,6 +323,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeVerified()
         {
             return this.shouldSerialize["verified"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeSalesforceId()
+        {
+            return this.shouldSerialize["salesforce_id"];
         }
 
         /// <inheritdoc/>
@@ -320,7 +364,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.TaxExempt == null && other.TaxExempt == null) || (this.TaxExempt?.Equals(other.TaxExempt) == true)) &&
                 ((this.TaxExemptReason == null && other.TaxExemptReason == null) || (this.TaxExemptReason?.Equals(other.TaxExemptReason) == true)) &&
                 ((this.ParentId == null && other.ParentId == null) || (this.ParentId?.Equals(other.ParentId) == true)) &&
-                ((this.Verified == null && other.Verified == null) || (this.Verified?.Equals(other.Verified) == true));
+                ((this.Verified == null && other.Verified == null) || (this.Verified?.Equals(other.Verified) == true)) &&
+                ((this.SalesforceId == null && other.SalesforceId == null) || (this.SalesforceId?.Equals(other.SalesforceId) == true));
         }
         
         /// <summary>
@@ -348,6 +393,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.TaxExemptReason = {(this.TaxExemptReason == null ? "null" : this.TaxExemptReason)}");
             toStringOutput.Add($"this.ParentId = {(this.ParentId == null ? "null" : this.ParentId.ToString())}");
             toStringOutput.Add($"this.Verified = {(this.Verified == null ? "null" : this.Verified.ToString())}");
+            toStringOutput.Add($"this.SalesforceId = {(this.SalesforceId == null ? "null" : this.SalesforceId)}");
 
             base.ToString(toStringOutput);
         }

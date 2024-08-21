@@ -23,10 +23,12 @@ namespace AdvancedBilling.Standard.Models
     {
         private string address2;
         private int? parentId;
+        private string salesforceId;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "address_2", false },
             { "parent_id", false },
+            { "salesforce_id", false },
         };
 
         /// <summary>
@@ -57,6 +59,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="vatNumber">vat_number.</param>
         /// <param name="metafields">metafields.</param>
         /// <param name="parentId">parent_id.</param>
+        /// <param name="salesforceId">salesforce_id.</param>
         public CustomerAttributes(
             string firstName = null,
             string lastName = null,
@@ -75,7 +78,8 @@ namespace AdvancedBilling.Standard.Models
             bool? taxExempt = null,
             string vatNumber = null,
             Dictionary<string, string> metafields = null,
-            int? parentId = null)
+            int? parentId = null,
+            string salesforceId = null)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
@@ -101,6 +105,11 @@ namespace AdvancedBilling.Standard.Models
             if (parentId != null)
             {
                 this.ParentId = parentId;
+            }
+
+            if (salesforceId != null)
+            {
+                this.SalesforceId = salesforceId;
             }
 
         }
@@ -237,6 +246,24 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// (Optional) The Salesforce ID of the customer.
+        /// </summary>
+        [JsonProperty("salesforce_id")]
+        public string SalesforceId
+        {
+            get
+            {
+                return this.salesforceId;
+            }
+
+            set
+            {
+                this.shouldSerialize["salesforce_id"] = true;
+                this.salesforceId = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -264,6 +291,14 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetSalesforceId()
+        {
+            this.shouldSerialize["salesforce_id"] = false;
+        }
+
+        /// <summary>
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
@@ -279,6 +314,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeParentId()
         {
             return this.shouldSerialize["parent_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeSalesforceId()
+        {
+            return this.shouldSerialize["salesforce_id"];
         }
 
         /// <inheritdoc/>
@@ -310,7 +354,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.TaxExempt == null && other.TaxExempt == null) || (this.TaxExempt?.Equals(other.TaxExempt) == true)) &&
                 ((this.VatNumber == null && other.VatNumber == null) || (this.VatNumber?.Equals(other.VatNumber) == true)) &&
                 ((this.Metafields == null && other.Metafields == null) || (this.Metafields?.Equals(other.Metafields) == true)) &&
-                ((this.ParentId == null && other.ParentId == null) || (this.ParentId?.Equals(other.ParentId) == true));
+                ((this.ParentId == null && other.ParentId == null) || (this.ParentId?.Equals(other.ParentId) == true)) &&
+                ((this.SalesforceId == null && other.SalesforceId == null) || (this.SalesforceId?.Equals(other.SalesforceId) == true));
         }
         
         /// <summary>
@@ -337,6 +382,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.VatNumber = {(this.VatNumber == null ? "null" : this.VatNumber)}");
             toStringOutput.Add($"Metafields = {(this.Metafields == null ? "null" : this.Metafields.ToString())}");
             toStringOutput.Add($"this.ParentId = {(this.ParentId == null ? "null" : this.ParentId.ToString())}");
+            toStringOutput.Add($"this.SalesforceId = {(this.SalesforceId == null ? "null" : this.SalesforceId)}");
 
             base.ToString(toStringOutput);
         }
