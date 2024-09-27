@@ -1,21 +1,21 @@
 // <copyright file="CreateInvoiceRequest.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using APIMatic.Core.Utilities.Converters;
+using AdvancedBilling.Standard;
+using AdvancedBilling.Standard.Utilities;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 namespace AdvancedBilling.Standard.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using APIMatic.Core.Utilities.Converters;
-    using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Utilities;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-
     /// <summary>
     /// CreateInvoiceRequest.
     /// </summary>

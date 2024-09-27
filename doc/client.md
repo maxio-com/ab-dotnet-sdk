@@ -14,7 +14,7 @@ The following parameters are configurable for the API Client:
 The API client can be initialized as follows:
 
 ```csharp
-AdvancedBilling.Standard.AdvancedBillingClient client = new AdvancedBilling.Standard.AdvancedBillingClient.Builder()
+AdvancedBillingClient client = new AdvancedBillingClient.Builder()
     .BasicAuthCredentials(
         new BasicAuthModel.Builder(
             "BasicAuthUserName",

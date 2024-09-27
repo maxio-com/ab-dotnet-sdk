@@ -1,12 +1,12 @@
 // <copyright file="HttpContext.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
+using APIMatic.Core.Types.Sdk;
+using AdvancedBilling.Standard.Http.Request;
+using AdvancedBilling.Standard.Http.Response;
+
 namespace AdvancedBilling.Standard.Http.Client
 {
-    using APIMatic.Core.Types.Sdk;
-    using AdvancedBilling.Standard.Http.Request;
-    using AdvancedBilling.Standard.Http.Response;
-    
     /// <summary>
     /// Represents the contextual information of HTTP request and response.
     /// </summary>

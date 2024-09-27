@@ -1,15 +1,15 @@
 // <copyright file="BasicAuthManager.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using AdvancedBilling.Standard.Http.Request;
+using APIMatic.Core.Authentication;
+
 namespace AdvancedBilling.Standard.Authentication
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Threading.Tasks;
-    using AdvancedBilling.Standard.Http.Request;
-    using APIMatic.Core.Authentication;
-
     /// <summary>
     /// BasicAuthManager Class.
     /// </summary>
