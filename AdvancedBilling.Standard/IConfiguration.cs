@@ -1,13 +1,13 @@
 // <copyright file="IConfiguration.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
+using System;
+using System.Net;
+using AdvancedBilling.Standard.Authentication;
+using AdvancedBilling.Standard.Models;
+
 namespace AdvancedBilling.Standard
 {
-    using System;
-    using System.Net;
-    using AdvancedBilling.Standard.Authentication;
-    using AdvancedBilling.Standard.Models;
-
     /// <summary>
     /// IConfiguration.
     /// </summary>

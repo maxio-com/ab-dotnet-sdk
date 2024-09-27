@@ -1,16 +1,15 @@
 // <copyright file="CompatibilityFactory.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
+using APIMatic.Core.Types.Sdk;
+using APIMatic.Core.Utilities;
+using AdvancedBilling.Standard.Exceptions;
+using AdvancedBilling.Standard.Http.Client;
+using AdvancedBilling.Standard.Http.Request;
+using AdvancedBilling.Standard.Http.Response;
 
 namespace AdvancedBilling.Standard.Utilities
 {
-    using APIMatic.Core.Types.Sdk;
-    using APIMatic.Core.Utilities;
-    using AdvancedBilling.Standard.Exceptions;
-    using AdvancedBilling.Standard.Http.Client;
-    using AdvancedBilling.Standard.Http.Request;
-    using AdvancedBilling.Standard.Http.Response;
-
     internal class CompatibilityFactory : ICompatibilityFactory<HttpRequest, HttpResponse, HttpContext, ApiException>
     {
         public ApiException CreateApiException(string reason, CoreContext<CoreRequest, CoreResponse> context) =>

@@ -1,19 +1,19 @@
 // <copyright file="BaseController.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
+using APIMatic.Core;
+using APIMatic.Core.Http.Configuration;
+using APIMatic.Core.Response;
+using AdvancedBilling.Standard.Exceptions;
+using AdvancedBilling.Standard.Http.Client;
+using AdvancedBilling.Standard.Http.Request;
+using AdvancedBilling.Standard.Http.Response;
+using AdvancedBilling.Standard.Utilities;
+using System;
+using System.Collections.Generic;
+
 namespace AdvancedBilling.Standard.Controllers
 {
-    using APIMatic.Core;
-    using APIMatic.Core.Http.Configuration;
-    using APIMatic.Core.Response;
-    using AdvancedBilling.Standard.Exceptions;
-    using AdvancedBilling.Standard.Http.Client;
-    using AdvancedBilling.Standard.Http.Request;
-    using AdvancedBilling.Standard.Http.Response;
-    using AdvancedBilling.Standard.Utilities;
-    using System;
-    using System.Collections.Generic;
-
     /// <summary>
     /// The base class for all controller classes.
     /// </summary>

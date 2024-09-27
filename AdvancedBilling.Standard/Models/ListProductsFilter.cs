@@ -1,21 +1,21 @@
 // <copyright file="ListProductsFilter.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using APIMatic.Core.Utilities.Converters;
+using AdvancedBilling.Standard;
+using AdvancedBilling.Standard.Utilities;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 namespace AdvancedBilling.Standard.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using APIMatic.Core.Utilities.Converters;
-    using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Utilities;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-
     /// <summary>
     /// ListProductsFilter.
     /// </summary>
@@ -31,15 +31,24 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="ListProductsFilter"/> class.
         /// </summary>
+        /// <param name="ids">ids.</param>
         /// <param name="prepaidProductPricePoint">prepaid_product_price_point.</param>
         /// <param name="useSiteExchangeRate">use_site_exchange_rate.</param>
         public ListProductsFilter(
+            List<int> ids = null,
             Models.PrepaidProductPricePointFilter prepaidProductPricePoint = null,
             bool? useSiteExchangeRate = null)
         {
+            this.Ids = ids;
             this.PrepaidProductPricePoint = prepaidProductPricePoint;
             this.UseSiteExchangeRate = useSiteExchangeRate;
         }
+
+        /// <summary>
+        /// Allows fetching products with matching id based on provided values. Use in query `filter[ids]=1,2,3`.
+        /// </summary>
+        [JsonProperty("ids", NullValueHandling = NullValueHandling.Ignore)]
+        public List<int> Ids { get; set; }
 
         /// <summary>
         /// Allows fetching products only if a prepaid product price point is present or not. To use this filter you also have to include the following param in the request `include=prepaid_product_price_point`. Use in query `filter[prepaid_product_price_point][product_price_point_id]=not_null`.
@@ -75,7 +84,8 @@ namespace AdvancedBilling.Standard.Models
             {
                 return true;
             }
-            return obj is ListProductsFilter other &&                ((this.PrepaidProductPricePoint == null && other.PrepaidProductPricePoint == null) || (this.PrepaidProductPricePoint?.Equals(other.PrepaidProductPricePoint) == true)) &&
+            return obj is ListProductsFilter other &&                ((this.Ids == null && other.Ids == null) || (this.Ids?.Equals(other.Ids) == true)) &&
+                ((this.PrepaidProductPricePoint == null && other.PrepaidProductPricePoint == null) || (this.PrepaidProductPricePoint?.Equals(other.PrepaidProductPricePoint) == true)) &&
                 ((this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null) || (this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true));
         }
         
@@ -85,6 +95,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
+            toStringOutput.Add($"this.Ids = {(this.Ids == null ? "null" : $"[{string.Join(", ", this.Ids)} ]")}");
             toStringOutput.Add($"this.PrepaidProductPricePoint = {(this.PrepaidProductPricePoint == null ? "null" : this.PrepaidProductPricePoint.ToString())}");
             toStringOutput.Add($"this.UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
 

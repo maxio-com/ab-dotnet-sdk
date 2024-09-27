@@ -1,13 +1,13 @@
 // <copyright file="ApiException.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
+using APIMatic.Core.Types.Sdk;
+using AdvancedBilling.Standard.Http.Client;
+using AdvancedBilling.Standard.Http.Request;
+using AdvancedBilling.Standard.Http.Response;
+
 namespace AdvancedBilling.Standard.Exceptions
 {
-    using APIMatic.Core.Types.Sdk;
-    using AdvancedBilling.Standard.Http.Client;
-    using AdvancedBilling.Standard.Http.Request;
-    using AdvancedBilling.Standard.Http.Response;
-
     /// <summary>
     /// This is the base class for all exceptions that represent an error response
     /// from the server.

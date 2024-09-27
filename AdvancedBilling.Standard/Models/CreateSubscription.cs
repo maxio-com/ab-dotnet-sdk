@@ -1,22 +1,22 @@
 // <copyright file="CreateSubscription.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using APIMatic.Core.Utilities.Converters;
+using AdvancedBilling.Standard;
+using AdvancedBilling.Standard.Models.Containers;
+using AdvancedBilling.Standard.Utilities;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 namespace AdvancedBilling.Standard.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using APIMatic.Core.Utilities.Converters;
-    using AdvancedBilling.Standard;
-    using AdvancedBilling.Standard.Models.Containers;
-    using AdvancedBilling.Standard.Utilities;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-
     /// <summary>
     /// CreateSubscription.
     /// </summary>
@@ -28,6 +28,11 @@ namespace AdvancedBilling.Standard.Models
         {
             { "dunning_communication_delay_enabled", true },
             { "dunning_communication_delay_time_zone", false },
+        };
+
+        private Dictionary<string, bool> hasPropertySetterCalledFor = new Dictionary<string, bool>
+        {
+            { "dunning_communication_delay_enabled", false },
         };
 
         /// <summary>
@@ -485,12 +490,19 @@ namespace AdvancedBilling.Standard.Models
         {
             get
             {
+                if (!hasPropertySetterCalledFor["dunning_communication_delay_enabled"] &&
+                    dunningCommunicationDelayEnabled == null)
+                {
+                    return false; // Default value
+                }
+
                 return this.dunningCommunicationDelayEnabled;
             }
 
             set
             {
                 this.shouldSerialize["dunning_communication_delay_enabled"] = true;
+                hasPropertySetterCalledFor["dunning_communication_delay_enabled"] = true;
                 this.dunningCommunicationDelayEnabled = value;
             }
         }
@@ -535,6 +547,7 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetDunningCommunicationDelayEnabled()
         {
             this.shouldSerialize["dunning_communication_delay_enabled"] = false;
+            this.hasPropertySetterCalledFor["dunning_communication_delay_enabled"] = false;
         }
 
         /// <summary>
