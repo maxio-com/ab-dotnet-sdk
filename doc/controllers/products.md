@@ -533,6 +533,15 @@ ListProductsAsync(
 ListProductsInput listProductsInput = new ListProductsInput
 {
     DateField = BasicDateField.UpdatedAt,
+    Filter = new ListProductsFilter
+    {
+        Ids = new List<int>
+        {
+            1,
+            2,
+            3,
+        },
+    },
     Page = 2,
     PerPage = 50,
     IncludeArchived = true,

@@ -54,6 +54,15 @@ ListProductsForProductFamilyInput listProductsForProductFamilyInput = new ListPr
     Page = 2,
     PerPage = 50,
     DateField = BasicDateField.UpdatedAt,
+    Filter = new ListProductsFilter
+    {
+        Ids = new List<int>
+        {
+            1,
+            2,
+            3,
+        },
+    },
     Include = ListProductsInclude.PrepaidProductPricePoint,
 };
 
