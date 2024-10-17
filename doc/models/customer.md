@@ -27,7 +27,7 @@
 | `Country` | `string` | Optional | The customer shipping address country |
 | `CountryName` | `string` | Optional | The customer's full name of country |
 | `Phone` | `string` | Optional | The phone number of the customer |
-| `Verified` | `bool?` | Optional | Is the customer verified to use ACH as a payment method. Available only on Authorize.Net gateway |
+| `Verified` | `bool?` | Optional | Is the customer verified to use ACH as a payment method. |
 | `PortalCustomerCreatedAt` | `DateTimeOffset?` | Optional | The timestamp of when the Billing Portal entry was created at for the customer |
 | `PortalInviteLastSentAt` | `DateTimeOffset?` | Optional | The timestamp of when the Billing Portal invite was last sent at |
 | `PortalInviteLastAcceptedAt` | `DateTimeOffset?` | Optional | The timestamp of when the Billing Portal invite was last accepted |
@@ -37,6 +37,8 @@
 | `Locale` | `string` | Optional | The locale for the customer to identify language-region |
 | `DefaultSubscriptionGroupUid` | `string` | Optional | - |
 | `SalesforceId` | `string` | Optional | The Salesforce ID for the customer |
+| `TaxExemptReason` | `string` | Optional | The Tax Exemption Reason Code for the customer |
+| `DefaultAutoRenewalProfileId` | `int?` | Optional | The default auto-renewal profile ID for the customer |
 
 ## Example (as JSON)
 
