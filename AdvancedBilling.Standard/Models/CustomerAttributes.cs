@@ -24,11 +24,13 @@ namespace AdvancedBilling.Standard.Models
         private string address2;
         private int? parentId;
         private string salesforceId;
+        private int? defaultAutoRenewalProfileId;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "address_2", false },
             { "parent_id", false },
             { "salesforce_id", false },
+            { "default_auto_renewal_profile_id", false },
         };
 
         /// <summary>
@@ -60,6 +62,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="metafields">metafields.</param>
         /// <param name="parentId">parent_id.</param>
         /// <param name="salesforceId">salesforce_id.</param>
+        /// <param name="defaultAutoRenewalProfileId">default_auto_renewal_profile_id.</param>
         public CustomerAttributes(
             string firstName = null,
             string lastName = null,
@@ -79,7 +82,8 @@ namespace AdvancedBilling.Standard.Models
             string vatNumber = null,
             Dictionary<string, string> metafields = null,
             int? parentId = null,
-            string salesforceId = null)
+            string salesforceId = null,
+            int? defaultAutoRenewalProfileId = null)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
@@ -110,6 +114,11 @@ namespace AdvancedBilling.Standard.Models
             if (salesforceId != null)
             {
                 this.SalesforceId = salesforceId;
+            }
+
+            if (defaultAutoRenewalProfileId != null)
+            {
+                this.DefaultAutoRenewalProfileId = defaultAutoRenewalProfileId;
             }
 
         }
@@ -264,6 +273,24 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// (Optional) The default auto-renewal profile ID for the customer
+        /// </summary>
+        [JsonProperty("default_auto_renewal_profile_id")]
+        public int? DefaultAutoRenewalProfileId
+        {
+            get
+            {
+                return this.defaultAutoRenewalProfileId;
+            }
+
+            set
+            {
+                this.shouldSerialize["default_auto_renewal_profile_id"] = true;
+                this.defaultAutoRenewalProfileId = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -299,6 +326,14 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetDefaultAutoRenewalProfileId()
+        {
+            this.shouldSerialize["default_auto_renewal_profile_id"] = false;
+        }
+
+        /// <summary>
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
@@ -323,6 +358,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeSalesforceId()
         {
             return this.shouldSerialize["salesforce_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeDefaultAutoRenewalProfileId()
+        {
+            return this.shouldSerialize["default_auto_renewal_profile_id"];
         }
 
         /// <inheritdoc/>
@@ -355,7 +399,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.VatNumber == null && other.VatNumber == null) || (this.VatNumber?.Equals(other.VatNumber) == true)) &&
                 ((this.Metafields == null && other.Metafields == null) || (this.Metafields?.Equals(other.Metafields) == true)) &&
                 ((this.ParentId == null && other.ParentId == null) || (this.ParentId?.Equals(other.ParentId) == true)) &&
-                ((this.SalesforceId == null && other.SalesforceId == null) || (this.SalesforceId?.Equals(other.SalesforceId) == true));
+                ((this.SalesforceId == null && other.SalesforceId == null) || (this.SalesforceId?.Equals(other.SalesforceId) == true)) &&
+                ((this.DefaultAutoRenewalProfileId == null && other.DefaultAutoRenewalProfileId == null) || (this.DefaultAutoRenewalProfileId?.Equals(other.DefaultAutoRenewalProfileId) == true));
         }
         
         /// <summary>
@@ -383,6 +428,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Metafields = {(this.Metafields == null ? "null" : this.Metafields.ToString())}");
             toStringOutput.Add($"this.ParentId = {(this.ParentId == null ? "null" : this.ParentId.ToString())}");
             toStringOutput.Add($"this.SalesforceId = {(this.SalesforceId == null ? "null" : this.SalesforceId)}");
+            toStringOutput.Add($"this.DefaultAutoRenewalProfileId = {(this.DefaultAutoRenewalProfileId == null ? "null" : this.DefaultAutoRenewalProfileId.ToString())}");
 
             base.ToString(toStringOutput);
         }

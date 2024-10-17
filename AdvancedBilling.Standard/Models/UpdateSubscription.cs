@@ -57,6 +57,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="components">components.</param>
         /// <param name="dunningCommunicationDelayEnabled">dunning_communication_delay_enabled.</param>
         /// <param name="dunningCommunicationDelayTimeZone">dunning_communication_delay_time_zone.</param>
+        /// <param name="productPricePointId">product_price_point_id.</param>
+        /// <param name="productPricePointHandle">product_price_point_handle.</param>
         public UpdateSubscription(
             Models.CreditCardAttributes creditCardAttributes = null,
             string productHandle = null,
@@ -74,7 +76,9 @@ namespace AdvancedBilling.Standard.Models
             Models.SubscriptionCustomPrice customPrice = null,
             List<Models.UpdateSubscriptionComponent> components = null,
             bool? dunningCommunicationDelayEnabled = null,
-            string dunningCommunicationDelayTimeZone = null)
+            string dunningCommunicationDelayTimeZone = null,
+            int? productPricePointId = null,
+            string productPricePointHandle = null)
         {
             this.CreditCardAttributes = creditCardAttributes;
             this.ProductHandle = productHandle;
@@ -101,6 +105,8 @@ namespace AdvancedBilling.Standard.Models
                 this.DunningCommunicationDelayTimeZone = dunningCommunicationDelayTimeZone;
             }
 
+            this.ProductPricePointId = productPricePointId;
+            this.ProductPricePointHandle = productPricePointHandle;
         }
 
         /// <summary>
@@ -230,6 +236,18 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// Set to change the current product's price point.
+        /// </summary>
+        [JsonProperty("product_price_point_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? ProductPricePointId { get; set; }
+
+        /// <summary>
+        /// Set to change the current product's price point.
+        /// </summary>
+        [JsonProperty("product_price_point_handle", NullValueHandling = NullValueHandling.Ignore)]
+        public string ProductPricePointHandle { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -302,7 +320,9 @@ namespace AdvancedBilling.Standard.Models
                 ((this.CustomPrice == null && other.CustomPrice == null) || (this.CustomPrice?.Equals(other.CustomPrice) == true)) &&
                 ((this.Components == null && other.Components == null) || (this.Components?.Equals(other.Components) == true)) &&
                 ((this.DunningCommunicationDelayEnabled == null && other.DunningCommunicationDelayEnabled == null) || (this.DunningCommunicationDelayEnabled?.Equals(other.DunningCommunicationDelayEnabled) == true)) &&
-                ((this.DunningCommunicationDelayTimeZone == null && other.DunningCommunicationDelayTimeZone == null) || (this.DunningCommunicationDelayTimeZone?.Equals(other.DunningCommunicationDelayTimeZone) == true));
+                ((this.DunningCommunicationDelayTimeZone == null && other.DunningCommunicationDelayTimeZone == null) || (this.DunningCommunicationDelayTimeZone?.Equals(other.DunningCommunicationDelayTimeZone) == true)) &&
+                ((this.ProductPricePointId == null && other.ProductPricePointId == null) || (this.ProductPricePointId?.Equals(other.ProductPricePointId) == true)) &&
+                ((this.ProductPricePointHandle == null && other.ProductPricePointHandle == null) || (this.ProductPricePointHandle?.Equals(other.ProductPricePointHandle) == true));
         }
         
         /// <summary>
@@ -328,6 +348,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Components = {(this.Components == null ? "null" : $"[{string.Join(", ", this.Components)} ]")}");
             toStringOutput.Add($"this.DunningCommunicationDelayEnabled = {(this.DunningCommunicationDelayEnabled == null ? "null" : this.DunningCommunicationDelayEnabled.ToString())}");
             toStringOutput.Add($"this.DunningCommunicationDelayTimeZone = {(this.DunningCommunicationDelayTimeZone == null ? "null" : this.DunningCommunicationDelayTimeZone)}");
+            toStringOutput.Add($"this.ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
+            toStringOutput.Add($"this.ProductPricePointHandle = {(this.ProductPricePointHandle == null ? "null" : this.ProductPricePointHandle)}");
 
             base.ToString(toStringOutput);
         }

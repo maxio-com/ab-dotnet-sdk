@@ -23,10 +23,12 @@ namespace AdvancedBilling.Standard.Models
     {
         private string gatewayHandle;
         private string gatewayTransactionId;
+        private DateTime? receivedOn;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "gateway_handle", false },
             { "gateway_transaction_id", false },
+            { "received_on", false },
         };
 
         /// <summary>
@@ -49,6 +51,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="gatewayHandle">gateway_handle.</param>
         /// <param name="gatewayUsed">gateway_used.</param>
         /// <param name="gatewayTransactionId">gateway_transaction_id.</param>
+        /// <param name="receivedOn">received_on.</param>
+        /// <param name="uid">uid.</param>
         public InvoicePayment(
             DateTimeOffset? transactionTime = null,
             string memo = null,
@@ -59,7 +63,9 @@ namespace AdvancedBilling.Standard.Models
             bool? prepayment = null,
             string gatewayHandle = null,
             string gatewayUsed = null,
-            string gatewayTransactionId = null)
+            string gatewayTransactionId = null,
+            DateTime? receivedOn = null,
+            string uid = null)
         {
             this.TransactionTime = transactionTime;
             this.Memo = memo;
@@ -79,6 +85,12 @@ namespace AdvancedBilling.Standard.Models
                 this.GatewayTransactionId = gatewayTransactionId;
             }
 
+            if (receivedOn != null)
+            {
+                this.ReceivedOn = receivedOn;
+            }
+
+            this.Uid = uid;
         }
 
         /// <summary>
@@ -166,6 +178,32 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// Date reflecting when the payment was received from a customer. Must be in the past. Applicable only to
+        /// `external` payments.
+        /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
+        [JsonProperty("received_on")]
+        public DateTime? ReceivedOn
+        {
+            get
+            {
+                return this.receivedOn;
+            }
+
+            set
+            {
+                this.shouldSerialize["received_on"] = true;
+                this.receivedOn = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets Uid.
+        /// </summary>
+        [JsonProperty("uid", NullValueHandling = NullValueHandling.Ignore)]
+        public string Uid { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -193,6 +231,14 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetReceivedOn()
+        {
+            this.shouldSerialize["received_on"] = false;
+        }
+
+        /// <summary>
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
@@ -208,6 +254,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeGatewayTransactionId()
         {
             return this.shouldSerialize["gateway_transaction_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeReceivedOn()
+        {
+            return this.shouldSerialize["received_on"];
         }
 
         /// <inheritdoc/>
@@ -231,7 +286,9 @@ namespace AdvancedBilling.Standard.Models
                 ((this.Prepayment == null && other.Prepayment == null) || (this.Prepayment?.Equals(other.Prepayment) == true)) &&
                 ((this.GatewayHandle == null && other.GatewayHandle == null) || (this.GatewayHandle?.Equals(other.GatewayHandle) == true)) &&
                 ((this.GatewayUsed == null && other.GatewayUsed == null) || (this.GatewayUsed?.Equals(other.GatewayUsed) == true)) &&
-                ((this.GatewayTransactionId == null && other.GatewayTransactionId == null) || (this.GatewayTransactionId?.Equals(other.GatewayTransactionId) == true));
+                ((this.GatewayTransactionId == null && other.GatewayTransactionId == null) || (this.GatewayTransactionId?.Equals(other.GatewayTransactionId) == true)) &&
+                ((this.ReceivedOn == null && other.ReceivedOn == null) || (this.ReceivedOn?.Equals(other.ReceivedOn) == true)) &&
+                ((this.Uid == null && other.Uid == null) || (this.Uid?.Equals(other.Uid) == true));
         }
         
         /// <summary>
@@ -250,6 +307,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.GatewayHandle = {(this.GatewayHandle == null ? "null" : this.GatewayHandle)}");
             toStringOutput.Add($"this.GatewayUsed = {(this.GatewayUsed == null ? "null" : this.GatewayUsed)}");
             toStringOutput.Add($"this.GatewayTransactionId = {(this.GatewayTransactionId == null ? "null" : this.GatewayTransactionId)}");
+            toStringOutput.Add($"this.ReceivedOn = {(this.ReceivedOn == null ? "null" : this.ReceivedOn.ToString())}");
+            toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
 
             base.ToString(toStringOutput);
         }

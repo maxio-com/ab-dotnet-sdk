@@ -42,6 +42,8 @@ namespace AdvancedBilling.Standard.Models
         private string locale;
         private string defaultSubscriptionGroupUid;
         private string salesforceId;
+        private string taxExemptReason;
+        private int? defaultAutoRenewalProfileId;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "cc_emails", false },
@@ -65,6 +67,8 @@ namespace AdvancedBilling.Standard.Models
             { "locale", false },
             { "default_subscription_group_uid", false },
             { "salesforce_id", false },
+            { "tax_exempt_reason", false },
+            { "default_auto_renewal_profile_id", false },
         };
 
         /// <summary>
@@ -105,6 +109,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="locale">locale.</param>
         /// <param name="defaultSubscriptionGroupUid">default_subscription_group_uid.</param>
         /// <param name="salesforceId">salesforce_id.</param>
+        /// <param name="taxExemptReason">tax_exempt_reason.</param>
+        /// <param name="defaultAutoRenewalProfileId">default_auto_renewal_profile_id.</param>
         public Customer(
             string firstName = null,
             string lastName = null,
@@ -133,7 +139,9 @@ namespace AdvancedBilling.Standard.Models
             int? parentId = null,
             string locale = null,
             string defaultSubscriptionGroupUid = null,
-            string salesforceId = null)
+            string salesforceId = null,
+            string taxExemptReason = null,
+            int? defaultAutoRenewalProfileId = null)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
@@ -245,6 +253,16 @@ namespace AdvancedBilling.Standard.Models
             if (salesforceId != null)
             {
                 this.SalesforceId = salesforceId;
+            }
+
+            if (taxExemptReason != null)
+            {
+                this.TaxExemptReason = taxExemptReason;
+            }
+
+            if (defaultAutoRenewalProfileId != null)
+            {
+                this.DefaultAutoRenewalProfileId = defaultAutoRenewalProfileId;
             }
 
         }
@@ -504,7 +522,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Is the customer verified to use ACH as a payment method. Available only on Authorize.Net gateway
+        /// Is the customer verified to use ACH as a payment method.
         /// </summary>
         [JsonProperty("verified")]
         public bool? Verified
@@ -671,6 +689,42 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.shouldSerialize["salesforce_id"] = true;
                 this.salesforceId = value;
+            }
+        }
+
+        /// <summary>
+        /// The Tax Exemption Reason Code for the customer
+        /// </summary>
+        [JsonProperty("tax_exempt_reason")]
+        public string TaxExemptReason
+        {
+            get
+            {
+                return this.taxExemptReason;
+            }
+
+            set
+            {
+                this.shouldSerialize["tax_exempt_reason"] = true;
+                this.taxExemptReason = value;
+            }
+        }
+
+        /// <summary>
+        /// The default auto-renewal profile ID for the customer
+        /// </summary>
+        [JsonProperty("default_auto_renewal_profile_id")]
+        public int? DefaultAutoRenewalProfileId
+        {
+            get
+            {
+                return this.defaultAutoRenewalProfileId;
+            }
+
+            set
+            {
+                this.shouldSerialize["default_auto_renewal_profile_id"] = true;
+                this.defaultAutoRenewalProfileId = value;
             }
         }
 
@@ -850,6 +904,22 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetSalesforceId()
         {
             this.shouldSerialize["salesforce_id"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetTaxExemptReason()
+        {
+            this.shouldSerialize["tax_exempt_reason"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serailized.
+        /// </summary>
+        public void UnsetDefaultAutoRenewalProfileId()
+        {
+            this.shouldSerialize["default_auto_renewal_profile_id"] = false;
         }
 
         /// <summary>
@@ -1041,6 +1111,24 @@ namespace AdvancedBilling.Standard.Models
             return this.shouldSerialize["salesforce_id"];
         }
 
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeTaxExemptReason()
+        {
+            return this.shouldSerialize["tax_exempt_reason"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeDefaultAutoRenewalProfileId()
+        {
+            return this.shouldSerialize["default_auto_renewal_profile_id"];
+        }
+
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
@@ -1080,7 +1168,9 @@ namespace AdvancedBilling.Standard.Models
                 ((this.ParentId == null && other.ParentId == null) || (this.ParentId?.Equals(other.ParentId) == true)) &&
                 ((this.Locale == null && other.Locale == null) || (this.Locale?.Equals(other.Locale) == true)) &&
                 ((this.DefaultSubscriptionGroupUid == null && other.DefaultSubscriptionGroupUid == null) || (this.DefaultSubscriptionGroupUid?.Equals(other.DefaultSubscriptionGroupUid) == true)) &&
-                ((this.SalesforceId == null && other.SalesforceId == null) || (this.SalesforceId?.Equals(other.SalesforceId) == true));
+                ((this.SalesforceId == null && other.SalesforceId == null) || (this.SalesforceId?.Equals(other.SalesforceId) == true)) &&
+                ((this.TaxExemptReason == null && other.TaxExemptReason == null) || (this.TaxExemptReason?.Equals(other.TaxExemptReason) == true)) &&
+                ((this.DefaultAutoRenewalProfileId == null && other.DefaultAutoRenewalProfileId == null) || (this.DefaultAutoRenewalProfileId?.Equals(other.DefaultAutoRenewalProfileId) == true));
         }
         
         /// <summary>
@@ -1117,6 +1207,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Locale = {(this.Locale == null ? "null" : this.Locale)}");
             toStringOutput.Add($"this.DefaultSubscriptionGroupUid = {(this.DefaultSubscriptionGroupUid == null ? "null" : this.DefaultSubscriptionGroupUid)}");
             toStringOutput.Add($"this.SalesforceId = {(this.SalesforceId == null ? "null" : this.SalesforceId)}");
+            toStringOutput.Add($"this.TaxExemptReason = {(this.TaxExemptReason == null ? "null" : this.TaxExemptReason)}");
+            toStringOutput.Add($"this.DefaultAutoRenewalProfileId = {(this.DefaultAutoRenewalProfileId == null ? "null" : this.DefaultAutoRenewalProfileId.ToString())}");
 
             base.ToString(toStringOutput);
         }

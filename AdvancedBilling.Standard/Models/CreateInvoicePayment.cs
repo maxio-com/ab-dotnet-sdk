@@ -37,18 +37,21 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="method">method.</param>
         /// <param name="details">details.</param>
         /// <param name="paymentProfileId">payment_profile_id.</param>
+        /// <param name="receivedOn">received_on.</param>
         public CreateInvoicePayment(
             CreateInvoicePaymentAmount amount = null,
             string memo = null,
             Models.InvoicePaymentMethodType? method = null,
             string details = null,
-            int? paymentProfileId = null)
+            int? paymentProfileId = null,
+            DateTime? receivedOn = null)
         {
             this.Amount = amount;
             this.Memo = memo;
             this.Method = method;
             this.Details = details;
             this.PaymentProfileId = paymentProfileId;
+            this.ReceivedOn = receivedOn;
         }
 
         /// <summary>
@@ -58,7 +61,7 @@ namespace AdvancedBilling.Standard.Models
         public CreateInvoicePaymentAmount Amount { get; set; }
 
         /// <summary>
-        /// A description to be attached to the payment.
+        /// A description to be attached to the payment. Applicable only to `external` payments.
         /// </summary>
         [JsonProperty("memo", NullValueHandling = NullValueHandling.Ignore)]
         public string Memo { get; set; }
@@ -70,7 +73,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.InvoicePaymentMethodType? Method { get; set; }
 
         /// <summary>
-        /// Additional information related to the payment method (eg. Check #)
+        /// Additional information related to the payment method (eg. Check #). Applicable only to `external` payments.
         /// </summary>
         [JsonProperty("details", NullValueHandling = NullValueHandling.Ignore)]
         public string Details { get; set; }
@@ -80,6 +83,14 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("payment_profile_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? PaymentProfileId { get; set; }
+
+        /// <summary>
+        /// Date reflecting when the payment was received from a customer. Must be in the past. Applicable only to
+        /// `external` payments.
+        /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
+        [JsonProperty("received_on", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? ReceivedOn { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -107,7 +118,8 @@ namespace AdvancedBilling.Standard.Models
                 ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
                 ((this.Method == null && other.Method == null) || (this.Method?.Equals(other.Method) == true)) &&
                 ((this.Details == null && other.Details == null) || (this.Details?.Equals(other.Details) == true)) &&
-                ((this.PaymentProfileId == null && other.PaymentProfileId == null) || (this.PaymentProfileId?.Equals(other.PaymentProfileId) == true));
+                ((this.PaymentProfileId == null && other.PaymentProfileId == null) || (this.PaymentProfileId?.Equals(other.PaymentProfileId) == true)) &&
+                ((this.ReceivedOn == null && other.ReceivedOn == null) || (this.ReceivedOn?.Equals(other.ReceivedOn) == true));
         }
         
         /// <summary>
@@ -121,6 +133,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Method = {(this.Method == null ? "null" : this.Method.ToString())}");
             toStringOutput.Add($"this.Details = {(this.Details == null ? "null" : this.Details)}");
             toStringOutput.Add($"this.PaymentProfileId = {(this.PaymentProfileId == null ? "null" : this.PaymentProfileId.ToString())}");
+            toStringOutput.Add($"this.ReceivedOn = {(this.ReceivedOn == null ? "null" : this.ReceivedOn.ToString())}");
 
             base.ToString(toStringOutput);
         }
