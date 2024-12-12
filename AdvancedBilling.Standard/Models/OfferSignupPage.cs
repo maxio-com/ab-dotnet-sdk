@@ -93,32 +93,32 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"OfferSignupPage : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is OfferSignupPage other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.Nickname == null && other.Nickname == null) || (this.Nickname?.Equals(other.Nickname) == true)) &&
-                ((this.Enabled == null && other.Enabled == null) || (this.Enabled?.Equals(other.Enabled) == true)) &&
-                ((this.ReturnUrl == null && other.ReturnUrl == null) || (this.ReturnUrl?.Equals(other.ReturnUrl) == true)) &&
-                ((this.ReturnParams == null && other.ReturnParams == null) || (this.ReturnParams?.Equals(other.ReturnParams) == true)) &&
-                ((this.Url == null && other.Url == null) || (this.Url?.Equals(other.Url) == true));
+            return obj is OfferSignupPage other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.Nickname == null && other.Nickname == null ||
+                 this.Nickname?.Equals(other.Nickname) == true) &&
+                (this.Enabled == null && other.Enabled == null ||
+                 this.Enabled?.Equals(other.Enabled) == true) &&
+                (this.ReturnUrl == null && other.ReturnUrl == null ||
+                 this.ReturnUrl?.Equals(other.ReturnUrl) == true) &&
+                (this.ReturnParams == null && other.ReturnParams == null ||
+                 this.ReturnParams?.Equals(other.ReturnParams) == true) &&
+                (this.Url == null && other.Url == null ||
+                 this.Url?.Equals(other.Url) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -126,11 +126,11 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.Nickname = {(this.Nickname == null ? "null" : this.Nickname)}");
+            toStringOutput.Add($"this.Nickname = {this.Nickname ?? "null"}");
             toStringOutput.Add($"this.Enabled = {(this.Enabled == null ? "null" : this.Enabled.ToString())}");
-            toStringOutput.Add($"this.ReturnUrl = {(this.ReturnUrl == null ? "null" : this.ReturnUrl)}");
-            toStringOutput.Add($"this.ReturnParams = {(this.ReturnParams == null ? "null" : this.ReturnParams)}");
-            toStringOutput.Add($"this.Url = {(this.Url == null ? "null" : this.Url)}");
+            toStringOutput.Add($"this.ReturnUrl = {this.ReturnUrl ?? "null"}");
+            toStringOutput.Add($"this.ReturnParams = {this.ReturnParams ?? "null"}");
+            toStringOutput.Add($"this.Url = {this.Url ?? "null"}");
 
             base.ToString(toStringOutput);
         }

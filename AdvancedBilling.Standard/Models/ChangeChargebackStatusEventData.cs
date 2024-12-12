@@ -48,27 +48,21 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ChangeChargebackStatusEventData : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ChangeChargebackStatusEventData other &&                this.ChargebackStatus.Equals(other.ChargebackStatus);
+            return obj is ChangeChargebackStatusEventData other &&
+                (this.ChargebackStatus.Equals(other.ChargebackStatus)) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

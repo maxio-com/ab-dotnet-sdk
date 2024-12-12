@@ -149,6 +149,7 @@ namespace AdvancedBilling.Standard.Models
         {
             this.Id = id;
             this.Name = name;
+
             if (handle != null)
             {
                 this.Handle = handle;
@@ -163,8 +164,8 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.AccountingCode = accountingCode;
             }
-
             this.RequestCreditCard = requestCreditCard;
+
             if (expirationInterval != null)
             {
                 this.ExpirationInterval = expirationInterval;
@@ -174,12 +175,12 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.ExpirationIntervalUnit = expirationIntervalUnit;
             }
-
             this.CreatedAt = createdAt;
             this.UpdatedAt = updatedAt;
             this.PriceInCents = priceInCents;
             this.Interval = interval;
             this.IntervalUnit = intervalUnit;
+
             if (initialChargeInCents != null)
             {
                 this.InitialChargeInCents = initialChargeInCents;
@@ -204,14 +205,14 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.ArchivedAt = archivedAt;
             }
-
             this.RequireCreditCard = requireCreditCard;
+
             if (returnParams != null)
             {
                 this.ReturnParams = returnParams;
             }
-
             this.Taxable = taxable;
+
             if (updateReturnUrl != null)
             {
                 this.UpdateReturnUrl = updateReturnUrl;
@@ -221,25 +222,25 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.InitialChargeAfterTrial = initialChargeAfterTrial;
             }
-
             this.VersionNumber = versionNumber;
+
             if (updateReturnParams != null)
             {
                 this.UpdateReturnParams = updateReturnParams;
             }
-
             this.ProductFamily = productFamily;
             this.PublicSignupPages = publicSignupPages;
             this.ProductPricePointName = productPricePointName;
             this.RequestBillingAddress = requestBillingAddress;
             this.RequireBillingAddress = requireBillingAddress;
             this.RequireShippingAddress = requireShippingAddress;
+
             if (taxCode != null)
             {
                 this.TaxCode = taxCode;
             }
-
             this.DefaultProductPricePointId = defaultProductPricePointId;
+
             if (useSiteExchangeRate != null)
             {
                 this.UseSiteExchangeRate = useSiteExchangeRate;
@@ -249,13 +250,12 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.ItemCategory = itemCategory;
             }
-
             this.ProductPricePointId = productPricePointId;
+
             if (productPricePointHandle != null)
             {
                 this.ProductPricePointHandle = productPricePointHandle;
             }
-
         }
 
         /// <summary>
@@ -703,14 +703,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"Product : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetHandle()
         {
@@ -718,7 +716,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDescription()
         {
@@ -726,7 +724,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetAccountingCode()
         {
@@ -734,7 +732,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetExpirationInterval()
         {
@@ -742,7 +740,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetExpirationIntervalUnit()
         {
@@ -750,7 +748,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetInitialChargeInCents()
         {
@@ -758,7 +756,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetTrialPriceInCents()
         {
@@ -766,7 +764,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetTrialInterval()
         {
@@ -774,7 +772,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetTrialIntervalUnit()
         {
@@ -782,7 +780,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetArchivedAt()
         {
@@ -790,7 +788,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetReturnParams()
         {
@@ -798,7 +796,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetUpdateReturnUrl()
         {
@@ -806,7 +804,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetInitialChargeAfterTrial()
         {
@@ -814,7 +812,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetUpdateReturnParams()
         {
@@ -822,7 +820,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetTaxCode()
         {
@@ -830,7 +828,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetUseSiteExchangeRate()
         {
@@ -838,7 +836,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetItemCategory()
         {
@@ -846,7 +844,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetProductPricePointHandle()
         {
@@ -1018,54 +1016,87 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is Product other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.Handle == null && other.Handle == null) || (this.Handle?.Equals(other.Handle) == true)) &&
-                ((this.Description == null && other.Description == null) || (this.Description?.Equals(other.Description) == true)) &&
-                ((this.AccountingCode == null && other.AccountingCode == null) || (this.AccountingCode?.Equals(other.AccountingCode) == true)) &&
-                ((this.RequestCreditCard == null && other.RequestCreditCard == null) || (this.RequestCreditCard?.Equals(other.RequestCreditCard) == true)) &&
-                ((this.ExpirationInterval == null && other.ExpirationInterval == null) || (this.ExpirationInterval?.Equals(other.ExpirationInterval) == true)) &&
-                ((this.ExpirationIntervalUnit == null && other.ExpirationIntervalUnit == null) || (this.ExpirationIntervalUnit?.Equals(other.ExpirationIntervalUnit) == true)) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true)) &&
-                ((this.UpdatedAt == null && other.UpdatedAt == null) || (this.UpdatedAt?.Equals(other.UpdatedAt) == true)) &&
-                ((this.PriceInCents == null && other.PriceInCents == null) || (this.PriceInCents?.Equals(other.PriceInCents) == true)) &&
-                ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
-                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true)) &&
-                ((this.InitialChargeInCents == null && other.InitialChargeInCents == null) || (this.InitialChargeInCents?.Equals(other.InitialChargeInCents) == true)) &&
-                ((this.TrialPriceInCents == null && other.TrialPriceInCents == null) || (this.TrialPriceInCents?.Equals(other.TrialPriceInCents) == true)) &&
-                ((this.TrialInterval == null && other.TrialInterval == null) || (this.TrialInterval?.Equals(other.TrialInterval) == true)) &&
-                ((this.TrialIntervalUnit == null && other.TrialIntervalUnit == null) || (this.TrialIntervalUnit?.Equals(other.TrialIntervalUnit) == true)) &&
-                ((this.ArchivedAt == null && other.ArchivedAt == null) || (this.ArchivedAt?.Equals(other.ArchivedAt) == true)) &&
-                ((this.RequireCreditCard == null && other.RequireCreditCard == null) || (this.RequireCreditCard?.Equals(other.RequireCreditCard) == true)) &&
-                ((this.ReturnParams == null && other.ReturnParams == null) || (this.ReturnParams?.Equals(other.ReturnParams) == true)) &&
-                ((this.Taxable == null && other.Taxable == null) || (this.Taxable?.Equals(other.Taxable) == true)) &&
-                ((this.UpdateReturnUrl == null && other.UpdateReturnUrl == null) || (this.UpdateReturnUrl?.Equals(other.UpdateReturnUrl) == true)) &&
-                ((this.InitialChargeAfterTrial == null && other.InitialChargeAfterTrial == null) || (this.InitialChargeAfterTrial?.Equals(other.InitialChargeAfterTrial) == true)) &&
-                ((this.VersionNumber == null && other.VersionNumber == null) || (this.VersionNumber?.Equals(other.VersionNumber) == true)) &&
-                ((this.UpdateReturnParams == null && other.UpdateReturnParams == null) || (this.UpdateReturnParams?.Equals(other.UpdateReturnParams) == true)) &&
-                ((this.ProductFamily == null && other.ProductFamily == null) || (this.ProductFamily?.Equals(other.ProductFamily) == true)) &&
-                ((this.PublicSignupPages == null && other.PublicSignupPages == null) || (this.PublicSignupPages?.Equals(other.PublicSignupPages) == true)) &&
-                ((this.ProductPricePointName == null && other.ProductPricePointName == null) || (this.ProductPricePointName?.Equals(other.ProductPricePointName) == true)) &&
-                ((this.RequestBillingAddress == null && other.RequestBillingAddress == null) || (this.RequestBillingAddress?.Equals(other.RequestBillingAddress) == true)) &&
-                ((this.RequireBillingAddress == null && other.RequireBillingAddress == null) || (this.RequireBillingAddress?.Equals(other.RequireBillingAddress) == true)) &&
-                ((this.RequireShippingAddress == null && other.RequireShippingAddress == null) || (this.RequireShippingAddress?.Equals(other.RequireShippingAddress) == true)) &&
-                ((this.TaxCode == null && other.TaxCode == null) || (this.TaxCode?.Equals(other.TaxCode) == true)) &&
-                ((this.DefaultProductPricePointId == null && other.DefaultProductPricePointId == null) || (this.DefaultProductPricePointId?.Equals(other.DefaultProductPricePointId) == true)) &&
-                ((this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null) || (this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true)) &&
-                ((this.ItemCategory == null && other.ItemCategory == null) || (this.ItemCategory?.Equals(other.ItemCategory) == true)) &&
-                ((this.ProductPricePointId == null && other.ProductPricePointId == null) || (this.ProductPricePointId?.Equals(other.ProductPricePointId) == true)) &&
-                ((this.ProductPricePointHandle == null && other.ProductPricePointHandle == null) || (this.ProductPricePointHandle?.Equals(other.ProductPricePointHandle) == true));
+            return obj is Product other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.Handle == null && other.Handle == null ||
+                 this.Handle?.Equals(other.Handle) == true) &&
+                (this.Description == null && other.Description == null ||
+                 this.Description?.Equals(other.Description) == true) &&
+                (this.AccountingCode == null && other.AccountingCode == null ||
+                 this.AccountingCode?.Equals(other.AccountingCode) == true) &&
+                (this.RequestCreditCard == null && other.RequestCreditCard == null ||
+                 this.RequestCreditCard?.Equals(other.RequestCreditCard) == true) &&
+                (this.ExpirationInterval == null && other.ExpirationInterval == null ||
+                 this.ExpirationInterval?.Equals(other.ExpirationInterval) == true) &&
+                (this.ExpirationIntervalUnit == null && other.ExpirationIntervalUnit == null ||
+                 this.ExpirationIntervalUnit?.Equals(other.ExpirationIntervalUnit) == true) &&
+                (this.CreatedAt == null && other.CreatedAt == null ||
+                 this.CreatedAt?.Equals(other.CreatedAt) == true) &&
+                (this.UpdatedAt == null && other.UpdatedAt == null ||
+                 this.UpdatedAt?.Equals(other.UpdatedAt) == true) &&
+                (this.PriceInCents == null && other.PriceInCents == null ||
+                 this.PriceInCents?.Equals(other.PriceInCents) == true) &&
+                (this.Interval == null && other.Interval == null ||
+                 this.Interval?.Equals(other.Interval) == true) &&
+                (this.IntervalUnit == null && other.IntervalUnit == null ||
+                 this.IntervalUnit?.Equals(other.IntervalUnit) == true) &&
+                (this.InitialChargeInCents == null && other.InitialChargeInCents == null ||
+                 this.InitialChargeInCents?.Equals(other.InitialChargeInCents) == true) &&
+                (this.TrialPriceInCents == null && other.TrialPriceInCents == null ||
+                 this.TrialPriceInCents?.Equals(other.TrialPriceInCents) == true) &&
+                (this.TrialInterval == null && other.TrialInterval == null ||
+                 this.TrialInterval?.Equals(other.TrialInterval) == true) &&
+                (this.TrialIntervalUnit == null && other.TrialIntervalUnit == null ||
+                 this.TrialIntervalUnit?.Equals(other.TrialIntervalUnit) == true) &&
+                (this.ArchivedAt == null && other.ArchivedAt == null ||
+                 this.ArchivedAt?.Equals(other.ArchivedAt) == true) &&
+                (this.RequireCreditCard == null && other.RequireCreditCard == null ||
+                 this.RequireCreditCard?.Equals(other.RequireCreditCard) == true) &&
+                (this.ReturnParams == null && other.ReturnParams == null ||
+                 this.ReturnParams?.Equals(other.ReturnParams) == true) &&
+                (this.Taxable == null && other.Taxable == null ||
+                 this.Taxable?.Equals(other.Taxable) == true) &&
+                (this.UpdateReturnUrl == null && other.UpdateReturnUrl == null ||
+                 this.UpdateReturnUrl?.Equals(other.UpdateReturnUrl) == true) &&
+                (this.InitialChargeAfterTrial == null && other.InitialChargeAfterTrial == null ||
+                 this.InitialChargeAfterTrial?.Equals(other.InitialChargeAfterTrial) == true) &&
+                (this.VersionNumber == null && other.VersionNumber == null ||
+                 this.VersionNumber?.Equals(other.VersionNumber) == true) &&
+                (this.UpdateReturnParams == null && other.UpdateReturnParams == null ||
+                 this.UpdateReturnParams?.Equals(other.UpdateReturnParams) == true) &&
+                (this.ProductFamily == null && other.ProductFamily == null ||
+                 this.ProductFamily?.Equals(other.ProductFamily) == true) &&
+                (this.PublicSignupPages == null && other.PublicSignupPages == null ||
+                 this.PublicSignupPages?.Equals(other.PublicSignupPages) == true) &&
+                (this.ProductPricePointName == null && other.ProductPricePointName == null ||
+                 this.ProductPricePointName?.Equals(other.ProductPricePointName) == true) &&
+                (this.RequestBillingAddress == null && other.RequestBillingAddress == null ||
+                 this.RequestBillingAddress?.Equals(other.RequestBillingAddress) == true) &&
+                (this.RequireBillingAddress == null && other.RequireBillingAddress == null ||
+                 this.RequireBillingAddress?.Equals(other.RequireBillingAddress) == true) &&
+                (this.RequireShippingAddress == null && other.RequireShippingAddress == null ||
+                 this.RequireShippingAddress?.Equals(other.RequireShippingAddress) == true) &&
+                (this.TaxCode == null && other.TaxCode == null ||
+                 this.TaxCode?.Equals(other.TaxCode) == true) &&
+                (this.DefaultProductPricePointId == null && other.DefaultProductPricePointId == null ||
+                 this.DefaultProductPricePointId?.Equals(other.DefaultProductPricePointId) == true) &&
+                (this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null ||
+                 this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true) &&
+                (this.ItemCategory == null && other.ItemCategory == null ||
+                 this.ItemCategory?.Equals(other.ItemCategory) == true) &&
+                (this.ProductPricePointId == null && other.ProductPricePointId == null ||
+                 this.ProductPricePointId?.Equals(other.ProductPricePointId) == true) &&
+                (this.ProductPricePointHandle == null && other.ProductPricePointHandle == null ||
+                 this.ProductPricePointHandle?.Equals(other.ProductPricePointHandle) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -1073,10 +1104,10 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
-            toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
-            toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
-            toStringOutput.Add($"this.AccountingCode = {(this.AccountingCode == null ? "null" : this.AccountingCode)}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"this.Handle = {this.Handle ?? "null"}");
+            toStringOutput.Add($"this.Description = {this.Description ?? "null"}");
+            toStringOutput.Add($"this.AccountingCode = {this.AccountingCode ?? "null"}");
             toStringOutput.Add($"this.RequestCreditCard = {(this.RequestCreditCard == null ? "null" : this.RequestCreditCard.ToString())}");
             toStringOutput.Add($"this.ExpirationInterval = {(this.ExpirationInterval == null ? "null" : this.ExpirationInterval.ToString())}");
             toStringOutput.Add($"this.ExpirationIntervalUnit = {(this.ExpirationIntervalUnit == null ? "null" : this.ExpirationIntervalUnit.ToString())}");
@@ -1091,24 +1122,24 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.TrialIntervalUnit = {(this.TrialIntervalUnit == null ? "null" : this.TrialIntervalUnit.ToString())}");
             toStringOutput.Add($"this.ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt.ToString())}");
             toStringOutput.Add($"this.RequireCreditCard = {(this.RequireCreditCard == null ? "null" : this.RequireCreditCard.ToString())}");
-            toStringOutput.Add($"this.ReturnParams = {(this.ReturnParams == null ? "null" : this.ReturnParams)}");
+            toStringOutput.Add($"this.ReturnParams = {this.ReturnParams ?? "null"}");
             toStringOutput.Add($"this.Taxable = {(this.Taxable == null ? "null" : this.Taxable.ToString())}");
-            toStringOutput.Add($"this.UpdateReturnUrl = {(this.UpdateReturnUrl == null ? "null" : this.UpdateReturnUrl)}");
+            toStringOutput.Add($"this.UpdateReturnUrl = {this.UpdateReturnUrl ?? "null"}");
             toStringOutput.Add($"this.InitialChargeAfterTrial = {(this.InitialChargeAfterTrial == null ? "null" : this.InitialChargeAfterTrial.ToString())}");
             toStringOutput.Add($"this.VersionNumber = {(this.VersionNumber == null ? "null" : this.VersionNumber.ToString())}");
-            toStringOutput.Add($"this.UpdateReturnParams = {(this.UpdateReturnParams == null ? "null" : this.UpdateReturnParams)}");
+            toStringOutput.Add($"this.UpdateReturnParams = {this.UpdateReturnParams ?? "null"}");
             toStringOutput.Add($"this.ProductFamily = {(this.ProductFamily == null ? "null" : this.ProductFamily.ToString())}");
             toStringOutput.Add($"this.PublicSignupPages = {(this.PublicSignupPages == null ? "null" : $"[{string.Join(", ", this.PublicSignupPages)} ]")}");
-            toStringOutput.Add($"this.ProductPricePointName = {(this.ProductPricePointName == null ? "null" : this.ProductPricePointName)}");
+            toStringOutput.Add($"this.ProductPricePointName = {this.ProductPricePointName ?? "null"}");
             toStringOutput.Add($"this.RequestBillingAddress = {(this.RequestBillingAddress == null ? "null" : this.RequestBillingAddress.ToString())}");
             toStringOutput.Add($"this.RequireBillingAddress = {(this.RequireBillingAddress == null ? "null" : this.RequireBillingAddress.ToString())}");
             toStringOutput.Add($"this.RequireShippingAddress = {(this.RequireShippingAddress == null ? "null" : this.RequireShippingAddress.ToString())}");
-            toStringOutput.Add($"this.TaxCode = {(this.TaxCode == null ? "null" : this.TaxCode)}");
+            toStringOutput.Add($"this.TaxCode = {this.TaxCode ?? "null"}");
             toStringOutput.Add($"this.DefaultProductPricePointId = {(this.DefaultProductPricePointId == null ? "null" : this.DefaultProductPricePointId.ToString())}");
             toStringOutput.Add($"this.UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
-            toStringOutput.Add($"this.ItemCategory = {(this.ItemCategory == null ? "null" : this.ItemCategory)}");
+            toStringOutput.Add($"this.ItemCategory = {this.ItemCategory ?? "null"}");
             toStringOutput.Add($"this.ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
-            toStringOutput.Add($"this.ProductPricePointHandle = {(this.ProductPricePointHandle == null ? "null" : this.ProductPricePointHandle)}");
+            toStringOutput.Add($"this.ProductPricePointHandle = {this.ProductPricePointHandle ?? "null"}");
 
             base.ToString(toStringOutput);
         }

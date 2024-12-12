@@ -110,6 +110,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is MStringCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PrecisionCase, double>), JTokenType.Float)]
@@ -140,6 +147,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             public override string ToString()
             {
                 return _value.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is PrecisionCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value.Equals(other._value);
             }
         }
 
@@ -172,6 +186,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is NumberCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value.Equals(other._value);
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<BooleanCase, bool>), JTokenType.Boolean)]
@@ -202,6 +223,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             public override string ToString()
             {
                 return _value.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is BooleanCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value.Equals(other._value);
             }
         }
     }

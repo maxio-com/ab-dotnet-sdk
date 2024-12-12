@@ -60,6 +60,7 @@ namespace AdvancedBilling.Standard.Models
             this.Id = id;
             this.Name = name;
             this.Signups = signups;
+
             if (savings != null)
             {
                 this.Savings = savings;
@@ -74,7 +75,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.Revenue = revenue;
             }
-
             this.RevenueInCents = revenueInCents;
         }
 
@@ -160,14 +160,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"CouponUsage : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetSavings()
         {
@@ -175,7 +173,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetSavingsInCents()
         {
@@ -183,7 +181,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetRevenue()
         {
@@ -220,24 +218,27 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is CouponUsage other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.Signups == null && other.Signups == null) || (this.Signups?.Equals(other.Signups) == true)) &&
-                ((this.Savings == null && other.Savings == null) || (this.Savings?.Equals(other.Savings) == true)) &&
-                ((this.SavingsInCents == null && other.SavingsInCents == null) || (this.SavingsInCents?.Equals(other.SavingsInCents) == true)) &&
-                ((this.Revenue == null && other.Revenue == null) || (this.Revenue?.Equals(other.Revenue) == true)) &&
-                ((this.RevenueInCents == null && other.RevenueInCents == null) || (this.RevenueInCents?.Equals(other.RevenueInCents) == true));
+            return obj is CouponUsage other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.Signups == null && other.Signups == null ||
+                 this.Signups?.Equals(other.Signups) == true) &&
+                (this.Savings == null && other.Savings == null ||
+                 this.Savings?.Equals(other.Savings) == true) &&
+                (this.SavingsInCents == null && other.SavingsInCents == null ||
+                 this.SavingsInCents?.Equals(other.SavingsInCents) == true) &&
+                (this.Revenue == null && other.Revenue == null ||
+                 this.Revenue?.Equals(other.Revenue) == true) &&
+                (this.RevenueInCents == null && other.RevenueInCents == null ||
+                 this.RevenueInCents?.Equals(other.RevenueInCents) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -245,7 +246,7 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
             toStringOutput.Add($"this.Signups = {(this.Signups == null ? "null" : this.Signups.ToString())}");
             toStringOutput.Add($"this.Savings = {(this.Savings == null ? "null" : this.Savings.ToString())}");
             toStringOutput.Add($"this.SavingsInCents = {(this.SavingsInCents == null ? "null" : this.SavingsInCents.ToString())}");

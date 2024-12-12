@@ -45,7 +45,7 @@ namespace AdvancedBilling.Standard.Models
             long? sinceId = null,
             long? maxId = null,
             Models.Direction? direction = Models.Direction.Desc,
-            List<Models.EventType> filter = null)
+            List<Models.EventKey> filter = null)
         {
             this.SubscriptionId = subscriptionId;
             this.Page = page;
@@ -99,39 +99,39 @@ namespace AdvancedBilling.Standard.Models
         /// Use in query `filter=signup_success,payment_success`.
         /// </summary>
         [JsonProperty("filter", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Models.EventType> Filter { get; set; }
+        public List<Models.EventKey> Filter { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ListSubscriptionEventsInput : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ListSubscriptionEventsInput other &&                this.SubscriptionId.Equals(other.SubscriptionId) &&
-                ((this.Page == null && other.Page == null) || (this.Page?.Equals(other.Page) == true)) &&
-                ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true)) &&
-                ((this.SinceId == null && other.SinceId == null) || (this.SinceId?.Equals(other.SinceId) == true)) &&
-                ((this.MaxId == null && other.MaxId == null) || (this.MaxId?.Equals(other.MaxId) == true)) &&
-                ((this.Direction == null && other.Direction == null) || (this.Direction?.Equals(other.Direction) == true)) &&
-                ((this.Filter == null && other.Filter == null) || (this.Filter?.Equals(other.Filter) == true));
+            return obj is ListSubscriptionEventsInput other &&
+                (this.SubscriptionId.Equals(other.SubscriptionId)) &&
+                (this.Page == null && other.Page == null ||
+                 this.Page?.Equals(other.Page) == true) &&
+                (this.PerPage == null && other.PerPage == null ||
+                 this.PerPage?.Equals(other.PerPage) == true) &&
+                (this.SinceId == null && other.SinceId == null ||
+                 this.SinceId?.Equals(other.SinceId) == true) &&
+                (this.MaxId == null && other.MaxId == null ||
+                 this.MaxId?.Equals(other.MaxId) == true) &&
+                (this.Direction == null && other.Direction == null ||
+                 this.Direction?.Equals(other.Direction) == true) &&
+                (this.Filter == null && other.Filter == null ||
+                 this.Filter?.Equals(other.Filter) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

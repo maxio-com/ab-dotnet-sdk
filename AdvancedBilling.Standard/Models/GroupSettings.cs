@@ -45,7 +45,6 @@ namespace AdvancedBilling.Standard.Models
         /// Attributes of the target customer who will be the responsible payer of the created subscription. Required.
         /// </summary>
         [JsonProperty("target")]
-        [JsonRequired]
         public Models.GroupTarget Target { get; set; }
 
         /// <summary>
@@ -58,28 +57,24 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"GroupSettings : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is GroupSettings other &&                ((this.Target == null && other.Target == null) || (this.Target?.Equals(other.Target) == true)) &&
-                ((this.Billing == null && other.Billing == null) || (this.Billing?.Equals(other.Billing) == true));
+            return obj is GroupSettings other &&
+                (this.Target == null && other.Target == null ||
+                 this.Target?.Equals(other.Target) == true) &&
+                (this.Billing == null && other.Billing == null ||
+                 this.Billing?.Equals(other.Billing) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

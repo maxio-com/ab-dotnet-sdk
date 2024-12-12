@@ -138,37 +138,42 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SiteStatistics : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SiteStatistics other &&                ((this.TotalSubscriptions == null && other.TotalSubscriptions == null) || (this.TotalSubscriptions?.Equals(other.TotalSubscriptions) == true)) &&
-                ((this.SubscriptionsToday == null && other.SubscriptionsToday == null) || (this.SubscriptionsToday?.Equals(other.SubscriptionsToday) == true)) &&
-                ((this.TotalRevenue == null && other.TotalRevenue == null) || (this.TotalRevenue?.Equals(other.TotalRevenue) == true)) &&
-                ((this.RevenueToday == null && other.RevenueToday == null) || (this.RevenueToday?.Equals(other.RevenueToday) == true)) &&
-                ((this.RevenueThisMonth == null && other.RevenueThisMonth == null) || (this.RevenueThisMonth?.Equals(other.RevenueThisMonth) == true)) &&
-                ((this.RevenueThisYear == null && other.RevenueThisYear == null) || (this.RevenueThisYear?.Equals(other.RevenueThisYear) == true)) &&
-                ((this.TotalCanceledSubscriptions == null && other.TotalCanceledSubscriptions == null) || (this.TotalCanceledSubscriptions?.Equals(other.TotalCanceledSubscriptions) == true)) &&
-                ((this.TotalActiveSubscriptions == null && other.TotalActiveSubscriptions == null) || (this.TotalActiveSubscriptions?.Equals(other.TotalActiveSubscriptions) == true)) &&
-                ((this.TotalPastDueSubscriptions == null && other.TotalPastDueSubscriptions == null) || (this.TotalPastDueSubscriptions?.Equals(other.TotalPastDueSubscriptions) == true)) &&
-                ((this.TotalUnpaidSubscriptions == null && other.TotalUnpaidSubscriptions == null) || (this.TotalUnpaidSubscriptions?.Equals(other.TotalUnpaidSubscriptions) == true)) &&
-                ((this.TotalDunningSubscriptions == null && other.TotalDunningSubscriptions == null) || (this.TotalDunningSubscriptions?.Equals(other.TotalDunningSubscriptions) == true));
+            return obj is SiteStatistics other &&
+                (this.TotalSubscriptions == null && other.TotalSubscriptions == null ||
+                 this.TotalSubscriptions?.Equals(other.TotalSubscriptions) == true) &&
+                (this.SubscriptionsToday == null && other.SubscriptionsToday == null ||
+                 this.SubscriptionsToday?.Equals(other.SubscriptionsToday) == true) &&
+                (this.TotalRevenue == null && other.TotalRevenue == null ||
+                 this.TotalRevenue?.Equals(other.TotalRevenue) == true) &&
+                (this.RevenueToday == null && other.RevenueToday == null ||
+                 this.RevenueToday?.Equals(other.RevenueToday) == true) &&
+                (this.RevenueThisMonth == null && other.RevenueThisMonth == null ||
+                 this.RevenueThisMonth?.Equals(other.RevenueThisMonth) == true) &&
+                (this.RevenueThisYear == null && other.RevenueThisYear == null ||
+                 this.RevenueThisYear?.Equals(other.RevenueThisYear) == true) &&
+                (this.TotalCanceledSubscriptions == null && other.TotalCanceledSubscriptions == null ||
+                 this.TotalCanceledSubscriptions?.Equals(other.TotalCanceledSubscriptions) == true) &&
+                (this.TotalActiveSubscriptions == null && other.TotalActiveSubscriptions == null ||
+                 this.TotalActiveSubscriptions?.Equals(other.TotalActiveSubscriptions) == true) &&
+                (this.TotalPastDueSubscriptions == null && other.TotalPastDueSubscriptions == null ||
+                 this.TotalPastDueSubscriptions?.Equals(other.TotalPastDueSubscriptions) == true) &&
+                (this.TotalUnpaidSubscriptions == null && other.TotalUnpaidSubscriptions == null ||
+                 this.TotalUnpaidSubscriptions?.Equals(other.TotalUnpaidSubscriptions) == true) &&
+                (this.TotalDunningSubscriptions == null && other.TotalDunningSubscriptions == null ||
+                 this.TotalDunningSubscriptions?.Equals(other.TotalDunningSubscriptions) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -177,10 +182,10 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.TotalSubscriptions = {(this.TotalSubscriptions == null ? "null" : this.TotalSubscriptions.ToString())}");
             toStringOutput.Add($"this.SubscriptionsToday = {(this.SubscriptionsToday == null ? "null" : this.SubscriptionsToday.ToString())}");
-            toStringOutput.Add($"this.TotalRevenue = {(this.TotalRevenue == null ? "null" : this.TotalRevenue)}");
-            toStringOutput.Add($"this.RevenueToday = {(this.RevenueToday == null ? "null" : this.RevenueToday)}");
-            toStringOutput.Add($"this.RevenueThisMonth = {(this.RevenueThisMonth == null ? "null" : this.RevenueThisMonth)}");
-            toStringOutput.Add($"this.RevenueThisYear = {(this.RevenueThisYear == null ? "null" : this.RevenueThisYear)}");
+            toStringOutput.Add($"this.TotalRevenue = {this.TotalRevenue ?? "null"}");
+            toStringOutput.Add($"this.RevenueToday = {this.RevenueToday ?? "null"}");
+            toStringOutput.Add($"this.RevenueThisMonth = {this.RevenueThisMonth ?? "null"}");
+            toStringOutput.Add($"this.RevenueThisYear = {this.RevenueThisYear ?? "null"}");
             toStringOutput.Add($"this.TotalCanceledSubscriptions = {(this.TotalCanceledSubscriptions == null ? "null" : this.TotalCanceledSubscriptions.ToString())}");
             toStringOutput.Add($"this.TotalActiveSubscriptions = {(this.TotalActiveSubscriptions == null ? "null" : this.TotalActiveSubscriptions.ToString())}");
             toStringOutput.Add($"this.TotalPastDueSubscriptions = {(this.TotalPastDueSubscriptions == null ? "null" : this.TotalPastDueSubscriptions.ToString())}");

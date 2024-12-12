@@ -87,18 +87,18 @@ namespace AdvancedBilling.Standard.Models
             this.ProductRevisableNumber = productRevisableNumber;
             this.Name = name;
             this.Handle = handle;
+
             if (description != null)
             {
                 this.Description = description;
             }
-
             this.CreatedAt = createdAt;
             this.UpdatedAt = updatedAt;
+
             if (archivedAt != null)
             {
                 this.ArchivedAt = archivedAt;
             }
-
             this.OfferItems = offerItems;
             this.OfferDiscounts = offerDiscounts;
             this.ProductFamilyName = productFamilyName;
@@ -253,14 +253,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"Offer : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDescription()
         {
@@ -268,7 +266,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetArchivedAt()
         {
@@ -296,36 +294,51 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is Offer other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.SiteId == null && other.SiteId == null) || (this.SiteId?.Equals(other.SiteId) == true)) &&
-                ((this.ProductFamilyId == null && other.ProductFamilyId == null) || (this.ProductFamilyId?.Equals(other.ProductFamilyId) == true)) &&
-                ((this.ProductId == null && other.ProductId == null) || (this.ProductId?.Equals(other.ProductId) == true)) &&
-                ((this.ProductPricePointId == null && other.ProductPricePointId == null) || (this.ProductPricePointId?.Equals(other.ProductPricePointId) == true)) &&
-                ((this.ProductRevisableNumber == null && other.ProductRevisableNumber == null) || (this.ProductRevisableNumber?.Equals(other.ProductRevisableNumber) == true)) &&
-                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.Handle == null && other.Handle == null) || (this.Handle?.Equals(other.Handle) == true)) &&
-                ((this.Description == null && other.Description == null) || (this.Description?.Equals(other.Description) == true)) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true)) &&
-                ((this.UpdatedAt == null && other.UpdatedAt == null) || (this.UpdatedAt?.Equals(other.UpdatedAt) == true)) &&
-                ((this.ArchivedAt == null && other.ArchivedAt == null) || (this.ArchivedAt?.Equals(other.ArchivedAt) == true)) &&
-                ((this.OfferItems == null && other.OfferItems == null) || (this.OfferItems?.Equals(other.OfferItems) == true)) &&
-                ((this.OfferDiscounts == null && other.OfferDiscounts == null) || (this.OfferDiscounts?.Equals(other.OfferDiscounts) == true)) &&
-                ((this.ProductFamilyName == null && other.ProductFamilyName == null) || (this.ProductFamilyName?.Equals(other.ProductFamilyName) == true)) &&
-                ((this.ProductName == null && other.ProductName == null) || (this.ProductName?.Equals(other.ProductName) == true)) &&
-                ((this.ProductPricePointName == null && other.ProductPricePointName == null) || (this.ProductPricePointName?.Equals(other.ProductPricePointName) == true)) &&
-                ((this.ProductPriceInCents == null && other.ProductPriceInCents == null) || (this.ProductPriceInCents?.Equals(other.ProductPriceInCents) == true)) &&
-                ((this.OfferSignupPages == null && other.OfferSignupPages == null) || (this.OfferSignupPages?.Equals(other.OfferSignupPages) == true));
+            return obj is Offer other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.SiteId == null && other.SiteId == null ||
+                 this.SiteId?.Equals(other.SiteId) == true) &&
+                (this.ProductFamilyId == null && other.ProductFamilyId == null ||
+                 this.ProductFamilyId?.Equals(other.ProductFamilyId) == true) &&
+                (this.ProductId == null && other.ProductId == null ||
+                 this.ProductId?.Equals(other.ProductId) == true) &&
+                (this.ProductPricePointId == null && other.ProductPricePointId == null ||
+                 this.ProductPricePointId?.Equals(other.ProductPricePointId) == true) &&
+                (this.ProductRevisableNumber == null && other.ProductRevisableNumber == null ||
+                 this.ProductRevisableNumber?.Equals(other.ProductRevisableNumber) == true) &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.Handle == null && other.Handle == null ||
+                 this.Handle?.Equals(other.Handle) == true) &&
+                (this.Description == null && other.Description == null ||
+                 this.Description?.Equals(other.Description) == true) &&
+                (this.CreatedAt == null && other.CreatedAt == null ||
+                 this.CreatedAt?.Equals(other.CreatedAt) == true) &&
+                (this.UpdatedAt == null && other.UpdatedAt == null ||
+                 this.UpdatedAt?.Equals(other.UpdatedAt) == true) &&
+                (this.ArchivedAt == null && other.ArchivedAt == null ||
+                 this.ArchivedAt?.Equals(other.ArchivedAt) == true) &&
+                (this.OfferItems == null && other.OfferItems == null ||
+                 this.OfferItems?.Equals(other.OfferItems) == true) &&
+                (this.OfferDiscounts == null && other.OfferDiscounts == null ||
+                 this.OfferDiscounts?.Equals(other.OfferDiscounts) == true) &&
+                (this.ProductFamilyName == null && other.ProductFamilyName == null ||
+                 this.ProductFamilyName?.Equals(other.ProductFamilyName) == true) &&
+                (this.ProductName == null && other.ProductName == null ||
+                 this.ProductName?.Equals(other.ProductName) == true) &&
+                (this.ProductPricePointName == null && other.ProductPricePointName == null ||
+                 this.ProductPricePointName?.Equals(other.ProductPricePointName) == true) &&
+                (this.ProductPriceInCents == null && other.ProductPriceInCents == null ||
+                 this.ProductPriceInCents?.Equals(other.ProductPriceInCents) == true) &&
+                (this.OfferSignupPages == null && other.OfferSignupPages == null ||
+                 this.OfferSignupPages?.Equals(other.OfferSignupPages) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -338,17 +351,17 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
             toStringOutput.Add($"this.ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
             toStringOutput.Add($"this.ProductRevisableNumber = {(this.ProductRevisableNumber == null ? "null" : this.ProductRevisableNumber.ToString())}");
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
-            toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
-            toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"this.Handle = {this.Handle ?? "null"}");
+            toStringOutput.Add($"this.Description = {this.Description ?? "null"}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
             toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
             toStringOutput.Add($"this.ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt.ToString())}");
             toStringOutput.Add($"this.OfferItems = {(this.OfferItems == null ? "null" : $"[{string.Join(", ", this.OfferItems)} ]")}");
             toStringOutput.Add($"this.OfferDiscounts = {(this.OfferDiscounts == null ? "null" : $"[{string.Join(", ", this.OfferDiscounts)} ]")}");
-            toStringOutput.Add($"this.ProductFamilyName = {(this.ProductFamilyName == null ? "null" : this.ProductFamilyName)}");
-            toStringOutput.Add($"this.ProductName = {(this.ProductName == null ? "null" : this.ProductName)}");
-            toStringOutput.Add($"this.ProductPricePointName = {(this.ProductPricePointName == null ? "null" : this.ProductPricePointName)}");
+            toStringOutput.Add($"this.ProductFamilyName = {this.ProductFamilyName ?? "null"}");
+            toStringOutput.Add($"this.ProductName = {this.ProductName ?? "null"}");
+            toStringOutput.Add($"this.ProductPricePointName = {this.ProductPricePointName ?? "null"}");
             toStringOutput.Add($"this.ProductPriceInCents = {(this.ProductPriceInCents == null ? "null" : this.ProductPriceInCents.ToString())}");
             toStringOutput.Add($"this.OfferSignupPages = {(this.OfferSignupPages == null ? "null" : $"[{string.Join(", ", this.OfferSignupPages)} ]")}");
 

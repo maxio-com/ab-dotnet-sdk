@@ -66,38 +66,35 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"CreditCardAttributes : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is CreditCardAttributes other &&                ((this.FullNumber == null && other.FullNumber == null) || (this.FullNumber?.Equals(other.FullNumber) == true)) &&
-                ((this.ExpirationMonth == null && other.ExpirationMonth == null) || (this.ExpirationMonth?.Equals(other.ExpirationMonth) == true)) &&
-                ((this.ExpirationYear == null && other.ExpirationYear == null) || (this.ExpirationYear?.Equals(other.ExpirationYear) == true));
+            return obj is CreditCardAttributes other &&
+                (this.FullNumber == null && other.FullNumber == null ||
+                 this.FullNumber?.Equals(other.FullNumber) == true) &&
+                (this.ExpirationMonth == null && other.ExpirationMonth == null ||
+                 this.ExpirationMonth?.Equals(other.ExpirationMonth) == true) &&
+                (this.ExpirationYear == null && other.ExpirationYear == null ||
+                 this.ExpirationYear?.Equals(other.ExpirationYear) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.FullNumber = {(this.FullNumber == null ? "null" : this.FullNumber)}");
-            toStringOutput.Add($"this.ExpirationMonth = {(this.ExpirationMonth == null ? "null" : this.ExpirationMonth)}");
-            toStringOutput.Add($"this.ExpirationYear = {(this.ExpirationYear == null ? "null" : this.ExpirationYear)}");
+            toStringOutput.Add($"this.FullNumber = {this.FullNumber ?? "null"}");
+            toStringOutput.Add($"this.ExpirationMonth = {this.ExpirationMonth ?? "null"}");
+            toStringOutput.Add($"this.ExpirationYear = {this.ExpirationYear ?? "null"}");
 
             base.ToString(toStringOutput);
         }

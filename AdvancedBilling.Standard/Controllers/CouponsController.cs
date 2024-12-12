@@ -40,9 +40,9 @@ namespace AdvancedBilling.Standard.Controllers
         /// Additionally, for documentation on how to apply a coupon to a subscription within the Advanced Billing UI, please see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261259337101-Coupons-and-Subscriptions).
         /// ## Create Coupon.
         /// This request will create a coupon, based on the provided information.
-        /// When creating a coupon, you must specify a product family using the `product_family_id`. If no `product_family_id` is passed, the first product family available is used. You will also need to formulate your URL to cite the Product Family ID in your request.
-        /// You can restrict a coupon to only apply to specific products / components by optionally passing in hashes of `restricted_products` and/or `restricted_components` in the format:.
-        /// `{ "<product/component_id>": boolean_value }`.
+        /// You can create either a flat amount coupon, by specyfing `amount_in_cents`, or percentage coupon by specyfing `percentage`.
+        /// You can restrict a coupon to only apply to specific products / components by optionally passing in `restricted_products` and/or `restricted_components` objects in the format:.
+        /// `{ "<product_id/component_id>": boolean_value }`.
         /// ]]>
         /// </summary>
         /// <param name="productFamilyId">Required parameter: The Advanced Billing id of the product family to which the coupon belongs.</param>
@@ -50,7 +50,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <returns>Returns the Models.CouponResponse response from the API call.</returns>
         public Models.CouponResponse CreateCoupon(
                 int productFamilyId,
-                Models.CreateOrUpdateCoupon body = null)
+                Models.CouponRequest body = null)
             => CoreHelper.RunTask(CreateCouponAsync(productFamilyId, body));
 
         /// <summary>
@@ -60,9 +60,9 @@ namespace AdvancedBilling.Standard.Controllers
         /// Additionally, for documentation on how to apply a coupon to a subscription within the Advanced Billing UI, please see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261259337101-Coupons-and-Subscriptions).
         /// ## Create Coupon.
         /// This request will create a coupon, based on the provided information.
-        /// When creating a coupon, you must specify a product family using the `product_family_id`. If no `product_family_id` is passed, the first product family available is used. You will also need to formulate your URL to cite the Product Family ID in your request.
-        /// You can restrict a coupon to only apply to specific products / components by optionally passing in hashes of `restricted_products` and/or `restricted_components` in the format:.
-        /// `{ "<product/component_id>": boolean_value }`.
+        /// You can create either a flat amount coupon, by specyfing `amount_in_cents`, or percentage coupon by specyfing `percentage`.
+        /// You can restrict a coupon to only apply to specific products / components by optionally passing in `restricted_products` and/or `restricted_components` objects in the format:.
+        /// `{ "<product_id/component_id>": boolean_value }`.
         /// ]]>
         /// </summary>
         /// <param name="productFamilyId">Required parameter: The Advanced Billing id of the product family to which the coupon belongs.</param>
@@ -71,7 +71,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <returns>Returns the Models.CouponResponse response from the API call.</returns>
         public async Task<Models.CouponResponse> CreateCouponAsync(
                 int productFamilyId,
-                Models.CreateOrUpdateCoupon body = null,
+                Models.CouponRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CouponResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
@@ -123,11 +123,13 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="productFamilyId">Optional parameter: The Advanced Billing id of the product family to which the coupon belongs.</param>
         /// <param name="code">Optional parameter: The code of the coupon.</param>
+        /// <param name="currencyPrices">Optional parameter: When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response..</param>
         /// <returns>Returns the Models.CouponResponse response from the API call.</returns>
         public Models.CouponResponse FindCoupon(
                 int? productFamilyId = null,
-                string code = null)
-            => CoreHelper.RunTask(FindCouponAsync(productFamilyId, code));
+                string code = null,
+                bool? currencyPrices = null)
+            => CoreHelper.RunTask(FindCouponAsync(productFamilyId, code, currencyPrices));
 
         /// <summary>
         /// You can search for a coupon via the API with the find method. By passing a code parameter, the find will attempt to locate a coupon that matches that code. If no coupon is found, a 404 is returned.
@@ -135,11 +137,13 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="productFamilyId">Optional parameter: The Advanced Billing id of the product family to which the coupon belongs.</param>
         /// <param name="code">Optional parameter: The code of the coupon.</param>
+        /// <param name="currencyPrices">Optional parameter: When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.CouponResponse response from the API call.</returns>
         public async Task<Models.CouponResponse> FindCouponAsync(
                 int? productFamilyId = null,
                 string code = null,
+                bool? currencyPrices = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CouponResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
@@ -147,7 +151,8 @@ namespace AdvancedBilling.Standard.Controllers
                   .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("product_family_id", productFamilyId))
-                      .Query(_query => _query.Setup("code", code))))
+                      .Query(_query => _query.Setup("code", code))
+                      .Query(_query => _query.Setup("currency_prices", currencyPrices))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -158,11 +163,13 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="productFamilyId">Required parameter: The Advanced Billing id of the product family to which the coupon belongs.</param>
         /// <param name="couponId">Required parameter: The Advanced Billing id of the coupon.</param>
+        /// <param name="currencyPrices">Optional parameter: When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response..</param>
         /// <returns>Returns the Models.CouponResponse response from the API call.</returns>
         public Models.CouponResponse ReadCoupon(
                 int productFamilyId,
-                int couponId)
-            => CoreHelper.RunTask(ReadCouponAsync(productFamilyId, couponId));
+                int couponId,
+                bool? currencyPrices = null)
+            => CoreHelper.RunTask(ReadCouponAsync(productFamilyId, couponId, currencyPrices));
 
         /// <summary>
         /// You can retrieve the Coupon via the API with the Show method. You must identify the Coupon in this call by the ID parameter that Advanced Billing assigns.
@@ -172,11 +179,13 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="productFamilyId">Required parameter: The Advanced Billing id of the product family to which the coupon belongs.</param>
         /// <param name="couponId">Required parameter: The Advanced Billing id of the coupon.</param>
+        /// <param name="currencyPrices">Optional parameter: When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.CouponResponse response from the API call.</returns>
         public async Task<Models.CouponResponse> ReadCouponAsync(
                 int productFamilyId,
                 int couponId,
+                bool? currencyPrices = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CouponResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
@@ -184,7 +193,8 @@ namespace AdvancedBilling.Standard.Controllers
                   .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
-                      .Template(_template => _template.Setup("coupon_id", couponId))))
+                      .Template(_template => _template.Setup("coupon_id", couponId))
+                      .Query(_query => _query.Setup("currency_prices", currencyPrices))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -202,7 +212,7 @@ namespace AdvancedBilling.Standard.Controllers
         public Models.CouponResponse UpdateCoupon(
                 int productFamilyId,
                 int couponId,
-                Models.CreateOrUpdateCoupon body = null)
+                Models.CouponRequest body = null)
             => CoreHelper.RunTask(UpdateCouponAsync(productFamilyId, couponId, body));
 
         /// <summary>
@@ -221,7 +231,7 @@ namespace AdvancedBilling.Standard.Controllers
         public async Task<Models.CouponResponse> UpdateCouponAsync(
                 int productFamilyId,
                 int couponId,
-                Models.CreateOrUpdateCoupon body = null,
+                Models.CouponRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CouponResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
@@ -232,6 +242,8 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("product_family_id", productFamilyId))
                       .Template(_template => _template.Setup("coupon_id", couponId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -426,6 +438,8 @@ namespace AdvancedBilling.Standard.Controllers
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("coupon_id", couponId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorStringMapResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>

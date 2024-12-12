@@ -25,6 +25,7 @@ namespace AdvancedBilling.Standard.Models
         private int? productVersion;
         private int? componentId;
         private int? pricePointId;
+        private int? billingScheduleItemId;
         private Models.InvoiceLineItemComponentCostData componentCostData;
         private int? productPricePointId;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -33,6 +34,7 @@ namespace AdvancedBilling.Standard.Models
             { "product_version", false },
             { "component_id", false },
             { "price_point_id", false },
+            { "billing_schedule_item_id", false },
             { "component_cost_data", false },
             { "product_price_point_id", false },
         };
@@ -64,6 +66,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="productVersion">product_version.</param>
         /// <param name="componentId">component_id.</param>
         /// <param name="pricePointId">price_point_id.</param>
+        /// <param name="billingScheduleItemId">billing_schedule_item_id.</param>
         /// <param name="hide">hide.</param>
         /// <param name="componentCostData">component_cost_data.</param>
         /// <param name="productPricePointId">product_price_point_id.</param>
@@ -87,6 +90,7 @@ namespace AdvancedBilling.Standard.Models
             int? productVersion = null,
             int? componentId = null,
             int? pricePointId = null,
+            int? billingScheduleItemId = null,
             bool? hide = null,
             Models.InvoiceLineItemComponentCostData componentCostData = null,
             int? productPricePointId = null,
@@ -106,6 +110,7 @@ namespace AdvancedBilling.Standard.Models
             this.PeriodRangeStart = periodRangeStart;
             this.PeriodRangeEnd = periodRangeEnd;
             this.TransactionId = transactionId;
+
             if (productId != null)
             {
                 this.ProductId = productId;
@@ -126,7 +131,12 @@ namespace AdvancedBilling.Standard.Models
                 this.PricePointId = pricePointId;
             }
 
+            if (billingScheduleItemId != null)
+            {
+                this.BillingScheduleItemId = billingScheduleItemId;
+            }
             this.Hide = hide;
+
             if (componentCostData != null)
             {
                 this.ComponentCostData = componentCostData;
@@ -136,7 +146,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.ProductPricePointId = productPricePointId;
             }
-
             this.CustomItem = customItem;
             this.Kind = kind;
         }
@@ -307,6 +316,24 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// Gets or sets BillingScheduleItemId.
+        /// </summary>
+        [JsonProperty("billing_schedule_item_id")]
+        public int? BillingScheduleItemId
+        {
+            get
+            {
+                return this.billingScheduleItemId;
+            }
+
+            set
+            {
+                this.shouldSerialize["billing_schedule_item_id"] = true;
+                this.billingScheduleItemId = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets Hide.
         /// </summary>
         [JsonProperty("hide", NullValueHandling = NullValueHandling.Ignore)]
@@ -364,14 +391,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"InvoiceLineItem : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetProductId()
         {
@@ -379,7 +404,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetProductVersion()
         {
@@ -387,7 +412,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetComponentId()
         {
@@ -395,7 +420,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetPricePointId()
         {
@@ -403,7 +428,15 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetBillingScheduleItemId()
+        {
+            this.shouldSerialize["billing_schedule_item_id"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetComponentCostData()
         {
@@ -411,7 +444,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetProductPricePointId()
         {
@@ -458,6 +491,15 @@ namespace AdvancedBilling.Standard.Models
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeBillingScheduleItemId()
+        {
+            return this.shouldSerialize["billing_schedule_item_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
         public bool ShouldSerializeComponentCostData()
         {
             return this.shouldSerialize["component_cost_data"];
@@ -475,54 +517,74 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is InvoiceLineItem other &&                ((this.Uid == null && other.Uid == null) || (this.Uid?.Equals(other.Uid) == true)) &&
-                ((this.Title == null && other.Title == null) || (this.Title?.Equals(other.Title) == true)) &&
-                ((this.Description == null && other.Description == null) || (this.Description?.Equals(other.Description) == true)) &&
-                ((this.Quantity == null && other.Quantity == null) || (this.Quantity?.Equals(other.Quantity) == true)) &&
-                ((this.UnitPrice == null && other.UnitPrice == null) || (this.UnitPrice?.Equals(other.UnitPrice) == true)) &&
-                ((this.SubtotalAmount == null && other.SubtotalAmount == null) || (this.SubtotalAmount?.Equals(other.SubtotalAmount) == true)) &&
-                ((this.DiscountAmount == null && other.DiscountAmount == null) || (this.DiscountAmount?.Equals(other.DiscountAmount) == true)) &&
-                ((this.TaxAmount == null && other.TaxAmount == null) || (this.TaxAmount?.Equals(other.TaxAmount) == true)) &&
-                ((this.TotalAmount == null && other.TotalAmount == null) || (this.TotalAmount?.Equals(other.TotalAmount) == true)) &&
-                ((this.TieredUnitPrice == null && other.TieredUnitPrice == null) || (this.TieredUnitPrice?.Equals(other.TieredUnitPrice) == true)) &&
-                ((this.PeriodRangeStart == null && other.PeriodRangeStart == null) || (this.PeriodRangeStart?.Equals(other.PeriodRangeStart) == true)) &&
-                ((this.PeriodRangeEnd == null && other.PeriodRangeEnd == null) || (this.PeriodRangeEnd?.Equals(other.PeriodRangeEnd) == true)) &&
-                ((this.TransactionId == null && other.TransactionId == null) || (this.TransactionId?.Equals(other.TransactionId) == true)) &&
-                ((this.ProductId == null && other.ProductId == null) || (this.ProductId?.Equals(other.ProductId) == true)) &&
-                ((this.ProductVersion == null && other.ProductVersion == null) || (this.ProductVersion?.Equals(other.ProductVersion) == true)) &&
-                ((this.ComponentId == null && other.ComponentId == null) || (this.ComponentId?.Equals(other.ComponentId) == true)) &&
-                ((this.PricePointId == null && other.PricePointId == null) || (this.PricePointId?.Equals(other.PricePointId) == true)) &&
-                ((this.Hide == null && other.Hide == null) || (this.Hide?.Equals(other.Hide) == true)) &&
-                ((this.ComponentCostData == null && other.ComponentCostData == null) || (this.ComponentCostData?.Equals(other.ComponentCostData) == true)) &&
-                ((this.ProductPricePointId == null && other.ProductPricePointId == null) || (this.ProductPricePointId?.Equals(other.ProductPricePointId) == true)) &&
-                ((this.CustomItem == null && other.CustomItem == null) || (this.CustomItem?.Equals(other.CustomItem) == true)) &&
-                ((this.Kind == null && other.Kind == null) || (this.Kind?.Equals(other.Kind) == true));
+            return obj is InvoiceLineItem other &&
+                (this.Uid == null && other.Uid == null ||
+                 this.Uid?.Equals(other.Uid) == true) &&
+                (this.Title == null && other.Title == null ||
+                 this.Title?.Equals(other.Title) == true) &&
+                (this.Description == null && other.Description == null ||
+                 this.Description?.Equals(other.Description) == true) &&
+                (this.Quantity == null && other.Quantity == null ||
+                 this.Quantity?.Equals(other.Quantity) == true) &&
+                (this.UnitPrice == null && other.UnitPrice == null ||
+                 this.UnitPrice?.Equals(other.UnitPrice) == true) &&
+                (this.SubtotalAmount == null && other.SubtotalAmount == null ||
+                 this.SubtotalAmount?.Equals(other.SubtotalAmount) == true) &&
+                (this.DiscountAmount == null && other.DiscountAmount == null ||
+                 this.DiscountAmount?.Equals(other.DiscountAmount) == true) &&
+                (this.TaxAmount == null && other.TaxAmount == null ||
+                 this.TaxAmount?.Equals(other.TaxAmount) == true) &&
+                (this.TotalAmount == null && other.TotalAmount == null ||
+                 this.TotalAmount?.Equals(other.TotalAmount) == true) &&
+                (this.TieredUnitPrice == null && other.TieredUnitPrice == null ||
+                 this.TieredUnitPrice?.Equals(other.TieredUnitPrice) == true) &&
+                (this.PeriodRangeStart == null && other.PeriodRangeStart == null ||
+                 this.PeriodRangeStart?.Equals(other.PeriodRangeStart) == true) &&
+                (this.PeriodRangeEnd == null && other.PeriodRangeEnd == null ||
+                 this.PeriodRangeEnd?.Equals(other.PeriodRangeEnd) == true) &&
+                (this.TransactionId == null && other.TransactionId == null ||
+                 this.TransactionId?.Equals(other.TransactionId) == true) &&
+                (this.ProductId == null && other.ProductId == null ||
+                 this.ProductId?.Equals(other.ProductId) == true) &&
+                (this.ProductVersion == null && other.ProductVersion == null ||
+                 this.ProductVersion?.Equals(other.ProductVersion) == true) &&
+                (this.ComponentId == null && other.ComponentId == null ||
+                 this.ComponentId?.Equals(other.ComponentId) == true) &&
+                (this.PricePointId == null && other.PricePointId == null ||
+                 this.PricePointId?.Equals(other.PricePointId) == true) &&
+                (this.BillingScheduleItemId == null && other.BillingScheduleItemId == null ||
+                 this.BillingScheduleItemId?.Equals(other.BillingScheduleItemId) == true) &&
+                (this.Hide == null && other.Hide == null ||
+                 this.Hide?.Equals(other.Hide) == true) &&
+                (this.ComponentCostData == null && other.ComponentCostData == null ||
+                 this.ComponentCostData?.Equals(other.ComponentCostData) == true) &&
+                (this.ProductPricePointId == null && other.ProductPricePointId == null ||
+                 this.ProductPricePointId?.Equals(other.ProductPricePointId) == true) &&
+                (this.CustomItem == null && other.CustomItem == null ||
+                 this.CustomItem?.Equals(other.CustomItem) == true) &&
+                (this.Kind == null && other.Kind == null ||
+                 this.Kind?.Equals(other.Kind) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
-            toStringOutput.Add($"this.Title = {(this.Title == null ? "null" : this.Title)}");
-            toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
-            toStringOutput.Add($"this.Quantity = {(this.Quantity == null ? "null" : this.Quantity)}");
-            toStringOutput.Add($"this.UnitPrice = {(this.UnitPrice == null ? "null" : this.UnitPrice)}");
-            toStringOutput.Add($"this.SubtotalAmount = {(this.SubtotalAmount == null ? "null" : this.SubtotalAmount)}");
-            toStringOutput.Add($"this.DiscountAmount = {(this.DiscountAmount == null ? "null" : this.DiscountAmount)}");
-            toStringOutput.Add($"this.TaxAmount = {(this.TaxAmount == null ? "null" : this.TaxAmount)}");
-            toStringOutput.Add($"this.TotalAmount = {(this.TotalAmount == null ? "null" : this.TotalAmount)}");
+            toStringOutput.Add($"this.Uid = {this.Uid ?? "null"}");
+            toStringOutput.Add($"this.Title = {this.Title ?? "null"}");
+            toStringOutput.Add($"this.Description = {this.Description ?? "null"}");
+            toStringOutput.Add($"this.Quantity = {this.Quantity ?? "null"}");
+            toStringOutput.Add($"this.UnitPrice = {this.UnitPrice ?? "null"}");
+            toStringOutput.Add($"this.SubtotalAmount = {this.SubtotalAmount ?? "null"}");
+            toStringOutput.Add($"this.DiscountAmount = {this.DiscountAmount ?? "null"}");
+            toStringOutput.Add($"this.TaxAmount = {this.TaxAmount ?? "null"}");
+            toStringOutput.Add($"this.TotalAmount = {this.TotalAmount ?? "null"}");
             toStringOutput.Add($"this.TieredUnitPrice = {(this.TieredUnitPrice == null ? "null" : this.TieredUnitPrice.ToString())}");
             toStringOutput.Add($"this.PeriodRangeStart = {(this.PeriodRangeStart == null ? "null" : this.PeriodRangeStart.ToString())}");
             toStringOutput.Add($"this.PeriodRangeEnd = {(this.PeriodRangeEnd == null ? "null" : this.PeriodRangeEnd.ToString())}");
@@ -531,11 +593,12 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ProductVersion = {(this.ProductVersion == null ? "null" : this.ProductVersion.ToString())}");
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
+            toStringOutput.Add($"this.BillingScheduleItemId = {(this.BillingScheduleItemId == null ? "null" : this.BillingScheduleItemId.ToString())}");
             toStringOutput.Add($"this.Hide = {(this.Hide == null ? "null" : this.Hide.ToString())}");
             toStringOutput.Add($"this.ComponentCostData = {(this.ComponentCostData == null ? "null" : this.ComponentCostData.ToString())}");
             toStringOutput.Add($"this.ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
             toStringOutput.Add($"this.CustomItem = {(this.CustomItem == null ? "null" : this.CustomItem.ToString())}");
-            toStringOutput.Add($"this.Kind = {(this.Kind == null ? "null" : this.Kind)}");
+            toStringOutput.Add($"this.Kind = {this.Kind ?? "null"}");
 
             base.ToString(toStringOutput);
         }

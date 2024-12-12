@@ -57,28 +57,24 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"BankAccountVerification : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is BankAccountVerification other &&                ((this.Deposit1InCents == null && other.Deposit1InCents == null) || (this.Deposit1InCents?.Equals(other.Deposit1InCents) == true)) &&
-                ((this.Deposit2InCents == null && other.Deposit2InCents == null) || (this.Deposit2InCents?.Equals(other.Deposit2InCents) == true));
+            return obj is BankAccountVerification other &&
+                (this.Deposit1InCents == null && other.Deposit1InCents == null ||
+                 this.Deposit1InCents?.Equals(other.Deposit1InCents) == true) &&
+                (this.Deposit2InCents == null && other.Deposit2InCents == null ||
+                 this.Deposit2InCents?.Equals(other.Deposit2InCents) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

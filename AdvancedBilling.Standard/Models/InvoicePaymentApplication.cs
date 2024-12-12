@@ -66,38 +66,35 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"InvoicePaymentApplication : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is InvoicePaymentApplication other &&                ((this.InvoiceUid == null && other.InvoiceUid == null) || (this.InvoiceUid?.Equals(other.InvoiceUid) == true)) &&
-                ((this.ApplicationUid == null && other.ApplicationUid == null) || (this.ApplicationUid?.Equals(other.ApplicationUid) == true)) &&
-                ((this.AppliedAmount == null && other.AppliedAmount == null) || (this.AppliedAmount?.Equals(other.AppliedAmount) == true));
+            return obj is InvoicePaymentApplication other &&
+                (this.InvoiceUid == null && other.InvoiceUid == null ||
+                 this.InvoiceUid?.Equals(other.InvoiceUid) == true) &&
+                (this.ApplicationUid == null && other.ApplicationUid == null ||
+                 this.ApplicationUid?.Equals(other.ApplicationUid) == true) &&
+                (this.AppliedAmount == null && other.AppliedAmount == null ||
+                 this.AppliedAmount?.Equals(other.AppliedAmount) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.InvoiceUid = {(this.InvoiceUid == null ? "null" : this.InvoiceUid)}");
-            toStringOutput.Add($"this.ApplicationUid = {(this.ApplicationUid == null ? "null" : this.ApplicationUid)}");
-            toStringOutput.Add($"this.AppliedAmount = {(this.AppliedAmount == null ? "null" : this.AppliedAmount)}");
+            toStringOutput.Add($"this.InvoiceUid = {this.InvoiceUid ?? "null"}");
+            toStringOutput.Add($"this.ApplicationUid = {this.ApplicationUid ?? "null"}");
+            toStringOutput.Add($"this.AppliedAmount = {this.AppliedAmount ?? "null"}");
 
             base.ToString(toStringOutput);
         }

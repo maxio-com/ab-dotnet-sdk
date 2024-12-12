@@ -167,45 +167,51 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"FullSubscriptionGroupResponse : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is FullSubscriptionGroupResponse other &&                ((this.Uid == null && other.Uid == null) || (this.Uid?.Equals(other.Uid) == true)) &&
-                ((this.Scheme == null && other.Scheme == null) || (this.Scheme?.Equals(other.Scheme) == true)) &&
-                ((this.CustomerId == null && other.CustomerId == null) || (this.CustomerId?.Equals(other.CustomerId) == true)) &&
-                ((this.PaymentProfileId == null && other.PaymentProfileId == null) || (this.PaymentProfileId?.Equals(other.PaymentProfileId) == true)) &&
-                ((this.SubscriptionIds == null && other.SubscriptionIds == null) || (this.SubscriptionIds?.Equals(other.SubscriptionIds) == true)) &&
-                ((this.PrimarySubscriptionId == null && other.PrimarySubscriptionId == null) || (this.PrimarySubscriptionId?.Equals(other.PrimarySubscriptionId) == true)) &&
-                ((this.NextAssessmentAt == null && other.NextAssessmentAt == null) || (this.NextAssessmentAt?.Equals(other.NextAssessmentAt) == true)) &&
-                ((this.State == null && other.State == null) || (this.State?.Equals(other.State) == true)) &&
-                ((this.CancelAtEndOfPeriod == null && other.CancelAtEndOfPeriod == null) || (this.CancelAtEndOfPeriod?.Equals(other.CancelAtEndOfPeriod) == true)) &&
-                ((this.CurrentBillingAmountInCents == null && other.CurrentBillingAmountInCents == null) || (this.CurrentBillingAmountInCents?.Equals(other.CurrentBillingAmountInCents) == true)) &&
-                ((this.Customer == null && other.Customer == null) || (this.Customer?.Equals(other.Customer) == true)) &&
-                ((this.AccountBalances == null && other.AccountBalances == null) || (this.AccountBalances?.Equals(other.AccountBalances) == true));
+            return obj is FullSubscriptionGroupResponse other &&
+                (this.Uid == null && other.Uid == null ||
+                 this.Uid?.Equals(other.Uid) == true) &&
+                (this.Scheme == null && other.Scheme == null ||
+                 this.Scheme?.Equals(other.Scheme) == true) &&
+                (this.CustomerId == null && other.CustomerId == null ||
+                 this.CustomerId?.Equals(other.CustomerId) == true) &&
+                (this.PaymentProfileId == null && other.PaymentProfileId == null ||
+                 this.PaymentProfileId?.Equals(other.PaymentProfileId) == true) &&
+                (this.SubscriptionIds == null && other.SubscriptionIds == null ||
+                 this.SubscriptionIds?.Equals(other.SubscriptionIds) == true) &&
+                (this.PrimarySubscriptionId == null && other.PrimarySubscriptionId == null ||
+                 this.PrimarySubscriptionId?.Equals(other.PrimarySubscriptionId) == true) &&
+                (this.NextAssessmentAt == null && other.NextAssessmentAt == null ||
+                 this.NextAssessmentAt?.Equals(other.NextAssessmentAt) == true) &&
+                (this.State == null && other.State == null ||
+                 this.State?.Equals(other.State) == true) &&
+                (this.CancelAtEndOfPeriod == null && other.CancelAtEndOfPeriod == null ||
+                 this.CancelAtEndOfPeriod?.Equals(other.CancelAtEndOfPeriod) == true) &&
+                (this.CurrentBillingAmountInCents == null && other.CurrentBillingAmountInCents == null ||
+                 this.CurrentBillingAmountInCents?.Equals(other.CurrentBillingAmountInCents) == true) &&
+                (this.Customer == null && other.Customer == null ||
+                 this.Customer?.Equals(other.Customer) == true) &&
+                (this.AccountBalances == null && other.AccountBalances == null ||
+                 this.AccountBalances?.Equals(other.AccountBalances) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
+            toStringOutput.Add($"this.Uid = {this.Uid ?? "null"}");
             toStringOutput.Add($"this.Scheme = {(this.Scheme == null ? "null" : this.Scheme.ToString())}");
             toStringOutput.Add($"this.CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
             toStringOutput.Add($"this.PaymentProfileId = {(this.PaymentProfileId == null ? "null" : this.PaymentProfileId.ToString())}");

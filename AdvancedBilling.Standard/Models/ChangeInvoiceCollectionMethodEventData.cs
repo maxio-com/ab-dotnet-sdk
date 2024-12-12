@@ -57,36 +57,32 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ChangeInvoiceCollectionMethodEventData : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ChangeInvoiceCollectionMethodEventData other &&                ((this.FromCollectionMethod == null && other.FromCollectionMethod == null) || (this.FromCollectionMethod?.Equals(other.FromCollectionMethod) == true)) &&
-                ((this.ToCollectionMethod == null && other.ToCollectionMethod == null) || (this.ToCollectionMethod?.Equals(other.ToCollectionMethod) == true));
+            return obj is ChangeInvoiceCollectionMethodEventData other &&
+                (this.FromCollectionMethod == null && other.FromCollectionMethod == null ||
+                 this.FromCollectionMethod?.Equals(other.FromCollectionMethod) == true) &&
+                (this.ToCollectionMethod == null && other.ToCollectionMethod == null ||
+                 this.ToCollectionMethod?.Equals(other.ToCollectionMethod) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.FromCollectionMethod = {(this.FromCollectionMethod == null ? "null" : this.FromCollectionMethod)}");
-            toStringOutput.Add($"this.ToCollectionMethod = {(this.ToCollectionMethod == null ? "null" : this.ToCollectionMethod)}");
+            toStringOutput.Add($"this.FromCollectionMethod = {this.FromCollectionMethod ?? "null"}");
+            toStringOutput.Add($"this.ToCollectionMethod = {this.ToCollectionMethod ?? "null"}");
 
             base.ToString(toStringOutput);
         }

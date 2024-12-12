@@ -60,19 +60,19 @@ namespace AdvancedBilling.Standard.Models
             this.Id = id;
             this.ComponentId = componentId;
             this.StartingQuantity = startingQuantity;
+
             if (endingQuantity != null)
             {
                 this.EndingQuantity = endingQuantity;
             }
-
             this.UnitPrice = unitPrice;
             this.PricePointId = pricePointId;
             this.FormattedUnitPrice = formattedUnitPrice;
+
             if (segmentId != null)
             {
                 this.SegmentId = segmentId;
             }
-
         }
 
         /// <summary>
@@ -151,14 +151,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ComponentPrice : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetEndingQuantity()
         {
@@ -166,7 +164,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetSegmentId()
         {
@@ -194,25 +192,29 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ComponentPrice other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.ComponentId == null && other.ComponentId == null) || (this.ComponentId?.Equals(other.ComponentId) == true)) &&
-                ((this.StartingQuantity == null && other.StartingQuantity == null) || (this.StartingQuantity?.Equals(other.StartingQuantity) == true)) &&
-                ((this.EndingQuantity == null && other.EndingQuantity == null) || (this.EndingQuantity?.Equals(other.EndingQuantity) == true)) &&
-                ((this.UnitPrice == null && other.UnitPrice == null) || (this.UnitPrice?.Equals(other.UnitPrice) == true)) &&
-                ((this.PricePointId == null && other.PricePointId == null) || (this.PricePointId?.Equals(other.PricePointId) == true)) &&
-                ((this.FormattedUnitPrice == null && other.FormattedUnitPrice == null) || (this.FormattedUnitPrice?.Equals(other.FormattedUnitPrice) == true)) &&
-                ((this.SegmentId == null && other.SegmentId == null) || (this.SegmentId?.Equals(other.SegmentId) == true));
+            return obj is ComponentPrice other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.ComponentId == null && other.ComponentId == null ||
+                 this.ComponentId?.Equals(other.ComponentId) == true) &&
+                (this.StartingQuantity == null && other.StartingQuantity == null ||
+                 this.StartingQuantity?.Equals(other.StartingQuantity) == true) &&
+                (this.EndingQuantity == null && other.EndingQuantity == null ||
+                 this.EndingQuantity?.Equals(other.EndingQuantity) == true) &&
+                (this.UnitPrice == null && other.UnitPrice == null ||
+                 this.UnitPrice?.Equals(other.UnitPrice) == true) &&
+                (this.PricePointId == null && other.PricePointId == null ||
+                 this.PricePointId?.Equals(other.PricePointId) == true) &&
+                (this.FormattedUnitPrice == null && other.FormattedUnitPrice == null ||
+                 this.FormattedUnitPrice?.Equals(other.FormattedUnitPrice) == true) &&
+                (this.SegmentId == null && other.SegmentId == null ||
+                 this.SegmentId?.Equals(other.SegmentId) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -223,9 +225,9 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"this.StartingQuantity = {(this.StartingQuantity == null ? "null" : this.StartingQuantity.ToString())}");
             toStringOutput.Add($"this.EndingQuantity = {(this.EndingQuantity == null ? "null" : this.EndingQuantity.ToString())}");
-            toStringOutput.Add($"this.UnitPrice = {(this.UnitPrice == null ? "null" : this.UnitPrice)}");
+            toStringOutput.Add($"this.UnitPrice = {this.UnitPrice ?? "null"}");
             toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
-            toStringOutput.Add($"this.FormattedUnitPrice = {(this.FormattedUnitPrice == null ? "null" : this.FormattedUnitPrice)}");
+            toStringOutput.Add($"this.FormattedUnitPrice = {this.FormattedUnitPrice ?? "null"}");
             toStringOutput.Add($"this.SegmentId = {(this.SegmentId == null ? "null" : this.SegmentId.ToString())}");
 
             base.ToString(toStringOutput);

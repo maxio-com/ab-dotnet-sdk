@@ -66,29 +66,26 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"GroupBilling : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is GroupBilling other &&                ((this.Accrue == null && other.Accrue == null) || (this.Accrue?.Equals(other.Accrue) == true)) &&
-                ((this.AlignDate == null && other.AlignDate == null) || (this.AlignDate?.Equals(other.AlignDate) == true)) &&
-                ((this.Prorate == null && other.Prorate == null) || (this.Prorate?.Equals(other.Prorate) == true));
+            return obj is GroupBilling other &&
+                (this.Accrue == null && other.Accrue == null ||
+                 this.Accrue?.Equals(other.Accrue) == true) &&
+                (this.AlignDate == null && other.AlignDate == null ||
+                 this.AlignDate?.Equals(other.AlignDate) == true) &&
+                (this.Prorate == null && other.Prorate == null ||
+                 this.Prorate?.Equals(other.Prorate) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

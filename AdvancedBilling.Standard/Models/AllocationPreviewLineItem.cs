@@ -120,35 +120,38 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"AllocationPreviewLineItem : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is AllocationPreviewLineItem other &&                ((this.TransactionType == null && other.TransactionType == null) || (this.TransactionType?.Equals(other.TransactionType) == true)) &&
-                ((this.Kind == null && other.Kind == null) || (this.Kind?.Equals(other.Kind) == true)) &&
-                ((this.AmountInCents == null && other.AmountInCents == null) || (this.AmountInCents?.Equals(other.AmountInCents) == true)) &&
-                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                ((this.DiscountAmountInCents == null && other.DiscountAmountInCents == null) || (this.DiscountAmountInCents?.Equals(other.DiscountAmountInCents) == true)) &&
-                ((this.TaxableAmountInCents == null && other.TaxableAmountInCents == null) || (this.TaxableAmountInCents?.Equals(other.TaxableAmountInCents) == true)) &&
-                ((this.ComponentId == null && other.ComponentId == null) || (this.ComponentId?.Equals(other.ComponentId) == true)) &&
-                ((this.ComponentHandle == null && other.ComponentHandle == null) || (this.ComponentHandle?.Equals(other.ComponentHandle) == true)) &&
-                ((this.Direction == null && other.Direction == null) || (this.Direction?.Equals(other.Direction) == true));
+            return obj is AllocationPreviewLineItem other &&
+                (this.TransactionType == null && other.TransactionType == null ||
+                 this.TransactionType?.Equals(other.TransactionType) == true) &&
+                (this.Kind == null && other.Kind == null ||
+                 this.Kind?.Equals(other.Kind) == true) &&
+                (this.AmountInCents == null && other.AmountInCents == null ||
+                 this.AmountInCents?.Equals(other.AmountInCents) == true) &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.DiscountAmountInCents == null && other.DiscountAmountInCents == null ||
+                 this.DiscountAmountInCents?.Equals(other.DiscountAmountInCents) == true) &&
+                (this.TaxableAmountInCents == null && other.TaxableAmountInCents == null ||
+                 this.TaxableAmountInCents?.Equals(other.TaxableAmountInCents) == true) &&
+                (this.ComponentId == null && other.ComponentId == null ||
+                 this.ComponentId?.Equals(other.ComponentId) == true) &&
+                (this.ComponentHandle == null && other.ComponentHandle == null ||
+                 this.ComponentHandle?.Equals(other.ComponentHandle) == true) &&
+                (this.Direction == null && other.Direction == null ||
+                 this.Direction?.Equals(other.Direction) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -158,11 +161,11 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.TransactionType = {(this.TransactionType == null ? "null" : this.TransactionType.ToString())}");
             toStringOutput.Add($"this.Kind = {(this.Kind == null ? "null" : this.Kind.ToString())}");
             toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
             toStringOutput.Add($"this.DiscountAmountInCents = {(this.DiscountAmountInCents == null ? "null" : this.DiscountAmountInCents.ToString())}");
             toStringOutput.Add($"this.TaxableAmountInCents = {(this.TaxableAmountInCents == null ? "null" : this.TaxableAmountInCents.ToString())}");
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
-            toStringOutput.Add($"this.ComponentHandle = {(this.ComponentHandle == null ? "null" : this.ComponentHandle)}");
+            toStringOutput.Add($"this.ComponentHandle = {this.ComponentHandle ?? "null"}");
             toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
 
             base.ToString(toStringOutput);

@@ -102,44 +102,41 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"MeteredUsage : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is MeteredUsage other &&                ((this.PreviousUnitBalance == null && other.PreviousUnitBalance == null) || (this.PreviousUnitBalance?.Equals(other.PreviousUnitBalance) == true)) &&
-                this.NewUnitBalance.Equals(other.NewUnitBalance) &&
-                this.UsageQuantity.Equals(other.UsageQuantity) &&
-                this.ComponentId.Equals(other.ComponentId) &&
-                ((this.ComponentHandle == null && other.ComponentHandle == null) || (this.ComponentHandle?.Equals(other.ComponentHandle) == true)) &&
-                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true));
+            return obj is MeteredUsage other &&
+                (this.PreviousUnitBalance == null && other.PreviousUnitBalance == null ||
+                 this.PreviousUnitBalance?.Equals(other.PreviousUnitBalance) == true) &&
+                (this.NewUnitBalance.Equals(other.NewUnitBalance)) &&
+                (this.UsageQuantity.Equals(other.UsageQuantity)) &&
+                (this.ComponentId.Equals(other.ComponentId)) &&
+                (this.ComponentHandle == null && other.ComponentHandle == null ||
+                 this.ComponentHandle?.Equals(other.ComponentHandle) == true) &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.PreviousUnitBalance = {(this.PreviousUnitBalance == null ? "null" : this.PreviousUnitBalance)}");
+            toStringOutput.Add($"this.PreviousUnitBalance = {this.PreviousUnitBalance ?? "null"}");
             toStringOutput.Add($"this.NewUnitBalance = {this.NewUnitBalance}");
             toStringOutput.Add($"this.UsageQuantity = {this.UsageQuantity}");
             toStringOutput.Add($"this.ComponentId = {this.ComponentId}");
-            toStringOutput.Add($"this.ComponentHandle = {(this.ComponentHandle == null ? "null" : this.ComponentHandle)}");
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
+            toStringOutput.Add($"this.ComponentHandle = {this.ComponentHandle ?? "null"}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
 
             base.ToString(toStringOutput);
         }

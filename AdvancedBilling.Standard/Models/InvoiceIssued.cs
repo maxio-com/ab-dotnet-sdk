@@ -202,61 +202,70 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"InvoiceIssued : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is InvoiceIssued other &&                ((this.Uid == null && other.Uid == null) || (this.Uid?.Equals(other.Uid) == true)) &&
-                ((this.Number == null && other.Number == null) || (this.Number?.Equals(other.Number) == true)) &&
-                ((this.Role == null && other.Role == null) || (this.Role?.Equals(other.Role) == true)) &&
-                ((this.DueDate == null && other.DueDate == null) || (this.DueDate?.Equals(other.DueDate) == true)) &&
-                ((this.IssueDate == null && other.IssueDate == null) || (this.IssueDate?.Equals(other.IssueDate) == true)) &&
-                ((this.PaidDate == null && other.PaidDate == null) || (this.PaidDate?.Equals(other.PaidDate) == true)) &&
-                ((this.DueAmount == null && other.DueAmount == null) || (this.DueAmount?.Equals(other.DueAmount) == true)) &&
-                ((this.PaidAmount == null && other.PaidAmount == null) || (this.PaidAmount?.Equals(other.PaidAmount) == true)) &&
-                ((this.TaxAmount == null && other.TaxAmount == null) || (this.TaxAmount?.Equals(other.TaxAmount) == true)) &&
-                ((this.RefundAmount == null && other.RefundAmount == null) || (this.RefundAmount?.Equals(other.RefundAmount) == true)) &&
-                ((this.TotalAmount == null && other.TotalAmount == null) || (this.TotalAmount?.Equals(other.TotalAmount) == true)) &&
-                ((this.StatusAmount == null && other.StatusAmount == null) || (this.StatusAmount?.Equals(other.StatusAmount) == true)) &&
-                ((this.ProductName == null && other.ProductName == null) || (this.ProductName?.Equals(other.ProductName) == true)) &&
-                ((this.ConsolidationLevel == null && other.ConsolidationLevel == null) || (this.ConsolidationLevel?.Equals(other.ConsolidationLevel) == true)) &&
-                ((this.LineItems == null && other.LineItems == null) || (this.LineItems?.Equals(other.LineItems) == true));
+            return obj is InvoiceIssued other &&
+                (this.Uid == null && other.Uid == null ||
+                 this.Uid?.Equals(other.Uid) == true) &&
+                (this.Number == null && other.Number == null ||
+                 this.Number?.Equals(other.Number) == true) &&
+                (this.Role == null && other.Role == null ||
+                 this.Role?.Equals(other.Role) == true) &&
+                (this.DueDate == null && other.DueDate == null ||
+                 this.DueDate?.Equals(other.DueDate) == true) &&
+                (this.IssueDate == null && other.IssueDate == null ||
+                 this.IssueDate?.Equals(other.IssueDate) == true) &&
+                (this.PaidDate == null && other.PaidDate == null ||
+                 this.PaidDate?.Equals(other.PaidDate) == true) &&
+                (this.DueAmount == null && other.DueAmount == null ||
+                 this.DueAmount?.Equals(other.DueAmount) == true) &&
+                (this.PaidAmount == null && other.PaidAmount == null ||
+                 this.PaidAmount?.Equals(other.PaidAmount) == true) &&
+                (this.TaxAmount == null && other.TaxAmount == null ||
+                 this.TaxAmount?.Equals(other.TaxAmount) == true) &&
+                (this.RefundAmount == null && other.RefundAmount == null ||
+                 this.RefundAmount?.Equals(other.RefundAmount) == true) &&
+                (this.TotalAmount == null && other.TotalAmount == null ||
+                 this.TotalAmount?.Equals(other.TotalAmount) == true) &&
+                (this.StatusAmount == null && other.StatusAmount == null ||
+                 this.StatusAmount?.Equals(other.StatusAmount) == true) &&
+                (this.ProductName == null && other.ProductName == null ||
+                 this.ProductName?.Equals(other.ProductName) == true) &&
+                (this.ConsolidationLevel == null && other.ConsolidationLevel == null ||
+                 this.ConsolidationLevel?.Equals(other.ConsolidationLevel) == true) &&
+                (this.LineItems == null && other.LineItems == null ||
+                 this.LineItems?.Equals(other.LineItems) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
-            toStringOutput.Add($"this.Number = {(this.Number == null ? "null" : this.Number)}");
-            toStringOutput.Add($"this.Role = {(this.Role == null ? "null" : this.Role)}");
+            toStringOutput.Add($"this.Uid = {this.Uid ?? "null"}");
+            toStringOutput.Add($"this.Number = {this.Number ?? "null"}");
+            toStringOutput.Add($"this.Role = {this.Role ?? "null"}");
             toStringOutput.Add($"this.DueDate = {(this.DueDate == null ? "null" : this.DueDate.ToString())}");
-            toStringOutput.Add($"this.IssueDate = {(this.IssueDate == null ? "null" : this.IssueDate)}");
-            toStringOutput.Add($"this.PaidDate = {(this.PaidDate == null ? "null" : this.PaidDate)}");
-            toStringOutput.Add($"this.DueAmount = {(this.DueAmount == null ? "null" : this.DueAmount)}");
-            toStringOutput.Add($"this.PaidAmount = {(this.PaidAmount == null ? "null" : this.PaidAmount)}");
-            toStringOutput.Add($"this.TaxAmount = {(this.TaxAmount == null ? "null" : this.TaxAmount)}");
-            toStringOutput.Add($"this.RefundAmount = {(this.RefundAmount == null ? "null" : this.RefundAmount)}");
-            toStringOutput.Add($"this.TotalAmount = {(this.TotalAmount == null ? "null" : this.TotalAmount)}");
-            toStringOutput.Add($"this.StatusAmount = {(this.StatusAmount == null ? "null" : this.StatusAmount)}");
-            toStringOutput.Add($"this.ProductName = {(this.ProductName == null ? "null" : this.ProductName)}");
-            toStringOutput.Add($"this.ConsolidationLevel = {(this.ConsolidationLevel == null ? "null" : this.ConsolidationLevel)}");
+            toStringOutput.Add($"this.IssueDate = {this.IssueDate ?? "null"}");
+            toStringOutput.Add($"this.PaidDate = {this.PaidDate ?? "null"}");
+            toStringOutput.Add($"this.DueAmount = {this.DueAmount ?? "null"}");
+            toStringOutput.Add($"this.PaidAmount = {this.PaidAmount ?? "null"}");
+            toStringOutput.Add($"this.TaxAmount = {this.TaxAmount ?? "null"}");
+            toStringOutput.Add($"this.RefundAmount = {this.RefundAmount ?? "null"}");
+            toStringOutput.Add($"this.TotalAmount = {this.TotalAmount ?? "null"}");
+            toStringOutput.Add($"this.StatusAmount = {this.StatusAmount ?? "null"}");
+            toStringOutput.Add($"this.ProductName = {this.ProductName ?? "null"}");
+            toStringOutput.Add($"this.ConsolidationLevel = {this.ConsolidationLevel ?? "null"}");
             toStringOutput.Add($"this.LineItems = {(this.LineItems == null ? "null" : $"[{string.Join(", ", this.LineItems)} ]")}");
 
             base.ToString(toStringOutput);

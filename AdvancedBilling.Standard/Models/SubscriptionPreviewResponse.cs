@@ -48,27 +48,22 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SubscriptionPreviewResponse : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SubscriptionPreviewResponse other &&                ((this.SubscriptionPreview == null && other.SubscriptionPreview == null) || (this.SubscriptionPreview?.Equals(other.SubscriptionPreview) == true));
+            return obj is SubscriptionPreviewResponse other &&
+                (this.SubscriptionPreview == null && other.SubscriptionPreview == null ||
+                 this.SubscriptionPreview?.Equals(other.SubscriptionPreview) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

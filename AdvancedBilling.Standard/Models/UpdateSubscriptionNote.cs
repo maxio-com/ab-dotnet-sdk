@@ -57,35 +57,30 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"UpdateSubscriptionNote : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is UpdateSubscriptionNote other &&                ((this.Body == null && other.Body == null) || (this.Body?.Equals(other.Body) == true)) &&
-                this.Sticky.Equals(other.Sticky);
+            return obj is UpdateSubscriptionNote other &&
+                (this.Body == null && other.Body == null ||
+                 this.Body?.Equals(other.Body) == true) &&
+                (this.Sticky.Equals(other.Sticky)) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Body = {(this.Body == null ? "null" : this.Body)}");
+            toStringOutput.Add($"this.Body = {this.Body ?? "null"}");
             toStringOutput.Add($"this.Sticky = {this.Sticky}");
 
             base.ToString(toStringOutput);

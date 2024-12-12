@@ -51,11 +51,11 @@ namespace AdvancedBilling.Standard.Models
         {
             this.AmountInCents = amountInCents;
             this.AppliedAmount = appliedAmount;
+
             if (memo != null)
             {
                 this.Memo = memo;
             }
-
             this.PaymentMethod = paymentMethod;
             this.TransactionId = transactionId;
         }
@@ -106,14 +106,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"FailedPaymentEventData : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetMemo()
         {
@@ -132,22 +130,19 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is FailedPaymentEventData other &&                this.AmountInCents.Equals(other.AmountInCents) &&
-                this.AppliedAmount.Equals(other.AppliedAmount) &&
-                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                this.PaymentMethod.Equals(other.PaymentMethod) &&
-                this.TransactionId.Equals(other.TransactionId);
+            return obj is FailedPaymentEventData other &&
+                (this.AmountInCents.Equals(other.AmountInCents)) &&
+                (this.AppliedAmount.Equals(other.AppliedAmount)) &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.PaymentMethod.Equals(other.PaymentMethod)) &&
+                (this.TransactionId.Equals(other.TransactionId)) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -156,7 +151,7 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.AmountInCents = {this.AmountInCents}");
             toStringOutput.Add($"this.AppliedAmount = {this.AppliedAmount}");
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
             toStringOutput.Add($"this.PaymentMethod = {this.PaymentMethod}");
             toStringOutput.Add($"this.TransactionId = {this.TransactionId}");
 

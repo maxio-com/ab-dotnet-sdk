@@ -68,11 +68,11 @@ namespace AdvancedBilling.Standard.Models
             this.CreatedAt = createdAt;
             this.LastError = lastError;
             this.LastErrorAt = lastErrorAt;
+
             if (acceptedAt != null)
             {
                 this.AcceptedAt = acceptedAt;
             }
-
             this.LastSentAt = lastSentAt;
             this.LastSentUrl = lastSentUrl;
             this.Successful = successful;
@@ -173,14 +173,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"Webhook : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetAcceptedAt()
         {
@@ -199,47 +197,55 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is Webhook other &&                ((this.MEvent == null && other.MEvent == null) || (this.MEvent?.Equals(other.MEvent) == true)) &&
-                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true)) &&
-                ((this.LastError == null && other.LastError == null) || (this.LastError?.Equals(other.LastError) == true)) &&
-                ((this.LastErrorAt == null && other.LastErrorAt == null) || (this.LastErrorAt?.Equals(other.LastErrorAt) == true)) &&
-                ((this.AcceptedAt == null && other.AcceptedAt == null) || (this.AcceptedAt?.Equals(other.AcceptedAt) == true)) &&
-                ((this.LastSentAt == null && other.LastSentAt == null) || (this.LastSentAt?.Equals(other.LastSentAt) == true)) &&
-                ((this.LastSentUrl == null && other.LastSentUrl == null) || (this.LastSentUrl?.Equals(other.LastSentUrl) == true)) &&
-                ((this.Successful == null && other.Successful == null) || (this.Successful?.Equals(other.Successful) == true)) &&
-                ((this.Body == null && other.Body == null) || (this.Body?.Equals(other.Body) == true)) &&
-                ((this.Signature == null && other.Signature == null) || (this.Signature?.Equals(other.Signature) == true)) &&
-                ((this.SignatureHmacSha256 == null && other.SignatureHmacSha256 == null) || (this.SignatureHmacSha256?.Equals(other.SignatureHmacSha256) == true));
+            return obj is Webhook other &&
+                (this.MEvent == null && other.MEvent == null ||
+                 this.MEvent?.Equals(other.MEvent) == true) &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.CreatedAt == null && other.CreatedAt == null ||
+                 this.CreatedAt?.Equals(other.CreatedAt) == true) &&
+                (this.LastError == null && other.LastError == null ||
+                 this.LastError?.Equals(other.LastError) == true) &&
+                (this.LastErrorAt == null && other.LastErrorAt == null ||
+                 this.LastErrorAt?.Equals(other.LastErrorAt) == true) &&
+                (this.AcceptedAt == null && other.AcceptedAt == null ||
+                 this.AcceptedAt?.Equals(other.AcceptedAt) == true) &&
+                (this.LastSentAt == null && other.LastSentAt == null ||
+                 this.LastSentAt?.Equals(other.LastSentAt) == true) &&
+                (this.LastSentUrl == null && other.LastSentUrl == null ||
+                 this.LastSentUrl?.Equals(other.LastSentUrl) == true) &&
+                (this.Successful == null && other.Successful == null ||
+                 this.Successful?.Equals(other.Successful) == true) &&
+                (this.Body == null && other.Body == null ||
+                 this.Body?.Equals(other.Body) == true) &&
+                (this.Signature == null && other.Signature == null ||
+                 this.Signature?.Equals(other.Signature) == true) &&
+                (this.SignatureHmacSha256 == null && other.SignatureHmacSha256 == null ||
+                 this.SignatureHmacSha256?.Equals(other.SignatureHmacSha256) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.MEvent = {(this.MEvent == null ? "null" : this.MEvent)}");
+            toStringOutput.Add($"this.MEvent = {this.MEvent ?? "null"}");
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
-            toStringOutput.Add($"this.LastError = {(this.LastError == null ? "null" : this.LastError)}");
+            toStringOutput.Add($"this.LastError = {this.LastError ?? "null"}");
             toStringOutput.Add($"this.LastErrorAt = {(this.LastErrorAt == null ? "null" : this.LastErrorAt.ToString())}");
             toStringOutput.Add($"this.AcceptedAt = {(this.AcceptedAt == null ? "null" : this.AcceptedAt.ToString())}");
             toStringOutput.Add($"this.LastSentAt = {(this.LastSentAt == null ? "null" : this.LastSentAt.ToString())}");
-            toStringOutput.Add($"this.LastSentUrl = {(this.LastSentUrl == null ? "null" : this.LastSentUrl)}");
+            toStringOutput.Add($"this.LastSentUrl = {this.LastSentUrl ?? "null"}");
             toStringOutput.Add($"this.Successful = {(this.Successful == null ? "null" : this.Successful.ToString())}");
-            toStringOutput.Add($"this.Body = {(this.Body == null ? "null" : this.Body)}");
-            toStringOutput.Add($"this.Signature = {(this.Signature == null ? "null" : this.Signature)}");
-            toStringOutput.Add($"this.SignatureHmacSha256 = {(this.SignatureHmacSha256 == null ? "null" : this.SignatureHmacSha256)}");
+            toStringOutput.Add($"this.Body = {this.Body ?? "null"}");
+            toStringOutput.Add($"this.Signature = {this.Signature ?? "null"}");
+            toStringOutput.Add($"this.SignatureHmacSha256 = {this.SignatureHmacSha256 ?? "null"}");
 
             base.ToString(toStringOutput);
         }

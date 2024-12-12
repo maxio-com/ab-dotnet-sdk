@@ -66,29 +66,26 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"TaxConfiguration : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is TaxConfiguration other &&                ((this.Kind == null && other.Kind == null) || (this.Kind?.Equals(other.Kind) == true)) &&
-                ((this.DestinationAddress == null && other.DestinationAddress == null) || (this.DestinationAddress?.Equals(other.DestinationAddress) == true)) &&
-                ((this.FullyConfigured == null && other.FullyConfigured == null) || (this.FullyConfigured?.Equals(other.FullyConfigured) == true));
+            return obj is TaxConfiguration other &&
+                (this.Kind == null && other.Kind == null ||
+                 this.Kind?.Equals(other.Kind) == true) &&
+                (this.DestinationAddress == null && other.DestinationAddress == null ||
+                 this.DestinationAddress?.Equals(other.DestinationAddress) == true) &&
+                (this.FullyConfigured == null && other.FullyConfigured == null ||
+                 this.FullyConfigured?.Equals(other.FullyConfigured) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

@@ -1477,7 +1477,6 @@ https://events.chargify.com/my-site-subdomain/events/my-stream-api-handle
 
 ```csharp
 RecordEventAsync(
-    string subdomain,
     string apiHandle,
     string storeUid = null,
     Models.EBBEvent body = null)
@@ -1487,7 +1486,6 @@ RecordEventAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subdomain` | `string` | Template, Required | Your site's subdomain |
 | `apiHandle` | `string` | Template, Required | Identifies the Stream for which the event should be published. |
 | `storeUid` | `string` | Query, Optional | If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store. |
 | `body` | [`EBBEvent`](../../doc/models/ebb-event.md) | Body, Optional | - |
@@ -1499,7 +1497,6 @@ RecordEventAsync(
 ## Example Usage
 
 ```csharp
-string subdomain = "subdomain4";
 string apiHandle = "api_handle6";
 EBBEvent body = new EBBEvent
 {
@@ -1515,7 +1512,6 @@ EBBEvent body = new EBBEvent
 try
 {
     await subscriptionComponentsController.RecordEventAsync(
-        subdomain,
         apiHandle,
         null,
         body
@@ -1539,7 +1535,6 @@ A maximum of 1000 events can be published in a single request. A 422 will be ret
 
 ```csharp
 BulkRecordEventsAsync(
-    string subdomain,
     string apiHandle,
     string storeUid = null,
     List<Models.EBBEvent> body = null)
@@ -1549,7 +1544,6 @@ BulkRecordEventsAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subdomain` | `string` | Template, Required | Your site's subdomain |
 | `apiHandle` | `string` | Template, Required | Identifies the Stream for which the events should be published. |
 | `storeUid` | `string` | Query, Optional | If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store. |
 | `body` | [`List<EBBEvent>`](../../doc/models/ebb-event.md) | Body, Optional | - |
@@ -1561,7 +1555,6 @@ BulkRecordEventsAsync(
 ## Example Usage
 
 ```csharp
-string subdomain = "subdomain4";
 string apiHandle = "api_handle6";
 List<EBBEvent> body = new List<EBBEvent>
 {
@@ -1580,7 +1573,6 @@ List<EBBEvent> body = new List<EBBEvent>
 try
 {
     await subscriptionComponentsController.BulkRecordEventsAsync(
-        subdomain,
         apiHandle,
         null,
         body

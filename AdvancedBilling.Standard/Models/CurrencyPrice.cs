@@ -35,6 +35,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="currency">currency.</param>
         /// <param name="price">price.</param>
         /// <param name="formattedPrice">formatted_price.</param>
+        /// <param name="priceId">price_id.</param>
+        /// <param name="pricePointId">price_point_id.</param>
         /// <param name="productPricePointId">product_price_point_id.</param>
         /// <param name="role">role.</param>
         public CurrencyPrice(
@@ -42,6 +44,8 @@ namespace AdvancedBilling.Standard.Models
             string currency = null,
             double? price = null,
             string formattedPrice = null,
+            int? priceId = null,
+            int? pricePointId = null,
             int? productPricePointId = null,
             Models.CurrencyPriceRole? role = null)
         {
@@ -49,6 +53,8 @@ namespace AdvancedBilling.Standard.Models
             this.Currency = currency;
             this.Price = price;
             this.FormattedPrice = formattedPrice;
+            this.PriceId = priceId;
+            this.PricePointId = pricePointId;
             this.ProductPricePointId = productPricePointId;
             this.Role = role;
         }
@@ -78,6 +84,18 @@ namespace AdvancedBilling.Standard.Models
         public string FormattedPrice { get; set; }
 
         /// <summary>
+        /// Gets or sets PriceId.
+        /// </summary>
+        [JsonProperty("price_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? PriceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets PricePointId.
+        /// </summary>
+        [JsonProperty("price_point_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? PricePointId { get; set; }
+
+        /// <summary>
         /// Gets or sets ProductPricePointId.
         /// </summary>
         [JsonProperty("product_price_point_id", NullValueHandling = NullValueHandling.Ignore)]
@@ -93,32 +111,36 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"CurrencyPrice : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is CurrencyPrice other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.Currency == null && other.Currency == null) || (this.Currency?.Equals(other.Currency) == true)) &&
-                ((this.Price == null && other.Price == null) || (this.Price?.Equals(other.Price) == true)) &&
-                ((this.FormattedPrice == null && other.FormattedPrice == null) || (this.FormattedPrice?.Equals(other.FormattedPrice) == true)) &&
-                ((this.ProductPricePointId == null && other.ProductPricePointId == null) || (this.ProductPricePointId?.Equals(other.ProductPricePointId) == true)) &&
-                ((this.Role == null && other.Role == null) || (this.Role?.Equals(other.Role) == true));
+            return obj is CurrencyPrice other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.Currency == null && other.Currency == null ||
+                 this.Currency?.Equals(other.Currency) == true) &&
+                (this.Price == null && other.Price == null ||
+                 this.Price?.Equals(other.Price) == true) &&
+                (this.FormattedPrice == null && other.FormattedPrice == null ||
+                 this.FormattedPrice?.Equals(other.FormattedPrice) == true) &&
+                (this.PriceId == null && other.PriceId == null ||
+                 this.PriceId?.Equals(other.PriceId) == true) &&
+                (this.PricePointId == null && other.PricePointId == null ||
+                 this.PricePointId?.Equals(other.PricePointId) == true) &&
+                (this.ProductPricePointId == null && other.ProductPricePointId == null ||
+                 this.ProductPricePointId?.Equals(other.ProductPricePointId) == true) &&
+                (this.Role == null && other.Role == null ||
+                 this.Role?.Equals(other.Role) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -126,9 +148,11 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.Currency = {(this.Currency == null ? "null" : this.Currency)}");
+            toStringOutput.Add($"this.Currency = {this.Currency ?? "null"}");
             toStringOutput.Add($"this.Price = {(this.Price == null ? "null" : this.Price.ToString())}");
-            toStringOutput.Add($"this.FormattedPrice = {(this.FormattedPrice == null ? "null" : this.FormattedPrice)}");
+            toStringOutput.Add($"this.FormattedPrice = {this.FormattedPrice ?? "null"}");
+            toStringOutput.Add($"this.PriceId = {(this.PriceId == null ? "null" : this.PriceId.ToString())}");
+            toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
             toStringOutput.Add($"this.ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
             toStringOutput.Add($"this.Role = {(this.Role == null ? "null" : this.Role.ToString())}");
 

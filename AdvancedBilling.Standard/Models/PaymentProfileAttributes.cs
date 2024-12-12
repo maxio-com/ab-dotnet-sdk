@@ -101,11 +101,11 @@ namespace AdvancedBilling.Standard.Models
             this.ExpirationMonth = expirationMonth;
             this.ExpirationYear = expirationYear;
             this.BillingAddress = billingAddress;
+
             if (billingAddress2 != null)
             {
                 this.BillingAddress2 = billingAddress2;
             }
-
             this.BillingCity = billingCity;
             this.BillingState = billingState;
             this.BillingCountry = billingCountry;
@@ -287,14 +287,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"PaymentProfileAttributes : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetBillingAddress2()
         {
@@ -313,73 +311,94 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is PaymentProfileAttributes other &&                ((this.ChargifyToken == null && other.ChargifyToken == null) || (this.ChargifyToken?.Equals(other.ChargifyToken) == true)) &&
-                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.PaymentType == null && other.PaymentType == null) || (this.PaymentType?.Equals(other.PaymentType) == true)) &&
-                ((this.FirstName == null && other.FirstName == null) || (this.FirstName?.Equals(other.FirstName) == true)) &&
-                ((this.LastName == null && other.LastName == null) || (this.LastName?.Equals(other.LastName) == true)) &&
-                ((this.MaskedCardNumber == null && other.MaskedCardNumber == null) || (this.MaskedCardNumber?.Equals(other.MaskedCardNumber) == true)) &&
-                ((this.FullNumber == null && other.FullNumber == null) || (this.FullNumber?.Equals(other.FullNumber) == true)) &&
-                ((this.CardType == null && other.CardType == null) || (this.CardType?.Equals(other.CardType) == true)) &&
-                ((this.ExpirationMonth == null && other.ExpirationMonth == null) || (this.ExpirationMonth?.Equals(other.ExpirationMonth) == true)) &&
-                ((this.ExpirationYear == null && other.ExpirationYear == null) || (this.ExpirationYear?.Equals(other.ExpirationYear) == true)) &&
-                ((this.BillingAddress == null && other.BillingAddress == null) || (this.BillingAddress?.Equals(other.BillingAddress) == true)) &&
-                ((this.BillingAddress2 == null && other.BillingAddress2 == null) || (this.BillingAddress2?.Equals(other.BillingAddress2) == true)) &&
-                ((this.BillingCity == null && other.BillingCity == null) || (this.BillingCity?.Equals(other.BillingCity) == true)) &&
-                ((this.BillingState == null && other.BillingState == null) || (this.BillingState?.Equals(other.BillingState) == true)) &&
-                ((this.BillingCountry == null && other.BillingCountry == null) || (this.BillingCountry?.Equals(other.BillingCountry) == true)) &&
-                ((this.BillingZip == null && other.BillingZip == null) || (this.BillingZip?.Equals(other.BillingZip) == true)) &&
-                ((this.CurrentVault == null && other.CurrentVault == null) || (this.CurrentVault?.Equals(other.CurrentVault) == true)) &&
-                ((this.VaultToken == null && other.VaultToken == null) || (this.VaultToken?.Equals(other.VaultToken) == true)) &&
-                ((this.CustomerVaultToken == null && other.CustomerVaultToken == null) || (this.CustomerVaultToken?.Equals(other.CustomerVaultToken) == true)) &&
-                ((this.CustomerId == null && other.CustomerId == null) || (this.CustomerId?.Equals(other.CustomerId) == true)) &&
-                ((this.PaypalEmail == null && other.PaypalEmail == null) || (this.PaypalEmail?.Equals(other.PaypalEmail) == true)) &&
-                ((this.PaymentMethodNonce == null && other.PaymentMethodNonce == null) || (this.PaymentMethodNonce?.Equals(other.PaymentMethodNonce) == true)) &&
-                ((this.GatewayHandle == null && other.GatewayHandle == null) || (this.GatewayHandle?.Equals(other.GatewayHandle) == true)) &&
-                ((this.Cvv == null && other.Cvv == null) || (this.Cvv?.Equals(other.Cvv) == true)) &&
-                ((this.LastFour == null && other.LastFour == null) || (this.LastFour?.Equals(other.LastFour) == true));
+            return obj is PaymentProfileAttributes other &&
+                (this.ChargifyToken == null && other.ChargifyToken == null ||
+                 this.ChargifyToken?.Equals(other.ChargifyToken) == true) &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.PaymentType == null && other.PaymentType == null ||
+                 this.PaymentType?.Equals(other.PaymentType) == true) &&
+                (this.FirstName == null && other.FirstName == null ||
+                 this.FirstName?.Equals(other.FirstName) == true) &&
+                (this.LastName == null && other.LastName == null ||
+                 this.LastName?.Equals(other.LastName) == true) &&
+                (this.MaskedCardNumber == null && other.MaskedCardNumber == null ||
+                 this.MaskedCardNumber?.Equals(other.MaskedCardNumber) == true) &&
+                (this.FullNumber == null && other.FullNumber == null ||
+                 this.FullNumber?.Equals(other.FullNumber) == true) &&
+                (this.CardType == null && other.CardType == null ||
+                 this.CardType?.Equals(other.CardType) == true) &&
+                (this.ExpirationMonth == null && other.ExpirationMonth == null ||
+                 this.ExpirationMonth?.Equals(other.ExpirationMonth) == true) &&
+                (this.ExpirationYear == null && other.ExpirationYear == null ||
+                 this.ExpirationYear?.Equals(other.ExpirationYear) == true) &&
+                (this.BillingAddress == null && other.BillingAddress == null ||
+                 this.BillingAddress?.Equals(other.BillingAddress) == true) &&
+                (this.BillingAddress2 == null && other.BillingAddress2 == null ||
+                 this.BillingAddress2?.Equals(other.BillingAddress2) == true) &&
+                (this.BillingCity == null && other.BillingCity == null ||
+                 this.BillingCity?.Equals(other.BillingCity) == true) &&
+                (this.BillingState == null && other.BillingState == null ||
+                 this.BillingState?.Equals(other.BillingState) == true) &&
+                (this.BillingCountry == null && other.BillingCountry == null ||
+                 this.BillingCountry?.Equals(other.BillingCountry) == true) &&
+                (this.BillingZip == null && other.BillingZip == null ||
+                 this.BillingZip?.Equals(other.BillingZip) == true) &&
+                (this.CurrentVault == null && other.CurrentVault == null ||
+                 this.CurrentVault?.Equals(other.CurrentVault) == true) &&
+                (this.VaultToken == null && other.VaultToken == null ||
+                 this.VaultToken?.Equals(other.VaultToken) == true) &&
+                (this.CustomerVaultToken == null && other.CustomerVaultToken == null ||
+                 this.CustomerVaultToken?.Equals(other.CustomerVaultToken) == true) &&
+                (this.CustomerId == null && other.CustomerId == null ||
+                 this.CustomerId?.Equals(other.CustomerId) == true) &&
+                (this.PaypalEmail == null && other.PaypalEmail == null ||
+                 this.PaypalEmail?.Equals(other.PaypalEmail) == true) &&
+                (this.PaymentMethodNonce == null && other.PaymentMethodNonce == null ||
+                 this.PaymentMethodNonce?.Equals(other.PaymentMethodNonce) == true) &&
+                (this.GatewayHandle == null && other.GatewayHandle == null ||
+                 this.GatewayHandle?.Equals(other.GatewayHandle) == true) &&
+                (this.Cvv == null && other.Cvv == null ||
+                 this.Cvv?.Equals(other.Cvv) == true) &&
+                (this.LastFour == null && other.LastFour == null ||
+                 this.LastFour?.Equals(other.LastFour) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ChargifyToken = {(this.ChargifyToken == null ? "null" : this.ChargifyToken)}");
+            toStringOutput.Add($"this.ChargifyToken = {this.ChargifyToken ?? "null"}");
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
-            toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : this.FirstName)}");
-            toStringOutput.Add($"this.LastName = {(this.LastName == null ? "null" : this.LastName)}");
-            toStringOutput.Add($"this.MaskedCardNumber = {(this.MaskedCardNumber == null ? "null" : this.MaskedCardNumber)}");
-            toStringOutput.Add($"this.FullNumber = {(this.FullNumber == null ? "null" : this.FullNumber)}");
+            toStringOutput.Add($"this.FirstName = {this.FirstName ?? "null"}");
+            toStringOutput.Add($"this.LastName = {this.LastName ?? "null"}");
+            toStringOutput.Add($"this.MaskedCardNumber = {this.MaskedCardNumber ?? "null"}");
+            toStringOutput.Add($"this.FullNumber = {this.FullNumber ?? "null"}");
             toStringOutput.Add($"this.CardType = {(this.CardType == null ? "null" : this.CardType.ToString())}");
             toStringOutput.Add($"ExpirationMonth = {(this.ExpirationMonth == null ? "null" : this.ExpirationMonth.ToString())}");
             toStringOutput.Add($"ExpirationYear = {(this.ExpirationYear == null ? "null" : this.ExpirationYear.ToString())}");
-            toStringOutput.Add($"this.BillingAddress = {(this.BillingAddress == null ? "null" : this.BillingAddress)}");
-            toStringOutput.Add($"this.BillingAddress2 = {(this.BillingAddress2 == null ? "null" : this.BillingAddress2)}");
-            toStringOutput.Add($"this.BillingCity = {(this.BillingCity == null ? "null" : this.BillingCity)}");
-            toStringOutput.Add($"this.BillingState = {(this.BillingState == null ? "null" : this.BillingState)}");
-            toStringOutput.Add($"this.BillingCountry = {(this.BillingCountry == null ? "null" : this.BillingCountry)}");
-            toStringOutput.Add($"this.BillingZip = {(this.BillingZip == null ? "null" : this.BillingZip)}");
+            toStringOutput.Add($"this.BillingAddress = {this.BillingAddress ?? "null"}");
+            toStringOutput.Add($"this.BillingAddress2 = {this.BillingAddress2 ?? "null"}");
+            toStringOutput.Add($"this.BillingCity = {this.BillingCity ?? "null"}");
+            toStringOutput.Add($"this.BillingState = {this.BillingState ?? "null"}");
+            toStringOutput.Add($"this.BillingCountry = {this.BillingCountry ?? "null"}");
+            toStringOutput.Add($"this.BillingZip = {this.BillingZip ?? "null"}");
             toStringOutput.Add($"this.CurrentVault = {(this.CurrentVault == null ? "null" : this.CurrentVault.ToString())}");
-            toStringOutput.Add($"this.VaultToken = {(this.VaultToken == null ? "null" : this.VaultToken)}");
-            toStringOutput.Add($"this.CustomerVaultToken = {(this.CustomerVaultToken == null ? "null" : this.CustomerVaultToken)}");
+            toStringOutput.Add($"this.VaultToken = {this.VaultToken ?? "null"}");
+            toStringOutput.Add($"this.CustomerVaultToken = {this.CustomerVaultToken ?? "null"}");
             toStringOutput.Add($"this.CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
-            toStringOutput.Add($"this.PaypalEmail = {(this.PaypalEmail == null ? "null" : this.PaypalEmail)}");
-            toStringOutput.Add($"this.PaymentMethodNonce = {(this.PaymentMethodNonce == null ? "null" : this.PaymentMethodNonce)}");
-            toStringOutput.Add($"this.GatewayHandle = {(this.GatewayHandle == null ? "null" : this.GatewayHandle)}");
-            toStringOutput.Add($"this.Cvv = {(this.Cvv == null ? "null" : this.Cvv)}");
-            toStringOutput.Add($"this.LastFour = {(this.LastFour == null ? "null" : this.LastFour)}");
+            toStringOutput.Add($"this.PaypalEmail = {this.PaypalEmail ?? "null"}");
+            toStringOutput.Add($"this.PaymentMethodNonce = {this.PaymentMethodNonce ?? "null"}");
+            toStringOutput.Add($"this.GatewayHandle = {this.GatewayHandle ?? "null"}");
+            toStringOutput.Add($"this.Cvv = {this.Cvv ?? "null"}");
+            toStringOutput.Add($"this.LastFour = {this.LastFour ?? "null"}");
 
             base.ToString(toStringOutput);
         }

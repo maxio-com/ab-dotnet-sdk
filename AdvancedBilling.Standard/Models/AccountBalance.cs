@@ -48,6 +48,7 @@ namespace AdvancedBilling.Standard.Models
             long? remittanceBalanceInCents = null)
         {
             this.BalanceInCents = balanceInCents;
+
             if (automaticBalanceInCents != null)
             {
                 this.AutomaticBalanceInCents = automaticBalanceInCents;
@@ -57,7 +58,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.RemittanceBalanceInCents = remittanceBalanceInCents;
             }
-
         }
 
         /// <summary>
@@ -106,14 +106,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"AccountBalance : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetAutomaticBalanceInCents()
         {
@@ -121,7 +119,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetRemittanceBalanceInCents()
         {
@@ -149,20 +147,19 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is AccountBalance other &&                ((this.BalanceInCents == null && other.BalanceInCents == null) || (this.BalanceInCents?.Equals(other.BalanceInCents) == true)) &&
-                ((this.AutomaticBalanceInCents == null && other.AutomaticBalanceInCents == null) || (this.AutomaticBalanceInCents?.Equals(other.AutomaticBalanceInCents) == true)) &&
-                ((this.RemittanceBalanceInCents == null && other.RemittanceBalanceInCents == null) || (this.RemittanceBalanceInCents?.Equals(other.RemittanceBalanceInCents) == true));
+            return obj is AccountBalance other &&
+                (this.BalanceInCents == null && other.BalanceInCents == null ||
+                 this.BalanceInCents?.Equals(other.BalanceInCents) == true) &&
+                (this.AutomaticBalanceInCents == null && other.AutomaticBalanceInCents == null ||
+                 this.AutomaticBalanceInCents?.Equals(other.AutomaticBalanceInCents) == true) &&
+                (this.RemittanceBalanceInCents == null && other.RemittanceBalanceInCents == null ||
+                 this.RemittanceBalanceInCents?.Equals(other.RemittanceBalanceInCents) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

@@ -131,36 +131,39 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ListComponentsForProductFamilyInput : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ListComponentsForProductFamilyInput other &&                this.ProductFamilyId.Equals(other.ProductFamilyId) &&
-                ((this.IncludeArchived == null && other.IncludeArchived == null) || (this.IncludeArchived?.Equals(other.IncludeArchived) == true)) &&
-                ((this.Page == null && other.Page == null) || (this.Page?.Equals(other.Page) == true)) &&
-                ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true)) &&
-                ((this.Filter == null && other.Filter == null) || (this.Filter?.Equals(other.Filter) == true)) &&
-                ((this.DateField == null && other.DateField == null) || (this.DateField?.Equals(other.DateField) == true)) &&
-                ((this.EndDate == null && other.EndDate == null) || (this.EndDate?.Equals(other.EndDate) == true)) &&
-                ((this.EndDatetime == null && other.EndDatetime == null) || (this.EndDatetime?.Equals(other.EndDatetime) == true)) &&
-                ((this.StartDate == null && other.StartDate == null) || (this.StartDate?.Equals(other.StartDate) == true)) &&
-                ((this.StartDatetime == null && other.StartDatetime == null) || (this.StartDatetime?.Equals(other.StartDatetime) == true));
+            return obj is ListComponentsForProductFamilyInput other &&
+                (this.ProductFamilyId.Equals(other.ProductFamilyId)) &&
+                (this.IncludeArchived == null && other.IncludeArchived == null ||
+                 this.IncludeArchived?.Equals(other.IncludeArchived) == true) &&
+                (this.Page == null && other.Page == null ||
+                 this.Page?.Equals(other.Page) == true) &&
+                (this.PerPage == null && other.PerPage == null ||
+                 this.PerPage?.Equals(other.PerPage) == true) &&
+                (this.Filter == null && other.Filter == null ||
+                 this.Filter?.Equals(other.Filter) == true) &&
+                (this.DateField == null && other.DateField == null ||
+                 this.DateField?.Equals(other.DateField) == true) &&
+                (this.EndDate == null && other.EndDate == null ||
+                 this.EndDate?.Equals(other.EndDate) == true) &&
+                (this.EndDatetime == null && other.EndDatetime == null ||
+                 this.EndDatetime?.Equals(other.EndDatetime) == true) &&
+                (this.StartDate == null && other.StartDate == null ||
+                 this.StartDate?.Equals(other.StartDate) == true) &&
+                (this.StartDatetime == null && other.StartDatetime == null ||
+                 this.StartDatetime?.Equals(other.StartDatetime) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -173,10 +176,10 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
             toStringOutput.Add($"this.Filter = {(this.Filter == null ? "null" : this.Filter.ToString())}");
             toStringOutput.Add($"this.DateField = {(this.DateField == null ? "null" : this.DateField.ToString())}");
-            toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate)}");
-            toStringOutput.Add($"this.EndDatetime = {(this.EndDatetime == null ? "null" : this.EndDatetime)}");
-            toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate)}");
-            toStringOutput.Add($"this.StartDatetime = {(this.StartDatetime == null ? "null" : this.StartDatetime)}");
+            toStringOutput.Add($"this.EndDate = {this.EndDate ?? "null"}");
+            toStringOutput.Add($"this.EndDatetime = {this.EndDatetime ?? "null"}");
+            toStringOutput.Add($"this.StartDate = {this.StartDate ?? "null"}");
+            toStringOutput.Add($"this.StartDatetime = {this.StartDatetime ?? "null"}");
 
             base.ToString(toStringOutput);
         }

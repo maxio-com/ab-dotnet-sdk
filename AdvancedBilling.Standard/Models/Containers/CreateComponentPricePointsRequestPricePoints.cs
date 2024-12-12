@@ -77,6 +77,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is CreateComponentPricePointCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<CreatePrepaidUsageComponentPricePointCase, CreatePrepaidUsageComponentPricePoint>))]
@@ -103,6 +110,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             public override string ToString()
             {
                 return _value?.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is CreatePrepaidUsageComponentPricePointCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
             }
         }
     }

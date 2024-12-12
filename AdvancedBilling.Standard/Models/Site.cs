@@ -183,42 +183,52 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"Site : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is Site other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.Subdomain == null && other.Subdomain == null) || (this.Subdomain?.Equals(other.Subdomain) == true)) &&
-                ((this.Currency == null && other.Currency == null) || (this.Currency?.Equals(other.Currency) == true)) &&
-                ((this.SellerId == null && other.SellerId == null) || (this.SellerId?.Equals(other.SellerId) == true)) &&
-                ((this.NonPrimaryCurrencies == null && other.NonPrimaryCurrencies == null) || (this.NonPrimaryCurrencies?.Equals(other.NonPrimaryCurrencies) == true)) &&
-                ((this.RelationshipInvoicingEnabled == null && other.RelationshipInvoicingEnabled == null) || (this.RelationshipInvoicingEnabled?.Equals(other.RelationshipInvoicingEnabled) == true)) &&
-                ((this.CustomerHierarchyEnabled == null && other.CustomerHierarchyEnabled == null) || (this.CustomerHierarchyEnabled?.Equals(other.CustomerHierarchyEnabled) == true)) &&
-                ((this.WhopaysEnabled == null && other.WhopaysEnabled == null) || (this.WhopaysEnabled?.Equals(other.WhopaysEnabled) == true)) &&
-                ((this.WhopaysDefaultPayer == null && other.WhopaysDefaultPayer == null) || (this.WhopaysDefaultPayer?.Equals(other.WhopaysDefaultPayer) == true)) &&
-                ((this.AllocationSettings == null && other.AllocationSettings == null) || (this.AllocationSettings?.Equals(other.AllocationSettings) == true)) &&
-                ((this.DefaultPaymentCollectionMethod == null && other.DefaultPaymentCollectionMethod == null) || (this.DefaultPaymentCollectionMethod?.Equals(other.DefaultPaymentCollectionMethod) == true)) &&
-                ((this.OrganizationAddress == null && other.OrganizationAddress == null) || (this.OrganizationAddress?.Equals(other.OrganizationAddress) == true)) &&
-                ((this.TaxConfiguration == null && other.TaxConfiguration == null) || (this.TaxConfiguration?.Equals(other.TaxConfiguration) == true)) &&
-                ((this.NetTerms == null && other.NetTerms == null) || (this.NetTerms?.Equals(other.NetTerms) == true)) &&
-                ((this.Test == null && other.Test == null) || (this.Test?.Equals(other.Test) == true));
+            return obj is Site other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.Subdomain == null && other.Subdomain == null ||
+                 this.Subdomain?.Equals(other.Subdomain) == true) &&
+                (this.Currency == null && other.Currency == null ||
+                 this.Currency?.Equals(other.Currency) == true) &&
+                (this.SellerId == null && other.SellerId == null ||
+                 this.SellerId?.Equals(other.SellerId) == true) &&
+                (this.NonPrimaryCurrencies == null && other.NonPrimaryCurrencies == null ||
+                 this.NonPrimaryCurrencies?.Equals(other.NonPrimaryCurrencies) == true) &&
+                (this.RelationshipInvoicingEnabled == null && other.RelationshipInvoicingEnabled == null ||
+                 this.RelationshipInvoicingEnabled?.Equals(other.RelationshipInvoicingEnabled) == true) &&
+                (this.CustomerHierarchyEnabled == null && other.CustomerHierarchyEnabled == null ||
+                 this.CustomerHierarchyEnabled?.Equals(other.CustomerHierarchyEnabled) == true) &&
+                (this.WhopaysEnabled == null && other.WhopaysEnabled == null ||
+                 this.WhopaysEnabled?.Equals(other.WhopaysEnabled) == true) &&
+                (this.WhopaysDefaultPayer == null && other.WhopaysDefaultPayer == null ||
+                 this.WhopaysDefaultPayer?.Equals(other.WhopaysDefaultPayer) == true) &&
+                (this.AllocationSettings == null && other.AllocationSettings == null ||
+                 this.AllocationSettings?.Equals(other.AllocationSettings) == true) &&
+                (this.DefaultPaymentCollectionMethod == null && other.DefaultPaymentCollectionMethod == null ||
+                 this.DefaultPaymentCollectionMethod?.Equals(other.DefaultPaymentCollectionMethod) == true) &&
+                (this.OrganizationAddress == null && other.OrganizationAddress == null ||
+                 this.OrganizationAddress?.Equals(other.OrganizationAddress) == true) &&
+                (this.TaxConfiguration == null && other.TaxConfiguration == null ||
+                 this.TaxConfiguration?.Equals(other.TaxConfiguration) == true) &&
+                (this.NetTerms == null && other.NetTerms == null ||
+                 this.NetTerms?.Equals(other.NetTerms) == true) &&
+                (this.Test == null && other.Test == null ||
+                 this.Test?.Equals(other.Test) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -226,17 +236,17 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
-            toStringOutput.Add($"this.Subdomain = {(this.Subdomain == null ? "null" : this.Subdomain)}");
-            toStringOutput.Add($"this.Currency = {(this.Currency == null ? "null" : this.Currency)}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"this.Subdomain = {this.Subdomain ?? "null"}");
+            toStringOutput.Add($"this.Currency = {this.Currency ?? "null"}");
             toStringOutput.Add($"this.SellerId = {(this.SellerId == null ? "null" : this.SellerId.ToString())}");
             toStringOutput.Add($"this.NonPrimaryCurrencies = {(this.NonPrimaryCurrencies == null ? "null" : $"[{string.Join(", ", this.NonPrimaryCurrencies)} ]")}");
             toStringOutput.Add($"this.RelationshipInvoicingEnabled = {(this.RelationshipInvoicingEnabled == null ? "null" : this.RelationshipInvoicingEnabled.ToString())}");
             toStringOutput.Add($"this.CustomerHierarchyEnabled = {(this.CustomerHierarchyEnabled == null ? "null" : this.CustomerHierarchyEnabled.ToString())}");
             toStringOutput.Add($"this.WhopaysEnabled = {(this.WhopaysEnabled == null ? "null" : this.WhopaysEnabled.ToString())}");
-            toStringOutput.Add($"this.WhopaysDefaultPayer = {(this.WhopaysDefaultPayer == null ? "null" : this.WhopaysDefaultPayer)}");
+            toStringOutput.Add($"this.WhopaysDefaultPayer = {this.WhopaysDefaultPayer ?? "null"}");
             toStringOutput.Add($"this.AllocationSettings = {(this.AllocationSettings == null ? "null" : this.AllocationSettings.ToString())}");
-            toStringOutput.Add($"this.DefaultPaymentCollectionMethod = {(this.DefaultPaymentCollectionMethod == null ? "null" : this.DefaultPaymentCollectionMethod)}");
+            toStringOutput.Add($"this.DefaultPaymentCollectionMethod = {this.DefaultPaymentCollectionMethod ?? "null"}");
             toStringOutput.Add($"this.OrganizationAddress = {(this.OrganizationAddress == null ? "null" : this.OrganizationAddress.ToString())}");
             toStringOutput.Add($"this.TaxConfiguration = {(this.TaxConfiguration == null ? "null" : this.TaxConfiguration.ToString())}");
             toStringOutput.Add($"this.NetTerms = {(this.NetTerms == null ? "null" : this.NetTerms.ToString())}");

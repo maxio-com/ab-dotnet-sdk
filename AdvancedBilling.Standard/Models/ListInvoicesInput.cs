@@ -239,59 +239,75 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ListInvoicesInput : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ListInvoicesInput other &&                ((this.StartDate == null && other.StartDate == null) || (this.StartDate?.Equals(other.StartDate) == true)) &&
-                ((this.EndDate == null && other.EndDate == null) || (this.EndDate?.Equals(other.EndDate) == true)) &&
-                ((this.Status == null && other.Status == null) || (this.Status?.Equals(other.Status) == true)) &&
-                ((this.SubscriptionId == null && other.SubscriptionId == null) || (this.SubscriptionId?.Equals(other.SubscriptionId) == true)) &&
-                ((this.SubscriptionGroupUid == null && other.SubscriptionGroupUid == null) || (this.SubscriptionGroupUid?.Equals(other.SubscriptionGroupUid) == true)) &&
-                ((this.Page == null && other.Page == null) || (this.Page?.Equals(other.Page) == true)) &&
-                ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true)) &&
-                ((this.Direction == null && other.Direction == null) || (this.Direction?.Equals(other.Direction) == true)) &&
-                ((this.LineItems == null && other.LineItems == null) || (this.LineItems?.Equals(other.LineItems) == true)) &&
-                ((this.Discounts == null && other.Discounts == null) || (this.Discounts?.Equals(other.Discounts) == true)) &&
-                ((this.Taxes == null && other.Taxes == null) || (this.Taxes?.Equals(other.Taxes) == true)) &&
-                ((this.Credits == null && other.Credits == null) || (this.Credits?.Equals(other.Credits) == true)) &&
-                ((this.Payments == null && other.Payments == null) || (this.Payments?.Equals(other.Payments) == true)) &&
-                ((this.CustomFields == null && other.CustomFields == null) || (this.CustomFields?.Equals(other.CustomFields) == true)) &&
-                ((this.Refunds == null && other.Refunds == null) || (this.Refunds?.Equals(other.Refunds) == true)) &&
-                ((this.DateField == null && other.DateField == null) || (this.DateField?.Equals(other.DateField) == true)) &&
-                ((this.StartDatetime == null && other.StartDatetime == null) || (this.StartDatetime?.Equals(other.StartDatetime) == true)) &&
-                ((this.EndDatetime == null && other.EndDatetime == null) || (this.EndDatetime?.Equals(other.EndDatetime) == true)) &&
-                ((this.CustomerIds == null && other.CustomerIds == null) || (this.CustomerIds?.Equals(other.CustomerIds) == true)) &&
-                ((this.Number == null && other.Number == null) || (this.Number?.Equals(other.Number) == true)) &&
-                ((this.ProductIds == null && other.ProductIds == null) || (this.ProductIds?.Equals(other.ProductIds) == true)) &&
-                ((this.Sort == null && other.Sort == null) || (this.Sort?.Equals(other.Sort) == true));
+            return obj is ListInvoicesInput other &&
+                (this.StartDate == null && other.StartDate == null ||
+                 this.StartDate?.Equals(other.StartDate) == true) &&
+                (this.EndDate == null && other.EndDate == null ||
+                 this.EndDate?.Equals(other.EndDate) == true) &&
+                (this.Status == null && other.Status == null ||
+                 this.Status?.Equals(other.Status) == true) &&
+                (this.SubscriptionId == null && other.SubscriptionId == null ||
+                 this.SubscriptionId?.Equals(other.SubscriptionId) == true) &&
+                (this.SubscriptionGroupUid == null && other.SubscriptionGroupUid == null ||
+                 this.SubscriptionGroupUid?.Equals(other.SubscriptionGroupUid) == true) &&
+                (this.Page == null && other.Page == null ||
+                 this.Page?.Equals(other.Page) == true) &&
+                (this.PerPage == null && other.PerPage == null ||
+                 this.PerPage?.Equals(other.PerPage) == true) &&
+                (this.Direction == null && other.Direction == null ||
+                 this.Direction?.Equals(other.Direction) == true) &&
+                (this.LineItems == null && other.LineItems == null ||
+                 this.LineItems?.Equals(other.LineItems) == true) &&
+                (this.Discounts == null && other.Discounts == null ||
+                 this.Discounts?.Equals(other.Discounts) == true) &&
+                (this.Taxes == null && other.Taxes == null ||
+                 this.Taxes?.Equals(other.Taxes) == true) &&
+                (this.Credits == null && other.Credits == null ||
+                 this.Credits?.Equals(other.Credits) == true) &&
+                (this.Payments == null && other.Payments == null ||
+                 this.Payments?.Equals(other.Payments) == true) &&
+                (this.CustomFields == null && other.CustomFields == null ||
+                 this.CustomFields?.Equals(other.CustomFields) == true) &&
+                (this.Refunds == null && other.Refunds == null ||
+                 this.Refunds?.Equals(other.Refunds) == true) &&
+                (this.DateField == null && other.DateField == null ||
+                 this.DateField?.Equals(other.DateField) == true) &&
+                (this.StartDatetime == null && other.StartDatetime == null ||
+                 this.StartDatetime?.Equals(other.StartDatetime) == true) &&
+                (this.EndDatetime == null && other.EndDatetime == null ||
+                 this.EndDatetime?.Equals(other.EndDatetime) == true) &&
+                (this.CustomerIds == null && other.CustomerIds == null ||
+                 this.CustomerIds?.Equals(other.CustomerIds) == true) &&
+                (this.Number == null && other.Number == null ||
+                 this.Number?.Equals(other.Number) == true) &&
+                (this.ProductIds == null && other.ProductIds == null ||
+                 this.ProductIds?.Equals(other.ProductIds) == true) &&
+                (this.Sort == null && other.Sort == null ||
+                 this.Sort?.Equals(other.Sort) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate)}");
-            toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate)}");
+            toStringOutput.Add($"this.StartDate = {this.StartDate ?? "null"}");
+            toStringOutput.Add($"this.EndDate = {this.EndDate ?? "null"}");
             toStringOutput.Add($"this.Status = {(this.Status == null ? "null" : this.Status.ToString())}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
-            toStringOutput.Add($"this.SubscriptionGroupUid = {(this.SubscriptionGroupUid == null ? "null" : this.SubscriptionGroupUid)}");
+            toStringOutput.Add($"this.SubscriptionGroupUid = {this.SubscriptionGroupUid ?? "null"}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
             toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
@@ -303,8 +319,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.CustomFields = {(this.CustomFields == null ? "null" : this.CustomFields.ToString())}");
             toStringOutput.Add($"this.Refunds = {(this.Refunds == null ? "null" : this.Refunds.ToString())}");
             toStringOutput.Add($"this.DateField = {(this.DateField == null ? "null" : this.DateField.ToString())}");
-            toStringOutput.Add($"this.StartDatetime = {(this.StartDatetime == null ? "null" : this.StartDatetime)}");
-            toStringOutput.Add($"this.EndDatetime = {(this.EndDatetime == null ? "null" : this.EndDatetime)}");
+            toStringOutput.Add($"this.StartDatetime = {this.StartDatetime ?? "null"}");
+            toStringOutput.Add($"this.EndDatetime = {this.EndDatetime ?? "null"}");
             toStringOutput.Add($"this.CustomerIds = {(this.CustomerIds == null ? "null" : $"[{string.Join(", ", this.CustomerIds)} ]")}");
             toStringOutput.Add($"this.Number = {(this.Number == null ? "null" : $"[{string.Join(", ", this.Number)} ]")}");
             toStringOutput.Add($"this.ProductIds = {(this.ProductIds == null ? "null" : $"[{string.Join(", ", this.ProductIds)} ]")}");

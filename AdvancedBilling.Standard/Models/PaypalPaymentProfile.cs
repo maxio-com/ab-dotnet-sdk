@@ -95,6 +95,7 @@ namespace AdvancedBilling.Standard.Models
             this.CustomerId = customerId;
             this.CurrentVault = currentVault;
             this.VaultToken = vaultToken;
+
             if (billingAddress != null)
             {
                 this.BillingAddress = billingAddress;
@@ -129,8 +130,8 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.BillingAddress2 = billingAddress2;
             }
-
             this.PaymentType = paymentType;
+
             if (siteGatewaySettingId != null)
             {
                 this.SiteGatewaySettingId = siteGatewaySettingId;
@@ -140,7 +141,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.GatewayHandle = gatewayHandle;
             }
-
             this.PaypalEmail = paypalEmail;
         }
 
@@ -371,14 +371,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"PaypalPaymentProfile : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetBillingAddress()
         {
@@ -386,7 +384,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetBillingCity()
         {
@@ -394,7 +392,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetBillingState()
         {
@@ -402,7 +400,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetBillingZip()
         {
@@ -410,7 +408,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetBillingCountry()
         {
@@ -418,7 +416,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetCustomerVaultToken()
         {
@@ -426,7 +424,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetBillingAddress2()
         {
@@ -434,7 +432,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetSiteGatewaySettingId()
         {
@@ -442,7 +440,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetGatewayHandle()
         {
@@ -533,34 +531,46 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is PaypalPaymentProfile other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.FirstName == null && other.FirstName == null) || (this.FirstName?.Equals(other.FirstName) == true)) &&
-                ((this.LastName == null && other.LastName == null) || (this.LastName?.Equals(other.LastName) == true)) &&
-                ((this.CustomerId == null && other.CustomerId == null) || (this.CustomerId?.Equals(other.CustomerId) == true)) &&
-                ((this.CurrentVault == null && other.CurrentVault == null) || (this.CurrentVault?.Equals(other.CurrentVault) == true)) &&
-                ((this.VaultToken == null && other.VaultToken == null) || (this.VaultToken?.Equals(other.VaultToken) == true)) &&
-                ((this.BillingAddress == null && other.BillingAddress == null) || (this.BillingAddress?.Equals(other.BillingAddress) == true)) &&
-                ((this.BillingCity == null && other.BillingCity == null) || (this.BillingCity?.Equals(other.BillingCity) == true)) &&
-                ((this.BillingState == null && other.BillingState == null) || (this.BillingState?.Equals(other.BillingState) == true)) &&
-                ((this.BillingZip == null && other.BillingZip == null) || (this.BillingZip?.Equals(other.BillingZip) == true)) &&
-                ((this.BillingCountry == null && other.BillingCountry == null) || (this.BillingCountry?.Equals(other.BillingCountry) == true)) &&
-                ((this.CustomerVaultToken == null && other.CustomerVaultToken == null) || (this.CustomerVaultToken?.Equals(other.CustomerVaultToken) == true)) &&
-                ((this.BillingAddress2 == null && other.BillingAddress2 == null) || (this.BillingAddress2?.Equals(other.BillingAddress2) == true)) &&
-                this.PaymentType.Equals(other.PaymentType) &&
-                ((this.SiteGatewaySettingId == null && other.SiteGatewaySettingId == null) || (this.SiteGatewaySettingId?.Equals(other.SiteGatewaySettingId) == true)) &&
-                ((this.GatewayHandle == null && other.GatewayHandle == null) || (this.GatewayHandle?.Equals(other.GatewayHandle) == true)) &&
-                ((this.PaypalEmail == null && other.PaypalEmail == null) || (this.PaypalEmail?.Equals(other.PaypalEmail) == true));
+            return obj is PaypalPaymentProfile other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.FirstName == null && other.FirstName == null ||
+                 this.FirstName?.Equals(other.FirstName) == true) &&
+                (this.LastName == null && other.LastName == null ||
+                 this.LastName?.Equals(other.LastName) == true) &&
+                (this.CustomerId == null && other.CustomerId == null ||
+                 this.CustomerId?.Equals(other.CustomerId) == true) &&
+                (this.CurrentVault == null && other.CurrentVault == null ||
+                 this.CurrentVault?.Equals(other.CurrentVault) == true) &&
+                (this.VaultToken == null && other.VaultToken == null ||
+                 this.VaultToken?.Equals(other.VaultToken) == true) &&
+                (this.BillingAddress == null && other.BillingAddress == null ||
+                 this.BillingAddress?.Equals(other.BillingAddress) == true) &&
+                (this.BillingCity == null && other.BillingCity == null ||
+                 this.BillingCity?.Equals(other.BillingCity) == true) &&
+                (this.BillingState == null && other.BillingState == null ||
+                 this.BillingState?.Equals(other.BillingState) == true) &&
+                (this.BillingZip == null && other.BillingZip == null ||
+                 this.BillingZip?.Equals(other.BillingZip) == true) &&
+                (this.BillingCountry == null && other.BillingCountry == null ||
+                 this.BillingCountry?.Equals(other.BillingCountry) == true) &&
+                (this.CustomerVaultToken == null && other.CustomerVaultToken == null ||
+                 this.CustomerVaultToken?.Equals(other.CustomerVaultToken) == true) &&
+                (this.BillingAddress2 == null && other.BillingAddress2 == null ||
+                 this.BillingAddress2?.Equals(other.BillingAddress2) == true) &&
+                (this.PaymentType.Equals(other.PaymentType)) &&
+                (this.SiteGatewaySettingId == null && other.SiteGatewaySettingId == null ||
+                 this.SiteGatewaySettingId?.Equals(other.SiteGatewaySettingId) == true) &&
+                (this.GatewayHandle == null && other.GatewayHandle == null ||
+                 this.GatewayHandle?.Equals(other.GatewayHandle) == true) &&
+                (this.PaypalEmail == null && other.PaypalEmail == null ||
+                 this.PaypalEmail?.Equals(other.PaypalEmail) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -568,22 +578,22 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : this.FirstName)}");
-            toStringOutput.Add($"this.LastName = {(this.LastName == null ? "null" : this.LastName)}");
+            toStringOutput.Add($"this.FirstName = {this.FirstName ?? "null"}");
+            toStringOutput.Add($"this.LastName = {this.LastName ?? "null"}");
             toStringOutput.Add($"this.CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
             toStringOutput.Add($"this.CurrentVault = {(this.CurrentVault == null ? "null" : this.CurrentVault.ToString())}");
-            toStringOutput.Add($"this.VaultToken = {(this.VaultToken == null ? "null" : this.VaultToken)}");
-            toStringOutput.Add($"this.BillingAddress = {(this.BillingAddress == null ? "null" : this.BillingAddress)}");
-            toStringOutput.Add($"this.BillingCity = {(this.BillingCity == null ? "null" : this.BillingCity)}");
-            toStringOutput.Add($"this.BillingState = {(this.BillingState == null ? "null" : this.BillingState)}");
-            toStringOutput.Add($"this.BillingZip = {(this.BillingZip == null ? "null" : this.BillingZip)}");
-            toStringOutput.Add($"this.BillingCountry = {(this.BillingCountry == null ? "null" : this.BillingCountry)}");
-            toStringOutput.Add($"this.CustomerVaultToken = {(this.CustomerVaultToken == null ? "null" : this.CustomerVaultToken)}");
-            toStringOutput.Add($"this.BillingAddress2 = {(this.BillingAddress2 == null ? "null" : this.BillingAddress2)}");
+            toStringOutput.Add($"this.VaultToken = {this.VaultToken ?? "null"}");
+            toStringOutput.Add($"this.BillingAddress = {this.BillingAddress ?? "null"}");
+            toStringOutput.Add($"this.BillingCity = {this.BillingCity ?? "null"}");
+            toStringOutput.Add($"this.BillingState = {this.BillingState ?? "null"}");
+            toStringOutput.Add($"this.BillingZip = {this.BillingZip ?? "null"}");
+            toStringOutput.Add($"this.BillingCountry = {this.BillingCountry ?? "null"}");
+            toStringOutput.Add($"this.CustomerVaultToken = {this.CustomerVaultToken ?? "null"}");
+            toStringOutput.Add($"this.BillingAddress2 = {this.BillingAddress2 ?? "null"}");
             toStringOutput.Add($"this.PaymentType = {this.PaymentType}");
             toStringOutput.Add($"this.SiteGatewaySettingId = {(this.SiteGatewaySettingId == null ? "null" : this.SiteGatewaySettingId.ToString())}");
-            toStringOutput.Add($"this.GatewayHandle = {(this.GatewayHandle == null ? "null" : this.GatewayHandle)}");
-            toStringOutput.Add($"this.PaypalEmail = {(this.PaypalEmail == null ? "null" : this.PaypalEmail)}");
+            toStringOutput.Add($"this.GatewayHandle = {this.GatewayHandle ?? "null"}");
+            toStringOutput.Add($"this.PaypalEmail = {this.PaypalEmail ?? "null"}");
 
             base.ToString(toStringOutput);
         }

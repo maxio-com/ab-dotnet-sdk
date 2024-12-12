@@ -71,37 +71,33 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"PaymentMethodBankAccount : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is PaymentMethodBankAccount other &&                ((this.MaskedAccountNumber == null && other.MaskedAccountNumber == null) || (this.MaskedAccountNumber?.Equals(other.MaskedAccountNumber) == true)) &&
-                ((this.MaskedRoutingNumber == null && other.MaskedRoutingNumber == null) || (this.MaskedRoutingNumber?.Equals(other.MaskedRoutingNumber) == true)) &&
-                this.Type.Equals(other.Type);
+            return obj is PaymentMethodBankAccount other &&
+                (this.MaskedAccountNumber == null && other.MaskedAccountNumber == null ||
+                 this.MaskedAccountNumber?.Equals(other.MaskedAccountNumber) == true) &&
+                (this.MaskedRoutingNumber == null && other.MaskedRoutingNumber == null ||
+                 this.MaskedRoutingNumber?.Equals(other.MaskedRoutingNumber) == true) &&
+                (this.Type.Equals(other.Type)) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.MaskedAccountNumber = {(this.MaskedAccountNumber == null ? "null" : this.MaskedAccountNumber)}");
-            toStringOutput.Add($"this.MaskedRoutingNumber = {(this.MaskedRoutingNumber == null ? "null" : this.MaskedRoutingNumber)}");
+            toStringOutput.Add($"this.MaskedAccountNumber = {this.MaskedAccountNumber ?? "null"}");
+            toStringOutput.Add($"this.MaskedRoutingNumber = {this.MaskedRoutingNumber ?? "null"}");
             toStringOutput.Add($"this.Type = {this.Type}");
 
             base.ToString(toStringOutput);

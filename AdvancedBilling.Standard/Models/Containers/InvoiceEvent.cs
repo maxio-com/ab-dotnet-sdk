@@ -281,6 +281,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is ApplyCreditNoteEventCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<ApplyDebitNoteEventCase, ApplyDebitNoteEvent>))]
@@ -322,6 +329,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             public override string ToString()
             {
                 return _value?.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is ApplyDebitNoteEventCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
             }
         }
 
@@ -365,6 +379,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is ApplyPaymentEventCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<BackportInvoiceEventCase, BackportInvoiceEvent>))]
@@ -406,6 +427,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             public override string ToString()
             {
                 return _value?.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is BackportInvoiceEventCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
             }
         }
 
@@ -449,6 +477,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is ChangeChargebackStatusEventCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<ChangeInvoiceCollectionMethodEventCase, ChangeInvoiceCollectionMethodEvent>))]
@@ -490,6 +525,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             public override string ToString()
             {
                 return _value?.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is ChangeInvoiceCollectionMethodEventCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
             }
         }
 
@@ -533,6 +575,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is ChangeInvoiceStatusEventCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<CreateCreditNoteEventCase, CreateCreditNoteEvent>))]
@@ -574,6 +623,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             public override string ToString()
             {
                 return _value?.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is CreateCreditNoteEventCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
             }
         }
 
@@ -617,6 +673,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is CreateDebitNoteEventCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<FailedPaymentEventCase, FailedPaymentEvent>))]
@@ -658,6 +721,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             public override string ToString()
             {
                 return _value?.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is FailedPaymentEventCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
             }
         }
 
@@ -701,6 +771,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is IssueInvoiceEventCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<RefundInvoiceEventCase, RefundInvoiceEvent>))]
@@ -742,6 +819,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             public override string ToString()
             {
                 return _value?.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is RefundInvoiceEventCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
             }
         }
 
@@ -785,6 +869,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is RemovePaymentEventCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<VoidInvoiceEventCase, VoidInvoiceEvent>))]
@@ -827,6 +918,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is VoidInvoiceEventCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<VoidRemainderEventCase, VoidRemainderEvent>))]
@@ -868,6 +966,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             public override string ToString()
             {
                 return _value?.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is VoidRemainderEventCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
             }
         }
     }

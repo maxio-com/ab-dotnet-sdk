@@ -57,28 +57,24 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"InvoiceDisplaySettings : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is InvoiceDisplaySettings other &&                ((this.HideZeroSubtotalLines == null && other.HideZeroSubtotalLines == null) || (this.HideZeroSubtotalLines?.Equals(other.HideZeroSubtotalLines) == true)) &&
-                ((this.IncludeDiscountsOnLines == null && other.IncludeDiscountsOnLines == null) || (this.IncludeDiscountsOnLines?.Equals(other.IncludeDiscountsOnLines) == true));
+            return obj is InvoiceDisplaySettings other &&
+                (this.HideZeroSubtotalLines == null && other.HideZeroSubtotalLines == null ||
+                 this.HideZeroSubtotalLines?.Equals(other.HideZeroSubtotalLines) == true) &&
+                (this.IncludeDiscountsOnLines == null && other.IncludeDiscountsOnLines == null ||
+                 this.IncludeDiscountsOnLines?.Equals(other.IncludeDiscountsOnLines) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

@@ -112,45 +112,44 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"CustomFieldValueChange : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is CustomFieldValueChange other &&                ((this.EventType == null && other.EventType == null) || (this.EventType?.Equals(other.EventType) == true)) &&
-                ((this.MetafieldName == null && other.MetafieldName == null) || (this.MetafieldName?.Equals(other.MetafieldName) == true)) &&
-                this.MetafieldId.Equals(other.MetafieldId) &&
-                ((this.OldValue == null && other.OldValue == null) || (this.OldValue?.Equals(other.OldValue) == true)) &&
-                ((this.NewValue == null && other.NewValue == null) || (this.NewValue?.Equals(other.NewValue) == true)) &&
-                ((this.ResourceType == null && other.ResourceType == null) || (this.ResourceType?.Equals(other.ResourceType) == true)) &&
-                this.ResourceId.Equals(other.ResourceId);
+            return obj is CustomFieldValueChange other &&
+                (this.EventType == null && other.EventType == null ||
+                 this.EventType?.Equals(other.EventType) == true) &&
+                (this.MetafieldName == null && other.MetafieldName == null ||
+                 this.MetafieldName?.Equals(other.MetafieldName) == true) &&
+                (this.MetafieldId.Equals(other.MetafieldId)) &&
+                (this.OldValue == null && other.OldValue == null ||
+                 this.OldValue?.Equals(other.OldValue) == true) &&
+                (this.NewValue == null && other.NewValue == null ||
+                 this.NewValue?.Equals(other.NewValue) == true) &&
+                (this.ResourceType == null && other.ResourceType == null ||
+                 this.ResourceType?.Equals(other.ResourceType) == true) &&
+                (this.ResourceId.Equals(other.ResourceId)) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.EventType = {(this.EventType == null ? "null" : this.EventType)}");
-            toStringOutput.Add($"this.MetafieldName = {(this.MetafieldName == null ? "null" : this.MetafieldName)}");
+            toStringOutput.Add($"this.EventType = {this.EventType ?? "null"}");
+            toStringOutput.Add($"this.MetafieldName = {this.MetafieldName ?? "null"}");
             toStringOutput.Add($"this.MetafieldId = {this.MetafieldId}");
-            toStringOutput.Add($"this.OldValue = {(this.OldValue == null ? "null" : this.OldValue)}");
-            toStringOutput.Add($"this.NewValue = {(this.NewValue == null ? "null" : this.NewValue)}");
-            toStringOutput.Add($"this.ResourceType = {(this.ResourceType == null ? "null" : this.ResourceType)}");
+            toStringOutput.Add($"this.OldValue = {this.OldValue ?? "null"}");
+            toStringOutput.Add($"this.NewValue = {this.NewValue ?? "null"}");
+            toStringOutput.Add($"this.ResourceType = {this.ResourceType ?? "null"}");
             toStringOutput.Add($"this.ResourceId = {this.ResourceId}");
 
             base.ToString(toStringOutput);

@@ -66,6 +66,7 @@ namespace AdvancedBilling.Standard.Models
             this.TotalDiscountInCents = totalDiscountInCents;
             this.TotalTaxInCents = totalTaxInCents;
             this.SubtotalInCents = subtotalInCents;
+
             if (startDate != null)
             {
                 this.StartDate = startDate;
@@ -80,7 +81,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.PeriodType = periodType;
             }
-
             this.ExistingBalanceInCents = existingBalanceInCents;
         }
 
@@ -180,14 +180,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"BillingManifest : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetStartDate()
         {
@@ -195,7 +193,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetEndDate()
         {
@@ -203,7 +201,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetPeriodType()
         {
@@ -240,26 +238,31 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is BillingManifest other &&                ((this.LineItems == null && other.LineItems == null) || (this.LineItems?.Equals(other.LineItems) == true)) &&
-                ((this.TotalInCents == null && other.TotalInCents == null) || (this.TotalInCents?.Equals(other.TotalInCents) == true)) &&
-                ((this.TotalDiscountInCents == null && other.TotalDiscountInCents == null) || (this.TotalDiscountInCents?.Equals(other.TotalDiscountInCents) == true)) &&
-                ((this.TotalTaxInCents == null && other.TotalTaxInCents == null) || (this.TotalTaxInCents?.Equals(other.TotalTaxInCents) == true)) &&
-                ((this.SubtotalInCents == null && other.SubtotalInCents == null) || (this.SubtotalInCents?.Equals(other.SubtotalInCents) == true)) &&
-                ((this.StartDate == null && other.StartDate == null) || (this.StartDate?.Equals(other.StartDate) == true)) &&
-                ((this.EndDate == null && other.EndDate == null) || (this.EndDate?.Equals(other.EndDate) == true)) &&
-                ((this.PeriodType == null && other.PeriodType == null) || (this.PeriodType?.Equals(other.PeriodType) == true)) &&
-                ((this.ExistingBalanceInCents == null && other.ExistingBalanceInCents == null) || (this.ExistingBalanceInCents?.Equals(other.ExistingBalanceInCents) == true));
+            return obj is BillingManifest other &&
+                (this.LineItems == null && other.LineItems == null ||
+                 this.LineItems?.Equals(other.LineItems) == true) &&
+                (this.TotalInCents == null && other.TotalInCents == null ||
+                 this.TotalInCents?.Equals(other.TotalInCents) == true) &&
+                (this.TotalDiscountInCents == null && other.TotalDiscountInCents == null ||
+                 this.TotalDiscountInCents?.Equals(other.TotalDiscountInCents) == true) &&
+                (this.TotalTaxInCents == null && other.TotalTaxInCents == null ||
+                 this.TotalTaxInCents?.Equals(other.TotalTaxInCents) == true) &&
+                (this.SubtotalInCents == null && other.SubtotalInCents == null ||
+                 this.SubtotalInCents?.Equals(other.SubtotalInCents) == true) &&
+                (this.StartDate == null && other.StartDate == null ||
+                 this.StartDate?.Equals(other.StartDate) == true) &&
+                (this.EndDate == null && other.EndDate == null ||
+                 this.EndDate?.Equals(other.EndDate) == true) &&
+                (this.PeriodType == null && other.PeriodType == null ||
+                 this.PeriodType?.Equals(other.PeriodType) == true) &&
+                (this.ExistingBalanceInCents == null && other.ExistingBalanceInCents == null ||
+                 this.ExistingBalanceInCents?.Equals(other.ExistingBalanceInCents) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -273,7 +276,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.SubtotalInCents = {(this.SubtotalInCents == null ? "null" : this.SubtotalInCents.ToString())}");
             toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate.ToString())}");
             toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate.ToString())}");
-            toStringOutput.Add($"this.PeriodType = {(this.PeriodType == null ? "null" : this.PeriodType)}");
+            toStringOutput.Add($"this.PeriodType = {this.PeriodType ?? "null"}");
             toStringOutput.Add($"this.ExistingBalanceInCents = {(this.ExistingBalanceInCents == null ? "null" : this.ExistingBalanceInCents.ToString())}");
 
             base.ToString(toStringOutput);

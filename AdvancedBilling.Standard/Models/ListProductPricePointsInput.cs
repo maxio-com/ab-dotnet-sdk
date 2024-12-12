@@ -37,18 +37,21 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="perPage">per_page.</param>
         /// <param name="currencyPrices">currency_prices.</param>
         /// <param name="filterType">filter[type].</param>
+        /// <param name="archived">archived.</param>
         public ListProductPricePointsInput(
             ListProductPricePointsInputProductId productId,
             int? page = 1,
             int? perPage = 10,
             bool? currencyPrices = null,
-            List<Models.PricePointType> filterType = null)
+            List<Models.PricePointType> filterType = null,
+            bool? archived = null)
         {
             this.ProductId = productId;
             this.Page = page;
             this.PerPage = perPage;
             this.CurrencyPrices = currencyPrices;
             this.FilterType = filterType;
+            this.Archived = archived;
         }
 
         /// <summary>
@@ -82,35 +85,42 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("filter[type]", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.PricePointType> FilterType { get; set; }
 
+        /// <summary>
+        /// Set to include archived price points in the response.
+        /// </summary>
+        [JsonProperty("archived", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? Archived { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ListProductPricePointsInput : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ListProductPricePointsInput other &&                ((this.ProductId == null && other.ProductId == null) || (this.ProductId?.Equals(other.ProductId) == true)) &&
-                ((this.Page == null && other.Page == null) || (this.Page?.Equals(other.Page) == true)) &&
-                ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true)) &&
-                ((this.CurrencyPrices == null && other.CurrencyPrices == null) || (this.CurrencyPrices?.Equals(other.CurrencyPrices) == true)) &&
-                ((this.FilterType == null && other.FilterType == null) || (this.FilterType?.Equals(other.FilterType) == true));
+            return obj is ListProductPricePointsInput other &&
+                (this.ProductId == null && other.ProductId == null ||
+                 this.ProductId?.Equals(other.ProductId) == true) &&
+                (this.Page == null && other.Page == null ||
+                 this.Page?.Equals(other.Page) == true) &&
+                (this.PerPage == null && other.PerPage == null ||
+                 this.PerPage?.Equals(other.PerPage) == true) &&
+                (this.CurrencyPrices == null && other.CurrencyPrices == null ||
+                 this.CurrencyPrices?.Equals(other.CurrencyPrices) == true) &&
+                (this.FilterType == null && other.FilterType == null ||
+                 this.FilterType?.Equals(other.FilterType) == true) &&
+                (this.Archived == null && other.Archived == null ||
+                 this.Archived?.Equals(other.Archived) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -122,6 +132,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
             toStringOutput.Add($"this.CurrencyPrices = {(this.CurrencyPrices == null ? "null" : this.CurrencyPrices.ToString())}");
             toStringOutput.Add($"this.FilterType = {(this.FilterType == null ? "null" : $"[{string.Join(", ", this.FilterType)} ]")}");
+            toStringOutput.Add($"this.Archived = {(this.Archived == null ? "null" : this.Archived.ToString())}");
 
             base.ToString(toStringOutput);
         }

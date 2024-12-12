@@ -25,8 +25,7 @@ namespace AdvancedBilling.Standard.Models.Containers
             typeof(PendingCancellationChangeCase),
             typeof(PrepaidSubscriptionBalanceChangedCase),
             typeof(ProformaInvoiceIssuedCase),
-            typeof(SubscriptionGroupSignupSuccessCase),
-            typeof(SubscriptionGroupSignupFailureCase),
+            typeof(SubscriptionGroupSignupEventDataCase),
             typeof(CreditAccountBalanceChangedCase),
             typeof(PrepaymentAccountBalanceChangedCase),
             typeof(PaymentCollectionMethodChangedCase),
@@ -170,25 +169,14 @@ namespace AdvancedBilling.Standard.Models.Containers
         }
 
         /// <summary>
-        /// This is Subscription Group Signup Success case.
+        /// This is Subscription Group Signup Event Data case.
         /// </summary>
         /// <returns>
-        /// The EventEventSpecificData instance, wrapping the provided SubscriptionGroupSignupSuccess value.
+        /// The EventEventSpecificData instance, wrapping the provided SubscriptionGroupSignupEventData value.
         /// </returns>
-        public static EventEventSpecificData FromSubscriptionGroupSignupSuccess(SubscriptionGroupSignupSuccess subscriptionGroupSignupSuccess)
+        public static EventEventSpecificData FromSubscriptionGroupSignupEventData(SubscriptionGroupSignupEventData subscriptionGroupSignupEventData)
         {
-            return new SubscriptionGroupSignupSuccessCase().Set(subscriptionGroupSignupSuccess);
-        }
-
-        /// <summary>
-        /// This is Subscription Group Signup Failure case.
-        /// </summary>
-        /// <returns>
-        /// The EventEventSpecificData instance, wrapping the provided SubscriptionGroupSignupFailure value.
-        /// </returns>
-        public static EventEventSpecificData FromSubscriptionGroupSignupFailure(SubscriptionGroupSignupFailure subscriptionGroupSignupFailure)
-        {
-            return new SubscriptionGroupSignupFailureCase().Set(subscriptionGroupSignupFailure);
+            return new SubscriptionGroupSignupEventDataCase().Set(subscriptionGroupSignupEventData);
         }
 
         /// <summary>
@@ -267,8 +255,7 @@ namespace AdvancedBilling.Standard.Models.Containers
             Func<PendingCancellationChange, T> pendingCancellationChange,
             Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
             Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-            Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-            Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
+            Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
             Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
             Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
             Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
@@ -293,8 +280,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PendingCancellationChange, T> pendingCancellationChange,
                 Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
                 Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-                Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
                 Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
@@ -319,6 +305,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is SubscriptionProductChangeCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<SubscriptionStateChangeCase, SubscriptionStateChange>))]
@@ -339,8 +332,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PendingCancellationChange, T> pendingCancellationChange,
                 Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
                 Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-                Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
                 Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
@@ -365,6 +357,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is SubscriptionStateChangeCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PaymentRelatedEventsCase, PaymentRelatedEvents>))]
@@ -385,8 +384,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PendingCancellationChange, T> pendingCancellationChange,
                 Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
                 Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-                Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
                 Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
@@ -411,6 +409,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is PaymentRelatedEventsCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<RefundSuccessCase, RefundSuccess>))]
@@ -431,8 +436,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PendingCancellationChange, T> pendingCancellationChange,
                 Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
                 Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-                Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
                 Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
@@ -457,6 +461,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is RefundSuccessCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<ComponentAllocationChangeCase, ComponentAllocationChange>))]
@@ -477,8 +488,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PendingCancellationChange, T> pendingCancellationChange,
                 Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
                 Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-                Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
                 Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
@@ -503,6 +513,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is ComponentAllocationChangeCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<MeteredUsageCase, MeteredUsage>))]
@@ -523,8 +540,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PendingCancellationChange, T> pendingCancellationChange,
                 Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
                 Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-                Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
                 Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
@@ -549,6 +565,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is MeteredUsageCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PrepaidUsageCase, PrepaidUsage>))]
@@ -569,8 +592,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PendingCancellationChange, T> pendingCancellationChange,
                 Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
                 Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-                Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
                 Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
@@ -595,6 +617,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is PrepaidUsageCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<DunningStepReachedCase, DunningStepReached>))]
@@ -615,8 +644,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PendingCancellationChange, T> pendingCancellationChange,
                 Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
                 Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-                Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
                 Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
@@ -641,6 +669,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is DunningStepReachedCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<InvoiceIssuedCase, InvoiceIssued>))]
@@ -661,8 +696,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PendingCancellationChange, T> pendingCancellationChange,
                 Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
                 Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-                Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
                 Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
@@ -687,6 +721,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is InvoiceIssuedCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PendingCancellationChangeCase, PendingCancellationChange>))]
@@ -707,8 +748,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PendingCancellationChange, T> pendingCancellationChange,
                 Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
                 Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-                Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
                 Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
@@ -733,6 +773,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is PendingCancellationChangeCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PrepaidSubscriptionBalanceChangedCase, PrepaidSubscriptionBalanceChanged>))]
@@ -753,8 +800,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PendingCancellationChange, T> pendingCancellationChange,
                 Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
                 Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-                Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
                 Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
@@ -779,6 +825,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is PrepaidSubscriptionBalanceChangedCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<ProformaInvoiceIssuedCase, ProformaInvoiceIssued>))]
@@ -799,8 +852,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PendingCancellationChange, T> pendingCancellationChange,
                 Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
                 Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-                Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
                 Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
@@ -825,12 +877,19 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is ProformaInvoiceIssuedCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
-        [JsonConverter(typeof(UnionTypeCaseConverter<SubscriptionGroupSignupSuccessCase, SubscriptionGroupSignupSuccess>))]
-        private sealed class SubscriptionGroupSignupSuccessCase : EventEventSpecificData, ICaseValue<SubscriptionGroupSignupSuccessCase, SubscriptionGroupSignupSuccess>
+        [JsonConverter(typeof(UnionTypeCaseConverter<SubscriptionGroupSignupEventDataCase, SubscriptionGroupSignupEventData>))]
+        private sealed class SubscriptionGroupSignupEventDataCase : EventEventSpecificData, ICaseValue<SubscriptionGroupSignupEventDataCase, SubscriptionGroupSignupEventData>
         {
-            public SubscriptionGroupSignupSuccess _value;
+            public SubscriptionGroupSignupEventData _value;
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
@@ -845,24 +904,23 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PendingCancellationChange, T> pendingCancellationChange,
                 Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
                 Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-                Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
                 Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
                 Func<CustomFieldValueChange, T> customFieldValueChange)
             {
-                return subscriptionGroupSignupSuccess(_value);
+                return subscriptionGroupSignupEventData(_value);
             }
 
-            public SubscriptionGroupSignupSuccessCase Set(SubscriptionGroupSignupSuccess value)
+            public SubscriptionGroupSignupEventDataCase Set(SubscriptionGroupSignupEventData value)
             {
                 _value = value;
                 return this;
             }
 
-            public SubscriptionGroupSignupSuccess Get()
+            public SubscriptionGroupSignupEventData Get()
             {
                 return _value;
             }
@@ -871,51 +929,12 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
-        }
 
-        [JsonConverter(typeof(UnionTypeCaseConverter<SubscriptionGroupSignupFailureCase, SubscriptionGroupSignupFailure>))]
-        private sealed class SubscriptionGroupSignupFailureCase : EventEventSpecificData, ICaseValue<SubscriptionGroupSignupFailureCase, SubscriptionGroupSignupFailure>
-        {
-            public SubscriptionGroupSignupFailure _value;
-
-            public override T Match<T>(
-                Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionStateChange, T> subscriptionStateChange,
-                Func<PaymentRelatedEvents, T> paymentRelatedEvents,
-                Func<RefundSuccess, T> refundSuccess,
-                Func<ComponentAllocationChange, T> componentAllocationChange,
-                Func<MeteredUsage, T> meteredUsage,
-                Func<PrepaidUsage, T> prepaidUsage,
-                Func<DunningStepReached, T> dunningStepReached,
-                Func<InvoiceIssued, T> invoiceIssued,
-                Func<PendingCancellationChange, T> pendingCancellationChange,
-                Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
-                Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-                Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
-                Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
-                Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
-                Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
-                Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange)
+            public override bool Equals(object obj)
             {
-                return subscriptionGroupSignupFailure(_value);
-            }
-
-            public SubscriptionGroupSignupFailureCase Set(SubscriptionGroupSignupFailure value)
-            {
-                _value = value;
-                return this;
-            }
-
-            public SubscriptionGroupSignupFailure Get()
-            {
-                return _value;
-            }
-
-            public override string ToString()
-            {
-                return _value?.ToString();
+                if (!(obj is SubscriptionGroupSignupEventDataCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
             }
         }
 
@@ -937,8 +956,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PendingCancellationChange, T> pendingCancellationChange,
                 Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
                 Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-                Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
                 Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
@@ -963,6 +981,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is CreditAccountBalanceChangedCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PrepaymentAccountBalanceChangedCase, PrepaymentAccountBalanceChanged>))]
@@ -983,8 +1008,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PendingCancellationChange, T> pendingCancellationChange,
                 Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
                 Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-                Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
                 Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
@@ -1009,6 +1033,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is PrepaymentAccountBalanceChangedCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PaymentCollectionMethodChangedCase, PaymentCollectionMethodChanged>))]
@@ -1029,8 +1060,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PendingCancellationChange, T> pendingCancellationChange,
                 Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
                 Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-                Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
                 Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
@@ -1055,6 +1085,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is PaymentCollectionMethodChangedCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<ItemPricePointChangedCase, ItemPricePointChanged>))]
@@ -1075,8 +1112,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PendingCancellationChange, T> pendingCancellationChange,
                 Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
                 Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-                Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
                 Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
@@ -1101,6 +1137,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is ItemPricePointChangedCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<CustomFieldValueChangeCase, CustomFieldValueChange>))]
@@ -1121,8 +1164,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PendingCancellationChange, T> pendingCancellationChange,
                 Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
                 Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupSuccess, T> subscriptionGroupSignupSuccess,
-                Func<SubscriptionGroupSignupFailure, T> subscriptionGroupSignupFailure,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
                 Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
@@ -1146,6 +1188,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             public override string ToString()
             {
                 return _value?.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is CustomFieldValueChangeCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
             }
         }
     }

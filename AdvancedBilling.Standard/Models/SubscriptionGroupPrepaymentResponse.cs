@@ -53,11 +53,11 @@ namespace AdvancedBilling.Standard.Models
             this.AmountInCents = amountInCents;
             this.EndingBalanceInCents = endingBalanceInCents;
             this.EntryType = entryType;
+
             if (memo != null)
             {
                 this.Memo = memo;
             }
-
         }
 
         /// <summary>
@@ -106,14 +106,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SubscriptionGroupPrepaymentResponse : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetMemo()
         {
@@ -132,22 +130,23 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SubscriptionGroupPrepaymentResponse other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.AmountInCents == null && other.AmountInCents == null) || (this.AmountInCents?.Equals(other.AmountInCents) == true)) &&
-                ((this.EndingBalanceInCents == null && other.EndingBalanceInCents == null) || (this.EndingBalanceInCents?.Equals(other.EndingBalanceInCents) == true)) &&
-                ((this.EntryType == null && other.EntryType == null) || (this.EntryType?.Equals(other.EntryType) == true)) &&
-                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true));
+            return obj is SubscriptionGroupPrepaymentResponse other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.AmountInCents == null && other.AmountInCents == null ||
+                 this.AmountInCents?.Equals(other.AmountInCents) == true) &&
+                (this.EndingBalanceInCents == null && other.EndingBalanceInCents == null ||
+                 this.EndingBalanceInCents?.Equals(other.EndingBalanceInCents) == true) &&
+                (this.EntryType == null && other.EntryType == null ||
+                 this.EntryType?.Equals(other.EntryType) == true) &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -158,7 +157,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
             toStringOutput.Add($"this.EndingBalanceInCents = {(this.EndingBalanceInCents == null ? "null" : this.EndingBalanceInCents.ToString())}");
             toStringOutput.Add($"this.EntryType = {(this.EntryType == null ? "null" : this.EntryType.ToString())}");
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
 
             base.ToString(toStringOutput);
         }

@@ -84,31 +84,30 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"InvoiceCustomField : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is InvoiceCustomField other &&                ((this.OwnerId == null && other.OwnerId == null) || (this.OwnerId?.Equals(other.OwnerId) == true)) &&
-                ((this.OwnerType == null && other.OwnerType == null) || (this.OwnerType?.Equals(other.OwnerType) == true)) &&
-                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.MValue == null && other.MValue == null) || (this.MValue?.Equals(other.MValue) == true)) &&
-                ((this.MetadatumId == null && other.MetadatumId == null) || (this.MetadatumId?.Equals(other.MetadatumId) == true));
+            return obj is InvoiceCustomField other &&
+                (this.OwnerId == null && other.OwnerId == null ||
+                 this.OwnerId?.Equals(other.OwnerId) == true) &&
+                (this.OwnerType == null && other.OwnerType == null ||
+                 this.OwnerType?.Equals(other.OwnerType) == true) &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.MValue == null && other.MValue == null ||
+                 this.MValue?.Equals(other.MValue) == true) &&
+                (this.MetadatumId == null && other.MetadatumId == null ||
+                 this.MetadatumId?.Equals(other.MetadatumId) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -117,8 +116,8 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.OwnerId = {(this.OwnerId == null ? "null" : this.OwnerId.ToString())}");
             toStringOutput.Add($"this.OwnerType = {(this.OwnerType == null ? "null" : this.OwnerType.ToString())}");
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
-            toStringOutput.Add($"this.MValue = {(this.MValue == null ? "null" : this.MValue)}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"this.MValue = {this.MValue ?? "null"}");
             toStringOutput.Add($"this.MetadatumId = {(this.MetadatumId == null ? "null" : this.MetadatumId.ToString())}");
 
             base.ToString(toStringOutput);

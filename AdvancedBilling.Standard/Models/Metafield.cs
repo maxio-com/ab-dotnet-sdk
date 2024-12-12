@@ -57,11 +57,11 @@ namespace AdvancedBilling.Standard.Models
             this.Scope = scope;
             this.DataCount = dataCount;
             this.InputType = inputType;
+
             if (mEnum != null)
             {
                 this.MEnum = mEnum;
             }
-
         }
 
         /// <summary>
@@ -116,14 +116,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"Metafield : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetEnum()
         {
@@ -142,23 +140,25 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is Metafield other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.Scope == null && other.Scope == null) || (this.Scope?.Equals(other.Scope) == true)) &&
-                ((this.DataCount == null && other.DataCount == null) || (this.DataCount?.Equals(other.DataCount) == true)) &&
-                ((this.InputType == null && other.InputType == null) || (this.InputType?.Equals(other.InputType) == true)) &&
-                ((this.MEnum == null && other.MEnum == null) || (this.MEnum?.Equals(other.MEnum) == true));
+            return obj is Metafield other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.Scope == null && other.Scope == null ||
+                 this.Scope?.Equals(other.Scope) == true) &&
+                (this.DataCount == null && other.DataCount == null ||
+                 this.DataCount?.Equals(other.DataCount) == true) &&
+                (this.InputType == null && other.InputType == null ||
+                 this.InputType?.Equals(other.InputType) == true) &&
+                (this.MEnum == null && other.MEnum == null ||
+                 this.MEnum?.Equals(other.MEnum) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -166,7 +166,7 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
             toStringOutput.Add($"this.Scope = {(this.Scope == null ? "null" : this.Scope.ToString())}");
             toStringOutput.Add($"this.DataCount = {(this.DataCount == null ? "null" : this.DataCount.ToString())}");
             toStringOutput.Add($"this.InputType = {(this.InputType == null ? "null" : this.InputType.ToString())}");

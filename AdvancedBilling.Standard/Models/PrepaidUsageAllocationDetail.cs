@@ -66,29 +66,26 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"PrepaidUsageAllocationDetail : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is PrepaidUsageAllocationDetail other &&                ((this.AllocationId == null && other.AllocationId == null) || (this.AllocationId?.Equals(other.AllocationId) == true)) &&
-                ((this.ChargeId == null && other.ChargeId == null) || (this.ChargeId?.Equals(other.ChargeId) == true)) &&
-                ((this.UsageQuantity == null && other.UsageQuantity == null) || (this.UsageQuantity?.Equals(other.UsageQuantity) == true));
+            return obj is PrepaidUsageAllocationDetail other &&
+                (this.AllocationId == null && other.AllocationId == null ||
+                 this.AllocationId?.Equals(other.AllocationId) == true) &&
+                (this.ChargeId == null && other.ChargeId == null ||
+                 this.ChargeId?.Equals(other.ChargeId) == true) &&
+                (this.UsageQuantity == null && other.UsageQuantity == null ||
+                 this.UsageQuantity?.Equals(other.UsageQuantity) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

@@ -57,36 +57,32 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SubscriptionComponentAllocationErrorItem : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SubscriptionComponentAllocationErrorItem other &&                ((this.Kind == null && other.Kind == null) || (this.Kind?.Equals(other.Kind) == true)) &&
-                ((this.Message == null && other.Message == null) || (this.Message?.Equals(other.Message) == true));
+            return obj is SubscriptionComponentAllocationErrorItem other &&
+                (this.Kind == null && other.Kind == null ||
+                 this.Kind?.Equals(other.Kind) == true) &&
+                (this.Message == null && other.Message == null ||
+                 this.Message?.Equals(other.Message) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Kind = {(this.Kind == null ? "null" : this.Kind)}");
-            toStringOutput.Add($"this.Message = {(this.Message == null ? "null" : this.Message)}");
+            toStringOutput.Add($"this.Kind = {this.Kind ?? "null"}");
+            toStringOutput.Add($"this.Message = {this.Message ?? "null"}");
 
             base.ToString(toStringOutput);
         }

@@ -56,11 +56,11 @@ namespace AdvancedBilling.Standard.Models
             this.CreatedAt = createdAt;
             this.NewLinkAvailableAt = newLinkAvailableAt;
             this.ExpiresAt = expiresAt;
+
             if (lastInviteSentAt != null)
             {
                 this.LastInviteSentAt = lastInviteSentAt;
             }
-
         }
 
         /// <summary>
@@ -119,14 +119,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"PortalManagementLink : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetLastInviteSentAt()
         {
@@ -145,30 +143,32 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is PortalManagementLink other &&                ((this.Url == null && other.Url == null) || (this.Url?.Equals(other.Url) == true)) &&
-                ((this.FetchCount == null && other.FetchCount == null) || (this.FetchCount?.Equals(other.FetchCount) == true)) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true)) &&
-                ((this.NewLinkAvailableAt == null && other.NewLinkAvailableAt == null) || (this.NewLinkAvailableAt?.Equals(other.NewLinkAvailableAt) == true)) &&
-                ((this.ExpiresAt == null && other.ExpiresAt == null) || (this.ExpiresAt?.Equals(other.ExpiresAt) == true)) &&
-                ((this.LastInviteSentAt == null && other.LastInviteSentAt == null) || (this.LastInviteSentAt?.Equals(other.LastInviteSentAt) == true));
+            return obj is PortalManagementLink other &&
+                (this.Url == null && other.Url == null ||
+                 this.Url?.Equals(other.Url) == true) &&
+                (this.FetchCount == null && other.FetchCount == null ||
+                 this.FetchCount?.Equals(other.FetchCount) == true) &&
+                (this.CreatedAt == null && other.CreatedAt == null ||
+                 this.CreatedAt?.Equals(other.CreatedAt) == true) &&
+                (this.NewLinkAvailableAt == null && other.NewLinkAvailableAt == null ||
+                 this.NewLinkAvailableAt?.Equals(other.NewLinkAvailableAt) == true) &&
+                (this.ExpiresAt == null && other.ExpiresAt == null ||
+                 this.ExpiresAt?.Equals(other.ExpiresAt) == true) &&
+                (this.LastInviteSentAt == null && other.LastInviteSentAt == null ||
+                 this.LastInviteSentAt?.Equals(other.LastInviteSentAt) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Url = {(this.Url == null ? "null" : this.Url)}");
+            toStringOutput.Add($"this.Url = {this.Url ?? "null"}");
             toStringOutput.Add($"this.FetchCount = {(this.FetchCount == null ? "null" : this.FetchCount.ToString())}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
             toStringOutput.Add($"this.NewLinkAvailableAt = {(this.NewLinkAvailableAt == null ? "null" : this.NewLinkAvailableAt.ToString())}");

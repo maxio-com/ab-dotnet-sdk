@@ -22,13 +22,9 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class EBBComponent : BaseModel
     {
-        private Models.CreditType? upgradeCharge;
-        private Models.CreditType? downgradeCredit;
         private Models.IntervalUnit? intervalUnit;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
-            { "upgrade_charge", false },
-            { "downgrade_credit", false },
             { "interval_unit", false },
         };
 
@@ -50,13 +46,10 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="handle">handle.</param>
         /// <param name="taxable">taxable.</param>
         /// <param name="prices">prices.</param>
-        /// <param name="upgradeCharge">upgrade_charge.</param>
-        /// <param name="downgradeCredit">downgrade_credit.</param>
         /// <param name="pricePoints">price_points.</param>
         /// <param name="unitPrice">unit_price.</param>
         /// <param name="taxCode">tax_code.</param>
         /// <param name="hideDateRangeOnInvoice">hide_date_range_on_invoice.</param>
-        /// <param name="priceInCents">price_in_cents.</param>
         /// <param name="interval">interval.</param>
         /// <param name="intervalUnit">interval_unit.</param>
         public EBBComponent(
@@ -68,13 +61,10 @@ namespace AdvancedBilling.Standard.Models
             string handle = null,
             bool? taxable = null,
             List<Models.Price> prices = null,
-            Models.CreditType? upgradeCharge = null,
-            Models.CreditType? downgradeCredit = null,
             List<Models.ComponentPricePointItem> pricePoints = null,
             EBBComponentUnitPrice unitPrice = null,
             string taxCode = null,
             bool? hideDateRangeOnInvoice = null,
-            string priceInCents = null,
             int? interval = null,
             Models.IntervalUnit? intervalUnit = null)
         {
@@ -85,28 +75,17 @@ namespace AdvancedBilling.Standard.Models
             this.Taxable = taxable;
             this.PricingScheme = pricingScheme;
             this.Prices = prices;
-            if (upgradeCharge != null)
-            {
-                this.UpgradeCharge = upgradeCharge;
-            }
-
-            if (downgradeCredit != null)
-            {
-                this.DowngradeCredit = downgradeCredit;
-            }
-
             this.PricePoints = pricePoints;
             this.UnitPrice = unitPrice;
             this.TaxCode = taxCode;
             this.HideDateRangeOnInvoice = hideDateRangeOnInvoice;
-            this.PriceInCents = priceInCents;
             this.EventBasedBillingMetricId = eventBasedBillingMetricId;
             this.Interval = interval;
+
             if (intervalUnit != null)
             {
                 this.IntervalUnit = intervalUnit;
             }
-
         }
 
         /// <summary>
@@ -146,48 +125,10 @@ namespace AdvancedBilling.Standard.Models
         public Models.PricingScheme PricingScheme { get; set; }
 
         /// <summary>
-        /// (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket Rules](https://help.chargify.com/products/product-components.html#general-price-bracket-rules) for an overview of how price brackets work for different pricing schemes.
+        /// (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket Rules](https://maxio.zendesk.com/hc/en-us/articles/24261149166733-Component-Pricing-Schemes#price-bracket-rules) for an overview of how price brackets work for different pricing schemes.
         /// </summary>
         [JsonProperty("prices", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.Price> Prices { get; set; }
-
-        /// <summary>
-        /// The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.
-        /// Available values: `full`, `prorated`, `none`.
-        /// </summary>
-        [JsonProperty("upgrade_charge")]
-        public Models.CreditType? UpgradeCharge
-        {
-            get
-            {
-                return this.upgradeCharge;
-            }
-
-            set
-            {
-                this.shouldSerialize["upgrade_charge"] = true;
-                this.upgradeCharge = value;
-            }
-        }
-
-        /// <summary>
-        /// The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.
-        /// Available values: `full`, `prorated`, `none`.
-        /// </summary>
-        [JsonProperty("downgrade_credit")]
-        public Models.CreditType? DowngradeCredit
-        {
-            get
-            {
-                return this.downgradeCredit;
-            }
-
-            set
-            {
-                this.shouldSerialize["downgrade_credit"] = true;
-                this.downgradeCredit = value;
-            }
-        }
 
         /// <summary>
         /// Gets or sets PricePoints.
@@ -212,12 +153,6 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("hide_date_range_on_invoice", NullValueHandling = NullValueHandling.Ignore)]
         public bool? HideDateRangeOnInvoice { get; set; }
-
-        /// <summary>
-        /// deprecated May 2011 - use unit_price instead
-        /// </summary>
-        [JsonProperty("price_in_cents", NullValueHandling = NullValueHandling.Ignore)]
-        public string PriceInCents { get; set; }
 
         /// <summary>
         /// The ID of an event based billing metric that will be attached to this component.
@@ -253,52 +188,16 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"EBBComponent : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
-        /// </summary>
-        public void UnsetUpgradeCharge()
-        {
-            this.shouldSerialize["upgrade_charge"] = false;
-        }
-
-        /// <summary>
-        /// Marks the field to not be serailized.
-        /// </summary>
-        public void UnsetDowngradeCredit()
-        {
-            this.shouldSerialize["downgrade_credit"] = false;
-        }
-
-        /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetIntervalUnit()
         {
             this.shouldSerialize["interval_unit"] = false;
-        }
-
-        /// <summary>
-        /// Checks if the field should be serialized or not.
-        /// </summary>
-        /// <returns>A boolean weather the field should be serialized or not.</returns>
-        public bool ShouldSerializeUpgradeCharge()
-        {
-            return this.shouldSerialize["upgrade_charge"];
-        }
-
-        /// <summary>
-        /// Checks if the field should be serialized or not.
-        /// </summary>
-        /// <returns>A boolean weather the field should be serialized or not.</returns>
-        public bool ShouldSerializeDowngradeCredit()
-        {
-            return this.shouldSerialize["downgrade_credit"];
         }
 
         /// <summary>
@@ -313,54 +212,56 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is EBBComponent other &&                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.UnitName == null && other.UnitName == null) || (this.UnitName?.Equals(other.UnitName) == true)) &&
-                ((this.Description == null && other.Description == null) || (this.Description?.Equals(other.Description) == true)) &&
-                ((this.Handle == null && other.Handle == null) || (this.Handle?.Equals(other.Handle) == true)) &&
-                ((this.Taxable == null && other.Taxable == null) || (this.Taxable?.Equals(other.Taxable) == true)) &&
-                this.PricingScheme.Equals(other.PricingScheme) &&
-                ((this.Prices == null && other.Prices == null) || (this.Prices?.Equals(other.Prices) == true)) &&
-                ((this.UpgradeCharge == null && other.UpgradeCharge == null) || (this.UpgradeCharge?.Equals(other.UpgradeCharge) == true)) &&
-                ((this.DowngradeCredit == null && other.DowngradeCredit == null) || (this.DowngradeCredit?.Equals(other.DowngradeCredit) == true)) &&
-                ((this.PricePoints == null && other.PricePoints == null) || (this.PricePoints?.Equals(other.PricePoints) == true)) &&
-                ((this.UnitPrice == null && other.UnitPrice == null) || (this.UnitPrice?.Equals(other.UnitPrice) == true)) &&
-                ((this.TaxCode == null && other.TaxCode == null) || (this.TaxCode?.Equals(other.TaxCode) == true)) &&
-                ((this.HideDateRangeOnInvoice == null && other.HideDateRangeOnInvoice == null) || (this.HideDateRangeOnInvoice?.Equals(other.HideDateRangeOnInvoice) == true)) &&
-                ((this.PriceInCents == null && other.PriceInCents == null) || (this.PriceInCents?.Equals(other.PriceInCents) == true)) &&
-                this.EventBasedBillingMetricId.Equals(other.EventBasedBillingMetricId) &&
-                ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
-                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true));
+            return obj is EBBComponent other &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.UnitName == null && other.UnitName == null ||
+                 this.UnitName?.Equals(other.UnitName) == true) &&
+                (this.Description == null && other.Description == null ||
+                 this.Description?.Equals(other.Description) == true) &&
+                (this.Handle == null && other.Handle == null ||
+                 this.Handle?.Equals(other.Handle) == true) &&
+                (this.Taxable == null && other.Taxable == null ||
+                 this.Taxable?.Equals(other.Taxable) == true) &&
+                (this.PricingScheme.Equals(other.PricingScheme)) &&
+                (this.Prices == null && other.Prices == null ||
+                 this.Prices?.Equals(other.Prices) == true) &&
+                (this.PricePoints == null && other.PricePoints == null ||
+                 this.PricePoints?.Equals(other.PricePoints) == true) &&
+                (this.UnitPrice == null && other.UnitPrice == null ||
+                 this.UnitPrice?.Equals(other.UnitPrice) == true) &&
+                (this.TaxCode == null && other.TaxCode == null ||
+                 this.TaxCode?.Equals(other.TaxCode) == true) &&
+                (this.HideDateRangeOnInvoice == null && other.HideDateRangeOnInvoice == null ||
+                 this.HideDateRangeOnInvoice?.Equals(other.HideDateRangeOnInvoice) == true) &&
+                (this.EventBasedBillingMetricId.Equals(other.EventBasedBillingMetricId)) &&
+                (this.Interval == null && other.Interval == null ||
+                 this.Interval?.Equals(other.Interval) == true) &&
+                (this.IntervalUnit == null && other.IntervalUnit == null ||
+                 this.IntervalUnit?.Equals(other.IntervalUnit) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
-            toStringOutput.Add($"this.UnitName = {(this.UnitName == null ? "null" : this.UnitName)}");
-            toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
-            toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"this.UnitName = {this.UnitName ?? "null"}");
+            toStringOutput.Add($"this.Description = {this.Description ?? "null"}");
+            toStringOutput.Add($"this.Handle = {this.Handle ?? "null"}");
             toStringOutput.Add($"this.Taxable = {(this.Taxable == null ? "null" : this.Taxable.ToString())}");
             toStringOutput.Add($"this.PricingScheme = {this.PricingScheme}");
             toStringOutput.Add($"this.Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
-            toStringOutput.Add($"this.UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
-            toStringOutput.Add($"this.DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
             toStringOutput.Add($"this.PricePoints = {(this.PricePoints == null ? "null" : $"[{string.Join(", ", this.PricePoints)} ]")}");
             toStringOutput.Add($"UnitPrice = {(this.UnitPrice == null ? "null" : this.UnitPrice.ToString())}");
-            toStringOutput.Add($"this.TaxCode = {(this.TaxCode == null ? "null" : this.TaxCode)}");
+            toStringOutput.Add($"this.TaxCode = {this.TaxCode ?? "null"}");
             toStringOutput.Add($"this.HideDateRangeOnInvoice = {(this.HideDateRangeOnInvoice == null ? "null" : this.HideDateRangeOnInvoice.ToString())}");
-            toStringOutput.Add($"this.PriceInCents = {(this.PriceInCents == null ? "null" : this.PriceInCents)}");
             toStringOutput.Add($"this.EventBasedBillingMetricId = {this.EventBasedBillingMetricId}");
             toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");

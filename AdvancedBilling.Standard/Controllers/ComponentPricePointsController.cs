@@ -99,6 +99,8 @@ namespace AdvancedBilling.Standard.Controllers
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("component_id", componentId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorArrayMapResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -167,6 +169,8 @@ namespace AdvancedBilling.Standard.Controllers
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("component_id", componentId).Required())
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -219,22 +223,26 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="componentId">Required parameter: The id or handle of the component. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
         /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-price_point-handle` for a string handle..</param>
+        /// <param name="currencyPrices">Optional parameter: Include an array of currency price data.</param>
         /// <returns>Returns the Models.ComponentPricePointResponse response from the API call.</returns>
         public Models.ComponentPricePointResponse ReadComponentPricePoint(
                 ReadComponentPricePointComponentId componentId,
-                ReadComponentPricePointPricePointId pricePointId)
-            => CoreHelper.RunTask(ReadComponentPricePointAsync(componentId, pricePointId));
+                ReadComponentPricePointPricePointId pricePointId,
+                bool? currencyPrices = null)
+            => CoreHelper.RunTask(ReadComponentPricePointAsync(componentId, pricePointId, currencyPrices));
 
         /// <summary>
         /// Use this endpoint to retrieve details for a specific component price point. You can achieve this by using either the component price point ID or handle.
         /// </summary>
         /// <param name="componentId">Required parameter: The id or handle of the component. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
         /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-price_point-handle` for a string handle..</param>
+        /// <param name="currencyPrices">Optional parameter: Include an array of currency price data.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentPricePointResponse response from the API call.</returns>
         public async Task<Models.ComponentPricePointResponse> ReadComponentPricePointAsync(
                 ReadComponentPricePointComponentId componentId,
                 ReadComponentPricePointPricePointId pricePointId,
+                bool? currencyPrices = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ComponentPricePointResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
@@ -242,7 +250,8 @@ namespace AdvancedBilling.Standard.Controllers
                   .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Template(_template => _template.Setup("component_id", componentId).Required())
-                      .Template(_template => _template.Setup("price_point_id", pricePointId).Required())))
+                      .Template(_template => _template.Setup("price_point_id", pricePointId).Required())
+                      .Query(_query => _query.Setup("currency_prices", currencyPrices))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -344,7 +353,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("price_point_id", pricePointId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorArrayMapResponseException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorArrayMapResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -380,7 +389,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("price_point_id", pricePointId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("Unprocessable Entity (WebDAV)", (_reason, _context) => new ErrorArrayMapResponseException(_reason, _context))))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorArrayMapResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>

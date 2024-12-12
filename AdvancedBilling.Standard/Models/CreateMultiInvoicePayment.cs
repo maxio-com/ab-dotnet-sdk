@@ -94,43 +94,43 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"CreateMultiInvoicePayment : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is CreateMultiInvoicePayment other &&                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                ((this.Details == null && other.Details == null) || (this.Details?.Equals(other.Details) == true)) &&
-                ((this.Method == null && other.Method == null) || (this.Method?.Equals(other.Method) == true)) &&
-                ((this.Amount == null && other.Amount == null) || (this.Amount?.Equals(other.Amount) == true)) &&
-                ((this.ReceivedOn == null && other.ReceivedOn == null) || (this.ReceivedOn?.Equals(other.ReceivedOn) == true)) &&
-                ((this.Applications == null && other.Applications == null) || (this.Applications?.Equals(other.Applications) == true));
+            return obj is CreateMultiInvoicePayment other &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.Details == null && other.Details == null ||
+                 this.Details?.Equals(other.Details) == true) &&
+                (this.Method == null && other.Method == null ||
+                 this.Method?.Equals(other.Method) == true) &&
+                (this.Amount == null && other.Amount == null ||
+                 this.Amount?.Equals(other.Amount) == true) &&
+                (this.ReceivedOn == null && other.ReceivedOn == null ||
+                 this.ReceivedOn?.Equals(other.ReceivedOn) == true) &&
+                (this.Applications == null && other.Applications == null ||
+                 this.Applications?.Equals(other.Applications) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
-            toStringOutput.Add($"this.Details = {(this.Details == null ? "null" : this.Details)}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"this.Details = {this.Details ?? "null"}");
             toStringOutput.Add($"this.Method = {(this.Method == null ? "null" : this.Method.ToString())}");
             toStringOutput.Add($"Amount = {(this.Amount == null ? "null" : this.Amount.ToString())}");
-            toStringOutput.Add($"this.ReceivedOn = {(this.ReceivedOn == null ? "null" : this.ReceivedOn)}");
+            toStringOutput.Add($"this.ReceivedOn = {this.ReceivedOn ?? "null"}");
             toStringOutput.Add($"this.Applications = {(this.Applications == null ? "null" : $"[{string.Join(", ", this.Applications)} ]")}");
 
             base.ToString(toStringOutput);

@@ -126,35 +126,34 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"RefundInvoiceEventData : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is RefundInvoiceEventData other &&                this.ApplyCredit.Equals(other.ApplyCredit) &&
-                ((this.ConsolidationLevel == null && other.ConsolidationLevel == null) || (this.ConsolidationLevel?.Equals(other.ConsolidationLevel) == true)) &&
-                ((this.CreditNoteAttributes == null && other.CreditNoteAttributes == null) || (this.CreditNoteAttributes?.Equals(other.CreditNoteAttributes) == true)) &&
-                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                ((this.OriginalAmount == null && other.OriginalAmount == null) || (this.OriginalAmount?.Equals(other.OriginalAmount) == true)) &&
-                this.PaymentId.Equals(other.PaymentId) &&
-                ((this.RefundAmount == null && other.RefundAmount == null) || (this.RefundAmount?.Equals(other.RefundAmount) == true)) &&
-                this.RefundId.Equals(other.RefundId) &&
-                this.TransactionTime.Equals(other.TransactionTime);
+            return obj is RefundInvoiceEventData other &&
+                (this.ApplyCredit.Equals(other.ApplyCredit)) &&
+                (this.ConsolidationLevel == null && other.ConsolidationLevel == null ||
+                 this.ConsolidationLevel?.Equals(other.ConsolidationLevel) == true) &&
+                (this.CreditNoteAttributes == null && other.CreditNoteAttributes == null ||
+                 this.CreditNoteAttributes?.Equals(other.CreditNoteAttributes) == true) &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.OriginalAmount == null && other.OriginalAmount == null ||
+                 this.OriginalAmount?.Equals(other.OriginalAmount) == true) &&
+                (this.PaymentId.Equals(other.PaymentId)) &&
+                (this.RefundAmount == null && other.RefundAmount == null ||
+                 this.RefundAmount?.Equals(other.RefundAmount) == true) &&
+                (this.RefundId.Equals(other.RefundId)) &&
+                (this.TransactionTime.Equals(other.TransactionTime)) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -164,10 +163,10 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ApplyCredit = {this.ApplyCredit}");
             toStringOutput.Add($"this.ConsolidationLevel = {(this.ConsolidationLevel == null ? "null" : this.ConsolidationLevel.ToString())}");
             toStringOutput.Add($"this.CreditNoteAttributes = {(this.CreditNoteAttributes == null ? "null" : this.CreditNoteAttributes.ToString())}");
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
-            toStringOutput.Add($"this.OriginalAmount = {(this.OriginalAmount == null ? "null" : this.OriginalAmount)}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"this.OriginalAmount = {this.OriginalAmount ?? "null"}");
             toStringOutput.Add($"this.PaymentId = {this.PaymentId}");
-            toStringOutput.Add($"this.RefundAmount = {(this.RefundAmount == null ? "null" : this.RefundAmount)}");
+            toStringOutput.Add($"this.RefundAmount = {this.RefundAmount ?? "null"}");
             toStringOutput.Add($"this.RefundId = {this.RefundId}");
             toStringOutput.Add($"this.TransactionTime = {this.TransactionTime}");
 

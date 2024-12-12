@@ -783,16 +783,14 @@ namespace AdvancedBilling.Standard.Controllers
         /// https://events.chargify.com/my-site-subdomain/events/my-stream-api-handle.
         /// ```.
         /// </summary>
-        /// <param name="subdomain">Required parameter: Your site's subdomain.</param>
         /// <param name="apiHandle">Required parameter: Identifies the Stream for which the event should be published..</param>
         /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store..</param>
         /// <param name="body">Optional parameter: Example: .</param>
         public void RecordEvent(
-                string subdomain,
                 string apiHandle,
                 string storeUid = null,
                 Models.EBBEvent body = null)
-            => CoreHelper.RunVoidTask(RecordEventAsync(subdomain, apiHandle, storeUid, body));
+            => CoreHelper.RunVoidTask(RecordEventAsync(apiHandle, storeUid, body));
 
         /// <summary>
         /// ## Documentation.
@@ -807,25 +805,23 @@ namespace AdvancedBilling.Standard.Controllers
         /// https://events.chargify.com/my-site-subdomain/events/my-stream-api-handle.
         /// ```.
         /// </summary>
-        /// <param name="subdomain">Required parameter: Your site's subdomain.</param>
         /// <param name="apiHandle">Required parameter: Identifies the Stream for which the event should be published..</param>
         /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store..</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the void response from the API call.</returns>
         public async Task RecordEventAsync(
-                string subdomain,
                 string apiHandle,
                 string storeUid = null,
                 Models.EBBEvent body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()
+              .Server(Server.Ebb)
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/{subdomain}/events/{api_handle}.json")
+                  .Setup(HttpMethod.Post, "/events/{api_handle}.json")
                   .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subdomain", subdomain).Required())
                       .Template(_template => _template.Setup("api_handle", apiHandle).Required())
                       .Header(_header => _header.Setup("Content-Type", "application/json"))
                       .Query(_query => _query.Setup("store_uid", storeUid))))
@@ -836,41 +832,37 @@ namespace AdvancedBilling.Standard.Controllers
         /// *Note: this endpoint differs from the standard Chargify API endpoints in that the subdomain will be `events` and your site subdomain will be included in the URL path.*.
         /// A maximum of 1000 events can be published in a single request. A 422 will be returned if this limit is exceeded.
         /// </summary>
-        /// <param name="subdomain">Required parameter: Your site's subdomain.</param>
         /// <param name="apiHandle">Required parameter: Identifies the Stream for which the events should be published..</param>
         /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store..</param>
         /// <param name="body">Optional parameter: Example: .</param>
         public void BulkRecordEvents(
-                string subdomain,
                 string apiHandle,
                 string storeUid = null,
                 List<Models.EBBEvent> body = null)
-            => CoreHelper.RunVoidTask(BulkRecordEventsAsync(subdomain, apiHandle, storeUid, body));
+            => CoreHelper.RunVoidTask(BulkRecordEventsAsync(apiHandle, storeUid, body));
 
         /// <summary>
         /// Use this endpoint to record a collection of events.
         /// *Note: this endpoint differs from the standard Chargify API endpoints in that the subdomain will be `events` and your site subdomain will be included in the URL path.*.
         /// A maximum of 1000 events can be published in a single request. A 422 will be returned if this limit is exceeded.
         /// </summary>
-        /// <param name="subdomain">Required parameter: Your site's subdomain.</param>
         /// <param name="apiHandle">Required parameter: Identifies the Stream for which the events should be published..</param>
         /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store..</param>
         /// <param name="body">Optional parameter: Example: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the void response from the API call.</returns>
         public async Task BulkRecordEventsAsync(
-                string subdomain,
                 string apiHandle,
                 string storeUid = null,
                 List<Models.EBBEvent> body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()
+              .Server(Server.Ebb)
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/{subdomain}/events/{api_handle}/bulk.json")
+                  .Setup(HttpMethod.Post, "/events/{api_handle}/bulk.json")
                   .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subdomain", subdomain).Required())
                       .Template(_template => _template.Setup("api_handle", apiHandle).Required())
                       .Header(_header => _header.Setup("Content-Type", "application/json"))
                       .Query(_query => _query.Setup("store_uid", storeUid))))

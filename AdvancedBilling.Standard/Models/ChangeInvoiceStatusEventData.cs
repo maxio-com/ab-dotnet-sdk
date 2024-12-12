@@ -84,39 +84,36 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ChangeInvoiceStatusEventData : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ChangeInvoiceStatusEventData other &&                ((this.GatewayTransId == null && other.GatewayTransId == null) || (this.GatewayTransId?.Equals(other.GatewayTransId) == true)) &&
-                ((this.Amount == null && other.Amount == null) || (this.Amount?.Equals(other.Amount) == true)) &&
-                this.FromStatus.Equals(other.FromStatus) &&
-                this.ToStatus.Equals(other.ToStatus) &&
-                ((this.ConsolidationLevel == null && other.ConsolidationLevel == null) || (this.ConsolidationLevel?.Equals(other.ConsolidationLevel) == true));
+            return obj is ChangeInvoiceStatusEventData other &&
+                (this.GatewayTransId == null && other.GatewayTransId == null ||
+                 this.GatewayTransId?.Equals(other.GatewayTransId) == true) &&
+                (this.Amount == null && other.Amount == null ||
+                 this.Amount?.Equals(other.Amount) == true) &&
+                (this.FromStatus.Equals(other.FromStatus)) &&
+                (this.ToStatus.Equals(other.ToStatus)) &&
+                (this.ConsolidationLevel == null && other.ConsolidationLevel == null ||
+                 this.ConsolidationLevel?.Equals(other.ConsolidationLevel) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.GatewayTransId = {(this.GatewayTransId == null ? "null" : this.GatewayTransId)}");
-            toStringOutput.Add($"this.Amount = {(this.Amount == null ? "null" : this.Amount)}");
+            toStringOutput.Add($"this.GatewayTransId = {this.GatewayTransId ?? "null"}");
+            toStringOutput.Add($"this.Amount = {this.Amount ?? "null"}");
             toStringOutput.Add($"this.FromStatus = {this.FromStatus}");
             toStringOutput.Add($"this.ToStatus = {this.ToStatus}");
             toStringOutput.Add($"this.ConsolidationLevel = {(this.ConsolidationLevel == null ? "null" : this.ConsolidationLevel.ToString())}");

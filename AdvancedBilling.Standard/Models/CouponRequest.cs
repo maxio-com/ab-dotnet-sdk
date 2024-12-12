@@ -1,4 +1,4 @@
-// <copyright file="CreateOrUpdateCoupon.cs" company="APIMatic">
+// <copyright file="CouponRequest.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
 using System;
@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using APIMatic.Core.Utilities.Converters;
 using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Models.Containers;
 using AdvancedBilling.Standard.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -18,25 +17,25 @@ using Newtonsoft.Json.Converters;
 namespace AdvancedBilling.Standard.Models
 {
     /// <summary>
-    /// CreateOrUpdateCoupon.
+    /// CouponRequest.
     /// </summary>
-    public class CreateOrUpdateCoupon : BaseModel
+    public class CouponRequest : BaseModel
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateOrUpdateCoupon"/> class.
+        /// Initializes a new instance of the <see cref="CouponRequest"/> class.
         /// </summary>
-        public CreateOrUpdateCoupon()
+        public CouponRequest()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateOrUpdateCoupon"/> class.
+        /// Initializes a new instance of the <see cref="CouponRequest"/> class.
         /// </summary>
         /// <param name="coupon">coupon.</param>
         /// <param name="restrictedProducts">restricted_products.</param>
         /// <param name="restrictedComponents">restricted_components.</param>
-        public CreateOrUpdateCoupon(
-            CreateOrUpdateCouponCoupon coupon = null,
+        public CouponRequest(
+            Models.CouponPayload coupon = null,
             Dictionary<string, bool> restrictedProducts = null,
             Dictionary<string, bool> restrictedComponents = null)
         {
@@ -49,7 +48,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Coupon.
         /// </summary>
         [JsonProperty("coupon", NullValueHandling = NullValueHandling.Ignore)]
-        public CreateOrUpdateCouponCoupon Coupon { get; set; }
+        public Models.CouponPayload Coupon { get; set; }
 
         /// <summary>
         /// An object where the keys are product_ids and the values are booleans indicating if the coupon should be applicable to the product
@@ -67,36 +66,33 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
-            return $"CreateOrUpdateCoupon : ({string.Join(", ", toStringOutput)})";
+            return $"CouponRequest : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is CreateOrUpdateCoupon other &&                ((this.Coupon == null && other.Coupon == null) || (this.Coupon?.Equals(other.Coupon) == true)) &&
-                ((this.RestrictedProducts == null && other.RestrictedProducts == null) || (this.RestrictedProducts?.Equals(other.RestrictedProducts) == true)) &&
-                ((this.RestrictedComponents == null && other.RestrictedComponents == null) || (this.RestrictedComponents?.Equals(other.RestrictedComponents) == true));
+            return obj is CouponRequest other &&
+                (this.Coupon == null && other.Coupon == null ||
+                 this.Coupon?.Equals(other.Coupon) == true) &&
+                (this.RestrictedProducts == null && other.RestrictedProducts == null ||
+                 this.RestrictedProducts?.Equals(other.RestrictedProducts) == true) &&
+                (this.RestrictedComponents == null && other.RestrictedComponents == null ||
+                 this.RestrictedComponents?.Equals(other.RestrictedComponents) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"Coupon = {(this.Coupon == null ? "null" : this.Coupon.ToString())}");
+            toStringOutput.Add($"this.Coupon = {(this.Coupon == null ? "null" : this.Coupon.ToString())}");
             toStringOutput.Add($"RestrictedProducts = {(this.RestrictedProducts == null ? "null" : this.RestrictedProducts.ToString())}");
             toStringOutput.Add($"RestrictedComponents = {(this.RestrictedComponents == null ? "null" : this.RestrictedComponents.ToString())}");
 

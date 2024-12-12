@@ -80,39 +80,36 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"PaymentMethodExternal : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is PaymentMethodExternal other &&                ((this.Details == null && other.Details == null) || (this.Details?.Equals(other.Details) == true)) &&
-                ((this.Kind == null && other.Kind == null) || (this.Kind?.Equals(other.Kind) == true)) &&
-                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                this.Type.Equals(other.Type);
+            return obj is PaymentMethodExternal other &&
+                (this.Details == null && other.Details == null ||
+                 this.Details?.Equals(other.Details) == true) &&
+                (this.Kind == null && other.Kind == null ||
+                 this.Kind?.Equals(other.Kind) == true) &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.Type.Equals(other.Type)) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Details = {(this.Details == null ? "null" : this.Details)}");
-            toStringOutput.Add($"this.Kind = {(this.Kind == null ? "null" : this.Kind)}");
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
+            toStringOutput.Add($"this.Details = {this.Details ?? "null"}");
+            toStringOutput.Add($"this.Kind = {this.Kind ?? "null"}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
             toStringOutput.Add($"this.Type = {this.Type}");
 
             base.ToString(toStringOutput);

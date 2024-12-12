@@ -121,35 +121,38 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ListSubcriptionGroupPrepaymentItem : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ListSubcriptionGroupPrepaymentItem other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.SubscriptionGroupUid == null && other.SubscriptionGroupUid == null) || (this.SubscriptionGroupUid?.Equals(other.SubscriptionGroupUid) == true)) &&
-                ((this.AmountInCents == null && other.AmountInCents == null) || (this.AmountInCents?.Equals(other.AmountInCents) == true)) &&
-                ((this.RemainingAmountInCents == null && other.RemainingAmountInCents == null) || (this.RemainingAmountInCents?.Equals(other.RemainingAmountInCents) == true)) &&
-                ((this.Details == null && other.Details == null) || (this.Details?.Equals(other.Details) == true)) &&
-                ((this.External == null && other.External == null) || (this.External?.Equals(other.External) == true)) &&
-                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                ((this.PaymentType == null && other.PaymentType == null) || (this.PaymentType?.Equals(other.PaymentType) == true)) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true));
+            return obj is ListSubcriptionGroupPrepaymentItem other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.SubscriptionGroupUid == null && other.SubscriptionGroupUid == null ||
+                 this.SubscriptionGroupUid?.Equals(other.SubscriptionGroupUid) == true) &&
+                (this.AmountInCents == null && other.AmountInCents == null ||
+                 this.AmountInCents?.Equals(other.AmountInCents) == true) &&
+                (this.RemainingAmountInCents == null && other.RemainingAmountInCents == null ||
+                 this.RemainingAmountInCents?.Equals(other.RemainingAmountInCents) == true) &&
+                (this.Details == null && other.Details == null ||
+                 this.Details?.Equals(other.Details) == true) &&
+                (this.External == null && other.External == null ||
+                 this.External?.Equals(other.External) == true) &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.PaymentType == null && other.PaymentType == null ||
+                 this.PaymentType?.Equals(other.PaymentType) == true) &&
+                (this.CreatedAt == null && other.CreatedAt == null ||
+                 this.CreatedAt?.Equals(other.CreatedAt) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -157,12 +160,12 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.SubscriptionGroupUid = {(this.SubscriptionGroupUid == null ? "null" : this.SubscriptionGroupUid)}");
+            toStringOutput.Add($"this.SubscriptionGroupUid = {this.SubscriptionGroupUid ?? "null"}");
             toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
             toStringOutput.Add($"this.RemainingAmountInCents = {(this.RemainingAmountInCents == null ? "null" : this.RemainingAmountInCents.ToString())}");
-            toStringOutput.Add($"this.Details = {(this.Details == null ? "null" : this.Details)}");
+            toStringOutput.Add($"this.Details = {this.Details ?? "null"}");
             toStringOutput.Add($"this.External = {(this.External == null ? "null" : this.External.ToString())}");
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
             toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
 

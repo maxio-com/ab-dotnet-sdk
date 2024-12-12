@@ -60,12 +60,13 @@ namespace AdvancedBilling.Standard.Models
             this.Code = code;
             this.UseCount = useCount;
             this.UsesAllowed = usesAllowed;
+
             if (expiresAt != null)
             {
                 this.ExpiresAt = expiresAt;
             }
-
             this.Recurring = recurring;
+
             if (amountInCents != null)
             {
                 this.AmountInCents = amountInCents;
@@ -75,7 +76,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.Percentage = percentage;
             }
-
         }
 
         /// <summary>
@@ -160,14 +160,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SubscriptionIncludedCoupon : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetExpiresAt()
         {
@@ -175,7 +173,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetAmountInCents()
         {
@@ -183,7 +181,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetPercentage()
         {
@@ -220,37 +218,40 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SubscriptionIncludedCoupon other &&                ((this.Code == null && other.Code == null) || (this.Code?.Equals(other.Code) == true)) &&
-                ((this.UseCount == null && other.UseCount == null) || (this.UseCount?.Equals(other.UseCount) == true)) &&
-                ((this.UsesAllowed == null && other.UsesAllowed == null) || (this.UsesAllowed?.Equals(other.UsesAllowed) == true)) &&
-                ((this.ExpiresAt == null && other.ExpiresAt == null) || (this.ExpiresAt?.Equals(other.ExpiresAt) == true)) &&
-                ((this.Recurring == null && other.Recurring == null) || (this.Recurring?.Equals(other.Recurring) == true)) &&
-                ((this.AmountInCents == null && other.AmountInCents == null) || (this.AmountInCents?.Equals(other.AmountInCents) == true)) &&
-                ((this.Percentage == null && other.Percentage == null) || (this.Percentage?.Equals(other.Percentage) == true));
+            return obj is SubscriptionIncludedCoupon other &&
+                (this.Code == null && other.Code == null ||
+                 this.Code?.Equals(other.Code) == true) &&
+                (this.UseCount == null && other.UseCount == null ||
+                 this.UseCount?.Equals(other.UseCount) == true) &&
+                (this.UsesAllowed == null && other.UsesAllowed == null ||
+                 this.UsesAllowed?.Equals(other.UsesAllowed) == true) &&
+                (this.ExpiresAt == null && other.ExpiresAt == null ||
+                 this.ExpiresAt?.Equals(other.ExpiresAt) == true) &&
+                (this.Recurring == null && other.Recurring == null ||
+                 this.Recurring?.Equals(other.Recurring) == true) &&
+                (this.AmountInCents == null && other.AmountInCents == null ||
+                 this.AmountInCents?.Equals(other.AmountInCents) == true) &&
+                (this.Percentage == null && other.Percentage == null ||
+                 this.Percentage?.Equals(other.Percentage) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Code = {(this.Code == null ? "null" : this.Code)}");
+            toStringOutput.Add($"this.Code = {this.Code ?? "null"}");
             toStringOutput.Add($"this.UseCount = {(this.UseCount == null ? "null" : this.UseCount.ToString())}");
             toStringOutput.Add($"this.UsesAllowed = {(this.UsesAllowed == null ? "null" : this.UsesAllowed.ToString())}");
-            toStringOutput.Add($"this.ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt)}");
+            toStringOutput.Add($"this.ExpiresAt = {this.ExpiresAt ?? "null"}");
             toStringOutput.Add($"this.Recurring = {(this.Recurring == null ? "null" : this.Recurring.ToString())}");
             toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
-            toStringOutput.Add($"this.Percentage = {(this.Percentage == null ? "null" : this.Percentage)}");
+            toStringOutput.Add($"this.Percentage = {this.Percentage ?? "null"}");
 
             base.ToString(toStringOutput);
         }

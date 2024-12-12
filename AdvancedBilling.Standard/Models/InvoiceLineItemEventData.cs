@@ -97,29 +97,30 @@ namespace AdvancedBilling.Standard.Models
             this.Title = title;
             this.Description = description;
             this.Quantity = quantity;
+
             if (quantityDelta != null)
             {
                 this.QuantityDelta = quantityDelta;
             }
-
             this.UnitPrice = unitPrice;
             this.PeriodRangeStart = periodRangeStart;
             this.PeriodRangeEnd = periodRangeEnd;
             this.Amount = amount;
             this.LineReferences = lineReferences;
+
             if (pricingDetailsIndex != null)
             {
                 this.PricingDetailsIndex = pricingDetailsIndex;
             }
-
             this.PricingDetails = pricingDetails;
+
             if (taxCode != null)
             {
                 this.TaxCode = taxCode;
             }
-
             this.TaxAmount = taxAmount;
             this.ProductId = productId;
+
             if (productPricePointId != null)
             {
                 this.ProductPricePointId = productPricePointId;
@@ -144,7 +145,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.CustomItem = customItem;
             }
-
         }
 
         /// <summary>
@@ -367,14 +367,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"InvoiceLineItemEventData : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetQuantityDelta()
         {
@@ -382,7 +380,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetPricingDetailsIndex()
         {
@@ -390,7 +388,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetTaxCode()
         {
@@ -398,7 +396,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetProductPricePointId()
         {
@@ -406,7 +404,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetPricePointId()
         {
@@ -414,7 +412,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetComponentId()
         {
@@ -422,7 +420,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetBillingScheduleItemId()
         {
@@ -430,7 +428,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetCustomItem()
         {
@@ -512,57 +510,73 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is InvoiceLineItemEventData other &&                ((this.Uid == null && other.Uid == null) || (this.Uid?.Equals(other.Uid) == true)) &&
-                ((this.Title == null && other.Title == null) || (this.Title?.Equals(other.Title) == true)) &&
-                ((this.Description == null && other.Description == null) || (this.Description?.Equals(other.Description) == true)) &&
-                ((this.Quantity == null && other.Quantity == null) || (this.Quantity?.Equals(other.Quantity) == true)) &&
-                ((this.QuantityDelta == null && other.QuantityDelta == null) || (this.QuantityDelta?.Equals(other.QuantityDelta) == true)) &&
-                ((this.UnitPrice == null && other.UnitPrice == null) || (this.UnitPrice?.Equals(other.UnitPrice) == true)) &&
-                ((this.PeriodRangeStart == null && other.PeriodRangeStart == null) || (this.PeriodRangeStart?.Equals(other.PeriodRangeStart) == true)) &&
-                ((this.PeriodRangeEnd == null && other.PeriodRangeEnd == null) || (this.PeriodRangeEnd?.Equals(other.PeriodRangeEnd) == true)) &&
-                ((this.Amount == null && other.Amount == null) || (this.Amount?.Equals(other.Amount) == true)) &&
-                ((this.LineReferences == null && other.LineReferences == null) || (this.LineReferences?.Equals(other.LineReferences) == true)) &&
-                ((this.PricingDetailsIndex == null && other.PricingDetailsIndex == null) || (this.PricingDetailsIndex?.Equals(other.PricingDetailsIndex) == true)) &&
-                ((this.PricingDetails == null && other.PricingDetails == null) || (this.PricingDetails?.Equals(other.PricingDetails) == true)) &&
-                ((this.TaxCode == null && other.TaxCode == null) || (this.TaxCode?.Equals(other.TaxCode) == true)) &&
-                ((this.TaxAmount == null && other.TaxAmount == null) || (this.TaxAmount?.Equals(other.TaxAmount) == true)) &&
-                ((this.ProductId == null && other.ProductId == null) || (this.ProductId?.Equals(other.ProductId) == true)) &&
-                ((this.ProductPricePointId == null && other.ProductPricePointId == null) || (this.ProductPricePointId?.Equals(other.ProductPricePointId) == true)) &&
-                ((this.PricePointId == null && other.PricePointId == null) || (this.PricePointId?.Equals(other.PricePointId) == true)) &&
-                ((this.ComponentId == null && other.ComponentId == null) || (this.ComponentId?.Equals(other.ComponentId) == true)) &&
-                ((this.BillingScheduleItemId == null && other.BillingScheduleItemId == null) || (this.BillingScheduleItemId?.Equals(other.BillingScheduleItemId) == true)) &&
-                ((this.CustomItem == null && other.CustomItem == null) || (this.CustomItem?.Equals(other.CustomItem) == true));
+            return obj is InvoiceLineItemEventData other &&
+                (this.Uid == null && other.Uid == null ||
+                 this.Uid?.Equals(other.Uid) == true) &&
+                (this.Title == null && other.Title == null ||
+                 this.Title?.Equals(other.Title) == true) &&
+                (this.Description == null && other.Description == null ||
+                 this.Description?.Equals(other.Description) == true) &&
+                (this.Quantity == null && other.Quantity == null ||
+                 this.Quantity?.Equals(other.Quantity) == true) &&
+                (this.QuantityDelta == null && other.QuantityDelta == null ||
+                 this.QuantityDelta?.Equals(other.QuantityDelta) == true) &&
+                (this.UnitPrice == null && other.UnitPrice == null ||
+                 this.UnitPrice?.Equals(other.UnitPrice) == true) &&
+                (this.PeriodRangeStart == null && other.PeriodRangeStart == null ||
+                 this.PeriodRangeStart?.Equals(other.PeriodRangeStart) == true) &&
+                (this.PeriodRangeEnd == null && other.PeriodRangeEnd == null ||
+                 this.PeriodRangeEnd?.Equals(other.PeriodRangeEnd) == true) &&
+                (this.Amount == null && other.Amount == null ||
+                 this.Amount?.Equals(other.Amount) == true) &&
+                (this.LineReferences == null && other.LineReferences == null ||
+                 this.LineReferences?.Equals(other.LineReferences) == true) &&
+                (this.PricingDetailsIndex == null && other.PricingDetailsIndex == null ||
+                 this.PricingDetailsIndex?.Equals(other.PricingDetailsIndex) == true) &&
+                (this.PricingDetails == null && other.PricingDetails == null ||
+                 this.PricingDetails?.Equals(other.PricingDetails) == true) &&
+                (this.TaxCode == null && other.TaxCode == null ||
+                 this.TaxCode?.Equals(other.TaxCode) == true) &&
+                (this.TaxAmount == null && other.TaxAmount == null ||
+                 this.TaxAmount?.Equals(other.TaxAmount) == true) &&
+                (this.ProductId == null && other.ProductId == null ||
+                 this.ProductId?.Equals(other.ProductId) == true) &&
+                (this.ProductPricePointId == null && other.ProductPricePointId == null ||
+                 this.ProductPricePointId?.Equals(other.ProductPricePointId) == true) &&
+                (this.PricePointId == null && other.PricePointId == null ||
+                 this.PricePointId?.Equals(other.PricePointId) == true) &&
+                (this.ComponentId == null && other.ComponentId == null ||
+                 this.ComponentId?.Equals(other.ComponentId) == true) &&
+                (this.BillingScheduleItemId == null && other.BillingScheduleItemId == null ||
+                 this.BillingScheduleItemId?.Equals(other.BillingScheduleItemId) == true) &&
+                (this.CustomItem == null && other.CustomItem == null ||
+                 this.CustomItem?.Equals(other.CustomItem) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
-            toStringOutput.Add($"this.Title = {(this.Title == null ? "null" : this.Title)}");
-            toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
+            toStringOutput.Add($"this.Uid = {this.Uid ?? "null"}");
+            toStringOutput.Add($"this.Title = {this.Title ?? "null"}");
+            toStringOutput.Add($"this.Description = {this.Description ?? "null"}");
             toStringOutput.Add($"this.Quantity = {(this.Quantity == null ? "null" : this.Quantity.ToString())}");
             toStringOutput.Add($"this.QuantityDelta = {(this.QuantityDelta == null ? "null" : this.QuantityDelta.ToString())}");
-            toStringOutput.Add($"this.UnitPrice = {(this.UnitPrice == null ? "null" : this.UnitPrice)}");
-            toStringOutput.Add($"this.PeriodRangeStart = {(this.PeriodRangeStart == null ? "null" : this.PeriodRangeStart)}");
-            toStringOutput.Add($"this.PeriodRangeEnd = {(this.PeriodRangeEnd == null ? "null" : this.PeriodRangeEnd)}");
-            toStringOutput.Add($"this.Amount = {(this.Amount == null ? "null" : this.Amount)}");
-            toStringOutput.Add($"this.LineReferences = {(this.LineReferences == null ? "null" : this.LineReferences)}");
+            toStringOutput.Add($"this.UnitPrice = {this.UnitPrice ?? "null"}");
+            toStringOutput.Add($"this.PeriodRangeStart = {this.PeriodRangeStart ?? "null"}");
+            toStringOutput.Add($"this.PeriodRangeEnd = {this.PeriodRangeEnd ?? "null"}");
+            toStringOutput.Add($"this.Amount = {this.Amount ?? "null"}");
+            toStringOutput.Add($"this.LineReferences = {this.LineReferences ?? "null"}");
             toStringOutput.Add($"this.PricingDetailsIndex = {(this.PricingDetailsIndex == null ? "null" : this.PricingDetailsIndex.ToString())}");
             toStringOutput.Add($"this.PricingDetails = {(this.PricingDetails == null ? "null" : $"[{string.Join(", ", this.PricingDetails)} ]")}");
-            toStringOutput.Add($"this.TaxCode = {(this.TaxCode == null ? "null" : this.TaxCode)}");
-            toStringOutput.Add($"this.TaxAmount = {(this.TaxAmount == null ? "null" : this.TaxAmount)}");
+            toStringOutput.Add($"this.TaxCode = {this.TaxCode ?? "null"}");
+            toStringOutput.Add($"this.TaxAmount = {this.TaxAmount ?? "null"}");
             toStringOutput.Add($"this.ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
             toStringOutput.Add($"this.ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
             toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");

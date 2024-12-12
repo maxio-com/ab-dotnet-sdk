@@ -59,28 +59,22 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"PaymentRelatedEvents : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is PaymentRelatedEvents other &&                this.ProductId.Equals(other.ProductId) &&
-                this.AccountTransactionId.Equals(other.AccountTransactionId);
+            return obj is PaymentRelatedEvents other &&
+                (this.ProductId.Equals(other.ProductId)) &&
+                (this.AccountTransactionId.Equals(other.AccountTransactionId)) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

@@ -75,40 +75,38 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ListSegmentsFilter : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ListSegmentsFilter other &&                ((this.SegmentProperty1Value == null && other.SegmentProperty1Value == null) || (this.SegmentProperty1Value?.Equals(other.SegmentProperty1Value) == true)) &&
-                ((this.SegmentProperty2Value == null && other.SegmentProperty2Value == null) || (this.SegmentProperty2Value?.Equals(other.SegmentProperty2Value) == true)) &&
-                ((this.SegmentProperty3Value == null && other.SegmentProperty3Value == null) || (this.SegmentProperty3Value?.Equals(other.SegmentProperty3Value) == true)) &&
-                ((this.SegmentProperty4Value == null && other.SegmentProperty4Value == null) || (this.SegmentProperty4Value?.Equals(other.SegmentProperty4Value) == true));
+            return obj is ListSegmentsFilter other &&
+                (this.SegmentProperty1Value == null && other.SegmentProperty1Value == null ||
+                 this.SegmentProperty1Value?.Equals(other.SegmentProperty1Value) == true) &&
+                (this.SegmentProperty2Value == null && other.SegmentProperty2Value == null ||
+                 this.SegmentProperty2Value?.Equals(other.SegmentProperty2Value) == true) &&
+                (this.SegmentProperty3Value == null && other.SegmentProperty3Value == null ||
+                 this.SegmentProperty3Value?.Equals(other.SegmentProperty3Value) == true) &&
+                (this.SegmentProperty4Value == null && other.SegmentProperty4Value == null ||
+                 this.SegmentProperty4Value?.Equals(other.SegmentProperty4Value) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.SegmentProperty1Value = {(this.SegmentProperty1Value == null ? "null" : this.SegmentProperty1Value)}");
-            toStringOutput.Add($"this.SegmentProperty2Value = {(this.SegmentProperty2Value == null ? "null" : this.SegmentProperty2Value)}");
-            toStringOutput.Add($"this.SegmentProperty3Value = {(this.SegmentProperty3Value == null ? "null" : this.SegmentProperty3Value)}");
-            toStringOutput.Add($"this.SegmentProperty4Value = {(this.SegmentProperty4Value == null ? "null" : this.SegmentProperty4Value)}");
+            toStringOutput.Add($"this.SegmentProperty1Value = {this.SegmentProperty1Value ?? "null"}");
+            toStringOutput.Add($"this.SegmentProperty2Value = {this.SegmentProperty2Value ?? "null"}");
+            toStringOutput.Add($"this.SegmentProperty3Value = {this.SegmentProperty3Value ?? "null"}");
+            toStringOutput.Add($"this.SegmentProperty4Value = {this.SegmentProperty4Value ?? "null"}");
 
             base.ToString(toStringOutput);
         }

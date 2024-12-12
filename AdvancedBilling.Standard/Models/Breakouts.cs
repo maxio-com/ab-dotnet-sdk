@@ -75,30 +75,28 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"Breakouts : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is Breakouts other &&                ((this.PlanAmountInCents == null && other.PlanAmountInCents == null) || (this.PlanAmountInCents?.Equals(other.PlanAmountInCents) == true)) &&
-                ((this.PlanAmountFormatted == null && other.PlanAmountFormatted == null) || (this.PlanAmountFormatted?.Equals(other.PlanAmountFormatted) == true)) &&
-                ((this.UsageAmountInCents == null && other.UsageAmountInCents == null) || (this.UsageAmountInCents?.Equals(other.UsageAmountInCents) == true)) &&
-                ((this.UsageAmountFormatted == null && other.UsageAmountFormatted == null) || (this.UsageAmountFormatted?.Equals(other.UsageAmountFormatted) == true));
+            return obj is Breakouts other &&
+                (this.PlanAmountInCents == null && other.PlanAmountInCents == null ||
+                 this.PlanAmountInCents?.Equals(other.PlanAmountInCents) == true) &&
+                (this.PlanAmountFormatted == null && other.PlanAmountFormatted == null ||
+                 this.PlanAmountFormatted?.Equals(other.PlanAmountFormatted) == true) &&
+                (this.UsageAmountInCents == null && other.UsageAmountInCents == null ||
+                 this.UsageAmountInCents?.Equals(other.UsageAmountInCents) == true) &&
+                (this.UsageAmountFormatted == null && other.UsageAmountFormatted == null ||
+                 this.UsageAmountFormatted?.Equals(other.UsageAmountFormatted) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -106,9 +104,9 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PlanAmountInCents = {(this.PlanAmountInCents == null ? "null" : this.PlanAmountInCents.ToString())}");
-            toStringOutput.Add($"this.PlanAmountFormatted = {(this.PlanAmountFormatted == null ? "null" : this.PlanAmountFormatted)}");
+            toStringOutput.Add($"this.PlanAmountFormatted = {this.PlanAmountFormatted ?? "null"}");
             toStringOutput.Add($"this.UsageAmountInCents = {(this.UsageAmountInCents == null ? "null" : this.UsageAmountInCents.ToString())}");
-            toStringOutput.Add($"this.UsageAmountFormatted = {(this.UsageAmountFormatted == null ? "null" : this.UsageAmountFormatted)}");
+            toStringOutput.Add($"this.UsageAmountFormatted = {this.UsageAmountFormatted ?? "null"}");
 
             base.ToString(toStringOutput);
         }

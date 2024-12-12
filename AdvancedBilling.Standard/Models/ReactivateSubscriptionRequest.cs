@@ -94,32 +94,32 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ReactivateSubscriptionRequest : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ReactivateSubscriptionRequest other &&                ((this.CalendarBilling == null && other.CalendarBilling == null) || (this.CalendarBilling?.Equals(other.CalendarBilling) == true)) &&
-                ((this.IncludeTrial == null && other.IncludeTrial == null) || (this.IncludeTrial?.Equals(other.IncludeTrial) == true)) &&
-                ((this.PreserveBalance == null && other.PreserveBalance == null) || (this.PreserveBalance?.Equals(other.PreserveBalance) == true)) &&
-                ((this.CouponCode == null && other.CouponCode == null) || (this.CouponCode?.Equals(other.CouponCode) == true)) &&
-                ((this.UseCreditsAndPrepayments == null && other.UseCreditsAndPrepayments == null) || (this.UseCreditsAndPrepayments?.Equals(other.UseCreditsAndPrepayments) == true)) &&
-                ((this.Resume == null && other.Resume == null) || (this.Resume?.Equals(other.Resume) == true));
+            return obj is ReactivateSubscriptionRequest other &&
+                (this.CalendarBilling == null && other.CalendarBilling == null ||
+                 this.CalendarBilling?.Equals(other.CalendarBilling) == true) &&
+                (this.IncludeTrial == null && other.IncludeTrial == null ||
+                 this.IncludeTrial?.Equals(other.IncludeTrial) == true) &&
+                (this.PreserveBalance == null && other.PreserveBalance == null ||
+                 this.PreserveBalance?.Equals(other.PreserveBalance) == true) &&
+                (this.CouponCode == null && other.CouponCode == null ||
+                 this.CouponCode?.Equals(other.CouponCode) == true) &&
+                (this.UseCreditsAndPrepayments == null && other.UseCreditsAndPrepayments == null ||
+                 this.UseCreditsAndPrepayments?.Equals(other.UseCreditsAndPrepayments) == true) &&
+                (this.Resume == null && other.Resume == null ||
+                 this.Resume?.Equals(other.Resume) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -129,7 +129,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.CalendarBilling = {(this.CalendarBilling == null ? "null" : this.CalendarBilling.ToString())}");
             toStringOutput.Add($"this.IncludeTrial = {(this.IncludeTrial == null ? "null" : this.IncludeTrial.ToString())}");
             toStringOutput.Add($"this.PreserveBalance = {(this.PreserveBalance == null ? "null" : this.PreserveBalance.ToString())}");
-            toStringOutput.Add($"this.CouponCode = {(this.CouponCode == null ? "null" : this.CouponCode)}");
+            toStringOutput.Add($"this.CouponCode = {this.CouponCode ?? "null"}");
             toStringOutput.Add($"this.UseCreditsAndPrepayments = {(this.UseCreditsAndPrepayments == null ? "null" : this.UseCreditsAndPrepayments.ToString())}");
             toStringOutput.Add($"Resume = {(this.Resume == null ? "null" : this.Resume.ToString())}");
 

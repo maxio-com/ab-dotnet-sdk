@@ -43,17 +43,15 @@ namespace AdvancedBilling.Standard.Models
         /// Initializes a new instance of the <see cref="OnOffComponent"/> class.
         /// </summary>
         /// <param name="name">name.</param>
+        /// <param name="unitPrice">unit_price.</param>
         /// <param name="description">description.</param>
         /// <param name="handle">handle.</param>
         /// <param name="taxable">taxable.</param>
-        /// <param name="prices">prices.</param>
         /// <param name="upgradeCharge">upgrade_charge.</param>
         /// <param name="downgradeCredit">downgrade_credit.</param>
         /// <param name="pricePoints">price_points.</param>
-        /// <param name="unitPrice">unit_price.</param>
         /// <param name="taxCode">tax_code.</param>
         /// <param name="hideDateRangeOnInvoice">hide_date_range_on_invoice.</param>
-        /// <param name="priceInCents">price_in_cents.</param>
         /// <param name="displayOnHostedPage">display_on_hosted_page.</param>
         /// <param name="allowFractionalQuantities">allow_fractional_quantities.</param>
         /// <param name="publicSignupPageIds">public_signup_page_ids.</param>
@@ -61,17 +59,15 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="intervalUnit">interval_unit.</param>
         public OnOffComponent(
             string name,
+            OnOffComponentUnitPrice unitPrice,
             string description = null,
             string handle = null,
             bool? taxable = null,
-            List<Models.Price> prices = null,
             Models.CreditType? upgradeCharge = null,
             Models.CreditType? downgradeCredit = null,
             List<Models.ComponentPricePointItem> pricePoints = null,
-            OnOffComponentUnitPrice unitPrice = null,
             string taxCode = null,
             bool? hideDateRangeOnInvoice = null,
-            string priceInCents = null,
             bool? displayOnHostedPage = null,
             bool? allowFractionalQuantities = null,
             List<int> publicSignupPageIds = null,
@@ -82,7 +78,7 @@ namespace AdvancedBilling.Standard.Models
             this.Description = description;
             this.Handle = handle;
             this.Taxable = taxable;
-            this.Prices = prices;
+
             if (upgradeCharge != null)
             {
                 this.UpgradeCharge = upgradeCharge;
@@ -92,21 +88,19 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.DowngradeCredit = downgradeCredit;
             }
-
             this.PricePoints = pricePoints;
             this.UnitPrice = unitPrice;
             this.TaxCode = taxCode;
             this.HideDateRangeOnInvoice = hideDateRangeOnInvoice;
-            this.PriceInCents = priceInCents;
             this.DisplayOnHostedPage = displayOnHostedPage;
             this.AllowFractionalQuantities = allowFractionalQuantities;
             this.PublicSignupPageIds = publicSignupPageIds;
             this.Interval = interval;
+
             if (intervalUnit != null)
             {
                 this.IntervalUnit = intervalUnit;
             }
-
         }
 
         /// <summary>
@@ -132,12 +126,6 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("taxable", NullValueHandling = NullValueHandling.Ignore)]
         public bool? Taxable { get; set; }
-
-        /// <summary>
-        /// (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket Rules](https://maxio.zendesk.com/hc/en-us/articles/24261191737101-Price-Points-Components) for an overview of how price brackets work for different pricing schemes.
-        /// </summary>
-        [JsonProperty("prices", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Models.Price> Prices { get; set; }
 
         /// <summary>
         /// The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.
@@ -184,9 +172,9 @@ namespace AdvancedBilling.Standard.Models
         public List<Models.ComponentPricePointItem> PricePoints { get; set; }
 
         /// <summary>
-        /// The amount the customer will be charged per unit when the pricing scheme is “per_unit”. For On/Off Components, this is the amount that the customer will be charged when they turn the component on for the subscription. The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
+        /// This is the amount that the customer will be charged when they turn the component on for the subscription. The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
         /// </summary>
-        [JsonProperty("unit_price", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("unit_price")]
         public OnOffComponentUnitPrice UnitPrice { get; set; }
 
         /// <summary>
@@ -200,12 +188,6 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("hide_date_range_on_invoice", NullValueHandling = NullValueHandling.Ignore)]
         public bool? HideDateRangeOnInvoice { get; set; }
-
-        /// <summary>
-        /// deprecated May 2011 - use unit_price instead
-        /// </summary>
-        [JsonProperty("price_in_cents", NullValueHandling = NullValueHandling.Ignore)]
-        public string PriceInCents { get; set; }
 
         /// <summary>
         /// Gets or sets DisplayOnHostedPage.
@@ -253,14 +235,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"OnOffComponent : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetUpgradeCharge()
         {
@@ -268,7 +248,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDowngradeCredit()
         {
@@ -276,7 +256,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetIntervalUnit()
         {
@@ -313,52 +293,59 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is OnOffComponent other &&                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.Description == null && other.Description == null) || (this.Description?.Equals(other.Description) == true)) &&
-                ((this.Handle == null && other.Handle == null) || (this.Handle?.Equals(other.Handle) == true)) &&
-                ((this.Taxable == null && other.Taxable == null) || (this.Taxable?.Equals(other.Taxable) == true)) &&
-                ((this.Prices == null && other.Prices == null) || (this.Prices?.Equals(other.Prices) == true)) &&
-                ((this.UpgradeCharge == null && other.UpgradeCharge == null) || (this.UpgradeCharge?.Equals(other.UpgradeCharge) == true)) &&
-                ((this.DowngradeCredit == null && other.DowngradeCredit == null) || (this.DowngradeCredit?.Equals(other.DowngradeCredit) == true)) &&
-                ((this.PricePoints == null && other.PricePoints == null) || (this.PricePoints?.Equals(other.PricePoints) == true)) &&
-                ((this.UnitPrice == null && other.UnitPrice == null) || (this.UnitPrice?.Equals(other.UnitPrice) == true)) &&
-                ((this.TaxCode == null && other.TaxCode == null) || (this.TaxCode?.Equals(other.TaxCode) == true)) &&
-                ((this.HideDateRangeOnInvoice == null && other.HideDateRangeOnInvoice == null) || (this.HideDateRangeOnInvoice?.Equals(other.HideDateRangeOnInvoice) == true)) &&
-                ((this.PriceInCents == null && other.PriceInCents == null) || (this.PriceInCents?.Equals(other.PriceInCents) == true)) &&
-                ((this.DisplayOnHostedPage == null && other.DisplayOnHostedPage == null) || (this.DisplayOnHostedPage?.Equals(other.DisplayOnHostedPage) == true)) &&
-                ((this.AllowFractionalQuantities == null && other.AllowFractionalQuantities == null) || (this.AllowFractionalQuantities?.Equals(other.AllowFractionalQuantities) == true)) &&
-                ((this.PublicSignupPageIds == null && other.PublicSignupPageIds == null) || (this.PublicSignupPageIds?.Equals(other.PublicSignupPageIds) == true)) &&
-                ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
-                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true));
+            return obj is OnOffComponent other &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.Description == null && other.Description == null ||
+                 this.Description?.Equals(other.Description) == true) &&
+                (this.Handle == null && other.Handle == null ||
+                 this.Handle?.Equals(other.Handle) == true) &&
+                (this.Taxable == null && other.Taxable == null ||
+                 this.Taxable?.Equals(other.Taxable) == true) &&
+                (this.UpgradeCharge == null && other.UpgradeCharge == null ||
+                 this.UpgradeCharge?.Equals(other.UpgradeCharge) == true) &&
+                (this.DowngradeCredit == null && other.DowngradeCredit == null ||
+                 this.DowngradeCredit?.Equals(other.DowngradeCredit) == true) &&
+                (this.PricePoints == null && other.PricePoints == null ||
+                 this.PricePoints?.Equals(other.PricePoints) == true) &&
+                (this.UnitPrice == null && other.UnitPrice == null ||
+                 this.UnitPrice?.Equals(other.UnitPrice) == true) &&
+                (this.TaxCode == null && other.TaxCode == null ||
+                 this.TaxCode?.Equals(other.TaxCode) == true) &&
+                (this.HideDateRangeOnInvoice == null && other.HideDateRangeOnInvoice == null ||
+                 this.HideDateRangeOnInvoice?.Equals(other.HideDateRangeOnInvoice) == true) &&
+                (this.DisplayOnHostedPage == null && other.DisplayOnHostedPage == null ||
+                 this.DisplayOnHostedPage?.Equals(other.DisplayOnHostedPage) == true) &&
+                (this.AllowFractionalQuantities == null && other.AllowFractionalQuantities == null ||
+                 this.AllowFractionalQuantities?.Equals(other.AllowFractionalQuantities) == true) &&
+                (this.PublicSignupPageIds == null && other.PublicSignupPageIds == null ||
+                 this.PublicSignupPageIds?.Equals(other.PublicSignupPageIds) == true) &&
+                (this.Interval == null && other.Interval == null ||
+                 this.Interval?.Equals(other.Interval) == true) &&
+                (this.IntervalUnit == null && other.IntervalUnit == null ||
+                 this.IntervalUnit?.Equals(other.IntervalUnit) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
-            toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
-            toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"this.Description = {this.Description ?? "null"}");
+            toStringOutput.Add($"this.Handle = {this.Handle ?? "null"}");
             toStringOutput.Add($"this.Taxable = {(this.Taxable == null ? "null" : this.Taxable.ToString())}");
-            toStringOutput.Add($"this.Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
             toStringOutput.Add($"this.UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
             toStringOutput.Add($"this.DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
             toStringOutput.Add($"this.PricePoints = {(this.PricePoints == null ? "null" : $"[{string.Join(", ", this.PricePoints)} ]")}");
             toStringOutput.Add($"UnitPrice = {(this.UnitPrice == null ? "null" : this.UnitPrice.ToString())}");
-            toStringOutput.Add($"this.TaxCode = {(this.TaxCode == null ? "null" : this.TaxCode)}");
+            toStringOutput.Add($"this.TaxCode = {this.TaxCode ?? "null"}");
             toStringOutput.Add($"this.HideDateRangeOnInvoice = {(this.HideDateRangeOnInvoice == null ? "null" : this.HideDateRangeOnInvoice.ToString())}");
-            toStringOutput.Add($"this.PriceInCents = {(this.PriceInCents == null ? "null" : this.PriceInCents)}");
             toStringOutput.Add($"this.DisplayOnHostedPage = {(this.DisplayOnHostedPage == null ? "null" : this.DisplayOnHostedPage.ToString())}");
             toStringOutput.Add($"this.AllowFractionalQuantities = {(this.AllowFractionalQuantities == null ? "null" : this.AllowFractionalQuantities.ToString())}");
             toStringOutput.Add($"this.PublicSignupPageIds = {(this.PublicSignupPageIds == null ? "null" : $"[{string.Join(", ", this.PublicSignupPageIds)} ]")}");

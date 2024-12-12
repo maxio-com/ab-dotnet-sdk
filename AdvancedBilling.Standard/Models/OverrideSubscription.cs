@@ -88,31 +88,30 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"OverrideSubscription : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is OverrideSubscription other &&                ((this.ActivatedAt == null && other.ActivatedAt == null) || (this.ActivatedAt?.Equals(other.ActivatedAt) == true)) &&
-                ((this.CanceledAt == null && other.CanceledAt == null) || (this.CanceledAt?.Equals(other.CanceledAt) == true)) &&
-                ((this.CancellationMessage == null && other.CancellationMessage == null) || (this.CancellationMessage?.Equals(other.CancellationMessage) == true)) &&
-                ((this.ExpiresAt == null && other.ExpiresAt == null) || (this.ExpiresAt?.Equals(other.ExpiresAt) == true)) &&
-                ((this.CurrentPeriodStartsAt == null && other.CurrentPeriodStartsAt == null) || (this.CurrentPeriodStartsAt?.Equals(other.CurrentPeriodStartsAt) == true));
+            return obj is OverrideSubscription other &&
+                (this.ActivatedAt == null && other.ActivatedAt == null ||
+                 this.ActivatedAt?.Equals(other.ActivatedAt) == true) &&
+                (this.CanceledAt == null && other.CanceledAt == null ||
+                 this.CanceledAt?.Equals(other.CanceledAt) == true) &&
+                (this.CancellationMessage == null && other.CancellationMessage == null ||
+                 this.CancellationMessage?.Equals(other.CancellationMessage) == true) &&
+                (this.ExpiresAt == null && other.ExpiresAt == null ||
+                 this.ExpiresAt?.Equals(other.ExpiresAt) == true) &&
+                (this.CurrentPeriodStartsAt == null && other.CurrentPeriodStartsAt == null ||
+                 this.CurrentPeriodStartsAt?.Equals(other.CurrentPeriodStartsAt) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -121,7 +120,7 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.ActivatedAt = {(this.ActivatedAt == null ? "null" : this.ActivatedAt.ToString())}");
             toStringOutput.Add($"this.CanceledAt = {(this.CanceledAt == null ? "null" : this.CanceledAt.ToString())}");
-            toStringOutput.Add($"this.CancellationMessage = {(this.CancellationMessage == null ? "null" : this.CancellationMessage)}");
+            toStringOutput.Add($"this.CancellationMessage = {this.CancellationMessage ?? "null"}");
             toStringOutput.Add($"this.ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt.ToString())}");
             toStringOutput.Add($"this.CurrentPeriodStartsAt = {(this.CurrentPeriodStartsAt == null ? "null" : this.CurrentPeriodStartsAt.ToString())}");
 

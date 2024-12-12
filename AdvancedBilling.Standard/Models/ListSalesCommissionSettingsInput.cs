@@ -85,39 +85,38 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ListSalesCommissionSettingsInput : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ListSalesCommissionSettingsInput other &&                ((this.SellerId == null && other.SellerId == null) || (this.SellerId?.Equals(other.SellerId) == true)) &&
-                ((this.Authorization == null && other.Authorization == null) || (this.Authorization?.Equals(other.Authorization) == true)) &&
-                ((this.LiveMode == null && other.LiveMode == null) || (this.LiveMode?.Equals(other.LiveMode) == true)) &&
-                ((this.Page == null && other.Page == null) || (this.Page?.Equals(other.Page) == true)) &&
-                ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true));
+            return obj is ListSalesCommissionSettingsInput other &&
+                (this.SellerId == null && other.SellerId == null ||
+                 this.SellerId?.Equals(other.SellerId) == true) &&
+                (this.Authorization == null && other.Authorization == null ||
+                 this.Authorization?.Equals(other.Authorization) == true) &&
+                (this.LiveMode == null && other.LiveMode == null ||
+                 this.LiveMode?.Equals(other.LiveMode) == true) &&
+                (this.Page == null && other.Page == null ||
+                 this.Page?.Equals(other.Page) == true) &&
+                (this.PerPage == null && other.PerPage == null ||
+                 this.PerPage?.Equals(other.PerPage) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.SellerId = {(this.SellerId == null ? "null" : this.SellerId)}");
-            toStringOutput.Add($"this.Authorization = {(this.Authorization == null ? "null" : this.Authorization)}");
+            toStringOutput.Add($"this.SellerId = {this.SellerId ?? "null"}");
+            toStringOutput.Add($"this.Authorization = {this.Authorization ?? "null"}");
             toStringOutput.Add($"this.LiveMode = {(this.LiveMode == null ? "null" : this.LiveMode.ToString())}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");

@@ -97,32 +97,32 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ChargifyEBB : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ChargifyEBB other &&                ((this.Timestamp == null && other.Timestamp == null) || (this.Timestamp?.Equals(other.Timestamp) == true)) &&
-                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true)) &&
-                ((this.UniquenessToken == null && other.UniquenessToken == null) || (this.UniquenessToken?.Equals(other.UniquenessToken) == true)) &&
-                ((this.SubscriptionId == null && other.SubscriptionId == null) || (this.SubscriptionId?.Equals(other.SubscriptionId) == true)) &&
-                ((this.SubscriptionReference == null && other.SubscriptionReference == null) || (this.SubscriptionReference?.Equals(other.SubscriptionReference) == true));
+            return obj is ChargifyEBB other &&
+                (this.Timestamp == null && other.Timestamp == null ||
+                 this.Timestamp?.Equals(other.Timestamp) == true) &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.CreatedAt == null && other.CreatedAt == null ||
+                 this.CreatedAt?.Equals(other.CreatedAt) == true) &&
+                (this.UniquenessToken == null && other.UniquenessToken == null ||
+                 this.UniquenessToken?.Equals(other.UniquenessToken) == true) &&
+                (this.SubscriptionId == null && other.SubscriptionId == null ||
+                 this.SubscriptionId?.Equals(other.SubscriptionId) == true) &&
+                (this.SubscriptionReference == null && other.SubscriptionReference == null ||
+                 this.SubscriptionReference?.Equals(other.SubscriptionReference) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -130,11 +130,11 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Timestamp = {(this.Timestamp == null ? "null" : this.Timestamp.ToString())}");
-            toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id)}");
+            toStringOutput.Add($"this.Id = {this.Id ?? "null"}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
-            toStringOutput.Add($"this.UniquenessToken = {(this.UniquenessToken == null ? "null" : this.UniquenessToken)}");
+            toStringOutput.Add($"this.UniquenessToken = {this.UniquenessToken ?? "null"}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
-            toStringOutput.Add($"this.SubscriptionReference = {(this.SubscriptionReference == null ? "null" : this.SubscriptionReference)}");
+            toStringOutput.Add($"this.SubscriptionReference = {this.SubscriptionReference ?? "null"}");
 
             base.ToString(toStringOutput);
         }

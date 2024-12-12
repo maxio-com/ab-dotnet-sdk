@@ -95,39 +95,34 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"DunnerData : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is DunnerData other &&                ((this.State == null && other.State == null) || (this.State?.Equals(other.State) == true)) &&
-                this.SubscriptionId.Equals(other.SubscriptionId) &&
-                this.RevenueAtRiskInCents.Equals(other.RevenueAtRiskInCents) &&
-                this.CreatedAt.Equals(other.CreatedAt) &&
-                this.Attempts.Equals(other.Attempts) &&
-                this.LastAttemptedAt.Equals(other.LastAttemptedAt);
+            return obj is DunnerData other &&
+                (this.State == null && other.State == null ||
+                 this.State?.Equals(other.State) == true) &&
+                (this.SubscriptionId.Equals(other.SubscriptionId)) &&
+                (this.RevenueAtRiskInCents.Equals(other.RevenueAtRiskInCents)) &&
+                (this.CreatedAt.Equals(other.CreatedAt)) &&
+                (this.Attempts.Equals(other.Attempts)) &&
+                (this.LastAttemptedAt.Equals(other.LastAttemptedAt)) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.State = {(this.State == null ? "null" : this.State)}");
+            toStringOutput.Add($"this.State = {this.State ?? "null"}");
             toStringOutput.Add($"this.SubscriptionId = {this.SubscriptionId}");
             toStringOutput.Add($"this.RevenueAtRiskInCents = {this.RevenueAtRiskInCents}");
             toStringOutput.Add($"this.CreatedAt = {this.CreatedAt}");

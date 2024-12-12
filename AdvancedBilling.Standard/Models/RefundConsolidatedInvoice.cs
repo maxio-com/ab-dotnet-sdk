@@ -99,44 +99,43 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"RefundConsolidatedInvoice : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is RefundConsolidatedInvoice other &&                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                this.PaymentId.Equals(other.PaymentId) &&
-                ((this.SegmentUids == null && other.SegmentUids == null) || (this.SegmentUids?.Equals(other.SegmentUids) == true)) &&
-                ((this.External == null && other.External == null) || (this.External?.Equals(other.External) == true)) &&
-                ((this.ApplyCredit == null && other.ApplyCredit == null) || (this.ApplyCredit?.Equals(other.ApplyCredit) == true)) &&
-                ((this.Amount == null && other.Amount == null) || (this.Amount?.Equals(other.Amount) == true));
+            return obj is RefundConsolidatedInvoice other &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.PaymentId.Equals(other.PaymentId)) &&
+                (this.SegmentUids == null && other.SegmentUids == null ||
+                 this.SegmentUids?.Equals(other.SegmentUids) == true) &&
+                (this.External == null && other.External == null ||
+                 this.External?.Equals(other.External) == true) &&
+                (this.ApplyCredit == null && other.ApplyCredit == null ||
+                 this.ApplyCredit?.Equals(other.ApplyCredit) == true) &&
+                (this.Amount == null && other.Amount == null ||
+                 this.Amount?.Equals(other.Amount) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
             toStringOutput.Add($"this.PaymentId = {this.PaymentId}");
             toStringOutput.Add($"SegmentUids = {(this.SegmentUids == null ? "null" : this.SegmentUids.ToString())}");
             toStringOutput.Add($"this.External = {(this.External == null ? "null" : this.External.ToString())}");
             toStringOutput.Add($"this.ApplyCredit = {(this.ApplyCredit == null ? "null" : this.ApplyCredit.ToString())}");
-            toStringOutput.Add($"this.Amount = {(this.Amount == null ? "null" : this.Amount)}");
+            toStringOutput.Add($"this.Amount = {this.Amount ?? "null"}");
 
             base.ToString(toStringOutput);
         }

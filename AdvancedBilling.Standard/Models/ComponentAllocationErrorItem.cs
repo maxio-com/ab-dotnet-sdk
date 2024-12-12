@@ -75,30 +75,28 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ComponentAllocationErrorItem : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ComponentAllocationErrorItem other &&                ((this.ComponentId == null && other.ComponentId == null) || (this.ComponentId?.Equals(other.ComponentId) == true)) &&
-                ((this.Message == null && other.Message == null) || (this.Message?.Equals(other.Message) == true)) &&
-                ((this.Kind == null && other.Kind == null) || (this.Kind?.Equals(other.Kind) == true)) &&
-                ((this.On == null && other.On == null) || (this.On?.Equals(other.On) == true));
+            return obj is ComponentAllocationErrorItem other &&
+                (this.ComponentId == null && other.ComponentId == null ||
+                 this.ComponentId?.Equals(other.ComponentId) == true) &&
+                (this.Message == null && other.Message == null ||
+                 this.Message?.Equals(other.Message) == true) &&
+                (this.Kind == null && other.Kind == null ||
+                 this.Kind?.Equals(other.Kind) == true) &&
+                (this.On == null && other.On == null ||
+                 this.On?.Equals(other.On) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -106,9 +104,9 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
-            toStringOutput.Add($"this.Message = {(this.Message == null ? "null" : this.Message)}");
-            toStringOutput.Add($"this.Kind = {(this.Kind == null ? "null" : this.Kind)}");
-            toStringOutput.Add($"this.On = {(this.On == null ? "null" : this.On)}");
+            toStringOutput.Add($"this.Message = {this.Message ?? "null"}");
+            toStringOutput.Add($"this.Kind = {this.Kind ?? "null"}");
+            toStringOutput.Add($"this.On = {this.On ?? "null"}");
 
             base.ToString(toStringOutput);
         }

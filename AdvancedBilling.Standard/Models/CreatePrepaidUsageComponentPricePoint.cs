@@ -68,11 +68,11 @@ namespace AdvancedBilling.Standard.Models
             this.RolloverPrepaidRemainder = rolloverPrepaidRemainder;
             this.RenewPrepaidAllocation = renewPrepaidAllocation;
             this.ExpirationInterval = expirationInterval;
+
             if (expirationIntervalUnit != null)
             {
                 this.ExpirationIntervalUnit = expirationIntervalUnit;
             }
-
         }
 
         /// <summary>
@@ -118,13 +118,13 @@ namespace AdvancedBilling.Standard.Models
         public bool? UseSiteExchangeRate { get; set; }
 
         /// <summary>
-        /// Boolean which controls whether or not remaining units should be rolled over to the next period
+        /// (only for prepaid usage components) Boolean which controls whether or not remaining units should be rolled over to the next period
         /// </summary>
         [JsonProperty("rollover_prepaid_remainder", NullValueHandling = NullValueHandling.Ignore)]
         public bool? RolloverPrepaidRemainder { get; set; }
 
         /// <summary>
-        /// Boolean which controls whether or not the allocated quantity should be renewed at the beginning of each period
+        /// (only for prepaid usage components) Boolean which controls whether or not the allocated quantity should be renewed at the beginning of each period
         /// </summary>
         [JsonProperty("renew_prepaid_allocation", NullValueHandling = NullValueHandling.Ignore)]
         public bool? RenewPrepaidAllocation { get; set; }
@@ -136,7 +136,7 @@ namespace AdvancedBilling.Standard.Models
         public double? ExpirationInterval { get; set; }
 
         /// <summary>
-        /// A string representing the expiration interval unit for this component, either month or day
+        /// (only for prepaid usage components where rollover_prepaid_remainder is true) A string representing the expiration interval unit for this component, either month or day
         /// </summary>
         [JsonProperty("expiration_interval_unit")]
         public Models.ExpirationIntervalUnit? ExpirationIntervalUnit
@@ -157,14 +157,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"CreatePrepaidUsageComponentPricePoint : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetExpirationIntervalUnit()
         {
@@ -183,35 +181,40 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is CreatePrepaidUsageComponentPricePoint other &&                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.Handle == null && other.Handle == null) || (this.Handle?.Equals(other.Handle) == true)) &&
-                this.PricingScheme.Equals(other.PricingScheme) &&
-                ((this.Prices == null && other.Prices == null) || (this.Prices?.Equals(other.Prices) == true)) &&
-                ((this.OveragePricing == null && other.OveragePricing == null) || (this.OveragePricing?.Equals(other.OveragePricing) == true)) &&
-                ((this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null) || (this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true)) &&
-                ((this.RolloverPrepaidRemainder == null && other.RolloverPrepaidRemainder == null) || (this.RolloverPrepaidRemainder?.Equals(other.RolloverPrepaidRemainder) == true)) &&
-                ((this.RenewPrepaidAllocation == null && other.RenewPrepaidAllocation == null) || (this.RenewPrepaidAllocation?.Equals(other.RenewPrepaidAllocation) == true)) &&
-                ((this.ExpirationInterval == null && other.ExpirationInterval == null) || (this.ExpirationInterval?.Equals(other.ExpirationInterval) == true)) &&
-                ((this.ExpirationIntervalUnit == null && other.ExpirationIntervalUnit == null) || (this.ExpirationIntervalUnit?.Equals(other.ExpirationIntervalUnit) == true));
+            return obj is CreatePrepaidUsageComponentPricePoint other &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.Handle == null && other.Handle == null ||
+                 this.Handle?.Equals(other.Handle) == true) &&
+                (this.PricingScheme.Equals(other.PricingScheme)) &&
+                (this.Prices == null && other.Prices == null ||
+                 this.Prices?.Equals(other.Prices) == true) &&
+                (this.OveragePricing == null && other.OveragePricing == null ||
+                 this.OveragePricing?.Equals(other.OveragePricing) == true) &&
+                (this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null ||
+                 this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true) &&
+                (this.RolloverPrepaidRemainder == null && other.RolloverPrepaidRemainder == null ||
+                 this.RolloverPrepaidRemainder?.Equals(other.RolloverPrepaidRemainder) == true) &&
+                (this.RenewPrepaidAllocation == null && other.RenewPrepaidAllocation == null ||
+                 this.RenewPrepaidAllocation?.Equals(other.RenewPrepaidAllocation) == true) &&
+                (this.ExpirationInterval == null && other.ExpirationInterval == null ||
+                 this.ExpirationInterval?.Equals(other.ExpirationInterval) == true) &&
+                (this.ExpirationIntervalUnit == null && other.ExpirationIntervalUnit == null ||
+                 this.ExpirationIntervalUnit?.Equals(other.ExpirationIntervalUnit) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
-            toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"this.Handle = {this.Handle ?? "null"}");
             toStringOutput.Add($"this.PricingScheme = {this.PricingScheme}");
             toStringOutput.Add($"this.Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
             toStringOutput.Add($"this.OveragePricing = {(this.OveragePricing == null ? "null" : this.OveragePricing.ToString())}");

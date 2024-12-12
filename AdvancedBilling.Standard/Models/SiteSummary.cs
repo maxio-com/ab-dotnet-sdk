@@ -84,41 +84,40 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SiteSummary : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SiteSummary other &&                ((this.SellerName == null && other.SellerName == null) || (this.SellerName?.Equals(other.SellerName) == true)) &&
-                ((this.SiteName == null && other.SiteName == null) || (this.SiteName?.Equals(other.SiteName) == true)) &&
-                ((this.SiteId == null && other.SiteId == null) || (this.SiteId?.Equals(other.SiteId) == true)) &&
-                ((this.SiteCurrency == null && other.SiteCurrency == null) || (this.SiteCurrency?.Equals(other.SiteCurrency) == true)) &&
-                ((this.Stats == null && other.Stats == null) || (this.Stats?.Equals(other.Stats) == true));
+            return obj is SiteSummary other &&
+                (this.SellerName == null && other.SellerName == null ||
+                 this.SellerName?.Equals(other.SellerName) == true) &&
+                (this.SiteName == null && other.SiteName == null ||
+                 this.SiteName?.Equals(other.SiteName) == true) &&
+                (this.SiteId == null && other.SiteId == null ||
+                 this.SiteId?.Equals(other.SiteId) == true) &&
+                (this.SiteCurrency == null && other.SiteCurrency == null ||
+                 this.SiteCurrency?.Equals(other.SiteCurrency) == true) &&
+                (this.Stats == null && other.Stats == null ||
+                 this.Stats?.Equals(other.Stats) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.SellerName = {(this.SellerName == null ? "null" : this.SellerName)}");
-            toStringOutput.Add($"this.SiteName = {(this.SiteName == null ? "null" : this.SiteName)}");
+            toStringOutput.Add($"this.SellerName = {this.SellerName ?? "null"}");
+            toStringOutput.Add($"this.SiteName = {this.SiteName ?? "null"}");
             toStringOutput.Add($"this.SiteId = {(this.SiteId == null ? "null" : this.SiteId.ToString())}");
-            toStringOutput.Add($"this.SiteCurrency = {(this.SiteCurrency == null ? "null" : this.SiteCurrency)}");
+            toStringOutput.Add($"this.SiteCurrency = {this.SiteCurrency ?? "null"}");
             toStringOutput.Add($"this.Stats = {(this.Stats == null ? "null" : this.Stats.ToString())}");
 
             base.ToString(toStringOutput);

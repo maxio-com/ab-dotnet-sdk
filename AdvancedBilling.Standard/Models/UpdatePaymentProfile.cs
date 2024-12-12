@@ -77,11 +77,11 @@ namespace AdvancedBilling.Standard.Models
             this.BillingState = billingState;
             this.BillingZip = billingZip;
             this.BillingCountry = billingCountry;
+
             if (billingAddress2 != null)
             {
                 this.BillingAddress2 = billingAddress2;
             }
-
         }
 
         /// <summary>
@@ -178,14 +178,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"UpdatePaymentProfile : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetBillingAddress2()
         {
@@ -204,49 +202,58 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is UpdatePaymentProfile other &&                ((this.FirstName == null && other.FirstName == null) || (this.FirstName?.Equals(other.FirstName) == true)) &&
-                ((this.LastName == null && other.LastName == null) || (this.LastName?.Equals(other.LastName) == true)) &&
-                ((this.FullNumber == null && other.FullNumber == null) || (this.FullNumber?.Equals(other.FullNumber) == true)) &&
-                ((this.CardType == null && other.CardType == null) || (this.CardType?.Equals(other.CardType) == true)) &&
-                ((this.ExpirationMonth == null && other.ExpirationMonth == null) || (this.ExpirationMonth?.Equals(other.ExpirationMonth) == true)) &&
-                ((this.ExpirationYear == null && other.ExpirationYear == null) || (this.ExpirationYear?.Equals(other.ExpirationYear) == true)) &&
-                ((this.CurrentVault == null && other.CurrentVault == null) || (this.CurrentVault?.Equals(other.CurrentVault) == true)) &&
-                ((this.BillingAddress == null && other.BillingAddress == null) || (this.BillingAddress?.Equals(other.BillingAddress) == true)) &&
-                ((this.BillingCity == null && other.BillingCity == null) || (this.BillingCity?.Equals(other.BillingCity) == true)) &&
-                ((this.BillingState == null && other.BillingState == null) || (this.BillingState?.Equals(other.BillingState) == true)) &&
-                ((this.BillingZip == null && other.BillingZip == null) || (this.BillingZip?.Equals(other.BillingZip) == true)) &&
-                ((this.BillingCountry == null && other.BillingCountry == null) || (this.BillingCountry?.Equals(other.BillingCountry) == true)) &&
-                ((this.BillingAddress2 == null && other.BillingAddress2 == null) || (this.BillingAddress2?.Equals(other.BillingAddress2) == true));
+            return obj is UpdatePaymentProfile other &&
+                (this.FirstName == null && other.FirstName == null ||
+                 this.FirstName?.Equals(other.FirstName) == true) &&
+                (this.LastName == null && other.LastName == null ||
+                 this.LastName?.Equals(other.LastName) == true) &&
+                (this.FullNumber == null && other.FullNumber == null ||
+                 this.FullNumber?.Equals(other.FullNumber) == true) &&
+                (this.CardType == null && other.CardType == null ||
+                 this.CardType?.Equals(other.CardType) == true) &&
+                (this.ExpirationMonth == null && other.ExpirationMonth == null ||
+                 this.ExpirationMonth?.Equals(other.ExpirationMonth) == true) &&
+                (this.ExpirationYear == null && other.ExpirationYear == null ||
+                 this.ExpirationYear?.Equals(other.ExpirationYear) == true) &&
+                (this.CurrentVault == null && other.CurrentVault == null ||
+                 this.CurrentVault?.Equals(other.CurrentVault) == true) &&
+                (this.BillingAddress == null && other.BillingAddress == null ||
+                 this.BillingAddress?.Equals(other.BillingAddress) == true) &&
+                (this.BillingCity == null && other.BillingCity == null ||
+                 this.BillingCity?.Equals(other.BillingCity) == true) &&
+                (this.BillingState == null && other.BillingState == null ||
+                 this.BillingState?.Equals(other.BillingState) == true) &&
+                (this.BillingZip == null && other.BillingZip == null ||
+                 this.BillingZip?.Equals(other.BillingZip) == true) &&
+                (this.BillingCountry == null && other.BillingCountry == null ||
+                 this.BillingCountry?.Equals(other.BillingCountry) == true) &&
+                (this.BillingAddress2 == null && other.BillingAddress2 == null ||
+                 this.BillingAddress2?.Equals(other.BillingAddress2) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : this.FirstName)}");
-            toStringOutput.Add($"this.LastName = {(this.LastName == null ? "null" : this.LastName)}");
-            toStringOutput.Add($"this.FullNumber = {(this.FullNumber == null ? "null" : this.FullNumber)}");
+            toStringOutput.Add($"this.FirstName = {this.FirstName ?? "null"}");
+            toStringOutput.Add($"this.LastName = {this.LastName ?? "null"}");
+            toStringOutput.Add($"this.FullNumber = {this.FullNumber ?? "null"}");
             toStringOutput.Add($"this.CardType = {(this.CardType == null ? "null" : this.CardType.ToString())}");
-            toStringOutput.Add($"this.ExpirationMonth = {(this.ExpirationMonth == null ? "null" : this.ExpirationMonth)}");
-            toStringOutput.Add($"this.ExpirationYear = {(this.ExpirationYear == null ? "null" : this.ExpirationYear)}");
+            toStringOutput.Add($"this.ExpirationMonth = {this.ExpirationMonth ?? "null"}");
+            toStringOutput.Add($"this.ExpirationYear = {this.ExpirationYear ?? "null"}");
             toStringOutput.Add($"this.CurrentVault = {(this.CurrentVault == null ? "null" : this.CurrentVault.ToString())}");
-            toStringOutput.Add($"this.BillingAddress = {(this.BillingAddress == null ? "null" : this.BillingAddress)}");
-            toStringOutput.Add($"this.BillingCity = {(this.BillingCity == null ? "null" : this.BillingCity)}");
-            toStringOutput.Add($"this.BillingState = {(this.BillingState == null ? "null" : this.BillingState)}");
-            toStringOutput.Add($"this.BillingZip = {(this.BillingZip == null ? "null" : this.BillingZip)}");
-            toStringOutput.Add($"this.BillingCountry = {(this.BillingCountry == null ? "null" : this.BillingCountry)}");
-            toStringOutput.Add($"this.BillingAddress2 = {(this.BillingAddress2 == null ? "null" : this.BillingAddress2)}");
+            toStringOutput.Add($"this.BillingAddress = {this.BillingAddress ?? "null"}");
+            toStringOutput.Add($"this.BillingCity = {this.BillingCity ?? "null"}");
+            toStringOutput.Add($"this.BillingState = {this.BillingState ?? "null"}");
+            toStringOutput.Add($"this.BillingZip = {this.BillingZip ?? "null"}");
+            toStringOutput.Add($"this.BillingCountry = {this.BillingCountry ?? "null"}");
+            toStringOutput.Add($"this.BillingAddress2 = {this.BillingAddress2 ?? "null"}");
 
             base.ToString(toStringOutput);
         }

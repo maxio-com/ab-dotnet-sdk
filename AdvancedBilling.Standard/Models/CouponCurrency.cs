@@ -21,6 +21,14 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class CouponCurrency : BaseModel
     {
+        private int? id;
+        private double? price;
+        private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
+        {
+            { "id", false },
+            { "price", false },
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CouponCurrency"/> class.
         /// </summary>
@@ -38,20 +46,40 @@ namespace AdvancedBilling.Standard.Models
         public CouponCurrency(
             int? id = null,
             string currency = null,
-            int? price = null,
+            double? price = null,
             int? couponId = null)
         {
-            this.Id = id;
+
+            if (id != null)
+            {
+                this.Id = id;
+            }
             this.Currency = currency;
-            this.Price = price;
+
+            if (price != null)
+            {
+                this.Price = price;
+            }
             this.CouponId = couponId;
         }
 
         /// <summary>
         /// Gets or sets Id.
         /// </summary>
-        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? Id { get; set; }
+        [JsonProperty("id")]
+        public int? Id
+        {
+            get
+            {
+                return this.id;
+            }
+
+            set
+            {
+                this.shouldSerialize["id"] = true;
+                this.id = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets Currency.
@@ -62,8 +90,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets Price.
         /// </summary>
-        [JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
-        public int? Price { get; set; }
+        [JsonProperty("price")]
+        public double? Price
+        {
+            get
+            {
+                return this.price;
+            }
+
+            set
+            {
+                this.shouldSerialize["price"] = true;
+                this.price = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets CouponId.
@@ -75,30 +115,62 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"CouponCurrency : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetId()
+        {
+            this.shouldSerialize["id"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetPrice()
+        {
+            this.shouldSerialize["price"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeId()
+        {
+            return this.shouldSerialize["id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializePrice()
+        {
+            return this.shouldSerialize["price"];
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is CouponCurrency other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.Currency == null && other.Currency == null) || (this.Currency?.Equals(other.Currency) == true)) &&
-                ((this.Price == null && other.Price == null) || (this.Price?.Equals(other.Price) == true)) &&
-                ((this.CouponId == null && other.CouponId == null) || (this.CouponId?.Equals(other.CouponId) == true));
+            return obj is CouponCurrency other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.Currency == null && other.Currency == null ||
+                 this.Currency?.Equals(other.Currency) == true) &&
+                (this.Price == null && other.Price == null ||
+                 this.Price?.Equals(other.Price) == true) &&
+                (this.CouponId == null && other.CouponId == null ||
+                 this.CouponId?.Equals(other.CouponId) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -106,7 +178,7 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.Currency = {(this.Currency == null ? "null" : this.Currency)}");
+            toStringOutput.Add($"this.Currency = {this.Currency ?? "null"}");
             toStringOutput.Add($"this.Price = {(this.Price == null ? "null" : this.Price.ToString())}");
             toStringOutput.Add($"this.CouponId = {(this.CouponId == null ? "null" : this.CouponId.ToString())}");
 

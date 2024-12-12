@@ -41,11 +41,11 @@ namespace AdvancedBilling.Standard.Models
         public ActivateSubscriptionRequest(
             bool? revertOnFailure = null)
         {
+
             if (revertOnFailure != null)
             {
                 this.RevertOnFailure = revertOnFailure;
             }
-
         }
 
         /// <summary>
@@ -70,14 +70,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ActivateSubscriptionRequest : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetRevertOnFailure()
         {
@@ -96,18 +94,15 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ActivateSubscriptionRequest other &&                ((this.RevertOnFailure == null && other.RevertOnFailure == null) || (this.RevertOnFailure?.Equals(other.RevertOnFailure) == true));
+            return obj is ActivateSubscriptionRequest other &&
+                (this.RevertOnFailure == null && other.RevertOnFailure == null ||
+                 this.RevertOnFailure?.Equals(other.RevertOnFailure) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

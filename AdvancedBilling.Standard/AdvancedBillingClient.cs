@@ -24,21 +24,23 @@ namespace AdvancedBilling.Standard
             new Dictionary<Environment, Dictionary<Enum, string>>
         {
             {
-                Environment.Production, new Dictionary<Enum, string>
+                Environment.US, new Dictionary<Enum, string>
                 {
-                    { Server.Default, "https://{subdomain}.{domain}" },
+                    { Server.Production, "https://{site}.chargify.com" },
+                    { Server.Ebb, "https://events.chargify.com/{site}" },
                 }
             },
             {
-                Environment.Environment2, new Dictionary<Enum, string>
+                Environment.EU, new Dictionary<Enum, string>
                 {
-                    { Server.Default, "https://events.chargify.com" },
+                    { Server.Production, "https://{site}.ebilling.maxio.com" },
+                    { Server.Ebb, "https://events.chargify.com/{site}" },
                 }
             },
         };
 
         private readonly GlobalConfiguration globalConfiguration;
-        private const string userAgent = "AB SDK DotNet:5.2.0 on OS {os-info}";
+        private const string userAgent = "AB SDK DotNet:6.0.0 on OS {os-info}";
         private readonly HttpCallback httpCallback;
         private readonly Lazy<APIExportsController> aPIExports;
         private readonly Lazy<AdvanceInvoiceController> advanceInvoice;
@@ -75,15 +77,13 @@ namespace AdvancedBilling.Standard
 
         private AdvancedBillingClient(
             Environment environment,
-            string subdomain,
-            string domain,
+            string site,
             BasicAuthModel basicAuthModel,
             HttpCallback httpCallback,
             IHttpClientConfiguration httpClientConfiguration)
         {
             this.Environment = environment;
-            this.Subdomain = subdomain;
-            this.Domain = domain;
+            this.Site = site;
             this.httpCallback = httpCallback;
             this.HttpClientConfiguration = httpClientConfiguration;
             BasicAuthModel = basicAuthModel;
@@ -94,10 +94,9 @@ namespace AdvancedBilling.Standard
                 })
                 .ApiCallback(httpCallback)
                 .HttpConfiguration(httpClientConfiguration)
-                .ServerUrls(EnvironmentsMap[environment], Server.Default)
+                .ServerUrls(EnvironmentsMap[environment], Server.Production)
                 .Parameters(globalParameter => globalParameter
-                    .Template(templateParameter => templateParameter.Setup("subdomain", this.Subdomain))
-                    .Template(templateParameter => templateParameter.Setup("domain", this.Domain)))
+                    .Template(templateParameter => templateParameter.Setup("site", this.Site)))
                 .UserAgent(userAgent)
                 .Build();
 
@@ -341,16 +340,10 @@ namespace AdvancedBilling.Standard
         public Environment Environment { get; }
 
         /// <summary>
-        /// Gets Subdomain.
+        /// Gets Site.
         /// The subdomain for your Advanced Billing site.
         /// </summary>
-        public string Subdomain { get; }
-
-        /// <summary>
-        /// Gets Domain.
-        /// The Advanced Billing server domain.
-        /// </summary>
-        public string Domain { get; }
+        public string Site { get; }
 
         /// <summary>
         /// Gets http callback.
@@ -371,9 +364,9 @@ namespace AdvancedBilling.Standard
         /// Gets the URL for a particular alias in the current environment and appends
         /// it with template parameters.
         /// </summary>
-        /// <param name="alias">Default value:DEFAULT.</param>
+        /// <param name="alias">Default value:PRODUCTION.</param>
         /// <returns>Returns the baseurl.</returns>
-        public string GetBaseUri(Server alias = Server.Default)
+        public string GetBaseUri(Server alias = Server.Production)
         {
             return globalConfiguration.ServerUrl(alias);
         }
@@ -386,8 +379,7 @@ namespace AdvancedBilling.Standard
         {
             Builder builder = new Builder()
                 .Environment(this.Environment)
-                .Subdomain(this.Subdomain)
-                .Domain(this.Domain)
+                .Site(this.Site)
                 .HttpCallback(httpCallback)
                 .HttpClientConfig(config => config.Build());
 
@@ -404,8 +396,7 @@ namespace AdvancedBilling.Standard
         {
             return
                 $"Environment = {this.Environment}, " +
-                $"Subdomain = {this.Subdomain}, " +
-                $"Domain = {this.Domain}, " +
+                $"Site = {this.Site}, " +
                 $"HttpClientConfiguration = {this.HttpClientConfiguration}, ";
         }
 
@@ -418,8 +409,7 @@ namespace AdvancedBilling.Standard
             var builder = new Builder();
 
             string environment = System.Environment.GetEnvironmentVariable("ADVANCED_BILLING_STANDARD_ENVIRONMENT");
-            string subdomain = System.Environment.GetEnvironmentVariable("ADVANCED_BILLING_STANDARD_SUBDOMAIN");
-            string domain = System.Environment.GetEnvironmentVariable("ADVANCED_BILLING_STANDARD_DOMAIN");
+            string site = System.Environment.GetEnvironmentVariable("ADVANCED_BILLING_STANDARD_SITE");
             string basicAuthUserName = System.Environment.GetEnvironmentVariable("ADVANCED_BILLING_STANDARD_BASIC_AUTH_USER_NAME");
             string basicAuthPassword = System.Environment.GetEnvironmentVariable("ADVANCED_BILLING_STANDARD_BASIC_AUTH_PASSWORD");
 
@@ -428,14 +418,9 @@ namespace AdvancedBilling.Standard
                 builder.Environment(ApiHelper.JsonDeserialize<Environment>($"\"{environment}\""));
             }
 
-            if (subdomain != null)
+            if (site != null)
             {
-                builder.Subdomain(subdomain);
-            }
-
-            if (domain != null)
-            {
-                builder.Domain(domain);
+                builder.Site(site);
             }
 
             if (basicAuthUserName != null && basicAuthPassword != null)
@@ -453,9 +438,8 @@ namespace AdvancedBilling.Standard
         /// </summary>
         public class Builder
         {
-            private Environment environment = AdvancedBilling.Standard.Environment.Production;
-            private string subdomain = "subdomain";
-            private string domain = "chargify.com";
+            private Environment environment = AdvancedBilling.Standard.Environment.US;
+            private string site = "subdomain";
             private BasicAuthModel basicAuthModel = new BasicAuthModel();
             private HttpClientConfiguration.Builder httpClientConfig = new HttpClientConfiguration.Builder();
             private HttpCallback httpCallback;
@@ -488,24 +472,13 @@ namespace AdvancedBilling.Standard
             }
 
             /// <summary>
-            /// Sets Subdomain.
+            /// Sets Site.
             /// </summary>
-            /// <param name="subdomain"> Subdomain. </param>
+            /// <param name="site"> Site. </param>
             /// <returns> Builder. </returns>
-            public Builder Subdomain(string subdomain)
+            public Builder Site(string site)
             {
-                this.subdomain = subdomain ?? throw new ArgumentNullException(nameof(subdomain));
-                return this;
-            }
-
-            /// <summary>
-            /// Sets Domain.
-            /// </summary>
-            /// <param name="domain"> Domain. </param>
-            /// <returns> Builder. </returns>
-            public Builder Domain(string domain)
-            {
-                this.domain = domain ?? throw new ArgumentNullException(nameof(domain));
+                this.site = site ?? throw new ArgumentNullException(nameof(site));
                 return this;
             }
 
@@ -550,8 +523,7 @@ namespace AdvancedBilling.Standard
                 }
                 return new AdvancedBillingClient(
                     environment,
-                    subdomain,
-                    domain,
+                    site,
                     basicAuthModel,
                     httpCallback,
                     httpClientConfig.Build());

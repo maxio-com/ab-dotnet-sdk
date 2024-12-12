@@ -65,11 +65,11 @@ namespace AdvancedBilling.Standard.Models
             this.OriginalAmount = originalAmount;
             this.AppliedAmount = appliedAmount;
             this.TransactionTime = transactionTime;
+
             if (memo != null)
             {
                 this.Memo = memo;
             }
-
             this.Role = role;
             this.ConsolidatedInvoice = consolidatedInvoice;
             this.AppliedCreditNotes = appliedCreditNotes;
@@ -152,14 +152,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ApplyCreditNoteEventData : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetMemo()
         {
@@ -178,41 +176,47 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ApplyCreditNoteEventData other &&                ((this.Uid == null && other.Uid == null) || (this.Uid?.Equals(other.Uid) == true)) &&
-                ((this.CreditNoteNumber == null && other.CreditNoteNumber == null) || (this.CreditNoteNumber?.Equals(other.CreditNoteNumber) == true)) &&
-                ((this.CreditNoteUid == null && other.CreditNoteUid == null) || (this.CreditNoteUid?.Equals(other.CreditNoteUid) == true)) &&
-                ((this.OriginalAmount == null && other.OriginalAmount == null) || (this.OriginalAmount?.Equals(other.OriginalAmount) == true)) &&
-                ((this.AppliedAmount == null && other.AppliedAmount == null) || (this.AppliedAmount?.Equals(other.AppliedAmount) == true)) &&
-                ((this.TransactionTime == null && other.TransactionTime == null) || (this.TransactionTime?.Equals(other.TransactionTime) == true)) &&
-                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                ((this.Role == null && other.Role == null) || (this.Role?.Equals(other.Role) == true)) &&
-                ((this.ConsolidatedInvoice == null && other.ConsolidatedInvoice == null) || (this.ConsolidatedInvoice?.Equals(other.ConsolidatedInvoice) == true)) &&
-                ((this.AppliedCreditNotes == null && other.AppliedCreditNotes == null) || (this.AppliedCreditNotes?.Equals(other.AppliedCreditNotes) == true));
+            return obj is ApplyCreditNoteEventData other &&
+                (this.Uid == null && other.Uid == null ||
+                 this.Uid?.Equals(other.Uid) == true) &&
+                (this.CreditNoteNumber == null && other.CreditNoteNumber == null ||
+                 this.CreditNoteNumber?.Equals(other.CreditNoteNumber) == true) &&
+                (this.CreditNoteUid == null && other.CreditNoteUid == null ||
+                 this.CreditNoteUid?.Equals(other.CreditNoteUid) == true) &&
+                (this.OriginalAmount == null && other.OriginalAmount == null ||
+                 this.OriginalAmount?.Equals(other.OriginalAmount) == true) &&
+                (this.AppliedAmount == null && other.AppliedAmount == null ||
+                 this.AppliedAmount?.Equals(other.AppliedAmount) == true) &&
+                (this.TransactionTime == null && other.TransactionTime == null ||
+                 this.TransactionTime?.Equals(other.TransactionTime) == true) &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.Role == null && other.Role == null ||
+                 this.Role?.Equals(other.Role) == true) &&
+                (this.ConsolidatedInvoice == null && other.ConsolidatedInvoice == null ||
+                 this.ConsolidatedInvoice?.Equals(other.ConsolidatedInvoice) == true) &&
+                (this.AppliedCreditNotes == null && other.AppliedCreditNotes == null ||
+                 this.AppliedCreditNotes?.Equals(other.AppliedCreditNotes) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
-            toStringOutput.Add($"this.CreditNoteNumber = {(this.CreditNoteNumber == null ? "null" : this.CreditNoteNumber)}");
-            toStringOutput.Add($"this.CreditNoteUid = {(this.CreditNoteUid == null ? "null" : this.CreditNoteUid)}");
-            toStringOutput.Add($"this.OriginalAmount = {(this.OriginalAmount == null ? "null" : this.OriginalAmount)}");
-            toStringOutput.Add($"this.AppliedAmount = {(this.AppliedAmount == null ? "null" : this.AppliedAmount)}");
+            toStringOutput.Add($"this.Uid = {this.Uid ?? "null"}");
+            toStringOutput.Add($"this.CreditNoteNumber = {this.CreditNoteNumber ?? "null"}");
+            toStringOutput.Add($"this.CreditNoteUid = {this.CreditNoteUid ?? "null"}");
+            toStringOutput.Add($"this.OriginalAmount = {this.OriginalAmount ?? "null"}");
+            toStringOutput.Add($"this.AppliedAmount = {this.AppliedAmount ?? "null"}");
             toStringOutput.Add($"this.TransactionTime = {(this.TransactionTime == null ? "null" : this.TransactionTime.ToString())}");
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
-            toStringOutput.Add($"this.Role = {(this.Role == null ? "null" : this.Role)}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"this.Role = {this.Role ?? "null"}");
             toStringOutput.Add($"this.ConsolidatedInvoice = {(this.ConsolidatedInvoice == null ? "null" : this.ConsolidatedInvoice.ToString())}");
             toStringOutput.Add($"this.AppliedCreditNotes = {(this.AppliedCreditNotes == null ? "null" : $"[{string.Join(", ", this.AppliedCreditNotes)} ]")}");
 

@@ -48,6 +48,7 @@
 | `TaxAmount` | `string` | Optional | Total tax on the invoice. |
 | `TotalAmount` | `string` | Optional | The invoice total, which is `subtotal_amount - discount_amount + tax_amount`.' |
 | `CreditAmount` | `string` | Optional | The amount of credit (from credit notes) applied to this invoice.<br><br>Credits offset the amount due from the customer. |
+| `DebitAmount` | `string` | Optional | - |
 | `RefundAmount` | `string` | Optional | - |
 | `PaidAmount` | `string` | Optional | The amount paid on the invoice by the customer. |
 | `DueAmount` | `string` | Optional | Amount due on the invoice, which is `total_amount - credit_amount - paid_amount`. |
@@ -55,10 +56,12 @@
 | `Discounts` | [`List<InvoiceDiscount>`](../../doc/models/invoice-discount.md) | Optional | - |
 | `Taxes` | [`List<InvoiceTax>`](../../doc/models/invoice-tax.md) | Optional | - |
 | `Credits` | [`List<InvoiceCredit>`](../../doc/models/invoice-credit.md) | Optional | - |
+| `Debits` | [`List<InvoiceDebit>`](../../doc/models/invoice-debit.md) | Optional | - |
 | `Refunds` | [`List<InvoiceRefund>`](../../doc/models/invoice-refund.md) | Optional | - |
 | `Payments` | [`List<InvoicePayment>`](../../doc/models/invoice-payment.md) | Optional | - |
 | `CustomFields` | [`List<InvoiceCustomField>`](../../doc/models/invoice-custom-field.md) | Optional | - |
 | `DisplaySettings` | [`InvoiceDisplaySettings`](../../doc/models/invoice-display-settings.md) | Optional | - |
+| `AvataxDetails` | [`InvoiceAvataxDetails`](../../doc/models/invoice-avatax-details.md) | Optional | - |
 | `PublicUrl` | `string` | Optional | The public URL of the invoice |
 | `PreviousBalanceData` | [`InvoicePreviousBalance`](../../doc/models/invoice-previous-balance.md) | Optional | - |
 | `PublicUrlExpiresOn` | `DateTime?` | Optional | The format is `"YYYY-MM-DD"`. |

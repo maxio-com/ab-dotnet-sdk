@@ -47,6 +47,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// An existing customer may be specified by a `customer_id` (ID within Advanced Billing) or a `customer_reference` (unique value within your app that you have shared with Advanced Billing via the reference attribute on a customer). You may also pass in an existing payment profile for that customer with `payment_profile_id`. A new customer may be created by providing `customer_attributes`.
         /// Credit card details may be required, depending on the options for the product being subscribed. The product can be specified by `product_id` or by `product_handle` (API Handle).
         /// If you are creating a subscription with a payment profile, the attribute to send will be `credit_card_attributes` or `bank_account_attributes` for ACH and Direct Debit. That said, when you read the subscription after creation, we return the profile details under `credit_card` or `bank_account`.
+        /// ## Bulk creation of subscriptions.
+        /// Bulk creation of subscriptions is currently not supported. For scenarios where multiple subscriptions must be added, particularly when assigning to the same subscription group, it is essential to switch to a single-threaded approach. .
+        /// To avoid data conflicts or inaccuracies, incorporate a sleep interval between requests.
+        /// While this single-threaded approach may impact performance, it ensures data consistency and accuracy in cases where concurrent creation attempts could otherwise lead to issues with subscription alignment and integrity.        .
         /// ## Taxable Subscriptions.
         /// If your intent is to charge your subscribers tax via [Avalara Taxes](https://maxio.zendesk.com/hc/en-us/articles/24287043035661-Avalara-VAT-Tax) or [Custom Taxes](https://maxio.zendesk.com/hc/en-us/articles/24287044212749-Custom-Taxes), there are a few considerations to be made regarding collecting subscription data.
         /// For subscribers to be eligible to be taxed, the following information for the `customer` object or `payment_profile` object must by supplied:.
@@ -545,6 +549,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// An existing customer may be specified by a `customer_id` (ID within Advanced Billing) or a `customer_reference` (unique value within your app that you have shared with Advanced Billing via the reference attribute on a customer). You may also pass in an existing payment profile for that customer with `payment_profile_id`. A new customer may be created by providing `customer_attributes`.
         /// Credit card details may be required, depending on the options for the product being subscribed. The product can be specified by `product_id` or by `product_handle` (API Handle).
         /// If you are creating a subscription with a payment profile, the attribute to send will be `credit_card_attributes` or `bank_account_attributes` for ACH and Direct Debit. That said, when you read the subscription after creation, we return the profile details under `credit_card` or `bank_account`.
+        /// ## Bulk creation of subscriptions.
+        /// Bulk creation of subscriptions is currently not supported. For scenarios where multiple subscriptions must be added, particularly when assigning to the same subscription group, it is essential to switch to a single-threaded approach. .
+        /// To avoid data conflicts or inaccuracies, incorporate a sleep interval between requests.
+        /// While this single-threaded approach may impact performance, it ensures data consistency and accuracy in cases where concurrent creation attempts could otherwise lead to issues with subscription alignment and integrity.        .
         /// ## Taxable Subscriptions.
         /// If your intent is to charge your subscribers tax via [Avalara Taxes](https://maxio.zendesk.com/hc/en-us/articles/24287043035661-Avalara-VAT-Tax) or [Custom Taxes](https://maxio.zendesk.com/hc/en-us/articles/24287044212749-Custom-Taxes), there are a few considerations to be made regarding collecting subscription data.
         /// For subscribers to be eligible to be taxed, the following information for the `customer` object or `payment_profile` object must by supplied:.
@@ -1275,6 +1283,8 @@ namespace AdvancedBilling.Standard.Controllers
                   .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("reference", reference))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -1289,11 +1299,12 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="ack">Required parameter: id of the customer..</param>
         /// <param name="cascade"><![CDATA[Optional parameter: Options are "customer" or "payment_profile". Use in query: `cascade[]=customer&cascade[]=payment_profile`..]]></param>
-        public void PurgeSubscription(
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public Models.SubscriptionResponse PurgeSubscription(
                 int subscriptionId,
                 int ack,
                 List<Models.SubscriptionPurgeType> cascade = null)
-            => CoreHelper.RunVoidTask(PurgeSubscriptionAsync(subscriptionId, ack, cascade));
+            => CoreHelper.RunTask(PurgeSubscriptionAsync(subscriptionId, ack, cascade));
 
         /// <summary>
         /// <![CDATA[
@@ -1308,13 +1319,13 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="ack">Required parameter: id of the customer..</param>
         /// <param name="cascade"><![CDATA[Optional parameter: Options are "customer" or "payment_profile". Use in query: `cascade[]=customer&cascade[]=payment_profile`..]]></param>
         /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the void response from the API call.</returns>
-        public async Task PurgeSubscriptionAsync(
+        /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
+        public async Task<Models.SubscriptionResponse> PurgeSubscriptionAsync(
                 int subscriptionId,
                 int ack,
                 List<Models.SubscriptionPurgeType> cascade = null,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<VoidType>()
+            => await CreateApiCall<Models.SubscriptionResponse>(ArraySerialization.UnIndexed)
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/purge.json")
                   .WithAuth("BasicAuth")
@@ -1322,6 +1333,8 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Query(_query => _query.Setup("ack", ack))
                       .Query(_query => _query.Setup("cascade", cascade?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("400", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionResponseErrorException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -1354,6 +1367,8 @@ namespace AdvancedBilling.Standard.Controllers
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
                       .Template(_template => _template.Setup("subscription_id", subscriptionId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ApiException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>

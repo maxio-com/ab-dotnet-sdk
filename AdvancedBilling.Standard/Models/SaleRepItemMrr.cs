@@ -66,38 +66,35 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SaleRepItemMrr : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SaleRepItemMrr other &&                ((this.Mrr == null && other.Mrr == null) || (this.Mrr?.Equals(other.Mrr) == true)) &&
-                ((this.Usage == null && other.Usage == null) || (this.Usage?.Equals(other.Usage) == true)) &&
-                ((this.Recurring == null && other.Recurring == null) || (this.Recurring?.Equals(other.Recurring) == true));
+            return obj is SaleRepItemMrr other &&
+                (this.Mrr == null && other.Mrr == null ||
+                 this.Mrr?.Equals(other.Mrr) == true) &&
+                (this.Usage == null && other.Usage == null ||
+                 this.Usage?.Equals(other.Usage) == true) &&
+                (this.Recurring == null && other.Recurring == null ||
+                 this.Recurring?.Equals(other.Recurring) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Mrr = {(this.Mrr == null ? "null" : this.Mrr)}");
-            toStringOutput.Add($"this.Usage = {(this.Usage == null ? "null" : this.Usage)}");
-            toStringOutput.Add($"this.Recurring = {(this.Recurring == null ? "null" : this.Recurring)}");
+            toStringOutput.Add($"this.Mrr = {this.Mrr ?? "null"}");
+            toStringOutput.Add($"this.Usage = {this.Usage ?? "null"}");
+            toStringOutput.Add($"this.Recurring = {this.Recurring ?? "null"}");
 
             base.ToString(toStringOutput);
         }

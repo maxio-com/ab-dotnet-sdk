@@ -41,11 +41,11 @@ namespace AdvancedBilling.Standard.Models
         public AutoResume(
             DateTimeOffset? automaticallyResumeAt = null)
         {
+
             if (automaticallyResumeAt != null)
             {
                 this.AutomaticallyResumeAt = automaticallyResumeAt;
             }
-
         }
 
         /// <summary>
@@ -71,14 +71,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"AutoResume : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetAutomaticallyResumeAt()
         {
@@ -97,18 +95,15 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is AutoResume other &&                ((this.AutomaticallyResumeAt == null && other.AutomaticallyResumeAt == null) || (this.AutomaticallyResumeAt?.Equals(other.AutomaticallyResumeAt) == true));
+            return obj is AutoResume other &&
+                (this.AutomaticallyResumeAt == null && other.AutomaticallyResumeAt == null ||
+                 this.AutomaticallyResumeAt?.Equals(other.AutomaticallyResumeAt) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
