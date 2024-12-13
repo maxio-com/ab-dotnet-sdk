@@ -49,27 +49,22 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"AllocationExpirationDate : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is AllocationExpirationDate other &&                ((this.ExpiresAt == null && other.ExpiresAt == null) || (this.ExpiresAt?.Equals(other.ExpiresAt) == true));
+            return obj is AllocationExpirationDate other &&
+                (this.ExpiresAt == null && other.ExpiresAt == null ||
+                 this.ExpiresAt?.Equals(other.ExpiresAt) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

@@ -85,31 +85,30 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"UpdatePrice : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is UpdatePrice other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.EndingQuantity == null && other.EndingQuantity == null) || (this.EndingQuantity?.Equals(other.EndingQuantity) == true)) &&
-                ((this.UnitPrice == null && other.UnitPrice == null) || (this.UnitPrice?.Equals(other.UnitPrice) == true)) &&
-                ((this.Destroy == null && other.Destroy == null) || (this.Destroy?.Equals(other.Destroy) == true)) &&
-                ((this.StartingQuantity == null && other.StartingQuantity == null) || (this.StartingQuantity?.Equals(other.StartingQuantity) == true));
+            return obj is UpdatePrice other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.EndingQuantity == null && other.EndingQuantity == null ||
+                 this.EndingQuantity?.Equals(other.EndingQuantity) == true) &&
+                (this.UnitPrice == null && other.UnitPrice == null ||
+                 this.UnitPrice?.Equals(other.UnitPrice) == true) &&
+                (this.Destroy == null && other.Destroy == null ||
+                 this.Destroy?.Equals(other.Destroy) == true) &&
+                (this.StartingQuantity == null && other.StartingQuantity == null ||
+                 this.StartingQuantity?.Equals(other.StartingQuantity) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

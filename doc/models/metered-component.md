@@ -16,13 +16,10 @@
 | `Taxable` | `bool?` | Optional | Boolean flag describing whether a component is taxable or not. |
 | `PricingScheme` | [`PricingScheme`](../../doc/models/pricing-scheme.md) | Required | The identifier for the pricing scheme. See [Product Components](https://help.chargify.com/products/product-components.html) for an overview of pricing schemes. |
 | `Prices` | [`List<Price>`](../../doc/models/price.md) | Optional | (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket Rules](https://maxio.zendesk.com/hc/en-us/articles/24261149166733-Component-Pricing-Schemes#price-bracket-rules) for an overview of how price brackets work for different pricing schemes. |
-| `UpgradeCharge` | [`CreditType?`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.<br>Available values: `full`, `prorated`, `none`. |
-| `DowngradeCredit` | [`CreditType?`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.<br>Available values: `full`, `prorated`, `none`. |
 | `PricePoints` | [`List<ComponentPricePointItem>`](../../doc/models/component-price-point-item.md) | Optional | - |
 | `UnitPrice` | [`MeteredComponentUnitPrice`](../../doc/models/containers/metered-component-unit-price.md) | Optional | This is a container for one-of cases. |
 | `TaxCode` | `string` | Optional | A string representing the tax code related to the component type. This is especially important when using the Avalara service to tax based on locale. This attribute has a max length of 10 characters. |
 | `HideDateRangeOnInvoice` | `bool?` | Optional | (Only available on Relationship Invoicing sites) Boolean flag describing if the service date range should show for the component on generated invoices. |
-| `PriceInCents` | `string` | Optional | deprecated May 2011 - use unit_price instead |
 | `DisplayOnHostedPage` | `bool?` | Optional | - |
 | `AllowFractionalQuantities` | `bool?` | Optional | - |
 | `PublicSignupPageIds` | `List<int>` | Optional | - |
@@ -46,7 +43,15 @@
       "unit_price": 23.26
     }
   ],
-  "upgrade_charge": "full"
+  "price_points": [
+    {
+      "name": "name2",
+      "handle": "handle8",
+      "pricing_scheme": "per_unit",
+      "interval": 92,
+      "interval_unit": "day"
+    }
+  ]
 }
 ```
 

@@ -21,12 +21,7 @@ namespace AdvancedBilling.Standard
         /// <summary>
         /// Gets The subdomain for your Advanced Billing site.
         /// </summary>
-        string Subdomain { get; }
-
-        /// <summary>
-        /// Gets The Advanced Billing server domain.
-        /// </summary>
-        string Domain { get; }
+        string Site { get; }
 
         /// <summary>
         /// Gets the credentials to use with BasicAuth.
@@ -41,8 +36,8 @@ namespace AdvancedBilling.Standard
         /// <summary>
         /// Gets the URL for a particular alias in the current environment and appends it with template parameters.
         /// </summary>
-        /// <param name="alias">Default value:DEFAULT.</param>
+        /// <param name="alias">Default value:PRODUCTION.</param>
         /// <returns>Returns the baseurl.</returns>
-        string GetBaseUri(Server alias = Server.Default);
+        string GetBaseUri(Server alias = Server.Production);
     }
 }

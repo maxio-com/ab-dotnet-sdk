@@ -68,11 +68,11 @@ namespace AdvancedBilling.Standard.Models
             this.Usage = usage;
             this.Recurring = recurring;
             this.LastPayment = lastPayment;
+
             if (churnDate != null)
             {
                 this.ChurnDate = churnDate;
             }
-
         }
 
         /// <summary>
@@ -151,14 +151,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SaleRepSubscription : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetChurnDate()
         {
@@ -177,27 +175,33 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SaleRepSubscription other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.SiteName == null && other.SiteName == null) || (this.SiteName?.Equals(other.SiteName) == true)) &&
-                ((this.SubscriptionUrl == null && other.SubscriptionUrl == null) || (this.SubscriptionUrl?.Equals(other.SubscriptionUrl) == true)) &&
-                ((this.CustomerName == null && other.CustomerName == null) || (this.CustomerName?.Equals(other.CustomerName) == true)) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true)) &&
-                ((this.Mrr == null && other.Mrr == null) || (this.Mrr?.Equals(other.Mrr) == true)) &&
-                ((this.Usage == null && other.Usage == null) || (this.Usage?.Equals(other.Usage) == true)) &&
-                ((this.Recurring == null && other.Recurring == null) || (this.Recurring?.Equals(other.Recurring) == true)) &&
-                ((this.LastPayment == null && other.LastPayment == null) || (this.LastPayment?.Equals(other.LastPayment) == true)) &&
-                ((this.ChurnDate == null && other.ChurnDate == null) || (this.ChurnDate?.Equals(other.ChurnDate) == true));
+            return obj is SaleRepSubscription other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.SiteName == null && other.SiteName == null ||
+                 this.SiteName?.Equals(other.SiteName) == true) &&
+                (this.SubscriptionUrl == null && other.SubscriptionUrl == null ||
+                 this.SubscriptionUrl?.Equals(other.SubscriptionUrl) == true) &&
+                (this.CustomerName == null && other.CustomerName == null ||
+                 this.CustomerName?.Equals(other.CustomerName) == true) &&
+                (this.CreatedAt == null && other.CreatedAt == null ||
+                 this.CreatedAt?.Equals(other.CreatedAt) == true) &&
+                (this.Mrr == null && other.Mrr == null ||
+                 this.Mrr?.Equals(other.Mrr) == true) &&
+                (this.Usage == null && other.Usage == null ||
+                 this.Usage?.Equals(other.Usage) == true) &&
+                (this.Recurring == null && other.Recurring == null ||
+                 this.Recurring?.Equals(other.Recurring) == true) &&
+                (this.LastPayment == null && other.LastPayment == null ||
+                 this.LastPayment?.Equals(other.LastPayment) == true) &&
+                (this.ChurnDate == null && other.ChurnDate == null ||
+                 this.ChurnDate?.Equals(other.ChurnDate) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -205,15 +209,15 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.SiteName = {(this.SiteName == null ? "null" : this.SiteName)}");
-            toStringOutput.Add($"this.SubscriptionUrl = {(this.SubscriptionUrl == null ? "null" : this.SubscriptionUrl)}");
-            toStringOutput.Add($"this.CustomerName = {(this.CustomerName == null ? "null" : this.CustomerName)}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt)}");
-            toStringOutput.Add($"this.Mrr = {(this.Mrr == null ? "null" : this.Mrr)}");
-            toStringOutput.Add($"this.Usage = {(this.Usage == null ? "null" : this.Usage)}");
-            toStringOutput.Add($"this.Recurring = {(this.Recurring == null ? "null" : this.Recurring)}");
-            toStringOutput.Add($"this.LastPayment = {(this.LastPayment == null ? "null" : this.LastPayment)}");
-            toStringOutput.Add($"this.ChurnDate = {(this.ChurnDate == null ? "null" : this.ChurnDate)}");
+            toStringOutput.Add($"this.SiteName = {this.SiteName ?? "null"}");
+            toStringOutput.Add($"this.SubscriptionUrl = {this.SubscriptionUrl ?? "null"}");
+            toStringOutput.Add($"this.CustomerName = {this.CustomerName ?? "null"}");
+            toStringOutput.Add($"this.CreatedAt = {this.CreatedAt ?? "null"}");
+            toStringOutput.Add($"this.Mrr = {this.Mrr ?? "null"}");
+            toStringOutput.Add($"this.Usage = {this.Usage ?? "null"}");
+            toStringOutput.Add($"this.Recurring = {this.Recurring ?? "null"}");
+            toStringOutput.Add($"this.LastPayment = {this.LastPayment ?? "null"}");
+            toStringOutput.Add($"this.ChurnDate = {this.ChurnDate ?? "null"}");
 
             base.ToString(toStringOutput);
         }

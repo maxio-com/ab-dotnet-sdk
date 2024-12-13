@@ -605,22 +605,20 @@ AddSubscriptionToGroupAsync(
 int subscriptionId = 222;
 AddSubscriptionToAGroup body = new AddSubscriptionToAGroup
 {
-    MGroup = AddSubscriptionToAGroupGroup.FromGroupSettings(
-        new GroupSettings
+    MGroup = new GroupSettings
+    {
+        Target = new GroupTarget
         {
-            Target = new GroupTarget
-            {
-                Type = GroupTargetType.Subscription,
-                Id = 32987,
-            },
-            Billing = new GroupBilling
-            {
-                Accrue = true,
-                AlignDate = true,
-                Prorate = true,
-            },
-        }
-    ),
+            Type = GroupTargetType.Subscription,
+            Id = 32987,
+        },
+        Billing = new GroupBilling
+        {
+            Accrue = true,
+            AlignDate = true,
+            Prorate = true,
+        },
+    },
 };
 
 try

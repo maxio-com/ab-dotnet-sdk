@@ -93,32 +93,32 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SubscriptionGroupSignupError : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SubscriptionGroupSignupError other &&                ((this.Subscriptions == null && other.Subscriptions == null) || (this.Subscriptions?.Equals(other.Subscriptions) == true)) &&
-                ((this.PayerReference == null && other.PayerReference == null) || (this.PayerReference?.Equals(other.PayerReference) == true)) &&
-                ((this.Payer == null && other.Payer == null) || (this.Payer?.Equals(other.Payer) == true)) &&
-                ((this.SubscriptionGroup == null && other.SubscriptionGroup == null) || (this.SubscriptionGroup?.Equals(other.SubscriptionGroup) == true)) &&
-                ((this.PaymentProfileId == null && other.PaymentProfileId == null) || (this.PaymentProfileId?.Equals(other.PaymentProfileId) == true)) &&
-                ((this.PayerId == null && other.PayerId == null) || (this.PayerId?.Equals(other.PayerId) == true));
+            return obj is SubscriptionGroupSignupError other &&
+                (this.Subscriptions == null && other.Subscriptions == null ||
+                 this.Subscriptions?.Equals(other.Subscriptions) == true) &&
+                (this.PayerReference == null && other.PayerReference == null ||
+                 this.PayerReference?.Equals(other.PayerReference) == true) &&
+                (this.Payer == null && other.Payer == null ||
+                 this.Payer?.Equals(other.Payer) == true) &&
+                (this.SubscriptionGroup == null && other.SubscriptionGroup == null ||
+                 this.SubscriptionGroup?.Equals(other.SubscriptionGroup) == true) &&
+                (this.PaymentProfileId == null && other.PaymentProfileId == null ||
+                 this.PaymentProfileId?.Equals(other.PaymentProfileId) == true) &&
+                (this.PayerId == null && other.PayerId == null ||
+                 this.PayerId?.Equals(other.PayerId) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -126,11 +126,11 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"Subscriptions = {(this.Subscriptions == null ? "null" : this.Subscriptions.ToString())}");
-            toStringOutput.Add($"this.PayerReference = {(this.PayerReference == null ? "null" : this.PayerReference)}");
+            toStringOutput.Add($"this.PayerReference = {this.PayerReference ?? "null"}");
             toStringOutput.Add($"this.Payer = {(this.Payer == null ? "null" : this.Payer.ToString())}");
             toStringOutput.Add($"this.SubscriptionGroup = {(this.SubscriptionGroup == null ? "null" : $"[{string.Join(", ", this.SubscriptionGroup)} ]")}");
-            toStringOutput.Add($"this.PaymentProfileId = {(this.PaymentProfileId == null ? "null" : this.PaymentProfileId)}");
-            toStringOutput.Add($"this.PayerId = {(this.PayerId == null ? "null" : this.PayerId)}");
+            toStringOutput.Add($"this.PaymentProfileId = {this.PaymentProfileId ?? "null"}");
+            toStringOutput.Add($"this.PayerId = {this.PayerId ?? "null"}");
 
             base.ToString(toStringOutput);
         }

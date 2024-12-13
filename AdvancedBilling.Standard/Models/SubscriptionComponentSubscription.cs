@@ -77,28 +77,24 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SubscriptionComponentSubscription : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SubscriptionComponentSubscription other &&                ((this.State == null && other.State == null) || (this.State?.Equals(other.State) == true)) &&
-                ((this.UpdatedAt == null && other.UpdatedAt == null) || (this.UpdatedAt?.Equals(other.UpdatedAt) == true));
+            return obj is SubscriptionComponentSubscription other &&
+                (this.State == null && other.State == null ||
+                 this.State?.Equals(other.State) == true) &&
+                (this.UpdatedAt == null && other.UpdatedAt == null ||
+                 this.UpdatedAt?.Equals(other.UpdatedAt) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

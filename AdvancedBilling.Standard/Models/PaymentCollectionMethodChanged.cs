@@ -61,36 +61,32 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"PaymentCollectionMethodChanged : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is PaymentCollectionMethodChanged other &&                ((this.PreviousValue == null && other.PreviousValue == null) || (this.PreviousValue?.Equals(other.PreviousValue) == true)) &&
-                ((this.CurrentValue == null && other.CurrentValue == null) || (this.CurrentValue?.Equals(other.CurrentValue) == true));
+            return obj is PaymentCollectionMethodChanged other &&
+                (this.PreviousValue == null && other.PreviousValue == null ||
+                 this.PreviousValue?.Equals(other.PreviousValue) == true) &&
+                (this.CurrentValue == null && other.CurrentValue == null ||
+                 this.CurrentValue?.Equals(other.CurrentValue) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.PreviousValue = {(this.PreviousValue == null ? "null" : this.PreviousValue)}");
-            toStringOutput.Add($"this.CurrentValue = {(this.CurrentValue == null ? "null" : this.CurrentValue)}");
+            toStringOutput.Add($"this.PreviousValue = {this.PreviousValue ?? "null"}");
+            toStringOutput.Add($"this.CurrentValue = {this.CurrentValue ?? "null"}");
 
             base.ToString(toStringOutput);
         }

@@ -44,10 +44,11 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         /// <param name="name">name.</param>
         /// <param name="unitName">unit_name.</param>
+        /// <param name="pricingScheme">pricing_scheme.</param>
+        /// <param name="overagePricing">overage_pricing.</param>
         /// <param name="description">description.</param>
         /// <param name="handle">handle.</param>
         /// <param name="taxable">taxable.</param>
-        /// <param name="pricingScheme">pricing_scheme.</param>
         /// <param name="prices">prices.</param>
         /// <param name="upgradeCharge">upgrade_charge.</param>
         /// <param name="downgradeCredit">downgrade_credit.</param>
@@ -55,8 +56,6 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="unitPrice">unit_price.</param>
         /// <param name="taxCode">tax_code.</param>
         /// <param name="hideDateRangeOnInvoice">hide_date_range_on_invoice.</param>
-        /// <param name="priceInCents">price_in_cents.</param>
-        /// <param name="overagePricing">overage_pricing.</param>
         /// <param name="rolloverPrepaidRemainder">rollover_prepaid_remainder.</param>
         /// <param name="renewPrepaidAllocation">renew_prepaid_allocation.</param>
         /// <param name="expirationInterval">expiration_interval.</param>
@@ -66,20 +65,19 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="publicSignupPageIds">public_signup_page_ids.</param>
         public PrepaidUsageComponent(
             string name,
-            string unitName = null,
+            string unitName,
+            Models.PricingScheme pricingScheme,
+            Models.OveragePricing overagePricing,
             string description = null,
             string handle = null,
             bool? taxable = null,
-            Models.PricingScheme? pricingScheme = null,
             List<Models.Price> prices = null,
             Models.CreditType? upgradeCharge = null,
             Models.CreditType? downgradeCredit = null,
-            List<Models.PrepaidComponentPricePoint> pricePoints = null,
+            List<Models.CreatePrepaidUsageComponentPricePoint> pricePoints = null,
             PrepaidUsageComponentUnitPrice unitPrice = null,
             string taxCode = null,
             bool? hideDateRangeOnInvoice = null,
-            string priceInCents = null,
-            Models.OveragePricing overagePricing = null,
             bool? rolloverPrepaidRemainder = null,
             bool? renewPrepaidAllocation = null,
             double? expirationInterval = null,
@@ -95,6 +93,7 @@ namespace AdvancedBilling.Standard.Models
             this.Taxable = taxable;
             this.PricingScheme = pricingScheme;
             this.Prices = prices;
+
             if (upgradeCharge != null)
             {
                 this.UpgradeCharge = upgradeCharge;
@@ -104,21 +103,19 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.DowngradeCredit = downgradeCredit;
             }
-
             this.PricePoints = pricePoints;
             this.UnitPrice = unitPrice;
             this.TaxCode = taxCode;
             this.HideDateRangeOnInvoice = hideDateRangeOnInvoice;
-            this.PriceInCents = priceInCents;
             this.OveragePricing = overagePricing;
             this.RolloverPrepaidRemainder = rolloverPrepaidRemainder;
             this.RenewPrepaidAllocation = renewPrepaidAllocation;
             this.ExpirationInterval = expirationInterval;
+
             if (expirationIntervalUnit != null)
             {
                 this.ExpirationIntervalUnit = expirationIntervalUnit;
             }
-
             this.DisplayOnHostedPage = displayOnHostedPage;
             this.AllowFractionalQuantities = allowFractionalQuantities;
             this.PublicSignupPageIds = publicSignupPageIds;
@@ -133,7 +130,7 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The name of the unit of measurement for the component. It should be singular since it will be automatically pluralized when necessary. i.e. “message”, which may then be shown as “5 messages” on a subscription’s component line-item
         /// </summary>
-        [JsonProperty("unit_name", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("unit_name")]
         public string UnitName { get; set; }
 
         /// <summary>
@@ -157,8 +154,8 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The identifier for the pricing scheme. See [Product Components](https://help.chargify.com/products/product-components.html) for an overview of pricing schemes.
         /// </summary>
-        [JsonProperty("pricing_scheme", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.PricingScheme? PricingScheme { get; set; }
+        [JsonProperty("pricing_scheme")]
+        public Models.PricingScheme PricingScheme { get; set; }
 
         /// <summary>
         /// (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket Rules](https://maxio.zendesk.com/hc/en-us/articles/24261149166733-Component-Pricing-Schemes#price-bracket-rules) for an overview of how price brackets work for different pricing schemes.
@@ -208,7 +205,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets PricePoints.
         /// </summary>
         [JsonProperty("price_points", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Models.PrepaidComponentPricePoint> PricePoints { get; set; }
+        public List<Models.CreatePrepaidUsageComponentPricePoint> PricePoints { get; set; }
 
         /// <summary>
         /// The amount the customer will be charged per unit when the pricing scheme is “per_unit”. For On/Off Components, this is the amount that the customer will be charged when they turn the component on for the subscription. The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
@@ -229,15 +226,9 @@ namespace AdvancedBilling.Standard.Models
         public bool? HideDateRangeOnInvoice { get; set; }
 
         /// <summary>
-        /// deprecated May 2011 - use unit_price instead
-        /// </summary>
-        [JsonProperty("price_in_cents", NullValueHandling = NullValueHandling.Ignore)]
-        public string PriceInCents { get; set; }
-
-        /// <summary>
         /// Gets or sets OveragePricing.
         /// </summary>
-        [JsonProperty("overage_pricing", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("overage_pricing")]
         public Models.OveragePricing OveragePricing { get; set; }
 
         /// <summary>
@@ -298,14 +289,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"PrepaidUsageComponent : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetUpgradeCharge()
         {
@@ -313,7 +302,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDowngradeCredit()
         {
@@ -321,7 +310,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetExpirationIntervalUnit()
         {
@@ -358,59 +347,73 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is PrepaidUsageComponent other &&                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.UnitName == null && other.UnitName == null) || (this.UnitName?.Equals(other.UnitName) == true)) &&
-                ((this.Description == null && other.Description == null) || (this.Description?.Equals(other.Description) == true)) &&
-                ((this.Handle == null && other.Handle == null) || (this.Handle?.Equals(other.Handle) == true)) &&
-                ((this.Taxable == null && other.Taxable == null) || (this.Taxable?.Equals(other.Taxable) == true)) &&
-                ((this.PricingScheme == null && other.PricingScheme == null) || (this.PricingScheme?.Equals(other.PricingScheme) == true)) &&
-                ((this.Prices == null && other.Prices == null) || (this.Prices?.Equals(other.Prices) == true)) &&
-                ((this.UpgradeCharge == null && other.UpgradeCharge == null) || (this.UpgradeCharge?.Equals(other.UpgradeCharge) == true)) &&
-                ((this.DowngradeCredit == null && other.DowngradeCredit == null) || (this.DowngradeCredit?.Equals(other.DowngradeCredit) == true)) &&
-                ((this.PricePoints == null && other.PricePoints == null) || (this.PricePoints?.Equals(other.PricePoints) == true)) &&
-                ((this.UnitPrice == null && other.UnitPrice == null) || (this.UnitPrice?.Equals(other.UnitPrice) == true)) &&
-                ((this.TaxCode == null && other.TaxCode == null) || (this.TaxCode?.Equals(other.TaxCode) == true)) &&
-                ((this.HideDateRangeOnInvoice == null && other.HideDateRangeOnInvoice == null) || (this.HideDateRangeOnInvoice?.Equals(other.HideDateRangeOnInvoice) == true)) &&
-                ((this.PriceInCents == null && other.PriceInCents == null) || (this.PriceInCents?.Equals(other.PriceInCents) == true)) &&
-                ((this.OveragePricing == null && other.OveragePricing == null) || (this.OveragePricing?.Equals(other.OveragePricing) == true)) &&
-                ((this.RolloverPrepaidRemainder == null && other.RolloverPrepaidRemainder == null) || (this.RolloverPrepaidRemainder?.Equals(other.RolloverPrepaidRemainder) == true)) &&
-                ((this.RenewPrepaidAllocation == null && other.RenewPrepaidAllocation == null) || (this.RenewPrepaidAllocation?.Equals(other.RenewPrepaidAllocation) == true)) &&
-                ((this.ExpirationInterval == null && other.ExpirationInterval == null) || (this.ExpirationInterval?.Equals(other.ExpirationInterval) == true)) &&
-                ((this.ExpirationIntervalUnit == null && other.ExpirationIntervalUnit == null) || (this.ExpirationIntervalUnit?.Equals(other.ExpirationIntervalUnit) == true)) &&
-                ((this.DisplayOnHostedPage == null && other.DisplayOnHostedPage == null) || (this.DisplayOnHostedPage?.Equals(other.DisplayOnHostedPage) == true)) &&
-                ((this.AllowFractionalQuantities == null && other.AllowFractionalQuantities == null) || (this.AllowFractionalQuantities?.Equals(other.AllowFractionalQuantities) == true)) &&
-                ((this.PublicSignupPageIds == null && other.PublicSignupPageIds == null) || (this.PublicSignupPageIds?.Equals(other.PublicSignupPageIds) == true));
+            return obj is PrepaidUsageComponent other &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.UnitName == null && other.UnitName == null ||
+                 this.UnitName?.Equals(other.UnitName) == true) &&
+                (this.Description == null && other.Description == null ||
+                 this.Description?.Equals(other.Description) == true) &&
+                (this.Handle == null && other.Handle == null ||
+                 this.Handle?.Equals(other.Handle) == true) &&
+                (this.Taxable == null && other.Taxable == null ||
+                 this.Taxable?.Equals(other.Taxable) == true) &&
+                (this.PricingScheme.Equals(other.PricingScheme)) &&
+                (this.Prices == null && other.Prices == null ||
+                 this.Prices?.Equals(other.Prices) == true) &&
+                (this.UpgradeCharge == null && other.UpgradeCharge == null ||
+                 this.UpgradeCharge?.Equals(other.UpgradeCharge) == true) &&
+                (this.DowngradeCredit == null && other.DowngradeCredit == null ||
+                 this.DowngradeCredit?.Equals(other.DowngradeCredit) == true) &&
+                (this.PricePoints == null && other.PricePoints == null ||
+                 this.PricePoints?.Equals(other.PricePoints) == true) &&
+                (this.UnitPrice == null && other.UnitPrice == null ||
+                 this.UnitPrice?.Equals(other.UnitPrice) == true) &&
+                (this.TaxCode == null && other.TaxCode == null ||
+                 this.TaxCode?.Equals(other.TaxCode) == true) &&
+                (this.HideDateRangeOnInvoice == null && other.HideDateRangeOnInvoice == null ||
+                 this.HideDateRangeOnInvoice?.Equals(other.HideDateRangeOnInvoice) == true) &&
+                (this.OveragePricing == null && other.OveragePricing == null ||
+                 this.OveragePricing?.Equals(other.OveragePricing) == true) &&
+                (this.RolloverPrepaidRemainder == null && other.RolloverPrepaidRemainder == null ||
+                 this.RolloverPrepaidRemainder?.Equals(other.RolloverPrepaidRemainder) == true) &&
+                (this.RenewPrepaidAllocation == null && other.RenewPrepaidAllocation == null ||
+                 this.RenewPrepaidAllocation?.Equals(other.RenewPrepaidAllocation) == true) &&
+                (this.ExpirationInterval == null && other.ExpirationInterval == null ||
+                 this.ExpirationInterval?.Equals(other.ExpirationInterval) == true) &&
+                (this.ExpirationIntervalUnit == null && other.ExpirationIntervalUnit == null ||
+                 this.ExpirationIntervalUnit?.Equals(other.ExpirationIntervalUnit) == true) &&
+                (this.DisplayOnHostedPage == null && other.DisplayOnHostedPage == null ||
+                 this.DisplayOnHostedPage?.Equals(other.DisplayOnHostedPage) == true) &&
+                (this.AllowFractionalQuantities == null && other.AllowFractionalQuantities == null ||
+                 this.AllowFractionalQuantities?.Equals(other.AllowFractionalQuantities) == true) &&
+                (this.PublicSignupPageIds == null && other.PublicSignupPageIds == null ||
+                 this.PublicSignupPageIds?.Equals(other.PublicSignupPageIds) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
-            toStringOutput.Add($"this.UnitName = {(this.UnitName == null ? "null" : this.UnitName)}");
-            toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
-            toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"this.UnitName = {this.UnitName ?? "null"}");
+            toStringOutput.Add($"this.Description = {this.Description ?? "null"}");
+            toStringOutput.Add($"this.Handle = {this.Handle ?? "null"}");
             toStringOutput.Add($"this.Taxable = {(this.Taxable == null ? "null" : this.Taxable.ToString())}");
-            toStringOutput.Add($"this.PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
+            toStringOutput.Add($"this.PricingScheme = {this.PricingScheme}");
             toStringOutput.Add($"this.Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
             toStringOutput.Add($"this.UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
             toStringOutput.Add($"this.DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
             toStringOutput.Add($"this.PricePoints = {(this.PricePoints == null ? "null" : $"[{string.Join(", ", this.PricePoints)} ]")}");
             toStringOutput.Add($"UnitPrice = {(this.UnitPrice == null ? "null" : this.UnitPrice.ToString())}");
-            toStringOutput.Add($"this.TaxCode = {(this.TaxCode == null ? "null" : this.TaxCode)}");
+            toStringOutput.Add($"this.TaxCode = {this.TaxCode ?? "null"}");
             toStringOutput.Add($"this.HideDateRangeOnInvoice = {(this.HideDateRangeOnInvoice == null ? "null" : this.HideDateRangeOnInvoice.ToString())}");
-            toStringOutput.Add($"this.PriceInCents = {(this.PriceInCents == null ? "null" : this.PriceInCents)}");
             toStringOutput.Add($"this.OveragePricing = {(this.OveragePricing == null ? "null" : this.OveragePricing.ToString())}");
             toStringOutput.Add($"this.RolloverPrepaidRemainder = {(this.RolloverPrepaidRemainder == null ? "null" : this.RolloverPrepaidRemainder.ToString())}");
             toStringOutput.Add($"this.RenewPrepaidAllocation = {(this.RenewPrepaidAllocation == null ? "null" : this.RenewPrepaidAllocation.ToString())}");

@@ -157,39 +157,45 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ListSubscriptionComponentsInput : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ListSubscriptionComponentsInput other &&                this.SubscriptionId.Equals(other.SubscriptionId) &&
-                ((this.DateField == null && other.DateField == null) || (this.DateField?.Equals(other.DateField) == true)) &&
-                ((this.Direction == null && other.Direction == null) || (this.Direction?.Equals(other.Direction) == true)) &&
-                ((this.Filter == null && other.Filter == null) || (this.Filter?.Equals(other.Filter) == true)) &&
-                ((this.EndDate == null && other.EndDate == null) || (this.EndDate?.Equals(other.EndDate) == true)) &&
-                ((this.EndDatetime == null && other.EndDatetime == null) || (this.EndDatetime?.Equals(other.EndDatetime) == true)) &&
-                ((this.PricePointIds == null && other.PricePointIds == null) || (this.PricePointIds?.Equals(other.PricePointIds) == true)) &&
-                ((this.ProductFamilyIds == null && other.ProductFamilyIds == null) || (this.ProductFamilyIds?.Equals(other.ProductFamilyIds) == true)) &&
-                ((this.Sort == null && other.Sort == null) || (this.Sort?.Equals(other.Sort) == true)) &&
-                ((this.StartDate == null && other.StartDate == null) || (this.StartDate?.Equals(other.StartDate) == true)) &&
-                ((this.StartDatetime == null && other.StartDatetime == null) || (this.StartDatetime?.Equals(other.StartDatetime) == true)) &&
-                ((this.Include == null && other.Include == null) || (this.Include?.Equals(other.Include) == true)) &&
-                ((this.InUse == null && other.InUse == null) || (this.InUse?.Equals(other.InUse) == true));
+            return obj is ListSubscriptionComponentsInput other &&
+                (this.SubscriptionId.Equals(other.SubscriptionId)) &&
+                (this.DateField == null && other.DateField == null ||
+                 this.DateField?.Equals(other.DateField) == true) &&
+                (this.Direction == null && other.Direction == null ||
+                 this.Direction?.Equals(other.Direction) == true) &&
+                (this.Filter == null && other.Filter == null ||
+                 this.Filter?.Equals(other.Filter) == true) &&
+                (this.EndDate == null && other.EndDate == null ||
+                 this.EndDate?.Equals(other.EndDate) == true) &&
+                (this.EndDatetime == null && other.EndDatetime == null ||
+                 this.EndDatetime?.Equals(other.EndDatetime) == true) &&
+                (this.PricePointIds == null && other.PricePointIds == null ||
+                 this.PricePointIds?.Equals(other.PricePointIds) == true) &&
+                (this.ProductFamilyIds == null && other.ProductFamilyIds == null ||
+                 this.ProductFamilyIds?.Equals(other.ProductFamilyIds) == true) &&
+                (this.Sort == null && other.Sort == null ||
+                 this.Sort?.Equals(other.Sort) == true) &&
+                (this.StartDate == null && other.StartDate == null ||
+                 this.StartDate?.Equals(other.StartDate) == true) &&
+                (this.StartDatetime == null && other.StartDatetime == null ||
+                 this.StartDatetime?.Equals(other.StartDatetime) == true) &&
+                (this.Include == null && other.Include == null ||
+                 this.Include?.Equals(other.Include) == true) &&
+                (this.InUse == null && other.InUse == null ||
+                 this.InUse?.Equals(other.InUse) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -200,13 +206,13 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.DateField = {(this.DateField == null ? "null" : this.DateField.ToString())}");
             toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
             toStringOutput.Add($"this.Filter = {(this.Filter == null ? "null" : this.Filter.ToString())}");
-            toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate)}");
-            toStringOutput.Add($"this.EndDatetime = {(this.EndDatetime == null ? "null" : this.EndDatetime)}");
+            toStringOutput.Add($"this.EndDate = {this.EndDate ?? "null"}");
+            toStringOutput.Add($"this.EndDatetime = {this.EndDatetime ?? "null"}");
             toStringOutput.Add($"this.PricePointIds = {(this.PricePointIds == null ? "null" : this.PricePointIds.ToString())}");
             toStringOutput.Add($"this.ProductFamilyIds = {(this.ProductFamilyIds == null ? "null" : $"[{string.Join(", ", this.ProductFamilyIds)} ]")}");
             toStringOutput.Add($"this.Sort = {(this.Sort == null ? "null" : this.Sort.ToString())}");
-            toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate)}");
-            toStringOutput.Add($"this.StartDatetime = {(this.StartDatetime == null ? "null" : this.StartDatetime)}");
+            toStringOutput.Add($"this.StartDate = {this.StartDate ?? "null"}");
+            toStringOutput.Add($"this.StartDatetime = {this.StartDatetime ?? "null"}");
             toStringOutput.Add($"this.Include = {(this.Include == null ? "null" : $"[{string.Join(", ", this.Include)} ]")}");
             toStringOutput.Add($"this.InUse = {(this.InUse == null ? "null" : this.InUse.ToString())}");
 

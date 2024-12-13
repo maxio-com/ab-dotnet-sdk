@@ -57,28 +57,24 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ListPublicKeysResponse : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ListPublicKeysResponse other &&                ((this.ChargifyJsKeys == null && other.ChargifyJsKeys == null) || (this.ChargifyJsKeys?.Equals(other.ChargifyJsKeys) == true)) &&
-                ((this.Meta == null && other.Meta == null) || (this.Meta?.Equals(other.Meta) == true));
+            return obj is ListPublicKeysResponse other &&
+                (this.ChargifyJsKeys == null && other.ChargifyJsKeys == null ||
+                 this.ChargifyJsKeys?.Equals(other.ChargifyJsKeys) == true) &&
+                (this.Meta == null && other.Meta == null ||
+                 this.Meta?.Equals(other.Meta) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

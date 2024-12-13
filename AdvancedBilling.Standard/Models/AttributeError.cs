@@ -48,27 +48,22 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"AttributeError : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is AttributeError other &&                ((this.Attribute == null && other.Attribute == null) || (this.Attribute?.Equals(other.Attribute) == true));
+            return obj is AttributeError other &&
+                (this.Attribute == null && other.Attribute == null ||
+                 this.Attribute?.Equals(other.Attribute) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

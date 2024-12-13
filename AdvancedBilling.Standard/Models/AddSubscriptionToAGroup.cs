@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using APIMatic.Core.Utilities.Converters;
 using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Models.Containers;
 using AdvancedBilling.Standard.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -34,7 +33,7 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         /// <param name="mGroup">group.</param>
         public AddSubscriptionToAGroup(
-            AddSubscriptionToAGroupGroup mGroup = null)
+            Models.GroupSettings mGroup = null)
         {
             this.MGroup = mGroup;
         }
@@ -43,40 +42,35 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets MGroup.
         /// </summary>
         [JsonProperty("group", NullValueHandling = NullValueHandling.Ignore)]
-        public AddSubscriptionToAGroupGroup MGroup { get; set; }
+        public Models.GroupSettings MGroup { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"AddSubscriptionToAGroup : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is AddSubscriptionToAGroup other &&                ((this.MGroup == null && other.MGroup == null) || (this.MGroup?.Equals(other.MGroup) == true));
+            return obj is AddSubscriptionToAGroup other &&
+                (this.MGroup == null && other.MGroup == null ||
+                 this.MGroup?.Equals(other.MGroup) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"MGroup = {(this.MGroup == null ? "null" : this.MGroup.ToString())}");
+            toStringOutput.Add($"this.MGroup = {(this.MGroup == null ? "null" : this.MGroup.ToString())}");
 
             base.ToString(toStringOutput);
         }

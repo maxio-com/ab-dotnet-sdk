@@ -87,39 +87,38 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"UpdateMetafield : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is UpdateMetafield other &&                ((this.CurrentName == null && other.CurrentName == null) || (this.CurrentName?.Equals(other.CurrentName) == true)) &&
-                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.Scope == null && other.Scope == null) || (this.Scope?.Equals(other.Scope) == true)) &&
-                ((this.InputType == null && other.InputType == null) || (this.InputType?.Equals(other.InputType) == true)) &&
-                ((this.MEnum == null && other.MEnum == null) || (this.MEnum?.Equals(other.MEnum) == true));
+            return obj is UpdateMetafield other &&
+                (this.CurrentName == null && other.CurrentName == null ||
+                 this.CurrentName?.Equals(other.CurrentName) == true) &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.Scope == null && other.Scope == null ||
+                 this.Scope?.Equals(other.Scope) == true) &&
+                (this.InputType == null && other.InputType == null ||
+                 this.InputType?.Equals(other.InputType) == true) &&
+                (this.MEnum == null && other.MEnum == null ||
+                 this.MEnum?.Equals(other.MEnum) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.CurrentName = {(this.CurrentName == null ? "null" : this.CurrentName)}");
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
+            toStringOutput.Add($"this.CurrentName = {this.CurrentName ?? "null"}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
             toStringOutput.Add($"this.Scope = {(this.Scope == null ? "null" : this.Scope.ToString())}");
             toStringOutput.Add($"this.InputType = {(this.InputType == null ? "null" : this.InputType.ToString())}");
             toStringOutput.Add($"this.MEnum = {(this.MEnum == null ? "null" : $"[{string.Join(", ", this.MEnum)} ]")}");

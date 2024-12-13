@@ -79,6 +79,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is MStringCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<ListOfStringCase, List<string>>), JTokenType.String, JTokenType.Null)]
@@ -105,6 +112,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             public override string ToString()
             {
                 return _value?.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is ListOfStringCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
             }
         }
     }

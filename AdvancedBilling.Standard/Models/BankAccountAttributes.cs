@@ -147,56 +147,62 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"BankAccountAttributes : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is BankAccountAttributes other &&                ((this.ChargifyToken == null && other.ChargifyToken == null) || (this.ChargifyToken?.Equals(other.ChargifyToken) == true)) &&
-                ((this.BankName == null && other.BankName == null) || (this.BankName?.Equals(other.BankName) == true)) &&
-                ((this.BankRoutingNumber == null && other.BankRoutingNumber == null) || (this.BankRoutingNumber?.Equals(other.BankRoutingNumber) == true)) &&
-                ((this.BankAccountNumber == null && other.BankAccountNumber == null) || (this.BankAccountNumber?.Equals(other.BankAccountNumber) == true)) &&
-                ((this.BankAccountType == null && other.BankAccountType == null) || (this.BankAccountType?.Equals(other.BankAccountType) == true)) &&
-                ((this.BankBranchCode == null && other.BankBranchCode == null) || (this.BankBranchCode?.Equals(other.BankBranchCode) == true)) &&
-                ((this.BankIban == null && other.BankIban == null) || (this.BankIban?.Equals(other.BankIban) == true)) &&
-                ((this.BankAccountHolderType == null && other.BankAccountHolderType == null) || (this.BankAccountHolderType?.Equals(other.BankAccountHolderType) == true)) &&
-                ((this.PaymentType == null && other.PaymentType == null) || (this.PaymentType?.Equals(other.PaymentType) == true)) &&
-                ((this.CurrentVault == null && other.CurrentVault == null) || (this.CurrentVault?.Equals(other.CurrentVault) == true)) &&
-                ((this.VaultToken == null && other.VaultToken == null) || (this.VaultToken?.Equals(other.VaultToken) == true)) &&
-                ((this.CustomerVaultToken == null && other.CustomerVaultToken == null) || (this.CustomerVaultToken?.Equals(other.CustomerVaultToken) == true));
+            return obj is BankAccountAttributes other &&
+                (this.ChargifyToken == null && other.ChargifyToken == null ||
+                 this.ChargifyToken?.Equals(other.ChargifyToken) == true) &&
+                (this.BankName == null && other.BankName == null ||
+                 this.BankName?.Equals(other.BankName) == true) &&
+                (this.BankRoutingNumber == null && other.BankRoutingNumber == null ||
+                 this.BankRoutingNumber?.Equals(other.BankRoutingNumber) == true) &&
+                (this.BankAccountNumber == null && other.BankAccountNumber == null ||
+                 this.BankAccountNumber?.Equals(other.BankAccountNumber) == true) &&
+                (this.BankAccountType == null && other.BankAccountType == null ||
+                 this.BankAccountType?.Equals(other.BankAccountType) == true) &&
+                (this.BankBranchCode == null && other.BankBranchCode == null ||
+                 this.BankBranchCode?.Equals(other.BankBranchCode) == true) &&
+                (this.BankIban == null && other.BankIban == null ||
+                 this.BankIban?.Equals(other.BankIban) == true) &&
+                (this.BankAccountHolderType == null && other.BankAccountHolderType == null ||
+                 this.BankAccountHolderType?.Equals(other.BankAccountHolderType) == true) &&
+                (this.PaymentType == null && other.PaymentType == null ||
+                 this.PaymentType?.Equals(other.PaymentType) == true) &&
+                (this.CurrentVault == null && other.CurrentVault == null ||
+                 this.CurrentVault?.Equals(other.CurrentVault) == true) &&
+                (this.VaultToken == null && other.VaultToken == null ||
+                 this.VaultToken?.Equals(other.VaultToken) == true) &&
+                (this.CustomerVaultToken == null && other.CustomerVaultToken == null ||
+                 this.CustomerVaultToken?.Equals(other.CustomerVaultToken) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ChargifyToken = {(this.ChargifyToken == null ? "null" : this.ChargifyToken)}");
-            toStringOutput.Add($"this.BankName = {(this.BankName == null ? "null" : this.BankName)}");
-            toStringOutput.Add($"this.BankRoutingNumber = {(this.BankRoutingNumber == null ? "null" : this.BankRoutingNumber)}");
-            toStringOutput.Add($"this.BankAccountNumber = {(this.BankAccountNumber == null ? "null" : this.BankAccountNumber)}");
+            toStringOutput.Add($"this.ChargifyToken = {this.ChargifyToken ?? "null"}");
+            toStringOutput.Add($"this.BankName = {this.BankName ?? "null"}");
+            toStringOutput.Add($"this.BankRoutingNumber = {this.BankRoutingNumber ?? "null"}");
+            toStringOutput.Add($"this.BankAccountNumber = {this.BankAccountNumber ?? "null"}");
             toStringOutput.Add($"this.BankAccountType = {(this.BankAccountType == null ? "null" : this.BankAccountType.ToString())}");
-            toStringOutput.Add($"this.BankBranchCode = {(this.BankBranchCode == null ? "null" : this.BankBranchCode)}");
-            toStringOutput.Add($"this.BankIban = {(this.BankIban == null ? "null" : this.BankIban)}");
+            toStringOutput.Add($"this.BankBranchCode = {this.BankBranchCode ?? "null"}");
+            toStringOutput.Add($"this.BankIban = {this.BankIban ?? "null"}");
             toStringOutput.Add($"this.BankAccountHolderType = {(this.BankAccountHolderType == null ? "null" : this.BankAccountHolderType.ToString())}");
             toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
             toStringOutput.Add($"this.CurrentVault = {(this.CurrentVault == null ? "null" : this.CurrentVault.ToString())}");
-            toStringOutput.Add($"this.VaultToken = {(this.VaultToken == null ? "null" : this.VaultToken)}");
-            toStringOutput.Add($"this.CustomerVaultToken = {(this.CustomerVaultToken == null ? "null" : this.CustomerVaultToken)}");
+            toStringOutput.Add($"this.VaultToken = {this.VaultToken ?? "null"}");
+            toStringOutput.Add($"this.CustomerVaultToken = {this.CustomerVaultToken ?? "null"}");
 
             base.ToString(toStringOutput);
         }

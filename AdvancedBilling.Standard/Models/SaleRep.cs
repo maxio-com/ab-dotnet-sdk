@@ -84,31 +84,30 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SaleRep : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SaleRep other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.FullName == null && other.FullName == null) || (this.FullName?.Equals(other.FullName) == true)) &&
-                ((this.SubscriptionsCount == null && other.SubscriptionsCount == null) || (this.SubscriptionsCount?.Equals(other.SubscriptionsCount) == true)) &&
-                ((this.TestMode == null && other.TestMode == null) || (this.TestMode?.Equals(other.TestMode) == true)) &&
-                ((this.Subscriptions == null && other.Subscriptions == null) || (this.Subscriptions?.Equals(other.Subscriptions) == true));
+            return obj is SaleRep other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.FullName == null && other.FullName == null ||
+                 this.FullName?.Equals(other.FullName) == true) &&
+                (this.SubscriptionsCount == null && other.SubscriptionsCount == null ||
+                 this.SubscriptionsCount?.Equals(other.SubscriptionsCount) == true) &&
+                (this.TestMode == null && other.TestMode == null ||
+                 this.TestMode?.Equals(other.TestMode) == true) &&
+                (this.Subscriptions == null && other.Subscriptions == null ||
+                 this.Subscriptions?.Equals(other.Subscriptions) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -116,7 +115,7 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.FullName = {(this.FullName == null ? "null" : this.FullName)}");
+            toStringOutput.Add($"this.FullName = {this.FullName ?? "null"}");
             toStringOutput.Add($"this.SubscriptionsCount = {(this.SubscriptionsCount == null ? "null" : this.SubscriptionsCount.ToString())}");
             toStringOutput.Add($"this.TestMode = {(this.TestMode == null ? "null" : this.TestMode.ToString())}");
             toStringOutput.Add($"this.Subscriptions = {(this.Subscriptions == null ? "null" : $"[{string.Join(", ", this.Subscriptions)} ]")}");

@@ -54,6 +54,7 @@ namespace AdvancedBilling.Standard.Models
             string completed = null)
         {
             this.Id = id;
+
             if (finishedAt != null)
             {
                 this.FinishedAt = finishedAt;
@@ -68,7 +69,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.CreatedAt = createdAt;
             }
-
             this.Completed = completed;
         }
 
@@ -144,14 +144,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"BatchJob : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetFinishedAt()
         {
@@ -159,7 +157,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetRowCount()
         {
@@ -167,7 +165,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetCreatedAt()
         {
@@ -204,22 +202,23 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is BatchJob other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.FinishedAt == null && other.FinishedAt == null) || (this.FinishedAt?.Equals(other.FinishedAt) == true)) &&
-                ((this.RowCount == null && other.RowCount == null) || (this.RowCount?.Equals(other.RowCount) == true)) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true)) &&
-                ((this.Completed == null && other.Completed == null) || (this.Completed?.Equals(other.Completed) == true));
+            return obj is BatchJob other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.FinishedAt == null && other.FinishedAt == null ||
+                 this.FinishedAt?.Equals(other.FinishedAt) == true) &&
+                (this.RowCount == null && other.RowCount == null ||
+                 this.RowCount?.Equals(other.RowCount) == true) &&
+                (this.CreatedAt == null && other.CreatedAt == null ||
+                 this.CreatedAt?.Equals(other.CreatedAt) == true) &&
+                (this.Completed == null && other.Completed == null ||
+                 this.Completed?.Equals(other.Completed) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -230,7 +229,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.FinishedAt = {(this.FinishedAt == null ? "null" : this.FinishedAt.ToString())}");
             toStringOutput.Add($"this.RowCount = {(this.RowCount == null ? "null" : this.RowCount.ToString())}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
-            toStringOutput.Add($"this.Completed = {(this.Completed == null ? "null" : this.Completed)}");
+            toStringOutput.Add($"this.Completed = {this.Completed ?? "null"}");
 
             base.ToString(toStringOutput);
         }

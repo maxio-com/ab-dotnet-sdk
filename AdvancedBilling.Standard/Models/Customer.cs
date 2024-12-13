@@ -146,6 +146,7 @@ namespace AdvancedBilling.Standard.Models
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Email = email;
+
             if (ccEmails != null)
             {
                 this.CcEmails = ccEmails;
@@ -160,10 +161,10 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.Reference = reference;
             }
-
             this.Id = id;
             this.CreatedAt = createdAt;
             this.UpdatedAt = updatedAt;
+
             if (address != null)
             {
                 this.Address = address;
@@ -228,8 +229,8 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.PortalInviteLastAcceptedAt = portalInviteLastAcceptedAt;
             }
-
             this.TaxExempt = taxExempt;
+
             if (vatNumber != null)
             {
                 this.VatNumber = vatNumber;
@@ -264,7 +265,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.DefaultAutoRenewalProfileId = defaultAutoRenewalProfileId;
             }
-
         }
 
         /// <summary>
@@ -732,14 +732,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"Customer : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetCcEmails()
         {
@@ -747,7 +745,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetOrganization()
         {
@@ -755,7 +753,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetReference()
         {
@@ -763,7 +761,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetAddress()
         {
@@ -771,7 +769,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetAddress2()
         {
@@ -779,7 +777,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetCity()
         {
@@ -787,7 +785,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetState()
         {
@@ -795,7 +793,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetStateName()
         {
@@ -803,7 +801,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetZip()
         {
@@ -811,7 +809,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetCountry()
         {
@@ -819,7 +817,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetCountryName()
         {
@@ -827,7 +825,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetPhone()
         {
@@ -835,7 +833,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetVerified()
         {
@@ -843,7 +841,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetPortalCustomerCreatedAt()
         {
@@ -851,7 +849,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetPortalInviteLastSentAt()
         {
@@ -859,7 +857,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetPortalInviteLastAcceptedAt()
         {
@@ -867,7 +865,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetVatNumber()
         {
@@ -875,7 +873,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetParentId()
         {
@@ -883,7 +881,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetLocale()
         {
@@ -891,7 +889,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDefaultSubscriptionGroupUid()
         {
@@ -899,7 +897,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetSalesforceId()
         {
@@ -907,7 +905,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetTaxExemptReason()
         {
@@ -915,7 +913,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDefaultAutoRenewalProfileId()
         {
@@ -1132,82 +1130,108 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is Customer other &&                ((this.FirstName == null && other.FirstName == null) || (this.FirstName?.Equals(other.FirstName) == true)) &&
-                ((this.LastName == null && other.LastName == null) || (this.LastName?.Equals(other.LastName) == true)) &&
-                ((this.Email == null && other.Email == null) || (this.Email?.Equals(other.Email) == true)) &&
-                ((this.CcEmails == null && other.CcEmails == null) || (this.CcEmails?.Equals(other.CcEmails) == true)) &&
-                ((this.Organization == null && other.Organization == null) || (this.Organization?.Equals(other.Organization) == true)) &&
-                ((this.Reference == null && other.Reference == null) || (this.Reference?.Equals(other.Reference) == true)) &&
-                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true)) &&
-                ((this.UpdatedAt == null && other.UpdatedAt == null) || (this.UpdatedAt?.Equals(other.UpdatedAt) == true)) &&
-                ((this.Address == null && other.Address == null) || (this.Address?.Equals(other.Address) == true)) &&
-                ((this.Address2 == null && other.Address2 == null) || (this.Address2?.Equals(other.Address2) == true)) &&
-                ((this.City == null && other.City == null) || (this.City?.Equals(other.City) == true)) &&
-                ((this.State == null && other.State == null) || (this.State?.Equals(other.State) == true)) &&
-                ((this.StateName == null && other.StateName == null) || (this.StateName?.Equals(other.StateName) == true)) &&
-                ((this.Zip == null && other.Zip == null) || (this.Zip?.Equals(other.Zip) == true)) &&
-                ((this.Country == null && other.Country == null) || (this.Country?.Equals(other.Country) == true)) &&
-                ((this.CountryName == null && other.CountryName == null) || (this.CountryName?.Equals(other.CountryName) == true)) &&
-                ((this.Phone == null && other.Phone == null) || (this.Phone?.Equals(other.Phone) == true)) &&
-                ((this.Verified == null && other.Verified == null) || (this.Verified?.Equals(other.Verified) == true)) &&
-                ((this.PortalCustomerCreatedAt == null && other.PortalCustomerCreatedAt == null) || (this.PortalCustomerCreatedAt?.Equals(other.PortalCustomerCreatedAt) == true)) &&
-                ((this.PortalInviteLastSentAt == null && other.PortalInviteLastSentAt == null) || (this.PortalInviteLastSentAt?.Equals(other.PortalInviteLastSentAt) == true)) &&
-                ((this.PortalInviteLastAcceptedAt == null && other.PortalInviteLastAcceptedAt == null) || (this.PortalInviteLastAcceptedAt?.Equals(other.PortalInviteLastAcceptedAt) == true)) &&
-                ((this.TaxExempt == null && other.TaxExempt == null) || (this.TaxExempt?.Equals(other.TaxExempt) == true)) &&
-                ((this.VatNumber == null && other.VatNumber == null) || (this.VatNumber?.Equals(other.VatNumber) == true)) &&
-                ((this.ParentId == null && other.ParentId == null) || (this.ParentId?.Equals(other.ParentId) == true)) &&
-                ((this.Locale == null && other.Locale == null) || (this.Locale?.Equals(other.Locale) == true)) &&
-                ((this.DefaultSubscriptionGroupUid == null && other.DefaultSubscriptionGroupUid == null) || (this.DefaultSubscriptionGroupUid?.Equals(other.DefaultSubscriptionGroupUid) == true)) &&
-                ((this.SalesforceId == null && other.SalesforceId == null) || (this.SalesforceId?.Equals(other.SalesforceId) == true)) &&
-                ((this.TaxExemptReason == null && other.TaxExemptReason == null) || (this.TaxExemptReason?.Equals(other.TaxExemptReason) == true)) &&
-                ((this.DefaultAutoRenewalProfileId == null && other.DefaultAutoRenewalProfileId == null) || (this.DefaultAutoRenewalProfileId?.Equals(other.DefaultAutoRenewalProfileId) == true));
+            return obj is Customer other &&
+                (this.FirstName == null && other.FirstName == null ||
+                 this.FirstName?.Equals(other.FirstName) == true) &&
+                (this.LastName == null && other.LastName == null ||
+                 this.LastName?.Equals(other.LastName) == true) &&
+                (this.Email == null && other.Email == null ||
+                 this.Email?.Equals(other.Email) == true) &&
+                (this.CcEmails == null && other.CcEmails == null ||
+                 this.CcEmails?.Equals(other.CcEmails) == true) &&
+                (this.Organization == null && other.Organization == null ||
+                 this.Organization?.Equals(other.Organization) == true) &&
+                (this.Reference == null && other.Reference == null ||
+                 this.Reference?.Equals(other.Reference) == true) &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.CreatedAt == null && other.CreatedAt == null ||
+                 this.CreatedAt?.Equals(other.CreatedAt) == true) &&
+                (this.UpdatedAt == null && other.UpdatedAt == null ||
+                 this.UpdatedAt?.Equals(other.UpdatedAt) == true) &&
+                (this.Address == null && other.Address == null ||
+                 this.Address?.Equals(other.Address) == true) &&
+                (this.Address2 == null && other.Address2 == null ||
+                 this.Address2?.Equals(other.Address2) == true) &&
+                (this.City == null && other.City == null ||
+                 this.City?.Equals(other.City) == true) &&
+                (this.State == null && other.State == null ||
+                 this.State?.Equals(other.State) == true) &&
+                (this.StateName == null && other.StateName == null ||
+                 this.StateName?.Equals(other.StateName) == true) &&
+                (this.Zip == null && other.Zip == null ||
+                 this.Zip?.Equals(other.Zip) == true) &&
+                (this.Country == null && other.Country == null ||
+                 this.Country?.Equals(other.Country) == true) &&
+                (this.CountryName == null && other.CountryName == null ||
+                 this.CountryName?.Equals(other.CountryName) == true) &&
+                (this.Phone == null && other.Phone == null ||
+                 this.Phone?.Equals(other.Phone) == true) &&
+                (this.Verified == null && other.Verified == null ||
+                 this.Verified?.Equals(other.Verified) == true) &&
+                (this.PortalCustomerCreatedAt == null && other.PortalCustomerCreatedAt == null ||
+                 this.PortalCustomerCreatedAt?.Equals(other.PortalCustomerCreatedAt) == true) &&
+                (this.PortalInviteLastSentAt == null && other.PortalInviteLastSentAt == null ||
+                 this.PortalInviteLastSentAt?.Equals(other.PortalInviteLastSentAt) == true) &&
+                (this.PortalInviteLastAcceptedAt == null && other.PortalInviteLastAcceptedAt == null ||
+                 this.PortalInviteLastAcceptedAt?.Equals(other.PortalInviteLastAcceptedAt) == true) &&
+                (this.TaxExempt == null && other.TaxExempt == null ||
+                 this.TaxExempt?.Equals(other.TaxExempt) == true) &&
+                (this.VatNumber == null && other.VatNumber == null ||
+                 this.VatNumber?.Equals(other.VatNumber) == true) &&
+                (this.ParentId == null && other.ParentId == null ||
+                 this.ParentId?.Equals(other.ParentId) == true) &&
+                (this.Locale == null && other.Locale == null ||
+                 this.Locale?.Equals(other.Locale) == true) &&
+                (this.DefaultSubscriptionGroupUid == null && other.DefaultSubscriptionGroupUid == null ||
+                 this.DefaultSubscriptionGroupUid?.Equals(other.DefaultSubscriptionGroupUid) == true) &&
+                (this.SalesforceId == null && other.SalesforceId == null ||
+                 this.SalesforceId?.Equals(other.SalesforceId) == true) &&
+                (this.TaxExemptReason == null && other.TaxExemptReason == null ||
+                 this.TaxExemptReason?.Equals(other.TaxExemptReason) == true) &&
+                (this.DefaultAutoRenewalProfileId == null && other.DefaultAutoRenewalProfileId == null ||
+                 this.DefaultAutoRenewalProfileId?.Equals(other.DefaultAutoRenewalProfileId) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : this.FirstName)}");
-            toStringOutput.Add($"this.LastName = {(this.LastName == null ? "null" : this.LastName)}");
-            toStringOutput.Add($"this.Email = {(this.Email == null ? "null" : this.Email)}");
-            toStringOutput.Add($"this.CcEmails = {(this.CcEmails == null ? "null" : this.CcEmails)}");
-            toStringOutput.Add($"this.Organization = {(this.Organization == null ? "null" : this.Organization)}");
-            toStringOutput.Add($"this.Reference = {(this.Reference == null ? "null" : this.Reference)}");
+            toStringOutput.Add($"this.FirstName = {this.FirstName ?? "null"}");
+            toStringOutput.Add($"this.LastName = {this.LastName ?? "null"}");
+            toStringOutput.Add($"this.Email = {this.Email ?? "null"}");
+            toStringOutput.Add($"this.CcEmails = {this.CcEmails ?? "null"}");
+            toStringOutput.Add($"this.Organization = {this.Organization ?? "null"}");
+            toStringOutput.Add($"this.Reference = {this.Reference ?? "null"}");
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
             toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
-            toStringOutput.Add($"this.Address = {(this.Address == null ? "null" : this.Address)}");
-            toStringOutput.Add($"this.Address2 = {(this.Address2 == null ? "null" : this.Address2)}");
-            toStringOutput.Add($"this.City = {(this.City == null ? "null" : this.City)}");
-            toStringOutput.Add($"this.State = {(this.State == null ? "null" : this.State)}");
-            toStringOutput.Add($"this.StateName = {(this.StateName == null ? "null" : this.StateName)}");
-            toStringOutput.Add($"this.Zip = {(this.Zip == null ? "null" : this.Zip)}");
-            toStringOutput.Add($"this.Country = {(this.Country == null ? "null" : this.Country)}");
-            toStringOutput.Add($"this.CountryName = {(this.CountryName == null ? "null" : this.CountryName)}");
-            toStringOutput.Add($"this.Phone = {(this.Phone == null ? "null" : this.Phone)}");
+            toStringOutput.Add($"this.Address = {this.Address ?? "null"}");
+            toStringOutput.Add($"this.Address2 = {this.Address2 ?? "null"}");
+            toStringOutput.Add($"this.City = {this.City ?? "null"}");
+            toStringOutput.Add($"this.State = {this.State ?? "null"}");
+            toStringOutput.Add($"this.StateName = {this.StateName ?? "null"}");
+            toStringOutput.Add($"this.Zip = {this.Zip ?? "null"}");
+            toStringOutput.Add($"this.Country = {this.Country ?? "null"}");
+            toStringOutput.Add($"this.CountryName = {this.CountryName ?? "null"}");
+            toStringOutput.Add($"this.Phone = {this.Phone ?? "null"}");
             toStringOutput.Add($"this.Verified = {(this.Verified == null ? "null" : this.Verified.ToString())}");
             toStringOutput.Add($"this.PortalCustomerCreatedAt = {(this.PortalCustomerCreatedAt == null ? "null" : this.PortalCustomerCreatedAt.ToString())}");
             toStringOutput.Add($"this.PortalInviteLastSentAt = {(this.PortalInviteLastSentAt == null ? "null" : this.PortalInviteLastSentAt.ToString())}");
             toStringOutput.Add($"this.PortalInviteLastAcceptedAt = {(this.PortalInviteLastAcceptedAt == null ? "null" : this.PortalInviteLastAcceptedAt.ToString())}");
             toStringOutput.Add($"this.TaxExempt = {(this.TaxExempt == null ? "null" : this.TaxExempt.ToString())}");
-            toStringOutput.Add($"this.VatNumber = {(this.VatNumber == null ? "null" : this.VatNumber)}");
+            toStringOutput.Add($"this.VatNumber = {this.VatNumber ?? "null"}");
             toStringOutput.Add($"this.ParentId = {(this.ParentId == null ? "null" : this.ParentId.ToString())}");
-            toStringOutput.Add($"this.Locale = {(this.Locale == null ? "null" : this.Locale)}");
-            toStringOutput.Add($"this.DefaultSubscriptionGroupUid = {(this.DefaultSubscriptionGroupUid == null ? "null" : this.DefaultSubscriptionGroupUid)}");
-            toStringOutput.Add($"this.SalesforceId = {(this.SalesforceId == null ? "null" : this.SalesforceId)}");
-            toStringOutput.Add($"this.TaxExemptReason = {(this.TaxExemptReason == null ? "null" : this.TaxExemptReason)}");
+            toStringOutput.Add($"this.Locale = {this.Locale ?? "null"}");
+            toStringOutput.Add($"this.DefaultSubscriptionGroupUid = {this.DefaultSubscriptionGroupUid ?? "null"}");
+            toStringOutput.Add($"this.SalesforceId = {this.SalesforceId ?? "null"}");
+            toStringOutput.Add($"this.TaxExemptReason = {this.TaxExemptReason ?? "null"}");
             toStringOutput.Add($"this.DefaultAutoRenewalProfileId = {(this.DefaultAutoRenewalProfileId == null ? "null" : this.DefaultAutoRenewalProfileId.ToString())}");
 
             base.ToString(toStringOutput);

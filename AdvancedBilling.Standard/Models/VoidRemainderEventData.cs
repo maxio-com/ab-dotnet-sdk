@@ -76,30 +76,27 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"VoidRemainderEventData : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is VoidRemainderEventData other &&                ((this.CreditNoteAttributes == null && other.CreditNoteAttributes == null) || (this.CreditNoteAttributes?.Equals(other.CreditNoteAttributes) == true)) &&
-                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                ((this.AppliedAmount == null && other.AppliedAmount == null) || (this.AppliedAmount?.Equals(other.AppliedAmount) == true)) &&
-                this.TransactionTime.Equals(other.TransactionTime);
+            return obj is VoidRemainderEventData other &&
+                (this.CreditNoteAttributes == null && other.CreditNoteAttributes == null ||
+                 this.CreditNoteAttributes?.Equals(other.CreditNoteAttributes) == true) &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.AppliedAmount == null && other.AppliedAmount == null ||
+                 this.AppliedAmount?.Equals(other.AppliedAmount) == true) &&
+                (this.TransactionTime.Equals(other.TransactionTime)) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -107,8 +104,8 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.CreditNoteAttributes = {(this.CreditNoteAttributes == null ? "null" : this.CreditNoteAttributes.ToString())}");
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
-            toStringOutput.Add($"this.AppliedAmount = {(this.AppliedAmount == null ? "null" : this.AppliedAmount)}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"this.AppliedAmount = {this.AppliedAmount ?? "null"}");
             toStringOutput.Add($"this.TransactionTime = {this.TransactionTime}");
 
             base.ToString(toStringOutput);

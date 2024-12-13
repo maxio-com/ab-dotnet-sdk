@@ -104,33 +104,34 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ListWebhooksInput : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ListWebhooksInput other &&                ((this.Status == null && other.Status == null) || (this.Status?.Equals(other.Status) == true)) &&
-                ((this.SinceDate == null && other.SinceDate == null) || (this.SinceDate?.Equals(other.SinceDate) == true)) &&
-                ((this.UntilDate == null && other.UntilDate == null) || (this.UntilDate?.Equals(other.UntilDate) == true)) &&
-                ((this.Page == null && other.Page == null) || (this.Page?.Equals(other.Page) == true)) &&
-                ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true)) &&
-                ((this.Order == null && other.Order == null) || (this.Order?.Equals(other.Order) == true)) &&
-                ((this.Subscription == null && other.Subscription == null) || (this.Subscription?.Equals(other.Subscription) == true));
+            return obj is ListWebhooksInput other &&
+                (this.Status == null && other.Status == null ||
+                 this.Status?.Equals(other.Status) == true) &&
+                (this.SinceDate == null && other.SinceDate == null ||
+                 this.SinceDate?.Equals(other.SinceDate) == true) &&
+                (this.UntilDate == null && other.UntilDate == null ||
+                 this.UntilDate?.Equals(other.UntilDate) == true) &&
+                (this.Page == null && other.Page == null ||
+                 this.Page?.Equals(other.Page) == true) &&
+                (this.PerPage == null && other.PerPage == null ||
+                 this.PerPage?.Equals(other.PerPage) == true) &&
+                (this.Order == null && other.Order == null ||
+                 this.Order?.Equals(other.Order) == true) &&
+                (this.Subscription == null && other.Subscription == null ||
+                 this.Subscription?.Equals(other.Subscription) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -138,8 +139,8 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Status = {(this.Status == null ? "null" : this.Status.ToString())}");
-            toStringOutput.Add($"this.SinceDate = {(this.SinceDate == null ? "null" : this.SinceDate)}");
-            toStringOutput.Add($"this.UntilDate = {(this.UntilDate == null ? "null" : this.UntilDate)}");
+            toStringOutput.Add($"this.SinceDate = {this.SinceDate ?? "null"}");
+            toStringOutput.Add($"this.UntilDate = {this.UntilDate ?? "null"}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
             toStringOutput.Add($"this.Order = {(this.Order == null ? "null" : this.Order.ToString())}");

@@ -57,36 +57,32 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"CancellationOptions : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is CancellationOptions other &&                ((this.CancellationMessage == null && other.CancellationMessage == null) || (this.CancellationMessage?.Equals(other.CancellationMessage) == true)) &&
-                ((this.ReasonCode == null && other.ReasonCode == null) || (this.ReasonCode?.Equals(other.ReasonCode) == true));
+            return obj is CancellationOptions other &&
+                (this.CancellationMessage == null && other.CancellationMessage == null ||
+                 this.CancellationMessage?.Equals(other.CancellationMessage) == true) &&
+                (this.ReasonCode == null && other.ReasonCode == null ||
+                 this.ReasonCode?.Equals(other.ReasonCode) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.CancellationMessage = {(this.CancellationMessage == null ? "null" : this.CancellationMessage)}");
-            toStringOutput.Add($"this.ReasonCode = {(this.ReasonCode == null ? "null" : this.ReasonCode)}");
+            toStringOutput.Add($"this.CancellationMessage = {this.CancellationMessage ?? "null"}");
+            toStringOutput.Add($"this.ReasonCode = {this.ReasonCode ?? "null"}");
 
             base.ToString(toStringOutput);
         }

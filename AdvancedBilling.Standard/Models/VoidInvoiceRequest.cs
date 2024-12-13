@@ -48,27 +48,22 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"VoidInvoiceRequest : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is VoidInvoiceRequest other &&                ((this.MVoid == null && other.MVoid == null) || (this.MVoid?.Equals(other.MVoid) == true));
+            return obj is VoidInvoiceRequest other &&
+                (this.MVoid == null && other.MVoid == null ||
+                 this.MVoid?.Equals(other.MVoid) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

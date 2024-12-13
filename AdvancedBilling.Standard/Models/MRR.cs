@@ -94,32 +94,32 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"MRR : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is MRR other &&                ((this.AmountInCents == null && other.AmountInCents == null) || (this.AmountInCents?.Equals(other.AmountInCents) == true)) &&
-                ((this.AmountFormatted == null && other.AmountFormatted == null) || (this.AmountFormatted?.Equals(other.AmountFormatted) == true)) &&
-                ((this.Currency == null && other.Currency == null) || (this.Currency?.Equals(other.Currency) == true)) &&
-                ((this.CurrencySymbol == null && other.CurrencySymbol == null) || (this.CurrencySymbol?.Equals(other.CurrencySymbol) == true)) &&
-                ((this.Breakouts == null && other.Breakouts == null) || (this.Breakouts?.Equals(other.Breakouts) == true)) &&
-                ((this.AtTime == null && other.AtTime == null) || (this.AtTime?.Equals(other.AtTime) == true));
+            return obj is MRR other &&
+                (this.AmountInCents == null && other.AmountInCents == null ||
+                 this.AmountInCents?.Equals(other.AmountInCents) == true) &&
+                (this.AmountFormatted == null && other.AmountFormatted == null ||
+                 this.AmountFormatted?.Equals(other.AmountFormatted) == true) &&
+                (this.Currency == null && other.Currency == null ||
+                 this.Currency?.Equals(other.Currency) == true) &&
+                (this.CurrencySymbol == null && other.CurrencySymbol == null ||
+                 this.CurrencySymbol?.Equals(other.CurrencySymbol) == true) &&
+                (this.Breakouts == null && other.Breakouts == null ||
+                 this.Breakouts?.Equals(other.Breakouts) == true) &&
+                (this.AtTime == null && other.AtTime == null ||
+                 this.AtTime?.Equals(other.AtTime) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -127,9 +127,9 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
-            toStringOutput.Add($"this.AmountFormatted = {(this.AmountFormatted == null ? "null" : this.AmountFormatted)}");
-            toStringOutput.Add($"this.Currency = {(this.Currency == null ? "null" : this.Currency)}");
-            toStringOutput.Add($"this.CurrencySymbol = {(this.CurrencySymbol == null ? "null" : this.CurrencySymbol)}");
+            toStringOutput.Add($"this.AmountFormatted = {this.AmountFormatted ?? "null"}");
+            toStringOutput.Add($"this.Currency = {this.Currency ?? "null"}");
+            toStringOutput.Add($"this.CurrencySymbol = {this.CurrencySymbol ?? "null"}");
             toStringOutput.Add($"this.Breakouts = {(this.Breakouts == null ? "null" : this.Breakouts.ToString())}");
             toStringOutput.Add($"this.AtTime = {(this.AtTime == null ? "null" : this.AtTime.ToString())}");
 

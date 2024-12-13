@@ -93,44 +93,44 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"AgreementAcceptance : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is AgreementAcceptance other &&                ((this.IpAddress == null && other.IpAddress == null) || (this.IpAddress?.Equals(other.IpAddress) == true)) &&
-                ((this.TermsUrl == null && other.TermsUrl == null) || (this.TermsUrl?.Equals(other.TermsUrl) == true)) &&
-                ((this.PrivacyPolicyUrl == null && other.PrivacyPolicyUrl == null) || (this.PrivacyPolicyUrl?.Equals(other.PrivacyPolicyUrl) == true)) &&
-                ((this.ReturnRefundPolicyUrl == null && other.ReturnRefundPolicyUrl == null) || (this.ReturnRefundPolicyUrl?.Equals(other.ReturnRefundPolicyUrl) == true)) &&
-                ((this.DeliveryPolicyUrl == null && other.DeliveryPolicyUrl == null) || (this.DeliveryPolicyUrl?.Equals(other.DeliveryPolicyUrl) == true)) &&
-                ((this.SecureCheckoutPolicyUrl == null && other.SecureCheckoutPolicyUrl == null) || (this.SecureCheckoutPolicyUrl?.Equals(other.SecureCheckoutPolicyUrl) == true));
+            return obj is AgreementAcceptance other &&
+                (this.IpAddress == null && other.IpAddress == null ||
+                 this.IpAddress?.Equals(other.IpAddress) == true) &&
+                (this.TermsUrl == null && other.TermsUrl == null ||
+                 this.TermsUrl?.Equals(other.TermsUrl) == true) &&
+                (this.PrivacyPolicyUrl == null && other.PrivacyPolicyUrl == null ||
+                 this.PrivacyPolicyUrl?.Equals(other.PrivacyPolicyUrl) == true) &&
+                (this.ReturnRefundPolicyUrl == null && other.ReturnRefundPolicyUrl == null ||
+                 this.ReturnRefundPolicyUrl?.Equals(other.ReturnRefundPolicyUrl) == true) &&
+                (this.DeliveryPolicyUrl == null && other.DeliveryPolicyUrl == null ||
+                 this.DeliveryPolicyUrl?.Equals(other.DeliveryPolicyUrl) == true) &&
+                (this.SecureCheckoutPolicyUrl == null && other.SecureCheckoutPolicyUrl == null ||
+                 this.SecureCheckoutPolicyUrl?.Equals(other.SecureCheckoutPolicyUrl) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.IpAddress = {(this.IpAddress == null ? "null" : this.IpAddress)}");
-            toStringOutput.Add($"this.TermsUrl = {(this.TermsUrl == null ? "null" : this.TermsUrl)}");
-            toStringOutput.Add($"this.PrivacyPolicyUrl = {(this.PrivacyPolicyUrl == null ? "null" : this.PrivacyPolicyUrl)}");
-            toStringOutput.Add($"this.ReturnRefundPolicyUrl = {(this.ReturnRefundPolicyUrl == null ? "null" : this.ReturnRefundPolicyUrl)}");
-            toStringOutput.Add($"this.DeliveryPolicyUrl = {(this.DeliveryPolicyUrl == null ? "null" : this.DeliveryPolicyUrl)}");
-            toStringOutput.Add($"this.SecureCheckoutPolicyUrl = {(this.SecureCheckoutPolicyUrl == null ? "null" : this.SecureCheckoutPolicyUrl)}");
+            toStringOutput.Add($"this.IpAddress = {this.IpAddress ?? "null"}");
+            toStringOutput.Add($"this.TermsUrl = {this.TermsUrl ?? "null"}");
+            toStringOutput.Add($"this.PrivacyPolicyUrl = {this.PrivacyPolicyUrl ?? "null"}");
+            toStringOutput.Add($"this.ReturnRefundPolicyUrl = {this.ReturnRefundPolicyUrl ?? "null"}");
+            toStringOutput.Add($"this.DeliveryPolicyUrl = {this.DeliveryPolicyUrl ?? "null"}");
+            toStringOutput.Add($"this.SecureCheckoutPolicyUrl = {this.SecureCheckoutPolicyUrl ?? "null"}");
 
             base.ToString(toStringOutput);
         }

@@ -38,15 +38,15 @@ Additionally, for documentation on how to apply a coupon to a subscription withi
 
 This request will create a coupon, based on the provided information.
 
-When creating a coupon, you must specify a product family using the `product_family_id`. If no `product_family_id` is passed, the first product family available is used. You will also need to formulate your URL to cite the Product Family ID in your request.
+You can create either a flat amount coupon, by specyfing `amount_in_cents`, or percentage coupon by specyfing `percentage`.
 
-You can restrict a coupon to only apply to specific products / components by optionally passing in hashes of `restricted_products` and/or `restricted_components` in the format:
-`{ "<product/component_id>": boolean_value }`
+You can restrict a coupon to only apply to specific products / components by optionally passing in `restricted_products` and/or `restricted_components` objects in the format:
+`{ "<product_id/component_id>": boolean_value }`
 
 ```csharp
 CreateCouponAsync(
     int productFamilyId,
-    Models.CreateOrUpdateCoupon body = null)
+    Models.CouponRequest body = null)
 ```
 
 ## Parameters
@@ -54,7 +54,7 @@ CreateCouponAsync(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `productFamilyId` | `int` | Template, Required | The Advanced Billing id of the product family to which the coupon belongs |
-| `body` | [`CreateOrUpdateCoupon`](../../doc/models/create-or-update-coupon.md) | Body, Optional | - |
+| `body` | [`CouponRequest`](../../doc/models/coupon-request.md) | Body, Optional | - |
 
 ## Response Type
 
@@ -64,27 +64,23 @@ CreateCouponAsync(
 
 ```csharp
 int productFamilyId = 140;
-CreateOrUpdateCoupon body = new CreateOrUpdateCoupon
+CouponRequest body = new CouponRequest
 {
-    Coupon = CreateOrUpdateCouponCoupon.FromCreateOrUpdatePercentageCoupon(
-        new CreateOrUpdatePercentageCoupon
-        {
-            Name = "15% off",
-            Code = "15OFF",
-            Percentage = CreateOrUpdatePercentageCouponPercentage.FromPrecision(15),
-            Description = "15% off for life",
-            AllowNegativeBalance = false,
-            Recurring = false,
-            EndDate = DateTime.ParseExact("2012-08-29T12:00:00-04:00", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
-                provider: CultureInfo.InvariantCulture,
-                DateTimeStyles.RoundtripKind),
-            ProductFamilyId = "2",
-            Stackable = true,
-            CompoundingStrategy = CompoundingStrategy.Compound,
-            ExcludeMidPeriodAllocations = true,
-            ApplyOnCancelAtEndOfPeriod = true,
-        }
-    ),
+    Coupon = new CouponPayload
+    {
+        Name = "15% off",
+        Code = "15OFF",
+        Description = "15% off for life",
+        Percentage = CouponPayloadPercentage.FromPrecision(15),
+        AllowNegativeBalance = false,
+        Recurring = false,
+        EndDate = DateTime.Parse("2012-08-29"),
+        ProductFamilyId = "2",
+        Stackable = true,
+        CompoundingStrategy = CompoundingStrategy.Compound,
+        ExcludeMidPeriodAllocations = true,
+        ApplyOnCancelAtEndOfPeriod = true,
+    },
     RestrictedProducts = new Dictionary<string, bool>
     {
         ["1"] = true,
@@ -287,7 +283,8 @@ If you have more than one product family and if the coupon you are trying to fin
 ```csharp
 FindCouponAsync(
     int? productFamilyId = null,
-    string code = null)
+    string code = null,
+    bool? currencyPrices = null)
 ```
 
 ## Parameters
@@ -296,6 +293,7 @@ FindCouponAsync(
 |  --- | --- | --- | --- |
 | `productFamilyId` | `int?` | Query, Optional | The Advanced Billing id of the product family to which the coupon belongs |
 | `code` | `string` | Query, Optional | The code of the coupon |
+| `currencyPrices` | `bool?` | Query, Optional | When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response. |
 
 ## Response Type
 
@@ -304,9 +302,14 @@ FindCouponAsync(
 ## Example Usage
 
 ```csharp
+bool? currencyPrices = true;
 try
 {
-    CouponResponse result = await couponsController.FindCouponAsync();
+    CouponResponse result = await couponsController.FindCouponAsync(
+        null,
+        null,
+        currencyPrices
+    );
 }
 catch (ApiException e)
 {
@@ -328,7 +331,8 @@ If the coupon is set to `use_site_exchange_rate: true`, it will return pricing b
 ```csharp
 ReadCouponAsync(
     int productFamilyId,
-    int couponId)
+    int couponId,
+    bool? currencyPrices = null)
 ```
 
 ## Parameters
@@ -337,6 +341,7 @@ ReadCouponAsync(
 |  --- | --- | --- | --- |
 | `productFamilyId` | `int` | Template, Required | The Advanced Billing id of the product family to which the coupon belongs |
 | `couponId` | `int` | Template, Required | The Advanced Billing id of the coupon |
+| `currencyPrices` | `bool?` | Query, Optional | When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response. |
 
 ## Response Type
 
@@ -347,11 +352,13 @@ ReadCouponAsync(
 ```csharp
 int productFamilyId = 140;
 int couponId = 162;
+bool? currencyPrices = true;
 try
 {
     CouponResponse result = await couponsController.ReadCouponAsync(
         productFamilyId,
-        couponId
+        couponId,
+        currencyPrices
     );
 }
 catch (ApiException e)
@@ -404,7 +411,7 @@ You can restrict a coupon to only apply to specific products / components by opt
 UpdateCouponAsync(
     int productFamilyId,
     int couponId,
-    Models.CreateOrUpdateCoupon body = null)
+    Models.CouponRequest body = null)
 ```
 
 ## Parameters
@@ -413,7 +420,7 @@ UpdateCouponAsync(
 |  --- | --- | --- | --- |
 | `productFamilyId` | `int` | Template, Required | The Advanced Billing id of the product family to which the coupon belongs |
 | `couponId` | `int` | Template, Required | The Advanced Billing id of the coupon |
-| `body` | [`CreateOrUpdateCoupon`](../../doc/models/create-or-update-coupon.md) | Body, Optional | - |
+| `body` | [`CouponRequest`](../../doc/models/coupon-request.md) | Body, Optional | - |
 
 ## Response Type
 
@@ -424,25 +431,21 @@ UpdateCouponAsync(
 ```csharp
 int productFamilyId = 140;
 int couponId = 162;
-CreateOrUpdateCoupon body = new CreateOrUpdateCoupon
+CouponRequest body = new CouponRequest
 {
-    Coupon = CreateOrUpdateCouponCoupon.FromCreateOrUpdatePercentageCoupon(
-        new CreateOrUpdatePercentageCoupon
-        {
-            Name = "15% off",
-            Code = "15OFF",
-            Percentage = CreateOrUpdatePercentageCouponPercentage.FromPrecision(15),
-            Description = "15% off for life",
-            AllowNegativeBalance = false,
-            Recurring = false,
-            EndDate = DateTime.ParseExact("2012-08-29T12:00:00-04:00", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
-                provider: CultureInfo.InvariantCulture,
-                DateTimeStyles.RoundtripKind),
-            ProductFamilyId = "2",
-            Stackable = true,
-            CompoundingStrategy = CompoundingStrategy.Compound,
-        }
-    ),
+    Coupon = new CouponPayload
+    {
+        Name = "15% off",
+        Code = "15OFF",
+        Description = "15% off for life",
+        Percentage = CouponPayloadPercentage.FromPrecision(15),
+        AllowNegativeBalance = false,
+        Recurring = false,
+        EndDate = DateTime.Parse("2012-08-29"),
+        ProductFamilyId = "2",
+        Stackable = true,
+        CompoundingStrategy = CompoundingStrategy.Compound,
+    },
     RestrictedProducts = new Dictionary<string, bool>
     {
         ["1"] = true,
@@ -497,6 +500,12 @@ catch (ApiException e)
   }
 }
 ```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # Archive Coupon
@@ -911,6 +920,12 @@ catch (ApiException e)
     Console.WriteLine(e.Message);
 }
 ```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorStringMapResponseException`](../../doc/models/error-string-map-response-exception.md) |
 
 
 # Create Coupon Subcodes

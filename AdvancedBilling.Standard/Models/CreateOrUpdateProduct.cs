@@ -83,18 +83,18 @@ namespace AdvancedBilling.Standard.Models
             this.IntervalUnit = intervalUnit;
             this.TrialPriceInCents = trialPriceInCents;
             this.TrialInterval = trialInterval;
+
             if (trialIntervalUnit != null)
             {
                 this.TrialIntervalUnit = trialIntervalUnit;
             }
-
             this.TrialType = trialType;
             this.ExpirationInterval = expirationInterval;
+
             if (expirationIntervalUnit != null)
             {
                 this.ExpirationIntervalUnit = expirationIntervalUnit;
             }
-
             this.AutoCreateSignupPage = autoCreateSignupPage;
             this.TaxCode = taxCode;
         }
@@ -223,14 +223,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"CreateOrUpdateProduct : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetTrialIntervalUnit()
         {
@@ -238,7 +236,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetExpirationIntervalUnit()
         {
@@ -266,43 +264,52 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is CreateOrUpdateProduct other &&                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.Handle == null && other.Handle == null) || (this.Handle?.Equals(other.Handle) == true)) &&
-                ((this.Description == null && other.Description == null) || (this.Description?.Equals(other.Description) == true)) &&
-                ((this.AccountingCode == null && other.AccountingCode == null) || (this.AccountingCode?.Equals(other.AccountingCode) == true)) &&
-                ((this.RequireCreditCard == null && other.RequireCreditCard == null) || (this.RequireCreditCard?.Equals(other.RequireCreditCard) == true)) &&
-                this.PriceInCents.Equals(other.PriceInCents) &&
-                this.Interval.Equals(other.Interval) &&
-                this.IntervalUnit.Equals(other.IntervalUnit) &&
-                ((this.TrialPriceInCents == null && other.TrialPriceInCents == null) || (this.TrialPriceInCents?.Equals(other.TrialPriceInCents) == true)) &&
-                ((this.TrialInterval == null && other.TrialInterval == null) || (this.TrialInterval?.Equals(other.TrialInterval) == true)) &&
-                ((this.TrialIntervalUnit == null && other.TrialIntervalUnit == null) || (this.TrialIntervalUnit?.Equals(other.TrialIntervalUnit) == true)) &&
-                ((this.TrialType == null && other.TrialType == null) || (this.TrialType?.Equals(other.TrialType) == true)) &&
-                ((this.ExpirationInterval == null && other.ExpirationInterval == null) || (this.ExpirationInterval?.Equals(other.ExpirationInterval) == true)) &&
-                ((this.ExpirationIntervalUnit == null && other.ExpirationIntervalUnit == null) || (this.ExpirationIntervalUnit?.Equals(other.ExpirationIntervalUnit) == true)) &&
-                ((this.AutoCreateSignupPage == null && other.AutoCreateSignupPage == null) || (this.AutoCreateSignupPage?.Equals(other.AutoCreateSignupPage) == true)) &&
-                ((this.TaxCode == null && other.TaxCode == null) || (this.TaxCode?.Equals(other.TaxCode) == true));
+            return obj is CreateOrUpdateProduct other &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.Handle == null && other.Handle == null ||
+                 this.Handle?.Equals(other.Handle) == true) &&
+                (this.Description == null && other.Description == null ||
+                 this.Description?.Equals(other.Description) == true) &&
+                (this.AccountingCode == null && other.AccountingCode == null ||
+                 this.AccountingCode?.Equals(other.AccountingCode) == true) &&
+                (this.RequireCreditCard == null && other.RequireCreditCard == null ||
+                 this.RequireCreditCard?.Equals(other.RequireCreditCard) == true) &&
+                (this.PriceInCents.Equals(other.PriceInCents)) &&
+                (this.Interval.Equals(other.Interval)) &&
+                (this.IntervalUnit.Equals(other.IntervalUnit)) &&
+                (this.TrialPriceInCents == null && other.TrialPriceInCents == null ||
+                 this.TrialPriceInCents?.Equals(other.TrialPriceInCents) == true) &&
+                (this.TrialInterval == null && other.TrialInterval == null ||
+                 this.TrialInterval?.Equals(other.TrialInterval) == true) &&
+                (this.TrialIntervalUnit == null && other.TrialIntervalUnit == null ||
+                 this.TrialIntervalUnit?.Equals(other.TrialIntervalUnit) == true) &&
+                (this.TrialType == null && other.TrialType == null ||
+                 this.TrialType?.Equals(other.TrialType) == true) &&
+                (this.ExpirationInterval == null && other.ExpirationInterval == null ||
+                 this.ExpirationInterval?.Equals(other.ExpirationInterval) == true) &&
+                (this.ExpirationIntervalUnit == null && other.ExpirationIntervalUnit == null ||
+                 this.ExpirationIntervalUnit?.Equals(other.ExpirationIntervalUnit) == true) &&
+                (this.AutoCreateSignupPage == null && other.AutoCreateSignupPage == null ||
+                 this.AutoCreateSignupPage?.Equals(other.AutoCreateSignupPage) == true) &&
+                (this.TaxCode == null && other.TaxCode == null ||
+                 this.TaxCode?.Equals(other.TaxCode) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
-            toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
-            toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
-            toStringOutput.Add($"this.AccountingCode = {(this.AccountingCode == null ? "null" : this.AccountingCode)}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"this.Handle = {this.Handle ?? "null"}");
+            toStringOutput.Add($"this.Description = {this.Description ?? "null"}");
+            toStringOutput.Add($"this.AccountingCode = {this.AccountingCode ?? "null"}");
             toStringOutput.Add($"this.RequireCreditCard = {(this.RequireCreditCard == null ? "null" : this.RequireCreditCard.ToString())}");
             toStringOutput.Add($"this.PriceInCents = {this.PriceInCents}");
             toStringOutput.Add($"this.Interval = {this.Interval}");
@@ -310,11 +317,11 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.TrialPriceInCents = {(this.TrialPriceInCents == null ? "null" : this.TrialPriceInCents.ToString())}");
             toStringOutput.Add($"this.TrialInterval = {(this.TrialInterval == null ? "null" : this.TrialInterval.ToString())}");
             toStringOutput.Add($"this.TrialIntervalUnit = {(this.TrialIntervalUnit == null ? "null" : this.TrialIntervalUnit.ToString())}");
-            toStringOutput.Add($"this.TrialType = {(this.TrialType == null ? "null" : this.TrialType)}");
+            toStringOutput.Add($"this.TrialType = {this.TrialType ?? "null"}");
             toStringOutput.Add($"this.ExpirationInterval = {(this.ExpirationInterval == null ? "null" : this.ExpirationInterval.ToString())}");
             toStringOutput.Add($"this.ExpirationIntervalUnit = {(this.ExpirationIntervalUnit == null ? "null" : this.ExpirationIntervalUnit.ToString())}");
             toStringOutput.Add($"this.AutoCreateSignupPage = {(this.AutoCreateSignupPage == null ? "null" : this.AutoCreateSignupPage.ToString())}");
-            toStringOutput.Add($"this.TaxCode = {(this.TaxCode == null ? "null" : this.TaxCode)}");
+            toStringOutput.Add($"this.TaxCode = {this.TaxCode ?? "null"}");
 
             base.ToString(toStringOutput);
         }

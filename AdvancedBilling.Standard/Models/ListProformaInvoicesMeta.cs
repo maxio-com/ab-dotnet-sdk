@@ -75,30 +75,28 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ListProformaInvoicesMeta : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ListProformaInvoicesMeta other &&                ((this.TotalCount == null && other.TotalCount == null) || (this.TotalCount?.Equals(other.TotalCount) == true)) &&
-                ((this.CurrentPage == null && other.CurrentPage == null) || (this.CurrentPage?.Equals(other.CurrentPage) == true)) &&
-                ((this.TotalPages == null && other.TotalPages == null) || (this.TotalPages?.Equals(other.TotalPages) == true)) &&
-                ((this.StatusCode == null && other.StatusCode == null) || (this.StatusCode?.Equals(other.StatusCode) == true));
+            return obj is ListProformaInvoicesMeta other &&
+                (this.TotalCount == null && other.TotalCount == null ||
+                 this.TotalCount?.Equals(other.TotalCount) == true) &&
+                (this.CurrentPage == null && other.CurrentPage == null ||
+                 this.CurrentPage?.Equals(other.CurrentPage) == true) &&
+                (this.TotalPages == null && other.TotalPages == null ||
+                 this.TotalPages?.Equals(other.TotalPages) == true) &&
+                (this.StatusCode == null && other.StatusCode == null ||
+                 this.StatusCode?.Equals(other.StatusCode) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

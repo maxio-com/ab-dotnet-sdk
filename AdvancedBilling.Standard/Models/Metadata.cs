@@ -59,6 +59,7 @@ namespace AdvancedBilling.Standard.Models
             DateTimeOffset? deletedAt = null,
             int? metafieldId = null)
         {
+
             if (id != null)
             {
                 this.Id = id;
@@ -73,8 +74,8 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.ResourceId = resourceId;
             }
-
             this.Name = name;
+
             if (deletedAt != null)
             {
                 this.DeletedAt = deletedAt;
@@ -84,7 +85,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.MetafieldId = metafieldId;
             }
-
         }
 
         /// <summary>
@@ -188,14 +188,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"Metadata : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetId()
         {
@@ -203,7 +201,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetMValue()
         {
@@ -211,7 +209,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetResourceId()
         {
@@ -219,7 +217,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDeletedAt()
         {
@@ -227,7 +225,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetMetafieldId()
         {
@@ -282,23 +280,25 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is Metadata other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.MValue == null && other.MValue == null) || (this.MValue?.Equals(other.MValue) == true)) &&
-                ((this.ResourceId == null && other.ResourceId == null) || (this.ResourceId?.Equals(other.ResourceId) == true)) &&
-                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.DeletedAt == null && other.DeletedAt == null) || (this.DeletedAt?.Equals(other.DeletedAt) == true)) &&
-                ((this.MetafieldId == null && other.MetafieldId == null) || (this.MetafieldId?.Equals(other.MetafieldId) == true));
+            return obj is Metadata other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.MValue == null && other.MValue == null ||
+                 this.MValue?.Equals(other.MValue) == true) &&
+                (this.ResourceId == null && other.ResourceId == null ||
+                 this.ResourceId?.Equals(other.ResourceId) == true) &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.DeletedAt == null && other.DeletedAt == null ||
+                 this.DeletedAt?.Equals(other.DeletedAt) == true) &&
+                (this.MetafieldId == null && other.MetafieldId == null ||
+                 this.MetafieldId?.Equals(other.MetafieldId) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -306,9 +306,9 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.MValue = {(this.MValue == null ? "null" : this.MValue)}");
+            toStringOutput.Add($"this.MValue = {this.MValue ?? "null"}");
             toStringOutput.Add($"this.ResourceId = {(this.ResourceId == null ? "null" : this.ResourceId.ToString())}");
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
             toStringOutput.Add($"this.DeletedAt = {(this.DeletedAt == null ? "null" : this.DeletedAt.ToString())}");
             toStringOutput.Add($"this.MetafieldId = {(this.MetafieldId == null ? "null" : this.MetafieldId.ToString())}");
 

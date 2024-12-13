@@ -69,36 +69,33 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ListExportedProformaInvoicesInput : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ListExportedProformaInvoicesInput other &&                ((this.BatchId == null && other.BatchId == null) || (this.BatchId?.Equals(other.BatchId) == true)) &&
-                ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true)) &&
-                ((this.Page == null && other.Page == null) || (this.Page?.Equals(other.Page) == true));
+            return obj is ListExportedProformaInvoicesInput other &&
+                (this.BatchId == null && other.BatchId == null ||
+                 this.BatchId?.Equals(other.BatchId) == true) &&
+                (this.PerPage == null && other.PerPage == null ||
+                 this.PerPage?.Equals(other.PerPage) == true) &&
+                (this.Page == null && other.Page == null ||
+                 this.Page?.Equals(other.Page) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.BatchId = {(this.BatchId == null ? "null" : this.BatchId)}");
+            toStringOutput.Add($"this.BatchId = {this.BatchId ?? "null"}");
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
             toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
 

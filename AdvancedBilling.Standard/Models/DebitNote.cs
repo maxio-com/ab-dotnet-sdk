@@ -252,70 +252,87 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"DebitNote : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is DebitNote other &&                ((this.Uid == null && other.Uid == null) || (this.Uid?.Equals(other.Uid) == true)) &&
-                ((this.SiteId == null && other.SiteId == null) || (this.SiteId?.Equals(other.SiteId) == true)) &&
-                ((this.CustomerId == null && other.CustomerId == null) || (this.CustomerId?.Equals(other.CustomerId) == true)) &&
-                ((this.SubscriptionId == null && other.SubscriptionId == null) || (this.SubscriptionId?.Equals(other.SubscriptionId) == true)) &&
-                ((this.Number == null && other.Number == null) || (this.Number?.Equals(other.Number) == true)) &&
-                ((this.SequenceNumber == null && other.SequenceNumber == null) || (this.SequenceNumber?.Equals(other.SequenceNumber) == true)) &&
-                ((this.OriginCreditNoteUid == null && other.OriginCreditNoteUid == null) || (this.OriginCreditNoteUid?.Equals(other.OriginCreditNoteUid) == true)) &&
-                ((this.OriginCreditNoteNumber == null && other.OriginCreditNoteNumber == null) || (this.OriginCreditNoteNumber?.Equals(other.OriginCreditNoteNumber) == true)) &&
-                ((this.IssueDate == null && other.IssueDate == null) || (this.IssueDate?.Equals(other.IssueDate) == true)) &&
-                ((this.AppliedDate == null && other.AppliedDate == null) || (this.AppliedDate?.Equals(other.AppliedDate) == true)) &&
-                ((this.DueDate == null && other.DueDate == null) || (this.DueDate?.Equals(other.DueDate) == true)) &&
-                ((this.Status == null && other.Status == null) || (this.Status?.Equals(other.Status) == true)) &&
-                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                ((this.Role == null && other.Role == null) || (this.Role?.Equals(other.Role) == true)) &&
-                ((this.Currency == null && other.Currency == null) || (this.Currency?.Equals(other.Currency) == true)) &&
-                ((this.Seller == null && other.Seller == null) || (this.Seller?.Equals(other.Seller) == true)) &&
-                ((this.Customer == null && other.Customer == null) || (this.Customer?.Equals(other.Customer) == true)) &&
-                ((this.BillingAddress == null && other.BillingAddress == null) || (this.BillingAddress?.Equals(other.BillingAddress) == true)) &&
-                ((this.ShippingAddress == null && other.ShippingAddress == null) || (this.ShippingAddress?.Equals(other.ShippingAddress) == true)) &&
-                ((this.LineItems == null && other.LineItems == null) || (this.LineItems?.Equals(other.LineItems) == true)) &&
-                ((this.Discounts == null && other.Discounts == null) || (this.Discounts?.Equals(other.Discounts) == true)) &&
-                ((this.Taxes == null && other.Taxes == null) || (this.Taxes?.Equals(other.Taxes) == true)) &&
-                ((this.Refunds == null && other.Refunds == null) || (this.Refunds?.Equals(other.Refunds) == true));
+            return obj is DebitNote other &&
+                (this.Uid == null && other.Uid == null ||
+                 this.Uid?.Equals(other.Uid) == true) &&
+                (this.SiteId == null && other.SiteId == null ||
+                 this.SiteId?.Equals(other.SiteId) == true) &&
+                (this.CustomerId == null && other.CustomerId == null ||
+                 this.CustomerId?.Equals(other.CustomerId) == true) &&
+                (this.SubscriptionId == null && other.SubscriptionId == null ||
+                 this.SubscriptionId?.Equals(other.SubscriptionId) == true) &&
+                (this.Number == null && other.Number == null ||
+                 this.Number?.Equals(other.Number) == true) &&
+                (this.SequenceNumber == null && other.SequenceNumber == null ||
+                 this.SequenceNumber?.Equals(other.SequenceNumber) == true) &&
+                (this.OriginCreditNoteUid == null && other.OriginCreditNoteUid == null ||
+                 this.OriginCreditNoteUid?.Equals(other.OriginCreditNoteUid) == true) &&
+                (this.OriginCreditNoteNumber == null && other.OriginCreditNoteNumber == null ||
+                 this.OriginCreditNoteNumber?.Equals(other.OriginCreditNoteNumber) == true) &&
+                (this.IssueDate == null && other.IssueDate == null ||
+                 this.IssueDate?.Equals(other.IssueDate) == true) &&
+                (this.AppliedDate == null && other.AppliedDate == null ||
+                 this.AppliedDate?.Equals(other.AppliedDate) == true) &&
+                (this.DueDate == null && other.DueDate == null ||
+                 this.DueDate?.Equals(other.DueDate) == true) &&
+                (this.Status == null && other.Status == null ||
+                 this.Status?.Equals(other.Status) == true) &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.Role == null && other.Role == null ||
+                 this.Role?.Equals(other.Role) == true) &&
+                (this.Currency == null && other.Currency == null ||
+                 this.Currency?.Equals(other.Currency) == true) &&
+                (this.Seller == null && other.Seller == null ||
+                 this.Seller?.Equals(other.Seller) == true) &&
+                (this.Customer == null && other.Customer == null ||
+                 this.Customer?.Equals(other.Customer) == true) &&
+                (this.BillingAddress == null && other.BillingAddress == null ||
+                 this.BillingAddress?.Equals(other.BillingAddress) == true) &&
+                (this.ShippingAddress == null && other.ShippingAddress == null ||
+                 this.ShippingAddress?.Equals(other.ShippingAddress) == true) &&
+                (this.LineItems == null && other.LineItems == null ||
+                 this.LineItems?.Equals(other.LineItems) == true) &&
+                (this.Discounts == null && other.Discounts == null ||
+                 this.Discounts?.Equals(other.Discounts) == true) &&
+                (this.Taxes == null && other.Taxes == null ||
+                 this.Taxes?.Equals(other.Taxes) == true) &&
+                (this.Refunds == null && other.Refunds == null ||
+                 this.Refunds?.Equals(other.Refunds) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
+            toStringOutput.Add($"this.Uid = {this.Uid ?? "null"}");
             toStringOutput.Add($"this.SiteId = {(this.SiteId == null ? "null" : this.SiteId.ToString())}");
             toStringOutput.Add($"this.CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
             toStringOutput.Add($"this.Number = {(this.Number == null ? "null" : this.Number.ToString())}");
             toStringOutput.Add($"this.SequenceNumber = {(this.SequenceNumber == null ? "null" : this.SequenceNumber.ToString())}");
-            toStringOutput.Add($"this.OriginCreditNoteUid = {(this.OriginCreditNoteUid == null ? "null" : this.OriginCreditNoteUid)}");
-            toStringOutput.Add($"this.OriginCreditNoteNumber = {(this.OriginCreditNoteNumber == null ? "null" : this.OriginCreditNoteNumber)}");
+            toStringOutput.Add($"this.OriginCreditNoteUid = {this.OriginCreditNoteUid ?? "null"}");
+            toStringOutput.Add($"this.OriginCreditNoteNumber = {this.OriginCreditNoteNumber ?? "null"}");
             toStringOutput.Add($"this.IssueDate = {(this.IssueDate == null ? "null" : this.IssueDate.ToString())}");
             toStringOutput.Add($"this.AppliedDate = {(this.AppliedDate == null ? "null" : this.AppliedDate.ToString())}");
             toStringOutput.Add($"this.DueDate = {(this.DueDate == null ? "null" : this.DueDate.ToString())}");
             toStringOutput.Add($"this.Status = {(this.Status == null ? "null" : this.Status.ToString())}");
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
             toStringOutput.Add($"this.Role = {(this.Role == null ? "null" : this.Role.ToString())}");
-            toStringOutput.Add($"this.Currency = {(this.Currency == null ? "null" : this.Currency)}");
+            toStringOutput.Add($"this.Currency = {this.Currency ?? "null"}");
             toStringOutput.Add($"this.Seller = {(this.Seller == null ? "null" : this.Seller.ToString())}");
             toStringOutput.Add($"this.Customer = {(this.Customer == null ? "null" : this.Customer.ToString())}");
             toStringOutput.Add($"this.BillingAddress = {(this.BillingAddress == null ? "null" : this.BillingAddress.ToString())}");

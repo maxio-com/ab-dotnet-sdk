@@ -121,35 +121,38 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"Movement : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is Movement other &&                ((this.Timestamp == null && other.Timestamp == null) || (this.Timestamp?.Equals(other.Timestamp) == true)) &&
-                ((this.AmountInCents == null && other.AmountInCents == null) || (this.AmountInCents?.Equals(other.AmountInCents) == true)) &&
-                ((this.AmountFormatted == null && other.AmountFormatted == null) || (this.AmountFormatted?.Equals(other.AmountFormatted) == true)) &&
-                ((this.Description == null && other.Description == null) || (this.Description?.Equals(other.Description) == true)) &&
-                ((this.Category == null && other.Category == null) || (this.Category?.Equals(other.Category) == true)) &&
-                ((this.Breakouts == null && other.Breakouts == null) || (this.Breakouts?.Equals(other.Breakouts) == true)) &&
-                ((this.LineItems == null && other.LineItems == null) || (this.LineItems?.Equals(other.LineItems) == true)) &&
-                ((this.SubscriptionId == null && other.SubscriptionId == null) || (this.SubscriptionId?.Equals(other.SubscriptionId) == true)) &&
-                ((this.SubscriberName == null && other.SubscriberName == null) || (this.SubscriberName?.Equals(other.SubscriberName) == true));
+            return obj is Movement other &&
+                (this.Timestamp == null && other.Timestamp == null ||
+                 this.Timestamp?.Equals(other.Timestamp) == true) &&
+                (this.AmountInCents == null && other.AmountInCents == null ||
+                 this.AmountInCents?.Equals(other.AmountInCents) == true) &&
+                (this.AmountFormatted == null && other.AmountFormatted == null ||
+                 this.AmountFormatted?.Equals(other.AmountFormatted) == true) &&
+                (this.Description == null && other.Description == null ||
+                 this.Description?.Equals(other.Description) == true) &&
+                (this.Category == null && other.Category == null ||
+                 this.Category?.Equals(other.Category) == true) &&
+                (this.Breakouts == null && other.Breakouts == null ||
+                 this.Breakouts?.Equals(other.Breakouts) == true) &&
+                (this.LineItems == null && other.LineItems == null ||
+                 this.LineItems?.Equals(other.LineItems) == true) &&
+                (this.SubscriptionId == null && other.SubscriptionId == null ||
+                 this.SubscriptionId?.Equals(other.SubscriptionId) == true) &&
+                (this.SubscriberName == null && other.SubscriberName == null ||
+                 this.SubscriberName?.Equals(other.SubscriberName) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -158,13 +161,13 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.Timestamp = {(this.Timestamp == null ? "null" : this.Timestamp.ToString())}");
             toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
-            toStringOutput.Add($"this.AmountFormatted = {(this.AmountFormatted == null ? "null" : this.AmountFormatted)}");
-            toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
-            toStringOutput.Add($"this.Category = {(this.Category == null ? "null" : this.Category)}");
+            toStringOutput.Add($"this.AmountFormatted = {this.AmountFormatted ?? "null"}");
+            toStringOutput.Add($"this.Description = {this.Description ?? "null"}");
+            toStringOutput.Add($"this.Category = {this.Category ?? "null"}");
             toStringOutput.Add($"this.Breakouts = {(this.Breakouts == null ? "null" : this.Breakouts.ToString())}");
             toStringOutput.Add($"this.LineItems = {(this.LineItems == null ? "null" : $"[{string.Join(", ", this.LineItems)} ]")}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
-            toStringOutput.Add($"this.SubscriberName = {(this.SubscriberName == null ? "null" : this.SubscriberName)}");
+            toStringOutput.Add($"this.SubscriberName = {this.SubscriberName ?? "null"}");
 
             base.ToString(toStringOutput);
         }

@@ -22,7 +22,7 @@ namespace AdvancedBilling.Standard.Models
     public class Coupon : BaseModel
     {
         private double? amount;
-        private int? amountInCents;
+        private long? amountInCents;
         private string productFamilyName;
         private DateTimeOffset? endDate;
         private string percentage;
@@ -89,13 +89,14 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="applyOnCancelAtEndOfPeriod">apply_on_cancel_at_end_of_period.</param>
         /// <param name="applyOnSubscriptionExpiration">apply_on_subscription_expiration.</param>
         /// <param name="couponRestrictions">coupon_restrictions.</param>
+        /// <param name="currencyPrices">currency_prices.</param>
         public Coupon(
             int? id = null,
             string name = null,
             string code = null,
             string description = null,
             double? amount = null,
-            int? amountInCents = null,
+            long? amountInCents = null,
             int? productFamilyId = null,
             string productFamilyName = null,
             DateTimeOffset? startDate = null,
@@ -119,12 +120,14 @@ namespace AdvancedBilling.Standard.Models
             bool? excludeMidPeriodAllocations = null,
             bool? applyOnCancelAtEndOfPeriod = null,
             bool? applyOnSubscriptionExpiration = null,
-            List<Models.CouponRestriction> couponRestrictions = null)
+            List<Models.CouponRestriction> couponRestrictions = null,
+            List<Models.CouponCurrency> currencyPrices = null)
         {
             this.Id = id;
             this.Name = name;
             this.Code = code;
             this.Description = description;
+
             if (amount != null)
             {
                 this.Amount = amount;
@@ -134,14 +137,14 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.AmountInCents = amountInCents;
             }
-
             this.ProductFamilyId = productFamilyId;
+
             if (productFamilyName != null)
             {
                 this.ProductFamilyName = productFamilyName;
             }
-
             this.StartDate = startDate;
+
             if (endDate != null)
             {
                 this.EndDate = endDate;
@@ -151,9 +154,9 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.Percentage = percentage;
             }
-
             this.Recurring = recurring;
             this.RecurringScheme = recurringScheme;
+
             if (durationPeriodCount != null)
             {
                 this.DurationPeriodCount = durationPeriodCount;
@@ -173,8 +176,8 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.DurationIntervalSpan = durationIntervalSpan;
             }
-
             this.AllowNegativeBalance = allowNegativeBalance;
+
             if (archivedAt != null)
             {
                 this.ArchivedAt = archivedAt;
@@ -184,13 +187,12 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.ConversionLimit = conversionLimit;
             }
-
             this.Stackable = stackable;
+
             if (compoundingStrategy != null)
             {
                 this.CompoundingStrategy = compoundingStrategy;
             }
-
             this.UseSiteExchangeRate = useSiteExchangeRate;
             this.CreatedAt = createdAt;
             this.UpdatedAt = updatedAt;
@@ -199,6 +201,7 @@ namespace AdvancedBilling.Standard.Models
             this.ApplyOnCancelAtEndOfPeriod = applyOnCancelAtEndOfPeriod;
             this.ApplyOnSubscriptionExpiration = applyOnSubscriptionExpiration;
             this.CouponRestrictions = couponRestrictions;
+            this.CurrencyPrices = currencyPrices;
         }
 
         /// <summary>
@@ -247,7 +250,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets AmountInCents.
         /// </summary>
         [JsonProperty("amount_in_cents")]
-        public int? AmountInCents
+        public long? AmountInCents
         {
             get
             {
@@ -293,7 +296,7 @@ namespace AdvancedBilling.Standard.Models
         public DateTimeOffset? StartDate { get; set; }
 
         /// <summary>
-        /// Gets or sets EndDate.
+        /// After the given time, this coupon code will be invalid for new signups. Recurring discounts started before this date will continue to recur even after this date.
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("end_date")]
@@ -414,7 +417,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Gets or sets AllowNegativeBalance.
+        /// If set to true, discount is not limited (credits will carry forward to next billing).
         /// </summary>
         [JsonProperty("allow_negative_balance", NullValueHandling = NullValueHandling.Ignore)]
         public bool? AllowNegativeBalance { get; set; }
@@ -457,13 +460,13 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Gets or sets Stackable.
+        /// A stackable coupon can be combined with other coupons on a Subscription.
         /// </summary>
         [JsonProperty("stackable", NullValueHandling = NullValueHandling.Ignore)]
         public bool? Stackable { get; set; }
 
         /// <summary>
-        /// Gets or sets CompoundingStrategy.
+        /// Applicable only to stackable coupons. For `compound`, Percentage-based discounts will be calculated against the remaining price, after prior discounts have been calculated. For `full-price`, Percentage-based discounts will always be calculated against the original item price, before other discounts are applied.
         /// </summary>
         [JsonProperty("compounding_strategy")]
         public Models.CompoundingStrategy? CompoundingStrategy
@@ -530,18 +533,22 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("coupon_restrictions", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.CouponRestriction> CouponRestrictions { get; set; }
 
+        /// <summary>
+        /// Returned in read, find, and list endpoints if the query parameter is provided.
+        /// </summary>
+        [JsonProperty("currency_prices", NullValueHandling = NullValueHandling.Ignore)]
+        public List<Models.CouponCurrency> CurrencyPrices { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"Coupon : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetAmount()
         {
@@ -549,7 +556,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetAmountInCents()
         {
@@ -557,7 +564,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetProductFamilyName()
         {
@@ -565,7 +572,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetEndDate()
         {
@@ -573,7 +580,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetPercentage()
         {
@@ -581,7 +588,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDurationPeriodCount()
         {
@@ -589,7 +596,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDurationInterval()
         {
@@ -597,7 +604,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDurationIntervalUnit()
         {
@@ -605,7 +612,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDurationIntervalSpan()
         {
@@ -613,7 +620,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetArchivedAt()
         {
@@ -621,7 +628,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetConversionLimit()
         {
@@ -629,7 +636,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetCompoundingStrategy()
         {
@@ -747,47 +754,75 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is Coupon other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.Code == null && other.Code == null) || (this.Code?.Equals(other.Code) == true)) &&
-                ((this.Description == null && other.Description == null) || (this.Description?.Equals(other.Description) == true)) &&
-                ((this.Amount == null && other.Amount == null) || (this.Amount?.Equals(other.Amount) == true)) &&
-                ((this.AmountInCents == null && other.AmountInCents == null) || (this.AmountInCents?.Equals(other.AmountInCents) == true)) &&
-                ((this.ProductFamilyId == null && other.ProductFamilyId == null) || (this.ProductFamilyId?.Equals(other.ProductFamilyId) == true)) &&
-                ((this.ProductFamilyName == null && other.ProductFamilyName == null) || (this.ProductFamilyName?.Equals(other.ProductFamilyName) == true)) &&
-                ((this.StartDate == null && other.StartDate == null) || (this.StartDate?.Equals(other.StartDate) == true)) &&
-                ((this.EndDate == null && other.EndDate == null) || (this.EndDate?.Equals(other.EndDate) == true)) &&
-                ((this.Percentage == null && other.Percentage == null) || (this.Percentage?.Equals(other.Percentage) == true)) &&
-                ((this.Recurring == null && other.Recurring == null) || (this.Recurring?.Equals(other.Recurring) == true)) &&
-                ((this.RecurringScheme == null && other.RecurringScheme == null) || (this.RecurringScheme?.Equals(other.RecurringScheme) == true)) &&
-                ((this.DurationPeriodCount == null && other.DurationPeriodCount == null) || (this.DurationPeriodCount?.Equals(other.DurationPeriodCount) == true)) &&
-                ((this.DurationInterval == null && other.DurationInterval == null) || (this.DurationInterval?.Equals(other.DurationInterval) == true)) &&
-                ((this.DurationIntervalUnit == null && other.DurationIntervalUnit == null) || (this.DurationIntervalUnit?.Equals(other.DurationIntervalUnit) == true)) &&
-                ((this.DurationIntervalSpan == null && other.DurationIntervalSpan == null) || (this.DurationIntervalSpan?.Equals(other.DurationIntervalSpan) == true)) &&
-                ((this.AllowNegativeBalance == null && other.AllowNegativeBalance == null) || (this.AllowNegativeBalance?.Equals(other.AllowNegativeBalance) == true)) &&
-                ((this.ArchivedAt == null && other.ArchivedAt == null) || (this.ArchivedAt?.Equals(other.ArchivedAt) == true)) &&
-                ((this.ConversionLimit == null && other.ConversionLimit == null) || (this.ConversionLimit?.Equals(other.ConversionLimit) == true)) &&
-                ((this.Stackable == null && other.Stackable == null) || (this.Stackable?.Equals(other.Stackable) == true)) &&
-                ((this.CompoundingStrategy == null && other.CompoundingStrategy == null) || (this.CompoundingStrategy?.Equals(other.CompoundingStrategy) == true)) &&
-                ((this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null) || (this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true)) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true)) &&
-                ((this.UpdatedAt == null && other.UpdatedAt == null) || (this.UpdatedAt?.Equals(other.UpdatedAt) == true)) &&
-                ((this.DiscountType == null && other.DiscountType == null) || (this.DiscountType?.Equals(other.DiscountType) == true)) &&
-                ((this.ExcludeMidPeriodAllocations == null && other.ExcludeMidPeriodAllocations == null) || (this.ExcludeMidPeriodAllocations?.Equals(other.ExcludeMidPeriodAllocations) == true)) &&
-                ((this.ApplyOnCancelAtEndOfPeriod == null && other.ApplyOnCancelAtEndOfPeriod == null) || (this.ApplyOnCancelAtEndOfPeriod?.Equals(other.ApplyOnCancelAtEndOfPeriod) == true)) &&
-                ((this.ApplyOnSubscriptionExpiration == null && other.ApplyOnSubscriptionExpiration == null) || (this.ApplyOnSubscriptionExpiration?.Equals(other.ApplyOnSubscriptionExpiration) == true)) &&
-                ((this.CouponRestrictions == null && other.CouponRestrictions == null) || (this.CouponRestrictions?.Equals(other.CouponRestrictions) == true));
+            return obj is Coupon other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.Code == null && other.Code == null ||
+                 this.Code?.Equals(other.Code) == true) &&
+                (this.Description == null && other.Description == null ||
+                 this.Description?.Equals(other.Description) == true) &&
+                (this.Amount == null && other.Amount == null ||
+                 this.Amount?.Equals(other.Amount) == true) &&
+                (this.AmountInCents == null && other.AmountInCents == null ||
+                 this.AmountInCents?.Equals(other.AmountInCents) == true) &&
+                (this.ProductFamilyId == null && other.ProductFamilyId == null ||
+                 this.ProductFamilyId?.Equals(other.ProductFamilyId) == true) &&
+                (this.ProductFamilyName == null && other.ProductFamilyName == null ||
+                 this.ProductFamilyName?.Equals(other.ProductFamilyName) == true) &&
+                (this.StartDate == null && other.StartDate == null ||
+                 this.StartDate?.Equals(other.StartDate) == true) &&
+                (this.EndDate == null && other.EndDate == null ||
+                 this.EndDate?.Equals(other.EndDate) == true) &&
+                (this.Percentage == null && other.Percentage == null ||
+                 this.Percentage?.Equals(other.Percentage) == true) &&
+                (this.Recurring == null && other.Recurring == null ||
+                 this.Recurring?.Equals(other.Recurring) == true) &&
+                (this.RecurringScheme == null && other.RecurringScheme == null ||
+                 this.RecurringScheme?.Equals(other.RecurringScheme) == true) &&
+                (this.DurationPeriodCount == null && other.DurationPeriodCount == null ||
+                 this.DurationPeriodCount?.Equals(other.DurationPeriodCount) == true) &&
+                (this.DurationInterval == null && other.DurationInterval == null ||
+                 this.DurationInterval?.Equals(other.DurationInterval) == true) &&
+                (this.DurationIntervalUnit == null && other.DurationIntervalUnit == null ||
+                 this.DurationIntervalUnit?.Equals(other.DurationIntervalUnit) == true) &&
+                (this.DurationIntervalSpan == null && other.DurationIntervalSpan == null ||
+                 this.DurationIntervalSpan?.Equals(other.DurationIntervalSpan) == true) &&
+                (this.AllowNegativeBalance == null && other.AllowNegativeBalance == null ||
+                 this.AllowNegativeBalance?.Equals(other.AllowNegativeBalance) == true) &&
+                (this.ArchivedAt == null && other.ArchivedAt == null ||
+                 this.ArchivedAt?.Equals(other.ArchivedAt) == true) &&
+                (this.ConversionLimit == null && other.ConversionLimit == null ||
+                 this.ConversionLimit?.Equals(other.ConversionLimit) == true) &&
+                (this.Stackable == null && other.Stackable == null ||
+                 this.Stackable?.Equals(other.Stackable) == true) &&
+                (this.CompoundingStrategy == null && other.CompoundingStrategy == null ||
+                 this.CompoundingStrategy?.Equals(other.CompoundingStrategy) == true) &&
+                (this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null ||
+                 this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true) &&
+                (this.CreatedAt == null && other.CreatedAt == null ||
+                 this.CreatedAt?.Equals(other.CreatedAt) == true) &&
+                (this.UpdatedAt == null && other.UpdatedAt == null ||
+                 this.UpdatedAt?.Equals(other.UpdatedAt) == true) &&
+                (this.DiscountType == null && other.DiscountType == null ||
+                 this.DiscountType?.Equals(other.DiscountType) == true) &&
+                (this.ExcludeMidPeriodAllocations == null && other.ExcludeMidPeriodAllocations == null ||
+                 this.ExcludeMidPeriodAllocations?.Equals(other.ExcludeMidPeriodAllocations) == true) &&
+                (this.ApplyOnCancelAtEndOfPeriod == null && other.ApplyOnCancelAtEndOfPeriod == null ||
+                 this.ApplyOnCancelAtEndOfPeriod?.Equals(other.ApplyOnCancelAtEndOfPeriod) == true) &&
+                (this.ApplyOnSubscriptionExpiration == null && other.ApplyOnSubscriptionExpiration == null ||
+                 this.ApplyOnSubscriptionExpiration?.Equals(other.ApplyOnSubscriptionExpiration) == true) &&
+                (this.CouponRestrictions == null && other.CouponRestrictions == null ||
+                 this.CouponRestrictions?.Equals(other.CouponRestrictions) == true) &&
+                (this.CurrencyPrices == null && other.CurrencyPrices == null ||
+                 this.CurrencyPrices?.Equals(other.CurrencyPrices) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -795,25 +830,25 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
-            toStringOutput.Add($"this.Code = {(this.Code == null ? "null" : this.Code)}");
-            toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"this.Code = {this.Code ?? "null"}");
+            toStringOutput.Add($"this.Description = {this.Description ?? "null"}");
             toStringOutput.Add($"this.Amount = {(this.Amount == null ? "null" : this.Amount.ToString())}");
             toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
             toStringOutput.Add($"this.ProductFamilyId = {(this.ProductFamilyId == null ? "null" : this.ProductFamilyId.ToString())}");
-            toStringOutput.Add($"this.ProductFamilyName = {(this.ProductFamilyName == null ? "null" : this.ProductFamilyName)}");
+            toStringOutput.Add($"this.ProductFamilyName = {this.ProductFamilyName ?? "null"}");
             toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate.ToString())}");
             toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate.ToString())}");
-            toStringOutput.Add($"this.Percentage = {(this.Percentage == null ? "null" : this.Percentage)}");
+            toStringOutput.Add($"this.Percentage = {this.Percentage ?? "null"}");
             toStringOutput.Add($"this.Recurring = {(this.Recurring == null ? "null" : this.Recurring.ToString())}");
             toStringOutput.Add($"this.RecurringScheme = {(this.RecurringScheme == null ? "null" : this.RecurringScheme.ToString())}");
             toStringOutput.Add($"this.DurationPeriodCount = {(this.DurationPeriodCount == null ? "null" : this.DurationPeriodCount.ToString())}");
             toStringOutput.Add($"this.DurationInterval = {(this.DurationInterval == null ? "null" : this.DurationInterval.ToString())}");
-            toStringOutput.Add($"this.DurationIntervalUnit = {(this.DurationIntervalUnit == null ? "null" : this.DurationIntervalUnit)}");
-            toStringOutput.Add($"this.DurationIntervalSpan = {(this.DurationIntervalSpan == null ? "null" : this.DurationIntervalSpan)}");
+            toStringOutput.Add($"this.DurationIntervalUnit = {this.DurationIntervalUnit ?? "null"}");
+            toStringOutput.Add($"this.DurationIntervalSpan = {this.DurationIntervalSpan ?? "null"}");
             toStringOutput.Add($"this.AllowNegativeBalance = {(this.AllowNegativeBalance == null ? "null" : this.AllowNegativeBalance.ToString())}");
             toStringOutput.Add($"this.ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt.ToString())}");
-            toStringOutput.Add($"this.ConversionLimit = {(this.ConversionLimit == null ? "null" : this.ConversionLimit)}");
+            toStringOutput.Add($"this.ConversionLimit = {this.ConversionLimit ?? "null"}");
             toStringOutput.Add($"this.Stackable = {(this.Stackable == null ? "null" : this.Stackable.ToString())}");
             toStringOutput.Add($"this.CompoundingStrategy = {(this.CompoundingStrategy == null ? "null" : this.CompoundingStrategy.ToString())}");
             toStringOutput.Add($"this.UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
@@ -824,6 +859,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ApplyOnCancelAtEndOfPeriod = {(this.ApplyOnCancelAtEndOfPeriod == null ? "null" : this.ApplyOnCancelAtEndOfPeriod.ToString())}");
             toStringOutput.Add($"this.ApplyOnSubscriptionExpiration = {(this.ApplyOnSubscriptionExpiration == null ? "null" : this.ApplyOnSubscriptionExpiration.ToString())}");
             toStringOutput.Add($"this.CouponRestrictions = {(this.CouponRestrictions == null ? "null" : $"[{string.Join(", ", this.CouponRestrictions)} ]")}");
+            toStringOutput.Add($"this.CurrencyPrices = {(this.CurrencyPrices == null ? "null" : $"[{string.Join(", ", this.CurrencyPrices)} ]")}");
 
             base.ToString(toStringOutput);
         }

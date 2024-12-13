@@ -93,39 +93,39 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ProductPricePointErrors : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ProductPricePointErrors other &&                ((this.PricePoint == null && other.PricePoint == null) || (this.PricePoint?.Equals(other.PricePoint) == true)) &&
-                ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
-                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true)) &&
-                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.Price == null && other.Price == null) || (this.Price?.Equals(other.Price) == true)) &&
-                ((this.PriceInCents == null && other.PriceInCents == null) || (this.PriceInCents?.Equals(other.PriceInCents) == true));
+            return obj is ProductPricePointErrors other &&
+                (this.PricePoint == null && other.PricePoint == null ||
+                 this.PricePoint?.Equals(other.PricePoint) == true) &&
+                (this.Interval == null && other.Interval == null ||
+                 this.Interval?.Equals(other.Interval) == true) &&
+                (this.IntervalUnit == null && other.IntervalUnit == null ||
+                 this.IntervalUnit?.Equals(other.IntervalUnit) == true) &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.Price == null && other.Price == null ||
+                 this.Price?.Equals(other.Price) == true) &&
+                (this.PriceInCents == null && other.PriceInCents == null ||
+                 this.PriceInCents?.Equals(other.PriceInCents) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.PricePoint = {(this.PricePoint == null ? "null" : this.PricePoint)}");
+            toStringOutput.Add($"this.PricePoint = {this.PricePoint ?? "null"}");
             toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : $"[{string.Join(", ", this.Interval)} ]")}");
             toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : $"[{string.Join(", ", this.IntervalUnit)} ]")}");
             toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : $"[{string.Join(", ", this.Name)} ]")}");

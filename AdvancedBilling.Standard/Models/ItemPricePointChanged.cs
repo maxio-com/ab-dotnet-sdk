@@ -102,32 +102,31 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ItemPricePointChanged : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ItemPricePointChanged other &&                this.ItemId.Equals(other.ItemId) &&
-                ((this.ItemType == null && other.ItemType == null) || (this.ItemType?.Equals(other.ItemType) == true)) &&
-                ((this.ItemHandle == null && other.ItemHandle == null) || (this.ItemHandle?.Equals(other.ItemHandle) == true)) &&
-                ((this.ItemName == null && other.ItemName == null) || (this.ItemName?.Equals(other.ItemName) == true)) &&
-                ((this.PreviousPricePoint == null && other.PreviousPricePoint == null) || (this.PreviousPricePoint?.Equals(other.PreviousPricePoint) == true)) &&
-                ((this.CurrentPricePoint == null && other.CurrentPricePoint == null) || (this.CurrentPricePoint?.Equals(other.CurrentPricePoint) == true));
+            return obj is ItemPricePointChanged other &&
+                (this.ItemId.Equals(other.ItemId)) &&
+                (this.ItemType == null && other.ItemType == null ||
+                 this.ItemType?.Equals(other.ItemType) == true) &&
+                (this.ItemHandle == null && other.ItemHandle == null ||
+                 this.ItemHandle?.Equals(other.ItemHandle) == true) &&
+                (this.ItemName == null && other.ItemName == null ||
+                 this.ItemName?.Equals(other.ItemName) == true) &&
+                (this.PreviousPricePoint == null && other.PreviousPricePoint == null ||
+                 this.PreviousPricePoint?.Equals(other.PreviousPricePoint) == true) &&
+                (this.CurrentPricePoint == null && other.CurrentPricePoint == null ||
+                 this.CurrentPricePoint?.Equals(other.CurrentPricePoint) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -135,9 +134,9 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ItemId = {this.ItemId}");
-            toStringOutput.Add($"this.ItemType = {(this.ItemType == null ? "null" : this.ItemType)}");
-            toStringOutput.Add($"this.ItemHandle = {(this.ItemHandle == null ? "null" : this.ItemHandle)}");
-            toStringOutput.Add($"this.ItemName = {(this.ItemName == null ? "null" : this.ItemName)}");
+            toStringOutput.Add($"this.ItemType = {this.ItemType ?? "null"}");
+            toStringOutput.Add($"this.ItemHandle = {this.ItemHandle ?? "null"}");
+            toStringOutput.Add($"this.ItemName = {this.ItemName ?? "null"}");
             toStringOutput.Add($"this.PreviousPricePoint = {(this.PreviousPricePoint == null ? "null" : this.PreviousPricePoint.ToString())}");
             toStringOutput.Add($"this.CurrentPricePoint = {(this.CurrentPricePoint == null ? "null" : this.CurrentPricePoint.ToString())}");
 

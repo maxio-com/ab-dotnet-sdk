@@ -71,6 +71,7 @@ namespace AdvancedBilling.Standard.Models
             this.TransactionTime = transactionTime;
             this.PaymentMethod = paymentMethod;
             this.TransactionId = transactionId;
+
             if (parentInvoiceNumber != null)
             {
                 this.ParentInvoiceNumber = parentInvoiceNumber;
@@ -80,7 +81,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.RemainingPrepaymentAmount = remainingPrepaymentAmount;
             }
-
             this.Prepayment = prepayment;
             this.External = external;
         }
@@ -180,14 +180,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ApplyPaymentEventData : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetParentInvoiceNumber()
         {
@@ -195,7 +193,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetRemainingPrepaymentAmount()
         {
@@ -223,28 +221,33 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ApplyPaymentEventData other &&                this.ConsolidationLevel.Equals(other.ConsolidationLevel) &&
-                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                ((this.OriginalAmount == null && other.OriginalAmount == null) || (this.OriginalAmount?.Equals(other.OriginalAmount) == true)) &&
-                ((this.AppliedAmount == null && other.AppliedAmount == null) || (this.AppliedAmount?.Equals(other.AppliedAmount) == true)) &&
-                this.TransactionTime.Equals(other.TransactionTime) &&
-                ((this.PaymentMethod == null && other.PaymentMethod == null) || (this.PaymentMethod?.Equals(other.PaymentMethod) == true)) &&
-                ((this.TransactionId == null && other.TransactionId == null) || (this.TransactionId?.Equals(other.TransactionId) == true)) &&
-                ((this.ParentInvoiceNumber == null && other.ParentInvoiceNumber == null) || (this.ParentInvoiceNumber?.Equals(other.ParentInvoiceNumber) == true)) &&
-                ((this.RemainingPrepaymentAmount == null && other.RemainingPrepaymentAmount == null) || (this.RemainingPrepaymentAmount?.Equals(other.RemainingPrepaymentAmount) == true)) &&
-                ((this.Prepayment == null && other.Prepayment == null) || (this.Prepayment?.Equals(other.Prepayment) == true)) &&
-                ((this.External == null && other.External == null) || (this.External?.Equals(other.External) == true));
+            return obj is ApplyPaymentEventData other &&
+                (this.ConsolidationLevel.Equals(other.ConsolidationLevel)) &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.OriginalAmount == null && other.OriginalAmount == null ||
+                 this.OriginalAmount?.Equals(other.OriginalAmount) == true) &&
+                (this.AppliedAmount == null && other.AppliedAmount == null ||
+                 this.AppliedAmount?.Equals(other.AppliedAmount) == true) &&
+                (this.TransactionTime.Equals(other.TransactionTime)) &&
+                (this.PaymentMethod == null && other.PaymentMethod == null ||
+                 this.PaymentMethod?.Equals(other.PaymentMethod) == true) &&
+                (this.TransactionId == null && other.TransactionId == null ||
+                 this.TransactionId?.Equals(other.TransactionId) == true) &&
+                (this.ParentInvoiceNumber == null && other.ParentInvoiceNumber == null ||
+                 this.ParentInvoiceNumber?.Equals(other.ParentInvoiceNumber) == true) &&
+                (this.RemainingPrepaymentAmount == null && other.RemainingPrepaymentAmount == null ||
+                 this.RemainingPrepaymentAmount?.Equals(other.RemainingPrepaymentAmount) == true) &&
+                (this.Prepayment == null && other.Prepayment == null ||
+                 this.Prepayment?.Equals(other.Prepayment) == true) &&
+                (this.External == null && other.External == null ||
+                 this.External?.Equals(other.External) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -252,14 +255,14 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.ConsolidationLevel = {this.ConsolidationLevel}");
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
-            toStringOutput.Add($"this.OriginalAmount = {(this.OriginalAmount == null ? "null" : this.OriginalAmount)}");
-            toStringOutput.Add($"this.AppliedAmount = {(this.AppliedAmount == null ? "null" : this.AppliedAmount)}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"this.OriginalAmount = {this.OriginalAmount ?? "null"}");
+            toStringOutput.Add($"this.AppliedAmount = {this.AppliedAmount ?? "null"}");
             toStringOutput.Add($"this.TransactionTime = {this.TransactionTime}");
             toStringOutput.Add($"PaymentMethod = {(this.PaymentMethod == null ? "null" : this.PaymentMethod.ToString())}");
             toStringOutput.Add($"this.TransactionId = {(this.TransactionId == null ? "null" : this.TransactionId.ToString())}");
             toStringOutput.Add($"this.ParentInvoiceNumber = {(this.ParentInvoiceNumber == null ? "null" : this.ParentInvoiceNumber.ToString())}");
-            toStringOutput.Add($"this.RemainingPrepaymentAmount = {(this.RemainingPrepaymentAmount == null ? "null" : this.RemainingPrepaymentAmount)}");
+            toStringOutput.Add($"this.RemainingPrepaymentAmount = {this.RemainingPrepaymentAmount ?? "null"}");
             toStringOutput.Add($"this.Prepayment = {(this.Prepayment == null ? "null" : this.Prepayment.ToString())}");
             toStringOutput.Add($"this.External = {(this.External == null ? "null" : this.External.ToString())}");
 

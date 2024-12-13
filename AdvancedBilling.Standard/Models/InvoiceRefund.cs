@@ -66,12 +66,13 @@ namespace AdvancedBilling.Standard.Models
             this.Memo = memo;
             this.OriginalAmount = originalAmount;
             this.AppliedAmount = appliedAmount;
+
             if (gatewayTransactionId != null)
             {
                 this.GatewayTransactionId = gatewayTransactionId;
             }
-
             this.GatewayUsed = gatewayUsed;
+
             if (gatewayHandle != null)
             {
                 this.GatewayHandle = gatewayHandle;
@@ -81,7 +82,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.AchLateReject = achLateReject;
             }
-
         }
 
         /// <summary>
@@ -178,14 +178,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"InvoiceRefund : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetGatewayTransactionId()
         {
@@ -193,7 +191,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetGatewayHandle()
         {
@@ -201,7 +199,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetAchLateReject()
         {
@@ -238,26 +236,31 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is InvoiceRefund other &&                ((this.TransactionId == null && other.TransactionId == null) || (this.TransactionId?.Equals(other.TransactionId) == true)) &&
-                ((this.PaymentId == null && other.PaymentId == null) || (this.PaymentId?.Equals(other.PaymentId) == true)) &&
-                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                ((this.OriginalAmount == null && other.OriginalAmount == null) || (this.OriginalAmount?.Equals(other.OriginalAmount) == true)) &&
-                ((this.AppliedAmount == null && other.AppliedAmount == null) || (this.AppliedAmount?.Equals(other.AppliedAmount) == true)) &&
-                ((this.GatewayTransactionId == null && other.GatewayTransactionId == null) || (this.GatewayTransactionId?.Equals(other.GatewayTransactionId) == true)) &&
-                ((this.GatewayUsed == null && other.GatewayUsed == null) || (this.GatewayUsed?.Equals(other.GatewayUsed) == true)) &&
-                ((this.GatewayHandle == null && other.GatewayHandle == null) || (this.GatewayHandle?.Equals(other.GatewayHandle) == true)) &&
-                ((this.AchLateReject == null && other.AchLateReject == null) || (this.AchLateReject?.Equals(other.AchLateReject) == true));
+            return obj is InvoiceRefund other &&
+                (this.TransactionId == null && other.TransactionId == null ||
+                 this.TransactionId?.Equals(other.TransactionId) == true) &&
+                (this.PaymentId == null && other.PaymentId == null ||
+                 this.PaymentId?.Equals(other.PaymentId) == true) &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.OriginalAmount == null && other.OriginalAmount == null ||
+                 this.OriginalAmount?.Equals(other.OriginalAmount) == true) &&
+                (this.AppliedAmount == null && other.AppliedAmount == null ||
+                 this.AppliedAmount?.Equals(other.AppliedAmount) == true) &&
+                (this.GatewayTransactionId == null && other.GatewayTransactionId == null ||
+                 this.GatewayTransactionId?.Equals(other.GatewayTransactionId) == true) &&
+                (this.GatewayUsed == null && other.GatewayUsed == null ||
+                 this.GatewayUsed?.Equals(other.GatewayUsed) == true) &&
+                (this.GatewayHandle == null && other.GatewayHandle == null ||
+                 this.GatewayHandle?.Equals(other.GatewayHandle) == true) &&
+                (this.AchLateReject == null && other.AchLateReject == null ||
+                 this.AchLateReject?.Equals(other.AchLateReject) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -266,12 +269,12 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.TransactionId = {(this.TransactionId == null ? "null" : this.TransactionId.ToString())}");
             toStringOutput.Add($"this.PaymentId = {(this.PaymentId == null ? "null" : this.PaymentId.ToString())}");
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
-            toStringOutput.Add($"this.OriginalAmount = {(this.OriginalAmount == null ? "null" : this.OriginalAmount)}");
-            toStringOutput.Add($"this.AppliedAmount = {(this.AppliedAmount == null ? "null" : this.AppliedAmount)}");
-            toStringOutput.Add($"this.GatewayTransactionId = {(this.GatewayTransactionId == null ? "null" : this.GatewayTransactionId)}");
-            toStringOutput.Add($"this.GatewayUsed = {(this.GatewayUsed == null ? "null" : this.GatewayUsed)}");
-            toStringOutput.Add($"this.GatewayHandle = {(this.GatewayHandle == null ? "null" : this.GatewayHandle)}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"this.OriginalAmount = {this.OriginalAmount ?? "null"}");
+            toStringOutput.Add($"this.AppliedAmount = {this.AppliedAmount ?? "null"}");
+            toStringOutput.Add($"this.GatewayTransactionId = {this.GatewayTransactionId ?? "null"}");
+            toStringOutput.Add($"this.GatewayUsed = {this.GatewayUsed ?? "null"}");
+            toStringOutput.Add($"this.GatewayHandle = {this.GatewayHandle ?? "null"}");
             toStringOutput.Add($"this.AchLateReject = {(this.AchLateReject == null ? "null" : this.AchLateReject.ToString())}");
 
             base.ToString(toStringOutput);

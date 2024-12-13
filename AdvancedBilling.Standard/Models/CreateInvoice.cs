@@ -130,36 +130,40 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"CreateInvoice : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is CreateInvoice other &&                ((this.LineItems == null && other.LineItems == null) || (this.LineItems?.Equals(other.LineItems) == true)) &&
-                ((this.IssueDate == null && other.IssueDate == null) || (this.IssueDate?.Equals(other.IssueDate) == true)) &&
-                ((this.NetTerms == null && other.NetTerms == null) || (this.NetTerms?.Equals(other.NetTerms) == true)) &&
-                ((this.PaymentInstructions == null && other.PaymentInstructions == null) || (this.PaymentInstructions?.Equals(other.PaymentInstructions) == true)) &&
-                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                ((this.SellerAddress == null && other.SellerAddress == null) || (this.SellerAddress?.Equals(other.SellerAddress) == true)) &&
-                ((this.BillingAddress == null && other.BillingAddress == null) || (this.BillingAddress?.Equals(other.BillingAddress) == true)) &&
-                ((this.ShippingAddress == null && other.ShippingAddress == null) || (this.ShippingAddress?.Equals(other.ShippingAddress) == true)) &&
-                ((this.Coupons == null && other.Coupons == null) || (this.Coupons?.Equals(other.Coupons) == true)) &&
-                ((this.Status == null && other.Status == null) || (this.Status?.Equals(other.Status) == true));
+            return obj is CreateInvoice other &&
+                (this.LineItems == null && other.LineItems == null ||
+                 this.LineItems?.Equals(other.LineItems) == true) &&
+                (this.IssueDate == null && other.IssueDate == null ||
+                 this.IssueDate?.Equals(other.IssueDate) == true) &&
+                (this.NetTerms == null && other.NetTerms == null ||
+                 this.NetTerms?.Equals(other.NetTerms) == true) &&
+                (this.PaymentInstructions == null && other.PaymentInstructions == null ||
+                 this.PaymentInstructions?.Equals(other.PaymentInstructions) == true) &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.SellerAddress == null && other.SellerAddress == null ||
+                 this.SellerAddress?.Equals(other.SellerAddress) == true) &&
+                (this.BillingAddress == null && other.BillingAddress == null ||
+                 this.BillingAddress?.Equals(other.BillingAddress) == true) &&
+                (this.ShippingAddress == null && other.ShippingAddress == null ||
+                 this.ShippingAddress?.Equals(other.ShippingAddress) == true) &&
+                (this.Coupons == null && other.Coupons == null ||
+                 this.Coupons?.Equals(other.Coupons) == true) &&
+                (this.Status == null && other.Status == null ||
+                 this.Status?.Equals(other.Status) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -169,8 +173,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.LineItems = {(this.LineItems == null ? "null" : $"[{string.Join(", ", this.LineItems)} ]")}");
             toStringOutput.Add($"this.IssueDate = {(this.IssueDate == null ? "null" : this.IssueDate.ToString())}");
             toStringOutput.Add($"this.NetTerms = {(this.NetTerms == null ? "null" : this.NetTerms.ToString())}");
-            toStringOutput.Add($"this.PaymentInstructions = {(this.PaymentInstructions == null ? "null" : this.PaymentInstructions)}");
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
+            toStringOutput.Add($"this.PaymentInstructions = {this.PaymentInstructions ?? "null"}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
             toStringOutput.Add($"this.SellerAddress = {(this.SellerAddress == null ? "null" : this.SellerAddress.ToString())}");
             toStringOutput.Add($"this.BillingAddress = {(this.BillingAddress == null ? "null" : this.BillingAddress.ToString())}");
             toStringOutput.Add($"this.ShippingAddress = {(this.ShippingAddress == null ? "null" : this.ShippingAddress.ToString())}");

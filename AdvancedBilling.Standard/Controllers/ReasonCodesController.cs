@@ -101,6 +101,8 @@ namespace AdvancedBilling.Standard.Controllers
                   .Parameters(_parameters => _parameters
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))))
+              .ResponseHandler(_responseHandler => _responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -162,15 +164,16 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(_template => _template.Setup("reason_code_id", reasonCodeId))
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This method gives a merchant the option to delete one reason code from the Churn Reason Codes. This code will be immediately removed. This action is not reversable.
         /// </summary>
         /// <param name="reasonCodeId">Required parameter: The Advanced Billing id of the reason code.</param>
-        /// <returns>Returns the Models.ReasonCodesJsonResponse response from the API call.</returns>
-        public Models.ReasonCodesJsonResponse DeleteReasonCode(
+        /// <returns>Returns the Models.OkResponse response from the API call.</returns>
+        public Models.OkResponse DeleteReasonCode(
                 int reasonCodeId)
             => CoreHelper.RunTask(DeleteReasonCodeAsync(reasonCodeId));
 
@@ -179,11 +182,11 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="reasonCodeId">Required parameter: The Advanced Billing id of the reason code.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ReasonCodesJsonResponse response from the API call.</returns>
-        public async Task<Models.ReasonCodesJsonResponse> DeleteReasonCodeAsync(
+        /// <returns>Returns the Models.OkResponse response from the API call.</returns>
+        public async Task<Models.OkResponse> DeleteReasonCodeAsync(
                 int reasonCodeId,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ReasonCodesJsonResponse>()
+            => await CreateApiCall<Models.OkResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
                   .Setup(HttpMethod.Delete, "/reason_codes/{reason_code_id}.json")
                   .WithAuth("BasicAuth")

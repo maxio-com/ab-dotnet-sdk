@@ -1,4 +1,4 @@
-// <copyright file="ReasonCodesJsonResponse.cs" company="APIMatic">
+// <copyright file="OkResponse.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
 using System;
@@ -17,22 +17,22 @@ using Newtonsoft.Json.Converters;
 namespace AdvancedBilling.Standard.Models
 {
     /// <summary>
-    /// ReasonCodesJsonResponse.
+    /// OkResponse.
     /// </summary>
-    public class ReasonCodesJsonResponse : BaseModel
+    public class OkResponse : BaseModel
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ReasonCodesJsonResponse"/> class.
+        /// Initializes a new instance of the <see cref="OkResponse"/> class.
         /// </summary>
-        public ReasonCodesJsonResponse()
+        public OkResponse()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ReasonCodesJsonResponse"/> class.
+        /// Initializes a new instance of the <see cref="OkResponse"/> class.
         /// </summary>
         /// <param name="ok">ok.</param>
-        public ReasonCodesJsonResponse(
+        public OkResponse(
             string ok = null)
         {
             this.Ok = ok;
@@ -48,34 +48,29 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
-            return $"ReasonCodesJsonResponse : ({string.Join(", ", toStringOutput)})";
+            return $"OkResponse : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ReasonCodesJsonResponse other &&                ((this.Ok == null && other.Ok == null) || (this.Ok?.Equals(other.Ok) == true));
+            return obj is OkResponse other &&
+                (this.Ok == null && other.Ok == null ||
+                 this.Ok?.Equals(other.Ok) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Ok = {(this.Ok == null ? "null" : this.Ok)}");
+            toStringOutput.Add($"this.Ok = {this.Ok ?? "null"}");
 
             base.ToString(toStringOutput);
         }

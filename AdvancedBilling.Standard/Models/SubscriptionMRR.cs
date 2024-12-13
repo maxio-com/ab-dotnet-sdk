@@ -66,29 +66,24 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SubscriptionMRR : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SubscriptionMRR other &&                this.SubscriptionId.Equals(other.SubscriptionId) &&
-                this.MrrAmountInCents.Equals(other.MrrAmountInCents) &&
-                ((this.Breakouts == null && other.Breakouts == null) || (this.Breakouts?.Equals(other.Breakouts) == true));
+            return obj is SubscriptionMRR other &&
+                (this.SubscriptionId.Equals(other.SubscriptionId)) &&
+                (this.MrrAmountInCents.Equals(other.MrrAmountInCents)) &&
+                (this.Breakouts == null && other.Breakouts == null ||
+                 this.Breakouts?.Equals(other.Breakouts) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

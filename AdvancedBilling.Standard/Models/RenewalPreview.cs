@@ -121,35 +121,38 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"RenewalPreview : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is RenewalPreview other &&                ((this.NextAssessmentAt == null && other.NextAssessmentAt == null) || (this.NextAssessmentAt?.Equals(other.NextAssessmentAt) == true)) &&
-                ((this.SubtotalInCents == null && other.SubtotalInCents == null) || (this.SubtotalInCents?.Equals(other.SubtotalInCents) == true)) &&
-                ((this.TotalTaxInCents == null && other.TotalTaxInCents == null) || (this.TotalTaxInCents?.Equals(other.TotalTaxInCents) == true)) &&
-                ((this.TotalDiscountInCents == null && other.TotalDiscountInCents == null) || (this.TotalDiscountInCents?.Equals(other.TotalDiscountInCents) == true)) &&
-                ((this.TotalInCents == null && other.TotalInCents == null) || (this.TotalInCents?.Equals(other.TotalInCents) == true)) &&
-                ((this.ExistingBalanceInCents == null && other.ExistingBalanceInCents == null) || (this.ExistingBalanceInCents?.Equals(other.ExistingBalanceInCents) == true)) &&
-                ((this.TotalAmountDueInCents == null && other.TotalAmountDueInCents == null) || (this.TotalAmountDueInCents?.Equals(other.TotalAmountDueInCents) == true)) &&
-                ((this.UncalculatedTaxes == null && other.UncalculatedTaxes == null) || (this.UncalculatedTaxes?.Equals(other.UncalculatedTaxes) == true)) &&
-                ((this.LineItems == null && other.LineItems == null) || (this.LineItems?.Equals(other.LineItems) == true));
+            return obj is RenewalPreview other &&
+                (this.NextAssessmentAt == null && other.NextAssessmentAt == null ||
+                 this.NextAssessmentAt?.Equals(other.NextAssessmentAt) == true) &&
+                (this.SubtotalInCents == null && other.SubtotalInCents == null ||
+                 this.SubtotalInCents?.Equals(other.SubtotalInCents) == true) &&
+                (this.TotalTaxInCents == null && other.TotalTaxInCents == null ||
+                 this.TotalTaxInCents?.Equals(other.TotalTaxInCents) == true) &&
+                (this.TotalDiscountInCents == null && other.TotalDiscountInCents == null ||
+                 this.TotalDiscountInCents?.Equals(other.TotalDiscountInCents) == true) &&
+                (this.TotalInCents == null && other.TotalInCents == null ||
+                 this.TotalInCents?.Equals(other.TotalInCents) == true) &&
+                (this.ExistingBalanceInCents == null && other.ExistingBalanceInCents == null ||
+                 this.ExistingBalanceInCents?.Equals(other.ExistingBalanceInCents) == true) &&
+                (this.TotalAmountDueInCents == null && other.TotalAmountDueInCents == null ||
+                 this.TotalAmountDueInCents?.Equals(other.TotalAmountDueInCents) == true) &&
+                (this.UncalculatedTaxes == null && other.UncalculatedTaxes == null ||
+                 this.UncalculatedTaxes?.Equals(other.UncalculatedTaxes) == true) &&
+                (this.LineItems == null && other.LineItems == null ||
+                 this.LineItems?.Equals(other.LineItems) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

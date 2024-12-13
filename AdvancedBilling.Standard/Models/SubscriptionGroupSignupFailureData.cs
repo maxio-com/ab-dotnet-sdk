@@ -111,34 +111,36 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SubscriptionGroupSignupFailureData : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SubscriptionGroupSignupFailureData other &&                ((this.PayerId == null && other.PayerId == null) || (this.PayerId?.Equals(other.PayerId) == true)) &&
-                ((this.PayerReference == null && other.PayerReference == null) || (this.PayerReference?.Equals(other.PayerReference) == true)) &&
-                ((this.PaymentProfileId == null && other.PaymentProfileId == null) || (this.PaymentProfileId?.Equals(other.PaymentProfileId) == true)) &&
-                ((this.PaymentCollectionMethod == null && other.PaymentCollectionMethod == null) || (this.PaymentCollectionMethod?.Equals(other.PaymentCollectionMethod) == true)) &&
-                ((this.PayerAttributes == null && other.PayerAttributes == null) || (this.PayerAttributes?.Equals(other.PayerAttributes) == true)) &&
-                ((this.CreditCardAttributes == null && other.CreditCardAttributes == null) || (this.CreditCardAttributes?.Equals(other.CreditCardAttributes) == true)) &&
-                ((this.BankAccountAttributes == null && other.BankAccountAttributes == null) || (this.BankAccountAttributes?.Equals(other.BankAccountAttributes) == true)) &&
-                ((this.Subscriptions == null && other.Subscriptions == null) || (this.Subscriptions?.Equals(other.Subscriptions) == true));
+            return obj is SubscriptionGroupSignupFailureData other &&
+                (this.PayerId == null && other.PayerId == null ||
+                 this.PayerId?.Equals(other.PayerId) == true) &&
+                (this.PayerReference == null && other.PayerReference == null ||
+                 this.PayerReference?.Equals(other.PayerReference) == true) &&
+                (this.PaymentProfileId == null && other.PaymentProfileId == null ||
+                 this.PaymentProfileId?.Equals(other.PaymentProfileId) == true) &&
+                (this.PaymentCollectionMethod == null && other.PaymentCollectionMethod == null ||
+                 this.PaymentCollectionMethod?.Equals(other.PaymentCollectionMethod) == true) &&
+                (this.PayerAttributes == null && other.PayerAttributes == null ||
+                 this.PayerAttributes?.Equals(other.PayerAttributes) == true) &&
+                (this.CreditCardAttributes == null && other.CreditCardAttributes == null ||
+                 this.CreditCardAttributes?.Equals(other.CreditCardAttributes) == true) &&
+                (this.BankAccountAttributes == null && other.BankAccountAttributes == null ||
+                 this.BankAccountAttributes?.Equals(other.BankAccountAttributes) == true) &&
+                (this.Subscriptions == null && other.Subscriptions == null ||
+                 this.Subscriptions?.Equals(other.Subscriptions) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -146,9 +148,9 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.PayerId = {(this.PayerId == null ? "null" : this.PayerId.ToString())}");
-            toStringOutput.Add($"this.PayerReference = {(this.PayerReference == null ? "null" : this.PayerReference)}");
+            toStringOutput.Add($"this.PayerReference = {this.PayerReference ?? "null"}");
             toStringOutput.Add($"this.PaymentProfileId = {(this.PaymentProfileId == null ? "null" : this.PaymentProfileId.ToString())}");
-            toStringOutput.Add($"this.PaymentCollectionMethod = {(this.PaymentCollectionMethod == null ? "null" : this.PaymentCollectionMethod)}");
+            toStringOutput.Add($"this.PaymentCollectionMethod = {this.PaymentCollectionMethod ?? "null"}");
             toStringOutput.Add($"this.PayerAttributes = {(this.PayerAttributes == null ? "null" : this.PayerAttributes.ToString())}");
             toStringOutput.Add($"this.CreditCardAttributes = {(this.CreditCardAttributes == null ? "null" : this.CreditCardAttributes.ToString())}");
             toStringOutput.Add($"this.BankAccountAttributes = {(this.BankAccountAttributes == null ? "null" : this.BankAccountAttributes.ToString())}");

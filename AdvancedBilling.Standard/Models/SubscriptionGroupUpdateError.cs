@@ -33,7 +33,7 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         /// <param name="members">members.</param>
         public SubscriptionGroupUpdateError(
-            List<Models.SubscriptionGroupMemberError> members = null)
+            List<string> members = null)
         {
             this.Members = members;
         }
@@ -42,33 +42,28 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Members.
         /// </summary>
         [JsonProperty("members", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Models.SubscriptionGroupMemberError> Members { get; set; }
+        public List<string> Members { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SubscriptionGroupUpdateError : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SubscriptionGroupUpdateError other &&                ((this.Members == null && other.Members == null) || (this.Members?.Equals(other.Members) == true));
+            return obj is SubscriptionGroupUpdateError other &&
+                (this.Members == null && other.Members == null ||
+                 this.Members?.Equals(other.Members) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

@@ -86,6 +86,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="taxAmount">tax_amount.</param>
         /// <param name="totalAmount">total_amount.</param>
         /// <param name="creditAmount">credit_amount.</param>
+        /// <param name="debitAmount">debit_amount.</param>
         /// <param name="refundAmount">refund_amount.</param>
         /// <param name="paidAmount">paid_amount.</param>
         /// <param name="dueAmount">due_amount.</param>
@@ -93,10 +94,12 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="discounts">discounts.</param>
         /// <param name="taxes">taxes.</param>
         /// <param name="credits">credits.</param>
+        /// <param name="debits">debits.</param>
         /// <param name="refunds">refunds.</param>
         /// <param name="payments">payments.</param>
         /// <param name="customFields">custom_fields.</param>
         /// <param name="displaySettings">display_settings.</param>
+        /// <param name="avataxDetails">avatax_details.</param>
         /// <param name="publicUrl">public_url.</param>
         /// <param name="previousBalanceData">previous_balance_data.</param>
         /// <param name="publicUrlExpiresOn">public_url_expires_on.</param>
@@ -140,6 +143,7 @@ namespace AdvancedBilling.Standard.Models
             string taxAmount = null,
             string totalAmount = null,
             string creditAmount = null,
+            string debitAmount = null,
             string refundAmount = null,
             string paidAmount = null,
             string dueAmount = null,
@@ -147,10 +151,12 @@ namespace AdvancedBilling.Standard.Models
             List<Models.InvoiceDiscount> discounts = null,
             List<Models.InvoiceTax> taxes = null,
             List<Models.InvoiceCredit> credits = null,
+            List<Models.InvoiceDebit> debits = null,
             List<Models.InvoiceRefund> refunds = null,
             List<Models.InvoicePayment> payments = null,
             List<Models.InvoiceCustomField> customFields = null,
             Models.InvoiceDisplaySettings displaySettings = null,
+            Models.InvoiceAvataxDetails avataxDetails = null,
             string publicUrl = null,
             Models.InvoicePreviousBalance previousBalanceData = null,
             DateTime? publicUrlExpiresOn = null)
@@ -167,22 +173,23 @@ namespace AdvancedBilling.Standard.Models
             this.UpdatedAt = updatedAt;
             this.IssueDate = issueDate;
             this.DueDate = dueDate;
+
             if (paidDate != null)
             {
                 this.PaidDate = paidDate;
             }
-
             this.Status = status;
             this.Role = role;
+
             if (parentInvoiceId != null)
             {
                 this.ParentInvoiceId = parentInvoiceId;
             }
-
             this.CollectionMethod = collectionMethod;
             this.PaymentInstructions = paymentInstructions;
             this.Currency = currency;
             this.ConsolidationLevel = consolidationLevel;
+
             if (parentInvoiceUid != null)
             {
                 this.ParentInvoiceUid = parentInvoiceUid;
@@ -202,7 +209,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.GroupPrimarySubscriptionId = groupPrimarySubscriptionId;
             }
-
             this.ProductName = productName;
             this.ProductFamilyName = productFamilyName;
             this.Seller = seller;
@@ -218,6 +224,7 @@ namespace AdvancedBilling.Standard.Models
             this.TaxAmount = taxAmount;
             this.TotalAmount = totalAmount;
             this.CreditAmount = creditAmount;
+            this.DebitAmount = debitAmount;
             this.RefundAmount = refundAmount;
             this.PaidAmount = paidAmount;
             this.DueAmount = dueAmount;
@@ -225,10 +232,12 @@ namespace AdvancedBilling.Standard.Models
             this.Discounts = discounts;
             this.Taxes = taxes;
             this.Credits = credits;
+            this.Debits = debits;
             this.Refunds = refunds;
             this.Payments = payments;
             this.CustomFields = customFields;
             this.DisplaySettings = displaySettings;
+            this.AvataxDetails = avataxDetails;
             this.PublicUrl = publicUrl;
             this.PreviousBalanceData = previousBalanceData;
             this.PublicUrlExpiresOn = publicUrlExpiresOn;
@@ -558,6 +567,12 @@ namespace AdvancedBilling.Standard.Models
         public string CreditAmount { get; set; }
 
         /// <summary>
+        /// Gets or sets DebitAmount.
+        /// </summary>
+        [JsonProperty("debit_amount", NullValueHandling = NullValueHandling.Ignore)]
+        public string DebitAmount { get; set; }
+
+        /// <summary>
         /// Gets or sets RefundAmount.
         /// </summary>
         [JsonProperty("refund_amount", NullValueHandling = NullValueHandling.Ignore)]
@@ -600,6 +615,12 @@ namespace AdvancedBilling.Standard.Models
         public List<Models.InvoiceCredit> Credits { get; set; }
 
         /// <summary>
+        /// Gets or sets Debits.
+        /// </summary>
+        [JsonProperty("debits", NullValueHandling = NullValueHandling.Ignore)]
+        public List<Models.InvoiceDebit> Debits { get; set; }
+
+        /// <summary>
         /// Gets or sets Refunds.
         /// </summary>
         [JsonProperty("refunds", NullValueHandling = NullValueHandling.Ignore)]
@@ -624,6 +645,12 @@ namespace AdvancedBilling.Standard.Models
         public Models.InvoiceDisplaySettings DisplaySettings { get; set; }
 
         /// <summary>
+        /// Gets or sets AvataxDetails.
+        /// </summary>
+        [JsonProperty("avatax_details", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.InvoiceAvataxDetails AvataxDetails { get; set; }
+
+        /// <summary>
         /// The public URL of the invoice
         /// </summary>
         [JsonProperty("public_url", NullValueHandling = NullValueHandling.Ignore)]
@@ -646,14 +673,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"Invoice : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetPaidDate()
         {
@@ -661,7 +686,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetParentInvoiceId()
         {
@@ -669,7 +694,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetParentInvoiceUid()
         {
@@ -677,7 +702,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetSubscriptionGroupId()
         {
@@ -685,7 +710,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetParentInvoiceNumber()
         {
@@ -693,7 +718,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetGroupPrimarySubscriptionId()
         {
@@ -757,70 +782,125 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is Invoice other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.Uid == null && other.Uid == null) || (this.Uid?.Equals(other.Uid) == true)) &&
-                ((this.SiteId == null && other.SiteId == null) || (this.SiteId?.Equals(other.SiteId) == true)) &&
-                ((this.CustomerId == null && other.CustomerId == null) || (this.CustomerId?.Equals(other.CustomerId) == true)) &&
-                ((this.SubscriptionId == null && other.SubscriptionId == null) || (this.SubscriptionId?.Equals(other.SubscriptionId) == true)) &&
-                ((this.Number == null && other.Number == null) || (this.Number?.Equals(other.Number) == true)) &&
-                ((this.SequenceNumber == null && other.SequenceNumber == null) || (this.SequenceNumber?.Equals(other.SequenceNumber) == true)) &&
-                ((this.TransactionTime == null && other.TransactionTime == null) || (this.TransactionTime?.Equals(other.TransactionTime) == true)) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true)) &&
-                ((this.UpdatedAt == null && other.UpdatedAt == null) || (this.UpdatedAt?.Equals(other.UpdatedAt) == true)) &&
-                ((this.IssueDate == null && other.IssueDate == null) || (this.IssueDate?.Equals(other.IssueDate) == true)) &&
-                ((this.DueDate == null && other.DueDate == null) || (this.DueDate?.Equals(other.DueDate) == true)) &&
-                ((this.PaidDate == null && other.PaidDate == null) || (this.PaidDate?.Equals(other.PaidDate) == true)) &&
-                ((this.Status == null && other.Status == null) || (this.Status?.Equals(other.Status) == true)) &&
-                ((this.Role == null && other.Role == null) || (this.Role?.Equals(other.Role) == true)) &&
-                ((this.ParentInvoiceId == null && other.ParentInvoiceId == null) || (this.ParentInvoiceId?.Equals(other.ParentInvoiceId) == true)) &&
-                ((this.CollectionMethod == null && other.CollectionMethod == null) || (this.CollectionMethod?.Equals(other.CollectionMethod) == true)) &&
-                ((this.PaymentInstructions == null && other.PaymentInstructions == null) || (this.PaymentInstructions?.Equals(other.PaymentInstructions) == true)) &&
-                ((this.Currency == null && other.Currency == null) || (this.Currency?.Equals(other.Currency) == true)) &&
-                ((this.ConsolidationLevel == null && other.ConsolidationLevel == null) || (this.ConsolidationLevel?.Equals(other.ConsolidationLevel) == true)) &&
-                ((this.ParentInvoiceUid == null && other.ParentInvoiceUid == null) || (this.ParentInvoiceUid?.Equals(other.ParentInvoiceUid) == true)) &&
-                ((this.SubscriptionGroupId == null && other.SubscriptionGroupId == null) || (this.SubscriptionGroupId?.Equals(other.SubscriptionGroupId) == true)) &&
-                ((this.ParentInvoiceNumber == null && other.ParentInvoiceNumber == null) || (this.ParentInvoiceNumber?.Equals(other.ParentInvoiceNumber) == true)) &&
-                ((this.GroupPrimarySubscriptionId == null && other.GroupPrimarySubscriptionId == null) || (this.GroupPrimarySubscriptionId?.Equals(other.GroupPrimarySubscriptionId) == true)) &&
-                ((this.ProductName == null && other.ProductName == null) || (this.ProductName?.Equals(other.ProductName) == true)) &&
-                ((this.ProductFamilyName == null && other.ProductFamilyName == null) || (this.ProductFamilyName?.Equals(other.ProductFamilyName) == true)) &&
-                ((this.Seller == null && other.Seller == null) || (this.Seller?.Equals(other.Seller) == true)) &&
-                ((this.Customer == null && other.Customer == null) || (this.Customer?.Equals(other.Customer) == true)) &&
-                ((this.Payer == null && other.Payer == null) || (this.Payer?.Equals(other.Payer) == true)) &&
-                ((this.RecipientEmails == null && other.RecipientEmails == null) || (this.RecipientEmails?.Equals(other.RecipientEmails) == true)) &&
-                ((this.NetTerms == null && other.NetTerms == null) || (this.NetTerms?.Equals(other.NetTerms) == true)) &&
-                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                ((this.BillingAddress == null && other.BillingAddress == null) || (this.BillingAddress?.Equals(other.BillingAddress) == true)) &&
-                ((this.ShippingAddress == null && other.ShippingAddress == null) || (this.ShippingAddress?.Equals(other.ShippingAddress) == true)) &&
-                ((this.SubtotalAmount == null && other.SubtotalAmount == null) || (this.SubtotalAmount?.Equals(other.SubtotalAmount) == true)) &&
-                ((this.DiscountAmount == null && other.DiscountAmount == null) || (this.DiscountAmount?.Equals(other.DiscountAmount) == true)) &&
-                ((this.TaxAmount == null && other.TaxAmount == null) || (this.TaxAmount?.Equals(other.TaxAmount) == true)) &&
-                ((this.TotalAmount == null && other.TotalAmount == null) || (this.TotalAmount?.Equals(other.TotalAmount) == true)) &&
-                ((this.CreditAmount == null && other.CreditAmount == null) || (this.CreditAmount?.Equals(other.CreditAmount) == true)) &&
-                ((this.RefundAmount == null && other.RefundAmount == null) || (this.RefundAmount?.Equals(other.RefundAmount) == true)) &&
-                ((this.PaidAmount == null && other.PaidAmount == null) || (this.PaidAmount?.Equals(other.PaidAmount) == true)) &&
-                ((this.DueAmount == null && other.DueAmount == null) || (this.DueAmount?.Equals(other.DueAmount) == true)) &&
-                ((this.LineItems == null && other.LineItems == null) || (this.LineItems?.Equals(other.LineItems) == true)) &&
-                ((this.Discounts == null && other.Discounts == null) || (this.Discounts?.Equals(other.Discounts) == true)) &&
-                ((this.Taxes == null && other.Taxes == null) || (this.Taxes?.Equals(other.Taxes) == true)) &&
-                ((this.Credits == null && other.Credits == null) || (this.Credits?.Equals(other.Credits) == true)) &&
-                ((this.Refunds == null && other.Refunds == null) || (this.Refunds?.Equals(other.Refunds) == true)) &&
-                ((this.Payments == null && other.Payments == null) || (this.Payments?.Equals(other.Payments) == true)) &&
-                ((this.CustomFields == null && other.CustomFields == null) || (this.CustomFields?.Equals(other.CustomFields) == true)) &&
-                ((this.DisplaySettings == null && other.DisplaySettings == null) || (this.DisplaySettings?.Equals(other.DisplaySettings) == true)) &&
-                ((this.PublicUrl == null && other.PublicUrl == null) || (this.PublicUrl?.Equals(other.PublicUrl) == true)) &&
-                ((this.PreviousBalanceData == null && other.PreviousBalanceData == null) || (this.PreviousBalanceData?.Equals(other.PreviousBalanceData) == true)) &&
-                ((this.PublicUrlExpiresOn == null && other.PublicUrlExpiresOn == null) || (this.PublicUrlExpiresOn?.Equals(other.PublicUrlExpiresOn) == true));
+            return obj is Invoice other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.Uid == null && other.Uid == null ||
+                 this.Uid?.Equals(other.Uid) == true) &&
+                (this.SiteId == null && other.SiteId == null ||
+                 this.SiteId?.Equals(other.SiteId) == true) &&
+                (this.CustomerId == null && other.CustomerId == null ||
+                 this.CustomerId?.Equals(other.CustomerId) == true) &&
+                (this.SubscriptionId == null && other.SubscriptionId == null ||
+                 this.SubscriptionId?.Equals(other.SubscriptionId) == true) &&
+                (this.Number == null && other.Number == null ||
+                 this.Number?.Equals(other.Number) == true) &&
+                (this.SequenceNumber == null && other.SequenceNumber == null ||
+                 this.SequenceNumber?.Equals(other.SequenceNumber) == true) &&
+                (this.TransactionTime == null && other.TransactionTime == null ||
+                 this.TransactionTime?.Equals(other.TransactionTime) == true) &&
+                (this.CreatedAt == null && other.CreatedAt == null ||
+                 this.CreatedAt?.Equals(other.CreatedAt) == true) &&
+                (this.UpdatedAt == null && other.UpdatedAt == null ||
+                 this.UpdatedAt?.Equals(other.UpdatedAt) == true) &&
+                (this.IssueDate == null && other.IssueDate == null ||
+                 this.IssueDate?.Equals(other.IssueDate) == true) &&
+                (this.DueDate == null && other.DueDate == null ||
+                 this.DueDate?.Equals(other.DueDate) == true) &&
+                (this.PaidDate == null && other.PaidDate == null ||
+                 this.PaidDate?.Equals(other.PaidDate) == true) &&
+                (this.Status == null && other.Status == null ||
+                 this.Status?.Equals(other.Status) == true) &&
+                (this.Role == null && other.Role == null ||
+                 this.Role?.Equals(other.Role) == true) &&
+                (this.ParentInvoiceId == null && other.ParentInvoiceId == null ||
+                 this.ParentInvoiceId?.Equals(other.ParentInvoiceId) == true) &&
+                (this.CollectionMethod == null && other.CollectionMethod == null ||
+                 this.CollectionMethod?.Equals(other.CollectionMethod) == true) &&
+                (this.PaymentInstructions == null && other.PaymentInstructions == null ||
+                 this.PaymentInstructions?.Equals(other.PaymentInstructions) == true) &&
+                (this.Currency == null && other.Currency == null ||
+                 this.Currency?.Equals(other.Currency) == true) &&
+                (this.ConsolidationLevel == null && other.ConsolidationLevel == null ||
+                 this.ConsolidationLevel?.Equals(other.ConsolidationLevel) == true) &&
+                (this.ParentInvoiceUid == null && other.ParentInvoiceUid == null ||
+                 this.ParentInvoiceUid?.Equals(other.ParentInvoiceUid) == true) &&
+                (this.SubscriptionGroupId == null && other.SubscriptionGroupId == null ||
+                 this.SubscriptionGroupId?.Equals(other.SubscriptionGroupId) == true) &&
+                (this.ParentInvoiceNumber == null && other.ParentInvoiceNumber == null ||
+                 this.ParentInvoiceNumber?.Equals(other.ParentInvoiceNumber) == true) &&
+                (this.GroupPrimarySubscriptionId == null && other.GroupPrimarySubscriptionId == null ||
+                 this.GroupPrimarySubscriptionId?.Equals(other.GroupPrimarySubscriptionId) == true) &&
+                (this.ProductName == null && other.ProductName == null ||
+                 this.ProductName?.Equals(other.ProductName) == true) &&
+                (this.ProductFamilyName == null && other.ProductFamilyName == null ||
+                 this.ProductFamilyName?.Equals(other.ProductFamilyName) == true) &&
+                (this.Seller == null && other.Seller == null ||
+                 this.Seller?.Equals(other.Seller) == true) &&
+                (this.Customer == null && other.Customer == null ||
+                 this.Customer?.Equals(other.Customer) == true) &&
+                (this.Payer == null && other.Payer == null ||
+                 this.Payer?.Equals(other.Payer) == true) &&
+                (this.RecipientEmails == null && other.RecipientEmails == null ||
+                 this.RecipientEmails?.Equals(other.RecipientEmails) == true) &&
+                (this.NetTerms == null && other.NetTerms == null ||
+                 this.NetTerms?.Equals(other.NetTerms) == true) &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.BillingAddress == null && other.BillingAddress == null ||
+                 this.BillingAddress?.Equals(other.BillingAddress) == true) &&
+                (this.ShippingAddress == null && other.ShippingAddress == null ||
+                 this.ShippingAddress?.Equals(other.ShippingAddress) == true) &&
+                (this.SubtotalAmount == null && other.SubtotalAmount == null ||
+                 this.SubtotalAmount?.Equals(other.SubtotalAmount) == true) &&
+                (this.DiscountAmount == null && other.DiscountAmount == null ||
+                 this.DiscountAmount?.Equals(other.DiscountAmount) == true) &&
+                (this.TaxAmount == null && other.TaxAmount == null ||
+                 this.TaxAmount?.Equals(other.TaxAmount) == true) &&
+                (this.TotalAmount == null && other.TotalAmount == null ||
+                 this.TotalAmount?.Equals(other.TotalAmount) == true) &&
+                (this.CreditAmount == null && other.CreditAmount == null ||
+                 this.CreditAmount?.Equals(other.CreditAmount) == true) &&
+                (this.DebitAmount == null && other.DebitAmount == null ||
+                 this.DebitAmount?.Equals(other.DebitAmount) == true) &&
+                (this.RefundAmount == null && other.RefundAmount == null ||
+                 this.RefundAmount?.Equals(other.RefundAmount) == true) &&
+                (this.PaidAmount == null && other.PaidAmount == null ||
+                 this.PaidAmount?.Equals(other.PaidAmount) == true) &&
+                (this.DueAmount == null && other.DueAmount == null ||
+                 this.DueAmount?.Equals(other.DueAmount) == true) &&
+                (this.LineItems == null && other.LineItems == null ||
+                 this.LineItems?.Equals(other.LineItems) == true) &&
+                (this.Discounts == null && other.Discounts == null ||
+                 this.Discounts?.Equals(other.Discounts) == true) &&
+                (this.Taxes == null && other.Taxes == null ||
+                 this.Taxes?.Equals(other.Taxes) == true) &&
+                (this.Credits == null && other.Credits == null ||
+                 this.Credits?.Equals(other.Credits) == true) &&
+                (this.Debits == null && other.Debits == null ||
+                 this.Debits?.Equals(other.Debits) == true) &&
+                (this.Refunds == null && other.Refunds == null ||
+                 this.Refunds?.Equals(other.Refunds) == true) &&
+                (this.Payments == null && other.Payments == null ||
+                 this.Payments?.Equals(other.Payments) == true) &&
+                (this.CustomFields == null && other.CustomFields == null ||
+                 this.CustomFields?.Equals(other.CustomFields) == true) &&
+                (this.DisplaySettings == null && other.DisplaySettings == null ||
+                 this.DisplaySettings?.Equals(other.DisplaySettings) == true) &&
+                (this.AvataxDetails == null && other.AvataxDetails == null ||
+                 this.AvataxDetails?.Equals(other.AvataxDetails) == true) &&
+                (this.PublicUrl == null && other.PublicUrl == null ||
+                 this.PublicUrl?.Equals(other.PublicUrl) == true) &&
+                (this.PreviousBalanceData == null && other.PreviousBalanceData == null ||
+                 this.PreviousBalanceData?.Equals(other.PreviousBalanceData) == true) &&
+                (this.PublicUrlExpiresOn == null && other.PublicUrlExpiresOn == null ||
+                 this.PublicUrlExpiresOn?.Equals(other.PublicUrlExpiresOn) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -828,11 +908,11 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
+            toStringOutput.Add($"this.Uid = {this.Uid ?? "null"}");
             toStringOutput.Add($"this.SiteId = {(this.SiteId == null ? "null" : this.SiteId.ToString())}");
             toStringOutput.Add($"this.CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
-            toStringOutput.Add($"this.Number = {(this.Number == null ? "null" : this.Number)}");
+            toStringOutput.Add($"this.Number = {this.Number ?? "null"}");
             toStringOutput.Add($"this.SequenceNumber = {(this.SequenceNumber == null ? "null" : this.SequenceNumber.ToString())}");
             toStringOutput.Add($"this.TransactionTime = {(this.TransactionTime == null ? "null" : this.TransactionTime.ToString())}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
@@ -844,40 +924,43 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Role = {(this.Role == null ? "null" : this.Role.ToString())}");
             toStringOutput.Add($"this.ParentInvoiceId = {(this.ParentInvoiceId == null ? "null" : this.ParentInvoiceId.ToString())}");
             toStringOutput.Add($"this.CollectionMethod = {(this.CollectionMethod == null ? "null" : this.CollectionMethod.ToString())}");
-            toStringOutput.Add($"this.PaymentInstructions = {(this.PaymentInstructions == null ? "null" : this.PaymentInstructions)}");
-            toStringOutput.Add($"this.Currency = {(this.Currency == null ? "null" : this.Currency)}");
+            toStringOutput.Add($"this.PaymentInstructions = {this.PaymentInstructions ?? "null"}");
+            toStringOutput.Add($"this.Currency = {this.Currency ?? "null"}");
             toStringOutput.Add($"this.ConsolidationLevel = {(this.ConsolidationLevel == null ? "null" : this.ConsolidationLevel.ToString())}");
-            toStringOutput.Add($"this.ParentInvoiceUid = {(this.ParentInvoiceUid == null ? "null" : this.ParentInvoiceUid)}");
+            toStringOutput.Add($"this.ParentInvoiceUid = {this.ParentInvoiceUid ?? "null"}");
             toStringOutput.Add($"this.SubscriptionGroupId = {(this.SubscriptionGroupId == null ? "null" : this.SubscriptionGroupId.ToString())}");
             toStringOutput.Add($"this.ParentInvoiceNumber = {(this.ParentInvoiceNumber == null ? "null" : this.ParentInvoiceNumber.ToString())}");
             toStringOutput.Add($"this.GroupPrimarySubscriptionId = {(this.GroupPrimarySubscriptionId == null ? "null" : this.GroupPrimarySubscriptionId.ToString())}");
-            toStringOutput.Add($"this.ProductName = {(this.ProductName == null ? "null" : this.ProductName)}");
-            toStringOutput.Add($"this.ProductFamilyName = {(this.ProductFamilyName == null ? "null" : this.ProductFamilyName)}");
+            toStringOutput.Add($"this.ProductName = {this.ProductName ?? "null"}");
+            toStringOutput.Add($"this.ProductFamilyName = {this.ProductFamilyName ?? "null"}");
             toStringOutput.Add($"this.Seller = {(this.Seller == null ? "null" : this.Seller.ToString())}");
             toStringOutput.Add($"this.Customer = {(this.Customer == null ? "null" : this.Customer.ToString())}");
             toStringOutput.Add($"this.Payer = {(this.Payer == null ? "null" : this.Payer.ToString())}");
             toStringOutput.Add($"this.RecipientEmails = {(this.RecipientEmails == null ? "null" : $"[{string.Join(", ", this.RecipientEmails)} ]")}");
             toStringOutput.Add($"this.NetTerms = {(this.NetTerms == null ? "null" : this.NetTerms.ToString())}");
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
             toStringOutput.Add($"this.BillingAddress = {(this.BillingAddress == null ? "null" : this.BillingAddress.ToString())}");
             toStringOutput.Add($"this.ShippingAddress = {(this.ShippingAddress == null ? "null" : this.ShippingAddress.ToString())}");
-            toStringOutput.Add($"this.SubtotalAmount = {(this.SubtotalAmount == null ? "null" : this.SubtotalAmount)}");
-            toStringOutput.Add($"this.DiscountAmount = {(this.DiscountAmount == null ? "null" : this.DiscountAmount)}");
-            toStringOutput.Add($"this.TaxAmount = {(this.TaxAmount == null ? "null" : this.TaxAmount)}");
-            toStringOutput.Add($"this.TotalAmount = {(this.TotalAmount == null ? "null" : this.TotalAmount)}");
-            toStringOutput.Add($"this.CreditAmount = {(this.CreditAmount == null ? "null" : this.CreditAmount)}");
-            toStringOutput.Add($"this.RefundAmount = {(this.RefundAmount == null ? "null" : this.RefundAmount)}");
-            toStringOutput.Add($"this.PaidAmount = {(this.PaidAmount == null ? "null" : this.PaidAmount)}");
-            toStringOutput.Add($"this.DueAmount = {(this.DueAmount == null ? "null" : this.DueAmount)}");
+            toStringOutput.Add($"this.SubtotalAmount = {this.SubtotalAmount ?? "null"}");
+            toStringOutput.Add($"this.DiscountAmount = {this.DiscountAmount ?? "null"}");
+            toStringOutput.Add($"this.TaxAmount = {this.TaxAmount ?? "null"}");
+            toStringOutput.Add($"this.TotalAmount = {this.TotalAmount ?? "null"}");
+            toStringOutput.Add($"this.CreditAmount = {this.CreditAmount ?? "null"}");
+            toStringOutput.Add($"this.DebitAmount = {this.DebitAmount ?? "null"}");
+            toStringOutput.Add($"this.RefundAmount = {this.RefundAmount ?? "null"}");
+            toStringOutput.Add($"this.PaidAmount = {this.PaidAmount ?? "null"}");
+            toStringOutput.Add($"this.DueAmount = {this.DueAmount ?? "null"}");
             toStringOutput.Add($"this.LineItems = {(this.LineItems == null ? "null" : $"[{string.Join(", ", this.LineItems)} ]")}");
             toStringOutput.Add($"this.Discounts = {(this.Discounts == null ? "null" : $"[{string.Join(", ", this.Discounts)} ]")}");
             toStringOutput.Add($"this.Taxes = {(this.Taxes == null ? "null" : $"[{string.Join(", ", this.Taxes)} ]")}");
             toStringOutput.Add($"this.Credits = {(this.Credits == null ? "null" : $"[{string.Join(", ", this.Credits)} ]")}");
+            toStringOutput.Add($"this.Debits = {(this.Debits == null ? "null" : $"[{string.Join(", ", this.Debits)} ]")}");
             toStringOutput.Add($"this.Refunds = {(this.Refunds == null ? "null" : $"[{string.Join(", ", this.Refunds)} ]")}");
             toStringOutput.Add($"this.Payments = {(this.Payments == null ? "null" : $"[{string.Join(", ", this.Payments)} ]")}");
             toStringOutput.Add($"this.CustomFields = {(this.CustomFields == null ? "null" : $"[{string.Join(", ", this.CustomFields)} ]")}");
             toStringOutput.Add($"this.DisplaySettings = {(this.DisplaySettings == null ? "null" : this.DisplaySettings.ToString())}");
-            toStringOutput.Add($"this.PublicUrl = {(this.PublicUrl == null ? "null" : this.PublicUrl)}");
+            toStringOutput.Add($"this.AvataxDetails = {(this.AvataxDetails == null ? "null" : this.AvataxDetails.ToString())}");
+            toStringOutput.Add($"this.PublicUrl = {this.PublicUrl ?? "null"}");
             toStringOutput.Add($"this.PreviousBalanceData = {(this.PreviousBalanceData == null ? "null" : this.PreviousBalanceData.ToString())}");
             toStringOutput.Add($"this.PublicUrlExpiresOn = {(this.PublicUrlExpiresOn == null ? "null" : this.PublicUrlExpiresOn.ToString())}");
 

@@ -120,35 +120,38 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"MovementLineItem : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is MovementLineItem other &&                ((this.ProductId == null && other.ProductId == null) || (this.ProductId?.Equals(other.ProductId) == true)) &&
-                ((this.ComponentId == null && other.ComponentId == null) || (this.ComponentId?.Equals(other.ComponentId) == true)) &&
-                ((this.PricePointId == null && other.PricePointId == null) || (this.PricePointId?.Equals(other.PricePointId) == true)) &&
-                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.Mrr == null && other.Mrr == null) || (this.Mrr?.Equals(other.Mrr) == true)) &&
-                ((this.MrrMovements == null && other.MrrMovements == null) || (this.MrrMovements?.Equals(other.MrrMovements) == true)) &&
-                ((this.Quantity == null && other.Quantity == null) || (this.Quantity?.Equals(other.Quantity) == true)) &&
-                ((this.PrevQuantity == null && other.PrevQuantity == null) || (this.PrevQuantity?.Equals(other.PrevQuantity) == true)) &&
-                ((this.Recurring == null && other.Recurring == null) || (this.Recurring?.Equals(other.Recurring) == true));
+            return obj is MovementLineItem other &&
+                (this.ProductId == null && other.ProductId == null ||
+                 this.ProductId?.Equals(other.ProductId) == true) &&
+                (this.ComponentId == null && other.ComponentId == null ||
+                 this.ComponentId?.Equals(other.ComponentId) == true) &&
+                (this.PricePointId == null && other.PricePointId == null ||
+                 this.PricePointId?.Equals(other.PricePointId) == true) &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.Mrr == null && other.Mrr == null ||
+                 this.Mrr?.Equals(other.Mrr) == true) &&
+                (this.MrrMovements == null && other.MrrMovements == null ||
+                 this.MrrMovements?.Equals(other.MrrMovements) == true) &&
+                (this.Quantity == null && other.Quantity == null ||
+                 this.Quantity?.Equals(other.Quantity) == true) &&
+                (this.PrevQuantity == null && other.PrevQuantity == null ||
+                 this.PrevQuantity?.Equals(other.PrevQuantity) == true) &&
+                (this.Recurring == null && other.Recurring == null ||
+                 this.Recurring?.Equals(other.Recurring) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -158,7 +161,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
             toStringOutput.Add($"this.Mrr = {(this.Mrr == null ? "null" : this.Mrr.ToString())}");
             toStringOutput.Add($"this.MrrMovements = {(this.MrrMovements == null ? "null" : $"[{string.Join(", ", this.MrrMovements)} ]")}");
             toStringOutput.Add($"this.Quantity = {(this.Quantity == null ? "null" : this.Quantity.ToString())}");

@@ -57,28 +57,24 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SubscriptionPreview : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SubscriptionPreview other &&                ((this.CurrentBillingManifest == null && other.CurrentBillingManifest == null) || (this.CurrentBillingManifest?.Equals(other.CurrentBillingManifest) == true)) &&
-                ((this.NextBillingManifest == null && other.NextBillingManifest == null) || (this.NextBillingManifest?.Equals(other.NextBillingManifest) == true));
+            return obj is SubscriptionPreview other &&
+                (this.CurrentBillingManifest == null && other.CurrentBillingManifest == null ||
+                 this.CurrentBillingManifest?.Equals(other.CurrentBillingManifest) == true) &&
+                (this.NextBillingManifest == null && other.NextBillingManifest == null ||
+                 this.NextBillingManifest?.Equals(other.NextBillingManifest) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

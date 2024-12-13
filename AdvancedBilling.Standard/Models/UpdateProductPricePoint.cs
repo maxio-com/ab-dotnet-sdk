@@ -57,35 +57,31 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"UpdateProductPricePoint : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is UpdateProductPricePoint other &&                ((this.Handle == null && other.Handle == null) || (this.Handle?.Equals(other.Handle) == true)) &&
-                ((this.PriceInCents == null && other.PriceInCents == null) || (this.PriceInCents?.Equals(other.PriceInCents) == true));
+            return obj is UpdateProductPricePoint other &&
+                (this.Handle == null && other.Handle == null ||
+                 this.Handle?.Equals(other.Handle) == true) &&
+                (this.PriceInCents == null && other.PriceInCents == null ||
+                 this.PriceInCents?.Equals(other.PriceInCents) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
+            toStringOutput.Add($"this.Handle = {this.Handle ?? "null"}");
             toStringOutput.Add($"this.PriceInCents = {(this.PriceInCents == null ? "null" : this.PriceInCents.ToString())}");
 
             base.ToString(toStringOutput);

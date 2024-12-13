@@ -48,6 +48,7 @@ namespace AdvancedBilling.Standard.Models
             string description = null)
         {
             this.Name = name;
+
             if (handle != null)
             {
                 this.Handle = handle;
@@ -57,7 +58,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.Description = description;
             }
-
         }
 
         /// <summary>
@@ -106,14 +106,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"CreateProductFamily : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetHandle()
         {
@@ -121,7 +119,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDescription()
         {
@@ -149,29 +147,28 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is CreateProductFamily other &&                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.Handle == null && other.Handle == null) || (this.Handle?.Equals(other.Handle) == true)) &&
-                ((this.Description == null && other.Description == null) || (this.Description?.Equals(other.Description) == true));
+            return obj is CreateProductFamily other &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.Handle == null && other.Handle == null ||
+                 this.Handle?.Equals(other.Handle) == true) &&
+                (this.Description == null && other.Description == null ||
+                 this.Description?.Equals(other.Description) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
-            toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
-            toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"this.Handle = {this.Handle ?? "null"}");
+            toStringOutput.Add($"this.Description = {this.Description ?? "null"}");
 
             base.ToString(toStringOutput);
         }

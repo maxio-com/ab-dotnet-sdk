@@ -75,40 +75,38 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"InvoiceTaxBreakout : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is InvoiceTaxBreakout other &&                ((this.Uid == null && other.Uid == null) || (this.Uid?.Equals(other.Uid) == true)) &&
-                ((this.TaxableAmount == null && other.TaxableAmount == null) || (this.TaxableAmount?.Equals(other.TaxableAmount) == true)) &&
-                ((this.TaxAmount == null && other.TaxAmount == null) || (this.TaxAmount?.Equals(other.TaxAmount) == true)) &&
-                ((this.TaxExemptAmount == null && other.TaxExemptAmount == null) || (this.TaxExemptAmount?.Equals(other.TaxExemptAmount) == true));
+            return obj is InvoiceTaxBreakout other &&
+                (this.Uid == null && other.Uid == null ||
+                 this.Uid?.Equals(other.Uid) == true) &&
+                (this.TaxableAmount == null && other.TaxableAmount == null ||
+                 this.TaxableAmount?.Equals(other.TaxableAmount) == true) &&
+                (this.TaxAmount == null && other.TaxAmount == null ||
+                 this.TaxAmount?.Equals(other.TaxAmount) == true) &&
+                (this.TaxExemptAmount == null && other.TaxExemptAmount == null ||
+                 this.TaxExemptAmount?.Equals(other.TaxExemptAmount) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
-            toStringOutput.Add($"this.TaxableAmount = {(this.TaxableAmount == null ? "null" : this.TaxableAmount)}");
-            toStringOutput.Add($"this.TaxAmount = {(this.TaxAmount == null ? "null" : this.TaxAmount)}");
-            toStringOutput.Add($"this.TaxExemptAmount = {(this.TaxExemptAmount == null ? "null" : this.TaxExemptAmount)}");
+            toStringOutput.Add($"this.Uid = {this.Uid ?? "null"}");
+            toStringOutput.Add($"this.TaxableAmount = {this.TaxableAmount ?? "null"}");
+            toStringOutput.Add($"this.TaxAmount = {this.TaxAmount ?? "null"}");
+            toStringOutput.Add($"this.TaxExemptAmount = {this.TaxExemptAmount ?? "null"}");
 
             base.ToString(toStringOutput);
         }

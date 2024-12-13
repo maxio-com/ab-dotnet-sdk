@@ -75,39 +75,37 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ProformaInvoicePayment : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ProformaInvoicePayment other &&                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                ((this.OriginalAmount == null && other.OriginalAmount == null) || (this.OriginalAmount?.Equals(other.OriginalAmount) == true)) &&
-                ((this.AppliedAmount == null && other.AppliedAmount == null) || (this.AppliedAmount?.Equals(other.AppliedAmount) == true)) &&
-                ((this.Prepayment == null && other.Prepayment == null) || (this.Prepayment?.Equals(other.Prepayment) == true));
+            return obj is ProformaInvoicePayment other &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.OriginalAmount == null && other.OriginalAmount == null ||
+                 this.OriginalAmount?.Equals(other.OriginalAmount) == true) &&
+                (this.AppliedAmount == null && other.AppliedAmount == null ||
+                 this.AppliedAmount?.Equals(other.AppliedAmount) == true) &&
+                (this.Prepayment == null && other.Prepayment == null ||
+                 this.Prepayment?.Equals(other.Prepayment) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
-            toStringOutput.Add($"this.OriginalAmount = {(this.OriginalAmount == null ? "null" : this.OriginalAmount)}");
-            toStringOutput.Add($"this.AppliedAmount = {(this.AppliedAmount == null ? "null" : this.AppliedAmount)}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"this.OriginalAmount = {this.OriginalAmount ?? "null"}");
+            toStringOutput.Add($"this.AppliedAmount = {this.AppliedAmount ?? "null"}");
             toStringOutput.Add($"this.Prepayment = {(this.Prepayment == null ? "null" : this.Prepayment.ToString())}");
 
             base.ToString(toStringOutput);

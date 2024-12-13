@@ -50,11 +50,11 @@ namespace AdvancedBilling.Standard.Models
             string amount = null)
         {
             this.StartingQuantity = startingQuantity;
+
             if (endingQuantity != null)
             {
                 this.EndingQuantity = endingQuantity;
             }
-
             this.Quantity = quantity;
             this.UnitPrice = unitPrice;
             this.Amount = amount;
@@ -106,14 +106,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ComponentCostDataRateTier : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetEndingQuantity()
         {
@@ -132,22 +130,23 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ComponentCostDataRateTier other &&                ((this.StartingQuantity == null && other.StartingQuantity == null) || (this.StartingQuantity?.Equals(other.StartingQuantity) == true)) &&
-                ((this.EndingQuantity == null && other.EndingQuantity == null) || (this.EndingQuantity?.Equals(other.EndingQuantity) == true)) &&
-                ((this.Quantity == null && other.Quantity == null) || (this.Quantity?.Equals(other.Quantity) == true)) &&
-                ((this.UnitPrice == null && other.UnitPrice == null) || (this.UnitPrice?.Equals(other.UnitPrice) == true)) &&
-                ((this.Amount == null && other.Amount == null) || (this.Amount?.Equals(other.Amount) == true));
+            return obj is ComponentCostDataRateTier other &&
+                (this.StartingQuantity == null && other.StartingQuantity == null ||
+                 this.StartingQuantity?.Equals(other.StartingQuantity) == true) &&
+                (this.EndingQuantity == null && other.EndingQuantity == null ||
+                 this.EndingQuantity?.Equals(other.EndingQuantity) == true) &&
+                (this.Quantity == null && other.Quantity == null ||
+                 this.Quantity?.Equals(other.Quantity) == true) &&
+                (this.UnitPrice == null && other.UnitPrice == null ||
+                 this.UnitPrice?.Equals(other.UnitPrice) == true) &&
+                (this.Amount == null && other.Amount == null ||
+                 this.Amount?.Equals(other.Amount) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -156,9 +155,9 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.StartingQuantity = {(this.StartingQuantity == null ? "null" : this.StartingQuantity.ToString())}");
             toStringOutput.Add($"this.EndingQuantity = {(this.EndingQuantity == null ? "null" : this.EndingQuantity.ToString())}");
-            toStringOutput.Add($"this.Quantity = {(this.Quantity == null ? "null" : this.Quantity)}");
-            toStringOutput.Add($"this.UnitPrice = {(this.UnitPrice == null ? "null" : this.UnitPrice)}");
-            toStringOutput.Add($"this.Amount = {(this.Amount == null ? "null" : this.Amount)}");
+            toStringOutput.Add($"this.Quantity = {this.Quantity ?? "null"}");
+            toStringOutput.Add($"this.UnitPrice = {this.UnitPrice ?? "null"}");
+            toStringOutput.Add($"this.Amount = {this.Amount ?? "null"}");
 
             base.ToString(toStringOutput);
         }

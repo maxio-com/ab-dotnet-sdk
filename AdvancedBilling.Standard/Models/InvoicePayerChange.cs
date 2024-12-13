@@ -75,40 +75,38 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"InvoicePayerChange : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is InvoicePayerChange other &&                ((this.FirstName == null && other.FirstName == null) || (this.FirstName?.Equals(other.FirstName) == true)) &&
-                ((this.LastName == null && other.LastName == null) || (this.LastName?.Equals(other.LastName) == true)) &&
-                ((this.Organization == null && other.Organization == null) || (this.Organization?.Equals(other.Organization) == true)) &&
-                ((this.Email == null && other.Email == null) || (this.Email?.Equals(other.Email) == true));
+            return obj is InvoicePayerChange other &&
+                (this.FirstName == null && other.FirstName == null ||
+                 this.FirstName?.Equals(other.FirstName) == true) &&
+                (this.LastName == null && other.LastName == null ||
+                 this.LastName?.Equals(other.LastName) == true) &&
+                (this.Organization == null && other.Organization == null ||
+                 this.Organization?.Equals(other.Organization) == true) &&
+                (this.Email == null && other.Email == null ||
+                 this.Email?.Equals(other.Email) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : this.FirstName)}");
-            toStringOutput.Add($"this.LastName = {(this.LastName == null ? "null" : this.LastName)}");
-            toStringOutput.Add($"this.Organization = {(this.Organization == null ? "null" : this.Organization)}");
-            toStringOutput.Add($"this.Email = {(this.Email == null ? "null" : this.Email)}");
+            toStringOutput.Add($"this.FirstName = {this.FirstName ?? "null"}");
+            toStringOutput.Add($"this.LastName = {this.LastName ?? "null"}");
+            toStringOutput.Add($"this.Organization = {this.Organization ?? "null"}");
+            toStringOutput.Add($"this.Email = {this.Email ?? "null"}");
 
             base.ToString(toStringOutput);
         }

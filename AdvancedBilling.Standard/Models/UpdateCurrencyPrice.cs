@@ -35,7 +35,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="price">price.</param>
         public UpdateCurrencyPrice(
             int id,
-            int price)
+            double price)
         {
             this.Id = id;
             this.Price = price;
@@ -51,34 +51,28 @@ namespace AdvancedBilling.Standard.Models
         /// New price for the given currency
         /// </summary>
         [JsonProperty("price")]
-        public int Price { get; set; }
+        public double Price { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"UpdateCurrencyPrice : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is UpdateCurrencyPrice other &&                this.Id.Equals(other.Id) &&
-                this.Price.Equals(other.Price);
+            return obj is UpdateCurrencyPrice other &&
+                (this.Id.Equals(other.Id)) &&
+                (this.Price.Equals(other.Price)) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

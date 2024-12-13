@@ -61,35 +61,30 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"PendingCancellationChange : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is PendingCancellationChange other &&                ((this.CancellationState == null && other.CancellationState == null) || (this.CancellationState?.Equals(other.CancellationState) == true)) &&
-                this.CancelsAt.Equals(other.CancelsAt);
+            return obj is PendingCancellationChange other &&
+                (this.CancellationState == null && other.CancellationState == null ||
+                 this.CancellationState?.Equals(other.CancellationState) == true) &&
+                (this.CancelsAt.Equals(other.CancelsAt)) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.CancellationState = {(this.CancellationState == null ? "null" : this.CancellationState)}");
+            toStringOutput.Add($"this.CancellationState = {this.CancellationState ?? "null"}");
             toStringOutput.Add($"this.CancelsAt = {this.CancelsAt}");
 
             base.ToString(toStringOutput);

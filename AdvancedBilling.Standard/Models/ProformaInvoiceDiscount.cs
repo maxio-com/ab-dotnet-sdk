@@ -111,47 +111,49 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ProformaInvoiceDiscount : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ProformaInvoiceDiscount other &&                ((this.Uid == null && other.Uid == null) || (this.Uid?.Equals(other.Uid) == true)) &&
-                ((this.Title == null && other.Title == null) || (this.Title?.Equals(other.Title) == true)) &&
-                ((this.Code == null && other.Code == null) || (this.Code?.Equals(other.Code) == true)) &&
-                ((this.SourceType == null && other.SourceType == null) || (this.SourceType?.Equals(other.SourceType) == true)) &&
-                ((this.DiscountType == null && other.DiscountType == null) || (this.DiscountType?.Equals(other.DiscountType) == true)) &&
-                ((this.EligibleAmount == null && other.EligibleAmount == null) || (this.EligibleAmount?.Equals(other.EligibleAmount) == true)) &&
-                ((this.DiscountAmount == null && other.DiscountAmount == null) || (this.DiscountAmount?.Equals(other.DiscountAmount) == true)) &&
-                ((this.LineItemBreakouts == null && other.LineItemBreakouts == null) || (this.LineItemBreakouts?.Equals(other.LineItemBreakouts) == true));
+            return obj is ProformaInvoiceDiscount other &&
+                (this.Uid == null && other.Uid == null ||
+                 this.Uid?.Equals(other.Uid) == true) &&
+                (this.Title == null && other.Title == null ||
+                 this.Title?.Equals(other.Title) == true) &&
+                (this.Code == null && other.Code == null ||
+                 this.Code?.Equals(other.Code) == true) &&
+                (this.SourceType == null && other.SourceType == null ||
+                 this.SourceType?.Equals(other.SourceType) == true) &&
+                (this.DiscountType == null && other.DiscountType == null ||
+                 this.DiscountType?.Equals(other.DiscountType) == true) &&
+                (this.EligibleAmount == null && other.EligibleAmount == null ||
+                 this.EligibleAmount?.Equals(other.EligibleAmount) == true) &&
+                (this.DiscountAmount == null && other.DiscountAmount == null ||
+                 this.DiscountAmount?.Equals(other.DiscountAmount) == true) &&
+                (this.LineItemBreakouts == null && other.LineItemBreakouts == null ||
+                 this.LineItemBreakouts?.Equals(other.LineItemBreakouts) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
-            toStringOutput.Add($"this.Title = {(this.Title == null ? "null" : this.Title)}");
-            toStringOutput.Add($"this.Code = {(this.Code == null ? "null" : this.Code)}");
+            toStringOutput.Add($"this.Uid = {this.Uid ?? "null"}");
+            toStringOutput.Add($"this.Title = {this.Title ?? "null"}");
+            toStringOutput.Add($"this.Code = {this.Code ?? "null"}");
             toStringOutput.Add($"this.SourceType = {(this.SourceType == null ? "null" : this.SourceType.ToString())}");
             toStringOutput.Add($"this.DiscountType = {(this.DiscountType == null ? "null" : this.DiscountType.ToString())}");
-            toStringOutput.Add($"this.EligibleAmount = {(this.EligibleAmount == null ? "null" : this.EligibleAmount)}");
-            toStringOutput.Add($"this.DiscountAmount = {(this.DiscountAmount == null ? "null" : this.DiscountAmount)}");
+            toStringOutput.Add($"this.EligibleAmount = {this.EligibleAmount ?? "null"}");
+            toStringOutput.Add($"this.DiscountAmount = {this.DiscountAmount ?? "null"}");
             toStringOutput.Add($"this.LineItemBreakouts = {(this.LineItemBreakouts == null ? "null" : $"[{string.Join(", ", this.LineItemBreakouts)} ]")}");
 
             base.ToString(toStringOutput);

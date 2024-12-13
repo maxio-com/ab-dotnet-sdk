@@ -47,6 +47,7 @@ namespace AdvancedBilling.Standard.Models
             Models.CreditType? downgradeCredit = null,
             string accrueCharge = null)
         {
+
             if (upgradeCharge != null)
             {
                 this.UpgradeCharge = upgradeCharge;
@@ -56,7 +57,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.DowngradeCredit = downgradeCredit;
             }
-
             this.AccrueCharge = accrueCharge;
         }
 
@@ -108,14 +108,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"AllocationSettings : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetUpgradeCharge()
         {
@@ -123,7 +121,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDowngradeCredit()
         {
@@ -151,20 +149,19 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is AllocationSettings other &&                ((this.UpgradeCharge == null && other.UpgradeCharge == null) || (this.UpgradeCharge?.Equals(other.UpgradeCharge) == true)) &&
-                ((this.DowngradeCredit == null && other.DowngradeCredit == null) || (this.DowngradeCredit?.Equals(other.DowngradeCredit) == true)) &&
-                ((this.AccrueCharge == null && other.AccrueCharge == null) || (this.AccrueCharge?.Equals(other.AccrueCharge) == true));
+            return obj is AllocationSettings other &&
+                (this.UpgradeCharge == null && other.UpgradeCharge == null ||
+                 this.UpgradeCharge?.Equals(other.UpgradeCharge) == true) &&
+                (this.DowngradeCredit == null && other.DowngradeCredit == null ||
+                 this.DowngradeCredit?.Equals(other.DowngradeCredit) == true) &&
+                (this.AccrueCharge == null && other.AccrueCharge == null ||
+                 this.AccrueCharge?.Equals(other.AccrueCharge) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -173,7 +170,7 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
             toStringOutput.Add($"this.DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
-            toStringOutput.Add($"this.AccrueCharge = {(this.AccrueCharge == null ? "null" : this.AccrueCharge)}");
+            toStringOutput.Add($"this.AccrueCharge = {this.AccrueCharge ?? "null"}");
 
             base.ToString(toStringOutput);
         }

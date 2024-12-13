@@ -150,38 +150,44 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"Segment : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is Segment other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.ComponentId == null && other.ComponentId == null) || (this.ComponentId?.Equals(other.ComponentId) == true)) &&
-                ((this.PricePointId == null && other.PricePointId == null) || (this.PricePointId?.Equals(other.PricePointId) == true)) &&
-                ((this.EventBasedBillingMetricId == null && other.EventBasedBillingMetricId == null) || (this.EventBasedBillingMetricId?.Equals(other.EventBasedBillingMetricId) == true)) &&
-                ((this.PricingScheme == null && other.PricingScheme == null) || (this.PricingScheme?.Equals(other.PricingScheme) == true)) &&
-                ((this.SegmentProperty1Value == null && other.SegmentProperty1Value == null) || (this.SegmentProperty1Value?.Equals(other.SegmentProperty1Value) == true)) &&
-                ((this.SegmentProperty2Value == null && other.SegmentProperty2Value == null) || (this.SegmentProperty2Value?.Equals(other.SegmentProperty2Value) == true)) &&
-                ((this.SegmentProperty3Value == null && other.SegmentProperty3Value == null) || (this.SegmentProperty3Value?.Equals(other.SegmentProperty3Value) == true)) &&
-                ((this.SegmentProperty4Value == null && other.SegmentProperty4Value == null) || (this.SegmentProperty4Value?.Equals(other.SegmentProperty4Value) == true)) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true)) &&
-                ((this.UpdatedAt == null && other.UpdatedAt == null) || (this.UpdatedAt?.Equals(other.UpdatedAt) == true)) &&
-                ((this.Prices == null && other.Prices == null) || (this.Prices?.Equals(other.Prices) == true));
+            return obj is Segment other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.ComponentId == null && other.ComponentId == null ||
+                 this.ComponentId?.Equals(other.ComponentId) == true) &&
+                (this.PricePointId == null && other.PricePointId == null ||
+                 this.PricePointId?.Equals(other.PricePointId) == true) &&
+                (this.EventBasedBillingMetricId == null && other.EventBasedBillingMetricId == null ||
+                 this.EventBasedBillingMetricId?.Equals(other.EventBasedBillingMetricId) == true) &&
+                (this.PricingScheme == null && other.PricingScheme == null ||
+                 this.PricingScheme?.Equals(other.PricingScheme) == true) &&
+                (this.SegmentProperty1Value == null && other.SegmentProperty1Value == null ||
+                 this.SegmentProperty1Value?.Equals(other.SegmentProperty1Value) == true) &&
+                (this.SegmentProperty2Value == null && other.SegmentProperty2Value == null ||
+                 this.SegmentProperty2Value?.Equals(other.SegmentProperty2Value) == true) &&
+                (this.SegmentProperty3Value == null && other.SegmentProperty3Value == null ||
+                 this.SegmentProperty3Value?.Equals(other.SegmentProperty3Value) == true) &&
+                (this.SegmentProperty4Value == null && other.SegmentProperty4Value == null ||
+                 this.SegmentProperty4Value?.Equals(other.SegmentProperty4Value) == true) &&
+                (this.CreatedAt == null && other.CreatedAt == null ||
+                 this.CreatedAt?.Equals(other.CreatedAt) == true) &&
+                (this.UpdatedAt == null && other.UpdatedAt == null ||
+                 this.UpdatedAt?.Equals(other.UpdatedAt) == true) &&
+                (this.Prices == null && other.Prices == null ||
+                 this.Prices?.Equals(other.Prices) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

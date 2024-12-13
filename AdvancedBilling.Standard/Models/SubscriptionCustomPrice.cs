@@ -77,11 +77,11 @@ namespace AdvancedBilling.Standard.Models
             this.InitialChargeInCents = initialChargeInCents;
             this.InitialChargeAfterTrial = initialChargeAfterTrial;
             this.ExpirationInterval = expirationInterval;
+
             if (expirationIntervalUnit != null)
             {
                 this.ExpirationIntervalUnit = expirationIntervalUnit;
             }
-
             this.TaxIncluded = taxIncluded;
         }
 
@@ -179,14 +179,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SubscriptionCustomPrice : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetExpirationIntervalUnit()
         {
@@ -205,38 +203,47 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SubscriptionCustomPrice other &&                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.Handle == null && other.Handle == null) || (this.Handle?.Equals(other.Handle) == true)) &&
-                ((this.PriceInCents == null && other.PriceInCents == null) || (this.PriceInCents?.Equals(other.PriceInCents) == true)) &&
-                ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
-                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true)) &&
-                ((this.TrialPriceInCents == null && other.TrialPriceInCents == null) || (this.TrialPriceInCents?.Equals(other.TrialPriceInCents) == true)) &&
-                ((this.TrialInterval == null && other.TrialInterval == null) || (this.TrialInterval?.Equals(other.TrialInterval) == true)) &&
-                ((this.TrialIntervalUnit == null && other.TrialIntervalUnit == null) || (this.TrialIntervalUnit?.Equals(other.TrialIntervalUnit) == true)) &&
-                ((this.InitialChargeInCents == null && other.InitialChargeInCents == null) || (this.InitialChargeInCents?.Equals(other.InitialChargeInCents) == true)) &&
-                ((this.InitialChargeAfterTrial == null && other.InitialChargeAfterTrial == null) || (this.InitialChargeAfterTrial?.Equals(other.InitialChargeAfterTrial) == true)) &&
-                ((this.ExpirationInterval == null && other.ExpirationInterval == null) || (this.ExpirationInterval?.Equals(other.ExpirationInterval) == true)) &&
-                ((this.ExpirationIntervalUnit == null && other.ExpirationIntervalUnit == null) || (this.ExpirationIntervalUnit?.Equals(other.ExpirationIntervalUnit) == true)) &&
-                ((this.TaxIncluded == null && other.TaxIncluded == null) || (this.TaxIncluded?.Equals(other.TaxIncluded) == true));
+            return obj is SubscriptionCustomPrice other &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.Handle == null && other.Handle == null ||
+                 this.Handle?.Equals(other.Handle) == true) &&
+                (this.PriceInCents == null && other.PriceInCents == null ||
+                 this.PriceInCents?.Equals(other.PriceInCents) == true) &&
+                (this.Interval == null && other.Interval == null ||
+                 this.Interval?.Equals(other.Interval) == true) &&
+                (this.IntervalUnit == null && other.IntervalUnit == null ||
+                 this.IntervalUnit?.Equals(other.IntervalUnit) == true) &&
+                (this.TrialPriceInCents == null && other.TrialPriceInCents == null ||
+                 this.TrialPriceInCents?.Equals(other.TrialPriceInCents) == true) &&
+                (this.TrialInterval == null && other.TrialInterval == null ||
+                 this.TrialInterval?.Equals(other.TrialInterval) == true) &&
+                (this.TrialIntervalUnit == null && other.TrialIntervalUnit == null ||
+                 this.TrialIntervalUnit?.Equals(other.TrialIntervalUnit) == true) &&
+                (this.InitialChargeInCents == null && other.InitialChargeInCents == null ||
+                 this.InitialChargeInCents?.Equals(other.InitialChargeInCents) == true) &&
+                (this.InitialChargeAfterTrial == null && other.InitialChargeAfterTrial == null ||
+                 this.InitialChargeAfterTrial?.Equals(other.InitialChargeAfterTrial) == true) &&
+                (this.ExpirationInterval == null && other.ExpirationInterval == null ||
+                 this.ExpirationInterval?.Equals(other.ExpirationInterval) == true) &&
+                (this.ExpirationIntervalUnit == null && other.ExpirationIntervalUnit == null ||
+                 this.ExpirationIntervalUnit?.Equals(other.ExpirationIntervalUnit) == true) &&
+                (this.TaxIncluded == null && other.TaxIncluded == null ||
+                 this.TaxIncluded?.Equals(other.TaxIncluded) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
-            toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"this.Handle = {this.Handle ?? "null"}");
             toStringOutput.Add($"PriceInCents = {(this.PriceInCents == null ? "null" : this.PriceInCents.ToString())}");
             toStringOutput.Add($"Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");

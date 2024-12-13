@@ -57,28 +57,24 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SignupProformaPreview : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SignupProformaPreview other &&                ((this.CurrentProformaInvoice == null && other.CurrentProformaInvoice == null) || (this.CurrentProformaInvoice?.Equals(other.CurrentProformaInvoice) == true)) &&
-                ((this.NextProformaInvoice == null && other.NextProformaInvoice == null) || (this.NextProformaInvoice?.Equals(other.NextProformaInvoice) == true));
+            return obj is SignupProformaPreview other &&
+                (this.CurrentProformaInvoice == null && other.CurrentProformaInvoice == null ||
+                 this.CurrentProformaInvoice?.Equals(other.CurrentProformaInvoice) == true) &&
+                (this.NextProformaInvoice == null && other.NextProformaInvoice == null ||
+                 this.NextProformaInvoice?.Equals(other.NextProformaInvoice) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

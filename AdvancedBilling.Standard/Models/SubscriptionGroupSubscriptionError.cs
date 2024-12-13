@@ -111,34 +111,36 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SubscriptionGroupSubscriptionError : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SubscriptionGroupSubscriptionError other &&                ((this.Product == null && other.Product == null) || (this.Product?.Equals(other.Product) == true)) &&
-                ((this.ProductPricePointId == null && other.ProductPricePointId == null) || (this.ProductPricePointId?.Equals(other.ProductPricePointId) == true)) &&
-                ((this.PaymentProfile == null && other.PaymentProfile == null) || (this.PaymentProfile?.Equals(other.PaymentProfile) == true)) &&
-                ((this.PaymentProfileChargifyToken == null && other.PaymentProfileChargifyToken == null) || (this.PaymentProfileChargifyToken?.Equals(other.PaymentProfileChargifyToken) == true)) &&
-                ((this.MBase == null && other.MBase == null) || (this.MBase?.Equals(other.MBase) == true)) &&
-                ((this.PaymentProfileExpirationMonth == null && other.PaymentProfileExpirationMonth == null) || (this.PaymentProfileExpirationMonth?.Equals(other.PaymentProfileExpirationMonth) == true)) &&
-                ((this.PaymentProfileExpirationYear == null && other.PaymentProfileExpirationYear == null) || (this.PaymentProfileExpirationYear?.Equals(other.PaymentProfileExpirationYear) == true)) &&
-                ((this.PaymentProfileFullNumber == null && other.PaymentProfileFullNumber == null) || (this.PaymentProfileFullNumber?.Equals(other.PaymentProfileFullNumber) == true));
+            return obj is SubscriptionGroupSubscriptionError other &&
+                (this.Product == null && other.Product == null ||
+                 this.Product?.Equals(other.Product) == true) &&
+                (this.ProductPricePointId == null && other.ProductPricePointId == null ||
+                 this.ProductPricePointId?.Equals(other.ProductPricePointId) == true) &&
+                (this.PaymentProfile == null && other.PaymentProfile == null ||
+                 this.PaymentProfile?.Equals(other.PaymentProfile) == true) &&
+                (this.PaymentProfileChargifyToken == null && other.PaymentProfileChargifyToken == null ||
+                 this.PaymentProfileChargifyToken?.Equals(other.PaymentProfileChargifyToken) == true) &&
+                (this.MBase == null && other.MBase == null ||
+                 this.MBase?.Equals(other.MBase) == true) &&
+                (this.PaymentProfileExpirationMonth == null && other.PaymentProfileExpirationMonth == null ||
+                 this.PaymentProfileExpirationMonth?.Equals(other.PaymentProfileExpirationMonth) == true) &&
+                (this.PaymentProfileExpirationYear == null && other.PaymentProfileExpirationYear == null ||
+                 this.PaymentProfileExpirationYear?.Equals(other.PaymentProfileExpirationYear) == true) &&
+                (this.PaymentProfileFullNumber == null && other.PaymentProfileFullNumber == null ||
+                 this.PaymentProfileFullNumber?.Equals(other.PaymentProfileFullNumber) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

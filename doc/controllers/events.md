@@ -38,11 +38,17 @@ The following keys are no longer supported.
 + `zferral_revenue_post_failure` - (Specific to the deprecated Zferral integration)
 + `zferral_revenue_post_success` - (Specific to the deprecated Zferral integration)
 
+## Event Key
+
+The event type is identified by the key property. You can check supported keys [here](../../doc/models/event-key.md).
+
 ## Event Specific Data
 
-Event Specific Data
+Different event types may include additional data in `event_specific_data` property.
+While some events share the same schema for `event_specific_data`, others may not include it at all.
+For precise mappings from key to event_specific_data, refer to [Event](../../doc/models/event.md).
 
-Each event type has its own `event_specific_data` specified.
+### Example
 
 Here’s an example event for the `subscription_product_change` event:
 
@@ -94,7 +100,7 @@ ListEventsAsync(
 | `sinceId` | `long?` | Query, Optional | Returns events with an id greater than or equal to the one specified |
 | `maxId` | `long?` | Query, Optional | Returns events with an id less than or equal to the one specified |
 | `direction` | [`Direction?`](../../doc/models/direction.md) | Query, Optional | The sort direction of the returned events.<br>**Default**: `Direction.desc` |
-| `filter` | [`List<EventType>`](../../doc/models/event-type.md) | Query, Optional | You can pass multiple event keys after comma.<br>Use in query `filter=signup_success,payment_success`. |
+| `filter` | [`List<EventKey>`](../../doc/models/event-key.md) | Query, Optional | You can pass multiple event keys after comma.<br>Use in query `filter=signup_success,payment_success`. |
 | `dateField` | [`ListEventsDateField?`](../../doc/models/list-events-date-field.md) | Query, Optional | The type of filter you would like to apply to your search. |
 | `startDate` | `string` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns components with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
 | `endDate` | `string` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns components with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. |
@@ -113,10 +119,10 @@ ListEventsInput listEventsInput = new ListEventsInput
     Page = 2,
     PerPage = 50,
     Direction = Direction.Desc,
-    Filter = new List<EventType>
+    Filter = new List<EventKey>
     {
-        EventType.CustomFieldValueChange,
-        EventType.PaymentSuccess,
+        EventKey.CustomFieldValueChange,
+        EventKey.PaymentSuccess,
     },
     DateField = ListEventsDateField.CreatedAt,
 };
@@ -199,7 +205,15 @@ catch (ApiException e)
 
 The following request will return a list of events for a subscription.
 
-Each event type has its own `event_specific_data` specified.
+## Event Key
+
+The event type is identified by the key property. You can check supported keys [here](../../doc/models/event-key.md).
+
+## Event Specific Data
+
+Different event types may include additional data in `event_specific_data` property.
+While some events share the same schema for `event_specific_data`, others may not include it at all.
+For precise mappings from key to event_specific_data, refer to [Event](../../doc/models/event.md).
 
 ```csharp
 ListSubscriptionEventsAsync(
@@ -216,7 +230,7 @@ ListSubscriptionEventsAsync(
 | `sinceId` | `long?` | Query, Optional | Returns events with an id greater than or equal to the one specified |
 | `maxId` | `long?` | Query, Optional | Returns events with an id less than or equal to the one specified |
 | `direction` | [`Direction?`](../../doc/models/direction.md) | Query, Optional | The sort direction of the returned events.<br>**Default**: `Direction.desc` |
-| `filter` | [`List<EventType>`](../../doc/models/event-type.md) | Query, Optional | You can pass multiple event keys after comma.<br>Use in query `filter=signup_success,payment_success`. |
+| `filter` | [`List<EventKey>`](../../doc/models/event-key.md) | Query, Optional | You can pass multiple event keys after comma.<br>Use in query `filter=signup_success,payment_success`. |
 
 ## Response Type
 
@@ -231,10 +245,10 @@ ListSubscriptionEventsInput listSubscriptionEventsInput = new ListSubscriptionEv
     Page = 2,
     PerPage = 50,
     Direction = Direction.Desc,
-    Filter = new List<EventType>
+    Filter = new List<EventKey>
     {
-        EventType.CustomFieldValueChange,
-        EventType.PaymentSuccess,
+        EventKey.CustomFieldValueChange,
+        EventKey.PaymentSuccess,
     },
 };
 
@@ -311,7 +325,7 @@ ReadEventsCountAsync(
 | `sinceId` | `long?` | Query, Optional | Returns events with an id greater than or equal to the one specified |
 | `maxId` | `long?` | Query, Optional | Returns events with an id less than or equal to the one specified |
 | `direction` | [`Direction?`](../../doc/models/direction.md) | Query, Optional | The sort direction of the returned events.<br>**Default**: `Direction.desc` |
-| `filter` | [`List<EventType>`](../../doc/models/event-type.md) | Query, Optional | You can pass multiple event keys after comma.<br>Use in query `filter=signup_success,payment_success`. |
+| `filter` | [`List<EventKey>`](../../doc/models/event-key.md) | Query, Optional | You can pass multiple event keys after comma.<br>Use in query `filter=signup_success,payment_success`. |
 
 ## Response Type
 
@@ -325,10 +339,10 @@ ReadEventsCountInput readEventsCountInput = new ReadEventsCountInput
     Page = 2,
     PerPage = 50,
     Direction = Direction.Desc,
-    Filter = new List<EventType>
+    Filter = new List<EventKey>
     {
-        EventType.CustomFieldValueChange,
-        EventType.PaymentSuccess,
+        EventKey.CustomFieldValueChange,
+        EventKey.PaymentSuccess,
     },
 };
 

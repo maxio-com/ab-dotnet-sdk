@@ -48,7 +48,7 @@ namespace AdvancedBilling.Standard.Models
             long? sinceId = null,
             long? maxId = null,
             Models.Direction? direction = Models.Direction.Desc,
-            List<Models.EventType> filter = null,
+            List<Models.EventKey> filter = null,
             Models.ListEventsDateField? dateField = null,
             string startDate = null,
             string endDate = null,
@@ -105,7 +105,7 @@ namespace AdvancedBilling.Standard.Models
         /// Use in query `filter=signup_success,payment_success`.
         /// </summary>
         [JsonProperty("filter", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Models.EventType> Filter { get; set; }
+        public List<Models.EventKey> Filter { get; set; }
 
         /// <summary>
         /// The type of filter you would like to apply to your search.
@@ -141,37 +141,42 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ListEventsInput : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ListEventsInput other &&                ((this.Page == null && other.Page == null) || (this.Page?.Equals(other.Page) == true)) &&
-                ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true)) &&
-                ((this.SinceId == null && other.SinceId == null) || (this.SinceId?.Equals(other.SinceId) == true)) &&
-                ((this.MaxId == null && other.MaxId == null) || (this.MaxId?.Equals(other.MaxId) == true)) &&
-                ((this.Direction == null && other.Direction == null) || (this.Direction?.Equals(other.Direction) == true)) &&
-                ((this.Filter == null && other.Filter == null) || (this.Filter?.Equals(other.Filter) == true)) &&
-                ((this.DateField == null && other.DateField == null) || (this.DateField?.Equals(other.DateField) == true)) &&
-                ((this.StartDate == null && other.StartDate == null) || (this.StartDate?.Equals(other.StartDate) == true)) &&
-                ((this.EndDate == null && other.EndDate == null) || (this.EndDate?.Equals(other.EndDate) == true)) &&
-                ((this.StartDatetime == null && other.StartDatetime == null) || (this.StartDatetime?.Equals(other.StartDatetime) == true)) &&
-                ((this.EndDatetime == null && other.EndDatetime == null) || (this.EndDatetime?.Equals(other.EndDatetime) == true));
+            return obj is ListEventsInput other &&
+                (this.Page == null && other.Page == null ||
+                 this.Page?.Equals(other.Page) == true) &&
+                (this.PerPage == null && other.PerPage == null ||
+                 this.PerPage?.Equals(other.PerPage) == true) &&
+                (this.SinceId == null && other.SinceId == null ||
+                 this.SinceId?.Equals(other.SinceId) == true) &&
+                (this.MaxId == null && other.MaxId == null ||
+                 this.MaxId?.Equals(other.MaxId) == true) &&
+                (this.Direction == null && other.Direction == null ||
+                 this.Direction?.Equals(other.Direction) == true) &&
+                (this.Filter == null && other.Filter == null ||
+                 this.Filter?.Equals(other.Filter) == true) &&
+                (this.DateField == null && other.DateField == null ||
+                 this.DateField?.Equals(other.DateField) == true) &&
+                (this.StartDate == null && other.StartDate == null ||
+                 this.StartDate?.Equals(other.StartDate) == true) &&
+                (this.EndDate == null && other.EndDate == null ||
+                 this.EndDate?.Equals(other.EndDate) == true) &&
+                (this.StartDatetime == null && other.StartDatetime == null ||
+                 this.StartDatetime?.Equals(other.StartDatetime) == true) &&
+                (this.EndDatetime == null && other.EndDatetime == null ||
+                 this.EndDatetime?.Equals(other.EndDatetime) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -185,10 +190,10 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
             toStringOutput.Add($"this.Filter = {(this.Filter == null ? "null" : $"[{string.Join(", ", this.Filter)} ]")}");
             toStringOutput.Add($"this.DateField = {(this.DateField == null ? "null" : this.DateField.ToString())}");
-            toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate)}");
-            toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate)}");
-            toStringOutput.Add($"this.StartDatetime = {(this.StartDatetime == null ? "null" : this.StartDatetime)}");
-            toStringOutput.Add($"this.EndDatetime = {(this.EndDatetime == null ? "null" : this.EndDatetime)}");
+            toStringOutput.Add($"this.StartDate = {this.StartDate ?? "null"}");
+            toStringOutput.Add($"this.EndDate = {this.EndDate ?? "null"}");
+            toStringOutput.Add($"this.StartDatetime = {this.StartDatetime ?? "null"}");
+            toStringOutput.Add($"this.EndDatetime = {this.EndDatetime ?? "null"}");
 
             base.ToString(toStringOutput);
         }

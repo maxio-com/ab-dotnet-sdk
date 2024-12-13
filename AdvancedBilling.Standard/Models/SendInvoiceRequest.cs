@@ -66,29 +66,26 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SendInvoiceRequest : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SendInvoiceRequest other &&                ((this.RecipientEmails == null && other.RecipientEmails == null) || (this.RecipientEmails?.Equals(other.RecipientEmails) == true)) &&
-                ((this.CcRecipientEmails == null && other.CcRecipientEmails == null) || (this.CcRecipientEmails?.Equals(other.CcRecipientEmails) == true)) &&
-                ((this.BccRecipientEmails == null && other.BccRecipientEmails == null) || (this.BccRecipientEmails?.Equals(other.BccRecipientEmails) == true));
+            return obj is SendInvoiceRequest other &&
+                (this.RecipientEmails == null && other.RecipientEmails == null ||
+                 this.RecipientEmails?.Equals(other.RecipientEmails) == true) &&
+                (this.CcRecipientEmails == null && other.CcRecipientEmails == null ||
+                 this.CcRecipientEmails?.Equals(other.CcRecipientEmails) == true) &&
+                (this.BccRecipientEmails == null && other.BccRecipientEmails == null ||
+                 this.BccRecipientEmails?.Equals(other.BccRecipientEmails) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

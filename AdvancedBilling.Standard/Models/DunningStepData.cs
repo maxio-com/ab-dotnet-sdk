@@ -61,6 +61,7 @@ namespace AdvancedBilling.Standard.Models
         {
             this.DayThreshold = dayThreshold;
             this.Action = action;
+
             if (emailBody != null)
             {
                 this.EmailBody = emailBody;
@@ -70,15 +71,14 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.EmailSubject = emailSubject;
             }
-
             this.SendEmail = sendEmail;
             this.SendBccEmail = sendBccEmail;
             this.SendSms = sendSms;
+
             if (smsBody != null)
             {
                 this.SmsBody = smsBody;
             }
-
         }
 
         /// <summary>
@@ -169,14 +169,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"DunningStepData : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetEmailBody()
         {
@@ -184,7 +182,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetEmailSubject()
         {
@@ -192,7 +190,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetSmsBody()
         {
@@ -229,25 +227,25 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is DunningStepData other &&                this.DayThreshold.Equals(other.DayThreshold) &&
-                ((this.Action == null && other.Action == null) || (this.Action?.Equals(other.Action) == true)) &&
-                ((this.EmailBody == null && other.EmailBody == null) || (this.EmailBody?.Equals(other.EmailBody) == true)) &&
-                ((this.EmailSubject == null && other.EmailSubject == null) || (this.EmailSubject?.Equals(other.EmailSubject) == true)) &&
-                this.SendEmail.Equals(other.SendEmail) &&
-                this.SendBccEmail.Equals(other.SendBccEmail) &&
-                this.SendSms.Equals(other.SendSms) &&
-                ((this.SmsBody == null && other.SmsBody == null) || (this.SmsBody?.Equals(other.SmsBody) == true));
+            return obj is DunningStepData other &&
+                (this.DayThreshold.Equals(other.DayThreshold)) &&
+                (this.Action == null && other.Action == null ||
+                 this.Action?.Equals(other.Action) == true) &&
+                (this.EmailBody == null && other.EmailBody == null ||
+                 this.EmailBody?.Equals(other.EmailBody) == true) &&
+                (this.EmailSubject == null && other.EmailSubject == null ||
+                 this.EmailSubject?.Equals(other.EmailSubject) == true) &&
+                (this.SendEmail.Equals(other.SendEmail)) &&
+                (this.SendBccEmail.Equals(other.SendBccEmail)) &&
+                (this.SendSms.Equals(other.SendSms)) &&
+                (this.SmsBody == null && other.SmsBody == null ||
+                 this.SmsBody?.Equals(other.SmsBody) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -255,13 +253,13 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.DayThreshold = {this.DayThreshold}");
-            toStringOutput.Add($"this.Action = {(this.Action == null ? "null" : this.Action)}");
-            toStringOutput.Add($"this.EmailBody = {(this.EmailBody == null ? "null" : this.EmailBody)}");
-            toStringOutput.Add($"this.EmailSubject = {(this.EmailSubject == null ? "null" : this.EmailSubject)}");
+            toStringOutput.Add($"this.Action = {this.Action ?? "null"}");
+            toStringOutput.Add($"this.EmailBody = {this.EmailBody ?? "null"}");
+            toStringOutput.Add($"this.EmailSubject = {this.EmailSubject ?? "null"}");
             toStringOutput.Add($"this.SendEmail = {this.SendEmail}");
             toStringOutput.Add($"this.SendBccEmail = {this.SendBccEmail}");
             toStringOutput.Add($"this.SendSms = {this.SendSms}");
-            toStringOutput.Add($"this.SmsBody = {(this.SmsBody == null ? "null" : this.SmsBody)}");
+            toStringOutput.Add($"this.SmsBody = {this.SmsBody ?? "null"}");
 
             base.ToString(toStringOutput);
         }

@@ -44,6 +44,14 @@ Credit card details may be required, depending on the options for the product be
 
 If you are creating a subscription with a payment profile, the attribute to send will be `credit_card_attributes` or `bank_account_attributes` for ACH and Direct Debit. That said, when you read the subscription after creation, we return the profile details under `credit_card` or `bank_account`.
 
+## Bulk creation of subscriptions
+
+Bulk creation of subscriptions is currently not supported. For scenarios where multiple subscriptions must be added, particularly when assigning to the same subscription group, it is essential to switch to a single-threaded approach.
+
+To avoid data conflicts or inaccuracies, incorporate a sleep interval between requests.
+
+While this single-threaded approach may impact performance, it ensures data consistency and accuracy in cases where concurrent creation attempts could otherwise lead to issues with subscription alignment and integrity.
+
 ## Taxable Subscriptions
 
 If your intent is to charge your subscribers tax via [Avalara Taxes](https://maxio.zendesk.com/hc/en-us/articles/24287043035661-Avalara-VAT-Tax) or [Custom Taxes](https://maxio.zendesk.com/hc/en-us/articles/24287044212749-Custom-Taxes), there are a few considerations to be made regarding collecting subscription data.
@@ -364,7 +372,7 @@ For more information on Stripe Direct Debit, please view the following two resou
 
 For more information on Stripe Direct Debit, please view the following two resources:
 
-+ [Payment Profiles via API for Stripe BECS Direct Debit]($e/Payment%20Profiles/createPaymentProfile)
++ [Payment Profiles via API for Stripe BECS Direct Debit](../../doc/controllers/payment-profiles.md#create-payment-profile)
 
 + [Full documentation on Stripe Direct Debit](https://maxio.zendesk.com/hc/en-us/articles/24176170430093-Stripe-SEPA-and-BECS-Direct-Debit)
 
@@ -395,7 +403,7 @@ For more information on Stripe Direct Debit, please view the following two resou
 
 For more information on Stripe Direct Debit, please view the following two resources:
 
-+ [Payment Profiles via API for Stripe BACS Direct Debit]($e/Payment%20Profiles/createPaymentProfile)
++ [Payment Profiles via API for Stripe BACS Direct Debit](../../doc/controllers/payment-profiles.md#create-payment-profile)
 
 + [Full documentation on Stripe Direct Debit](https://maxio.zendesk.com/hc/en-us/articles/24176170430093-Stripe-SEPA-and-BECS-Direct-Debit)
 
@@ -696,6 +704,7 @@ CreateSubscriptionRequest body = new CreateSubscriptionRequest
     Subscription = new CreateSubscription
     {
         ProductHandle = "basic",
+        PaymentCollectionMethod = CollectionMethod.Remittance,
         CustomerAttributes = new CustomerAttributes
         {
             FirstName = "Joe",
@@ -710,21 +719,6 @@ CreateSubscriptionRequest body = new CreateSubscriptionRequest
             Zip = "02120",
             Country = "US",
             Phone = "(617) 111 - 0000",
-        },
-        CreditCardAttributes = new PaymentProfileAttributes
-        {
-            FirstName = "Joe",
-            LastName = "Smith",
-            FullNumber = "4111111111111111",
-            CardType = CardType.Visa,
-            ExpirationMonth = PaymentProfileAttributesExpirationMonth.FromString("1"),
-            ExpirationYear = PaymentProfileAttributesExpirationYear.FromString("2021"),
-            BillingAddress = "123 Mass Ave.",
-            BillingAddress2 = "billing_address_22",
-            BillingCity = "Boston",
-            BillingState = "MA",
-            BillingCountry = "US",
-            BillingZip = "02120",
         },
     },
 };
@@ -1476,6 +1470,12 @@ catch (ApiException e)
 }
 ```
 
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+
 
 # Purge Subscription
 
@@ -1506,7 +1506,7 @@ PurgeSubscriptionAsync(
 
 ## Response Type
 
-`Task`
+[`Task<Models.SubscriptionResponse>`](../../doc/models/subscription-response.md)
 
 ## Example Usage
 
@@ -1521,7 +1521,7 @@ List<SubscriptionPurgeType> cascade = new List<SubscriptionPurgeType>
 
 try
 {
-    await subscriptionsController.PurgeSubscriptionAsync(
+    SubscriptionResponse result = await subscriptionsController.PurgeSubscriptionAsync(
         subscriptionId,
         ack,
         cascade
@@ -1533,6 +1533,12 @@ catch (ApiException e)
     Console.WriteLine(e.Message);
 }
 ```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Bad Request | [`SubscriptionResponseErrorException`](../../doc/models/subscription-response-error-exception.md) |
 
 
 # Update Prepaid Subscription Configuration
@@ -1598,6 +1604,12 @@ catch (ApiException e)
   }
 }
 ```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | `ApiException` |
 
 
 # Preview Subscription

@@ -84,31 +84,30 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"PrepaidConfiguration : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is PrepaidConfiguration other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.InitialFundingAmountInCents == null && other.InitialFundingAmountInCents == null) || (this.InitialFundingAmountInCents?.Equals(other.InitialFundingAmountInCents) == true)) &&
-                ((this.ReplenishToAmountInCents == null && other.ReplenishToAmountInCents == null) || (this.ReplenishToAmountInCents?.Equals(other.ReplenishToAmountInCents) == true)) &&
-                ((this.AutoReplenish == null && other.AutoReplenish == null) || (this.AutoReplenish?.Equals(other.AutoReplenish) == true)) &&
-                ((this.ReplenishThresholdAmountInCents == null && other.ReplenishThresholdAmountInCents == null) || (this.ReplenishThresholdAmountInCents?.Equals(other.ReplenishThresholdAmountInCents) == true));
+            return obj is PrepaidConfiguration other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.InitialFundingAmountInCents == null && other.InitialFundingAmountInCents == null ||
+                 this.InitialFundingAmountInCents?.Equals(other.InitialFundingAmountInCents) == true) &&
+                (this.ReplenishToAmountInCents == null && other.ReplenishToAmountInCents == null ||
+                 this.ReplenishToAmountInCents?.Equals(other.ReplenishToAmountInCents) == true) &&
+                (this.AutoReplenish == null && other.AutoReplenish == null ||
+                 this.AutoReplenish?.Equals(other.AutoReplenish) == true) &&
+                (this.ReplenishThresholdAmountInCents == null && other.ReplenishThresholdAmountInCents == null ||
+                 this.ReplenishThresholdAmountInCents?.Equals(other.ReplenishThresholdAmountInCents) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

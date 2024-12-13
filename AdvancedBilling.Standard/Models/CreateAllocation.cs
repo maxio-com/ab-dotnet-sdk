@@ -72,6 +72,7 @@ namespace AdvancedBilling.Standard.Models
             this.ProrationDowngradeScheme = prorationDowngradeScheme;
             this.ProrationUpgradeScheme = prorationUpgradeScheme;
             this.AccrueCharge = accrueCharge;
+
             if (downgradeCredit != null)
             {
                 this.DowngradeCredit = downgradeCredit;
@@ -81,13 +82,12 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.UpgradeCharge = upgradeCharge;
             }
-
             this.InitiateDunning = initiateDunning;
+
             if (pricePointId != null)
             {
                 this.PricePointId = pricePointId;
             }
-
             this.BillingSchedule = billingSchedule;
         }
 
@@ -200,14 +200,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"CreateAllocation : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDowngradeCredit()
         {
@@ -215,7 +213,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetUpgradeCharge()
         {
@@ -223,7 +221,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetPricePointId()
         {
@@ -260,28 +258,34 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is CreateAllocation other &&                this.Quantity.Equals(other.Quantity) &&
-                ((this.ComponentId == null && other.ComponentId == null) || (this.ComponentId?.Equals(other.ComponentId) == true)) &&
-                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                ((this.ProrationDowngradeScheme == null && other.ProrationDowngradeScheme == null) || (this.ProrationDowngradeScheme?.Equals(other.ProrationDowngradeScheme) == true)) &&
-                ((this.ProrationUpgradeScheme == null && other.ProrationUpgradeScheme == null) || (this.ProrationUpgradeScheme?.Equals(other.ProrationUpgradeScheme) == true)) &&
-                ((this.AccrueCharge == null && other.AccrueCharge == null) || (this.AccrueCharge?.Equals(other.AccrueCharge) == true)) &&
-                ((this.DowngradeCredit == null && other.DowngradeCredit == null) || (this.DowngradeCredit?.Equals(other.DowngradeCredit) == true)) &&
-                ((this.UpgradeCharge == null && other.UpgradeCharge == null) || (this.UpgradeCharge?.Equals(other.UpgradeCharge) == true)) &&
-                ((this.InitiateDunning == null && other.InitiateDunning == null) || (this.InitiateDunning?.Equals(other.InitiateDunning) == true)) &&
-                ((this.PricePointId == null && other.PricePointId == null) || (this.PricePointId?.Equals(other.PricePointId) == true)) &&
-                ((this.BillingSchedule == null && other.BillingSchedule == null) || (this.BillingSchedule?.Equals(other.BillingSchedule) == true));
+            return obj is CreateAllocation other &&
+                (this.Quantity.Equals(other.Quantity)) &&
+                (this.ComponentId == null && other.ComponentId == null ||
+                 this.ComponentId?.Equals(other.ComponentId) == true) &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.ProrationDowngradeScheme == null && other.ProrationDowngradeScheme == null ||
+                 this.ProrationDowngradeScheme?.Equals(other.ProrationDowngradeScheme) == true) &&
+                (this.ProrationUpgradeScheme == null && other.ProrationUpgradeScheme == null ||
+                 this.ProrationUpgradeScheme?.Equals(other.ProrationUpgradeScheme) == true) &&
+                (this.AccrueCharge == null && other.AccrueCharge == null ||
+                 this.AccrueCharge?.Equals(other.AccrueCharge) == true) &&
+                (this.DowngradeCredit == null && other.DowngradeCredit == null ||
+                 this.DowngradeCredit?.Equals(other.DowngradeCredit) == true) &&
+                (this.UpgradeCharge == null && other.UpgradeCharge == null ||
+                 this.UpgradeCharge?.Equals(other.UpgradeCharge) == true) &&
+                (this.InitiateDunning == null && other.InitiateDunning == null ||
+                 this.InitiateDunning?.Equals(other.InitiateDunning) == true) &&
+                (this.PricePointId == null && other.PricePointId == null ||
+                 this.PricePointId?.Equals(other.PricePointId) == true) &&
+                (this.BillingSchedule == null && other.BillingSchedule == null ||
+                 this.BillingSchedule?.Equals(other.BillingSchedule) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -290,9 +294,9 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.Quantity = {this.Quantity}");
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
-            toStringOutput.Add($"this.ProrationDowngradeScheme = {(this.ProrationDowngradeScheme == null ? "null" : this.ProrationDowngradeScheme)}");
-            toStringOutput.Add($"this.ProrationUpgradeScheme = {(this.ProrationUpgradeScheme == null ? "null" : this.ProrationUpgradeScheme)}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"this.ProrationDowngradeScheme = {this.ProrationDowngradeScheme ?? "null"}");
+            toStringOutput.Add($"this.ProrationUpgradeScheme = {this.ProrationUpgradeScheme ?? "null"}");
             toStringOutput.Add($"this.AccrueCharge = {(this.AccrueCharge == null ? "null" : this.AccrueCharge.ToString())}");
             toStringOutput.Add($"this.DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
             toStringOutput.Add($"this.UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");

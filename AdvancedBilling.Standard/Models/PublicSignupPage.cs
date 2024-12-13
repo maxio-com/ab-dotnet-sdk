@@ -50,6 +50,7 @@ namespace AdvancedBilling.Standard.Models
             string url = null)
         {
             this.Id = id;
+
             if (returnUrl != null)
             {
                 this.ReturnUrl = returnUrl;
@@ -59,7 +60,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.ReturnParams = returnParams;
             }
-
             this.Url = url;
         }
 
@@ -115,14 +115,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"PublicSignupPage : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetReturnUrl()
         {
@@ -130,7 +128,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetReturnParams()
         {
@@ -158,21 +156,21 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is PublicSignupPage other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.ReturnUrl == null && other.ReturnUrl == null) || (this.ReturnUrl?.Equals(other.ReturnUrl) == true)) &&
-                ((this.ReturnParams == null && other.ReturnParams == null) || (this.ReturnParams?.Equals(other.ReturnParams) == true)) &&
-                ((this.Url == null && other.Url == null) || (this.Url?.Equals(other.Url) == true));
+            return obj is PublicSignupPage other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.ReturnUrl == null && other.ReturnUrl == null ||
+                 this.ReturnUrl?.Equals(other.ReturnUrl) == true) &&
+                (this.ReturnParams == null && other.ReturnParams == null ||
+                 this.ReturnParams?.Equals(other.ReturnParams) == true) &&
+                (this.Url == null && other.Url == null ||
+                 this.Url?.Equals(other.Url) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -180,9 +178,9 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.ReturnUrl = {(this.ReturnUrl == null ? "null" : this.ReturnUrl)}");
-            toStringOutput.Add($"this.ReturnParams = {(this.ReturnParams == null ? "null" : this.ReturnParams)}");
-            toStringOutput.Add($"this.Url = {(this.Url == null ? "null" : this.Url)}");
+            toStringOutput.Add($"this.ReturnUrl = {this.ReturnUrl ?? "null"}");
+            toStringOutput.Add($"this.ReturnParams = {this.ReturnParams ?? "null"}");
+            toStringOutput.Add($"this.Url = {this.Url ?? "null"}");
 
             base.ToString(toStringOutput);
         }

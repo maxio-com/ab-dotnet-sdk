@@ -141,6 +141,7 @@ namespace AdvancedBilling.Standard.Models
         {
             this.Id = id;
             this.Name = name;
+
             if (handle != null)
             {
                 this.Handle = handle;
@@ -150,23 +151,23 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.PricingScheme = pricingScheme;
             }
-
             this.UnitName = unitName;
+
             if (unitPrice != null)
             {
                 this.UnitPrice = unitPrice;
             }
-
             this.ProductFamilyId = productFamilyId;
             this.ProductFamilyName = productFamilyName;
+
             if (pricePerUnitInCents != null)
             {
                 this.PricePerUnitInCents = pricePerUnitInCents;
             }
-
             this.Kind = kind;
             this.Archived = archived;
             this.Taxable = taxable;
+
             if (description != null)
             {
                 this.Description = description;
@@ -186,20 +187,20 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.Prices = prices;
             }
-
             this.PricePointCount = pricePointCount;
+
             if (pricePointsUrl != null)
             {
                 this.PricePointsUrl = pricePointsUrl;
             }
-
             this.DefaultPricePointName = defaultPricePointName;
+
             if (taxCode != null)
             {
                 this.TaxCode = taxCode;
             }
-
             this.Recurring = recurring;
+
             if (upgradeCharge != null)
             {
                 this.UpgradeCharge = upgradeCharge;
@@ -209,16 +210,16 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.DowngradeCredit = downgradeCredit;
             }
-
             this.CreatedAt = createdAt;
             this.UpdatedAt = updatedAt;
+
             if (archivedAt != null)
             {
                 this.ArchivedAt = archivedAt;
             }
-
             this.HideDateRangeOnInvoice = hideDateRangeOnInvoice;
             this.AllowFractionalQuantities = allowFractionalQuantities;
+
             if (itemCategory != null)
             {
                 this.ItemCategory = itemCategory;
@@ -233,14 +234,13 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.AccountingCode = accountingCode;
             }
-
             this.EventBasedBillingMetricId = eventBasedBillingMetricId;
             this.Interval = interval;
+
             if (intervalUnit != null)
             {
                 this.IntervalUnit = intervalUnit;
             }
-
         }
 
         /// <summary>
@@ -400,7 +400,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// An array of price brackets. If the component uses the ‘per_unit’ pricing scheme, this array will be empty.
+        /// Applicable only to prepaid usage components. An array of overage price brackets.
         /// </summary>
         [JsonProperty("overage_prices")]
         public List<Models.ComponentPrice> OveragePrices
@@ -660,14 +660,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"Component : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetHandle()
         {
@@ -675,7 +673,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetPricingScheme()
         {
@@ -683,7 +681,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetUnitPrice()
         {
@@ -691,7 +689,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetPricePerUnitInCents()
         {
@@ -699,7 +697,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDescription()
         {
@@ -707,7 +705,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDefaultPricePointId()
         {
@@ -715,7 +713,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetOveragePrices()
         {
@@ -723,7 +721,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetPrices()
         {
@@ -731,7 +729,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetPricePointsUrl()
         {
@@ -739,7 +737,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetTaxCode()
         {
@@ -747,7 +745,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetUpgradeCharge()
         {
@@ -755,7 +753,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDowngradeCredit()
         {
@@ -763,7 +761,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetArchivedAt()
         {
@@ -771,7 +769,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetItemCategory()
         {
@@ -779,7 +777,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetUseSiteExchangeRate()
         {
@@ -787,7 +785,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetAccountingCode()
         {
@@ -795,7 +793,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetIntervalUnit()
         {
@@ -958,51 +956,81 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is Component other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.Handle == null && other.Handle == null) || (this.Handle?.Equals(other.Handle) == true)) &&
-                ((this.PricingScheme == null && other.PricingScheme == null) || (this.PricingScheme?.Equals(other.PricingScheme) == true)) &&
-                ((this.UnitName == null && other.UnitName == null) || (this.UnitName?.Equals(other.UnitName) == true)) &&
-                ((this.UnitPrice == null && other.UnitPrice == null) || (this.UnitPrice?.Equals(other.UnitPrice) == true)) &&
-                ((this.ProductFamilyId == null && other.ProductFamilyId == null) || (this.ProductFamilyId?.Equals(other.ProductFamilyId) == true)) &&
-                ((this.ProductFamilyName == null && other.ProductFamilyName == null) || (this.ProductFamilyName?.Equals(other.ProductFamilyName) == true)) &&
-                ((this.PricePerUnitInCents == null && other.PricePerUnitInCents == null) || (this.PricePerUnitInCents?.Equals(other.PricePerUnitInCents) == true)) &&
-                ((this.Kind == null && other.Kind == null) || (this.Kind?.Equals(other.Kind) == true)) &&
-                ((this.Archived == null && other.Archived == null) || (this.Archived?.Equals(other.Archived) == true)) &&
-                ((this.Taxable == null && other.Taxable == null) || (this.Taxable?.Equals(other.Taxable) == true)) &&
-                ((this.Description == null && other.Description == null) || (this.Description?.Equals(other.Description) == true)) &&
-                ((this.DefaultPricePointId == null && other.DefaultPricePointId == null) || (this.DefaultPricePointId?.Equals(other.DefaultPricePointId) == true)) &&
-                ((this.OveragePrices == null && other.OveragePrices == null) || (this.OveragePrices?.Equals(other.OveragePrices) == true)) &&
-                ((this.Prices == null && other.Prices == null) || (this.Prices?.Equals(other.Prices) == true)) &&
-                ((this.PricePointCount == null && other.PricePointCount == null) || (this.PricePointCount?.Equals(other.PricePointCount) == true)) &&
-                ((this.PricePointsUrl == null && other.PricePointsUrl == null) || (this.PricePointsUrl?.Equals(other.PricePointsUrl) == true)) &&
-                ((this.DefaultPricePointName == null && other.DefaultPricePointName == null) || (this.DefaultPricePointName?.Equals(other.DefaultPricePointName) == true)) &&
-                ((this.TaxCode == null && other.TaxCode == null) || (this.TaxCode?.Equals(other.TaxCode) == true)) &&
-                ((this.Recurring == null && other.Recurring == null) || (this.Recurring?.Equals(other.Recurring) == true)) &&
-                ((this.UpgradeCharge == null && other.UpgradeCharge == null) || (this.UpgradeCharge?.Equals(other.UpgradeCharge) == true)) &&
-                ((this.DowngradeCredit == null && other.DowngradeCredit == null) || (this.DowngradeCredit?.Equals(other.DowngradeCredit) == true)) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true)) &&
-                ((this.UpdatedAt == null && other.UpdatedAt == null) || (this.UpdatedAt?.Equals(other.UpdatedAt) == true)) &&
-                ((this.ArchivedAt == null && other.ArchivedAt == null) || (this.ArchivedAt?.Equals(other.ArchivedAt) == true)) &&
-                ((this.HideDateRangeOnInvoice == null && other.HideDateRangeOnInvoice == null) || (this.HideDateRangeOnInvoice?.Equals(other.HideDateRangeOnInvoice) == true)) &&
-                ((this.AllowFractionalQuantities == null && other.AllowFractionalQuantities == null) || (this.AllowFractionalQuantities?.Equals(other.AllowFractionalQuantities) == true)) &&
-                ((this.ItemCategory == null && other.ItemCategory == null) || (this.ItemCategory?.Equals(other.ItemCategory) == true)) &&
-                ((this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null) || (this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true)) &&
-                ((this.AccountingCode == null && other.AccountingCode == null) || (this.AccountingCode?.Equals(other.AccountingCode) == true)) &&
-                ((this.EventBasedBillingMetricId == null && other.EventBasedBillingMetricId == null) || (this.EventBasedBillingMetricId?.Equals(other.EventBasedBillingMetricId) == true)) &&
-                ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
-                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true));
+            return obj is Component other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.Handle == null && other.Handle == null ||
+                 this.Handle?.Equals(other.Handle) == true) &&
+                (this.PricingScheme == null && other.PricingScheme == null ||
+                 this.PricingScheme?.Equals(other.PricingScheme) == true) &&
+                (this.UnitName == null && other.UnitName == null ||
+                 this.UnitName?.Equals(other.UnitName) == true) &&
+                (this.UnitPrice == null && other.UnitPrice == null ||
+                 this.UnitPrice?.Equals(other.UnitPrice) == true) &&
+                (this.ProductFamilyId == null && other.ProductFamilyId == null ||
+                 this.ProductFamilyId?.Equals(other.ProductFamilyId) == true) &&
+                (this.ProductFamilyName == null && other.ProductFamilyName == null ||
+                 this.ProductFamilyName?.Equals(other.ProductFamilyName) == true) &&
+                (this.PricePerUnitInCents == null && other.PricePerUnitInCents == null ||
+                 this.PricePerUnitInCents?.Equals(other.PricePerUnitInCents) == true) &&
+                (this.Kind == null && other.Kind == null ||
+                 this.Kind?.Equals(other.Kind) == true) &&
+                (this.Archived == null && other.Archived == null ||
+                 this.Archived?.Equals(other.Archived) == true) &&
+                (this.Taxable == null && other.Taxable == null ||
+                 this.Taxable?.Equals(other.Taxable) == true) &&
+                (this.Description == null && other.Description == null ||
+                 this.Description?.Equals(other.Description) == true) &&
+                (this.DefaultPricePointId == null && other.DefaultPricePointId == null ||
+                 this.DefaultPricePointId?.Equals(other.DefaultPricePointId) == true) &&
+                (this.OveragePrices == null && other.OveragePrices == null ||
+                 this.OveragePrices?.Equals(other.OveragePrices) == true) &&
+                (this.Prices == null && other.Prices == null ||
+                 this.Prices?.Equals(other.Prices) == true) &&
+                (this.PricePointCount == null && other.PricePointCount == null ||
+                 this.PricePointCount?.Equals(other.PricePointCount) == true) &&
+                (this.PricePointsUrl == null && other.PricePointsUrl == null ||
+                 this.PricePointsUrl?.Equals(other.PricePointsUrl) == true) &&
+                (this.DefaultPricePointName == null && other.DefaultPricePointName == null ||
+                 this.DefaultPricePointName?.Equals(other.DefaultPricePointName) == true) &&
+                (this.TaxCode == null && other.TaxCode == null ||
+                 this.TaxCode?.Equals(other.TaxCode) == true) &&
+                (this.Recurring == null && other.Recurring == null ||
+                 this.Recurring?.Equals(other.Recurring) == true) &&
+                (this.UpgradeCharge == null && other.UpgradeCharge == null ||
+                 this.UpgradeCharge?.Equals(other.UpgradeCharge) == true) &&
+                (this.DowngradeCredit == null && other.DowngradeCredit == null ||
+                 this.DowngradeCredit?.Equals(other.DowngradeCredit) == true) &&
+                (this.CreatedAt == null && other.CreatedAt == null ||
+                 this.CreatedAt?.Equals(other.CreatedAt) == true) &&
+                (this.UpdatedAt == null && other.UpdatedAt == null ||
+                 this.UpdatedAt?.Equals(other.UpdatedAt) == true) &&
+                (this.ArchivedAt == null && other.ArchivedAt == null ||
+                 this.ArchivedAt?.Equals(other.ArchivedAt) == true) &&
+                (this.HideDateRangeOnInvoice == null && other.HideDateRangeOnInvoice == null ||
+                 this.HideDateRangeOnInvoice?.Equals(other.HideDateRangeOnInvoice) == true) &&
+                (this.AllowFractionalQuantities == null && other.AllowFractionalQuantities == null ||
+                 this.AllowFractionalQuantities?.Equals(other.AllowFractionalQuantities) == true) &&
+                (this.ItemCategory == null && other.ItemCategory == null ||
+                 this.ItemCategory?.Equals(other.ItemCategory) == true) &&
+                (this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null ||
+                 this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true) &&
+                (this.AccountingCode == null && other.AccountingCode == null ||
+                 this.AccountingCode?.Equals(other.AccountingCode) == true) &&
+                (this.EventBasedBillingMetricId == null && other.EventBasedBillingMetricId == null ||
+                 this.EventBasedBillingMetricId?.Equals(other.EventBasedBillingMetricId) == true) &&
+                (this.Interval == null && other.Interval == null ||
+                 this.Interval?.Equals(other.Interval) == true) &&
+                (this.IntervalUnit == null && other.IntervalUnit == null ||
+                 this.IntervalUnit?.Equals(other.IntervalUnit) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -1010,25 +1038,25 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
-            toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"this.Handle = {this.Handle ?? "null"}");
             toStringOutput.Add($"this.PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
-            toStringOutput.Add($"this.UnitName = {(this.UnitName == null ? "null" : this.UnitName)}");
-            toStringOutput.Add($"this.UnitPrice = {(this.UnitPrice == null ? "null" : this.UnitPrice)}");
+            toStringOutput.Add($"this.UnitName = {this.UnitName ?? "null"}");
+            toStringOutput.Add($"this.UnitPrice = {this.UnitPrice ?? "null"}");
             toStringOutput.Add($"this.ProductFamilyId = {(this.ProductFamilyId == null ? "null" : this.ProductFamilyId.ToString())}");
-            toStringOutput.Add($"this.ProductFamilyName = {(this.ProductFamilyName == null ? "null" : this.ProductFamilyName)}");
+            toStringOutput.Add($"this.ProductFamilyName = {this.ProductFamilyName ?? "null"}");
             toStringOutput.Add($"this.PricePerUnitInCents = {(this.PricePerUnitInCents == null ? "null" : this.PricePerUnitInCents.ToString())}");
             toStringOutput.Add($"this.Kind = {(this.Kind == null ? "null" : this.Kind.ToString())}");
             toStringOutput.Add($"this.Archived = {(this.Archived == null ? "null" : this.Archived.ToString())}");
             toStringOutput.Add($"this.Taxable = {(this.Taxable == null ? "null" : this.Taxable.ToString())}");
-            toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
+            toStringOutput.Add($"this.Description = {this.Description ?? "null"}");
             toStringOutput.Add($"this.DefaultPricePointId = {(this.DefaultPricePointId == null ? "null" : this.DefaultPricePointId.ToString())}");
             toStringOutput.Add($"this.OveragePrices = {(this.OveragePrices == null ? "null" : $"[{string.Join(", ", this.OveragePrices)} ]")}");
             toStringOutput.Add($"this.Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
             toStringOutput.Add($"this.PricePointCount = {(this.PricePointCount == null ? "null" : this.PricePointCount.ToString())}");
-            toStringOutput.Add($"this.PricePointsUrl = {(this.PricePointsUrl == null ? "null" : this.PricePointsUrl)}");
-            toStringOutput.Add($"this.DefaultPricePointName = {(this.DefaultPricePointName == null ? "null" : this.DefaultPricePointName)}");
-            toStringOutput.Add($"this.TaxCode = {(this.TaxCode == null ? "null" : this.TaxCode)}");
+            toStringOutput.Add($"this.PricePointsUrl = {this.PricePointsUrl ?? "null"}");
+            toStringOutput.Add($"this.DefaultPricePointName = {this.DefaultPricePointName ?? "null"}");
+            toStringOutput.Add($"this.TaxCode = {this.TaxCode ?? "null"}");
             toStringOutput.Add($"this.Recurring = {(this.Recurring == null ? "null" : this.Recurring.ToString())}");
             toStringOutput.Add($"this.UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
             toStringOutput.Add($"this.DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
@@ -1039,7 +1067,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.AllowFractionalQuantities = {(this.AllowFractionalQuantities == null ? "null" : this.AllowFractionalQuantities.ToString())}");
             toStringOutput.Add($"this.ItemCategory = {(this.ItemCategory == null ? "null" : this.ItemCategory.ToString())}");
             toStringOutput.Add($"this.UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
-            toStringOutput.Add($"this.AccountingCode = {(this.AccountingCode == null ? "null" : this.AccountingCode)}");
+            toStringOutput.Add($"this.AccountingCode = {this.AccountingCode ?? "null"}");
             toStringOutput.Add($"this.EventBasedBillingMetricId = {(this.EventBasedBillingMetricId == null ? "null" : this.EventBasedBillingMetricId.ToString())}");
             toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");

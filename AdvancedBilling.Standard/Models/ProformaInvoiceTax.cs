@@ -102,45 +102,46 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ProformaInvoiceTax : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ProformaInvoiceTax other &&                ((this.Uid == null && other.Uid == null) || (this.Uid?.Equals(other.Uid) == true)) &&
-                ((this.Title == null && other.Title == null) || (this.Title?.Equals(other.Title) == true)) &&
-                ((this.SourceType == null && other.SourceType == null) || (this.SourceType?.Equals(other.SourceType) == true)) &&
-                ((this.Percentage == null && other.Percentage == null) || (this.Percentage?.Equals(other.Percentage) == true)) &&
-                ((this.TaxableAmount == null && other.TaxableAmount == null) || (this.TaxableAmount?.Equals(other.TaxableAmount) == true)) &&
-                ((this.TaxAmount == null && other.TaxAmount == null) || (this.TaxAmount?.Equals(other.TaxAmount) == true)) &&
-                ((this.LineItemBreakouts == null && other.LineItemBreakouts == null) || (this.LineItemBreakouts?.Equals(other.LineItemBreakouts) == true));
+            return obj is ProformaInvoiceTax other &&
+                (this.Uid == null && other.Uid == null ||
+                 this.Uid?.Equals(other.Uid) == true) &&
+                (this.Title == null && other.Title == null ||
+                 this.Title?.Equals(other.Title) == true) &&
+                (this.SourceType == null && other.SourceType == null ||
+                 this.SourceType?.Equals(other.SourceType) == true) &&
+                (this.Percentage == null && other.Percentage == null ||
+                 this.Percentage?.Equals(other.Percentage) == true) &&
+                (this.TaxableAmount == null && other.TaxableAmount == null ||
+                 this.TaxableAmount?.Equals(other.TaxableAmount) == true) &&
+                (this.TaxAmount == null && other.TaxAmount == null ||
+                 this.TaxAmount?.Equals(other.TaxAmount) == true) &&
+                (this.LineItemBreakouts == null && other.LineItemBreakouts == null ||
+                 this.LineItemBreakouts?.Equals(other.LineItemBreakouts) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
-            toStringOutput.Add($"this.Title = {(this.Title == null ? "null" : this.Title)}");
+            toStringOutput.Add($"this.Uid = {this.Uid ?? "null"}");
+            toStringOutput.Add($"this.Title = {this.Title ?? "null"}");
             toStringOutput.Add($"this.SourceType = {(this.SourceType == null ? "null" : this.SourceType.ToString())}");
-            toStringOutput.Add($"this.Percentage = {(this.Percentage == null ? "null" : this.Percentage)}");
-            toStringOutput.Add($"this.TaxableAmount = {(this.TaxableAmount == null ? "null" : this.TaxableAmount)}");
-            toStringOutput.Add($"this.TaxAmount = {(this.TaxAmount == null ? "null" : this.TaxAmount)}");
+            toStringOutput.Add($"this.Percentage = {this.Percentage ?? "null"}");
+            toStringOutput.Add($"this.TaxableAmount = {this.TaxableAmount ?? "null"}");
+            toStringOutput.Add($"this.TaxAmount = {this.TaxAmount ?? "null"}");
             toStringOutput.Add($"this.LineItemBreakouts = {(this.LineItemBreakouts == null ? "null" : $"[{string.Join(", ", this.LineItemBreakouts)} ]")}");
 
             base.ToString(toStringOutput);

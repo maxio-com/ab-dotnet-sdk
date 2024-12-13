@@ -1,4 +1,4 @@
-// <copyright file="CreateOrUpdatePercentageCouponPercentage.cs" company="APIMatic">
+// <copyright file="CouponPayloadPercentage.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
 using APIMatic.Core.Utilities.Converters;
@@ -12,22 +12,22 @@ namespace AdvancedBilling.Standard.Models.Containers
     /// This is a container class for one-of types.
     /// </summary>
     [JsonConverter(
-        typeof(UnionTypeConverter<CreateOrUpdatePercentageCouponPercentage>),
+        typeof(UnionTypeConverter<CouponPayloadPercentage>),
         new Type[] {
             typeof(MStringCase),
             typeof(PrecisionCase)
         },
         true
     )]
-    public abstract class CreateOrUpdatePercentageCouponPercentage
+    public abstract class CouponPayloadPercentage
     {
         /// <summary>
         /// This is String case.
         /// </summary>
         /// <returns>
-        /// The CreateOrUpdatePercentageCouponPercentage instance, wrapping the provided string value.
+        /// The CouponPayloadPercentage instance, wrapping the provided string value.
         /// </returns>
-        public static CreateOrUpdatePercentageCouponPercentage FromString(string mString)
+        public static CouponPayloadPercentage FromString(string mString)
         {
             return new MStringCase().Set(mString);
         }
@@ -36,9 +36,9 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// This is Precision case.
         /// </summary>
         /// <returns>
-        /// The CreateOrUpdatePercentageCouponPercentage instance, wrapping the provided double value.
+        /// The CouponPayloadPercentage instance, wrapping the provided double value.
         /// </returns>
-        public static CreateOrUpdatePercentageCouponPercentage FromPrecision(double precision)
+        public static CouponPayloadPercentage FromPrecision(double precision)
         {
             return new PrecisionCase().Set(precision);
         }
@@ -54,7 +54,7 @@ namespace AdvancedBilling.Standard.Models.Containers
         public abstract T Match<T>(Func<string, T> mString, Func<double, T> precision);
 
         [JsonConverter(typeof(UnionTypeCaseConverter<MStringCase, string>), JTokenType.String, JTokenType.Null)]
-        private sealed class MStringCase : CreateOrUpdatePercentageCouponPercentage, ICaseValue<MStringCase, string>
+        private sealed class MStringCase : CouponPayloadPercentage, ICaseValue<MStringCase, string>
         {
             public string _value;
 
@@ -78,10 +78,17 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is MStringCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PrecisionCase, double>), JTokenType.Float)]
-        private sealed class PrecisionCase : CreateOrUpdatePercentageCouponPercentage, ICaseValue<PrecisionCase, double>
+        private sealed class PrecisionCase : CouponPayloadPercentage, ICaseValue<PrecisionCase, double>
         {
             public double _value;
 
@@ -104,6 +111,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             public override string ToString()
             {
                 return _value.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is PrecisionCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value.Equals(other._value);
             }
         }
     }

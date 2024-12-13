@@ -89,31 +89,27 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"IssueInvoiceEventData : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is IssueInvoiceEventData other &&                this.ConsolidationLevel.Equals(other.ConsolidationLevel) &&
-                this.FromStatus.Equals(other.FromStatus) &&
-                this.ToStatus.Equals(other.ToStatus) &&
-                ((this.DueAmount == null && other.DueAmount == null) || (this.DueAmount?.Equals(other.DueAmount) == true)) &&
-                ((this.TotalAmount == null && other.TotalAmount == null) || (this.TotalAmount?.Equals(other.TotalAmount) == true));
+            return obj is IssueInvoiceEventData other &&
+                (this.ConsolidationLevel.Equals(other.ConsolidationLevel)) &&
+                (this.FromStatus.Equals(other.FromStatus)) &&
+                (this.ToStatus.Equals(other.ToStatus)) &&
+                (this.DueAmount == null && other.DueAmount == null ||
+                 this.DueAmount?.Equals(other.DueAmount) == true) &&
+                (this.TotalAmount == null && other.TotalAmount == null ||
+                 this.TotalAmount?.Equals(other.TotalAmount) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -123,8 +119,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ConsolidationLevel = {this.ConsolidationLevel}");
             toStringOutput.Add($"this.FromStatus = {this.FromStatus}");
             toStringOutput.Add($"this.ToStatus = {this.ToStatus}");
-            toStringOutput.Add($"this.DueAmount = {(this.DueAmount == null ? "null" : this.DueAmount)}");
-            toStringOutput.Add($"this.TotalAmount = {(this.TotalAmount == null ? "null" : this.TotalAmount)}");
+            toStringOutput.Add($"this.DueAmount = {this.DueAmount ?? "null"}");
+            toStringOutput.Add($"this.TotalAmount = {this.TotalAmount ?? "null"}");
 
             base.ToString(toStringOutput);
         }

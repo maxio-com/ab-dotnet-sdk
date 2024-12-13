@@ -25,12 +25,16 @@ namespace AdvancedBilling.Standard.Models
         private DateTimeOffset? archivedAt;
         private int? interval;
         private Models.IntervalUnit? intervalUnit;
+        private int? expirationInterval;
+        private Models.ExpirationIntervalUnit? expirationIntervalUnit;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "handle", false },
             { "archived_at", false },
             { "interval", false },
             { "interval_unit", false },
+            { "expiration_interval", false },
+            { "expiration_interval_unit", false },
         };
 
         /// <summary>
@@ -60,6 +64,12 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="interval">interval.</param>
         /// <param name="intervalUnit">interval_unit.</param>
         /// <param name="currencyPrices">currency_prices.</param>
+        /// <param name="overagePrices">overage_prices.</param>
+        /// <param name="overagePricingScheme">overage_pricing_scheme.</param>
+        /// <param name="renewPrepaidAllocation">renew_prepaid_allocation.</param>
+        /// <param name="rolloverPrepaidRemainder">rollover_prepaid_remainder.</param>
+        /// <param name="expirationInterval">expiration_interval.</param>
+        /// <param name="expirationIntervalUnit">expiration_interval_unit.</param>
         public ComponentPricePoint(
             int? id = null,
             Models.PricePointType? type = null,
@@ -77,7 +87,13 @@ namespace AdvancedBilling.Standard.Models
             bool? taxIncluded = null,
             int? interval = null,
             Models.IntervalUnit? intervalUnit = null,
-            List<Models.ComponentCurrencyPrice> currencyPrices = null)
+            List<Models.ComponentCurrencyPrice> currencyPrices = null,
+            List<Models.ComponentPrice> overagePrices = null,
+            Models.PricingScheme? overagePricingScheme = null,
+            bool? renewPrepaidAllocation = null,
+            bool? rolloverPrepaidRemainder = null,
+            int? expirationInterval = null,
+            Models.ExpirationIntervalUnit? expirationIntervalUnit = null)
         {
             this.Id = id;
             this.Type = type;
@@ -85,6 +101,7 @@ namespace AdvancedBilling.Standard.Models
             this.Name = name;
             this.PricingScheme = pricingScheme;
             this.ComponentId = componentId;
+
             if (handle != null)
             {
                 this.Handle = handle;
@@ -94,13 +111,13 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.ArchivedAt = archivedAt;
             }
-
             this.CreatedAt = createdAt;
             this.UpdatedAt = updatedAt;
             this.Prices = prices;
             this.UseSiteExchangeRate = useSiteExchangeRate;
             this.SubscriptionId = subscriptionId;
             this.TaxIncluded = taxIncluded;
+
             if (interval != null)
             {
                 this.Interval = interval;
@@ -110,8 +127,21 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.IntervalUnit = intervalUnit;
             }
-
             this.CurrencyPrices = currencyPrices;
+            this.OveragePrices = overagePrices;
+            this.OveragePricingScheme = overagePricingScheme;
+            this.RenewPrepaidAllocation = renewPrepaidAllocation;
+            this.RolloverPrepaidRemainder = rolloverPrepaidRemainder;
+
+            if (expirationInterval != null)
+            {
+                this.ExpirationInterval = expirationInterval;
+            }
+
+            if (expirationIntervalUnit != null)
+            {
+                this.ExpirationIntervalUnit = expirationIntervalUnit;
+            }
         }
 
         /// <summary>
@@ -270,18 +300,76 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("currency_prices", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.ComponentCurrencyPrice> CurrencyPrices { get; set; }
 
+        /// <summary>
+        /// Applicable only to prepaid usage components. An array of overage price brackets.
+        /// </summary>
+        [JsonProperty("overage_prices", NullValueHandling = NullValueHandling.Ignore)]
+        public List<Models.ComponentPrice> OveragePrices { get; set; }
+
+        /// <summary>
+        /// Applicable only to prepaid usage components. Pricing scheme for overage pricing.
+        /// </summary>
+        [JsonProperty("overage_pricing_scheme", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.PricingScheme? OveragePricingScheme { get; set; }
+
+        /// <summary>
+        /// Applicable only to prepaid usage components. Boolean which controls whether or not the allocated quantity should be renewed at the beginning of each period.
+        /// </summary>
+        [JsonProperty("renew_prepaid_allocation", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? RenewPrepaidAllocation { get; set; }
+
+        /// <summary>
+        /// Applicable only to prepaid usage components. Boolean which controls whether or not remaining units should be rolled over to the next period.
+        /// </summary>
+        [JsonProperty("rollover_prepaid_remainder", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? RolloverPrepaidRemainder { get; set; }
+
+        /// <summary>
+        /// Applicable only to prepaid usage components where rollover_prepaid_remainder is true. The number of `expiration_interval_unit`s after which rollover amounts should expire.
+        /// </summary>
+        [JsonProperty("expiration_interval")]
+        public int? ExpirationInterval
+        {
+            get
+            {
+                return this.expirationInterval;
+            }
+
+            set
+            {
+                this.shouldSerialize["expiration_interval"] = true;
+                this.expirationInterval = value;
+            }
+        }
+
+        /// <summary>
+        /// Applicable only to prepaid usage components where rollover_prepaid_remainder is true. A string representing the expiration interval unit for this component, either month or day.
+        /// </summary>
+        [JsonProperty("expiration_interval_unit")]
+        public Models.ExpirationIntervalUnit? ExpirationIntervalUnit
+        {
+            get
+            {
+                return this.expirationIntervalUnit;
+            }
+
+            set
+            {
+                this.shouldSerialize["expiration_interval_unit"] = true;
+                this.expirationIntervalUnit = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ComponentPricePoint : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetHandle()
         {
@@ -289,7 +377,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetArchivedAt()
         {
@@ -297,7 +385,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetInterval()
         {
@@ -305,11 +393,27 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetIntervalUnit()
         {
             this.shouldSerialize["interval_unit"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetExpirationInterval()
+        {
+            this.shouldSerialize["expiration_interval"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetExpirationIntervalUnit()
+        {
+            this.shouldSerialize["expiration_interval_unit"] = false;
         }
 
         /// <summary>
@@ -348,37 +452,80 @@ namespace AdvancedBilling.Standard.Models
             return this.shouldSerialize["interval_unit"];
         }
 
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeExpirationInterval()
+        {
+            return this.shouldSerialize["expiration_interval"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeExpirationIntervalUnit()
+        {
+            return this.shouldSerialize["expiration_interval_unit"];
+        }
+
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ComponentPricePoint other &&                ((this.Id == null && other.Id == null) || (this.Id?.Equals(other.Id) == true)) &&
-                ((this.Type == null && other.Type == null) || (this.Type?.Equals(other.Type) == true)) &&
-                ((this.MDefault == null && other.MDefault == null) || (this.MDefault?.Equals(other.MDefault) == true)) &&
-                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.PricingScheme == null && other.PricingScheme == null) || (this.PricingScheme?.Equals(other.PricingScheme) == true)) &&
-                ((this.ComponentId == null && other.ComponentId == null) || (this.ComponentId?.Equals(other.ComponentId) == true)) &&
-                ((this.Handle == null && other.Handle == null) || (this.Handle?.Equals(other.Handle) == true)) &&
-                ((this.ArchivedAt == null && other.ArchivedAt == null) || (this.ArchivedAt?.Equals(other.ArchivedAt) == true)) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true)) &&
-                ((this.UpdatedAt == null && other.UpdatedAt == null) || (this.UpdatedAt?.Equals(other.UpdatedAt) == true)) &&
-                ((this.Prices == null && other.Prices == null) || (this.Prices?.Equals(other.Prices) == true)) &&
-                ((this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null) || (this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true)) &&
-                ((this.SubscriptionId == null && other.SubscriptionId == null) || (this.SubscriptionId?.Equals(other.SubscriptionId) == true)) &&
-                ((this.TaxIncluded == null && other.TaxIncluded == null) || (this.TaxIncluded?.Equals(other.TaxIncluded) == true)) &&
-                ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
-                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true)) &&
-                ((this.CurrencyPrices == null && other.CurrencyPrices == null) || (this.CurrencyPrices?.Equals(other.CurrencyPrices) == true));
+            return obj is ComponentPricePoint other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.Type == null && other.Type == null ||
+                 this.Type?.Equals(other.Type) == true) &&
+                (this.MDefault == null && other.MDefault == null ||
+                 this.MDefault?.Equals(other.MDefault) == true) &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.PricingScheme == null && other.PricingScheme == null ||
+                 this.PricingScheme?.Equals(other.PricingScheme) == true) &&
+                (this.ComponentId == null && other.ComponentId == null ||
+                 this.ComponentId?.Equals(other.ComponentId) == true) &&
+                (this.Handle == null && other.Handle == null ||
+                 this.Handle?.Equals(other.Handle) == true) &&
+                (this.ArchivedAt == null && other.ArchivedAt == null ||
+                 this.ArchivedAt?.Equals(other.ArchivedAt) == true) &&
+                (this.CreatedAt == null && other.CreatedAt == null ||
+                 this.CreatedAt?.Equals(other.CreatedAt) == true) &&
+                (this.UpdatedAt == null && other.UpdatedAt == null ||
+                 this.UpdatedAt?.Equals(other.UpdatedAt) == true) &&
+                (this.Prices == null && other.Prices == null ||
+                 this.Prices?.Equals(other.Prices) == true) &&
+                (this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null ||
+                 this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true) &&
+                (this.SubscriptionId == null && other.SubscriptionId == null ||
+                 this.SubscriptionId?.Equals(other.SubscriptionId) == true) &&
+                (this.TaxIncluded == null && other.TaxIncluded == null ||
+                 this.TaxIncluded?.Equals(other.TaxIncluded) == true) &&
+                (this.Interval == null && other.Interval == null ||
+                 this.Interval?.Equals(other.Interval) == true) &&
+                (this.IntervalUnit == null && other.IntervalUnit == null ||
+                 this.IntervalUnit?.Equals(other.IntervalUnit) == true) &&
+                (this.CurrencyPrices == null && other.CurrencyPrices == null ||
+                 this.CurrencyPrices?.Equals(other.CurrencyPrices) == true) &&
+                (this.OveragePrices == null && other.OveragePrices == null ||
+                 this.OveragePrices?.Equals(other.OveragePrices) == true) &&
+                (this.OveragePricingScheme == null && other.OveragePricingScheme == null ||
+                 this.OveragePricingScheme?.Equals(other.OveragePricingScheme) == true) &&
+                (this.RenewPrepaidAllocation == null && other.RenewPrepaidAllocation == null ||
+                 this.RenewPrepaidAllocation?.Equals(other.RenewPrepaidAllocation) == true) &&
+                (this.RolloverPrepaidRemainder == null && other.RolloverPrepaidRemainder == null ||
+                 this.RolloverPrepaidRemainder?.Equals(other.RolloverPrepaidRemainder) == true) &&
+                (this.ExpirationInterval == null && other.ExpirationInterval == null ||
+                 this.ExpirationInterval?.Equals(other.ExpirationInterval) == true) &&
+                (this.ExpirationIntervalUnit == null && other.ExpirationIntervalUnit == null ||
+                 this.ExpirationIntervalUnit?.Equals(other.ExpirationIntervalUnit) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -388,10 +535,10 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"this.Type = {(this.Type == null ? "null" : this.Type.ToString())}");
             toStringOutput.Add($"this.MDefault = {(this.MDefault == null ? "null" : this.MDefault.ToString())}");
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
             toStringOutput.Add($"this.PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
-            toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
+            toStringOutput.Add($"this.Handle = {this.Handle ?? "null"}");
             toStringOutput.Add($"this.ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt.ToString())}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
             toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
@@ -402,6 +549,12 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
             toStringOutput.Add($"this.CurrencyPrices = {(this.CurrencyPrices == null ? "null" : $"[{string.Join(", ", this.CurrencyPrices)} ]")}");
+            toStringOutput.Add($"this.OveragePrices = {(this.OveragePrices == null ? "null" : $"[{string.Join(", ", this.OveragePrices)} ]")}");
+            toStringOutput.Add($"this.OveragePricingScheme = {(this.OveragePricingScheme == null ? "null" : this.OveragePricingScheme.ToString())}");
+            toStringOutput.Add($"this.RenewPrepaidAllocation = {(this.RenewPrepaidAllocation == null ? "null" : this.RenewPrepaidAllocation.ToString())}");
+            toStringOutput.Add($"this.RolloverPrepaidRemainder = {(this.RolloverPrepaidRemainder == null ? "null" : this.RolloverPrepaidRemainder.ToString())}");
+            toStringOutput.Add($"this.ExpirationInterval = {(this.ExpirationInterval == null ? "null" : this.ExpirationInterval.ToString())}");
+            toStringOutput.Add($"this.ExpirationIntervalUnit = {(this.ExpirationIntervalUnit == null ? "null" : this.ExpirationIntervalUnit.ToString())}");
 
             base.ToString(toStringOutput);
         }

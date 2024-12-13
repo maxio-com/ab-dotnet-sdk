@@ -75,37 +75,35 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"NestedSubscriptionGroup : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is NestedSubscriptionGroup other &&                ((this.Uid == null && other.Uid == null) || (this.Uid?.Equals(other.Uid) == true)) &&
-                ((this.Scheme == null && other.Scheme == null) || (this.Scheme?.Equals(other.Scheme) == true)) &&
-                ((this.PrimarySubscriptionId == null && other.PrimarySubscriptionId == null) || (this.PrimarySubscriptionId?.Equals(other.PrimarySubscriptionId) == true)) &&
-                ((this.Primary == null && other.Primary == null) || (this.Primary?.Equals(other.Primary) == true));
+            return obj is NestedSubscriptionGroup other &&
+                (this.Uid == null && other.Uid == null ||
+                 this.Uid?.Equals(other.Uid) == true) &&
+                (this.Scheme == null && other.Scheme == null ||
+                 this.Scheme?.Equals(other.Scheme) == true) &&
+                (this.PrimarySubscriptionId == null && other.PrimarySubscriptionId == null ||
+                 this.PrimarySubscriptionId?.Equals(other.PrimarySubscriptionId) == true) &&
+                (this.Primary == null && other.Primary == null ||
+                 this.Primary?.Equals(other.Primary) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
+            toStringOutput.Add($"this.Uid = {this.Uid ?? "null"}");
             toStringOutput.Add($"this.Scheme = {(this.Scheme == null ? "null" : this.Scheme.ToString())}");
             toStringOutput.Add($"this.PrimarySubscriptionId = {(this.PrimarySubscriptionId == null ? "null" : this.PrimarySubscriptionId.ToString())}");
             toStringOutput.Add($"this.Primary = {(this.Primary == null ? "null" : this.Primary.ToString())}");

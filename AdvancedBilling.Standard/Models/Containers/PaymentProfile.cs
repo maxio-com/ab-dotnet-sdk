@@ -116,6 +116,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is ApplePayPaymentProfileCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<BankAccountPaymentProfileCase, BankAccountPaymentProfile>))]
@@ -146,6 +153,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             public override string ToString()
             {
                 return _value?.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is BankAccountPaymentProfileCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
             }
         }
 
@@ -178,6 +192,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 return _value?.ToString();
             }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is CreditCardPaymentProfileCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+            }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PaypalPaymentProfileCase, PaypalPaymentProfile>))]
@@ -208,6 +229,13 @@ namespace AdvancedBilling.Standard.Models.Containers
             public override string ToString()
             {
                 return _value?.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is PaypalPaymentProfileCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
             }
         }
     }

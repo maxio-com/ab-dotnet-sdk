@@ -111,33 +111,30 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ComponentAllocationChange : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ComponentAllocationChange other &&                this.PreviousAllocation.Equals(other.PreviousAllocation) &&
-                this.NewAllocation.Equals(other.NewAllocation) &&
-                this.ComponentId.Equals(other.ComponentId) &&
-                ((this.ComponentHandle == null && other.ComponentHandle == null) || (this.ComponentHandle?.Equals(other.ComponentHandle) == true)) &&
-                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                this.AllocationId.Equals(other.AllocationId) &&
-                ((this.AllocatedQuantity == null && other.AllocatedQuantity == null) || (this.AllocatedQuantity?.Equals(other.AllocatedQuantity) == true));
+            return obj is ComponentAllocationChange other &&
+                (this.PreviousAllocation.Equals(other.PreviousAllocation)) &&
+                (this.NewAllocation.Equals(other.NewAllocation)) &&
+                (this.ComponentId.Equals(other.ComponentId)) &&
+                (this.ComponentHandle == null && other.ComponentHandle == null ||
+                 this.ComponentHandle?.Equals(other.ComponentHandle) == true) &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.AllocationId.Equals(other.AllocationId)) &&
+                (this.AllocatedQuantity == null && other.AllocatedQuantity == null ||
+                 this.AllocatedQuantity?.Equals(other.AllocatedQuantity) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -147,8 +144,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PreviousAllocation = {this.PreviousAllocation}");
             toStringOutput.Add($"this.NewAllocation = {this.NewAllocation}");
             toStringOutput.Add($"this.ComponentId = {this.ComponentId}");
-            toStringOutput.Add($"this.ComponentHandle = {(this.ComponentHandle == null ? "null" : this.ComponentHandle)}");
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
+            toStringOutput.Add($"this.ComponentHandle = {this.ComponentHandle ?? "null"}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
             toStringOutput.Add($"this.AllocationId = {this.AllocationId}");
             toStringOutput.Add($"AllocatedQuantity = {(this.AllocatedQuantity == null ? "null" : this.AllocatedQuantity.ToString())}");
 

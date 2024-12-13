@@ -5,9 +5,8 @@ The following parameters are configurable for the API Client:
 
 | Parameter | Type | Description |
 |  --- | --- | --- |
-| `Subdomain` | `string` | The subdomain for your Advanced Billing site.<br>*Default*: `"subdomain"` |
-| `Domain` | `string` | The Advanced Billing server domain.<br>*Default*: `"chargify.com"` |
-| `Environment` | `Environment` | The API environment. <br> **Default: `Environment.Production`** |
+| `Site` | `string` | The subdomain for your Advanced Billing site.<br>*Default*: `"subdomain"` |
+| `Environment` | `Environment` | The API environment. <br> **Default: `Environment.US`** |
 | `Timeout` | `TimeSpan` | Http client timeout.<br>*Default*: `TimeSpan.FromSeconds(120)` |
 | `BasicAuthCredentials` | [`BasicAuthCredentials`](auth/basic-authentication.md) | The Credentials Setter for Basic Authentication |
 
@@ -21,9 +20,8 @@ AdvancedBillingClient client = new AdvancedBillingClient.Builder()
             "BasicAuthPassword"
         )
         .Build())
-    .Environment(AdvancedBilling.Standard.Environment.Production)
-    .Subdomain("subdomain")
-    .Domain("chargify.com")
+    .Environment(AdvancedBilling.Standard.Environment.US)
+    .Site("subdomain")
     .Build();
 ```
 
@@ -75,15 +73,14 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 | HttpClientConfiguration | Gets the configuration of the Http Client associated with this client. | [`IHttpClientConfiguration`](http-client-configuration.md) |
 | Timeout | Http client timeout. | `TimeSpan` |
 | Environment | Current API environment. | `Environment` |
-| Subdomain | The subdomain for your Advanced Billing site. | `string` |
-| Domain | The Advanced Billing server domain. | `string` |
+| Site | The subdomain for your Advanced Billing site. | `string` |
 | BasicAuthCredentials | Gets the credentials to use with BasicAuth. | [`IBasicAuthCredentials`](auth/basic-authentication.md) |
 
 ### Methods
 
 | Name | Description | Return Type |
 |  --- | --- | --- |
-| `GetBaseUri(Server alias = Server.Default)` | Gets the URL for a particular alias in the current environment and appends it with template parameters. | `string` |
+| `GetBaseUri(Server alias = Server.Production)` | Gets the URL for a particular alias in the current environment and appends it with template parameters. | `string` |
 | `ToBuilder()` | Creates an object of the Maxio Advanced BillingClient using the values provided for the builder. | `Builder` |
 
 ## Maxio Advanced BillingClient Builder Class
@@ -97,7 +94,6 @@ Class to build instances of Maxio Advanced BillingClient.
 | `HttpClientConfiguration(Action<`[`HttpClientConfiguration.Builder`](http-client-configuration-builder.md)`> action)` | Gets the configuration of the Http Client associated with this client. | `Builder` |
 | `Timeout(TimeSpan timeout)` | Http client timeout. | `Builder` |
 | `Environment(Environment environment)` | Current API environment. | `Builder` |
-| `Subdomain(string subdomain)` | The subdomain for your Advanced Billing site. | `Builder` |
-| `Domain(string domain)` | The Advanced Billing server domain. | `Builder` |
+| `Site(string site)` | The subdomain for your Advanced Billing site. | `Builder` |
 | `BasicAuthCredentials(Action<BasicAuthModel.Builder> action)` | Sets credentials for BasicAuth. | `Builder` |
 

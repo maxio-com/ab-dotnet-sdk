@@ -69,29 +69,26 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"DunningStepReached : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is DunningStepReached other &&                ((this.Dunner == null && other.Dunner == null) || (this.Dunner?.Equals(other.Dunner) == true)) &&
-                ((this.CurrentStep == null && other.CurrentStep == null) || (this.CurrentStep?.Equals(other.CurrentStep) == true)) &&
-                ((this.NextStep == null && other.NextStep == null) || (this.NextStep?.Equals(other.NextStep) == true));
+            return obj is DunningStepReached other &&
+                (this.Dunner == null && other.Dunner == null ||
+                 this.Dunner?.Equals(other.Dunner) == true) &&
+                (this.CurrentStep == null && other.CurrentStep == null ||
+                 this.CurrentStep?.Equals(other.CurrentStep) == true) &&
+                (this.NextStep == null && other.NextStep == null ||
+                 this.NextStep?.Equals(other.NextStep) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

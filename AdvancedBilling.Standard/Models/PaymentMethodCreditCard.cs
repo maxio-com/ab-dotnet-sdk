@@ -51,11 +51,11 @@ namespace AdvancedBilling.Standard.Models
         {
             this.CardBrand = cardBrand;
             this.CardExpiration = cardExpiration;
+
             if (lastFour != null)
             {
                 this.LastFour = lastFour;
             }
-
             this.MaskedCardNumber = maskedCardNumber;
             this.Type = type;
         }
@@ -113,14 +113,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"PaymentMethodCreditCard : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetLastFour()
         {
@@ -139,32 +137,32 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is PaymentMethodCreditCard other &&                ((this.CardBrand == null && other.CardBrand == null) || (this.CardBrand?.Equals(other.CardBrand) == true)) &&
-                ((this.CardExpiration == null && other.CardExpiration == null) || (this.CardExpiration?.Equals(other.CardExpiration) == true)) &&
-                ((this.LastFour == null && other.LastFour == null) || (this.LastFour?.Equals(other.LastFour) == true)) &&
-                ((this.MaskedCardNumber == null && other.MaskedCardNumber == null) || (this.MaskedCardNumber?.Equals(other.MaskedCardNumber) == true)) &&
-                this.Type.Equals(other.Type);
+            return obj is PaymentMethodCreditCard other &&
+                (this.CardBrand == null && other.CardBrand == null ||
+                 this.CardBrand?.Equals(other.CardBrand) == true) &&
+                (this.CardExpiration == null && other.CardExpiration == null ||
+                 this.CardExpiration?.Equals(other.CardExpiration) == true) &&
+                (this.LastFour == null && other.LastFour == null ||
+                 this.LastFour?.Equals(other.LastFour) == true) &&
+                (this.MaskedCardNumber == null && other.MaskedCardNumber == null ||
+                 this.MaskedCardNumber?.Equals(other.MaskedCardNumber) == true) &&
+                (this.Type.Equals(other.Type)) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.CardBrand = {(this.CardBrand == null ? "null" : this.CardBrand)}");
-            toStringOutput.Add($"this.CardExpiration = {(this.CardExpiration == null ? "null" : this.CardExpiration)}");
-            toStringOutput.Add($"this.LastFour = {(this.LastFour == null ? "null" : this.LastFour)}");
-            toStringOutput.Add($"this.MaskedCardNumber = {(this.MaskedCardNumber == null ? "null" : this.MaskedCardNumber)}");
+            toStringOutput.Add($"this.CardBrand = {this.CardBrand ?? "null"}");
+            toStringOutput.Add($"this.CardExpiration = {this.CardExpiration ?? "null"}");
+            toStringOutput.Add($"this.LastFour = {this.LastFour ?? "null"}");
+            toStringOutput.Add($"this.MaskedCardNumber = {this.MaskedCardNumber ?? "null"}");
             toStringOutput.Add($"this.Type = {this.Type}");
 
             base.ToString(toStringOutput);

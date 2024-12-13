@@ -14,15 +14,15 @@ namespace AdvancedBilling.Standard
     public enum Environment
     {
         /// <summary>
-        /// Production server.
+        /// Default Advanced Billing environment hosted in US. Valid for the majority of our customers..
         /// </summary>
-        [EnumMember(Value = "production")]
-        Production,
+        [EnumMember(Value = "US")]
+        US,
 
         /// <summary>
-        /// Production server.
+        /// Advanced Billing environment hosted in EU. Use only when you requested EU hosting for your AB account..
         /// </summary>
-        [EnumMember(Value = "environment2")]
-        Environment2,
+        [EnumMember(Value = "EU")]
+        EU,
     }
 }

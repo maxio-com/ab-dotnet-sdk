@@ -58,35 +58,30 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"TooManyManagementLinkRequests : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is TooManyManagementLinkRequests other &&                ((this.Error == null && other.Error == null) || (this.Error?.Equals(other.Error) == true)) &&
-                this.NewLinkAvailableAt.Equals(other.NewLinkAvailableAt);
+            return obj is TooManyManagementLinkRequests other &&
+                (this.Error == null && other.Error == null ||
+                 this.Error?.Equals(other.Error) == true) &&
+                (this.NewLinkAvailableAt.Equals(other.NewLinkAvailableAt)) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Error = {(this.Error == null ? "null" : this.Error)}");
+            toStringOutput.Add($"this.Error = {this.Error ?? "null"}");
             toStringOutput.Add($"this.NewLinkAvailableAt = {this.NewLinkAvailableAt}");
 
             base.ToString(toStringOutput);

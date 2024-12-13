@@ -62,9 +62,9 @@ namespace AdvancedBillingTests
 
             var couponCode = $"100{randomString}OFF";
 
-            var createOrUpdatePercentageCoupon = new CreateOrUpdatePercentageCoupon("100% off first month of usage",
-                couponCode, CreateOrUpdatePercentageCouponPercentage.FromPrecision(100), "100% off one-time", false,
-                false, DateTimeOffset.Now.AddYears(1), productFamilyId.ToString(), false,
+            var couponPayload = new CouponPayload("100% off first month of usage",
+                couponCode, "100% off one-time", CouponPayloadPercentage.FromPrecision(100), null, false,
+                false, DateTime.Now.AddYears(1), productFamilyId.ToString(), false,
                 excludeMidPeriodAllocations: true, applyOnCancelAtEndOfPeriod: true);
 
             var restrictedProductDictionary = new Dictionary<string, bool> { { product.Product.Id.ToString()!, true } };
@@ -74,9 +74,7 @@ namespace AdvancedBillingTests
             };
 
             var couponResponse = await _client.CouponsController.CreateCouponAsync((int)productFamilyId,
-                new CreateOrUpdateCoupon(
-                    CreateOrUpdateCouponCoupon.FromCreateOrUpdatePercentageCoupon(createOrUpdatePercentageCoupon),
-                    restrictedProductDictionary, restrictedComponentsDictionary));
+                new CouponRequest(couponPayload, restrictedProductDictionary, restrictedComponentsDictionary));
             couponResponse.Coupon.Id.Should().NotBeNull();
 
             var customer = await CreationUtils.CreateCustomer(_client);
@@ -182,9 +180,9 @@ namespace AdvancedBillingTests
 
             var couponCode = $"100{randomString}OFF";
 
-            var createOrUpdatePercentageCoupon = new CreateOrUpdatePercentageCoupon("100% off first month of usage",
-                couponCode, CreateOrUpdatePercentageCouponPercentage.FromPrecision(100), "100% off one-time", false,
-                false, DateTimeOffset.Now.AddYears(1), productFamilyId.ToString(), false,
+            var couponPayload = new CouponPayload("100% off first month of usage",
+                couponCode, "100% off one-time", CouponPayloadPercentage.FromPrecision(100), null, false,
+                false, DateTime.Now.AddYears(1), productFamilyId.ToString(), false,
                 excludeMidPeriodAllocations: true, applyOnCancelAtEndOfPeriod: true);
 
             var restrictedProductDictionary = new Dictionary<string, bool> { { product.Product.Id.ToString()!, true } };
@@ -195,9 +193,7 @@ namespace AdvancedBillingTests
             };
 
             var couponResponse = await _client.CouponsController.CreateCouponAsync((int)productFamilyId,
-                new CreateOrUpdateCoupon(
-                    CreateOrUpdateCouponCoupon.FromCreateOrUpdatePercentageCoupon(createOrUpdatePercentageCoupon),
-                    restrictedProductDictionary, restrictedComponentsDictionary));
+                new CouponRequest(couponPayload, restrictedProductDictionary, restrictedComponentsDictionary));
             couponResponse.Coupon.Id.Should().NotBeNull();
 
             var customer = await CreationUtils.CreateCustomer(_client);

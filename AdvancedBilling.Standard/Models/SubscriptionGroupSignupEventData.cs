@@ -1,4 +1,4 @@
-// <copyright file="SubscriptionGroupSignupSuccess.cs" company="APIMatic">
+// <copyright file="SubscriptionGroupSignupEventData.cs" company="APIMatic">
 // Copyright (c) APIMatic. All rights reserved.
 // </copyright>
 using System;
@@ -17,25 +17,25 @@ using Newtonsoft.Json.Converters;
 namespace AdvancedBilling.Standard.Models
 {
     /// <summary>
-    /// SubscriptionGroupSignupSuccess.
+    /// SubscriptionGroupSignupEventData.
     /// </summary>
-    public class SubscriptionGroupSignupSuccess : BaseModel
+    public class SubscriptionGroupSignupEventData : BaseModel
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SubscriptionGroupSignupSuccess"/> class.
+        /// Initializes a new instance of the <see cref="SubscriptionGroupSignupEventData"/> class.
         /// </summary>
-        public SubscriptionGroupSignupSuccess()
+        public SubscriptionGroupSignupEventData()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SubscriptionGroupSignupSuccess"/> class.
+        /// Initializes a new instance of the <see cref="SubscriptionGroupSignupEventData"/> class.
         /// </summary>
         /// <param name="subscriptionGroup">subscription_group.</param>
         /// <param name="customer">customer.</param>
-        public SubscriptionGroupSignupSuccess(
-            Models.SubscriptionGroupSignupSuccessData subscriptionGroup,
-            Models.Customer customer)
+        public SubscriptionGroupSignupEventData(
+            Models.SubscriptionGroupSignupFailureData subscriptionGroup,
+            Models.Customer customer = null)
         {
             this.SubscriptionGroup = subscriptionGroup;
             this.Customer = customer;
@@ -46,41 +46,36 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("subscription_group")]
         [JsonRequired]
-        public Models.SubscriptionGroupSignupSuccessData SubscriptionGroup { get; set; }
+        public Models.SubscriptionGroupSignupFailureData SubscriptionGroup { get; set; }
 
         /// <summary>
         /// Gets or sets Customer.
         /// </summary>
-        [JsonProperty("customer")]
-        [JsonRequired]
+        [JsonProperty("customer", NullValueHandling = NullValueHandling.Include)]
         public Models.Customer Customer { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
-            return $"SubscriptionGroupSignupSuccess : ({string.Join(", ", toStringOutput)})";
+            return $"SubscriptionGroupSignupEventData : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SubscriptionGroupSignupSuccess other &&                ((this.SubscriptionGroup == null && other.SubscriptionGroup == null) || (this.SubscriptionGroup?.Equals(other.SubscriptionGroup) == true)) &&
-                ((this.Customer == null && other.Customer == null) || (this.Customer?.Equals(other.Customer) == true));
+            return obj is SubscriptionGroupSignupEventData other &&
+                (this.SubscriptionGroup == null && other.SubscriptionGroup == null ||
+                 this.SubscriptionGroup?.Equals(other.SubscriptionGroup) == true) &&
+                (this.Customer == null && other.Customer == null ||
+                 this.Customer?.Equals(other.Customer) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

@@ -102,33 +102,34 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"MetafieldScope : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is MetafieldScope other &&                ((this.Csv == null && other.Csv == null) || (this.Csv?.Equals(other.Csv) == true)) &&
-                ((this.Invoices == null && other.Invoices == null) || (this.Invoices?.Equals(other.Invoices) == true)) &&
-                ((this.Statements == null && other.Statements == null) || (this.Statements?.Equals(other.Statements) == true)) &&
-                ((this.Portal == null && other.Portal == null) || (this.Portal?.Equals(other.Portal) == true)) &&
-                ((this.PublicShow == null && other.PublicShow == null) || (this.PublicShow?.Equals(other.PublicShow) == true)) &&
-                ((this.PublicEdit == null && other.PublicEdit == null) || (this.PublicEdit?.Equals(other.PublicEdit) == true)) &&
-                ((this.Hosted == null && other.Hosted == null) || (this.Hosted?.Equals(other.Hosted) == true));
+            return obj is MetafieldScope other &&
+                (this.Csv == null && other.Csv == null ||
+                 this.Csv?.Equals(other.Csv) == true) &&
+                (this.Invoices == null && other.Invoices == null ||
+                 this.Invoices?.Equals(other.Invoices) == true) &&
+                (this.Statements == null && other.Statements == null ||
+                 this.Statements?.Equals(other.Statements) == true) &&
+                (this.Portal == null && other.Portal == null ||
+                 this.Portal?.Equals(other.Portal) == true) &&
+                (this.PublicShow == null && other.PublicShow == null ||
+                 this.PublicShow?.Equals(other.PublicShow) == true) &&
+                (this.PublicEdit == null && other.PublicEdit == null ||
+                 this.PublicEdit?.Equals(other.PublicEdit) == true) &&
+                (this.Hosted == null && other.Hosted == null ||
+                 this.Hosted?.Equals(other.Hosted) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

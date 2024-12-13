@@ -69,6 +69,7 @@ namespace AdvancedBilling.Standard.Models
             string name = null,
             string phone = null)
         {
+
             if (street != null)
             {
                 this.Street = street;
@@ -108,7 +109,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.Phone = phone;
             }
-
         }
 
         /// <summary>
@@ -259,14 +259,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"OrganizationAddress : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetStreet()
         {
@@ -274,7 +272,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetLine2()
         {
@@ -282,7 +280,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetCity()
         {
@@ -290,7 +288,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetState()
         {
@@ -298,7 +296,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetZip()
         {
@@ -306,7 +304,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetCountry()
         {
@@ -314,7 +312,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetName()
         {
@@ -322,7 +320,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetPhone()
         {
@@ -404,39 +402,43 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is OrganizationAddress other &&                ((this.Street == null && other.Street == null) || (this.Street?.Equals(other.Street) == true)) &&
-                ((this.Line2 == null && other.Line2 == null) || (this.Line2?.Equals(other.Line2) == true)) &&
-                ((this.City == null && other.City == null) || (this.City?.Equals(other.City) == true)) &&
-                ((this.State == null && other.State == null) || (this.State?.Equals(other.State) == true)) &&
-                ((this.Zip == null && other.Zip == null) || (this.Zip?.Equals(other.Zip) == true)) &&
-                ((this.Country == null && other.Country == null) || (this.Country?.Equals(other.Country) == true)) &&
-                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.Phone == null && other.Phone == null) || (this.Phone?.Equals(other.Phone) == true));
+            return obj is OrganizationAddress other &&
+                (this.Street == null && other.Street == null ||
+                 this.Street?.Equals(other.Street) == true) &&
+                (this.Line2 == null && other.Line2 == null ||
+                 this.Line2?.Equals(other.Line2) == true) &&
+                (this.City == null && other.City == null ||
+                 this.City?.Equals(other.City) == true) &&
+                (this.State == null && other.State == null ||
+                 this.State?.Equals(other.State) == true) &&
+                (this.Zip == null && other.Zip == null ||
+                 this.Zip?.Equals(other.Zip) == true) &&
+                (this.Country == null && other.Country == null ||
+                 this.Country?.Equals(other.Country) == true) &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.Phone == null && other.Phone == null ||
+                 this.Phone?.Equals(other.Phone) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Street = {(this.Street == null ? "null" : this.Street)}");
-            toStringOutput.Add($"this.Line2 = {(this.Line2 == null ? "null" : this.Line2)}");
-            toStringOutput.Add($"this.City = {(this.City == null ? "null" : this.City)}");
-            toStringOutput.Add($"this.State = {(this.State == null ? "null" : this.State)}");
-            toStringOutput.Add($"this.Zip = {(this.Zip == null ? "null" : this.Zip)}");
-            toStringOutput.Add($"this.Country = {(this.Country == null ? "null" : this.Country)}");
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
-            toStringOutput.Add($"this.Phone = {(this.Phone == null ? "null" : this.Phone)}");
+            toStringOutput.Add($"this.Street = {this.Street ?? "null"}");
+            toStringOutput.Add($"this.Line2 = {this.Line2 ?? "null"}");
+            toStringOutput.Add($"this.City = {this.City ?? "null"}");
+            toStringOutput.Add($"this.State = {this.State ?? "null"}");
+            toStringOutput.Add($"this.Zip = {this.Zip ?? "null"}");
+            toStringOutput.Add($"this.Country = {this.Country ?? "null"}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"this.Phone = {this.Phone ?? "null"}");
 
             base.ToString(toStringOutput);
         }

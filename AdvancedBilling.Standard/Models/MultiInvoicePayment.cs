@@ -75,30 +75,28 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"MultiInvoicePayment : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is MultiInvoicePayment other &&                ((this.TransactionId == null && other.TransactionId == null) || (this.TransactionId?.Equals(other.TransactionId) == true)) &&
-                ((this.TotalAmount == null && other.TotalAmount == null) || (this.TotalAmount?.Equals(other.TotalAmount) == true)) &&
-                ((this.CurrencyCode == null && other.CurrencyCode == null) || (this.CurrencyCode?.Equals(other.CurrencyCode) == true)) &&
-                ((this.Applications == null && other.Applications == null) || (this.Applications?.Equals(other.Applications) == true));
+            return obj is MultiInvoicePayment other &&
+                (this.TransactionId == null && other.TransactionId == null ||
+                 this.TransactionId?.Equals(other.TransactionId) == true) &&
+                (this.TotalAmount == null && other.TotalAmount == null ||
+                 this.TotalAmount?.Equals(other.TotalAmount) == true) &&
+                (this.CurrencyCode == null && other.CurrencyCode == null ||
+                 this.CurrencyCode?.Equals(other.CurrencyCode) == true) &&
+                (this.Applications == null && other.Applications == null ||
+                 this.Applications?.Equals(other.Applications) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -106,8 +104,8 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.TransactionId = {(this.TransactionId == null ? "null" : this.TransactionId.ToString())}");
-            toStringOutput.Add($"this.TotalAmount = {(this.TotalAmount == null ? "null" : this.TotalAmount)}");
-            toStringOutput.Add($"this.CurrencyCode = {(this.CurrencyCode == null ? "null" : this.CurrencyCode)}");
+            toStringOutput.Add($"this.TotalAmount = {this.TotalAmount ?? "null"}");
+            toStringOutput.Add($"this.CurrencyCode = {this.CurrencyCode ?? "null"}");
             toStringOutput.Add($"this.Applications = {(this.Applications == null ? "null" : $"[{string.Join(", ", this.Applications)} ]")}");
 
             base.ToString(toStringOutput);

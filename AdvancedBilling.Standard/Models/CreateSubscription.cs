@@ -22,17 +22,10 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class CreateSubscription : BaseModel
     {
-        private bool? dunningCommunicationDelayEnabled;
         private string dunningCommunicationDelayTimeZone;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
-            { "dunning_communication_delay_enabled", true },
             { "dunning_communication_delay_time_zone", false },
-        };
-
-        private Dictionary<string, bool> hasPropertySetterCalledFor = new Dictionary<string, bool>
-        {
-            { "dunning_communication_delay_enabled", false },
         };
 
         /// <summary>
@@ -192,11 +185,11 @@ namespace AdvancedBilling.Standard.Models
             this.AgreementAcceptance = agreementAcceptance;
             this.AchAgreement = achAgreement;
             this.DunningCommunicationDelayEnabled = dunningCommunicationDelayEnabled;
+
             if (dunningCommunicationDelayTimeZone != null)
             {
                 this.DunningCommunicationDelayTimeZone = dunningCommunicationDelayTimeZone;
             }
-
             this.SkipBillingManifestTaxes = skipBillingManifestTaxes;
         }
 
@@ -485,27 +478,8 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Enable Communication Delay feature, making sure no communication (email or SMS) is sent to the Customer between 9PM and 8AM in time zone set by the `dunning_communication_delay_time_zone` attribute.
         /// </summary>
-        [JsonProperty("dunning_communication_delay_enabled")]
-        public bool? DunningCommunicationDelayEnabled
-        {
-            get
-            {
-                if (!hasPropertySetterCalledFor["dunning_communication_delay_enabled"] &&
-                    dunningCommunicationDelayEnabled == null)
-                {
-                    return false; // Default value
-                }
-
-                return this.dunningCommunicationDelayEnabled;
-            }
-
-            set
-            {
-                this.shouldSerialize["dunning_communication_delay_enabled"] = true;
-                hasPropertySetterCalledFor["dunning_communication_delay_enabled"] = true;
-                this.dunningCommunicationDelayEnabled = value;
-            }
-        }
+        [JsonProperty("dunning_communication_delay_enabled", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? DunningCommunicationDelayEnabled { get; set; }
 
         /// <summary>
         /// Time zone for the Dunning Communication Delay feature.
@@ -535,36 +509,16 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"CreateSubscription : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
-        /// </summary>
-        public void UnsetDunningCommunicationDelayEnabled()
-        {
-            this.shouldSerialize["dunning_communication_delay_enabled"] = false;
-            this.hasPropertySetterCalledFor["dunning_communication_delay_enabled"] = false;
-        }
-
-        /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDunningCommunicationDelayTimeZone()
         {
             this.shouldSerialize["dunning_communication_delay_time_zone"] = false;
-        }
-
-        /// <summary>
-        /// Checks if the field should be serialized or not.
-        /// </summary>
-        /// <returns>A boolean weather the field should be serialized or not.</returns>
-        public bool ShouldSerializeDunningCommunicationDelayEnabled()
-        {
-            return this.shouldSerialize["dunning_communication_delay_enabled"];
         }
 
         /// <summary>
@@ -579,89 +533,134 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is CreateSubscription other &&                ((this.ProductHandle == null && other.ProductHandle == null) || (this.ProductHandle?.Equals(other.ProductHandle) == true)) &&
-                ((this.ProductId == null && other.ProductId == null) || (this.ProductId?.Equals(other.ProductId) == true)) &&
-                ((this.ProductPricePointHandle == null && other.ProductPricePointHandle == null) || (this.ProductPricePointHandle?.Equals(other.ProductPricePointHandle) == true)) &&
-                ((this.ProductPricePointId == null && other.ProductPricePointId == null) || (this.ProductPricePointId?.Equals(other.ProductPricePointId) == true)) &&
-                ((this.CustomPrice == null && other.CustomPrice == null) || (this.CustomPrice?.Equals(other.CustomPrice) == true)) &&
-                ((this.CouponCode == null && other.CouponCode == null) || (this.CouponCode?.Equals(other.CouponCode) == true)) &&
-                ((this.CouponCodes == null && other.CouponCodes == null) || (this.CouponCodes?.Equals(other.CouponCodes) == true)) &&
-                ((this.PaymentCollectionMethod == null && other.PaymentCollectionMethod == null) || (this.PaymentCollectionMethod?.Equals(other.PaymentCollectionMethod) == true)) &&
-                ((this.ReceivesInvoiceEmails == null && other.ReceivesInvoiceEmails == null) || (this.ReceivesInvoiceEmails?.Equals(other.ReceivesInvoiceEmails) == true)) &&
-                ((this.NetTerms == null && other.NetTerms == null) || (this.NetTerms?.Equals(other.NetTerms) == true)) &&
-                ((this.CustomerId == null && other.CustomerId == null) || (this.CustomerId?.Equals(other.CustomerId) == true)) &&
-                ((this.NextBillingAt == null && other.NextBillingAt == null) || (this.NextBillingAt?.Equals(other.NextBillingAt) == true)) &&
-                ((this.InitialBillingAt == null && other.InitialBillingAt == null) || (this.InitialBillingAt?.Equals(other.InitialBillingAt) == true)) &&
-                ((this.StoredCredentialTransactionId == null && other.StoredCredentialTransactionId == null) || (this.StoredCredentialTransactionId?.Equals(other.StoredCredentialTransactionId) == true)) &&
-                ((this.SalesRepId == null && other.SalesRepId == null) || (this.SalesRepId?.Equals(other.SalesRepId) == true)) &&
-                ((this.PaymentProfileId == null && other.PaymentProfileId == null) || (this.PaymentProfileId?.Equals(other.PaymentProfileId) == true)) &&
-                ((this.Reference == null && other.Reference == null) || (this.Reference?.Equals(other.Reference) == true)) &&
-                ((this.CustomerAttributes == null && other.CustomerAttributes == null) || (this.CustomerAttributes?.Equals(other.CustomerAttributes) == true)) &&
-                ((this.PaymentProfileAttributes == null && other.PaymentProfileAttributes == null) || (this.PaymentProfileAttributes?.Equals(other.PaymentProfileAttributes) == true)) &&
-                ((this.CreditCardAttributes == null && other.CreditCardAttributes == null) || (this.CreditCardAttributes?.Equals(other.CreditCardAttributes) == true)) &&
-                ((this.BankAccountAttributes == null && other.BankAccountAttributes == null) || (this.BankAccountAttributes?.Equals(other.BankAccountAttributes) == true)) &&
-                ((this.Components == null && other.Components == null) || (this.Components?.Equals(other.Components) == true)) &&
-                ((this.CalendarBilling == null && other.CalendarBilling == null) || (this.CalendarBilling?.Equals(other.CalendarBilling) == true)) &&
-                ((this.Metafields == null && other.Metafields == null) || (this.Metafields?.Equals(other.Metafields) == true)) &&
-                ((this.CustomerReference == null && other.CustomerReference == null) || (this.CustomerReference?.Equals(other.CustomerReference) == true)) &&
-                ((this.MGroup == null && other.MGroup == null) || (this.MGroup?.Equals(other.MGroup) == true)) &&
-                ((this.MRef == null && other.MRef == null) || (this.MRef?.Equals(other.MRef) == true)) &&
-                ((this.CancellationMessage == null && other.CancellationMessage == null) || (this.CancellationMessage?.Equals(other.CancellationMessage) == true)) &&
-                ((this.CancellationMethod == null && other.CancellationMethod == null) || (this.CancellationMethod?.Equals(other.CancellationMethod) == true)) &&
-                ((this.Currency == null && other.Currency == null) || (this.Currency?.Equals(other.Currency) == true)) &&
-                ((this.ExpiresAt == null && other.ExpiresAt == null) || (this.ExpiresAt?.Equals(other.ExpiresAt) == true)) &&
-                ((this.ExpirationTracksNextBillingChange == null && other.ExpirationTracksNextBillingChange == null) || (this.ExpirationTracksNextBillingChange?.Equals(other.ExpirationTracksNextBillingChange) == true)) &&
-                ((this.AgreementTerms == null && other.AgreementTerms == null) || (this.AgreementTerms?.Equals(other.AgreementTerms) == true)) &&
-                ((this.AuthorizerFirstName == null && other.AuthorizerFirstName == null) || (this.AuthorizerFirstName?.Equals(other.AuthorizerFirstName) == true)) &&
-                ((this.AuthorizerLastName == null && other.AuthorizerLastName == null) || (this.AuthorizerLastName?.Equals(other.AuthorizerLastName) == true)) &&
-                ((this.CalendarBillingFirstCharge == null && other.CalendarBillingFirstCharge == null) || (this.CalendarBillingFirstCharge?.Equals(other.CalendarBillingFirstCharge) == true)) &&
-                ((this.ReasonCode == null && other.ReasonCode == null) || (this.ReasonCode?.Equals(other.ReasonCode) == true)) &&
-                ((this.ProductChangeDelayed == null && other.ProductChangeDelayed == null) || (this.ProductChangeDelayed?.Equals(other.ProductChangeDelayed) == true)) &&
-                ((this.OfferId == null && other.OfferId == null) || (this.OfferId?.Equals(other.OfferId) == true)) &&
-                ((this.PrepaidConfiguration == null && other.PrepaidConfiguration == null) || (this.PrepaidConfiguration?.Equals(other.PrepaidConfiguration) == true)) &&
-                ((this.PreviousBillingAt == null && other.PreviousBillingAt == null) || (this.PreviousBillingAt?.Equals(other.PreviousBillingAt) == true)) &&
-                ((this.ImportMrr == null && other.ImportMrr == null) || (this.ImportMrr?.Equals(other.ImportMrr) == true)) &&
-                ((this.CanceledAt == null && other.CanceledAt == null) || (this.CanceledAt?.Equals(other.CanceledAt) == true)) &&
-                ((this.ActivatedAt == null && other.ActivatedAt == null) || (this.ActivatedAt?.Equals(other.ActivatedAt) == true)) &&
-                ((this.AgreementAcceptance == null && other.AgreementAcceptance == null) || (this.AgreementAcceptance?.Equals(other.AgreementAcceptance) == true)) &&
-                ((this.AchAgreement == null && other.AchAgreement == null) || (this.AchAgreement?.Equals(other.AchAgreement) == true)) &&
-                ((this.DunningCommunicationDelayEnabled == null && other.DunningCommunicationDelayEnabled == null) || (this.DunningCommunicationDelayEnabled?.Equals(other.DunningCommunicationDelayEnabled) == true)) &&
-                ((this.DunningCommunicationDelayTimeZone == null && other.DunningCommunicationDelayTimeZone == null) || (this.DunningCommunicationDelayTimeZone?.Equals(other.DunningCommunicationDelayTimeZone) == true)) &&
-                ((this.SkipBillingManifestTaxes == null && other.SkipBillingManifestTaxes == null) || (this.SkipBillingManifestTaxes?.Equals(other.SkipBillingManifestTaxes) == true));
+            return obj is CreateSubscription other &&
+                (this.ProductHandle == null && other.ProductHandle == null ||
+                 this.ProductHandle?.Equals(other.ProductHandle) == true) &&
+                (this.ProductId == null && other.ProductId == null ||
+                 this.ProductId?.Equals(other.ProductId) == true) &&
+                (this.ProductPricePointHandle == null && other.ProductPricePointHandle == null ||
+                 this.ProductPricePointHandle?.Equals(other.ProductPricePointHandle) == true) &&
+                (this.ProductPricePointId == null && other.ProductPricePointId == null ||
+                 this.ProductPricePointId?.Equals(other.ProductPricePointId) == true) &&
+                (this.CustomPrice == null && other.CustomPrice == null ||
+                 this.CustomPrice?.Equals(other.CustomPrice) == true) &&
+                (this.CouponCode == null && other.CouponCode == null ||
+                 this.CouponCode?.Equals(other.CouponCode) == true) &&
+                (this.CouponCodes == null && other.CouponCodes == null ||
+                 this.CouponCodes?.Equals(other.CouponCodes) == true) &&
+                (this.PaymentCollectionMethod == null && other.PaymentCollectionMethod == null ||
+                 this.PaymentCollectionMethod?.Equals(other.PaymentCollectionMethod) == true) &&
+                (this.ReceivesInvoiceEmails == null && other.ReceivesInvoiceEmails == null ||
+                 this.ReceivesInvoiceEmails?.Equals(other.ReceivesInvoiceEmails) == true) &&
+                (this.NetTerms == null && other.NetTerms == null ||
+                 this.NetTerms?.Equals(other.NetTerms) == true) &&
+                (this.CustomerId == null && other.CustomerId == null ||
+                 this.CustomerId?.Equals(other.CustomerId) == true) &&
+                (this.NextBillingAt == null && other.NextBillingAt == null ||
+                 this.NextBillingAt?.Equals(other.NextBillingAt) == true) &&
+                (this.InitialBillingAt == null && other.InitialBillingAt == null ||
+                 this.InitialBillingAt?.Equals(other.InitialBillingAt) == true) &&
+                (this.StoredCredentialTransactionId == null && other.StoredCredentialTransactionId == null ||
+                 this.StoredCredentialTransactionId?.Equals(other.StoredCredentialTransactionId) == true) &&
+                (this.SalesRepId == null && other.SalesRepId == null ||
+                 this.SalesRepId?.Equals(other.SalesRepId) == true) &&
+                (this.PaymentProfileId == null && other.PaymentProfileId == null ||
+                 this.PaymentProfileId?.Equals(other.PaymentProfileId) == true) &&
+                (this.Reference == null && other.Reference == null ||
+                 this.Reference?.Equals(other.Reference) == true) &&
+                (this.CustomerAttributes == null && other.CustomerAttributes == null ||
+                 this.CustomerAttributes?.Equals(other.CustomerAttributes) == true) &&
+                (this.PaymentProfileAttributes == null && other.PaymentProfileAttributes == null ||
+                 this.PaymentProfileAttributes?.Equals(other.PaymentProfileAttributes) == true) &&
+                (this.CreditCardAttributes == null && other.CreditCardAttributes == null ||
+                 this.CreditCardAttributes?.Equals(other.CreditCardAttributes) == true) &&
+                (this.BankAccountAttributes == null && other.BankAccountAttributes == null ||
+                 this.BankAccountAttributes?.Equals(other.BankAccountAttributes) == true) &&
+                (this.Components == null && other.Components == null ||
+                 this.Components?.Equals(other.Components) == true) &&
+                (this.CalendarBilling == null && other.CalendarBilling == null ||
+                 this.CalendarBilling?.Equals(other.CalendarBilling) == true) &&
+                (this.Metafields == null && other.Metafields == null ||
+                 this.Metafields?.Equals(other.Metafields) == true) &&
+                (this.CustomerReference == null && other.CustomerReference == null ||
+                 this.CustomerReference?.Equals(other.CustomerReference) == true) &&
+                (this.MGroup == null && other.MGroup == null ||
+                 this.MGroup?.Equals(other.MGroup) == true) &&
+                (this.MRef == null && other.MRef == null ||
+                 this.MRef?.Equals(other.MRef) == true) &&
+                (this.CancellationMessage == null && other.CancellationMessage == null ||
+                 this.CancellationMessage?.Equals(other.CancellationMessage) == true) &&
+                (this.CancellationMethod == null && other.CancellationMethod == null ||
+                 this.CancellationMethod?.Equals(other.CancellationMethod) == true) &&
+                (this.Currency == null && other.Currency == null ||
+                 this.Currency?.Equals(other.Currency) == true) &&
+                (this.ExpiresAt == null && other.ExpiresAt == null ||
+                 this.ExpiresAt?.Equals(other.ExpiresAt) == true) &&
+                (this.ExpirationTracksNextBillingChange == null && other.ExpirationTracksNextBillingChange == null ||
+                 this.ExpirationTracksNextBillingChange?.Equals(other.ExpirationTracksNextBillingChange) == true) &&
+                (this.AgreementTerms == null && other.AgreementTerms == null ||
+                 this.AgreementTerms?.Equals(other.AgreementTerms) == true) &&
+                (this.AuthorizerFirstName == null && other.AuthorizerFirstName == null ||
+                 this.AuthorizerFirstName?.Equals(other.AuthorizerFirstName) == true) &&
+                (this.AuthorizerLastName == null && other.AuthorizerLastName == null ||
+                 this.AuthorizerLastName?.Equals(other.AuthorizerLastName) == true) &&
+                (this.CalendarBillingFirstCharge == null && other.CalendarBillingFirstCharge == null ||
+                 this.CalendarBillingFirstCharge?.Equals(other.CalendarBillingFirstCharge) == true) &&
+                (this.ReasonCode == null && other.ReasonCode == null ||
+                 this.ReasonCode?.Equals(other.ReasonCode) == true) &&
+                (this.ProductChangeDelayed == null && other.ProductChangeDelayed == null ||
+                 this.ProductChangeDelayed?.Equals(other.ProductChangeDelayed) == true) &&
+                (this.OfferId == null && other.OfferId == null ||
+                 this.OfferId?.Equals(other.OfferId) == true) &&
+                (this.PrepaidConfiguration == null && other.PrepaidConfiguration == null ||
+                 this.PrepaidConfiguration?.Equals(other.PrepaidConfiguration) == true) &&
+                (this.PreviousBillingAt == null && other.PreviousBillingAt == null ||
+                 this.PreviousBillingAt?.Equals(other.PreviousBillingAt) == true) &&
+                (this.ImportMrr == null && other.ImportMrr == null ||
+                 this.ImportMrr?.Equals(other.ImportMrr) == true) &&
+                (this.CanceledAt == null && other.CanceledAt == null ||
+                 this.CanceledAt?.Equals(other.CanceledAt) == true) &&
+                (this.ActivatedAt == null && other.ActivatedAt == null ||
+                 this.ActivatedAt?.Equals(other.ActivatedAt) == true) &&
+                (this.AgreementAcceptance == null && other.AgreementAcceptance == null ||
+                 this.AgreementAcceptance?.Equals(other.AgreementAcceptance) == true) &&
+                (this.AchAgreement == null && other.AchAgreement == null ||
+                 this.AchAgreement?.Equals(other.AchAgreement) == true) &&
+                (this.DunningCommunicationDelayEnabled == null && other.DunningCommunicationDelayEnabled == null ||
+                 this.DunningCommunicationDelayEnabled?.Equals(other.DunningCommunicationDelayEnabled) == true) &&
+                (this.DunningCommunicationDelayTimeZone == null && other.DunningCommunicationDelayTimeZone == null ||
+                 this.DunningCommunicationDelayTimeZone?.Equals(other.DunningCommunicationDelayTimeZone) == true) &&
+                (this.SkipBillingManifestTaxes == null && other.SkipBillingManifestTaxes == null ||
+                 this.SkipBillingManifestTaxes?.Equals(other.SkipBillingManifestTaxes) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ProductHandle = {(this.ProductHandle == null ? "null" : this.ProductHandle)}");
+            toStringOutput.Add($"this.ProductHandle = {this.ProductHandle ?? "null"}");
             toStringOutput.Add($"this.ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
-            toStringOutput.Add($"this.ProductPricePointHandle = {(this.ProductPricePointHandle == null ? "null" : this.ProductPricePointHandle)}");
+            toStringOutput.Add($"this.ProductPricePointHandle = {this.ProductPricePointHandle ?? "null"}");
             toStringOutput.Add($"this.ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
             toStringOutput.Add($"this.CustomPrice = {(this.CustomPrice == null ? "null" : this.CustomPrice.ToString())}");
-            toStringOutput.Add($"this.CouponCode = {(this.CouponCode == null ? "null" : this.CouponCode)}");
+            toStringOutput.Add($"this.CouponCode = {this.CouponCode ?? "null"}");
             toStringOutput.Add($"this.CouponCodes = {(this.CouponCodes == null ? "null" : $"[{string.Join(", ", this.CouponCodes)} ]")}");
             toStringOutput.Add($"this.PaymentCollectionMethod = {(this.PaymentCollectionMethod == null ? "null" : this.PaymentCollectionMethod.ToString())}");
-            toStringOutput.Add($"this.ReceivesInvoiceEmails = {(this.ReceivesInvoiceEmails == null ? "null" : this.ReceivesInvoiceEmails)}");
-            toStringOutput.Add($"this.NetTerms = {(this.NetTerms == null ? "null" : this.NetTerms)}");
+            toStringOutput.Add($"this.ReceivesInvoiceEmails = {this.ReceivesInvoiceEmails ?? "null"}");
+            toStringOutput.Add($"this.NetTerms = {this.NetTerms ?? "null"}");
             toStringOutput.Add($"this.CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
             toStringOutput.Add($"this.NextBillingAt = {(this.NextBillingAt == null ? "null" : this.NextBillingAt.ToString())}");
             toStringOutput.Add($"this.InitialBillingAt = {(this.InitialBillingAt == null ? "null" : this.InitialBillingAt.ToString())}");
             toStringOutput.Add($"this.StoredCredentialTransactionId = {(this.StoredCredentialTransactionId == null ? "null" : this.StoredCredentialTransactionId.ToString())}");
             toStringOutput.Add($"this.SalesRepId = {(this.SalesRepId == null ? "null" : this.SalesRepId.ToString())}");
             toStringOutput.Add($"this.PaymentProfileId = {(this.PaymentProfileId == null ? "null" : this.PaymentProfileId.ToString())}");
-            toStringOutput.Add($"this.Reference = {(this.Reference == null ? "null" : this.Reference)}");
+            toStringOutput.Add($"this.Reference = {this.Reference ?? "null"}");
             toStringOutput.Add($"this.CustomerAttributes = {(this.CustomerAttributes == null ? "null" : this.CustomerAttributes.ToString())}");
             toStringOutput.Add($"this.PaymentProfileAttributes = {(this.PaymentProfileAttributes == null ? "null" : this.PaymentProfileAttributes.ToString())}");
             toStringOutput.Add($"this.CreditCardAttributes = {(this.CreditCardAttributes == null ? "null" : this.CreditCardAttributes.ToString())}");
@@ -669,19 +668,19 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.Components = {(this.Components == null ? "null" : $"[{string.Join(", ", this.Components)} ]")}");
             toStringOutput.Add($"this.CalendarBilling = {(this.CalendarBilling == null ? "null" : this.CalendarBilling.ToString())}");
             toStringOutput.Add($"Metafields = {(this.Metafields == null ? "null" : this.Metafields.ToString())}");
-            toStringOutput.Add($"this.CustomerReference = {(this.CustomerReference == null ? "null" : this.CustomerReference)}");
+            toStringOutput.Add($"this.CustomerReference = {this.CustomerReference ?? "null"}");
             toStringOutput.Add($"this.MGroup = {(this.MGroup == null ? "null" : this.MGroup.ToString())}");
-            toStringOutput.Add($"this.MRef = {(this.MRef == null ? "null" : this.MRef)}");
-            toStringOutput.Add($"this.CancellationMessage = {(this.CancellationMessage == null ? "null" : this.CancellationMessage)}");
-            toStringOutput.Add($"this.CancellationMethod = {(this.CancellationMethod == null ? "null" : this.CancellationMethod)}");
-            toStringOutput.Add($"this.Currency = {(this.Currency == null ? "null" : this.Currency)}");
+            toStringOutput.Add($"this.MRef = {this.MRef ?? "null"}");
+            toStringOutput.Add($"this.CancellationMessage = {this.CancellationMessage ?? "null"}");
+            toStringOutput.Add($"this.CancellationMethod = {this.CancellationMethod ?? "null"}");
+            toStringOutput.Add($"this.Currency = {this.Currency ?? "null"}");
             toStringOutput.Add($"this.ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt.ToString())}");
-            toStringOutput.Add($"this.ExpirationTracksNextBillingChange = {(this.ExpirationTracksNextBillingChange == null ? "null" : this.ExpirationTracksNextBillingChange)}");
-            toStringOutput.Add($"this.AgreementTerms = {(this.AgreementTerms == null ? "null" : this.AgreementTerms)}");
-            toStringOutput.Add($"this.AuthorizerFirstName = {(this.AuthorizerFirstName == null ? "null" : this.AuthorizerFirstName)}");
-            toStringOutput.Add($"this.AuthorizerLastName = {(this.AuthorizerLastName == null ? "null" : this.AuthorizerLastName)}");
-            toStringOutput.Add($"this.CalendarBillingFirstCharge = {(this.CalendarBillingFirstCharge == null ? "null" : this.CalendarBillingFirstCharge)}");
-            toStringOutput.Add($"this.ReasonCode = {(this.ReasonCode == null ? "null" : this.ReasonCode)}");
+            toStringOutput.Add($"this.ExpirationTracksNextBillingChange = {this.ExpirationTracksNextBillingChange ?? "null"}");
+            toStringOutput.Add($"this.AgreementTerms = {this.AgreementTerms ?? "null"}");
+            toStringOutput.Add($"this.AuthorizerFirstName = {this.AuthorizerFirstName ?? "null"}");
+            toStringOutput.Add($"this.AuthorizerLastName = {this.AuthorizerLastName ?? "null"}");
+            toStringOutput.Add($"this.CalendarBillingFirstCharge = {this.CalendarBillingFirstCharge ?? "null"}");
+            toStringOutput.Add($"this.ReasonCode = {this.ReasonCode ?? "null"}");
             toStringOutput.Add($"this.ProductChangeDelayed = {(this.ProductChangeDelayed == null ? "null" : this.ProductChangeDelayed.ToString())}");
             toStringOutput.Add($"OfferId = {(this.OfferId == null ? "null" : this.OfferId.ToString())}");
             toStringOutput.Add($"this.PrepaidConfiguration = {(this.PrepaidConfiguration == null ? "null" : this.PrepaidConfiguration.ToString())}");
@@ -692,7 +691,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.AgreementAcceptance = {(this.AgreementAcceptance == null ? "null" : this.AgreementAcceptance.ToString())}");
             toStringOutput.Add($"this.AchAgreement = {(this.AchAgreement == null ? "null" : this.AchAgreement.ToString())}");
             toStringOutput.Add($"this.DunningCommunicationDelayEnabled = {(this.DunningCommunicationDelayEnabled == null ? "null" : this.DunningCommunicationDelayEnabled.ToString())}");
-            toStringOutput.Add($"this.DunningCommunicationDelayTimeZone = {(this.DunningCommunicationDelayTimeZone == null ? "null" : this.DunningCommunicationDelayTimeZone)}");
+            toStringOutput.Add($"this.DunningCommunicationDelayTimeZone = {this.DunningCommunicationDelayTimeZone ?? "null"}");
             toStringOutput.Add($"this.SkipBillingManifestTaxes = {(this.SkipBillingManifestTaxes == null ? "null" : this.SkipBillingManifestTaxes.ToString())}");
 
             base.ToString(toStringOutput);

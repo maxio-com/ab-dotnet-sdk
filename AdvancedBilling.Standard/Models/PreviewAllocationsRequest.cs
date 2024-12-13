@@ -51,6 +51,7 @@ namespace AdvancedBilling.Standard.Models
         {
             this.Allocations = allocations;
             this.EffectiveProrationDate = effectiveProrationDate;
+
             if (upgradeCharge != null)
             {
                 this.UpgradeCharge = upgradeCharge;
@@ -60,7 +61,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.DowngradeCredit = downgradeCredit;
             }
-
         }
 
         /// <summary>
@@ -118,14 +118,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"PreviewAllocationsRequest : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetUpgradeCharge()
         {
@@ -133,7 +131,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDowngradeCredit()
         {
@@ -161,21 +159,21 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is PreviewAllocationsRequest other &&                ((this.Allocations == null && other.Allocations == null) || (this.Allocations?.Equals(other.Allocations) == true)) &&
-                ((this.EffectiveProrationDate == null && other.EffectiveProrationDate == null) || (this.EffectiveProrationDate?.Equals(other.EffectiveProrationDate) == true)) &&
-                ((this.UpgradeCharge == null && other.UpgradeCharge == null) || (this.UpgradeCharge?.Equals(other.UpgradeCharge) == true)) &&
-                ((this.DowngradeCredit == null && other.DowngradeCredit == null) || (this.DowngradeCredit?.Equals(other.DowngradeCredit) == true));
+            return obj is PreviewAllocationsRequest other &&
+                (this.Allocations == null && other.Allocations == null ||
+                 this.Allocations?.Equals(other.Allocations) == true) &&
+                (this.EffectiveProrationDate == null && other.EffectiveProrationDate == null ||
+                 this.EffectiveProrationDate?.Equals(other.EffectiveProrationDate) == true) &&
+                (this.UpgradeCharge == null && other.UpgradeCharge == null ||
+                 this.UpgradeCharge?.Equals(other.UpgradeCharge) == true) &&
+                (this.DowngradeCredit == null && other.DowngradeCredit == null ||
+                 this.DowngradeCredit?.Equals(other.DowngradeCredit) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

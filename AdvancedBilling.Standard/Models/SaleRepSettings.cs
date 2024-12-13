@@ -102,46 +102,47 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SaleRepSettings : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SaleRepSettings other &&                ((this.CustomerName == null && other.CustomerName == null) || (this.CustomerName?.Equals(other.CustomerName) == true)) &&
-                ((this.SubscriptionId == null && other.SubscriptionId == null) || (this.SubscriptionId?.Equals(other.SubscriptionId) == true)) &&
-                ((this.SiteLink == null && other.SiteLink == null) || (this.SiteLink?.Equals(other.SiteLink) == true)) &&
-                ((this.SiteName == null && other.SiteName == null) || (this.SiteName?.Equals(other.SiteName) == true)) &&
-                ((this.SubscriptionMrr == null && other.SubscriptionMrr == null) || (this.SubscriptionMrr?.Equals(other.SubscriptionMrr) == true)) &&
-                ((this.SalesRepId == null && other.SalesRepId == null) || (this.SalesRepId?.Equals(other.SalesRepId) == true)) &&
-                ((this.SalesRepName == null && other.SalesRepName == null) || (this.SalesRepName?.Equals(other.SalesRepName) == true));
+            return obj is SaleRepSettings other &&
+                (this.CustomerName == null && other.CustomerName == null ||
+                 this.CustomerName?.Equals(other.CustomerName) == true) &&
+                (this.SubscriptionId == null && other.SubscriptionId == null ||
+                 this.SubscriptionId?.Equals(other.SubscriptionId) == true) &&
+                (this.SiteLink == null && other.SiteLink == null ||
+                 this.SiteLink?.Equals(other.SiteLink) == true) &&
+                (this.SiteName == null && other.SiteName == null ||
+                 this.SiteName?.Equals(other.SiteName) == true) &&
+                (this.SubscriptionMrr == null && other.SubscriptionMrr == null ||
+                 this.SubscriptionMrr?.Equals(other.SubscriptionMrr) == true) &&
+                (this.SalesRepId == null && other.SalesRepId == null ||
+                 this.SalesRepId?.Equals(other.SalesRepId) == true) &&
+                (this.SalesRepName == null && other.SalesRepName == null ||
+                 this.SalesRepName?.Equals(other.SalesRepName) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.CustomerName = {(this.CustomerName == null ? "null" : this.CustomerName)}");
+            toStringOutput.Add($"this.CustomerName = {this.CustomerName ?? "null"}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
-            toStringOutput.Add($"this.SiteLink = {(this.SiteLink == null ? "null" : this.SiteLink)}");
-            toStringOutput.Add($"this.SiteName = {(this.SiteName == null ? "null" : this.SiteName)}");
-            toStringOutput.Add($"this.SubscriptionMrr = {(this.SubscriptionMrr == null ? "null" : this.SubscriptionMrr)}");
+            toStringOutput.Add($"this.SiteLink = {this.SiteLink ?? "null"}");
+            toStringOutput.Add($"this.SiteName = {this.SiteName ?? "null"}");
+            toStringOutput.Add($"this.SubscriptionMrr = {this.SubscriptionMrr ?? "null"}");
             toStringOutput.Add($"this.SalesRepId = {(this.SalesRepId == null ? "null" : this.SalesRepId.ToString())}");
-            toStringOutput.Add($"this.SalesRepName = {(this.SalesRepName == null ? "null" : this.SalesRepName)}");
+            toStringOutput.Add($"this.SalesRepName = {this.SalesRepName ?? "null"}");
 
             base.ToString(toStringOutput);
         }

@@ -75,30 +75,28 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SubscriptionMigrationPreview : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SubscriptionMigrationPreview other &&                ((this.ProratedAdjustmentInCents == null && other.ProratedAdjustmentInCents == null) || (this.ProratedAdjustmentInCents?.Equals(other.ProratedAdjustmentInCents) == true)) &&
-                ((this.ChargeInCents == null && other.ChargeInCents == null) || (this.ChargeInCents?.Equals(other.ChargeInCents) == true)) &&
-                ((this.PaymentDueInCents == null && other.PaymentDueInCents == null) || (this.PaymentDueInCents?.Equals(other.PaymentDueInCents) == true)) &&
-                ((this.CreditAppliedInCents == null && other.CreditAppliedInCents == null) || (this.CreditAppliedInCents?.Equals(other.CreditAppliedInCents) == true));
+            return obj is SubscriptionMigrationPreview other &&
+                (this.ProratedAdjustmentInCents == null && other.ProratedAdjustmentInCents == null ||
+                 this.ProratedAdjustmentInCents?.Equals(other.ProratedAdjustmentInCents) == true) &&
+                (this.ChargeInCents == null && other.ChargeInCents == null ||
+                 this.ChargeInCents?.Equals(other.ChargeInCents) == true) &&
+                (this.PaymentDueInCents == null && other.PaymentDueInCents == null ||
+                 this.PaymentDueInCents?.Equals(other.PaymentDueInCents) == true) &&
+                (this.CreditAppliedInCents == null && other.CreditAppliedInCents == null ||
+                 this.CreditAppliedInCents?.Equals(other.CreditAppliedInCents) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

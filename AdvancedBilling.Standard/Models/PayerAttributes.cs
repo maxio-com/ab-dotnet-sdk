@@ -201,67 +201,79 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"PayerAttributes : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is PayerAttributes other &&                ((this.FirstName == null && other.FirstName == null) || (this.FirstName?.Equals(other.FirstName) == true)) &&
-                ((this.LastName == null && other.LastName == null) || (this.LastName?.Equals(other.LastName) == true)) &&
-                ((this.Email == null && other.Email == null) || (this.Email?.Equals(other.Email) == true)) &&
-                ((this.CcEmails == null && other.CcEmails == null) || (this.CcEmails?.Equals(other.CcEmails) == true)) &&
-                ((this.Organization == null && other.Organization == null) || (this.Organization?.Equals(other.Organization) == true)) &&
-                ((this.Reference == null && other.Reference == null) || (this.Reference?.Equals(other.Reference) == true)) &&
-                ((this.Address == null && other.Address == null) || (this.Address?.Equals(other.Address) == true)) &&
-                ((this.Address2 == null && other.Address2 == null) || (this.Address2?.Equals(other.Address2) == true)) &&
-                ((this.City == null && other.City == null) || (this.City?.Equals(other.City) == true)) &&
-                ((this.State == null && other.State == null) || (this.State?.Equals(other.State) == true)) &&
-                ((this.Zip == null && other.Zip == null) || (this.Zip?.Equals(other.Zip) == true)) &&
-                ((this.Country == null && other.Country == null) || (this.Country?.Equals(other.Country) == true)) &&
-                ((this.Phone == null && other.Phone == null) || (this.Phone?.Equals(other.Phone) == true)) &&
-                ((this.Locale == null && other.Locale == null) || (this.Locale?.Equals(other.Locale) == true)) &&
-                ((this.VatNumber == null && other.VatNumber == null) || (this.VatNumber?.Equals(other.VatNumber) == true)) &&
-                ((this.TaxExempt == null && other.TaxExempt == null) || (this.TaxExempt?.Equals(other.TaxExempt) == true)) &&
-                ((this.TaxExemptReason == null && other.TaxExemptReason == null) || (this.TaxExemptReason?.Equals(other.TaxExemptReason) == true)) &&
-                ((this.Metafields == null && other.Metafields == null) || (this.Metafields?.Equals(other.Metafields) == true));
+            return obj is PayerAttributes other &&
+                (this.FirstName == null && other.FirstName == null ||
+                 this.FirstName?.Equals(other.FirstName) == true) &&
+                (this.LastName == null && other.LastName == null ||
+                 this.LastName?.Equals(other.LastName) == true) &&
+                (this.Email == null && other.Email == null ||
+                 this.Email?.Equals(other.Email) == true) &&
+                (this.CcEmails == null && other.CcEmails == null ||
+                 this.CcEmails?.Equals(other.CcEmails) == true) &&
+                (this.Organization == null && other.Organization == null ||
+                 this.Organization?.Equals(other.Organization) == true) &&
+                (this.Reference == null && other.Reference == null ||
+                 this.Reference?.Equals(other.Reference) == true) &&
+                (this.Address == null && other.Address == null ||
+                 this.Address?.Equals(other.Address) == true) &&
+                (this.Address2 == null && other.Address2 == null ||
+                 this.Address2?.Equals(other.Address2) == true) &&
+                (this.City == null && other.City == null ||
+                 this.City?.Equals(other.City) == true) &&
+                (this.State == null && other.State == null ||
+                 this.State?.Equals(other.State) == true) &&
+                (this.Zip == null && other.Zip == null ||
+                 this.Zip?.Equals(other.Zip) == true) &&
+                (this.Country == null && other.Country == null ||
+                 this.Country?.Equals(other.Country) == true) &&
+                (this.Phone == null && other.Phone == null ||
+                 this.Phone?.Equals(other.Phone) == true) &&
+                (this.Locale == null && other.Locale == null ||
+                 this.Locale?.Equals(other.Locale) == true) &&
+                (this.VatNumber == null && other.VatNumber == null ||
+                 this.VatNumber?.Equals(other.VatNumber) == true) &&
+                (this.TaxExempt == null && other.TaxExempt == null ||
+                 this.TaxExempt?.Equals(other.TaxExempt) == true) &&
+                (this.TaxExemptReason == null && other.TaxExemptReason == null ||
+                 this.TaxExemptReason?.Equals(other.TaxExemptReason) == true) &&
+                (this.Metafields == null && other.Metafields == null ||
+                 this.Metafields?.Equals(other.Metafields) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : this.FirstName)}");
-            toStringOutput.Add($"this.LastName = {(this.LastName == null ? "null" : this.LastName)}");
-            toStringOutput.Add($"this.Email = {(this.Email == null ? "null" : this.Email)}");
-            toStringOutput.Add($"this.CcEmails = {(this.CcEmails == null ? "null" : this.CcEmails)}");
-            toStringOutput.Add($"this.Organization = {(this.Organization == null ? "null" : this.Organization)}");
-            toStringOutput.Add($"this.Reference = {(this.Reference == null ? "null" : this.Reference)}");
-            toStringOutput.Add($"this.Address = {(this.Address == null ? "null" : this.Address)}");
-            toStringOutput.Add($"this.Address2 = {(this.Address2 == null ? "null" : this.Address2)}");
-            toStringOutput.Add($"this.City = {(this.City == null ? "null" : this.City)}");
-            toStringOutput.Add($"this.State = {(this.State == null ? "null" : this.State)}");
-            toStringOutput.Add($"this.Zip = {(this.Zip == null ? "null" : this.Zip)}");
-            toStringOutput.Add($"this.Country = {(this.Country == null ? "null" : this.Country)}");
-            toStringOutput.Add($"this.Phone = {(this.Phone == null ? "null" : this.Phone)}");
-            toStringOutput.Add($"this.Locale = {(this.Locale == null ? "null" : this.Locale)}");
-            toStringOutput.Add($"this.VatNumber = {(this.VatNumber == null ? "null" : this.VatNumber)}");
+            toStringOutput.Add($"this.FirstName = {this.FirstName ?? "null"}");
+            toStringOutput.Add($"this.LastName = {this.LastName ?? "null"}");
+            toStringOutput.Add($"this.Email = {this.Email ?? "null"}");
+            toStringOutput.Add($"this.CcEmails = {this.CcEmails ?? "null"}");
+            toStringOutput.Add($"this.Organization = {this.Organization ?? "null"}");
+            toStringOutput.Add($"this.Reference = {this.Reference ?? "null"}");
+            toStringOutput.Add($"this.Address = {this.Address ?? "null"}");
+            toStringOutput.Add($"this.Address2 = {this.Address2 ?? "null"}");
+            toStringOutput.Add($"this.City = {this.City ?? "null"}");
+            toStringOutput.Add($"this.State = {this.State ?? "null"}");
+            toStringOutput.Add($"this.Zip = {this.Zip ?? "null"}");
+            toStringOutput.Add($"this.Country = {this.Country ?? "null"}");
+            toStringOutput.Add($"this.Phone = {this.Phone ?? "null"}");
+            toStringOutput.Add($"this.Locale = {this.Locale ?? "null"}");
+            toStringOutput.Add($"this.VatNumber = {this.VatNumber ?? "null"}");
             toStringOutput.Add($"this.TaxExempt = {(this.TaxExempt == null ? "null" : this.TaxExempt.ToString())}");
-            toStringOutput.Add($"this.TaxExemptReason = {(this.TaxExemptReason == null ? "null" : this.TaxExemptReason)}");
+            toStringOutput.Add($"this.TaxExemptReason = {this.TaxExemptReason ?? "null"}");
             toStringOutput.Add($"Metafields = {(this.Metafields == null ? "null" : this.Metafields.ToString())}");
 
             base.ToString(toStringOutput);

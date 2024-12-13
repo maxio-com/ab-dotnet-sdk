@@ -10,8 +10,13 @@ namespace AdvancedBilling.Standard
     public enum Server
     {
         /// <summary>
-        /// Default.
+        /// Production.
         /// </summary>
-        Default,
+        Production,
+
+        /// <summary>
+        /// Ebb.
+        /// </summary>
+        Ebb,
     }
 }

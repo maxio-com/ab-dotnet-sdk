@@ -66,29 +66,26 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SubscriptionGroupComponentCustomPrice : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SubscriptionGroupComponentCustomPrice other &&                ((this.PricingScheme == null && other.PricingScheme == null) || (this.PricingScheme?.Equals(other.PricingScheme) == true)) &&
-                ((this.Prices == null && other.Prices == null) || (this.Prices?.Equals(other.Prices) == true)) &&
-                ((this.OveragePricing == null && other.OveragePricing == null) || (this.OveragePricing?.Equals(other.OveragePricing) == true));
+            return obj is SubscriptionGroupComponentCustomPrice other &&
+                (this.PricingScheme == null && other.PricingScheme == null ||
+                 this.PricingScheme?.Equals(other.PricingScheme) == true) &&
+                (this.Prices == null && other.Prices == null ||
+                 this.Prices?.Equals(other.Prices) == true) &&
+                (this.OveragePricing == null && other.OveragePricing == null ||
+                 this.OveragePricing?.Equals(other.OveragePricing) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

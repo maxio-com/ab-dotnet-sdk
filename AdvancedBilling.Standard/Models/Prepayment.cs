@@ -130,36 +130,34 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"Prepayment : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is Prepayment other &&                this.Id.Equals(other.Id) &&
-                this.SubscriptionId.Equals(other.SubscriptionId) &&
-                this.AmountInCents.Equals(other.AmountInCents) &&
-                this.RemainingAmountInCents.Equals(other.RemainingAmountInCents) &&
-                ((this.RefundedAmountInCents == null && other.RefundedAmountInCents == null) || (this.RefundedAmountInCents?.Equals(other.RefundedAmountInCents) == true)) &&
-                ((this.Details == null && other.Details == null) || (this.Details?.Equals(other.Details) == true)) &&
-                this.External.Equals(other.External) &&
-                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                ((this.PaymentType == null && other.PaymentType == null) || (this.PaymentType?.Equals(other.PaymentType) == true)) &&
-                this.CreatedAt.Equals(other.CreatedAt);
+            return obj is Prepayment other &&
+                (this.Id.Equals(other.Id)) &&
+                (this.SubscriptionId.Equals(other.SubscriptionId)) &&
+                (this.AmountInCents.Equals(other.AmountInCents)) &&
+                (this.RemainingAmountInCents.Equals(other.RemainingAmountInCents)) &&
+                (this.RefundedAmountInCents == null && other.RefundedAmountInCents == null ||
+                 this.RefundedAmountInCents?.Equals(other.RefundedAmountInCents) == true) &&
+                (this.Details == null && other.Details == null ||
+                 this.Details?.Equals(other.Details) == true) &&
+                (this.External.Equals(other.External)) &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.PaymentType == null && other.PaymentType == null ||
+                 this.PaymentType?.Equals(other.PaymentType) == true) &&
+                (this.CreatedAt.Equals(other.CreatedAt)) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -171,9 +169,9 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.AmountInCents = {this.AmountInCents}");
             toStringOutput.Add($"this.RemainingAmountInCents = {this.RemainingAmountInCents}");
             toStringOutput.Add($"this.RefundedAmountInCents = {(this.RefundedAmountInCents == null ? "null" : this.RefundedAmountInCents.ToString())}");
-            toStringOutput.Add($"this.Details = {(this.Details == null ? "null" : this.Details)}");
+            toStringOutput.Add($"this.Details = {this.Details ?? "null"}");
             toStringOutput.Add($"this.External = {this.External}");
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
             toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
             toStringOutput.Add($"this.CreatedAt = {this.CreatedAt}");
 

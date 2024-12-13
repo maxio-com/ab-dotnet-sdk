@@ -116,34 +116,35 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ListUsagesInput : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ListUsagesInput other &&                this.SubscriptionId.Equals(other.SubscriptionId) &&
-                ((this.ComponentId == null && other.ComponentId == null) || (this.ComponentId?.Equals(other.ComponentId) == true)) &&
-                ((this.SinceId == null && other.SinceId == null) || (this.SinceId?.Equals(other.SinceId) == true)) &&
-                ((this.MaxId == null && other.MaxId == null) || (this.MaxId?.Equals(other.MaxId) == true)) &&
-                ((this.SinceDate == null && other.SinceDate == null) || (this.SinceDate?.Equals(other.SinceDate) == true)) &&
-                ((this.UntilDate == null && other.UntilDate == null) || (this.UntilDate?.Equals(other.UntilDate) == true)) &&
-                ((this.Page == null && other.Page == null) || (this.Page?.Equals(other.Page) == true)) &&
-                ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true));
+            return obj is ListUsagesInput other &&
+                (this.SubscriptionId.Equals(other.SubscriptionId)) &&
+                (this.ComponentId == null && other.ComponentId == null ||
+                 this.ComponentId?.Equals(other.ComponentId) == true) &&
+                (this.SinceId == null && other.SinceId == null ||
+                 this.SinceId?.Equals(other.SinceId) == true) &&
+                (this.MaxId == null && other.MaxId == null ||
+                 this.MaxId?.Equals(other.MaxId) == true) &&
+                (this.SinceDate == null && other.SinceDate == null ||
+                 this.SinceDate?.Equals(other.SinceDate) == true) &&
+                (this.UntilDate == null && other.UntilDate == null ||
+                 this.UntilDate?.Equals(other.UntilDate) == true) &&
+                (this.Page == null && other.Page == null ||
+                 this.Page?.Equals(other.Page) == true) &&
+                (this.PerPage == null && other.PerPage == null ||
+                 this.PerPage?.Equals(other.PerPage) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

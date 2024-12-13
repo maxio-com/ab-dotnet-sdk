@@ -67,6 +67,7 @@ namespace AdvancedBilling.Standard.Models
         {
             this.Handle = handle;
             this.Name = name;
+
             if (description != null)
             {
                 this.Description = description;
@@ -76,8 +77,8 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.AccountingCode = accountingCode;
             }
-
             this.Taxable = taxable;
+
             if (taxCode != null)
             {
                 this.TaxCode = taxCode;
@@ -87,13 +88,12 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.ItemCategory = itemCategory;
             }
-
             this.DisplayOnHostedPage = displayOnHostedPage;
+
             if (upgradeCharge != null)
             {
                 this.UpgradeCharge = upgradeCharge;
             }
-
         }
 
         /// <summary>
@@ -215,14 +215,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"UpdateComponent : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDescription()
         {
@@ -230,7 +228,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetAccountingCode()
         {
@@ -238,7 +236,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetTaxCode()
         {
@@ -246,7 +244,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetItemCategory()
         {
@@ -254,7 +252,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetUpgradeCharge()
         {
@@ -309,38 +307,43 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is UpdateComponent other &&                ((this.Handle == null && other.Handle == null) || (this.Handle?.Equals(other.Handle) == true)) &&
-                ((this.Name == null && other.Name == null) || (this.Name?.Equals(other.Name) == true)) &&
-                ((this.Description == null && other.Description == null) || (this.Description?.Equals(other.Description) == true)) &&
-                ((this.AccountingCode == null && other.AccountingCode == null) || (this.AccountingCode?.Equals(other.AccountingCode) == true)) &&
-                ((this.Taxable == null && other.Taxable == null) || (this.Taxable?.Equals(other.Taxable) == true)) &&
-                ((this.TaxCode == null && other.TaxCode == null) || (this.TaxCode?.Equals(other.TaxCode) == true)) &&
-                ((this.ItemCategory == null && other.ItemCategory == null) || (this.ItemCategory?.Equals(other.ItemCategory) == true)) &&
-                ((this.DisplayOnHostedPage == null && other.DisplayOnHostedPage == null) || (this.DisplayOnHostedPage?.Equals(other.DisplayOnHostedPage) == true)) &&
-                ((this.UpgradeCharge == null && other.UpgradeCharge == null) || (this.UpgradeCharge?.Equals(other.UpgradeCharge) == true));
+            return obj is UpdateComponent other &&
+                (this.Handle == null && other.Handle == null ||
+                 this.Handle?.Equals(other.Handle) == true) &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.Description == null && other.Description == null ||
+                 this.Description?.Equals(other.Description) == true) &&
+                (this.AccountingCode == null && other.AccountingCode == null ||
+                 this.AccountingCode?.Equals(other.AccountingCode) == true) &&
+                (this.Taxable == null && other.Taxable == null ||
+                 this.Taxable?.Equals(other.Taxable) == true) &&
+                (this.TaxCode == null && other.TaxCode == null ||
+                 this.TaxCode?.Equals(other.TaxCode) == true) &&
+                (this.ItemCategory == null && other.ItemCategory == null ||
+                 this.ItemCategory?.Equals(other.ItemCategory) == true) &&
+                (this.DisplayOnHostedPage == null && other.DisplayOnHostedPage == null ||
+                 this.DisplayOnHostedPage?.Equals(other.DisplayOnHostedPage) == true) &&
+                (this.UpgradeCharge == null && other.UpgradeCharge == null ||
+                 this.UpgradeCharge?.Equals(other.UpgradeCharge) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Handle = {(this.Handle == null ? "null" : this.Handle)}");
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : this.Name)}");
-            toStringOutput.Add($"this.Description = {(this.Description == null ? "null" : this.Description)}");
-            toStringOutput.Add($"this.AccountingCode = {(this.AccountingCode == null ? "null" : this.AccountingCode)}");
+            toStringOutput.Add($"this.Handle = {this.Handle ?? "null"}");
+            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"this.Description = {this.Description ?? "null"}");
+            toStringOutput.Add($"this.AccountingCode = {this.AccountingCode ?? "null"}");
             toStringOutput.Add($"this.Taxable = {(this.Taxable == null ? "null" : this.Taxable.ToString())}");
-            toStringOutput.Add($"this.TaxCode = {(this.TaxCode == null ? "null" : this.TaxCode)}");
+            toStringOutput.Add($"this.TaxCode = {this.TaxCode ?? "null"}");
             toStringOutput.Add($"this.ItemCategory = {(this.ItemCategory == null ? "null" : this.ItemCategory.ToString())}");
             toStringOutput.Add($"this.DisplayOnHostedPage = {(this.DisplayOnHostedPage == null ? "null" : this.DisplayOnHostedPage.ToString())}");
             toStringOutput.Add($"this.UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");

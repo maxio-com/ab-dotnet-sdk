@@ -95,41 +95,41 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ResentInvitation : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ResentInvitation other &&                ((this.LastSentAt == null && other.LastSentAt == null) || (this.LastSentAt?.Equals(other.LastSentAt) == true)) &&
-                ((this.LastAcceptedAt == null && other.LastAcceptedAt == null) || (this.LastAcceptedAt?.Equals(other.LastAcceptedAt) == true)) &&
-                ((this.SendInviteLinkText == null && other.SendInviteLinkText == null) || (this.SendInviteLinkText?.Equals(other.SendInviteLinkText) == true)) &&
-                ((this.UninvitedCount == null && other.UninvitedCount == null) || (this.UninvitedCount?.Equals(other.UninvitedCount) == true)) &&
-                ((this.LastInviteSentAt == null && other.LastInviteSentAt == null) || (this.LastInviteSentAt?.Equals(other.LastInviteSentAt) == true)) &&
-                ((this.LastInviteAcceptedAt == null && other.LastInviteAcceptedAt == null) || (this.LastInviteAcceptedAt?.Equals(other.LastInviteAcceptedAt) == true));
+            return obj is ResentInvitation other &&
+                (this.LastSentAt == null && other.LastSentAt == null ||
+                 this.LastSentAt?.Equals(other.LastSentAt) == true) &&
+                (this.LastAcceptedAt == null && other.LastAcceptedAt == null ||
+                 this.LastAcceptedAt?.Equals(other.LastAcceptedAt) == true) &&
+                (this.SendInviteLinkText == null && other.SendInviteLinkText == null ||
+                 this.SendInviteLinkText?.Equals(other.SendInviteLinkText) == true) &&
+                (this.UninvitedCount == null && other.UninvitedCount == null ||
+                 this.UninvitedCount?.Equals(other.UninvitedCount) == true) &&
+                (this.LastInviteSentAt == null && other.LastInviteSentAt == null ||
+                 this.LastInviteSentAt?.Equals(other.LastInviteSentAt) == true) &&
+                (this.LastInviteAcceptedAt == null && other.LastInviteAcceptedAt == null ||
+                 this.LastInviteAcceptedAt?.Equals(other.LastInviteAcceptedAt) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.LastSentAt = {(this.LastSentAt == null ? "null" : this.LastSentAt)}");
-            toStringOutput.Add($"this.LastAcceptedAt = {(this.LastAcceptedAt == null ? "null" : this.LastAcceptedAt)}");
-            toStringOutput.Add($"this.SendInviteLinkText = {(this.SendInviteLinkText == null ? "null" : this.SendInviteLinkText)}");
+            toStringOutput.Add($"this.LastSentAt = {this.LastSentAt ?? "null"}");
+            toStringOutput.Add($"this.LastAcceptedAt = {this.LastAcceptedAt ?? "null"}");
+            toStringOutput.Add($"this.SendInviteLinkText = {this.SendInviteLinkText ?? "null"}");
             toStringOutput.Add($"this.UninvitedCount = {(this.UninvitedCount == null ? "null" : this.UninvitedCount.ToString())}");
             toStringOutput.Add($"this.LastInviteSentAt = {(this.LastInviteSentAt == null ? "null" : this.LastInviteSentAt.ToString())}");
             toStringOutput.Add($"this.LastInviteAcceptedAt = {(this.LastInviteAcceptedAt == null ? "null" : this.LastInviteAcceptedAt.ToString())}");

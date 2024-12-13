@@ -75,40 +75,38 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ACHAgreement : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ACHAgreement other &&                ((this.AgreementTerms == null && other.AgreementTerms == null) || (this.AgreementTerms?.Equals(other.AgreementTerms) == true)) &&
-                ((this.AuthorizerFirstName == null && other.AuthorizerFirstName == null) || (this.AuthorizerFirstName?.Equals(other.AuthorizerFirstName) == true)) &&
-                ((this.AuthorizerLastName == null && other.AuthorizerLastName == null) || (this.AuthorizerLastName?.Equals(other.AuthorizerLastName) == true)) &&
-                ((this.IpAddress == null && other.IpAddress == null) || (this.IpAddress?.Equals(other.IpAddress) == true));
+            return obj is ACHAgreement other &&
+                (this.AgreementTerms == null && other.AgreementTerms == null ||
+                 this.AgreementTerms?.Equals(other.AgreementTerms) == true) &&
+                (this.AuthorizerFirstName == null && other.AuthorizerFirstName == null ||
+                 this.AuthorizerFirstName?.Equals(other.AuthorizerFirstName) == true) &&
+                (this.AuthorizerLastName == null && other.AuthorizerLastName == null ||
+                 this.AuthorizerLastName?.Equals(other.AuthorizerLastName) == true) &&
+                (this.IpAddress == null && other.IpAddress == null ||
+                 this.IpAddress?.Equals(other.IpAddress) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.AgreementTerms = {(this.AgreementTerms == null ? "null" : this.AgreementTerms)}");
-            toStringOutput.Add($"this.AuthorizerFirstName = {(this.AuthorizerFirstName == null ? "null" : this.AuthorizerFirstName)}");
-            toStringOutput.Add($"this.AuthorizerLastName = {(this.AuthorizerLastName == null ? "null" : this.AuthorizerLastName)}");
-            toStringOutput.Add($"this.IpAddress = {(this.IpAddress == null ? "null" : this.IpAddress)}");
+            toStringOutput.Add($"this.AgreementTerms = {this.AgreementTerms ?? "null"}");
+            toStringOutput.Add($"this.AuthorizerFirstName = {this.AuthorizerFirstName ?? "null"}");
+            toStringOutput.Add($"this.AuthorizerLastName = {this.AuthorizerLastName ?? "null"}");
+            toStringOutput.Add($"this.IpAddress = {this.IpAddress ?? "null"}");
 
             base.ToString(toStringOutput);
         }

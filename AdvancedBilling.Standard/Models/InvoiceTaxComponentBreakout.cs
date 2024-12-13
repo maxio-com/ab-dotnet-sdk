@@ -165,40 +165,48 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"InvoiceTaxComponentBreakout : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is InvoiceTaxComponentBreakout other &&                ((this.TaxRuleId == null && other.TaxRuleId == null) || (this.TaxRuleId?.Equals(other.TaxRuleId) == true)) &&
-                ((this.Percentage == null && other.Percentage == null) || (this.Percentage?.Equals(other.Percentage) == true)) &&
-                ((this.CountryCode == null && other.CountryCode == null) || (this.CountryCode?.Equals(other.CountryCode) == true)) &&
-                ((this.SubdivisionCode == null && other.SubdivisionCode == null) || (this.SubdivisionCode?.Equals(other.SubdivisionCode) == true)) &&
-                ((this.TaxAmount == null && other.TaxAmount == null) || (this.TaxAmount?.Equals(other.TaxAmount) == true)) &&
-                ((this.TaxableAmount == null && other.TaxableAmount == null) || (this.TaxableAmount?.Equals(other.TaxableAmount) == true)) &&
-                ((this.TaxExemptAmount == null && other.TaxExemptAmount == null) || (this.TaxExemptAmount?.Equals(other.TaxExemptAmount) == true)) &&
-                ((this.NonTaxableAmount == null && other.NonTaxableAmount == null) || (this.NonTaxableAmount?.Equals(other.NonTaxableAmount) == true)) &&
-                ((this.TaxName == null && other.TaxName == null) || (this.TaxName?.Equals(other.TaxName) == true)) &&
-                ((this.TaxType == null && other.TaxType == null) || (this.TaxType?.Equals(other.TaxType) == true)) &&
-                ((this.RateType == null && other.RateType == null) || (this.RateType?.Equals(other.RateType) == true)) &&
-                ((this.TaxAuthorityType == null && other.TaxAuthorityType == null) || (this.TaxAuthorityType?.Equals(other.TaxAuthorityType) == true)) &&
-                ((this.StateAssignedNo == null && other.StateAssignedNo == null) || (this.StateAssignedNo?.Equals(other.StateAssignedNo) == true)) &&
-                ((this.TaxSubType == null && other.TaxSubType == null) || (this.TaxSubType?.Equals(other.TaxSubType) == true));
+            return obj is InvoiceTaxComponentBreakout other &&
+                (this.TaxRuleId == null && other.TaxRuleId == null ||
+                 this.TaxRuleId?.Equals(other.TaxRuleId) == true) &&
+                (this.Percentage == null && other.Percentage == null ||
+                 this.Percentage?.Equals(other.Percentage) == true) &&
+                (this.CountryCode == null && other.CountryCode == null ||
+                 this.CountryCode?.Equals(other.CountryCode) == true) &&
+                (this.SubdivisionCode == null && other.SubdivisionCode == null ||
+                 this.SubdivisionCode?.Equals(other.SubdivisionCode) == true) &&
+                (this.TaxAmount == null && other.TaxAmount == null ||
+                 this.TaxAmount?.Equals(other.TaxAmount) == true) &&
+                (this.TaxableAmount == null && other.TaxableAmount == null ||
+                 this.TaxableAmount?.Equals(other.TaxableAmount) == true) &&
+                (this.TaxExemptAmount == null && other.TaxExemptAmount == null ||
+                 this.TaxExemptAmount?.Equals(other.TaxExemptAmount) == true) &&
+                (this.NonTaxableAmount == null && other.NonTaxableAmount == null ||
+                 this.NonTaxableAmount?.Equals(other.NonTaxableAmount) == true) &&
+                (this.TaxName == null && other.TaxName == null ||
+                 this.TaxName?.Equals(other.TaxName) == true) &&
+                (this.TaxType == null && other.TaxType == null ||
+                 this.TaxType?.Equals(other.TaxType) == true) &&
+                (this.RateType == null && other.RateType == null ||
+                 this.RateType?.Equals(other.RateType) == true) &&
+                (this.TaxAuthorityType == null && other.TaxAuthorityType == null ||
+                 this.TaxAuthorityType?.Equals(other.TaxAuthorityType) == true) &&
+                (this.StateAssignedNo == null && other.StateAssignedNo == null ||
+                 this.StateAssignedNo?.Equals(other.StateAssignedNo) == true) &&
+                (this.TaxSubType == null && other.TaxSubType == null ||
+                 this.TaxSubType?.Equals(other.TaxSubType) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -206,19 +214,19 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.TaxRuleId = {(this.TaxRuleId == null ? "null" : this.TaxRuleId.ToString())}");
-            toStringOutput.Add($"this.Percentage = {(this.Percentage == null ? "null" : this.Percentage)}");
-            toStringOutput.Add($"this.CountryCode = {(this.CountryCode == null ? "null" : this.CountryCode)}");
-            toStringOutput.Add($"this.SubdivisionCode = {(this.SubdivisionCode == null ? "null" : this.SubdivisionCode)}");
-            toStringOutput.Add($"this.TaxAmount = {(this.TaxAmount == null ? "null" : this.TaxAmount)}");
-            toStringOutput.Add($"this.TaxableAmount = {(this.TaxableAmount == null ? "null" : this.TaxableAmount)}");
-            toStringOutput.Add($"this.TaxExemptAmount = {(this.TaxExemptAmount == null ? "null" : this.TaxExemptAmount)}");
-            toStringOutput.Add($"this.NonTaxableAmount = {(this.NonTaxableAmount == null ? "null" : this.NonTaxableAmount)}");
-            toStringOutput.Add($"this.TaxName = {(this.TaxName == null ? "null" : this.TaxName)}");
-            toStringOutput.Add($"this.TaxType = {(this.TaxType == null ? "null" : this.TaxType)}");
-            toStringOutput.Add($"this.RateType = {(this.RateType == null ? "null" : this.RateType)}");
+            toStringOutput.Add($"this.Percentage = {this.Percentage ?? "null"}");
+            toStringOutput.Add($"this.CountryCode = {this.CountryCode ?? "null"}");
+            toStringOutput.Add($"this.SubdivisionCode = {this.SubdivisionCode ?? "null"}");
+            toStringOutput.Add($"this.TaxAmount = {this.TaxAmount ?? "null"}");
+            toStringOutput.Add($"this.TaxableAmount = {this.TaxableAmount ?? "null"}");
+            toStringOutput.Add($"this.TaxExemptAmount = {this.TaxExemptAmount ?? "null"}");
+            toStringOutput.Add($"this.NonTaxableAmount = {this.NonTaxableAmount ?? "null"}");
+            toStringOutput.Add($"this.TaxName = {this.TaxName ?? "null"}");
+            toStringOutput.Add($"this.TaxType = {this.TaxType ?? "null"}");
+            toStringOutput.Add($"this.RateType = {this.RateType ?? "null"}");
             toStringOutput.Add($"this.TaxAuthorityType = {(this.TaxAuthorityType == null ? "null" : this.TaxAuthorityType.ToString())}");
-            toStringOutput.Add($"this.StateAssignedNo = {(this.StateAssignedNo == null ? "null" : this.StateAssignedNo)}");
-            toStringOutput.Add($"this.TaxSubType = {(this.TaxSubType == null ? "null" : this.TaxSubType)}");
+            toStringOutput.Add($"this.StateAssignedNo = {this.StateAssignedNo ?? "null"}");
+            toStringOutput.Add($"this.TaxSubType = {this.TaxSubType ?? "null"}");
 
             base.ToString(toStringOutput);
         }

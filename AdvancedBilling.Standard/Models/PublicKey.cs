@@ -67,36 +67,33 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"PublicKey : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is PublicKey other &&                ((this.PublicKeyProp == null && other.PublicKeyProp == null) || (this.PublicKeyProp?.Equals(other.PublicKeyProp) == true)) &&
-                ((this.RequiresSecurityToken == null && other.RequiresSecurityToken == null) || (this.RequiresSecurityToken?.Equals(other.RequiresSecurityToken) == true)) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true));
+            return obj is PublicKey other &&
+                (this.PublicKeyProp == null && other.PublicKeyProp == null ||
+                 this.PublicKeyProp?.Equals(other.PublicKeyProp) == true) &&
+                (this.RequiresSecurityToken == null && other.RequiresSecurityToken == null ||
+                 this.RequiresSecurityToken?.Equals(other.RequiresSecurityToken) == true) &&
+                (this.CreatedAt == null && other.CreatedAt == null ||
+                 this.CreatedAt?.Equals(other.CreatedAt) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.PublicKeyProp = {(this.PublicKeyProp == null ? "null" : this.PublicKeyProp)}");
+            toStringOutput.Add($"this.PublicKeyProp = {this.PublicKeyProp ?? "null"}");
             toStringOutput.Add($"this.RequiresSecurityToken = {(this.RequiresSecurityToken == null ? "null" : this.RequiresSecurityToken.ToString())}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
 

@@ -68,11 +68,11 @@ namespace AdvancedBilling.Standard.Models
             this.PricePointName = pricePointName;
             this.CurrencyPrices = currencyPrices;
             this.Interval = interval;
+
             if (intervalUnit != null)
             {
                 this.IntervalUnit = intervalUnit;
             }
-
         }
 
         /// <summary>
@@ -151,14 +151,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"OfferItem : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetIntervalUnit()
         {
@@ -177,27 +175,33 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is OfferItem other &&                ((this.ComponentId == null && other.ComponentId == null) || (this.ComponentId?.Equals(other.ComponentId) == true)) &&
-                ((this.PricePointId == null && other.PricePointId == null) || (this.PricePointId?.Equals(other.PricePointId) == true)) &&
-                ((this.StartingQuantity == null && other.StartingQuantity == null) || (this.StartingQuantity?.Equals(other.StartingQuantity) == true)) &&
-                ((this.Editable == null && other.Editable == null) || (this.Editable?.Equals(other.Editable) == true)) &&
-                ((this.ComponentUnitPrice == null && other.ComponentUnitPrice == null) || (this.ComponentUnitPrice?.Equals(other.ComponentUnitPrice) == true)) &&
-                ((this.ComponentName == null && other.ComponentName == null) || (this.ComponentName?.Equals(other.ComponentName) == true)) &&
-                ((this.PricePointName == null && other.PricePointName == null) || (this.PricePointName?.Equals(other.PricePointName) == true)) &&
-                ((this.CurrencyPrices == null && other.CurrencyPrices == null) || (this.CurrencyPrices?.Equals(other.CurrencyPrices) == true)) &&
-                ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
-                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true));
+            return obj is OfferItem other &&
+                (this.ComponentId == null && other.ComponentId == null ||
+                 this.ComponentId?.Equals(other.ComponentId) == true) &&
+                (this.PricePointId == null && other.PricePointId == null ||
+                 this.PricePointId?.Equals(other.PricePointId) == true) &&
+                (this.StartingQuantity == null && other.StartingQuantity == null ||
+                 this.StartingQuantity?.Equals(other.StartingQuantity) == true) &&
+                (this.Editable == null && other.Editable == null ||
+                 this.Editable?.Equals(other.Editable) == true) &&
+                (this.ComponentUnitPrice == null && other.ComponentUnitPrice == null ||
+                 this.ComponentUnitPrice?.Equals(other.ComponentUnitPrice) == true) &&
+                (this.ComponentName == null && other.ComponentName == null ||
+                 this.ComponentName?.Equals(other.ComponentName) == true) &&
+                (this.PricePointName == null && other.PricePointName == null ||
+                 this.PricePointName?.Equals(other.PricePointName) == true) &&
+                (this.CurrencyPrices == null && other.CurrencyPrices == null ||
+                 this.CurrencyPrices?.Equals(other.CurrencyPrices) == true) &&
+                (this.Interval == null && other.Interval == null ||
+                 this.Interval?.Equals(other.Interval) == true) &&
+                (this.IntervalUnit == null && other.IntervalUnit == null ||
+                 this.IntervalUnit?.Equals(other.IntervalUnit) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -206,11 +210,11 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
-            toStringOutput.Add($"this.StartingQuantity = {(this.StartingQuantity == null ? "null" : this.StartingQuantity)}");
+            toStringOutput.Add($"this.StartingQuantity = {this.StartingQuantity ?? "null"}");
             toStringOutput.Add($"this.Editable = {(this.Editable == null ? "null" : this.Editable.ToString())}");
-            toStringOutput.Add($"this.ComponentUnitPrice = {(this.ComponentUnitPrice == null ? "null" : this.ComponentUnitPrice)}");
-            toStringOutput.Add($"this.ComponentName = {(this.ComponentName == null ? "null" : this.ComponentName)}");
-            toStringOutput.Add($"this.PricePointName = {(this.PricePointName == null ? "null" : this.PricePointName)}");
+            toStringOutput.Add($"this.ComponentUnitPrice = {this.ComponentUnitPrice ?? "null"}");
+            toStringOutput.Add($"this.ComponentName = {this.ComponentName ?? "null"}");
+            toStringOutput.Add($"this.PricePointName = {this.PricePointName ?? "null"}");
             toStringOutput.Add($"this.CurrencyPrices = {(this.CurrencyPrices == null ? "null" : $"[{string.Join(", ", this.CurrencyPrices)} ]")}");
             toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");

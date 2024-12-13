@@ -120,50 +120,53 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"CreateInvoiceAddress : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is CreateInvoiceAddress other &&                ((this.FirstName == null && other.FirstName == null) || (this.FirstName?.Equals(other.FirstName) == true)) &&
-                ((this.LastName == null && other.LastName == null) || (this.LastName?.Equals(other.LastName) == true)) &&
-                ((this.Phone == null && other.Phone == null) || (this.Phone?.Equals(other.Phone) == true)) &&
-                ((this.Address == null && other.Address == null) || (this.Address?.Equals(other.Address) == true)) &&
-                ((this.Address2 == null && other.Address2 == null) || (this.Address2?.Equals(other.Address2) == true)) &&
-                ((this.City == null && other.City == null) || (this.City?.Equals(other.City) == true)) &&
-                ((this.State == null && other.State == null) || (this.State?.Equals(other.State) == true)) &&
-                ((this.Zip == null && other.Zip == null) || (this.Zip?.Equals(other.Zip) == true)) &&
-                ((this.Country == null && other.Country == null) || (this.Country?.Equals(other.Country) == true));
+            return obj is CreateInvoiceAddress other &&
+                (this.FirstName == null && other.FirstName == null ||
+                 this.FirstName?.Equals(other.FirstName) == true) &&
+                (this.LastName == null && other.LastName == null ||
+                 this.LastName?.Equals(other.LastName) == true) &&
+                (this.Phone == null && other.Phone == null ||
+                 this.Phone?.Equals(other.Phone) == true) &&
+                (this.Address == null && other.Address == null ||
+                 this.Address?.Equals(other.Address) == true) &&
+                (this.Address2 == null && other.Address2 == null ||
+                 this.Address2?.Equals(other.Address2) == true) &&
+                (this.City == null && other.City == null ||
+                 this.City?.Equals(other.City) == true) &&
+                (this.State == null && other.State == null ||
+                 this.State?.Equals(other.State) == true) &&
+                (this.Zip == null && other.Zip == null ||
+                 this.Zip?.Equals(other.Zip) == true) &&
+                (this.Country == null && other.Country == null ||
+                 this.Country?.Equals(other.Country) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.FirstName = {(this.FirstName == null ? "null" : this.FirstName)}");
-            toStringOutput.Add($"this.LastName = {(this.LastName == null ? "null" : this.LastName)}");
-            toStringOutput.Add($"this.Phone = {(this.Phone == null ? "null" : this.Phone)}");
-            toStringOutput.Add($"this.Address = {(this.Address == null ? "null" : this.Address)}");
-            toStringOutput.Add($"this.Address2 = {(this.Address2 == null ? "null" : this.Address2)}");
-            toStringOutput.Add($"this.City = {(this.City == null ? "null" : this.City)}");
-            toStringOutput.Add($"this.State = {(this.State == null ? "null" : this.State)}");
-            toStringOutput.Add($"this.Zip = {(this.Zip == null ? "null" : this.Zip)}");
-            toStringOutput.Add($"this.Country = {(this.Country == null ? "null" : this.Country)}");
+            toStringOutput.Add($"this.FirstName = {this.FirstName ?? "null"}");
+            toStringOutput.Add($"this.LastName = {this.LastName ?? "null"}");
+            toStringOutput.Add($"this.Phone = {this.Phone ?? "null"}");
+            toStringOutput.Add($"this.Address = {this.Address ?? "null"}");
+            toStringOutput.Add($"this.Address2 = {this.Address2 ?? "null"}");
+            toStringOutput.Add($"this.City = {this.City ?? "null"}");
+            toStringOutput.Add($"this.State = {this.State ?? "null"}");
+            toStringOutput.Add($"this.Zip = {this.Zip ?? "null"}");
+            toStringOutput.Add($"this.Country = {this.Country ?? "null"}");
 
             base.ToString(toStringOutput);
         }

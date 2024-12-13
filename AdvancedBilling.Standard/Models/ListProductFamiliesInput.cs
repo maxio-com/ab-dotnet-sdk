@@ -38,10 +38,10 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="endDatetime">end_datetime.</param>
         public ListProductFamiliesInput(
             Models.BasicDateField? dateField = null,
-            string startDate = null,
-            string endDate = null,
-            string startDatetime = null,
-            string endDatetime = null)
+            DateTime? startDate = null,
+            DateTime? endDate = null,
+            DateTimeOffset? startDatetime = null,
+            DateTimeOffset? endDatetime = null)
         {
             this.DateField = dateField;
             this.StartDate = startDate;
@@ -60,56 +60,59 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The start date (format YYYY-MM-DD) with which to filter the date_field. Returns products with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified.
         /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("start_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         /// <summary>
         /// The end date (format YYYY-MM-DD) with which to filter the date_field. Returns products with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified.
         /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("end_date", NullValueHandling = NullValueHandling.Ignore)]
-        public string EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         /// <summary>
         /// The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns products with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("start_datetime", NullValueHandling = NullValueHandling.Ignore)]
-        public string StartDatetime { get; set; }
+        public DateTimeOffset? StartDatetime { get; set; }
 
         /// <summary>
         /// The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns products with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date.
         /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("end_datetime", NullValueHandling = NullValueHandling.Ignore)]
-        public string EndDatetime { get; set; }
+        public DateTimeOffset? EndDatetime { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ListProductFamiliesInput : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ListProductFamiliesInput other &&                ((this.DateField == null && other.DateField == null) || (this.DateField?.Equals(other.DateField) == true)) &&
-                ((this.StartDate == null && other.StartDate == null) || (this.StartDate?.Equals(other.StartDate) == true)) &&
-                ((this.EndDate == null && other.EndDate == null) || (this.EndDate?.Equals(other.EndDate) == true)) &&
-                ((this.StartDatetime == null && other.StartDatetime == null) || (this.StartDatetime?.Equals(other.StartDatetime) == true)) &&
-                ((this.EndDatetime == null && other.EndDatetime == null) || (this.EndDatetime?.Equals(other.EndDatetime) == true));
+            return obj is ListProductFamiliesInput other &&
+                (this.DateField == null && other.DateField == null ||
+                 this.DateField?.Equals(other.DateField) == true) &&
+                (this.StartDate == null && other.StartDate == null ||
+                 this.StartDate?.Equals(other.StartDate) == true) &&
+                (this.EndDate == null && other.EndDate == null ||
+                 this.EndDate?.Equals(other.EndDate) == true) &&
+                (this.StartDatetime == null && other.StartDatetime == null ||
+                 this.StartDatetime?.Equals(other.StartDatetime) == true) &&
+                (this.EndDatetime == null && other.EndDatetime == null ||
+                 this.EndDatetime?.Equals(other.EndDatetime) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -117,10 +120,10 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.DateField = {(this.DateField == null ? "null" : this.DateField.ToString())}");
-            toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate)}");
-            toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate)}");
-            toStringOutput.Add($"this.StartDatetime = {(this.StartDatetime == null ? "null" : this.StartDatetime)}");
-            toStringOutput.Add($"this.EndDatetime = {(this.EndDatetime == null ? "null" : this.EndDatetime)}");
+            toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate.ToString())}");
+            toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate.ToString())}");
+            toStringOutput.Add($"this.StartDatetime = {(this.StartDatetime == null ? "null" : this.StartDatetime.ToString())}");
+            toStringOutput.Add($"this.EndDatetime = {(this.EndDatetime == null ? "null" : this.EndDatetime.ToString())}");
 
             base.ToString(toStringOutput);
         }

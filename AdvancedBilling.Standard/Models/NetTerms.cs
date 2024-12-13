@@ -84,31 +84,30 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"NetTerms : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is NetTerms other &&                ((this.DefaultNetTerms == null && other.DefaultNetTerms == null) || (this.DefaultNetTerms?.Equals(other.DefaultNetTerms) == true)) &&
-                ((this.AutomaticNetTerms == null && other.AutomaticNetTerms == null) || (this.AutomaticNetTerms?.Equals(other.AutomaticNetTerms) == true)) &&
-                ((this.RemittanceNetTerms == null && other.RemittanceNetTerms == null) || (this.RemittanceNetTerms?.Equals(other.RemittanceNetTerms) == true)) &&
-                ((this.NetTermsOnRemittanceSignupsEnabled == null && other.NetTermsOnRemittanceSignupsEnabled == null) || (this.NetTermsOnRemittanceSignupsEnabled?.Equals(other.NetTermsOnRemittanceSignupsEnabled) == true)) &&
-                ((this.CustomNetTermsEnabled == null && other.CustomNetTermsEnabled == null) || (this.CustomNetTermsEnabled?.Equals(other.CustomNetTermsEnabled) == true));
+            return obj is NetTerms other &&
+                (this.DefaultNetTerms == null && other.DefaultNetTerms == null ||
+                 this.DefaultNetTerms?.Equals(other.DefaultNetTerms) == true) &&
+                (this.AutomaticNetTerms == null && other.AutomaticNetTerms == null ||
+                 this.AutomaticNetTerms?.Equals(other.AutomaticNetTerms) == true) &&
+                (this.RemittanceNetTerms == null && other.RemittanceNetTerms == null ||
+                 this.RemittanceNetTerms?.Equals(other.RemittanceNetTerms) == true) &&
+                (this.NetTermsOnRemittanceSignupsEnabled == null && other.NetTermsOnRemittanceSignupsEnabled == null ||
+                 this.NetTermsOnRemittanceSignupsEnabled?.Equals(other.NetTermsOnRemittanceSignupsEnabled) == true) &&
+                (this.CustomNetTermsEnabled == null && other.CustomNetTermsEnabled == null ||
+                 this.CustomNetTermsEnabled?.Equals(other.CustomNetTermsEnabled) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

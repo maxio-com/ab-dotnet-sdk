@@ -102,33 +102,34 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ListMRRResponseResult : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ListMRRResponseResult other &&                ((this.Page == null && other.Page == null) || (this.Page?.Equals(other.Page) == true)) &&
-                ((this.PerPage == null && other.PerPage == null) || (this.PerPage?.Equals(other.PerPage) == true)) &&
-                ((this.TotalPages == null && other.TotalPages == null) || (this.TotalPages?.Equals(other.TotalPages) == true)) &&
-                ((this.TotalEntries == null && other.TotalEntries == null) || (this.TotalEntries?.Equals(other.TotalEntries) == true)) &&
-                ((this.Currency == null && other.Currency == null) || (this.Currency?.Equals(other.Currency) == true)) &&
-                ((this.CurrencySymbol == null && other.CurrencySymbol == null) || (this.CurrencySymbol?.Equals(other.CurrencySymbol) == true)) &&
-                ((this.Movements == null && other.Movements == null) || (this.Movements?.Equals(other.Movements) == true));
+            return obj is ListMRRResponseResult other &&
+                (this.Page == null && other.Page == null ||
+                 this.Page?.Equals(other.Page) == true) &&
+                (this.PerPage == null && other.PerPage == null ||
+                 this.PerPage?.Equals(other.PerPage) == true) &&
+                (this.TotalPages == null && other.TotalPages == null ||
+                 this.TotalPages?.Equals(other.TotalPages) == true) &&
+                (this.TotalEntries == null && other.TotalEntries == null ||
+                 this.TotalEntries?.Equals(other.TotalEntries) == true) &&
+                (this.Currency == null && other.Currency == null ||
+                 this.Currency?.Equals(other.Currency) == true) &&
+                (this.CurrencySymbol == null && other.CurrencySymbol == null ||
+                 this.CurrencySymbol?.Equals(other.CurrencySymbol) == true) &&
+                (this.Movements == null && other.Movements == null ||
+                 this.Movements?.Equals(other.Movements) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -139,8 +140,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
             toStringOutput.Add($"this.TotalPages = {(this.TotalPages == null ? "null" : this.TotalPages.ToString())}");
             toStringOutput.Add($"this.TotalEntries = {(this.TotalEntries == null ? "null" : this.TotalEntries.ToString())}");
-            toStringOutput.Add($"this.Currency = {(this.Currency == null ? "null" : this.Currency)}");
-            toStringOutput.Add($"this.CurrencySymbol = {(this.CurrencySymbol == null ? "null" : this.CurrencySymbol)}");
+            toStringOutput.Add($"this.Currency = {this.Currency ?? "null"}");
+            toStringOutput.Add($"this.CurrencySymbol = {this.CurrencySymbol ?? "null"}");
             toStringOutput.Add($"this.Movements = {(this.Movements == null ? "null" : $"[{string.Join(", ", this.Movements)} ]")}");
 
             base.ToString(toStringOutput);

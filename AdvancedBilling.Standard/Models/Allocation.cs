@@ -102,19 +102,19 @@ namespace AdvancedBilling.Standard.Models
         {
             this.AllocationId = allocationId;
             this.ComponentId = componentId;
+
             if (componentHandle != null)
             {
                 this.ComponentHandle = componentHandle;
             }
-
             this.SubscriptionId = subscriptionId;
             this.Quantity = quantity;
             this.PreviousQuantity = previousQuantity;
+
             if (memo != null)
             {
                 this.Memo = memo;
             }
-
             this.Timestamp = timestamp;
             this.CreatedAt = createdAt;
             this.ProrationUpgradeScheme = prorationUpgradeScheme;
@@ -123,14 +123,15 @@ namespace AdvancedBilling.Standard.Models
             this.PricePointName = pricePointName;
             this.PricePointHandle = pricePointHandle;
             this.Interval = interval;
+
             if (intervalUnit != null)
             {
                 this.IntervalUnit = intervalUnit;
             }
-
             this.PreviousPricePointId = previousPricePointId;
             this.AccrueCharge = accrueCharge;
             this.InitiateDunning = initiateDunning;
+
             if (upgradeCharge != null)
             {
                 this.UpgradeCharge = upgradeCharge;
@@ -145,7 +146,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.Payment = payment;
             }
-
             this.ExpiresAt = expiresAt;
             this.UsedQuantity = usedQuantity;
             this.ChargeId = chargeId;
@@ -383,14 +383,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"Allocation : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetComponentHandle()
         {
@@ -398,7 +396,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetMemo()
         {
@@ -406,7 +404,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetIntervalUnit()
         {
@@ -414,7 +412,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetUpgradeCharge()
         {
@@ -422,7 +420,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDowngradeCredit()
         {
@@ -430,7 +428,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetPayment()
         {
@@ -494,42 +492,63 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is Allocation other &&                ((this.AllocationId == null && other.AllocationId == null) || (this.AllocationId?.Equals(other.AllocationId) == true)) &&
-                ((this.ComponentId == null && other.ComponentId == null) || (this.ComponentId?.Equals(other.ComponentId) == true)) &&
-                ((this.ComponentHandle == null && other.ComponentHandle == null) || (this.ComponentHandle?.Equals(other.ComponentHandle) == true)) &&
-                ((this.SubscriptionId == null && other.SubscriptionId == null) || (this.SubscriptionId?.Equals(other.SubscriptionId) == true)) &&
-                ((this.Quantity == null && other.Quantity == null) || (this.Quantity?.Equals(other.Quantity) == true)) &&
-                ((this.PreviousQuantity == null && other.PreviousQuantity == null) || (this.PreviousQuantity?.Equals(other.PreviousQuantity) == true)) &&
-                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                ((this.Timestamp == null && other.Timestamp == null) || (this.Timestamp?.Equals(other.Timestamp) == true)) &&
-                ((this.CreatedAt == null && other.CreatedAt == null) || (this.CreatedAt?.Equals(other.CreatedAt) == true)) &&
-                ((this.ProrationUpgradeScheme == null && other.ProrationUpgradeScheme == null) || (this.ProrationUpgradeScheme?.Equals(other.ProrationUpgradeScheme) == true)) &&
-                ((this.ProrationDowngradeScheme == null && other.ProrationDowngradeScheme == null) || (this.ProrationDowngradeScheme?.Equals(other.ProrationDowngradeScheme) == true)) &&
-                ((this.PricePointId == null && other.PricePointId == null) || (this.PricePointId?.Equals(other.PricePointId) == true)) &&
-                ((this.PricePointName == null && other.PricePointName == null) || (this.PricePointName?.Equals(other.PricePointName) == true)) &&
-                ((this.PricePointHandle == null && other.PricePointHandle == null) || (this.PricePointHandle?.Equals(other.PricePointHandle) == true)) &&
-                ((this.Interval == null && other.Interval == null) || (this.Interval?.Equals(other.Interval) == true)) &&
-                ((this.IntervalUnit == null && other.IntervalUnit == null) || (this.IntervalUnit?.Equals(other.IntervalUnit) == true)) &&
-                ((this.PreviousPricePointId == null && other.PreviousPricePointId == null) || (this.PreviousPricePointId?.Equals(other.PreviousPricePointId) == true)) &&
-                ((this.AccrueCharge == null && other.AccrueCharge == null) || (this.AccrueCharge?.Equals(other.AccrueCharge) == true)) &&
-                ((this.InitiateDunning == null && other.InitiateDunning == null) || (this.InitiateDunning?.Equals(other.InitiateDunning) == true)) &&
-                ((this.UpgradeCharge == null && other.UpgradeCharge == null) || (this.UpgradeCharge?.Equals(other.UpgradeCharge) == true)) &&
-                ((this.DowngradeCredit == null && other.DowngradeCredit == null) || (this.DowngradeCredit?.Equals(other.DowngradeCredit) == true)) &&
-                ((this.Payment == null && other.Payment == null) || (this.Payment?.Equals(other.Payment) == true)) &&
-                ((this.ExpiresAt == null && other.ExpiresAt == null) || (this.ExpiresAt?.Equals(other.ExpiresAt) == true)) &&
-                ((this.UsedQuantity == null && other.UsedQuantity == null) || (this.UsedQuantity?.Equals(other.UsedQuantity) == true)) &&
-                ((this.ChargeId == null && other.ChargeId == null) || (this.ChargeId?.Equals(other.ChargeId) == true));
+            return obj is Allocation other &&
+                (this.AllocationId == null && other.AllocationId == null ||
+                 this.AllocationId?.Equals(other.AllocationId) == true) &&
+                (this.ComponentId == null && other.ComponentId == null ||
+                 this.ComponentId?.Equals(other.ComponentId) == true) &&
+                (this.ComponentHandle == null && other.ComponentHandle == null ||
+                 this.ComponentHandle?.Equals(other.ComponentHandle) == true) &&
+                (this.SubscriptionId == null && other.SubscriptionId == null ||
+                 this.SubscriptionId?.Equals(other.SubscriptionId) == true) &&
+                (this.Quantity == null && other.Quantity == null ||
+                 this.Quantity?.Equals(other.Quantity) == true) &&
+                (this.PreviousQuantity == null && other.PreviousQuantity == null ||
+                 this.PreviousQuantity?.Equals(other.PreviousQuantity) == true) &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.Timestamp == null && other.Timestamp == null ||
+                 this.Timestamp?.Equals(other.Timestamp) == true) &&
+                (this.CreatedAt == null && other.CreatedAt == null ||
+                 this.CreatedAt?.Equals(other.CreatedAt) == true) &&
+                (this.ProrationUpgradeScheme == null && other.ProrationUpgradeScheme == null ||
+                 this.ProrationUpgradeScheme?.Equals(other.ProrationUpgradeScheme) == true) &&
+                (this.ProrationDowngradeScheme == null && other.ProrationDowngradeScheme == null ||
+                 this.ProrationDowngradeScheme?.Equals(other.ProrationDowngradeScheme) == true) &&
+                (this.PricePointId == null && other.PricePointId == null ||
+                 this.PricePointId?.Equals(other.PricePointId) == true) &&
+                (this.PricePointName == null && other.PricePointName == null ||
+                 this.PricePointName?.Equals(other.PricePointName) == true) &&
+                (this.PricePointHandle == null && other.PricePointHandle == null ||
+                 this.PricePointHandle?.Equals(other.PricePointHandle) == true) &&
+                (this.Interval == null && other.Interval == null ||
+                 this.Interval?.Equals(other.Interval) == true) &&
+                (this.IntervalUnit == null && other.IntervalUnit == null ||
+                 this.IntervalUnit?.Equals(other.IntervalUnit) == true) &&
+                (this.PreviousPricePointId == null && other.PreviousPricePointId == null ||
+                 this.PreviousPricePointId?.Equals(other.PreviousPricePointId) == true) &&
+                (this.AccrueCharge == null && other.AccrueCharge == null ||
+                 this.AccrueCharge?.Equals(other.AccrueCharge) == true) &&
+                (this.InitiateDunning == null && other.InitiateDunning == null ||
+                 this.InitiateDunning?.Equals(other.InitiateDunning) == true) &&
+                (this.UpgradeCharge == null && other.UpgradeCharge == null ||
+                 this.UpgradeCharge?.Equals(other.UpgradeCharge) == true) &&
+                (this.DowngradeCredit == null && other.DowngradeCredit == null ||
+                 this.DowngradeCredit?.Equals(other.DowngradeCredit) == true) &&
+                (this.Payment == null && other.Payment == null ||
+                 this.Payment?.Equals(other.Payment) == true) &&
+                (this.ExpiresAt == null && other.ExpiresAt == null ||
+                 this.ExpiresAt?.Equals(other.ExpiresAt) == true) &&
+                (this.UsedQuantity == null && other.UsedQuantity == null ||
+                 this.UsedQuantity?.Equals(other.UsedQuantity) == true) &&
+                (this.ChargeId == null && other.ChargeId == null ||
+                 this.ChargeId?.Equals(other.ChargeId) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -538,18 +557,18 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"this.AllocationId = {(this.AllocationId == null ? "null" : this.AllocationId.ToString())}");
             toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
-            toStringOutput.Add($"this.ComponentHandle = {(this.ComponentHandle == null ? "null" : this.ComponentHandle)}");
+            toStringOutput.Add($"this.ComponentHandle = {this.ComponentHandle ?? "null"}");
             toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
             toStringOutput.Add($"Quantity = {(this.Quantity == null ? "null" : this.Quantity.ToString())}");
             toStringOutput.Add($"PreviousQuantity = {(this.PreviousQuantity == null ? "null" : this.PreviousQuantity.ToString())}");
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
             toStringOutput.Add($"this.Timestamp = {(this.Timestamp == null ? "null" : this.Timestamp.ToString())}");
             toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
-            toStringOutput.Add($"this.ProrationUpgradeScheme = {(this.ProrationUpgradeScheme == null ? "null" : this.ProrationUpgradeScheme)}");
-            toStringOutput.Add($"this.ProrationDowngradeScheme = {(this.ProrationDowngradeScheme == null ? "null" : this.ProrationDowngradeScheme)}");
+            toStringOutput.Add($"this.ProrationUpgradeScheme = {this.ProrationUpgradeScheme ?? "null"}");
+            toStringOutput.Add($"this.ProrationDowngradeScheme = {this.ProrationDowngradeScheme ?? "null"}");
             toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
-            toStringOutput.Add($"this.PricePointName = {(this.PricePointName == null ? "null" : this.PricePointName)}");
-            toStringOutput.Add($"this.PricePointHandle = {(this.PricePointHandle == null ? "null" : this.PricePointHandle)}");
+            toStringOutput.Add($"this.PricePointName = {this.PricePointName ?? "null"}");
+            toStringOutput.Add($"this.PricePointHandle = {this.PricePointHandle ?? "null"}");
             toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
             toStringOutput.Add($"this.PreviousPricePointId = {(this.PreviousPricePointId == null ? "null" : this.PreviousPricePointId.ToString())}");

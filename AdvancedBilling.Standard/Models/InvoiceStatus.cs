@@ -53,6 +53,12 @@ namespace AdvancedBilling.Standard.Models
         /// Canceled.
         /// </summary>
         [EnumMember(Value = "canceled")]
-        Canceled
+        Canceled,
+
+        /// <summary>
+        /// Processing.
+        /// </summary>
+        [EnumMember(Value = "processing")]
+        Processing
     }
 }

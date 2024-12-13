@@ -161,6 +161,12 @@ catch (ApiException e)
 ]
 ```
 
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
 
 # Read Reason Code
 
@@ -244,6 +250,7 @@ catch (ApiException e)
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # Delete Reason Code
@@ -263,7 +270,7 @@ DeleteReasonCodeAsync(
 
 ## Response Type
 
-[`Task<Models.ReasonCodesJsonResponse>`](../../doc/models/reason-codes-json-response.md)
+[`Task<Models.OkResponse>`](../../doc/models/ok-response.md)
 
 ## Example Usage
 
@@ -271,7 +278,7 @@ DeleteReasonCodeAsync(
 int reasonCodeId = 32;
 try
 {
-    ReasonCodesJsonResponse result = await reasonCodesController.DeleteReasonCodeAsync(reasonCodeId);
+    OkResponse result = await reasonCodesController.DeleteReasonCodeAsync(reasonCodeId);
 }
 catch (ApiException e)
 {

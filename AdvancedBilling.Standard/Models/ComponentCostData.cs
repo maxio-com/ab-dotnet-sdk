@@ -53,11 +53,11 @@ namespace AdvancedBilling.Standard.Models
             Models.PricingScheme? pricingScheme = null,
             List<Models.ComponentCostDataRateTier> tiers = null)
         {
+
             if (componentCodeId != null)
             {
                 this.ComponentCodeId = componentCodeId;
             }
-
             this.PricePointId = pricePointId;
             this.ProductId = productId;
             this.Quantity = quantity;
@@ -124,14 +124,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ComponentCostData : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetComponentCodeId()
         {
@@ -150,24 +148,27 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ComponentCostData other &&                ((this.ComponentCodeId == null && other.ComponentCodeId == null) || (this.ComponentCodeId?.Equals(other.ComponentCodeId) == true)) &&
-                ((this.PricePointId == null && other.PricePointId == null) || (this.PricePointId?.Equals(other.PricePointId) == true)) &&
-                ((this.ProductId == null && other.ProductId == null) || (this.ProductId?.Equals(other.ProductId) == true)) &&
-                ((this.Quantity == null && other.Quantity == null) || (this.Quantity?.Equals(other.Quantity) == true)) &&
-                ((this.Amount == null && other.Amount == null) || (this.Amount?.Equals(other.Amount) == true)) &&
-                ((this.PricingScheme == null && other.PricingScheme == null) || (this.PricingScheme?.Equals(other.PricingScheme) == true)) &&
-                ((this.Tiers == null && other.Tiers == null) || (this.Tiers?.Equals(other.Tiers) == true));
+            return obj is ComponentCostData other &&
+                (this.ComponentCodeId == null && other.ComponentCodeId == null ||
+                 this.ComponentCodeId?.Equals(other.ComponentCodeId) == true) &&
+                (this.PricePointId == null && other.PricePointId == null ||
+                 this.PricePointId?.Equals(other.PricePointId) == true) &&
+                (this.ProductId == null && other.ProductId == null ||
+                 this.ProductId?.Equals(other.ProductId) == true) &&
+                (this.Quantity == null && other.Quantity == null ||
+                 this.Quantity?.Equals(other.Quantity) == true) &&
+                (this.Amount == null && other.Amount == null ||
+                 this.Amount?.Equals(other.Amount) == true) &&
+                (this.PricingScheme == null && other.PricingScheme == null ||
+                 this.PricingScheme?.Equals(other.PricingScheme) == true) &&
+                (this.Tiers == null && other.Tiers == null ||
+                 this.Tiers?.Equals(other.Tiers) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -177,8 +178,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.ComponentCodeId = {(this.ComponentCodeId == null ? "null" : this.ComponentCodeId.ToString())}");
             toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
             toStringOutput.Add($"this.ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
-            toStringOutput.Add($"this.Quantity = {(this.Quantity == null ? "null" : this.Quantity)}");
-            toStringOutput.Add($"this.Amount = {(this.Amount == null ? "null" : this.Amount)}");
+            toStringOutput.Add($"this.Quantity = {this.Quantity ?? "null"}");
+            toStringOutput.Add($"this.Amount = {this.Amount ?? "null"}");
             toStringOutput.Add($"this.PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
             toStringOutput.Add($"this.Tiers = {(this.Tiers == null ? "null" : $"[{string.Join(", ", this.Tiers)} ]")}");
 

@@ -57,6 +57,7 @@ namespace AdvancedBilling.Standard.Models
             this.DebitNoteUid = debitNoteUid;
             this.OriginalAmount = originalAmount;
             this.AppliedAmount = appliedAmount;
+
             if (memo != null)
             {
                 this.Memo = memo;
@@ -66,7 +67,6 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.TransactionTime = transactionTime;
             }
-
         }
 
         /// <summary>
@@ -134,14 +134,12 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ApplyDebitNoteEventData : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetMemo()
         {
@@ -149,7 +147,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Marks the field to not be serailized.
+        /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetTransactionTime()
         {
@@ -177,34 +175,36 @@ namespace AdvancedBilling.Standard.Models
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ApplyDebitNoteEventData other &&                ((this.DebitNoteNumber == null && other.DebitNoteNumber == null) || (this.DebitNoteNumber?.Equals(other.DebitNoteNumber) == true)) &&
-                ((this.DebitNoteUid == null && other.DebitNoteUid == null) || (this.DebitNoteUid?.Equals(other.DebitNoteUid) == true)) &&
-                ((this.OriginalAmount == null && other.OriginalAmount == null) || (this.OriginalAmount?.Equals(other.OriginalAmount) == true)) &&
-                ((this.AppliedAmount == null && other.AppliedAmount == null) || (this.AppliedAmount?.Equals(other.AppliedAmount) == true)) &&
-                ((this.Memo == null && other.Memo == null) || (this.Memo?.Equals(other.Memo) == true)) &&
-                ((this.TransactionTime == null && other.TransactionTime == null) || (this.TransactionTime?.Equals(other.TransactionTime) == true));
+            return obj is ApplyDebitNoteEventData other &&
+                (this.DebitNoteNumber == null && other.DebitNoteNumber == null ||
+                 this.DebitNoteNumber?.Equals(other.DebitNoteNumber) == true) &&
+                (this.DebitNoteUid == null && other.DebitNoteUid == null ||
+                 this.DebitNoteUid?.Equals(other.DebitNoteUid) == true) &&
+                (this.OriginalAmount == null && other.OriginalAmount == null ||
+                 this.OriginalAmount?.Equals(other.OriginalAmount) == true) &&
+                (this.AppliedAmount == null && other.AppliedAmount == null ||
+                 this.AppliedAmount?.Equals(other.AppliedAmount) == true) &&
+                (this.Memo == null && other.Memo == null ||
+                 this.Memo?.Equals(other.Memo) == true) &&
+                (this.TransactionTime == null && other.TransactionTime == null ||
+                 this.TransactionTime?.Equals(other.TransactionTime) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.DebitNoteNumber = {(this.DebitNoteNumber == null ? "null" : this.DebitNoteNumber)}");
-            toStringOutput.Add($"this.DebitNoteUid = {(this.DebitNoteUid == null ? "null" : this.DebitNoteUid)}");
-            toStringOutput.Add($"this.OriginalAmount = {(this.OriginalAmount == null ? "null" : this.OriginalAmount)}");
-            toStringOutput.Add($"this.AppliedAmount = {(this.AppliedAmount == null ? "null" : this.AppliedAmount)}");
-            toStringOutput.Add($"this.Memo = {(this.Memo == null ? "null" : this.Memo)}");
+            toStringOutput.Add($"this.DebitNoteNumber = {this.DebitNoteNumber ?? "null"}");
+            toStringOutput.Add($"this.DebitNoteUid = {this.DebitNoteUid ?? "null"}");
+            toStringOutput.Add($"this.OriginalAmount = {this.OriginalAmount ?? "null"}");
+            toStringOutput.Add($"this.AppliedAmount = {this.AppliedAmount ?? "null"}");
+            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
             toStringOutput.Add($"this.TransactionTime = {(this.TransactionTime == null ? "null" : this.TransactionTime.ToString())}");
 
             base.ToString(toStringOutput);

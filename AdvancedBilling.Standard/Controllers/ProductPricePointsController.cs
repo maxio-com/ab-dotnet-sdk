@@ -95,7 +95,8 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))
                       .Query(_query => _query.Setup("currency_prices", input.CurrencyPrices))
-                      .Query(_query => _query.Setup("filter[type]", input.FilterType?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+                      .Query(_query => _query.Setup("filter[type]", input.FilterType?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))
+                      .Query(_query => _query.Setup("archived", input.Archived))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>

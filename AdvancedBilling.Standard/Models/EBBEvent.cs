@@ -48,27 +48,22 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"EBBEvent : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is EBBEvent other &&                ((this.Chargify == null && other.Chargify == null) || (this.Chargify?.Equals(other.Chargify) == true));
+            return obj is EBBEvent other &&
+                (this.Chargify == null && other.Chargify == null ||
+                 this.Chargify?.Equals(other.Chargify) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>

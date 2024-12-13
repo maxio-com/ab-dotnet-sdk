@@ -75,30 +75,28 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"MRRMovement : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is MRRMovement other &&                ((this.Amount == null && other.Amount == null) || (this.Amount?.Equals(other.Amount) == true)) &&
-                ((this.Category == null && other.Category == null) || (this.Category?.Equals(other.Category) == true)) &&
-                ((this.SubscriberDelta == null && other.SubscriberDelta == null) || (this.SubscriberDelta?.Equals(other.SubscriberDelta) == true)) &&
-                ((this.LeadDelta == null && other.LeadDelta == null) || (this.LeadDelta?.Equals(other.LeadDelta) == true));
+            return obj is MRRMovement other &&
+                (this.Amount == null && other.Amount == null ||
+                 this.Amount?.Equals(other.Amount) == true) &&
+                (this.Category == null && other.Category == null ||
+                 this.Category?.Equals(other.Category) == true) &&
+                (this.SubscriberDelta == null && other.SubscriberDelta == null ||
+                 this.SubscriberDelta?.Equals(other.SubscriberDelta) == true) &&
+                (this.LeadDelta == null && other.LeadDelta == null ||
+                 this.LeadDelta?.Equals(other.LeadDelta) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -106,7 +104,7 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"this.Amount = {(this.Amount == null ? "null" : this.Amount.ToString())}");
-            toStringOutput.Add($"this.Category = {(this.Category == null ? "null" : this.Category)}");
+            toStringOutput.Add($"this.Category = {this.Category ?? "null"}");
             toStringOutput.Add($"this.SubscriberDelta = {(this.SubscriberDelta == null ? "null" : this.SubscriberDelta.ToString())}");
             toStringOutput.Add($"this.LeadDelta = {(this.LeadDelta == null ? "null" : this.LeadDelta.ToString())}");
 

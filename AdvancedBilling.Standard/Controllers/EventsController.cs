@@ -46,9 +46,13 @@ namespace AdvancedBilling.Standard.Controllers
         /// + `renewal_success_recreated`.
         /// + `zferral_revenue_post_failure` - (Specific to the deprecated Zferral integration).
         /// + `zferral_revenue_post_success` - (Specific to the deprecated Zferral integration).
+        /// ## Event Key.
+        /// The event type is identified by the key property. You can check supported keys [here]($m/Event%20Key).
         /// ## Event Specific Data.
-        /// Event Specific Data.
-        /// Each event type has its own `event_specific_data` specified.
+        /// Different event types may include additional data in `event_specific_data` property.
+        /// While some events share the same schema for `event_specific_data`, others may not include it at all.
+        /// For precise mappings from key to event_specific_data, refer to [Event]($m/Event).
+        /// ### Example.
         /// Here’s an example event for the `subscription_product_change` event:.
         /// ```.
         /// {.
@@ -102,9 +106,13 @@ namespace AdvancedBilling.Standard.Controllers
         /// + `renewal_success_recreated`.
         /// + `zferral_revenue_post_failure` - (Specific to the deprecated Zferral integration).
         /// + `zferral_revenue_post_success` - (Specific to the deprecated Zferral integration).
+        /// ## Event Key.
+        /// The event type is identified by the key property. You can check supported keys [here]($m/Event%20Key).
         /// ## Event Specific Data.
-        /// Event Specific Data.
-        /// Each event type has its own `event_specific_data` specified.
+        /// Different event types may include additional data in `event_specific_data` property.
+        /// While some events share the same schema for `event_specific_data`, others may not include it at all.
+        /// For precise mappings from key to event_specific_data, refer to [Event]($m/Event).
+        /// ### Example.
         /// Here’s an example event for the `subscription_product_change` event:.
         /// ```.
         /// {.
@@ -164,7 +172,12 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// The following request will return a list of events for a subscription.
-        /// Each event type has its own `event_specific_data` specified.
+        /// ## Event Key.
+        /// The event type is identified by the key property. You can check supported keys [here]($m/Event%20Key).
+        /// ## Event Specific Data.
+        /// Different event types may include additional data in `event_specific_data` property.
+        /// While some events share the same schema for `event_specific_data`, others may not include it at all.
+        /// For precise mappings from key to event_specific_data, refer to [Event]($m/Event).
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the List of Models.EventResponse response from the API call.</returns>
@@ -174,7 +187,12 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// The following request will return a list of events for a subscription.
-        /// Each event type has its own `event_specific_data` specified.
+        /// ## Event Key.
+        /// The event type is identified by the key property. You can check supported keys [here]($m/Event%20Key).
+        /// ## Event Specific Data.
+        /// Different event types may include additional data in `event_specific_data` property.
+        /// While some events share the same schema for `event_specific_data`, others may not include it at all.
+        /// For precise mappings from key to event_specific_data, refer to [Event]($m/Event).
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>

@@ -310,16 +310,9 @@ CreateOnOffComponent body = new CreateOnOffComponent
     OnOffComponent = new OnOffComponent
     {
         Name = "Annual Support Services",
+        UnitPrice = OnOffComponentUnitPrice.FromString("100.00"),
         Description = "Prepay for support services",
         Taxable = true,
-        Prices = new List<Price>
-        {
-            new Price
-            {
-                StartingQuantity = PriceStartingQuantity.FromString("0"),
-                UnitPrice = PriceUnitPrice.FromString("100.00"),
-            },
-        },
         DisplayOnHostedPage = true,
         PublicSignupPageIds = new List<int>
         {
@@ -424,7 +417,6 @@ CreatePrepaidComponent body = new CreatePrepaidComponent
         Name = "Minutes",
         UnitName = "minutes",
         PricingScheme = PricingScheme.PerUnit,
-        UnitPrice = PrepaidUsageComponentUnitPrice.FromPrecision(2),
         OveragePricing = new OveragePricing
         {
             PricingScheme = PricingScheme.Stairstep,
@@ -443,6 +435,7 @@ CreatePrepaidComponent body = new CreatePrepaidComponent
                 },
             },
         },
+        UnitPrice = PrepaidUsageComponentUnitPrice.FromPrecision(2),
         RolloverPrepaidRemainder = true,
         RenewPrepaidAllocation = true,
         ExpirationInterval = 15,

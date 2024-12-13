@@ -102,40 +102,41 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"ListSubscriptionGroupProformaInvoicesInput : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is ListSubscriptionGroupProformaInvoicesInput other &&                ((this.Uid == null && other.Uid == null) || (this.Uid?.Equals(other.Uid) == true)) &&
-                ((this.LineItems == null && other.LineItems == null) || (this.LineItems?.Equals(other.LineItems) == true)) &&
-                ((this.Discounts == null && other.Discounts == null) || (this.Discounts?.Equals(other.Discounts) == true)) &&
-                ((this.Taxes == null && other.Taxes == null) || (this.Taxes?.Equals(other.Taxes) == true)) &&
-                ((this.Credits == null && other.Credits == null) || (this.Credits?.Equals(other.Credits) == true)) &&
-                ((this.Payments == null && other.Payments == null) || (this.Payments?.Equals(other.Payments) == true)) &&
-                ((this.CustomFields == null && other.CustomFields == null) || (this.CustomFields?.Equals(other.CustomFields) == true));
+            return obj is ListSubscriptionGroupProformaInvoicesInput other &&
+                (this.Uid == null && other.Uid == null ||
+                 this.Uid?.Equals(other.Uid) == true) &&
+                (this.LineItems == null && other.LineItems == null ||
+                 this.LineItems?.Equals(other.LineItems) == true) &&
+                (this.Discounts == null && other.Discounts == null ||
+                 this.Discounts?.Equals(other.Discounts) == true) &&
+                (this.Taxes == null && other.Taxes == null ||
+                 this.Taxes?.Equals(other.Taxes) == true) &&
+                (this.Credits == null && other.Credits == null ||
+                 this.Credits?.Equals(other.Credits) == true) &&
+                (this.Payments == null && other.Payments == null ||
+                 this.Payments?.Equals(other.Payments) == true) &&
+                (this.CustomFields == null && other.CustomFields == null ||
+                 this.CustomFields?.Equals(other.CustomFields) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Uid = {(this.Uid == null ? "null" : this.Uid)}");
+            toStringOutput.Add($"this.Uid = {this.Uid ?? "null"}");
             toStringOutput.Add($"this.LineItems = {(this.LineItems == null ? "null" : this.LineItems.ToString())}");
             toStringOutput.Add($"this.Discounts = {(this.Discounts == null ? "null" : this.Discounts.ToString())}");
             toStringOutput.Add($"this.Taxes = {(this.Taxes == null ? "null" : this.Taxes.ToString())}");

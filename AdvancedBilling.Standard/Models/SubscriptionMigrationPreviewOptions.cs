@@ -130,36 +130,40 @@ namespace AdvancedBilling.Standard.Models
         public override string ToString()
         {
             var toStringOutput = new List<string>();
-
             this.ToString(toStringOutput);
-
             return $"SubscriptionMigrationPreviewOptions : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj == this)
-            {
-                return true;
-            }
-            return obj is SubscriptionMigrationPreviewOptions other &&                ((this.ProductId == null && other.ProductId == null) || (this.ProductId?.Equals(other.ProductId) == true)) &&
-                ((this.ProductPricePointId == null && other.ProductPricePointId == null) || (this.ProductPricePointId?.Equals(other.ProductPricePointId) == true)) &&
-                ((this.IncludeTrial == null && other.IncludeTrial == null) || (this.IncludeTrial?.Equals(other.IncludeTrial) == true)) &&
-                ((this.IncludeInitialCharge == null && other.IncludeInitialCharge == null) || (this.IncludeInitialCharge?.Equals(other.IncludeInitialCharge) == true)) &&
-                ((this.IncludeCoupons == null && other.IncludeCoupons == null) || (this.IncludeCoupons?.Equals(other.IncludeCoupons) == true)) &&
-                ((this.PreservePeriod == null && other.PreservePeriod == null) || (this.PreservePeriod?.Equals(other.PreservePeriod) == true)) &&
-                ((this.ProductHandle == null && other.ProductHandle == null) || (this.ProductHandle?.Equals(other.ProductHandle) == true)) &&
-                ((this.ProductPricePointHandle == null && other.ProductPricePointHandle == null) || (this.ProductPricePointHandle?.Equals(other.ProductPricePointHandle) == true)) &&
-                ((this.Proration == null && other.Proration == null) || (this.Proration?.Equals(other.Proration) == true)) &&
-                ((this.ProrationDate == null && other.ProrationDate == null) || (this.ProrationDate?.Equals(other.ProrationDate) == true));
+            return obj is SubscriptionMigrationPreviewOptions other &&
+                (this.ProductId == null && other.ProductId == null ||
+                 this.ProductId?.Equals(other.ProductId) == true) &&
+                (this.ProductPricePointId == null && other.ProductPricePointId == null ||
+                 this.ProductPricePointId?.Equals(other.ProductPricePointId) == true) &&
+                (this.IncludeTrial == null && other.IncludeTrial == null ||
+                 this.IncludeTrial?.Equals(other.IncludeTrial) == true) &&
+                (this.IncludeInitialCharge == null && other.IncludeInitialCharge == null ||
+                 this.IncludeInitialCharge?.Equals(other.IncludeInitialCharge) == true) &&
+                (this.IncludeCoupons == null && other.IncludeCoupons == null ||
+                 this.IncludeCoupons?.Equals(other.IncludeCoupons) == true) &&
+                (this.PreservePeriod == null && other.PreservePeriod == null ||
+                 this.PreservePeriod?.Equals(other.PreservePeriod) == true) &&
+                (this.ProductHandle == null && other.ProductHandle == null ||
+                 this.ProductHandle?.Equals(other.ProductHandle) == true) &&
+                (this.ProductPricePointHandle == null && other.ProductPricePointHandle == null ||
+                 this.ProductPricePointHandle?.Equals(other.ProductPricePointHandle) == true) &&
+                (this.Proration == null && other.Proration == null ||
+                 this.Proration?.Equals(other.Proration) == true) &&
+                (this.ProrationDate == null && other.ProrationDate == null ||
+                 this.ProrationDate?.Equals(other.ProrationDate) == true) &&
+                base.Equals(obj);
         }
-        
+
         /// <summary>
         /// ToString overload.
         /// </summary>
@@ -172,8 +176,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"this.IncludeInitialCharge = {(this.IncludeInitialCharge == null ? "null" : this.IncludeInitialCharge.ToString())}");
             toStringOutput.Add($"this.IncludeCoupons = {(this.IncludeCoupons == null ? "null" : this.IncludeCoupons.ToString())}");
             toStringOutput.Add($"this.PreservePeriod = {(this.PreservePeriod == null ? "null" : this.PreservePeriod.ToString())}");
-            toStringOutput.Add($"this.ProductHandle = {(this.ProductHandle == null ? "null" : this.ProductHandle)}");
-            toStringOutput.Add($"this.ProductPricePointHandle = {(this.ProductPricePointHandle == null ? "null" : this.ProductPricePointHandle)}");
+            toStringOutput.Add($"this.ProductHandle = {this.ProductHandle ?? "null"}");
+            toStringOutput.Add($"this.ProductPricePointHandle = {this.ProductPricePointHandle ?? "null"}");
             toStringOutput.Add($"this.Proration = {(this.Proration == null ? "null" : this.Proration.ToString())}");
             toStringOutput.Add($"this.ProrationDate = {(this.ProrationDate == null ? "null" : this.ProrationDate.ToString())}");
 
