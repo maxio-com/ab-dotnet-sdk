@@ -1,5 +1,4 @@
 ﻿using AdvancedBilling.Standard;
-using Environment = AdvancedBilling.Standard.Environment;
 using AdvancedBilling.Standard.Authentication;
 
 namespace AdvancedBillingTests
@@ -9,9 +8,7 @@ namespace AdvancedBillingTests
         public static AdvancedBillingClient GetInvalidClient()
         {
             var builder = new AdvancedBillingClient.Builder();
-            builder.Environment(Environment.Production);
-            builder.Domain("staging-chargify.com");
-            builder.Subdomain("dotnet-sdk");
+            builder.Site("dotnet-sdk");
             builder.BasicAuthCredentials(new BasicAuthModel.Builder("abc", "123").Build());
 
             return builder.Build();
