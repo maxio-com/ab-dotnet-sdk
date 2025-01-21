@@ -84,8 +84,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.CancellationState = {this.CancellationState ?? "null"}");
-            toStringOutput.Add($"this.CancelsAt = {this.CancelsAt}");
+            toStringOutput.Add($"CancellationState = {this.CancellationState ?? "null"}");
+            toStringOutput.Add($"CancelsAt = {this.CancelsAt}");
 
             base.ToString(toStringOutput);
         }

@@ -188,17 +188,17 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ResourceType = {this.ResourceType}");
-            toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
-            toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
-            toStringOutput.Add($"this.DateField = {(this.DateField == null ? "null" : this.DateField.ToString())}");
-            toStringOutput.Add($"this.StartDate = {(this.StartDate == null ? "null" : this.StartDate.ToString())}");
-            toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate.ToString())}");
-            toStringOutput.Add($"this.StartDatetime = {(this.StartDatetime == null ? "null" : this.StartDatetime.ToString())}");
-            toStringOutput.Add($"this.EndDatetime = {(this.EndDatetime == null ? "null" : this.EndDatetime.ToString())}");
-            toStringOutput.Add($"this.WithDeleted = {(this.WithDeleted == null ? "null" : this.WithDeleted.ToString())}");
-            toStringOutput.Add($"this.ResourceIds = {(this.ResourceIds == null ? "null" : $"[{string.Join(", ", this.ResourceIds)} ]")}");
-            toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
+            toStringOutput.Add($"ResourceType = {this.ResourceType}");
+            toStringOutput.Add($"Page = {(this.Page == null ? "null" : this.Page.ToString())}");
+            toStringOutput.Add($"PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
+            toStringOutput.Add($"DateField = {(this.DateField == null ? "null" : this.DateField.ToString())}");
+            toStringOutput.Add($"StartDate = {(this.StartDate == null ? "null" : this.StartDate.ToString())}");
+            toStringOutput.Add($"EndDate = {(this.EndDate == null ? "null" : this.EndDate.ToString())}");
+            toStringOutput.Add($"StartDatetime = {(this.StartDatetime == null ? "null" : this.StartDatetime.ToString())}");
+            toStringOutput.Add($"EndDatetime = {(this.EndDatetime == null ? "null" : this.EndDatetime.ToString())}");
+            toStringOutput.Add($"WithDeleted = {(this.WithDeleted == null ? "null" : this.WithDeleted.ToString())}");
+            toStringOutput.Add($"ResourceIds = {(this.ResourceIds == null ? "null" : $"[{string.Join(", ", this.ResourceIds)} ]")}");
+            toStringOutput.Add($"Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
 
             base.ToString(toStringOutput);
         }

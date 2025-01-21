@@ -230,18 +230,18 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Uid = {this.Uid ?? "null"}");
-            toStringOutput.Add($"this.Title = {this.Title ?? "null"}");
-            toStringOutput.Add($"this.Description = {this.Description ?? "null"}");
-            toStringOutput.Add($"this.Code = {this.Code ?? "null"}");
-            toStringOutput.Add($"this.SourceType = {(this.SourceType == null ? "null" : this.SourceType.ToString())}");
-            toStringOutput.Add($"this.SourceId = {(this.SourceId == null ? "null" : this.SourceId.ToString())}");
-            toStringOutput.Add($"this.DiscountType = {(this.DiscountType == null ? "null" : this.DiscountType.ToString())}");
-            toStringOutput.Add($"this.Percentage = {this.Percentage ?? "null"}");
-            toStringOutput.Add($"this.EligibleAmount = {this.EligibleAmount ?? "null"}");
-            toStringOutput.Add($"this.DiscountAmount = {this.DiscountAmount ?? "null"}");
-            toStringOutput.Add($"this.TransactionId = {(this.TransactionId == null ? "null" : this.TransactionId.ToString())}");
-            toStringOutput.Add($"this.LineItemBreakouts = {(this.LineItemBreakouts == null ? "null" : $"[{string.Join(", ", this.LineItemBreakouts)} ]")}");
+            toStringOutput.Add($"Uid = {this.Uid ?? "null"}");
+            toStringOutput.Add($"Title = {this.Title ?? "null"}");
+            toStringOutput.Add($"Description = {this.Description ?? "null"}");
+            toStringOutput.Add($"Code = {this.Code ?? "null"}");
+            toStringOutput.Add($"SourceType = {(this.SourceType == null ? "null" : this.SourceType.ToString())}");
+            toStringOutput.Add($"SourceId = {(this.SourceId == null ? "null" : this.SourceId.ToString())}");
+            toStringOutput.Add($"DiscountType = {(this.DiscountType == null ? "null" : this.DiscountType.ToString())}");
+            toStringOutput.Add($"Percentage = {this.Percentage ?? "null"}");
+            toStringOutput.Add($"EligibleAmount = {this.EligibleAmount ?? "null"}");
+            toStringOutput.Add($"DiscountAmount = {this.DiscountAmount ?? "null"}");
+            toStringOutput.Add($"TransactionId = {(this.TransactionId == null ? "null" : this.TransactionId.ToString())}");
+            toStringOutput.Add($"LineItemBreakouts = {(this.LineItemBreakouts == null ? "null" : $"[{string.Join(", ", this.LineItemBreakouts)} ]")}");
 
             base.ToString(toStringOutput);
         }

@@ -168,12 +168,12 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Url = {this.Url ?? "null"}");
-            toStringOutput.Add($"this.FetchCount = {(this.FetchCount == null ? "null" : this.FetchCount.ToString())}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
-            toStringOutput.Add($"this.NewLinkAvailableAt = {(this.NewLinkAvailableAt == null ? "null" : this.NewLinkAvailableAt.ToString())}");
-            toStringOutput.Add($"this.ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt.ToString())}");
-            toStringOutput.Add($"this.LastInviteSentAt = {(this.LastInviteSentAt == null ? "null" : this.LastInviteSentAt.ToString())}");
+            toStringOutput.Add($"Url = {this.Url ?? "null"}");
+            toStringOutput.Add($"FetchCount = {(this.FetchCount == null ? "null" : this.FetchCount.ToString())}");
+            toStringOutput.Add($"CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"NewLinkAvailableAt = {(this.NewLinkAvailableAt == null ? "null" : this.NewLinkAvailableAt.ToString())}");
+            toStringOutput.Add($"ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt.ToString())}");
+            toStringOutput.Add($"LastInviteSentAt = {(this.LastInviteSentAt == null ? "null" : this.LastInviteSentAt.ToString())}");
 
             base.ToString(toStringOutput);
         }

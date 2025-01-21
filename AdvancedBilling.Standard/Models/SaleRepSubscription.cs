@@ -208,16 +208,16 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.SiteName = {this.SiteName ?? "null"}");
-            toStringOutput.Add($"this.SubscriptionUrl = {this.SubscriptionUrl ?? "null"}");
-            toStringOutput.Add($"this.CustomerName = {this.CustomerName ?? "null"}");
-            toStringOutput.Add($"this.CreatedAt = {this.CreatedAt ?? "null"}");
-            toStringOutput.Add($"this.Mrr = {this.Mrr ?? "null"}");
-            toStringOutput.Add($"this.Usage = {this.Usage ?? "null"}");
-            toStringOutput.Add($"this.Recurring = {this.Recurring ?? "null"}");
-            toStringOutput.Add($"this.LastPayment = {this.LastPayment ?? "null"}");
-            toStringOutput.Add($"this.ChurnDate = {this.ChurnDate ?? "null"}");
+            toStringOutput.Add($"Id = {(this.Id == null ? "null" : this.Id.ToString())}");
+            toStringOutput.Add($"SiteName = {this.SiteName ?? "null"}");
+            toStringOutput.Add($"SubscriptionUrl = {this.SubscriptionUrl ?? "null"}");
+            toStringOutput.Add($"CustomerName = {this.CustomerName ?? "null"}");
+            toStringOutput.Add($"CreatedAt = {this.CreatedAt ?? "null"}");
+            toStringOutput.Add($"Mrr = {this.Mrr ?? "null"}");
+            toStringOutput.Add($"Usage = {this.Usage ?? "null"}");
+            toStringOutput.Add($"Recurring = {this.Recurring ?? "null"}");
+            toStringOutput.Add($"LastPayment = {this.LastPayment ?? "null"}");
+            toStringOutput.Add($"ChurnDate = {this.ChurnDate ?? "null"}");
 
             base.ToString(toStringOutput);
         }

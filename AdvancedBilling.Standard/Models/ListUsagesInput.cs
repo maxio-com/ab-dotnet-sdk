@@ -151,14 +151,14 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.SubscriptionId = {this.SubscriptionId}");
+            toStringOutput.Add($"SubscriptionId = {this.SubscriptionId}");
             toStringOutput.Add($"ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
-            toStringOutput.Add($"this.SinceId = {(this.SinceId == null ? "null" : this.SinceId.ToString())}");
-            toStringOutput.Add($"this.MaxId = {(this.MaxId == null ? "null" : this.MaxId.ToString())}");
-            toStringOutput.Add($"this.SinceDate = {(this.SinceDate == null ? "null" : this.SinceDate.ToString())}");
-            toStringOutput.Add($"this.UntilDate = {(this.UntilDate == null ? "null" : this.UntilDate.ToString())}");
-            toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
-            toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
+            toStringOutput.Add($"SinceId = {(this.SinceId == null ? "null" : this.SinceId.ToString())}");
+            toStringOutput.Add($"MaxId = {(this.MaxId == null ? "null" : this.MaxId.ToString())}");
+            toStringOutput.Add($"SinceDate = {(this.SinceDate == null ? "null" : this.SinceDate.ToString())}");
+            toStringOutput.Add($"UntilDate = {(this.UntilDate == null ? "null" : this.UntilDate.ToString())}");
+            toStringOutput.Add($"Page = {(this.Page == null ? "null" : this.Page.ToString())}");
+            toStringOutput.Add($"PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
 
             base.ToString(toStringOutput);
         }

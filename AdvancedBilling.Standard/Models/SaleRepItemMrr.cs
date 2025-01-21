@@ -92,9 +92,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Mrr = {this.Mrr ?? "null"}");
-            toStringOutput.Add($"this.Usage = {this.Usage ?? "null"}");
-            toStringOutput.Add($"this.Recurring = {this.Recurring ?? "null"}");
+            toStringOutput.Add($"Mrr = {this.Mrr ?? "null"}");
+            toStringOutput.Add($"Usage = {this.Usage ?? "null"}");
+            toStringOutput.Add($"Recurring = {this.Recurring ?? "null"}");
 
             base.ToString(toStringOutput);
         }

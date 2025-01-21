@@ -92,9 +92,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.LastSentAt = {this.LastSentAt ?? "null"}");
-            toStringOutput.Add($"this.LastAcceptedAt = {this.LastAcceptedAt ?? "null"}");
-            toStringOutput.Add($"this.UninvitedCount = {(this.UninvitedCount == null ? "null" : this.UninvitedCount.ToString())}");
+            toStringOutput.Add($"LastSentAt = {this.LastSentAt ?? "null"}");
+            toStringOutput.Add($"LastAcceptedAt = {this.LastAcceptedAt ?? "null"}");
+            toStringOutput.Add($"UninvitedCount = {(this.UninvitedCount == null ? "null" : this.UninvitedCount.ToString())}");
 
             base.ToString(toStringOutput);
         }

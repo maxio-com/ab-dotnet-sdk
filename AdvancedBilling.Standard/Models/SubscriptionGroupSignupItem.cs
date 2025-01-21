@@ -202,18 +202,18 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ProductHandle = {this.ProductHandle ?? "null"}");
-            toStringOutput.Add($"this.ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
-            toStringOutput.Add($"this.ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
-            toStringOutput.Add($"this.ProductPricePointHandle = {this.ProductPricePointHandle ?? "null"}");
-            toStringOutput.Add($"this.OfferId = {(this.OfferId == null ? "null" : this.OfferId.ToString())}");
-            toStringOutput.Add($"this.Reference = {this.Reference ?? "null"}");
-            toStringOutput.Add($"this.Primary = {(this.Primary == null ? "null" : this.Primary.ToString())}");
-            toStringOutput.Add($"this.Currency = {this.Currency ?? "null"}");
-            toStringOutput.Add($"this.CouponCodes = {(this.CouponCodes == null ? "null" : $"[{string.Join(", ", this.CouponCodes)} ]")}");
-            toStringOutput.Add($"this.Components = {(this.Components == null ? "null" : $"[{string.Join(", ", this.Components)} ]")}");
-            toStringOutput.Add($"this.CustomPrice = {(this.CustomPrice == null ? "null" : this.CustomPrice.ToString())}");
-            toStringOutput.Add($"this.CalendarBilling = {(this.CalendarBilling == null ? "null" : this.CalendarBilling.ToString())}");
+            toStringOutput.Add($"ProductHandle = {this.ProductHandle ?? "null"}");
+            toStringOutput.Add($"ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
+            toStringOutput.Add($"ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
+            toStringOutput.Add($"ProductPricePointHandle = {this.ProductPricePointHandle ?? "null"}");
+            toStringOutput.Add($"OfferId = {(this.OfferId == null ? "null" : this.OfferId.ToString())}");
+            toStringOutput.Add($"Reference = {this.Reference ?? "null"}");
+            toStringOutput.Add($"Primary = {(this.Primary == null ? "null" : this.Primary.ToString())}");
+            toStringOutput.Add($"Currency = {this.Currency ?? "null"}");
+            toStringOutput.Add($"CouponCodes = {(this.CouponCodes == null ? "null" : $"[{string.Join(", ", this.CouponCodes)} ]")}");
+            toStringOutput.Add($"Components = {(this.Components == null ? "null" : $"[{string.Join(", ", this.Components)} ]")}");
+            toStringOutput.Add($"CustomPrice = {(this.CustomPrice == null ? "null" : this.CustomPrice.ToString())}");
+            toStringOutput.Add($"CalendarBilling = {(this.CalendarBilling == null ? "null" : this.CalendarBilling.ToString())}");
             toStringOutput.Add($"Metafields = {(this.Metafields == null ? "null" : this.Metafields.ToString())}");
 
             base.ToString(toStringOutput);

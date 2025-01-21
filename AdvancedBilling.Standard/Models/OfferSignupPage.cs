@@ -125,12 +125,12 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.Nickname = {this.Nickname ?? "null"}");
-            toStringOutput.Add($"this.Enabled = {(this.Enabled == null ? "null" : this.Enabled.ToString())}");
-            toStringOutput.Add($"this.ReturnUrl = {this.ReturnUrl ?? "null"}");
-            toStringOutput.Add($"this.ReturnParams = {this.ReturnParams ?? "null"}");
-            toStringOutput.Add($"this.Url = {this.Url ?? "null"}");
+            toStringOutput.Add($"Id = {(this.Id == null ? "null" : this.Id.ToString())}");
+            toStringOutput.Add($"Nickname = {this.Nickname ?? "null"}");
+            toStringOutput.Add($"Enabled = {(this.Enabled == null ? "null" : this.Enabled.ToString())}");
+            toStringOutput.Add($"ReturnUrl = {this.ReturnUrl ?? "null"}");
+            toStringOutput.Add($"ReturnParams = {this.ReturnParams ?? "null"}");
+            toStringOutput.Add($"Url = {this.Url ?? "null"}");
 
             base.ToString(toStringOutput);
         }

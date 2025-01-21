@@ -80,8 +80,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Currency = {this.Currency ?? "null"}");
-            toStringOutput.Add($"this.Price = {this.Price}");
+            toStringOutput.Add($"Currency = {this.Currency ?? "null"}");
+            toStringOutput.Add($"Price = {this.Price}");
 
             base.ToString(toStringOutput);
         }

@@ -114,11 +114,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.Url = {this.Url ?? "null"}");
-            toStringOutput.Add($"this.SiteId = {(this.SiteId == null ? "null" : this.SiteId.ToString())}");
-            toStringOutput.Add($"this.Status = {this.Status ?? "null"}");
-            toStringOutput.Add($"this.WebhookSubscriptions = {(this.WebhookSubscriptions == null ? "null" : $"[{string.Join(", ", this.WebhookSubscriptions)} ]")}");
+            toStringOutput.Add($"Id = {(this.Id == null ? "null" : this.Id.ToString())}");
+            toStringOutput.Add($"Url = {this.Url ?? "null"}");
+            toStringOutput.Add($"SiteId = {(this.SiteId == null ? "null" : this.SiteId.ToString())}");
+            toStringOutput.Add($"Status = {this.Status ?? "null"}");
+            toStringOutput.Add($"WebhookSubscriptions = {(this.WebhookSubscriptions == null ? "null" : $"[{string.Join(", ", this.WebhookSubscriptions)} ]")}");
 
             base.ToString(toStringOutput);
         }

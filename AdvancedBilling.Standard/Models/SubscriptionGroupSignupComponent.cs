@@ -119,7 +119,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"AllocatedQuantity = {(this.AllocatedQuantity == null ? "null" : this.AllocatedQuantity.ToString())}");
             toStringOutput.Add($"UnitBalance = {(this.UnitBalance == null ? "null" : this.UnitBalance.ToString())}");
             toStringOutput.Add($"PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
-            toStringOutput.Add($"this.CustomPrice = {(this.CustomPrice == null ? "null" : this.CustomPrice.ToString())}");
+            toStringOutput.Add($"CustomPrice = {(this.CustomPrice == null ? "null" : this.CustomPrice.ToString())}");
 
             base.ToString(toStringOutput);
         }

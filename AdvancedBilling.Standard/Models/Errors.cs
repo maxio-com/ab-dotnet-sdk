@@ -81,8 +81,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : $"[{string.Join(", ", this.PerPage)} ]")}");
-            toStringOutput.Add($"this.PricePoint = {(this.PricePoint == null ? "null" : $"[{string.Join(", ", this.PricePoint)} ]")}");
+            toStringOutput.Add($"PerPage = {(this.PerPage == null ? "null" : $"[{string.Join(", ", this.PerPage)} ]")}");
+            toStringOutput.Add($"PricePoint = {(this.PricePoint == null ? "null" : $"[{string.Join(", ", this.PricePoint)} ]")}");
 
             base.ToString(toStringOutput);
         }

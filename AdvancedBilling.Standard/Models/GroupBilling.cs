@@ -92,9 +92,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Accrue = {(this.Accrue == null ? "null" : this.Accrue.ToString())}");
-            toStringOutput.Add($"this.AlignDate = {(this.AlignDate == null ? "null" : this.AlignDate.ToString())}");
-            toStringOutput.Add($"this.Prorate = {(this.Prorate == null ? "null" : this.Prorate.ToString())}");
+            toStringOutput.Add($"Accrue = {(this.Accrue == null ? "null" : this.Accrue.ToString())}");
+            toStringOutput.Add($"AlignDate = {(this.AlignDate == null ? "null" : this.AlignDate.ToString())}");
+            toStringOutput.Add($"Prorate = {(this.Prorate == null ? "null" : this.Prorate.ToString())}");
 
             base.ToString(toStringOutput);
         }

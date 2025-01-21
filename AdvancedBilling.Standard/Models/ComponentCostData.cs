@@ -175,13 +175,13 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ComponentCodeId = {(this.ComponentCodeId == null ? "null" : this.ComponentCodeId.ToString())}");
-            toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
-            toStringOutput.Add($"this.ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
-            toStringOutput.Add($"this.Quantity = {this.Quantity ?? "null"}");
-            toStringOutput.Add($"this.Amount = {this.Amount ?? "null"}");
-            toStringOutput.Add($"this.PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
-            toStringOutput.Add($"this.Tiers = {(this.Tiers == null ? "null" : $"[{string.Join(", ", this.Tiers)} ]")}");
+            toStringOutput.Add($"ComponentCodeId = {(this.ComponentCodeId == null ? "null" : this.ComponentCodeId.ToString())}");
+            toStringOutput.Add($"PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
+            toStringOutput.Add($"ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
+            toStringOutput.Add($"Quantity = {this.Quantity ?? "null"}");
+            toStringOutput.Add($"Amount = {this.Amount ?? "null"}");
+            toStringOutput.Add($"PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
+            toStringOutput.Add($"Tiers = {(this.Tiers == null ? "null" : $"[{string.Join(", ", this.Tiers)} ]")}");
 
             base.ToString(toStringOutput);
         }

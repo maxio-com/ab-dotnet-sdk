@@ -257,23 +257,23 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.FirstName = {this.FirstName ?? "null"}");
-            toStringOutput.Add($"this.LastName = {this.LastName ?? "null"}");
-            toStringOutput.Add($"this.Email = {this.Email ?? "null"}");
-            toStringOutput.Add($"this.CcEmails = {this.CcEmails ?? "null"}");
-            toStringOutput.Add($"this.Organization = {this.Organization ?? "null"}");
-            toStringOutput.Add($"this.Reference = {this.Reference ?? "null"}");
-            toStringOutput.Add($"this.Address = {this.Address ?? "null"}");
-            toStringOutput.Add($"this.Address2 = {this.Address2 ?? "null"}");
-            toStringOutput.Add($"this.City = {this.City ?? "null"}");
-            toStringOutput.Add($"this.State = {this.State ?? "null"}");
-            toStringOutput.Add($"this.Zip = {this.Zip ?? "null"}");
-            toStringOutput.Add($"this.Country = {this.Country ?? "null"}");
-            toStringOutput.Add($"this.Phone = {this.Phone ?? "null"}");
-            toStringOutput.Add($"this.Locale = {this.Locale ?? "null"}");
-            toStringOutput.Add($"this.VatNumber = {this.VatNumber ?? "null"}");
-            toStringOutput.Add($"this.TaxExempt = {(this.TaxExempt == null ? "null" : this.TaxExempt.ToString())}");
-            toStringOutput.Add($"this.TaxExemptReason = {this.TaxExemptReason ?? "null"}");
+            toStringOutput.Add($"FirstName = {this.FirstName ?? "null"}");
+            toStringOutput.Add($"LastName = {this.LastName ?? "null"}");
+            toStringOutput.Add($"Email = {this.Email ?? "null"}");
+            toStringOutput.Add($"CcEmails = {this.CcEmails ?? "null"}");
+            toStringOutput.Add($"Organization = {this.Organization ?? "null"}");
+            toStringOutput.Add($"Reference = {this.Reference ?? "null"}");
+            toStringOutput.Add($"Address = {this.Address ?? "null"}");
+            toStringOutput.Add($"Address2 = {this.Address2 ?? "null"}");
+            toStringOutput.Add($"City = {this.City ?? "null"}");
+            toStringOutput.Add($"State = {this.State ?? "null"}");
+            toStringOutput.Add($"Zip = {this.Zip ?? "null"}");
+            toStringOutput.Add($"Country = {this.Country ?? "null"}");
+            toStringOutput.Add($"Phone = {this.Phone ?? "null"}");
+            toStringOutput.Add($"Locale = {this.Locale ?? "null"}");
+            toStringOutput.Add($"VatNumber = {this.VatNumber ?? "null"}");
+            toStringOutput.Add($"TaxExempt = {(this.TaxExempt == null ? "null" : this.TaxExempt.ToString())}");
+            toStringOutput.Add($"TaxExemptReason = {this.TaxExemptReason ?? "null"}");
             toStringOutput.Add($"Metafields = {(this.Metafields == null ? "null" : this.Metafields.ToString())}");
 
             base.ToString(toStringOutput);

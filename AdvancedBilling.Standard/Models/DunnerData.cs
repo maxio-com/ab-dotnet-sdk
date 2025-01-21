@@ -122,12 +122,12 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.State = {this.State ?? "null"}");
-            toStringOutput.Add($"this.SubscriptionId = {this.SubscriptionId}");
-            toStringOutput.Add($"this.RevenueAtRiskInCents = {this.RevenueAtRiskInCents}");
-            toStringOutput.Add($"this.CreatedAt = {this.CreatedAt}");
-            toStringOutput.Add($"this.Attempts = {this.Attempts}");
-            toStringOutput.Add($"this.LastAttemptedAt = {this.LastAttemptedAt}");
+            toStringOutput.Add($"State = {this.State ?? "null"}");
+            toStringOutput.Add($"SubscriptionId = {this.SubscriptionId}");
+            toStringOutput.Add($"RevenueAtRiskInCents = {this.RevenueAtRiskInCents}");
+            toStringOutput.Add($"CreatedAt = {this.CreatedAt}");
+            toStringOutput.Add($"Attempts = {this.Attempts}");
+            toStringOutput.Add($"LastAttemptedAt = {this.LastAttemptedAt}");
 
             base.ToString(toStringOutput);
         }

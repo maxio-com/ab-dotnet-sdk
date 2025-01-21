@@ -165,11 +165,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
-            toStringOutput.Add($"this.Scope = {(this.Scope == null ? "null" : this.Scope.ToString())}");
-            toStringOutput.Add($"this.DataCount = {(this.DataCount == null ? "null" : this.DataCount.ToString())}");
-            toStringOutput.Add($"this.InputType = {(this.InputType == null ? "null" : this.InputType.ToString())}");
+            toStringOutput.Add($"Id = {(this.Id == null ? "null" : this.Id.ToString())}");
+            toStringOutput.Add($"Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"Scope = {(this.Scope == null ? "null" : this.Scope.ToString())}");
+            toStringOutput.Add($"DataCount = {(this.DataCount == null ? "null" : this.DataCount.ToString())}");
+            toStringOutput.Add($"InputType = {(this.InputType == null ? "null" : this.InputType.ToString())}");
             toStringOutput.Add($"MEnum = {(this.MEnum == null ? "null" : this.MEnum.ToString())}");
 
             base.ToString(toStringOutput);

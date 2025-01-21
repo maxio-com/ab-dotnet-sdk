@@ -103,10 +103,10 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ProratedAdjustmentInCents = {(this.ProratedAdjustmentInCents == null ? "null" : this.ProratedAdjustmentInCents.ToString())}");
-            toStringOutput.Add($"this.ChargeInCents = {(this.ChargeInCents == null ? "null" : this.ChargeInCents.ToString())}");
-            toStringOutput.Add($"this.PaymentDueInCents = {(this.PaymentDueInCents == null ? "null" : this.PaymentDueInCents.ToString())}");
-            toStringOutput.Add($"this.CreditAppliedInCents = {(this.CreditAppliedInCents == null ? "null" : this.CreditAppliedInCents.ToString())}");
+            toStringOutput.Add($"ProratedAdjustmentInCents = {(this.ProratedAdjustmentInCents == null ? "null" : this.ProratedAdjustmentInCents.ToString())}");
+            toStringOutput.Add($"ChargeInCents = {(this.ChargeInCents == null ? "null" : this.ChargeInCents.ToString())}");
+            toStringOutput.Add($"PaymentDueInCents = {(this.PaymentDueInCents == null ? "null" : this.PaymentDueInCents.ToString())}");
+            toStringOutput.Add($"CreditAppliedInCents = {(this.CreditAppliedInCents == null ? "null" : this.CreditAppliedInCents.ToString())}");
 
             base.ToString(toStringOutput);
         }

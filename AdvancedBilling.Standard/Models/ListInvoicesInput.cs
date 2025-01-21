@@ -303,28 +303,28 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.StartDate = {this.StartDate ?? "null"}");
-            toStringOutput.Add($"this.EndDate = {this.EndDate ?? "null"}");
-            toStringOutput.Add($"this.Status = {(this.Status == null ? "null" : this.Status.ToString())}");
-            toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
-            toStringOutput.Add($"this.SubscriptionGroupUid = {this.SubscriptionGroupUid ?? "null"}");
-            toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
-            toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
-            toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
-            toStringOutput.Add($"this.LineItems = {(this.LineItems == null ? "null" : this.LineItems.ToString())}");
-            toStringOutput.Add($"this.Discounts = {(this.Discounts == null ? "null" : this.Discounts.ToString())}");
-            toStringOutput.Add($"this.Taxes = {(this.Taxes == null ? "null" : this.Taxes.ToString())}");
-            toStringOutput.Add($"this.Credits = {(this.Credits == null ? "null" : this.Credits.ToString())}");
-            toStringOutput.Add($"this.Payments = {(this.Payments == null ? "null" : this.Payments.ToString())}");
-            toStringOutput.Add($"this.CustomFields = {(this.CustomFields == null ? "null" : this.CustomFields.ToString())}");
-            toStringOutput.Add($"this.Refunds = {(this.Refunds == null ? "null" : this.Refunds.ToString())}");
-            toStringOutput.Add($"this.DateField = {(this.DateField == null ? "null" : this.DateField.ToString())}");
-            toStringOutput.Add($"this.StartDatetime = {this.StartDatetime ?? "null"}");
-            toStringOutput.Add($"this.EndDatetime = {this.EndDatetime ?? "null"}");
-            toStringOutput.Add($"this.CustomerIds = {(this.CustomerIds == null ? "null" : $"[{string.Join(", ", this.CustomerIds)} ]")}");
-            toStringOutput.Add($"this.Number = {(this.Number == null ? "null" : $"[{string.Join(", ", this.Number)} ]")}");
-            toStringOutput.Add($"this.ProductIds = {(this.ProductIds == null ? "null" : $"[{string.Join(", ", this.ProductIds)} ]")}");
-            toStringOutput.Add($"this.Sort = {(this.Sort == null ? "null" : this.Sort.ToString())}");
+            toStringOutput.Add($"StartDate = {this.StartDate ?? "null"}");
+            toStringOutput.Add($"EndDate = {this.EndDate ?? "null"}");
+            toStringOutput.Add($"Status = {(this.Status == null ? "null" : this.Status.ToString())}");
+            toStringOutput.Add($"SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
+            toStringOutput.Add($"SubscriptionGroupUid = {this.SubscriptionGroupUid ?? "null"}");
+            toStringOutput.Add($"Page = {(this.Page == null ? "null" : this.Page.ToString())}");
+            toStringOutput.Add($"PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
+            toStringOutput.Add($"Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
+            toStringOutput.Add($"LineItems = {(this.LineItems == null ? "null" : this.LineItems.ToString())}");
+            toStringOutput.Add($"Discounts = {(this.Discounts == null ? "null" : this.Discounts.ToString())}");
+            toStringOutput.Add($"Taxes = {(this.Taxes == null ? "null" : this.Taxes.ToString())}");
+            toStringOutput.Add($"Credits = {(this.Credits == null ? "null" : this.Credits.ToString())}");
+            toStringOutput.Add($"Payments = {(this.Payments == null ? "null" : this.Payments.ToString())}");
+            toStringOutput.Add($"CustomFields = {(this.CustomFields == null ? "null" : this.CustomFields.ToString())}");
+            toStringOutput.Add($"Refunds = {(this.Refunds == null ? "null" : this.Refunds.ToString())}");
+            toStringOutput.Add($"DateField = {(this.DateField == null ? "null" : this.DateField.ToString())}");
+            toStringOutput.Add($"StartDatetime = {this.StartDatetime ?? "null"}");
+            toStringOutput.Add($"EndDatetime = {this.EndDatetime ?? "null"}");
+            toStringOutput.Add($"CustomerIds = {(this.CustomerIds == null ? "null" : $"[{string.Join(", ", this.CustomerIds)} ]")}");
+            toStringOutput.Add($"Number = {(this.Number == null ? "null" : $"[{string.Join(", ", this.Number)} ]")}");
+            toStringOutput.Add($"ProductIds = {(this.ProductIds == null ? "null" : $"[{string.Join(", ", this.ProductIds)} ]")}");
+            toStringOutput.Add($"Sort = {(this.Sort == null ? "null" : this.Sort.ToString())}");
 
             base.ToString(toStringOutput);
         }

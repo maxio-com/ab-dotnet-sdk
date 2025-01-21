@@ -103,10 +103,10 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.SegmentProperty1Value = {this.SegmentProperty1Value ?? "null"}");
-            toStringOutput.Add($"this.SegmentProperty2Value = {this.SegmentProperty2Value ?? "null"}");
-            toStringOutput.Add($"this.SegmentProperty3Value = {this.SegmentProperty3Value ?? "null"}");
-            toStringOutput.Add($"this.SegmentProperty4Value = {this.SegmentProperty4Value ?? "null"}");
+            toStringOutput.Add($"SegmentProperty1Value = {this.SegmentProperty1Value ?? "null"}");
+            toStringOutput.Add($"SegmentProperty2Value = {this.SegmentProperty2Value ?? "null"}");
+            toStringOutput.Add($"SegmentProperty3Value = {this.SegmentProperty3Value ?? "null"}");
+            toStringOutput.Add($"SegmentProperty4Value = {this.SegmentProperty4Value ?? "null"}");
 
             base.ToString(toStringOutput);
         }

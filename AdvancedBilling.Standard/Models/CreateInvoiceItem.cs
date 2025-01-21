@@ -193,18 +193,18 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Title = {this.Title ?? "null"}");
+            toStringOutput.Add($"Title = {this.Title ?? "null"}");
             toStringOutput.Add($"Quantity = {(this.Quantity == null ? "null" : this.Quantity.ToString())}");
             toStringOutput.Add($"UnitPrice = {(this.UnitPrice == null ? "null" : this.UnitPrice.ToString())}");
-            toStringOutput.Add($"this.Taxable = {(this.Taxable == null ? "null" : this.Taxable.ToString())}");
-            toStringOutput.Add($"this.TaxCode = {this.TaxCode ?? "null"}");
-            toStringOutput.Add($"this.PeriodRangeStart = {this.PeriodRangeStart ?? "null"}");
-            toStringOutput.Add($"this.PeriodRangeEnd = {this.PeriodRangeEnd ?? "null"}");
+            toStringOutput.Add($"Taxable = {(this.Taxable == null ? "null" : this.Taxable.ToString())}");
+            toStringOutput.Add($"TaxCode = {this.TaxCode ?? "null"}");
+            toStringOutput.Add($"PeriodRangeStart = {this.PeriodRangeStart ?? "null"}");
+            toStringOutput.Add($"PeriodRangeEnd = {this.PeriodRangeEnd ?? "null"}");
             toStringOutput.Add($"ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
             toStringOutput.Add($"ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
             toStringOutput.Add($"ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
-            toStringOutput.Add($"this.Description = {this.Description ?? "null"}");
+            toStringOutput.Add($"Description = {this.Description ?? "null"}");
 
             base.ToString(toStringOutput);
         }

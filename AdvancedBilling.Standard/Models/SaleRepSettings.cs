@@ -136,13 +136,13 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.CustomerName = {this.CustomerName ?? "null"}");
-            toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
-            toStringOutput.Add($"this.SiteLink = {this.SiteLink ?? "null"}");
-            toStringOutput.Add($"this.SiteName = {this.SiteName ?? "null"}");
-            toStringOutput.Add($"this.SubscriptionMrr = {this.SubscriptionMrr ?? "null"}");
-            toStringOutput.Add($"this.SalesRepId = {(this.SalesRepId == null ? "null" : this.SalesRepId.ToString())}");
-            toStringOutput.Add($"this.SalesRepName = {this.SalesRepName ?? "null"}");
+            toStringOutput.Add($"CustomerName = {this.CustomerName ?? "null"}");
+            toStringOutput.Add($"SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
+            toStringOutput.Add($"SiteLink = {this.SiteLink ?? "null"}");
+            toStringOutput.Add($"SiteName = {this.SiteName ?? "null"}");
+            toStringOutput.Add($"SubscriptionMrr = {this.SubscriptionMrr ?? "null"}");
+            toStringOutput.Add($"SalesRepId = {(this.SalesRepId == null ? "null" : this.SalesRepId.ToString())}");
+            toStringOutput.Add($"SalesRepName = {this.SalesRepName ?? "null"}");
 
             base.ToString(toStringOutput);
         }

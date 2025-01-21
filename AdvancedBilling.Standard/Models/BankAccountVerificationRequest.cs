@@ -70,7 +70,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.BankAccountVerification = {(this.BankAccountVerification == null ? "null" : this.BankAccountVerification.ToString())}");
+            toStringOutput.Add($"BankAccountVerification = {(this.BankAccountVerification == null ? "null" : this.BankAccountVerification.ToString())}");
 
             base.ToString(toStringOutput);
         }

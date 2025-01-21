@@ -158,15 +158,15 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
-            toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
-            toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
-            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
-            toStringOutput.Add($"this.Mrr = {(this.Mrr == null ? "null" : this.Mrr.ToString())}");
-            toStringOutput.Add($"this.MrrMovements = {(this.MrrMovements == null ? "null" : $"[{string.Join(", ", this.MrrMovements)} ]")}");
-            toStringOutput.Add($"this.Quantity = {(this.Quantity == null ? "null" : this.Quantity.ToString())}");
-            toStringOutput.Add($"this.PrevQuantity = {(this.PrevQuantity == null ? "null" : this.PrevQuantity.ToString())}");
-            toStringOutput.Add($"this.Recurring = {(this.Recurring == null ? "null" : this.Recurring.ToString())}");
+            toStringOutput.Add($"ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
+            toStringOutput.Add($"ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
+            toStringOutput.Add($"PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
+            toStringOutput.Add($"Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"Mrr = {(this.Mrr == null ? "null" : this.Mrr.ToString())}");
+            toStringOutput.Add($"MrrMovements = {(this.MrrMovements == null ? "null" : $"[{string.Join(", ", this.MrrMovements)} ]")}");
+            toStringOutput.Add($"Quantity = {(this.Quantity == null ? "null" : this.Quantity.ToString())}");
+            toStringOutput.Add($"PrevQuantity = {(this.PrevQuantity == null ? "null" : this.PrevQuantity.ToString())}");
+            toStringOutput.Add($"Recurring = {(this.Recurring == null ? "null" : this.Recurring.ToString())}");
 
             base.ToString(toStringOutput);
         }

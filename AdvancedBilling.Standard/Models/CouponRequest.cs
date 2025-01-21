@@ -92,7 +92,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Coupon = {(this.Coupon == null ? "null" : this.Coupon.ToString())}");
+            toStringOutput.Add($"Coupon = {(this.Coupon == null ? "null" : this.Coupon.ToString())}");
             toStringOutput.Add($"RestrictedProducts = {(this.RestrictedProducts == null ? "null" : this.RestrictedProducts.ToString())}");
             toStringOutput.Add($"RestrictedComponents = {(this.RestrictedComponents == null ? "null" : this.RestrictedComponents.ToString())}");
 

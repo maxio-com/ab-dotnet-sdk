@@ -1203,36 +1203,36 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.FirstName = {this.FirstName ?? "null"}");
-            toStringOutput.Add($"this.LastName = {this.LastName ?? "null"}");
-            toStringOutput.Add($"this.Email = {this.Email ?? "null"}");
-            toStringOutput.Add($"this.CcEmails = {this.CcEmails ?? "null"}");
-            toStringOutput.Add($"this.Organization = {this.Organization ?? "null"}");
-            toStringOutput.Add($"this.Reference = {this.Reference ?? "null"}");
-            toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
-            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
-            toStringOutput.Add($"this.Address = {this.Address ?? "null"}");
-            toStringOutput.Add($"this.Address2 = {this.Address2 ?? "null"}");
-            toStringOutput.Add($"this.City = {this.City ?? "null"}");
-            toStringOutput.Add($"this.State = {this.State ?? "null"}");
-            toStringOutput.Add($"this.StateName = {this.StateName ?? "null"}");
-            toStringOutput.Add($"this.Zip = {this.Zip ?? "null"}");
-            toStringOutput.Add($"this.Country = {this.Country ?? "null"}");
-            toStringOutput.Add($"this.CountryName = {this.CountryName ?? "null"}");
-            toStringOutput.Add($"this.Phone = {this.Phone ?? "null"}");
-            toStringOutput.Add($"this.Verified = {(this.Verified == null ? "null" : this.Verified.ToString())}");
-            toStringOutput.Add($"this.PortalCustomerCreatedAt = {(this.PortalCustomerCreatedAt == null ? "null" : this.PortalCustomerCreatedAt.ToString())}");
-            toStringOutput.Add($"this.PortalInviteLastSentAt = {(this.PortalInviteLastSentAt == null ? "null" : this.PortalInviteLastSentAt.ToString())}");
-            toStringOutput.Add($"this.PortalInviteLastAcceptedAt = {(this.PortalInviteLastAcceptedAt == null ? "null" : this.PortalInviteLastAcceptedAt.ToString())}");
-            toStringOutput.Add($"this.TaxExempt = {(this.TaxExempt == null ? "null" : this.TaxExempt.ToString())}");
-            toStringOutput.Add($"this.VatNumber = {this.VatNumber ?? "null"}");
-            toStringOutput.Add($"this.ParentId = {(this.ParentId == null ? "null" : this.ParentId.ToString())}");
-            toStringOutput.Add($"this.Locale = {this.Locale ?? "null"}");
-            toStringOutput.Add($"this.DefaultSubscriptionGroupUid = {this.DefaultSubscriptionGroupUid ?? "null"}");
-            toStringOutput.Add($"this.SalesforceId = {this.SalesforceId ?? "null"}");
-            toStringOutput.Add($"this.TaxExemptReason = {this.TaxExemptReason ?? "null"}");
-            toStringOutput.Add($"this.DefaultAutoRenewalProfileId = {(this.DefaultAutoRenewalProfileId == null ? "null" : this.DefaultAutoRenewalProfileId.ToString())}");
+            toStringOutput.Add($"FirstName = {this.FirstName ?? "null"}");
+            toStringOutput.Add($"LastName = {this.LastName ?? "null"}");
+            toStringOutput.Add($"Email = {this.Email ?? "null"}");
+            toStringOutput.Add($"CcEmails = {this.CcEmails ?? "null"}");
+            toStringOutput.Add($"Organization = {this.Organization ?? "null"}");
+            toStringOutput.Add($"Reference = {this.Reference ?? "null"}");
+            toStringOutput.Add($"Id = {(this.Id == null ? "null" : this.Id.ToString())}");
+            toStringOutput.Add($"CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
+            toStringOutput.Add($"Address = {this.Address ?? "null"}");
+            toStringOutput.Add($"Address2 = {this.Address2 ?? "null"}");
+            toStringOutput.Add($"City = {this.City ?? "null"}");
+            toStringOutput.Add($"State = {this.State ?? "null"}");
+            toStringOutput.Add($"StateName = {this.StateName ?? "null"}");
+            toStringOutput.Add($"Zip = {this.Zip ?? "null"}");
+            toStringOutput.Add($"Country = {this.Country ?? "null"}");
+            toStringOutput.Add($"CountryName = {this.CountryName ?? "null"}");
+            toStringOutput.Add($"Phone = {this.Phone ?? "null"}");
+            toStringOutput.Add($"Verified = {(this.Verified == null ? "null" : this.Verified.ToString())}");
+            toStringOutput.Add($"PortalCustomerCreatedAt = {(this.PortalCustomerCreatedAt == null ? "null" : this.PortalCustomerCreatedAt.ToString())}");
+            toStringOutput.Add($"PortalInviteLastSentAt = {(this.PortalInviteLastSentAt == null ? "null" : this.PortalInviteLastSentAt.ToString())}");
+            toStringOutput.Add($"PortalInviteLastAcceptedAt = {(this.PortalInviteLastAcceptedAt == null ? "null" : this.PortalInviteLastAcceptedAt.ToString())}");
+            toStringOutput.Add($"TaxExempt = {(this.TaxExempt == null ? "null" : this.TaxExempt.ToString())}");
+            toStringOutput.Add($"VatNumber = {this.VatNumber ?? "null"}");
+            toStringOutput.Add($"ParentId = {(this.ParentId == null ? "null" : this.ParentId.ToString())}");
+            toStringOutput.Add($"Locale = {this.Locale ?? "null"}");
+            toStringOutput.Add($"DefaultSubscriptionGroupUid = {this.DefaultSubscriptionGroupUid ?? "null"}");
+            toStringOutput.Add($"SalesforceId = {this.SalesforceId ?? "null"}");
+            toStringOutput.Add($"TaxExemptReason = {this.TaxExemptReason ?? "null"}");
+            toStringOutput.Add($"DefaultAutoRenewalProfileId = {(this.DefaultAutoRenewalProfileId == null ? "null" : this.DefaultAutoRenewalProfileId.ToString())}");
 
             base.ToString(toStringOutput);
         }

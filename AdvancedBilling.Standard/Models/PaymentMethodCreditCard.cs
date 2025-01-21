@@ -159,11 +159,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.CardBrand = {this.CardBrand ?? "null"}");
-            toStringOutput.Add($"this.CardExpiration = {this.CardExpiration ?? "null"}");
-            toStringOutput.Add($"this.LastFour = {this.LastFour ?? "null"}");
-            toStringOutput.Add($"this.MaskedCardNumber = {this.MaskedCardNumber ?? "null"}");
-            toStringOutput.Add($"this.Type = {this.Type}");
+            toStringOutput.Add($"CardBrand = {this.CardBrand ?? "null"}");
+            toStringOutput.Add($"CardExpiration = {this.CardExpiration ?? "null"}");
+            toStringOutput.Add($"LastFour = {this.LastFour ?? "null"}");
+            toStringOutput.Add($"MaskedCardNumber = {this.MaskedCardNumber ?? "null"}");
+            toStringOutput.Add($"Type = {this.Type}");
 
             base.ToString(toStringOutput);
         }

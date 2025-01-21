@@ -114,11 +114,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.OwnerId = {(this.OwnerId == null ? "null" : this.OwnerId.ToString())}");
-            toStringOutput.Add($"this.OwnerType = {(this.OwnerType == null ? "null" : this.OwnerType.ToString())}");
-            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
-            toStringOutput.Add($"this.MValue = {this.MValue ?? "null"}");
-            toStringOutput.Add($"this.MetadatumId = {(this.MetadatumId == null ? "null" : this.MetadatumId.ToString())}");
+            toStringOutput.Add($"OwnerId = {(this.OwnerId == null ? "null" : this.OwnerId.ToString())}");
+            toStringOutput.Add($"OwnerType = {(this.OwnerType == null ? "null" : this.OwnerType.ToString())}");
+            toStringOutput.Add($"Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"MValue = {this.MValue ?? "null"}");
+            toStringOutput.Add($"MetadatumId = {(this.MetadatumId == null ? "null" : this.MetadatumId.ToString())}");
 
             base.ToString(toStringOutput);
         }

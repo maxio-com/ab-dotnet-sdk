@@ -79,8 +79,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.PlanAmountInCents = {this.PlanAmountInCents}");
-            toStringOutput.Add($"this.UsageAmountInCents = {this.UsageAmountInCents}");
+            toStringOutput.Add($"PlanAmountInCents = {this.PlanAmountInCents}");
+            toStringOutput.Add($"UsageAmountInCents = {this.UsageAmountInCents}");
 
             base.ToString(toStringOutput);
         }

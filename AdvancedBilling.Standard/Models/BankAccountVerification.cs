@@ -81,8 +81,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Deposit1InCents = {(this.Deposit1InCents == null ? "null" : this.Deposit1InCents.ToString())}");
-            toStringOutput.Add($"this.Deposit2InCents = {(this.Deposit2InCents == null ? "null" : this.Deposit2InCents.ToString())}");
+            toStringOutput.Add($"Deposit1InCents = {(this.Deposit1InCents == null ? "null" : this.Deposit1InCents.ToString())}");
+            toStringOutput.Add($"Deposit2InCents = {(this.Deposit2InCents == null ? "null" : this.Deposit2InCents.ToString())}");
 
             base.ToString(toStringOutput);
         }

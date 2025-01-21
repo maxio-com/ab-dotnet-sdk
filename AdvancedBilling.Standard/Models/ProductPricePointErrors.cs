@@ -125,12 +125,12 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.PricePoint = {this.PricePoint ?? "null"}");
-            toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : $"[{string.Join(", ", this.Interval)} ]")}");
-            toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : $"[{string.Join(", ", this.IntervalUnit)} ]")}");
-            toStringOutput.Add($"this.Name = {(this.Name == null ? "null" : $"[{string.Join(", ", this.Name)} ]")}");
-            toStringOutput.Add($"this.Price = {(this.Price == null ? "null" : $"[{string.Join(", ", this.Price)} ]")}");
-            toStringOutput.Add($"this.PriceInCents = {(this.PriceInCents == null ? "null" : $"[{string.Join(", ", this.PriceInCents)} ]")}");
+            toStringOutput.Add($"PricePoint = {this.PricePoint ?? "null"}");
+            toStringOutput.Add($"Interval = {(this.Interval == null ? "null" : $"[{string.Join(", ", this.Interval)} ]")}");
+            toStringOutput.Add($"IntervalUnit = {(this.IntervalUnit == null ? "null" : $"[{string.Join(", ", this.IntervalUnit)} ]")}");
+            toStringOutput.Add($"Name = {(this.Name == null ? "null" : $"[{string.Join(", ", this.Name)} ]")}");
+            toStringOutput.Add($"Price = {(this.Price == null ? "null" : $"[{string.Join(", ", this.Price)} ]")}");
+            toStringOutput.Add($"PriceInCents = {(this.PriceInCents == null ? "null" : $"[{string.Join(", ", this.PriceInCents)} ]")}");
 
             base.ToString(toStringOutput);
         }

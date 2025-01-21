@@ -303,18 +303,18 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.TransactionTime = {(this.TransactionTime == null ? "null" : this.TransactionTime.ToString())}");
-            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
-            toStringOutput.Add($"this.OriginalAmount = {this.OriginalAmount ?? "null"}");
-            toStringOutput.Add($"this.AppliedAmount = {this.AppliedAmount ?? "null"}");
-            toStringOutput.Add($"this.PaymentMethod = {(this.PaymentMethod == null ? "null" : this.PaymentMethod.ToString())}");
-            toStringOutput.Add($"this.TransactionId = {(this.TransactionId == null ? "null" : this.TransactionId.ToString())}");
-            toStringOutput.Add($"this.Prepayment = {(this.Prepayment == null ? "null" : this.Prepayment.ToString())}");
-            toStringOutput.Add($"this.GatewayHandle = {this.GatewayHandle ?? "null"}");
-            toStringOutput.Add($"this.GatewayUsed = {this.GatewayUsed ?? "null"}");
-            toStringOutput.Add($"this.GatewayTransactionId = {this.GatewayTransactionId ?? "null"}");
-            toStringOutput.Add($"this.ReceivedOn = {(this.ReceivedOn == null ? "null" : this.ReceivedOn.ToString())}");
-            toStringOutput.Add($"this.Uid = {this.Uid ?? "null"}");
+            toStringOutput.Add($"TransactionTime = {(this.TransactionTime == null ? "null" : this.TransactionTime.ToString())}");
+            toStringOutput.Add($"Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"OriginalAmount = {this.OriginalAmount ?? "null"}");
+            toStringOutput.Add($"AppliedAmount = {this.AppliedAmount ?? "null"}");
+            toStringOutput.Add($"PaymentMethod = {(this.PaymentMethod == null ? "null" : this.PaymentMethod.ToString())}");
+            toStringOutput.Add($"TransactionId = {(this.TransactionId == null ? "null" : this.TransactionId.ToString())}");
+            toStringOutput.Add($"Prepayment = {(this.Prepayment == null ? "null" : this.Prepayment.ToString())}");
+            toStringOutput.Add($"GatewayHandle = {this.GatewayHandle ?? "null"}");
+            toStringOutput.Add($"GatewayUsed = {this.GatewayUsed ?? "null"}");
+            toStringOutput.Add($"GatewayTransactionId = {this.GatewayTransactionId ?? "null"}");
+            toStringOutput.Add($"ReceivedOn = {(this.ReceivedOn == null ? "null" : this.ReceivedOn.ToString())}");
+            toStringOutput.Add($"Uid = {this.Uid ?? "null"}");
 
             base.ToString(toStringOutput);
         }

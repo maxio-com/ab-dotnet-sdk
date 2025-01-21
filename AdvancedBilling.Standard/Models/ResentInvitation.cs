@@ -127,12 +127,12 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.LastSentAt = {this.LastSentAt ?? "null"}");
-            toStringOutput.Add($"this.LastAcceptedAt = {this.LastAcceptedAt ?? "null"}");
-            toStringOutput.Add($"this.SendInviteLinkText = {this.SendInviteLinkText ?? "null"}");
-            toStringOutput.Add($"this.UninvitedCount = {(this.UninvitedCount == null ? "null" : this.UninvitedCount.ToString())}");
-            toStringOutput.Add($"this.LastInviteSentAt = {(this.LastInviteSentAt == null ? "null" : this.LastInviteSentAt.ToString())}");
-            toStringOutput.Add($"this.LastInviteAcceptedAt = {(this.LastInviteAcceptedAt == null ? "null" : this.LastInviteAcceptedAt.ToString())}");
+            toStringOutput.Add($"LastSentAt = {this.LastSentAt ?? "null"}");
+            toStringOutput.Add($"LastAcceptedAt = {this.LastAcceptedAt ?? "null"}");
+            toStringOutput.Add($"SendInviteLinkText = {this.SendInviteLinkText ?? "null"}");
+            toStringOutput.Add($"UninvitedCount = {(this.UninvitedCount == null ? "null" : this.UninvitedCount.ToString())}");
+            toStringOutput.Add($"LastInviteSentAt = {(this.LastInviteSentAt == null ? "null" : this.LastInviteSentAt.ToString())}");
+            toStringOutput.Add($"LastInviteAcceptedAt = {(this.LastInviteAcceptedAt == null ? "null" : this.LastInviteAcceptedAt.ToString())}");
 
             base.ToString(toStringOutput);
         }

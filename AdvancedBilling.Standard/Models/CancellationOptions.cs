@@ -81,8 +81,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.CancellationMessage = {this.CancellationMessage ?? "null"}");
-            toStringOutput.Add($"this.ReasonCode = {this.ReasonCode ?? "null"}");
+            toStringOutput.Add($"CancellationMessage = {this.CancellationMessage ?? "null"}");
+            toStringOutput.Add($"ReasonCode = {this.ReasonCode ?? "null"}");
 
             base.ToString(toStringOutput);
         }

@@ -92,9 +92,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.RecipientEmails = {(this.RecipientEmails == null ? "null" : $"[{string.Join(", ", this.RecipientEmails)} ]")}");
-            toStringOutput.Add($"this.CcRecipientEmails = {(this.CcRecipientEmails == null ? "null" : $"[{string.Join(", ", this.CcRecipientEmails)} ]")}");
-            toStringOutput.Add($"this.BccRecipientEmails = {(this.BccRecipientEmails == null ? "null" : $"[{string.Join(", ", this.BccRecipientEmails)} ]")}");
+            toStringOutput.Add($"RecipientEmails = {(this.RecipientEmails == null ? "null" : $"[{string.Join(", ", this.RecipientEmails)} ]")}");
+            toStringOutput.Add($"CcRecipientEmails = {(this.CcRecipientEmails == null ? "null" : $"[{string.Join(", ", this.CcRecipientEmails)} ]")}");
+            toStringOutput.Add($"BccRecipientEmails = {(this.BccRecipientEmails == null ? "null" : $"[{string.Join(", ", this.BccRecipientEmails)} ]")}");
 
             base.ToString(toStringOutput);
         }

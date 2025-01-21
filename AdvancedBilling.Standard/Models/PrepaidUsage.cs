@@ -178,16 +178,16 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.PreviousUnitBalance = {this.PreviousUnitBalance ?? "null"}");
-            toStringOutput.Add($"this.PreviousOverageUnitBalance = {this.PreviousOverageUnitBalance ?? "null"}");
-            toStringOutput.Add($"this.NewUnitBalance = {this.NewUnitBalance}");
-            toStringOutput.Add($"this.NewOverageUnitBalance = {this.NewOverageUnitBalance}");
-            toStringOutput.Add($"this.UsageQuantity = {this.UsageQuantity}");
-            toStringOutput.Add($"this.OverageUsageQuantity = {this.OverageUsageQuantity}");
-            toStringOutput.Add($"this.ComponentId = {this.ComponentId}");
-            toStringOutput.Add($"this.ComponentHandle = {this.ComponentHandle ?? "null"}");
-            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
-            toStringOutput.Add($"this.AllocationDetails = {(this.AllocationDetails == null ? "null" : $"[{string.Join(", ", this.AllocationDetails)} ]")}");
+            toStringOutput.Add($"PreviousUnitBalance = {this.PreviousUnitBalance ?? "null"}");
+            toStringOutput.Add($"PreviousOverageUnitBalance = {this.PreviousOverageUnitBalance ?? "null"}");
+            toStringOutput.Add($"NewUnitBalance = {this.NewUnitBalance}");
+            toStringOutput.Add($"NewOverageUnitBalance = {this.NewOverageUnitBalance}");
+            toStringOutput.Add($"UsageQuantity = {this.UsageQuantity}");
+            toStringOutput.Add($"OverageUsageQuantity = {this.OverageUsageQuantity}");
+            toStringOutput.Add($"ComponentId = {this.ComponentId}");
+            toStringOutput.Add($"ComponentHandle = {this.ComponentHandle ?? "null"}");
+            toStringOutput.Add($"Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"AllocationDetails = {(this.AllocationDetails == null ? "null" : $"[{string.Join(", ", this.AllocationDetails)} ]")}");
 
             base.ToString(toStringOutput);
         }

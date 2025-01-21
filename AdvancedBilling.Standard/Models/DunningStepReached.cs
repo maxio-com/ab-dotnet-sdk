@@ -95,9 +95,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Dunner = {(this.Dunner == null ? "null" : this.Dunner.ToString())}");
-            toStringOutput.Add($"this.CurrentStep = {(this.CurrentStep == null ? "null" : this.CurrentStep.ToString())}");
-            toStringOutput.Add($"this.NextStep = {(this.NextStep == null ? "null" : this.NextStep.ToString())}");
+            toStringOutput.Add($"Dunner = {(this.Dunner == null ? "null" : this.Dunner.ToString())}");
+            toStringOutput.Add($"CurrentStep = {(this.CurrentStep == null ? "null" : this.CurrentStep.ToString())}");
+            toStringOutput.Add($"NextStep = {(this.NextStep == null ? "null" : this.NextStep.ToString())}");
 
             base.ToString(toStringOutput);
         }

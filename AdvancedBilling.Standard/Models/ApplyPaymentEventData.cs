@@ -254,17 +254,17 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ConsolidationLevel = {this.ConsolidationLevel}");
-            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
-            toStringOutput.Add($"this.OriginalAmount = {this.OriginalAmount ?? "null"}");
-            toStringOutput.Add($"this.AppliedAmount = {this.AppliedAmount ?? "null"}");
-            toStringOutput.Add($"this.TransactionTime = {this.TransactionTime}");
+            toStringOutput.Add($"ConsolidationLevel = {this.ConsolidationLevel}");
+            toStringOutput.Add($"Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"OriginalAmount = {this.OriginalAmount ?? "null"}");
+            toStringOutput.Add($"AppliedAmount = {this.AppliedAmount ?? "null"}");
+            toStringOutput.Add($"TransactionTime = {this.TransactionTime}");
             toStringOutput.Add($"PaymentMethod = {(this.PaymentMethod == null ? "null" : this.PaymentMethod.ToString())}");
-            toStringOutput.Add($"this.TransactionId = {(this.TransactionId == null ? "null" : this.TransactionId.ToString())}");
-            toStringOutput.Add($"this.ParentInvoiceNumber = {(this.ParentInvoiceNumber == null ? "null" : this.ParentInvoiceNumber.ToString())}");
-            toStringOutput.Add($"this.RemainingPrepaymentAmount = {this.RemainingPrepaymentAmount ?? "null"}");
-            toStringOutput.Add($"this.Prepayment = {(this.Prepayment == null ? "null" : this.Prepayment.ToString())}");
-            toStringOutput.Add($"this.External = {(this.External == null ? "null" : this.External.ToString())}");
+            toStringOutput.Add($"TransactionId = {(this.TransactionId == null ? "null" : this.TransactionId.ToString())}");
+            toStringOutput.Add($"ParentInvoiceNumber = {(this.ParentInvoiceNumber == null ? "null" : this.ParentInvoiceNumber.ToString())}");
+            toStringOutput.Add($"RemainingPrepaymentAmount = {this.RemainingPrepaymentAmount ?? "null"}");
+            toStringOutput.Add($"Prepayment = {(this.Prepayment == null ? "null" : this.Prepayment.ToString())}");
+            toStringOutput.Add($"External = {(this.External == null ? "null" : this.External.ToString())}");
 
             base.ToString(toStringOutput);
         }

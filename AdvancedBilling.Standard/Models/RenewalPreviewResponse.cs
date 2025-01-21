@@ -70,7 +70,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.RenewalPreview = {(this.RenewalPreview == null ? "null" : this.RenewalPreview.ToString())}");
+            toStringOutput.Add($"RenewalPreview = {(this.RenewalPreview == null ? "null" : this.RenewalPreview.ToString())}");
 
             base.ToString(toStringOutput);
         }

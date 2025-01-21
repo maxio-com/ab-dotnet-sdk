@@ -117,11 +117,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
-            toStringOutput.Add($"this.Filter = {(this.Filter == null ? "null" : this.Filter.ToString())}");
-            toStringOutput.Add($"this.Include = {(this.Include == null ? "null" : this.Include.ToString())}");
-            toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
-            toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
+            toStringOutput.Add($"Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
+            toStringOutput.Add($"Filter = {(this.Filter == null ? "null" : this.Filter.ToString())}");
+            toStringOutput.Add($"Include = {(this.Include == null ? "null" : this.Include.ToString())}");
+            toStringOutput.Add($"Page = {(this.Page == null ? "null" : this.Page.ToString())}");
+            toStringOutput.Add($"PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
 
             base.ToString(toStringOutput);
         }

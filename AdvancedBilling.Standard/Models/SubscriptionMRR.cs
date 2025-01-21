@@ -90,9 +90,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.SubscriptionId = {this.SubscriptionId}");
-            toStringOutput.Add($"this.MrrAmountInCents = {this.MrrAmountInCents}");
-            toStringOutput.Add($"this.Breakouts = {(this.Breakouts == null ? "null" : this.Breakouts.ToString())}");
+            toStringOutput.Add($"SubscriptionId = {this.SubscriptionId}");
+            toStringOutput.Add($"MrrAmountInCents = {this.MrrAmountInCents}");
+            toStringOutput.Add($"Breakouts = {(this.Breakouts == null ? "null" : this.Breakouts.ToString())}");
 
             base.ToString(toStringOutput);
         }

@@ -160,15 +160,15 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ApplyCredit = {this.ApplyCredit}");
-            toStringOutput.Add($"this.ConsolidationLevel = {(this.ConsolidationLevel == null ? "null" : this.ConsolidationLevel.ToString())}");
-            toStringOutput.Add($"this.CreditNoteAttributes = {(this.CreditNoteAttributes == null ? "null" : this.CreditNoteAttributes.ToString())}");
-            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
-            toStringOutput.Add($"this.OriginalAmount = {this.OriginalAmount ?? "null"}");
-            toStringOutput.Add($"this.PaymentId = {this.PaymentId}");
-            toStringOutput.Add($"this.RefundAmount = {this.RefundAmount ?? "null"}");
-            toStringOutput.Add($"this.RefundId = {this.RefundId}");
-            toStringOutput.Add($"this.TransactionTime = {this.TransactionTime}");
+            toStringOutput.Add($"ApplyCredit = {this.ApplyCredit}");
+            toStringOutput.Add($"ConsolidationLevel = {(this.ConsolidationLevel == null ? "null" : this.ConsolidationLevel.ToString())}");
+            toStringOutput.Add($"CreditNoteAttributes = {(this.CreditNoteAttributes == null ? "null" : this.CreditNoteAttributes.ToString())}");
+            toStringOutput.Add($"Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"OriginalAmount = {this.OriginalAmount ?? "null"}");
+            toStringOutput.Add($"PaymentId = {this.PaymentId}");
+            toStringOutput.Add($"RefundAmount = {this.RefundAmount ?? "null"}");
+            toStringOutput.Add($"RefundId = {this.RefundId}");
+            toStringOutput.Add($"TransactionTime = {this.TransactionTime}");
 
             base.ToString(toStringOutput);
         }

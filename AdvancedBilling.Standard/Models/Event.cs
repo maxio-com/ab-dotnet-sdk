@@ -168,12 +168,12 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Id = {this.Id}");
-            toStringOutput.Add($"this.Key = {this.Key}");
-            toStringOutput.Add($"this.Message = {this.Message ?? "null"}");
-            toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
-            toStringOutput.Add($"this.CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
-            toStringOutput.Add($"this.CreatedAt = {this.CreatedAt}");
+            toStringOutput.Add($"Id = {this.Id}");
+            toStringOutput.Add($"Key = {this.Key}");
+            toStringOutput.Add($"Message = {this.Message ?? "null"}");
+            toStringOutput.Add($"SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
+            toStringOutput.Add($"CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
+            toStringOutput.Add($"CreatedAt = {this.CreatedAt}");
             toStringOutput.Add($"EventSpecificData = {(this.EventSpecificData == null ? "null" : this.EventSpecificData.ToString())}");
 
             base.ToString(toStringOutput);

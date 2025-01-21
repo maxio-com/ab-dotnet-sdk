@@ -131,12 +131,12 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.PreviousUnitBalance = {this.PreviousUnitBalance ?? "null"}");
-            toStringOutput.Add($"this.NewUnitBalance = {this.NewUnitBalance}");
-            toStringOutput.Add($"this.UsageQuantity = {this.UsageQuantity}");
-            toStringOutput.Add($"this.ComponentId = {this.ComponentId}");
-            toStringOutput.Add($"this.ComponentHandle = {this.ComponentHandle ?? "null"}");
-            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"PreviousUnitBalance = {this.PreviousUnitBalance ?? "null"}");
+            toStringOutput.Add($"NewUnitBalance = {this.NewUnitBalance}");
+            toStringOutput.Add($"UsageQuantity = {this.UsageQuantity}");
+            toStringOutput.Add($"ComponentId = {this.ComponentId}");
+            toStringOutput.Add($"ComponentHandle = {this.ComponentHandle ?? "null"}");
+            toStringOutput.Add($"Memo = {this.Memo ?? "null"}");
 
             base.ToString(toStringOutput);
         }

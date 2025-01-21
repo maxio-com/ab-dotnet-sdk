@@ -251,20 +251,20 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
-            toStringOutput.Add($"this.UnitName = {this.UnitName ?? "null"}");
-            toStringOutput.Add($"this.Description = {this.Description ?? "null"}");
-            toStringOutput.Add($"this.Handle = {this.Handle ?? "null"}");
-            toStringOutput.Add($"this.Taxable = {(this.Taxable == null ? "null" : this.Taxable.ToString())}");
-            toStringOutput.Add($"this.PricingScheme = {this.PricingScheme}");
-            toStringOutput.Add($"this.Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
-            toStringOutput.Add($"this.PricePoints = {(this.PricePoints == null ? "null" : $"[{string.Join(", ", this.PricePoints)} ]")}");
+            toStringOutput.Add($"Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"UnitName = {this.UnitName ?? "null"}");
+            toStringOutput.Add($"Description = {this.Description ?? "null"}");
+            toStringOutput.Add($"Handle = {this.Handle ?? "null"}");
+            toStringOutput.Add($"Taxable = {(this.Taxable == null ? "null" : this.Taxable.ToString())}");
+            toStringOutput.Add($"PricingScheme = {this.PricingScheme}");
+            toStringOutput.Add($"Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
+            toStringOutput.Add($"PricePoints = {(this.PricePoints == null ? "null" : $"[{string.Join(", ", this.PricePoints)} ]")}");
             toStringOutput.Add($"UnitPrice = {(this.UnitPrice == null ? "null" : this.UnitPrice.ToString())}");
-            toStringOutput.Add($"this.TaxCode = {this.TaxCode ?? "null"}");
-            toStringOutput.Add($"this.HideDateRangeOnInvoice = {(this.HideDateRangeOnInvoice == null ? "null" : this.HideDateRangeOnInvoice.ToString())}");
-            toStringOutput.Add($"this.EventBasedBillingMetricId = {this.EventBasedBillingMetricId}");
-            toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
-            toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
+            toStringOutput.Add($"TaxCode = {this.TaxCode ?? "null"}");
+            toStringOutput.Add($"HideDateRangeOnInvoice = {(this.HideDateRangeOnInvoice == null ? "null" : this.HideDateRangeOnInvoice.ToString())}");
+            toStringOutput.Add($"EventBasedBillingMetricId = {this.EventBasedBillingMetricId}");
+            toStringOutput.Add($"Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
+            toStringOutput.Add($"IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
 
             base.ToString(toStringOutput);
         }

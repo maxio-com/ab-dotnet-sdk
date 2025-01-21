@@ -70,7 +70,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ReactivationCharge = {(this.ReactivationCharge == null ? "null" : this.ReactivationCharge.ToString())}");
+            toStringOutput.Add($"ReactivationCharge = {(this.ReactivationCharge == null ? "null" : this.ReactivationCharge.ToString())}");
 
             base.ToString(toStringOutput);
         }

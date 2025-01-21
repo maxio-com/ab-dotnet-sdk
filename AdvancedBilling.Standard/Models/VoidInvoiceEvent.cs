@@ -117,11 +117,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Id = {this.Id}");
-            toStringOutput.Add($"this.Timestamp = {this.Timestamp}");
-            toStringOutput.Add($"this.Invoice = {(this.Invoice == null ? "null" : this.Invoice.ToString())}");
-            toStringOutput.Add($"this.EventType = {this.EventType}");
-            toStringOutput.Add($"this.EventData = {(this.EventData == null ? "null" : this.EventData.ToString())}");
+            toStringOutput.Add($"Id = {this.Id}");
+            toStringOutput.Add($"Timestamp = {this.Timestamp}");
+            toStringOutput.Add($"Invoice = {(this.Invoice == null ? "null" : this.Invoice.ToString())}");
+            toStringOutput.Add($"EventType = {this.EventType}");
+            toStringOutput.Add($"EventData = {(this.EventData == null ? "null" : this.EventData.ToString())}");
 
             base.ToString(toStringOutput);
         }

@@ -38,5 +38,23 @@ namespace AdvancedBilling.Standard.Exceptions
         /// </summary>
         [JsonProperty("subscription")]
         public List<string> Subscription { get; set; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            var toStringOutput = new List<string>();
+            this.ToString(toStringOutput);
+            return $"SubscriptionRemoveCouponErrorsException : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// ToString overload.
+        /// </summary>
+        /// <param name="toStringOutput">List of strings.</param>
+        protected new void ToString(List<string> toStringOutput)
+        {
+            base.ToString(toStringOutput);
+            toStringOutput.Add($"Subscription = {(this.Subscription == null ? "null" : $"[{string.Join(", ", this.Subscription)} ]")}");
+        }
     }
 }

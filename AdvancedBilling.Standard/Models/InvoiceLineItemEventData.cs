@@ -563,26 +563,26 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Uid = {this.Uid ?? "null"}");
-            toStringOutput.Add($"this.Title = {this.Title ?? "null"}");
-            toStringOutput.Add($"this.Description = {this.Description ?? "null"}");
-            toStringOutput.Add($"this.Quantity = {(this.Quantity == null ? "null" : this.Quantity.ToString())}");
-            toStringOutput.Add($"this.QuantityDelta = {(this.QuantityDelta == null ? "null" : this.QuantityDelta.ToString())}");
-            toStringOutput.Add($"this.UnitPrice = {this.UnitPrice ?? "null"}");
-            toStringOutput.Add($"this.PeriodRangeStart = {this.PeriodRangeStart ?? "null"}");
-            toStringOutput.Add($"this.PeriodRangeEnd = {this.PeriodRangeEnd ?? "null"}");
-            toStringOutput.Add($"this.Amount = {this.Amount ?? "null"}");
-            toStringOutput.Add($"this.LineReferences = {this.LineReferences ?? "null"}");
-            toStringOutput.Add($"this.PricingDetailsIndex = {(this.PricingDetailsIndex == null ? "null" : this.PricingDetailsIndex.ToString())}");
-            toStringOutput.Add($"this.PricingDetails = {(this.PricingDetails == null ? "null" : $"[{string.Join(", ", this.PricingDetails)} ]")}");
-            toStringOutput.Add($"this.TaxCode = {this.TaxCode ?? "null"}");
-            toStringOutput.Add($"this.TaxAmount = {this.TaxAmount ?? "null"}");
-            toStringOutput.Add($"this.ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
-            toStringOutput.Add($"this.ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
-            toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
-            toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
-            toStringOutput.Add($"this.BillingScheduleItemId = {(this.BillingScheduleItemId == null ? "null" : this.BillingScheduleItemId.ToString())}");
-            toStringOutput.Add($"this.CustomItem = {(this.CustomItem == null ? "null" : this.CustomItem.ToString())}");
+            toStringOutput.Add($"Uid = {this.Uid ?? "null"}");
+            toStringOutput.Add($"Title = {this.Title ?? "null"}");
+            toStringOutput.Add($"Description = {this.Description ?? "null"}");
+            toStringOutput.Add($"Quantity = {(this.Quantity == null ? "null" : this.Quantity.ToString())}");
+            toStringOutput.Add($"QuantityDelta = {(this.QuantityDelta == null ? "null" : this.QuantityDelta.ToString())}");
+            toStringOutput.Add($"UnitPrice = {this.UnitPrice ?? "null"}");
+            toStringOutput.Add($"PeriodRangeStart = {this.PeriodRangeStart ?? "null"}");
+            toStringOutput.Add($"PeriodRangeEnd = {this.PeriodRangeEnd ?? "null"}");
+            toStringOutput.Add($"Amount = {this.Amount ?? "null"}");
+            toStringOutput.Add($"LineReferences = {this.LineReferences ?? "null"}");
+            toStringOutput.Add($"PricingDetailsIndex = {(this.PricingDetailsIndex == null ? "null" : this.PricingDetailsIndex.ToString())}");
+            toStringOutput.Add($"PricingDetails = {(this.PricingDetails == null ? "null" : $"[{string.Join(", ", this.PricingDetails)} ]")}");
+            toStringOutput.Add($"TaxCode = {this.TaxCode ?? "null"}");
+            toStringOutput.Add($"TaxAmount = {this.TaxAmount ?? "null"}");
+            toStringOutput.Add($"ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
+            toStringOutput.Add($"ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
+            toStringOutput.Add($"PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
+            toStringOutput.Add($"ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
+            toStringOutput.Add($"BillingScheduleItemId = {(this.BillingScheduleItemId == null ? "null" : this.BillingScheduleItemId.ToString())}");
+            toStringOutput.Add($"CustomItem = {(this.CustomItem == null ? "null" : this.CustomItem.ToString())}");
 
             base.ToString(toStringOutput);
         }

@@ -431,14 +431,14 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Street = {this.Street ?? "null"}");
-            toStringOutput.Add($"this.Line2 = {this.Line2 ?? "null"}");
-            toStringOutput.Add($"this.City = {this.City ?? "null"}");
-            toStringOutput.Add($"this.State = {this.State ?? "null"}");
-            toStringOutput.Add($"this.Zip = {this.Zip ?? "null"}");
-            toStringOutput.Add($"this.Country = {this.Country ?? "null"}");
-            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
-            toStringOutput.Add($"this.Phone = {this.Phone ?? "null"}");
+            toStringOutput.Add($"Street = {this.Street ?? "null"}");
+            toStringOutput.Add($"Line2 = {this.Line2 ?? "null"}");
+            toStringOutput.Add($"City = {this.City ?? "null"}");
+            toStringOutput.Add($"State = {this.State ?? "null"}");
+            toStringOutput.Add($"Zip = {this.Zip ?? "null"}");
+            toStringOutput.Add($"Country = {this.Country ?? "null"}");
+            toStringOutput.Add($"Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"Phone = {this.Phone ?? "null"}");
 
             base.ToString(toStringOutput);
         }

@@ -278,16 +278,16 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.Reference = {this.Reference ?? "null"}");
-            toStringOutput.Add($"this.ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
-            toStringOutput.Add($"this.ProductHandle = {this.ProductHandle ?? "null"}");
-            toStringOutput.Add($"this.ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
-            toStringOutput.Add($"this.ProductPricePointHandle = {this.ProductPricePointHandle ?? "null"}");
-            toStringOutput.Add($"this.Currency = {this.Currency ?? "null"}");
-            toStringOutput.Add($"this.CouponCode = {this.CouponCode ?? "null"}");
-            toStringOutput.Add($"this.TotalRevenueInCents = {(this.TotalRevenueInCents == null ? "null" : this.TotalRevenueInCents.ToString())}");
-            toStringOutput.Add($"this.BalanceInCents = {(this.BalanceInCents == null ? "null" : this.BalanceInCents.ToString())}");
+            toStringOutput.Add($"Id = {(this.Id == null ? "null" : this.Id.ToString())}");
+            toStringOutput.Add($"Reference = {this.Reference ?? "null"}");
+            toStringOutput.Add($"ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
+            toStringOutput.Add($"ProductHandle = {this.ProductHandle ?? "null"}");
+            toStringOutput.Add($"ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
+            toStringOutput.Add($"ProductPricePointHandle = {this.ProductPricePointHandle ?? "null"}");
+            toStringOutput.Add($"Currency = {this.Currency ?? "null"}");
+            toStringOutput.Add($"CouponCode = {this.CouponCode ?? "null"}");
+            toStringOutput.Add($"TotalRevenueInCents = {(this.TotalRevenueInCents == null ? "null" : this.TotalRevenueInCents.ToString())}");
+            toStringOutput.Add($"BalanceInCents = {(this.BalanceInCents == null ? "null" : this.BalanceInCents.ToString())}");
 
             base.ToString(toStringOutput);
         }

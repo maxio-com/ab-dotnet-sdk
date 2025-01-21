@@ -215,20 +215,20 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
-            toStringOutput.Add($"this.Code = {this.Code ?? "null"}");
-            toStringOutput.Add($"this.Description = {this.Description ?? "null"}");
+            toStringOutput.Add($"Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"Code = {this.Code ?? "null"}");
+            toStringOutput.Add($"Description = {this.Description ?? "null"}");
             toStringOutput.Add($"Percentage = {(this.Percentage == null ? "null" : this.Percentage.ToString())}");
-            toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
-            toStringOutput.Add($"this.AllowNegativeBalance = {(this.AllowNegativeBalance == null ? "null" : this.AllowNegativeBalance.ToString())}");
-            toStringOutput.Add($"this.Recurring = {(this.Recurring == null ? "null" : this.Recurring.ToString())}");
-            toStringOutput.Add($"this.EndDate = {(this.EndDate == null ? "null" : this.EndDate.ToString())}");
-            toStringOutput.Add($"this.ProductFamilyId = {this.ProductFamilyId ?? "null"}");
-            toStringOutput.Add($"this.Stackable = {(this.Stackable == null ? "null" : this.Stackable.ToString())}");
-            toStringOutput.Add($"this.CompoundingStrategy = {(this.CompoundingStrategy == null ? "null" : this.CompoundingStrategy.ToString())}");
-            toStringOutput.Add($"this.ExcludeMidPeriodAllocations = {(this.ExcludeMidPeriodAllocations == null ? "null" : this.ExcludeMidPeriodAllocations.ToString())}");
-            toStringOutput.Add($"this.ApplyOnCancelAtEndOfPeriod = {(this.ApplyOnCancelAtEndOfPeriod == null ? "null" : this.ApplyOnCancelAtEndOfPeriod.ToString())}");
-            toStringOutput.Add($"this.ApplyOnSubscriptionExpiration = {(this.ApplyOnSubscriptionExpiration == null ? "null" : this.ApplyOnSubscriptionExpiration.ToString())}");
+            toStringOutput.Add($"AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
+            toStringOutput.Add($"AllowNegativeBalance = {(this.AllowNegativeBalance == null ? "null" : this.AllowNegativeBalance.ToString())}");
+            toStringOutput.Add($"Recurring = {(this.Recurring == null ? "null" : this.Recurring.ToString())}");
+            toStringOutput.Add($"EndDate = {(this.EndDate == null ? "null" : this.EndDate.ToString())}");
+            toStringOutput.Add($"ProductFamilyId = {this.ProductFamilyId ?? "null"}");
+            toStringOutput.Add($"Stackable = {(this.Stackable == null ? "null" : this.Stackable.ToString())}");
+            toStringOutput.Add($"CompoundingStrategy = {(this.CompoundingStrategy == null ? "null" : this.CompoundingStrategy.ToString())}");
+            toStringOutput.Add($"ExcludeMidPeriodAllocations = {(this.ExcludeMidPeriodAllocations == null ? "null" : this.ExcludeMidPeriodAllocations.ToString())}");
+            toStringOutput.Add($"ApplyOnCancelAtEndOfPeriod = {(this.ApplyOnCancelAtEndOfPeriod == null ? "null" : this.ApplyOnCancelAtEndOfPeriod.ToString())}");
+            toStringOutput.Add($"ApplyOnSubscriptionExpiration = {(this.ApplyOnSubscriptionExpiration == null ? "null" : this.ApplyOnSubscriptionExpiration.ToString())}");
 
             base.ToString(toStringOutput);
         }

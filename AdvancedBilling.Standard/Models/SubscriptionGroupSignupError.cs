@@ -126,11 +126,11 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"Subscriptions = {(this.Subscriptions == null ? "null" : this.Subscriptions.ToString())}");
-            toStringOutput.Add($"this.PayerReference = {this.PayerReference ?? "null"}");
-            toStringOutput.Add($"this.Payer = {(this.Payer == null ? "null" : this.Payer.ToString())}");
-            toStringOutput.Add($"this.SubscriptionGroup = {(this.SubscriptionGroup == null ? "null" : $"[{string.Join(", ", this.SubscriptionGroup)} ]")}");
-            toStringOutput.Add($"this.PaymentProfileId = {this.PaymentProfileId ?? "null"}");
-            toStringOutput.Add($"this.PayerId = {this.PayerId ?? "null"}");
+            toStringOutput.Add($"PayerReference = {this.PayerReference ?? "null"}");
+            toStringOutput.Add($"Payer = {(this.Payer == null ? "null" : this.Payer.ToString())}");
+            toStringOutput.Add($"SubscriptionGroup = {(this.SubscriptionGroup == null ? "null" : $"[{string.Join(", ", this.SubscriptionGroup)} ]")}");
+            toStringOutput.Add($"PaymentProfileId = {this.PaymentProfileId ?? "null"}");
+            toStringOutput.Add($"PayerId = {this.PayerId ?? "null"}");
 
             base.ToString(toStringOutput);
         }

@@ -70,7 +70,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ProductFamily = {(this.ProductFamily == null ? "null" : this.ProductFamily.ToString())}");
+            toStringOutput.Add($"ProductFamily = {(this.ProductFamily == null ? "null" : this.ProductFamily.ToString())}");
 
             base.ToString(toStringOutput);
         }

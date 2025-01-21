@@ -118,11 +118,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ActivatedAt = {(this.ActivatedAt == null ? "null" : this.ActivatedAt.ToString())}");
-            toStringOutput.Add($"this.CanceledAt = {(this.CanceledAt == null ? "null" : this.CanceledAt.ToString())}");
-            toStringOutput.Add($"this.CancellationMessage = {this.CancellationMessage ?? "null"}");
-            toStringOutput.Add($"this.ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt.ToString())}");
-            toStringOutput.Add($"this.CurrentPeriodStartsAt = {(this.CurrentPeriodStartsAt == null ? "null" : this.CurrentPeriodStartsAt.ToString())}");
+            toStringOutput.Add($"ActivatedAt = {(this.ActivatedAt == null ? "null" : this.ActivatedAt.ToString())}");
+            toStringOutput.Add($"CanceledAt = {(this.CanceledAt == null ? "null" : this.CanceledAt.ToString())}");
+            toStringOutput.Add($"CancellationMessage = {this.CancellationMessage ?? "null"}");
+            toStringOutput.Add($"ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt.ToString())}");
+            toStringOutput.Add($"CurrentPeriodStartsAt = {(this.CurrentPeriodStartsAt == null ? "null" : this.CurrentPeriodStartsAt.ToString())}");
 
             base.ToString(toStringOutput);
         }

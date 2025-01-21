@@ -362,33 +362,33 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Uid = {this.Uid ?? "null"}");
-            toStringOutput.Add($"this.SiteId = {(this.SiteId == null ? "null" : this.SiteId.ToString())}");
-            toStringOutput.Add($"this.CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
-            toStringOutput.Add($"this.SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
-            toStringOutput.Add($"this.Number = {this.Number ?? "null"}");
-            toStringOutput.Add($"this.SequenceNumber = {(this.SequenceNumber == null ? "null" : this.SequenceNumber.ToString())}");
-            toStringOutput.Add($"this.IssueDate = {(this.IssueDate == null ? "null" : this.IssueDate.ToString())}");
-            toStringOutput.Add($"this.AppliedDate = {(this.AppliedDate == null ? "null" : this.AppliedDate.ToString())}");
-            toStringOutput.Add($"this.Status = {(this.Status == null ? "null" : this.Status.ToString())}");
-            toStringOutput.Add($"this.Currency = {this.Currency ?? "null"}");
-            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
-            toStringOutput.Add($"this.Seller = {(this.Seller == null ? "null" : this.Seller.ToString())}");
-            toStringOutput.Add($"this.Customer = {(this.Customer == null ? "null" : this.Customer.ToString())}");
-            toStringOutput.Add($"this.BillingAddress = {(this.BillingAddress == null ? "null" : this.BillingAddress.ToString())}");
-            toStringOutput.Add($"this.ShippingAddress = {(this.ShippingAddress == null ? "null" : this.ShippingAddress.ToString())}");
-            toStringOutput.Add($"this.SubtotalAmount = {this.SubtotalAmount ?? "null"}");
-            toStringOutput.Add($"this.DiscountAmount = {this.DiscountAmount ?? "null"}");
-            toStringOutput.Add($"this.TaxAmount = {this.TaxAmount ?? "null"}");
-            toStringOutput.Add($"this.TotalAmount = {this.TotalAmount ?? "null"}");
-            toStringOutput.Add($"this.AppliedAmount = {this.AppliedAmount ?? "null"}");
-            toStringOutput.Add($"this.RemainingAmount = {this.RemainingAmount ?? "null"}");
-            toStringOutput.Add($"this.LineItems = {(this.LineItems == null ? "null" : $"[{string.Join(", ", this.LineItems)} ]")}");
-            toStringOutput.Add($"this.Discounts = {(this.Discounts == null ? "null" : $"[{string.Join(", ", this.Discounts)} ]")}");
-            toStringOutput.Add($"this.Taxes = {(this.Taxes == null ? "null" : $"[{string.Join(", ", this.Taxes)} ]")}");
-            toStringOutput.Add($"this.Applications = {(this.Applications == null ? "null" : $"[{string.Join(", ", this.Applications)} ]")}");
-            toStringOutput.Add($"this.Refunds = {(this.Refunds == null ? "null" : $"[{string.Join(", ", this.Refunds)} ]")}");
-            toStringOutput.Add($"this.OriginInvoices = {(this.OriginInvoices == null ? "null" : $"[{string.Join(", ", this.OriginInvoices)} ]")}");
+            toStringOutput.Add($"Uid = {this.Uid ?? "null"}");
+            toStringOutput.Add($"SiteId = {(this.SiteId == null ? "null" : this.SiteId.ToString())}");
+            toStringOutput.Add($"CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
+            toStringOutput.Add($"SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
+            toStringOutput.Add($"Number = {this.Number ?? "null"}");
+            toStringOutput.Add($"SequenceNumber = {(this.SequenceNumber == null ? "null" : this.SequenceNumber.ToString())}");
+            toStringOutput.Add($"IssueDate = {(this.IssueDate == null ? "null" : this.IssueDate.ToString())}");
+            toStringOutput.Add($"AppliedDate = {(this.AppliedDate == null ? "null" : this.AppliedDate.ToString())}");
+            toStringOutput.Add($"Status = {(this.Status == null ? "null" : this.Status.ToString())}");
+            toStringOutput.Add($"Currency = {this.Currency ?? "null"}");
+            toStringOutput.Add($"Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"Seller = {(this.Seller == null ? "null" : this.Seller.ToString())}");
+            toStringOutput.Add($"Customer = {(this.Customer == null ? "null" : this.Customer.ToString())}");
+            toStringOutput.Add($"BillingAddress = {(this.BillingAddress == null ? "null" : this.BillingAddress.ToString())}");
+            toStringOutput.Add($"ShippingAddress = {(this.ShippingAddress == null ? "null" : this.ShippingAddress.ToString())}");
+            toStringOutput.Add($"SubtotalAmount = {this.SubtotalAmount ?? "null"}");
+            toStringOutput.Add($"DiscountAmount = {this.DiscountAmount ?? "null"}");
+            toStringOutput.Add($"TaxAmount = {this.TaxAmount ?? "null"}");
+            toStringOutput.Add($"TotalAmount = {this.TotalAmount ?? "null"}");
+            toStringOutput.Add($"AppliedAmount = {this.AppliedAmount ?? "null"}");
+            toStringOutput.Add($"RemainingAmount = {this.RemainingAmount ?? "null"}");
+            toStringOutput.Add($"LineItems = {(this.LineItems == null ? "null" : $"[{string.Join(", ", this.LineItems)} ]")}");
+            toStringOutput.Add($"Discounts = {(this.Discounts == null ? "null" : $"[{string.Join(", ", this.Discounts)} ]")}");
+            toStringOutput.Add($"Taxes = {(this.Taxes == null ? "null" : $"[{string.Join(", ", this.Taxes)} ]")}");
+            toStringOutput.Add($"Applications = {(this.Applications == null ? "null" : $"[{string.Join(", ", this.Applications)} ]")}");
+            toStringOutput.Add($"Refunds = {(this.Refunds == null ? "null" : $"[{string.Join(", ", this.Refunds)} ]")}");
+            toStringOutput.Add($"OriginInvoices = {(this.OriginInvoices == null ? "null" : $"[{string.Join(", ", this.OriginInvoices)} ]")}");
 
             base.ToString(toStringOutput);
         }

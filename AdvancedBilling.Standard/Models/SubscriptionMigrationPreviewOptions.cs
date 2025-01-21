@@ -170,16 +170,16 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
-            toStringOutput.Add($"this.ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
-            toStringOutput.Add($"this.IncludeTrial = {(this.IncludeTrial == null ? "null" : this.IncludeTrial.ToString())}");
-            toStringOutput.Add($"this.IncludeInitialCharge = {(this.IncludeInitialCharge == null ? "null" : this.IncludeInitialCharge.ToString())}");
-            toStringOutput.Add($"this.IncludeCoupons = {(this.IncludeCoupons == null ? "null" : this.IncludeCoupons.ToString())}");
-            toStringOutput.Add($"this.PreservePeriod = {(this.PreservePeriod == null ? "null" : this.PreservePeriod.ToString())}");
-            toStringOutput.Add($"this.ProductHandle = {this.ProductHandle ?? "null"}");
-            toStringOutput.Add($"this.ProductPricePointHandle = {this.ProductPricePointHandle ?? "null"}");
-            toStringOutput.Add($"this.Proration = {(this.Proration == null ? "null" : this.Proration.ToString())}");
-            toStringOutput.Add($"this.ProrationDate = {(this.ProrationDate == null ? "null" : this.ProrationDate.ToString())}");
+            toStringOutput.Add($"ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
+            toStringOutput.Add($"ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
+            toStringOutput.Add($"IncludeTrial = {(this.IncludeTrial == null ? "null" : this.IncludeTrial.ToString())}");
+            toStringOutput.Add($"IncludeInitialCharge = {(this.IncludeInitialCharge == null ? "null" : this.IncludeInitialCharge.ToString())}");
+            toStringOutput.Add($"IncludeCoupons = {(this.IncludeCoupons == null ? "null" : this.IncludeCoupons.ToString())}");
+            toStringOutput.Add($"PreservePeriod = {(this.PreservePeriod == null ? "null" : this.PreservePeriod.ToString())}");
+            toStringOutput.Add($"ProductHandle = {this.ProductHandle ?? "null"}");
+            toStringOutput.Add($"ProductPricePointHandle = {this.ProductPricePointHandle ?? "null"}");
+            toStringOutput.Add($"Proration = {(this.Proration == null ? "null" : this.Proration.ToString())}");
+            toStringOutput.Add($"ProrationDate = {(this.ProrationDate == null ? "null" : this.ProrationDate.ToString())}");
 
             base.ToString(toStringOutput);
         }

@@ -69,7 +69,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.WebhooksEnabled = {this.WebhooksEnabled}");
+            toStringOutput.Add($"WebhooksEnabled = {this.WebhooksEnabled}");
 
             base.ToString(toStringOutput);
         }

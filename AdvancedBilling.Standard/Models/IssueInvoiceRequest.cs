@@ -73,7 +73,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.OnFailedPayment = {(this.OnFailedPayment == null ? "null" : this.OnFailedPayment.ToString())}");
+            toStringOutput.Add($"OnFailedPayment = {(this.OnFailedPayment == null ? "null" : this.OnFailedPayment.ToString())}");
 
             base.ToString(toStringOutput);
         }

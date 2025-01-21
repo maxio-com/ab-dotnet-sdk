@@ -83,8 +83,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Email = {this.Email ?? "null"}");
-            toStringOutput.Add($"this.Type = {this.Type}");
+            toStringOutput.Add($"Email = {this.Email ?? "null"}");
+            toStringOutput.Add($"Type = {this.Type}");
 
             base.ToString(toStringOutput);
         }

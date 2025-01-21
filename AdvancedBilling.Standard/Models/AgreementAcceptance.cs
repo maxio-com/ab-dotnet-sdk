@@ -125,12 +125,12 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.IpAddress = {this.IpAddress ?? "null"}");
-            toStringOutput.Add($"this.TermsUrl = {this.TermsUrl ?? "null"}");
-            toStringOutput.Add($"this.PrivacyPolicyUrl = {this.PrivacyPolicyUrl ?? "null"}");
-            toStringOutput.Add($"this.ReturnRefundPolicyUrl = {this.ReturnRefundPolicyUrl ?? "null"}");
-            toStringOutput.Add($"this.DeliveryPolicyUrl = {this.DeliveryPolicyUrl ?? "null"}");
-            toStringOutput.Add($"this.SecureCheckoutPolicyUrl = {this.SecureCheckoutPolicyUrl ?? "null"}");
+            toStringOutput.Add($"IpAddress = {this.IpAddress ?? "null"}");
+            toStringOutput.Add($"TermsUrl = {this.TermsUrl ?? "null"}");
+            toStringOutput.Add($"PrivacyPolicyUrl = {this.PrivacyPolicyUrl ?? "null"}");
+            toStringOutput.Add($"ReturnRefundPolicyUrl = {this.ReturnRefundPolicyUrl ?? "null"}");
+            toStringOutput.Add($"DeliveryPolicyUrl = {this.DeliveryPolicyUrl ?? "null"}");
+            toStringOutput.Add($"SecureCheckoutPolicyUrl = {this.SecureCheckoutPolicyUrl ?? "null"}");
 
             base.ToString(toStringOutput);
         }

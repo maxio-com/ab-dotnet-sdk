@@ -158,15 +158,15 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.FirstName = {this.FirstName ?? "null"}");
-            toStringOutput.Add($"this.LastName = {this.LastName ?? "null"}");
-            toStringOutput.Add($"this.Phone = {this.Phone ?? "null"}");
-            toStringOutput.Add($"this.Address = {this.Address ?? "null"}");
-            toStringOutput.Add($"this.Address2 = {this.Address2 ?? "null"}");
-            toStringOutput.Add($"this.City = {this.City ?? "null"}");
-            toStringOutput.Add($"this.State = {this.State ?? "null"}");
-            toStringOutput.Add($"this.Zip = {this.Zip ?? "null"}");
-            toStringOutput.Add($"this.Country = {this.Country ?? "null"}");
+            toStringOutput.Add($"FirstName = {this.FirstName ?? "null"}");
+            toStringOutput.Add($"LastName = {this.LastName ?? "null"}");
+            toStringOutput.Add($"Phone = {this.Phone ?? "null"}");
+            toStringOutput.Add($"Address = {this.Address ?? "null"}");
+            toStringOutput.Add($"Address2 = {this.Address2 ?? "null"}");
+            toStringOutput.Add($"City = {this.City ?? "null"}");
+            toStringOutput.Add($"State = {this.State ?? "null"}");
+            toStringOutput.Add($"Zip = {this.Zip ?? "null"}");
+            toStringOutput.Add($"Country = {this.Country ?? "null"}");
 
             base.ToString(toStringOutput);
         }

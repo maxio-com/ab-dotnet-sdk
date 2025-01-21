@@ -133,12 +133,12 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ItemId = {this.ItemId}");
-            toStringOutput.Add($"this.ItemType = {this.ItemType ?? "null"}");
-            toStringOutput.Add($"this.ItemHandle = {this.ItemHandle ?? "null"}");
-            toStringOutput.Add($"this.ItemName = {this.ItemName ?? "null"}");
-            toStringOutput.Add($"this.PreviousPricePoint = {(this.PreviousPricePoint == null ? "null" : this.PreviousPricePoint.ToString())}");
-            toStringOutput.Add($"this.CurrentPricePoint = {(this.CurrentPricePoint == null ? "null" : this.CurrentPricePoint.ToString())}");
+            toStringOutput.Add($"ItemId = {this.ItemId}");
+            toStringOutput.Add($"ItemType = {this.ItemType ?? "null"}");
+            toStringOutput.Add($"ItemHandle = {this.ItemHandle ?? "null"}");
+            toStringOutput.Add($"ItemName = {this.ItemName ?? "null"}");
+            toStringOutput.Add($"PreviousPricePoint = {(this.PreviousPricePoint == null ? "null" : this.PreviousPricePoint.ToString())}");
+            toStringOutput.Add($"CurrentPricePoint = {(this.CurrentPricePoint == null ? "null" : this.CurrentPricePoint.ToString())}");
 
             base.ToString(toStringOutput);
         }

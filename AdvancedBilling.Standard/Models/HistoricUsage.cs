@@ -94,9 +94,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.TotalUsageQuantity = {(this.TotalUsageQuantity == null ? "null" : this.TotalUsageQuantity.ToString())}");
-            toStringOutput.Add($"this.BillingPeriodStartsAt = {(this.BillingPeriodStartsAt == null ? "null" : this.BillingPeriodStartsAt.ToString())}");
-            toStringOutput.Add($"this.BillingPeriodEndsAt = {(this.BillingPeriodEndsAt == null ? "null" : this.BillingPeriodEndsAt.ToString())}");
+            toStringOutput.Add($"TotalUsageQuantity = {(this.TotalUsageQuantity == null ? "null" : this.TotalUsageQuantity.ToString())}");
+            toStringOutput.Add($"BillingPeriodStartsAt = {(this.BillingPeriodStartsAt == null ? "null" : this.BillingPeriodStartsAt.ToString())}");
+            toStringOutput.Add($"BillingPeriodEndsAt = {(this.BillingPeriodEndsAt == null ? "null" : this.BillingPeriodEndsAt.ToString())}");
 
             base.ToString(toStringOutput);
         }

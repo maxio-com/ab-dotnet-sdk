@@ -235,22 +235,22 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.BankName = {this.BankName ?? "null"}");
-            toStringOutput.Add($"this.BankAccountNumber = {this.BankAccountNumber ?? "null"}");
-            toStringOutput.Add($"this.BankRoutingNumber = {this.BankRoutingNumber ?? "null"}");
-            toStringOutput.Add($"this.BankIban = {this.BankIban ?? "null"}");
-            toStringOutput.Add($"this.BankBranchCode = {this.BankBranchCode ?? "null"}");
-            toStringOutput.Add($"this.BankAccountType = {(this.BankAccountType == null ? "null" : this.BankAccountType.ToString())}");
-            toStringOutput.Add($"this.BankAccountHolderType = {(this.BankAccountHolderType == null ? "null" : this.BankAccountHolderType.ToString())}");
-            toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
-            toStringOutput.Add($"this.BillingAddress = {this.BillingAddress ?? "null"}");
-            toStringOutput.Add($"this.BillingCity = {this.BillingCity ?? "null"}");
-            toStringOutput.Add($"this.BillingState = {this.BillingState ?? "null"}");
-            toStringOutput.Add($"this.BillingZip = {this.BillingZip ?? "null"}");
-            toStringOutput.Add($"this.BillingCountry = {this.BillingCountry ?? "null"}");
-            toStringOutput.Add($"this.ChargifyToken = {this.ChargifyToken ?? "null"}");
-            toStringOutput.Add($"this.CurrentVault = {(this.CurrentVault == null ? "null" : this.CurrentVault.ToString())}");
-            toStringOutput.Add($"this.GatewayHandle = {this.GatewayHandle ?? "null"}");
+            toStringOutput.Add($"BankName = {this.BankName ?? "null"}");
+            toStringOutput.Add($"BankAccountNumber = {this.BankAccountNumber ?? "null"}");
+            toStringOutput.Add($"BankRoutingNumber = {this.BankRoutingNumber ?? "null"}");
+            toStringOutput.Add($"BankIban = {this.BankIban ?? "null"}");
+            toStringOutput.Add($"BankBranchCode = {this.BankBranchCode ?? "null"}");
+            toStringOutput.Add($"BankAccountType = {(this.BankAccountType == null ? "null" : this.BankAccountType.ToString())}");
+            toStringOutput.Add($"BankAccountHolderType = {(this.BankAccountHolderType == null ? "null" : this.BankAccountHolderType.ToString())}");
+            toStringOutput.Add($"PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
+            toStringOutput.Add($"BillingAddress = {this.BillingAddress ?? "null"}");
+            toStringOutput.Add($"BillingCity = {this.BillingCity ?? "null"}");
+            toStringOutput.Add($"BillingState = {this.BillingState ?? "null"}");
+            toStringOutput.Add($"BillingZip = {this.BillingZip ?? "null"}");
+            toStringOutput.Add($"BillingCountry = {this.BillingCountry ?? "null"}");
+            toStringOutput.Add($"ChargifyToken = {this.ChargifyToken ?? "null"}");
+            toStringOutput.Add($"CurrentVault = {(this.CurrentVault == null ? "null" : this.CurrentVault.ToString())}");
+            toStringOutput.Add($"GatewayHandle = {this.GatewayHandle ?? "null"}");
 
             base.ToString(toStringOutput);
         }

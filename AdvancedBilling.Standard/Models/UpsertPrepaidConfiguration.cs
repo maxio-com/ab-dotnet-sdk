@@ -103,10 +103,10 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.InitialFundingAmountInCents = {(this.InitialFundingAmountInCents == null ? "null" : this.InitialFundingAmountInCents.ToString())}");
-            toStringOutput.Add($"this.ReplenishToAmountInCents = {(this.ReplenishToAmountInCents == null ? "null" : this.ReplenishToAmountInCents.ToString())}");
-            toStringOutput.Add($"this.AutoReplenish = {(this.AutoReplenish == null ? "null" : this.AutoReplenish.ToString())}");
-            toStringOutput.Add($"this.ReplenishThresholdAmountInCents = {(this.ReplenishThresholdAmountInCents == null ? "null" : this.ReplenishThresholdAmountInCents.ToString())}");
+            toStringOutput.Add($"InitialFundingAmountInCents = {(this.InitialFundingAmountInCents == null ? "null" : this.InitialFundingAmountInCents.ToString())}");
+            toStringOutput.Add($"ReplenishToAmountInCents = {(this.ReplenishToAmountInCents == null ? "null" : this.ReplenishToAmountInCents.ToString())}");
+            toStringOutput.Add($"AutoReplenish = {(this.AutoReplenish == null ? "null" : this.AutoReplenish.ToString())}");
+            toStringOutput.Add($"ReplenishThresholdAmountInCents = {(this.ReplenishThresholdAmountInCents == null ? "null" : this.ReplenishThresholdAmountInCents.ToString())}");
 
             base.ToString(toStringOutput);
         }
