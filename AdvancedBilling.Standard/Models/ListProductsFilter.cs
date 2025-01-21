@@ -92,9 +92,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Ids = {(this.Ids == null ? "null" : $"[{string.Join(", ", this.Ids)} ]")}");
-            toStringOutput.Add($"this.PrepaidProductPricePoint = {(this.PrepaidProductPricePoint == null ? "null" : this.PrepaidProductPricePoint.ToString())}");
-            toStringOutput.Add($"this.UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
+            toStringOutput.Add($"Ids = {(this.Ids == null ? "null" : $"[{string.Join(", ", this.Ids)} ]")}");
+            toStringOutput.Add($"PrepaidProductPricePoint = {(this.PrepaidProductPricePoint == null ? "null" : this.PrepaidProductPricePoint.ToString())}");
+            toStringOutput.Add($"UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
 
             base.ToString(toStringOutput);
         }

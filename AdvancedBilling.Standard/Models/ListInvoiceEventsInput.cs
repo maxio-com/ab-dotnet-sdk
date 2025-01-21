@@ -137,13 +137,13 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.SinceDate = {this.SinceDate ?? "null"}");
-            toStringOutput.Add($"this.SinceId = {(this.SinceId == null ? "null" : this.SinceId.ToString())}");
-            toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
-            toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
-            toStringOutput.Add($"this.InvoiceUid = {this.InvoiceUid ?? "null"}");
-            toStringOutput.Add($"this.WithChangeInvoiceStatus = {this.WithChangeInvoiceStatus ?? "null"}");
-            toStringOutput.Add($"this.EventTypes = {(this.EventTypes == null ? "null" : $"[{string.Join(", ", this.EventTypes)} ]")}");
+            toStringOutput.Add($"SinceDate = {this.SinceDate ?? "null"}");
+            toStringOutput.Add($"SinceId = {(this.SinceId == null ? "null" : this.SinceId.ToString())}");
+            toStringOutput.Add($"Page = {(this.Page == null ? "null" : this.Page.ToString())}");
+            toStringOutput.Add($"PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
+            toStringOutput.Add($"InvoiceUid = {this.InvoiceUid ?? "null"}");
+            toStringOutput.Add($"WithChangeInvoiceStatus = {this.WithChangeInvoiceStatus ?? "null"}");
+            toStringOutput.Add($"EventTypes = {(this.EventTypes == null ? "null" : $"[{string.Join(", ", this.EventTypes)} ]")}");
 
             base.ToString(toStringOutput);
         }

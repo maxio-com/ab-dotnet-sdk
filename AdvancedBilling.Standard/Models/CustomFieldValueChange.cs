@@ -144,13 +144,13 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.EventType = {this.EventType ?? "null"}");
-            toStringOutput.Add($"this.MetafieldName = {this.MetafieldName ?? "null"}");
-            toStringOutput.Add($"this.MetafieldId = {this.MetafieldId}");
-            toStringOutput.Add($"this.OldValue = {this.OldValue ?? "null"}");
-            toStringOutput.Add($"this.NewValue = {this.NewValue ?? "null"}");
-            toStringOutput.Add($"this.ResourceType = {this.ResourceType ?? "null"}");
-            toStringOutput.Add($"this.ResourceId = {this.ResourceId}");
+            toStringOutput.Add($"EventType = {this.EventType ?? "null"}");
+            toStringOutput.Add($"MetafieldName = {this.MetafieldName ?? "null"}");
+            toStringOutput.Add($"MetafieldId = {this.MetafieldId}");
+            toStringOutput.Add($"OldValue = {this.OldValue ?? "null"}");
+            toStringOutput.Add($"NewValue = {this.NewValue ?? "null"}");
+            toStringOutput.Add($"ResourceType = {this.ResourceType ?? "null"}");
+            toStringOutput.Add($"ResourceId = {this.ResourceId}");
 
             base.ToString(toStringOutput);
         }

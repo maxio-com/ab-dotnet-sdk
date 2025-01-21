@@ -305,12 +305,12 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.MValue = {this.MValue ?? "null"}");
-            toStringOutput.Add($"this.ResourceId = {(this.ResourceId == null ? "null" : this.ResourceId.ToString())}");
-            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
-            toStringOutput.Add($"this.DeletedAt = {(this.DeletedAt == null ? "null" : this.DeletedAt.ToString())}");
-            toStringOutput.Add($"this.MetafieldId = {(this.MetafieldId == null ? "null" : this.MetafieldId.ToString())}");
+            toStringOutput.Add($"Id = {(this.Id == null ? "null" : this.Id.ToString())}");
+            toStringOutput.Add($"MValue = {this.MValue ?? "null"}");
+            toStringOutput.Add($"ResourceId = {(this.ResourceId == null ? "null" : this.ResourceId.ToString())}");
+            toStringOutput.Add($"Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"DeletedAt = {(this.DeletedAt == null ? "null" : this.DeletedAt.ToString())}");
+            toStringOutput.Add($"MetafieldId = {(this.MetafieldId == null ? "null" : this.MetafieldId.ToString())}");
 
             base.ToString(toStringOutput);
         }

@@ -126,12 +126,12 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
-            toStringOutput.Add($"this.Details = {this.Details ?? "null"}");
-            toStringOutput.Add($"this.Method = {(this.Method == null ? "null" : this.Method.ToString())}");
+            toStringOutput.Add($"Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"Details = {this.Details ?? "null"}");
+            toStringOutput.Add($"Method = {(this.Method == null ? "null" : this.Method.ToString())}");
             toStringOutput.Add($"Amount = {(this.Amount == null ? "null" : this.Amount.ToString())}");
-            toStringOutput.Add($"this.ReceivedOn = {this.ReceivedOn ?? "null"}");
-            toStringOutput.Add($"this.Applications = {(this.Applications == null ? "null" : $"[{string.Join(", ", this.Applications)} ]")}");
+            toStringOutput.Add($"ReceivedOn = {this.ReceivedOn ?? "null"}");
+            toStringOutput.Add($"Applications = {(this.Applications == null ? "null" : $"[{string.Join(", ", this.Applications)} ]")}");
 
             base.ToString(toStringOutput);
         }

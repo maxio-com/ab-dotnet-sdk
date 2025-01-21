@@ -224,14 +224,14 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ProrationUpgradeScheme = {this.ProrationUpgradeScheme ?? "null"}");
-            toStringOutput.Add($"this.ProrationDowngradeScheme = {this.ProrationDowngradeScheme ?? "null"}");
-            toStringOutput.Add($"this.Allocations = {(this.Allocations == null ? "null" : $"[{string.Join(", ", this.Allocations)} ]")}");
-            toStringOutput.Add($"this.AccrueCharge = {(this.AccrueCharge == null ? "null" : this.AccrueCharge.ToString())}");
-            toStringOutput.Add($"this.UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
-            toStringOutput.Add($"this.DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
-            toStringOutput.Add($"this.PaymentCollectionMethod = {(this.PaymentCollectionMethod == null ? "null" : this.PaymentCollectionMethod.ToString())}");
-            toStringOutput.Add($"this.InitiateDunning = {(this.InitiateDunning == null ? "null" : this.InitiateDunning.ToString())}");
+            toStringOutput.Add($"ProrationUpgradeScheme = {this.ProrationUpgradeScheme ?? "null"}");
+            toStringOutput.Add($"ProrationDowngradeScheme = {this.ProrationDowngradeScheme ?? "null"}");
+            toStringOutput.Add($"Allocations = {(this.Allocations == null ? "null" : $"[{string.Join(", ", this.Allocations)} ]")}");
+            toStringOutput.Add($"AccrueCharge = {(this.AccrueCharge == null ? "null" : this.AccrueCharge.ToString())}");
+            toStringOutput.Add($"UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
+            toStringOutput.Add($"DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
+            toStringOutput.Add($"PaymentCollectionMethod = {(this.PaymentCollectionMethod == null ? "null" : this.PaymentCollectionMethod.ToString())}");
+            toStringOutput.Add($"InitiateDunning = {(this.InitiateDunning == null ? "null" : this.InitiateDunning.ToString())}");
 
             base.ToString(toStringOutput);
         }

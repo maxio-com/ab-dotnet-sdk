@@ -92,9 +92,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.FullNumber = {this.FullNumber ?? "null"}");
-            toStringOutput.Add($"this.ExpirationMonth = {this.ExpirationMonth ?? "null"}");
-            toStringOutput.Add($"this.ExpirationYear = {this.ExpirationYear ?? "null"}");
+            toStringOutput.Add($"FullNumber = {this.FullNumber ?? "null"}");
+            toStringOutput.Add($"ExpirationMonth = {this.ExpirationMonth ?? "null"}");
+            toStringOutput.Add($"ExpirationYear = {this.ExpirationYear ?? "null"}");
 
             base.ToString(toStringOutput);
         }

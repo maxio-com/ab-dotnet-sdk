@@ -202,19 +202,19 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.SubscriptionId = {this.SubscriptionId}");
-            toStringOutput.Add($"this.DateField = {(this.DateField == null ? "null" : this.DateField.ToString())}");
-            toStringOutput.Add($"this.Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
-            toStringOutput.Add($"this.Filter = {(this.Filter == null ? "null" : this.Filter.ToString())}");
-            toStringOutput.Add($"this.EndDate = {this.EndDate ?? "null"}");
-            toStringOutput.Add($"this.EndDatetime = {this.EndDatetime ?? "null"}");
-            toStringOutput.Add($"this.PricePointIds = {(this.PricePointIds == null ? "null" : this.PricePointIds.ToString())}");
-            toStringOutput.Add($"this.ProductFamilyIds = {(this.ProductFamilyIds == null ? "null" : $"[{string.Join(", ", this.ProductFamilyIds)} ]")}");
-            toStringOutput.Add($"this.Sort = {(this.Sort == null ? "null" : this.Sort.ToString())}");
-            toStringOutput.Add($"this.StartDate = {this.StartDate ?? "null"}");
-            toStringOutput.Add($"this.StartDatetime = {this.StartDatetime ?? "null"}");
-            toStringOutput.Add($"this.Include = {(this.Include == null ? "null" : $"[{string.Join(", ", this.Include)} ]")}");
-            toStringOutput.Add($"this.InUse = {(this.InUse == null ? "null" : this.InUse.ToString())}");
+            toStringOutput.Add($"SubscriptionId = {this.SubscriptionId}");
+            toStringOutput.Add($"DateField = {(this.DateField == null ? "null" : this.DateField.ToString())}");
+            toStringOutput.Add($"Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");
+            toStringOutput.Add($"Filter = {(this.Filter == null ? "null" : this.Filter.ToString())}");
+            toStringOutput.Add($"EndDate = {this.EndDate ?? "null"}");
+            toStringOutput.Add($"EndDatetime = {this.EndDatetime ?? "null"}");
+            toStringOutput.Add($"PricePointIds = {(this.PricePointIds == null ? "null" : this.PricePointIds.ToString())}");
+            toStringOutput.Add($"ProductFamilyIds = {(this.ProductFamilyIds == null ? "null" : $"[{string.Join(", ", this.ProductFamilyIds)} ]")}");
+            toStringOutput.Add($"Sort = {(this.Sort == null ? "null" : this.Sort.ToString())}");
+            toStringOutput.Add($"StartDate = {this.StartDate ?? "null"}");
+            toStringOutput.Add($"StartDatetime = {this.StartDatetime ?? "null"}");
+            toStringOutput.Add($"Include = {(this.Include == null ? "null" : $"[{string.Join(", ", this.Include)} ]")}");
+            toStringOutput.Add($"InUse = {(this.InUse == null ? "null" : this.InUse.ToString())}");
 
             base.ToString(toStringOutput);
         }

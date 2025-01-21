@@ -345,25 +345,25 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.SiteId = {(this.SiteId == null ? "null" : this.SiteId.ToString())}");
-            toStringOutput.Add($"this.ProductFamilyId = {(this.ProductFamilyId == null ? "null" : this.ProductFamilyId.ToString())}");
-            toStringOutput.Add($"this.ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
-            toStringOutput.Add($"this.ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
-            toStringOutput.Add($"this.ProductRevisableNumber = {(this.ProductRevisableNumber == null ? "null" : this.ProductRevisableNumber.ToString())}");
-            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
-            toStringOutput.Add($"this.Handle = {this.Handle ?? "null"}");
-            toStringOutput.Add($"this.Description = {this.Description ?? "null"}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
-            toStringOutput.Add($"this.UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
-            toStringOutput.Add($"this.ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt.ToString())}");
-            toStringOutput.Add($"this.OfferItems = {(this.OfferItems == null ? "null" : $"[{string.Join(", ", this.OfferItems)} ]")}");
-            toStringOutput.Add($"this.OfferDiscounts = {(this.OfferDiscounts == null ? "null" : $"[{string.Join(", ", this.OfferDiscounts)} ]")}");
-            toStringOutput.Add($"this.ProductFamilyName = {this.ProductFamilyName ?? "null"}");
-            toStringOutput.Add($"this.ProductName = {this.ProductName ?? "null"}");
-            toStringOutput.Add($"this.ProductPricePointName = {this.ProductPricePointName ?? "null"}");
-            toStringOutput.Add($"this.ProductPriceInCents = {(this.ProductPriceInCents == null ? "null" : this.ProductPriceInCents.ToString())}");
-            toStringOutput.Add($"this.OfferSignupPages = {(this.OfferSignupPages == null ? "null" : $"[{string.Join(", ", this.OfferSignupPages)} ]")}");
+            toStringOutput.Add($"Id = {(this.Id == null ? "null" : this.Id.ToString())}");
+            toStringOutput.Add($"SiteId = {(this.SiteId == null ? "null" : this.SiteId.ToString())}");
+            toStringOutput.Add($"ProductFamilyId = {(this.ProductFamilyId == null ? "null" : this.ProductFamilyId.ToString())}");
+            toStringOutput.Add($"ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
+            toStringOutput.Add($"ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
+            toStringOutput.Add($"ProductRevisableNumber = {(this.ProductRevisableNumber == null ? "null" : this.ProductRevisableNumber.ToString())}");
+            toStringOutput.Add($"Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"Handle = {this.Handle ?? "null"}");
+            toStringOutput.Add($"Description = {this.Description ?? "null"}");
+            toStringOutput.Add($"CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
+            toStringOutput.Add($"ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt.ToString())}");
+            toStringOutput.Add($"OfferItems = {(this.OfferItems == null ? "null" : $"[{string.Join(", ", this.OfferItems)} ]")}");
+            toStringOutput.Add($"OfferDiscounts = {(this.OfferDiscounts == null ? "null" : $"[{string.Join(", ", this.OfferDiscounts)} ]")}");
+            toStringOutput.Add($"ProductFamilyName = {this.ProductFamilyName ?? "null"}");
+            toStringOutput.Add($"ProductName = {this.ProductName ?? "null"}");
+            toStringOutput.Add($"ProductPricePointName = {this.ProductPricePointName ?? "null"}");
+            toStringOutput.Add($"ProductPriceInCents = {(this.ProductPriceInCents == null ? "null" : this.ProductPriceInCents.ToString())}");
+            toStringOutput.Add($"OfferSignupPages = {(this.OfferSignupPages == null ? "null" : $"[{string.Join(", ", this.OfferSignupPages)} ]")}");
 
             base.ToString(toStringOutput);
         }

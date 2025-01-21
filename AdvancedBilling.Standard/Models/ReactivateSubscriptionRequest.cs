@@ -126,11 +126,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.CalendarBilling = {(this.CalendarBilling == null ? "null" : this.CalendarBilling.ToString())}");
-            toStringOutput.Add($"this.IncludeTrial = {(this.IncludeTrial == null ? "null" : this.IncludeTrial.ToString())}");
-            toStringOutput.Add($"this.PreserveBalance = {(this.PreserveBalance == null ? "null" : this.PreserveBalance.ToString())}");
-            toStringOutput.Add($"this.CouponCode = {this.CouponCode ?? "null"}");
-            toStringOutput.Add($"this.UseCreditsAndPrepayments = {(this.UseCreditsAndPrepayments == null ? "null" : this.UseCreditsAndPrepayments.ToString())}");
+            toStringOutput.Add($"CalendarBilling = {(this.CalendarBilling == null ? "null" : this.CalendarBilling.ToString())}");
+            toStringOutput.Add($"IncludeTrial = {(this.IncludeTrial == null ? "null" : this.IncludeTrial.ToString())}");
+            toStringOutput.Add($"PreserveBalance = {(this.PreserveBalance == null ? "null" : this.PreserveBalance.ToString())}");
+            toStringOutput.Add($"CouponCode = {this.CouponCode ?? "null"}");
+            toStringOutput.Add($"UseCreditsAndPrepayments = {(this.UseCreditsAndPrepayments == null ? "null" : this.UseCreditsAndPrepayments.ToString())}");
             toStringOutput.Add($"Resume = {(this.Resume == null ? "null" : this.Resume.ToString())}");
 
             base.ToString(toStringOutput);

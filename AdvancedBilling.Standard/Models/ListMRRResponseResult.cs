@@ -136,13 +136,13 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Page = {(this.Page == null ? "null" : this.Page.ToString())}");
-            toStringOutput.Add($"this.PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
-            toStringOutput.Add($"this.TotalPages = {(this.TotalPages == null ? "null" : this.TotalPages.ToString())}");
-            toStringOutput.Add($"this.TotalEntries = {(this.TotalEntries == null ? "null" : this.TotalEntries.ToString())}");
-            toStringOutput.Add($"this.Currency = {this.Currency ?? "null"}");
-            toStringOutput.Add($"this.CurrencySymbol = {this.CurrencySymbol ?? "null"}");
-            toStringOutput.Add($"this.Movements = {(this.Movements == null ? "null" : $"[{string.Join(", ", this.Movements)} ]")}");
+            toStringOutput.Add($"Page = {(this.Page == null ? "null" : this.Page.ToString())}");
+            toStringOutput.Add($"PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
+            toStringOutput.Add($"TotalPages = {(this.TotalPages == null ? "null" : this.TotalPages.ToString())}");
+            toStringOutput.Add($"TotalEntries = {(this.TotalEntries == null ? "null" : this.TotalEntries.ToString())}");
+            toStringOutput.Add($"Currency = {this.Currency ?? "null"}");
+            toStringOutput.Add($"CurrencySymbol = {this.CurrencySymbol ?? "null"}");
+            toStringOutput.Add($"Movements = {(this.Movements == null ? "null" : $"[{string.Join(", ", this.Movements)} ]")}");
 
             base.ToString(toStringOutput);
         }

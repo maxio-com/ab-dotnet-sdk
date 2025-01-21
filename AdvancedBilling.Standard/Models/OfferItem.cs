@@ -208,16 +208,16 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
-            toStringOutput.Add($"this.PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
-            toStringOutput.Add($"this.StartingQuantity = {this.StartingQuantity ?? "null"}");
-            toStringOutput.Add($"this.Editable = {(this.Editable == null ? "null" : this.Editable.ToString())}");
-            toStringOutput.Add($"this.ComponentUnitPrice = {this.ComponentUnitPrice ?? "null"}");
-            toStringOutput.Add($"this.ComponentName = {this.ComponentName ?? "null"}");
-            toStringOutput.Add($"this.PricePointName = {this.PricePointName ?? "null"}");
-            toStringOutput.Add($"this.CurrencyPrices = {(this.CurrencyPrices == null ? "null" : $"[{string.Join(", ", this.CurrencyPrices)} ]")}");
-            toStringOutput.Add($"this.Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
-            toStringOutput.Add($"this.IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
+            toStringOutput.Add($"ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
+            toStringOutput.Add($"PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
+            toStringOutput.Add($"StartingQuantity = {this.StartingQuantity ?? "null"}");
+            toStringOutput.Add($"Editable = {(this.Editable == null ? "null" : this.Editable.ToString())}");
+            toStringOutput.Add($"ComponentUnitPrice = {this.ComponentUnitPrice ?? "null"}");
+            toStringOutput.Add($"ComponentName = {this.ComponentName ?? "null"}");
+            toStringOutput.Add($"PricePointName = {this.PricePointName ?? "null"}");
+            toStringOutput.Add($"CurrencyPrices = {(this.CurrencyPrices == null ? "null" : $"[{string.Join(", ", this.CurrencyPrices)} ]")}");
+            toStringOutput.Add($"Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
+            toStringOutput.Add($"IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
 
             base.ToString(toStringOutput);
         }

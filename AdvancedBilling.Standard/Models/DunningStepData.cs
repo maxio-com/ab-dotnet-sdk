@@ -252,14 +252,14 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.DayThreshold = {this.DayThreshold}");
-            toStringOutput.Add($"this.Action = {this.Action ?? "null"}");
-            toStringOutput.Add($"this.EmailBody = {this.EmailBody ?? "null"}");
-            toStringOutput.Add($"this.EmailSubject = {this.EmailSubject ?? "null"}");
-            toStringOutput.Add($"this.SendEmail = {this.SendEmail}");
-            toStringOutput.Add($"this.SendBccEmail = {this.SendBccEmail}");
-            toStringOutput.Add($"this.SendSms = {this.SendSms}");
-            toStringOutput.Add($"this.SmsBody = {this.SmsBody ?? "null"}");
+            toStringOutput.Add($"DayThreshold = {this.DayThreshold}");
+            toStringOutput.Add($"Action = {this.Action ?? "null"}");
+            toStringOutput.Add($"EmailBody = {this.EmailBody ?? "null"}");
+            toStringOutput.Add($"EmailSubject = {this.EmailSubject ?? "null"}");
+            toStringOutput.Add($"SendEmail = {this.SendEmail}");
+            toStringOutput.Add($"SendBccEmail = {this.SendBccEmail}");
+            toStringOutput.Add($"SendSms = {this.SendSms}");
+            toStringOutput.Add($"SmsBody = {this.SmsBody ?? "null"}");
 
             base.ToString(toStringOutput);
         }

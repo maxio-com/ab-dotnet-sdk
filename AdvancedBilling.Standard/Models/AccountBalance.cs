@@ -166,9 +166,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.BalanceInCents = {(this.BalanceInCents == null ? "null" : this.BalanceInCents.ToString())}");
-            toStringOutput.Add($"this.AutomaticBalanceInCents = {(this.AutomaticBalanceInCents == null ? "null" : this.AutomaticBalanceInCents.ToString())}");
-            toStringOutput.Add($"this.RemittanceBalanceInCents = {(this.RemittanceBalanceInCents == null ? "null" : this.RemittanceBalanceInCents.ToString())}");
+            toStringOutput.Add($"BalanceInCents = {(this.BalanceInCents == null ? "null" : this.BalanceInCents.ToString())}");
+            toStringOutput.Add($"AutomaticBalanceInCents = {(this.AutomaticBalanceInCents == null ? "null" : this.AutomaticBalanceInCents.ToString())}");
+            toStringOutput.Add($"RemittanceBalanceInCents = {(this.RemittanceBalanceInCents == null ? "null" : this.RemittanceBalanceInCents.ToString())}");
 
             base.ToString(toStringOutput);
         }

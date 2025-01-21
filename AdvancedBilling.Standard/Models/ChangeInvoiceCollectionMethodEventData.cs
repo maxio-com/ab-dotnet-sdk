@@ -81,8 +81,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.FromCollectionMethod = {this.FromCollectionMethod ?? "null"}");
-            toStringOutput.Add($"this.ToCollectionMethod = {this.ToCollectionMethod ?? "null"}");
+            toStringOutput.Add($"FromCollectionMethod = {this.FromCollectionMethod ?? "null"}");
+            toStringOutput.Add($"ToCollectionMethod = {this.ToCollectionMethod ?? "null"}");
 
             base.ToString(toStringOutput);
         }

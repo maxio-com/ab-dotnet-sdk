@@ -116,11 +116,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ConsolidationLevel = {this.ConsolidationLevel}");
-            toStringOutput.Add($"this.FromStatus = {this.FromStatus}");
-            toStringOutput.Add($"this.ToStatus = {this.ToStatus}");
-            toStringOutput.Add($"this.DueAmount = {this.DueAmount ?? "null"}");
-            toStringOutput.Add($"this.TotalAmount = {this.TotalAmount ?? "null"}");
+            toStringOutput.Add($"ConsolidationLevel = {this.ConsolidationLevel}");
+            toStringOutput.Add($"FromStatus = {this.FromStatus}");
+            toStringOutput.Add($"ToStatus = {this.ToStatus}");
+            toStringOutput.Add($"DueAmount = {this.DueAmount ?? "null"}");
+            toStringOutput.Add($"TotalAmount = {this.TotalAmount ?? "null"}");
 
             base.ToString(toStringOutput);
         }

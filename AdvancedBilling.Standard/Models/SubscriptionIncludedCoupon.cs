@@ -245,13 +245,13 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Code = {this.Code ?? "null"}");
-            toStringOutput.Add($"this.UseCount = {(this.UseCount == null ? "null" : this.UseCount.ToString())}");
-            toStringOutput.Add($"this.UsesAllowed = {(this.UsesAllowed == null ? "null" : this.UsesAllowed.ToString())}");
-            toStringOutput.Add($"this.ExpiresAt = {this.ExpiresAt ?? "null"}");
-            toStringOutput.Add($"this.Recurring = {(this.Recurring == null ? "null" : this.Recurring.ToString())}");
-            toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
-            toStringOutput.Add($"this.Percentage = {this.Percentage ?? "null"}");
+            toStringOutput.Add($"Code = {this.Code ?? "null"}");
+            toStringOutput.Add($"UseCount = {(this.UseCount == null ? "null" : this.UseCount.ToString())}");
+            toStringOutput.Add($"UsesAllowed = {(this.UsesAllowed == null ? "null" : this.UsesAllowed.ToString())}");
+            toStringOutput.Add($"ExpiresAt = {this.ExpiresAt ?? "null"}");
+            toStringOutput.Add($"Recurring = {(this.Recurring == null ? "null" : this.Recurring.ToString())}");
+            toStringOutput.Add($"AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
+            toStringOutput.Add($"Percentage = {this.Percentage ?? "null"}");
 
             base.ToString(toStringOutput);
         }

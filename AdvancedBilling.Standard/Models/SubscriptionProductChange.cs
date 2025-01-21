@@ -81,8 +81,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.PreviousProductId = {this.PreviousProductId}");
-            toStringOutput.Add($"this.NewProductId = {this.NewProductId}");
+            toStringOutput.Add($"PreviousProductId = {this.PreviousProductId}");
+            toStringOutput.Add($"NewProductId = {this.NewProductId}");
 
             base.ToString(toStringOutput);
         }

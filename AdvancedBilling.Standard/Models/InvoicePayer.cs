@@ -199,12 +199,12 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ChargifyId = {(this.ChargifyId == null ? "null" : this.ChargifyId.ToString())}");
-            toStringOutput.Add($"this.FirstName = {this.FirstName ?? "null"}");
-            toStringOutput.Add($"this.LastName = {this.LastName ?? "null"}");
-            toStringOutput.Add($"this.Organization = {this.Organization ?? "null"}");
-            toStringOutput.Add($"this.Email = {this.Email ?? "null"}");
-            toStringOutput.Add($"this.VatNumber = {this.VatNumber ?? "null"}");
+            toStringOutput.Add($"ChargifyId = {(this.ChargifyId == null ? "null" : this.ChargifyId.ToString())}");
+            toStringOutput.Add($"FirstName = {this.FirstName ?? "null"}");
+            toStringOutput.Add($"LastName = {this.LastName ?? "null"}");
+            toStringOutput.Add($"Organization = {this.Organization ?? "null"}");
+            toStringOutput.Add($"Email = {this.Email ?? "null"}");
+            toStringOutput.Add($"VatNumber = {this.VatNumber ?? "null"}");
 
             base.ToString(toStringOutput);
         }

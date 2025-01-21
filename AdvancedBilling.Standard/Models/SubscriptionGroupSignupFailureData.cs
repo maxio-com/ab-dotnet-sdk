@@ -147,14 +147,14 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.PayerId = {(this.PayerId == null ? "null" : this.PayerId.ToString())}");
-            toStringOutput.Add($"this.PayerReference = {this.PayerReference ?? "null"}");
-            toStringOutput.Add($"this.PaymentProfileId = {(this.PaymentProfileId == null ? "null" : this.PaymentProfileId.ToString())}");
-            toStringOutput.Add($"this.PaymentCollectionMethod = {this.PaymentCollectionMethod ?? "null"}");
-            toStringOutput.Add($"this.PayerAttributes = {(this.PayerAttributes == null ? "null" : this.PayerAttributes.ToString())}");
-            toStringOutput.Add($"this.CreditCardAttributes = {(this.CreditCardAttributes == null ? "null" : this.CreditCardAttributes.ToString())}");
-            toStringOutput.Add($"this.BankAccountAttributes = {(this.BankAccountAttributes == null ? "null" : this.BankAccountAttributes.ToString())}");
-            toStringOutput.Add($"this.Subscriptions = {(this.Subscriptions == null ? "null" : $"[{string.Join(", ", this.Subscriptions)} ]")}");
+            toStringOutput.Add($"PayerId = {(this.PayerId == null ? "null" : this.PayerId.ToString())}");
+            toStringOutput.Add($"PayerReference = {this.PayerReference ?? "null"}");
+            toStringOutput.Add($"PaymentProfileId = {(this.PaymentProfileId == null ? "null" : this.PaymentProfileId.ToString())}");
+            toStringOutput.Add($"PaymentCollectionMethod = {this.PaymentCollectionMethod ?? "null"}");
+            toStringOutput.Add($"PayerAttributes = {(this.PayerAttributes == null ? "null" : this.PayerAttributes.ToString())}");
+            toStringOutput.Add($"CreditCardAttributes = {(this.CreditCardAttributes == null ? "null" : this.CreditCardAttributes.ToString())}");
+            toStringOutput.Add($"BankAccountAttributes = {(this.BankAccountAttributes == null ? "null" : this.BankAccountAttributes.ToString())}");
+            toStringOutput.Add($"Subscriptions = {(this.Subscriptions == null ? "null" : $"[{string.Join(", ", this.Subscriptions)} ]")}");
 
             base.ToString(toStringOutput);
         }

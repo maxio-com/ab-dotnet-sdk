@@ -81,8 +81,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Kind = {this.Kind ?? "null"}");
-            toStringOutput.Add($"this.Message = {this.Message ?? "null"}");
+            toStringOutput.Add($"Kind = {this.Kind ?? "null"}");
+            toStringOutput.Add($"Message = {this.Message ?? "null"}");
 
             base.ToString(toStringOutput);
         }

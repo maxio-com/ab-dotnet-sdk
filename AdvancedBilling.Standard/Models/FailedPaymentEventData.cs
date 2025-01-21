@@ -149,11 +149,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.AmountInCents = {this.AmountInCents}");
-            toStringOutput.Add($"this.AppliedAmount = {this.AppliedAmount}");
-            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
-            toStringOutput.Add($"this.PaymentMethod = {this.PaymentMethod}");
-            toStringOutput.Add($"this.TransactionId = {this.TransactionId}");
+            toStringOutput.Add($"AmountInCents = {this.AmountInCents}");
+            toStringOutput.Add($"AppliedAmount = {this.AppliedAmount}");
+            toStringOutput.Add($"Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"PaymentMethod = {this.PaymentMethod}");
+            toStringOutput.Add($"TransactionId = {this.TransactionId}");
 
             base.ToString(toStringOutput);
         }

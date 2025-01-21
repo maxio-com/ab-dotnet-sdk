@@ -147,14 +147,14 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Product = {(this.Product == null ? "null" : $"[{string.Join(", ", this.Product)} ]")}");
-            toStringOutput.Add($"this.ProductPricePointId = {(this.ProductPricePointId == null ? "null" : $"[{string.Join(", ", this.ProductPricePointId)} ]")}");
-            toStringOutput.Add($"this.PaymentProfile = {(this.PaymentProfile == null ? "null" : $"[{string.Join(", ", this.PaymentProfile)} ]")}");
-            toStringOutput.Add($"this.PaymentProfileChargifyToken = {(this.PaymentProfileChargifyToken == null ? "null" : $"[{string.Join(", ", this.PaymentProfileChargifyToken)} ]")}");
-            toStringOutput.Add($"this.MBase = {(this.MBase == null ? "null" : $"[{string.Join(", ", this.MBase)} ]")}");
-            toStringOutput.Add($"this.PaymentProfileExpirationMonth = {(this.PaymentProfileExpirationMonth == null ? "null" : $"[{string.Join(", ", this.PaymentProfileExpirationMonth)} ]")}");
-            toStringOutput.Add($"this.PaymentProfileExpirationYear = {(this.PaymentProfileExpirationYear == null ? "null" : $"[{string.Join(", ", this.PaymentProfileExpirationYear)} ]")}");
-            toStringOutput.Add($"this.PaymentProfileFullNumber = {(this.PaymentProfileFullNumber == null ? "null" : $"[{string.Join(", ", this.PaymentProfileFullNumber)} ]")}");
+            toStringOutput.Add($"Product = {(this.Product == null ? "null" : $"[{string.Join(", ", this.Product)} ]")}");
+            toStringOutput.Add($"ProductPricePointId = {(this.ProductPricePointId == null ? "null" : $"[{string.Join(", ", this.ProductPricePointId)} ]")}");
+            toStringOutput.Add($"PaymentProfile = {(this.PaymentProfile == null ? "null" : $"[{string.Join(", ", this.PaymentProfile)} ]")}");
+            toStringOutput.Add($"PaymentProfileChargifyToken = {(this.PaymentProfileChargifyToken == null ? "null" : $"[{string.Join(", ", this.PaymentProfileChargifyToken)} ]")}");
+            toStringOutput.Add($"MBase = {(this.MBase == null ? "null" : $"[{string.Join(", ", this.MBase)} ]")}");
+            toStringOutput.Add($"PaymentProfileExpirationMonth = {(this.PaymentProfileExpirationMonth == null ? "null" : $"[{string.Join(", ", this.PaymentProfileExpirationMonth)} ]")}");
+            toStringOutput.Add($"PaymentProfileExpirationYear = {(this.PaymentProfileExpirationYear == null ? "null" : $"[{string.Join(", ", this.PaymentProfileExpirationYear)} ]")}");
+            toStringOutput.Add($"PaymentProfileFullNumber = {(this.PaymentProfileFullNumber == null ? "null" : $"[{string.Join(", ", this.PaymentProfileFullNumber)} ]")}");
 
             base.ToString(toStringOutput);
         }

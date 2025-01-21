@@ -577,23 +577,23 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.FirstName = {this.FirstName ?? "null"}");
-            toStringOutput.Add($"this.LastName = {this.LastName ?? "null"}");
-            toStringOutput.Add($"this.CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
-            toStringOutput.Add($"this.CurrentVault = {(this.CurrentVault == null ? "null" : this.CurrentVault.ToString())}");
-            toStringOutput.Add($"this.VaultToken = {this.VaultToken ?? "null"}");
-            toStringOutput.Add($"this.BillingAddress = {this.BillingAddress ?? "null"}");
-            toStringOutput.Add($"this.BillingCity = {this.BillingCity ?? "null"}");
-            toStringOutput.Add($"this.BillingState = {this.BillingState ?? "null"}");
-            toStringOutput.Add($"this.BillingZip = {this.BillingZip ?? "null"}");
-            toStringOutput.Add($"this.BillingCountry = {this.BillingCountry ?? "null"}");
-            toStringOutput.Add($"this.CustomerVaultToken = {this.CustomerVaultToken ?? "null"}");
-            toStringOutput.Add($"this.BillingAddress2 = {this.BillingAddress2 ?? "null"}");
-            toStringOutput.Add($"this.PaymentType = {this.PaymentType}");
-            toStringOutput.Add($"this.SiteGatewaySettingId = {(this.SiteGatewaySettingId == null ? "null" : this.SiteGatewaySettingId.ToString())}");
-            toStringOutput.Add($"this.GatewayHandle = {this.GatewayHandle ?? "null"}");
-            toStringOutput.Add($"this.PaypalEmail = {this.PaypalEmail ?? "null"}");
+            toStringOutput.Add($"Id = {(this.Id == null ? "null" : this.Id.ToString())}");
+            toStringOutput.Add($"FirstName = {this.FirstName ?? "null"}");
+            toStringOutput.Add($"LastName = {this.LastName ?? "null"}");
+            toStringOutput.Add($"CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
+            toStringOutput.Add($"CurrentVault = {(this.CurrentVault == null ? "null" : this.CurrentVault.ToString())}");
+            toStringOutput.Add($"VaultToken = {this.VaultToken ?? "null"}");
+            toStringOutput.Add($"BillingAddress = {this.BillingAddress ?? "null"}");
+            toStringOutput.Add($"BillingCity = {this.BillingCity ?? "null"}");
+            toStringOutput.Add($"BillingState = {this.BillingState ?? "null"}");
+            toStringOutput.Add($"BillingZip = {this.BillingZip ?? "null"}");
+            toStringOutput.Add($"BillingCountry = {this.BillingCountry ?? "null"}");
+            toStringOutput.Add($"CustomerVaultToken = {this.CustomerVaultToken ?? "null"}");
+            toStringOutput.Add($"BillingAddress2 = {this.BillingAddress2 ?? "null"}");
+            toStringOutput.Add($"PaymentType = {this.PaymentType}");
+            toStringOutput.Add($"SiteGatewaySettingId = {(this.SiteGatewaySettingId == null ? "null" : this.SiteGatewaySettingId.ToString())}");
+            toStringOutput.Add($"GatewayHandle = {this.GatewayHandle ?? "null"}");
+            toStringOutput.Add($"PaypalEmail = {this.PaypalEmail ?? "null"}");
 
             base.ToString(toStringOutput);
         }

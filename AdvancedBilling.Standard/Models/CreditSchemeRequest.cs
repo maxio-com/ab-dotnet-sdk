@@ -69,7 +69,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.CreditScheme = {this.CreditScheme}");
+            toStringOutput.Add($"CreditScheme = {this.CreditScheme}");
 
             base.ToString(toStringOutput);
         }

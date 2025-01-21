@@ -159,15 +159,15 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.SubscriptionGroupUid = {this.SubscriptionGroupUid ?? "null"}");
-            toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
-            toStringOutput.Add($"this.RemainingAmountInCents = {(this.RemainingAmountInCents == null ? "null" : this.RemainingAmountInCents.ToString())}");
-            toStringOutput.Add($"this.Details = {this.Details ?? "null"}");
-            toStringOutput.Add($"this.External = {(this.External == null ? "null" : this.External.ToString())}");
-            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
-            toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"Id = {(this.Id == null ? "null" : this.Id.ToString())}");
+            toStringOutput.Add($"SubscriptionGroupUid = {this.SubscriptionGroupUid ?? "null"}");
+            toStringOutput.Add($"AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
+            toStringOutput.Add($"RemainingAmountInCents = {(this.RemainingAmountInCents == null ? "null" : this.RemainingAmountInCents.ToString())}");
+            toStringOutput.Add($"Details = {this.Details ?? "null"}");
+            toStringOutput.Add($"External = {(this.External == null ? "null" : this.External.ToString())}");
+            toStringOutput.Add($"Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
+            toStringOutput.Add($"CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
 
             base.ToString(toStringOutput);
         }

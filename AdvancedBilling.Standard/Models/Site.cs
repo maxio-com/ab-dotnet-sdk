@@ -38,6 +38,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="sellerId">seller_id.</param>
         /// <param name="nonPrimaryCurrencies">non_primary_currencies.</param>
         /// <param name="relationshipInvoicingEnabled">relationship_invoicing_enabled.</param>
+        /// <param name="scheduleSubscriptionCancellationEnabled">schedule_subscription_cancellation_enabled.</param>
         /// <param name="customerHierarchyEnabled">customer_hierarchy_enabled.</param>
         /// <param name="whopaysEnabled">whopays_enabled.</param>
         /// <param name="whopaysDefaultPayer">whopays_default_payer.</param>
@@ -55,6 +56,7 @@ namespace AdvancedBilling.Standard.Models
             int? sellerId = null,
             List<string> nonPrimaryCurrencies = null,
             bool? relationshipInvoicingEnabled = null,
+            bool? scheduleSubscriptionCancellationEnabled = null,
             bool? customerHierarchyEnabled = null,
             bool? whopaysEnabled = null,
             string whopaysDefaultPayer = null,
@@ -72,6 +74,7 @@ namespace AdvancedBilling.Standard.Models
             this.SellerId = sellerId;
             this.NonPrimaryCurrencies = nonPrimaryCurrencies;
             this.RelationshipInvoicingEnabled = relationshipInvoicingEnabled;
+            this.ScheduleSubscriptionCancellationEnabled = scheduleSubscriptionCancellationEnabled;
             this.CustomerHierarchyEnabled = customerHierarchyEnabled;
             this.WhopaysEnabled = whopaysEnabled;
             this.WhopaysDefaultPayer = whopaysDefaultPayer;
@@ -124,6 +127,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("relationship_invoicing_enabled", NullValueHandling = NullValueHandling.Ignore)]
         public bool? RelationshipInvoicingEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets ScheduleSubscriptionCancellationEnabled.
+        /// </summary>
+        [JsonProperty("schedule_subscription_cancellation_enabled", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? ScheduleSubscriptionCancellationEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets CustomerHierarchyEnabled.
@@ -208,6 +217,8 @@ namespace AdvancedBilling.Standard.Models
                  this.NonPrimaryCurrencies?.Equals(other.NonPrimaryCurrencies) == true) &&
                 (this.RelationshipInvoicingEnabled == null && other.RelationshipInvoicingEnabled == null ||
                  this.RelationshipInvoicingEnabled?.Equals(other.RelationshipInvoicingEnabled) == true) &&
+                (this.ScheduleSubscriptionCancellationEnabled == null && other.ScheduleSubscriptionCancellationEnabled == null ||
+                 this.ScheduleSubscriptionCancellationEnabled?.Equals(other.ScheduleSubscriptionCancellationEnabled) == true) &&
                 (this.CustomerHierarchyEnabled == null && other.CustomerHierarchyEnabled == null ||
                  this.CustomerHierarchyEnabled?.Equals(other.CustomerHierarchyEnabled) == true) &&
                 (this.WhopaysEnabled == null && other.WhopaysEnabled == null ||
@@ -235,22 +246,23 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
-            toStringOutput.Add($"this.Subdomain = {this.Subdomain ?? "null"}");
-            toStringOutput.Add($"this.Currency = {this.Currency ?? "null"}");
-            toStringOutput.Add($"this.SellerId = {(this.SellerId == null ? "null" : this.SellerId.ToString())}");
-            toStringOutput.Add($"this.NonPrimaryCurrencies = {(this.NonPrimaryCurrencies == null ? "null" : $"[{string.Join(", ", this.NonPrimaryCurrencies)} ]")}");
-            toStringOutput.Add($"this.RelationshipInvoicingEnabled = {(this.RelationshipInvoicingEnabled == null ? "null" : this.RelationshipInvoicingEnabled.ToString())}");
-            toStringOutput.Add($"this.CustomerHierarchyEnabled = {(this.CustomerHierarchyEnabled == null ? "null" : this.CustomerHierarchyEnabled.ToString())}");
-            toStringOutput.Add($"this.WhopaysEnabled = {(this.WhopaysEnabled == null ? "null" : this.WhopaysEnabled.ToString())}");
-            toStringOutput.Add($"this.WhopaysDefaultPayer = {this.WhopaysDefaultPayer ?? "null"}");
-            toStringOutput.Add($"this.AllocationSettings = {(this.AllocationSettings == null ? "null" : this.AllocationSettings.ToString())}");
-            toStringOutput.Add($"this.DefaultPaymentCollectionMethod = {this.DefaultPaymentCollectionMethod ?? "null"}");
-            toStringOutput.Add($"this.OrganizationAddress = {(this.OrganizationAddress == null ? "null" : this.OrganizationAddress.ToString())}");
-            toStringOutput.Add($"this.TaxConfiguration = {(this.TaxConfiguration == null ? "null" : this.TaxConfiguration.ToString())}");
-            toStringOutput.Add($"this.NetTerms = {(this.NetTerms == null ? "null" : this.NetTerms.ToString())}");
-            toStringOutput.Add($"this.Test = {(this.Test == null ? "null" : this.Test.ToString())}");
+            toStringOutput.Add($"Id = {(this.Id == null ? "null" : this.Id.ToString())}");
+            toStringOutput.Add($"Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"Subdomain = {this.Subdomain ?? "null"}");
+            toStringOutput.Add($"Currency = {this.Currency ?? "null"}");
+            toStringOutput.Add($"SellerId = {(this.SellerId == null ? "null" : this.SellerId.ToString())}");
+            toStringOutput.Add($"NonPrimaryCurrencies = {(this.NonPrimaryCurrencies == null ? "null" : $"[{string.Join(", ", this.NonPrimaryCurrencies)} ]")}");
+            toStringOutput.Add($"RelationshipInvoicingEnabled = {(this.RelationshipInvoicingEnabled == null ? "null" : this.RelationshipInvoicingEnabled.ToString())}");
+            toStringOutput.Add($"ScheduleSubscriptionCancellationEnabled = {(this.ScheduleSubscriptionCancellationEnabled == null ? "null" : this.ScheduleSubscriptionCancellationEnabled.ToString())}");
+            toStringOutput.Add($"CustomerHierarchyEnabled = {(this.CustomerHierarchyEnabled == null ? "null" : this.CustomerHierarchyEnabled.ToString())}");
+            toStringOutput.Add($"WhopaysEnabled = {(this.WhopaysEnabled == null ? "null" : this.WhopaysEnabled.ToString())}");
+            toStringOutput.Add($"WhopaysDefaultPayer = {this.WhopaysDefaultPayer ?? "null"}");
+            toStringOutput.Add($"AllocationSettings = {(this.AllocationSettings == null ? "null" : this.AllocationSettings.ToString())}");
+            toStringOutput.Add($"DefaultPaymentCollectionMethod = {this.DefaultPaymentCollectionMethod ?? "null"}");
+            toStringOutput.Add($"OrganizationAddress = {(this.OrganizationAddress == null ? "null" : this.OrganizationAddress.ToString())}");
+            toStringOutput.Add($"TaxConfiguration = {(this.TaxConfiguration == null ? "null" : this.TaxConfiguration.ToString())}");
+            toStringOutput.Add($"NetTerms = {(this.NetTerms == null ? "null" : this.NetTerms.ToString())}");
+            toStringOutput.Add($"Test = {(this.Test == null ? "null" : this.Test.ToString())}");
 
             base.ToString(toStringOutput);
         }

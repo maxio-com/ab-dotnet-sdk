@@ -142,10 +142,10 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
-            toStringOutput.Add($"this.Address = {(this.Address == null ? "null" : this.Address.ToString())}");
-            toStringOutput.Add($"this.Phone = {this.Phone ?? "null"}");
-            toStringOutput.Add($"this.LogoUrl = {this.LogoUrl ?? "null"}");
+            toStringOutput.Add($"Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"Address = {(this.Address == null ? "null" : this.Address.ToString())}");
+            toStringOutput.Add($"Phone = {this.Phone ?? "null"}");
+            toStringOutput.Add($"LogoUrl = {this.LogoUrl ?? "null"}");
 
             base.ToString(toStringOutput);
         }

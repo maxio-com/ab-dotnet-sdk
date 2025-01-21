@@ -295,11 +295,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.Status = {this.Status ?? "null"}");
-            toStringOutput.Add($"this.DocumentCode = {this.DocumentCode ?? "null"}");
-            toStringOutput.Add($"this.CommitDate = {(this.CommitDate == null ? "null" : this.CommitDate.ToString())}");
-            toStringOutput.Add($"this.ModifyDate = {(this.ModifyDate == null ? "null" : this.ModifyDate.ToString())}");
+            toStringOutput.Add($"Id = {(this.Id == null ? "null" : this.Id.ToString())}");
+            toStringOutput.Add($"Status = {this.Status ?? "null"}");
+            toStringOutput.Add($"DocumentCode = {this.DocumentCode ?? "null"}");
+            toStringOutput.Add($"CommitDate = {(this.CommitDate == null ? "null" : this.CommitDate.ToString())}");
+            toStringOutput.Add($"ModifyDate = {(this.ModifyDate == null ? "null" : this.ModifyDate.ToString())}");
 
             base.ToString(toStringOutput);
         }

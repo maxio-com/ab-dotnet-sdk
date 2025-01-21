@@ -234,18 +234,18 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.MEvent = {this.MEvent ?? "null"}");
-            toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
-            toStringOutput.Add($"this.LastError = {this.LastError ?? "null"}");
-            toStringOutput.Add($"this.LastErrorAt = {(this.LastErrorAt == null ? "null" : this.LastErrorAt.ToString())}");
-            toStringOutput.Add($"this.AcceptedAt = {(this.AcceptedAt == null ? "null" : this.AcceptedAt.ToString())}");
-            toStringOutput.Add($"this.LastSentAt = {(this.LastSentAt == null ? "null" : this.LastSentAt.ToString())}");
-            toStringOutput.Add($"this.LastSentUrl = {this.LastSentUrl ?? "null"}");
-            toStringOutput.Add($"this.Successful = {(this.Successful == null ? "null" : this.Successful.ToString())}");
-            toStringOutput.Add($"this.Body = {this.Body ?? "null"}");
-            toStringOutput.Add($"this.Signature = {this.Signature ?? "null"}");
-            toStringOutput.Add($"this.SignatureHmacSha256 = {this.SignatureHmacSha256 ?? "null"}");
+            toStringOutput.Add($"MEvent = {this.MEvent ?? "null"}");
+            toStringOutput.Add($"Id = {(this.Id == null ? "null" : this.Id.ToString())}");
+            toStringOutput.Add($"CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"LastError = {this.LastError ?? "null"}");
+            toStringOutput.Add($"LastErrorAt = {(this.LastErrorAt == null ? "null" : this.LastErrorAt.ToString())}");
+            toStringOutput.Add($"AcceptedAt = {(this.AcceptedAt == null ? "null" : this.AcceptedAt.ToString())}");
+            toStringOutput.Add($"LastSentAt = {(this.LastSentAt == null ? "null" : this.LastSentAt.ToString())}");
+            toStringOutput.Add($"LastSentUrl = {this.LastSentUrl ?? "null"}");
+            toStringOutput.Add($"Successful = {(this.Successful == null ? "null" : this.Successful.ToString())}");
+            toStringOutput.Add($"Body = {this.Body ?? "null"}");
+            toStringOutput.Add($"Signature = {this.Signature ?? "null"}");
+            toStringOutput.Add($"SignatureHmacSha256 = {this.SignatureHmacSha256 ?? "null"}");
 
             base.ToString(toStringOutput);
         }

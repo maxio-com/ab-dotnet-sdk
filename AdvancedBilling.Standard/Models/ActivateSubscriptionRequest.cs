@@ -109,7 +109,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.RevertOnFailure = {(this.RevertOnFailure == null ? "null" : this.RevertOnFailure.ToString())}");
+            toStringOutput.Add($"RevertOnFailure = {(this.RevertOnFailure == null ? "null" : this.RevertOnFailure.ToString())}");
 
             base.ToString(toStringOutput);
         }

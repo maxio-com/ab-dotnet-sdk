@@ -70,7 +70,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ReferralCode = {(this.ReferralCode == null ? "null" : this.ReferralCode.ToString())}");
+            toStringOutput.Add($"ReferralCode = {(this.ReferralCode == null ? "null" : this.ReferralCode.ToString())}");
 
             base.ToString(toStringOutput);
         }

@@ -81,8 +81,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ChargifyJsKeys = {(this.ChargifyJsKeys == null ? "null" : $"[{string.Join(", ", this.ChargifyJsKeys)} ]")}");
-            toStringOutput.Add($"this.Meta = {(this.Meta == null ? "null" : this.Meta.ToString())}");
+            toStringOutput.Add($"ChargifyJsKeys = {(this.ChargifyJsKeys == null ? "null" : $"[{string.Join(", ", this.ChargifyJsKeys)} ]")}");
+            toStringOutput.Add($"Meta = {(this.Meta == null ? "null" : this.Meta.ToString())}");
 
             base.ToString(toStringOutput);
         }

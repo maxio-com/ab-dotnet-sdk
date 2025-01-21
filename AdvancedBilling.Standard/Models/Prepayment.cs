@@ -164,16 +164,16 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Id = {this.Id}");
-            toStringOutput.Add($"this.SubscriptionId = {this.SubscriptionId}");
-            toStringOutput.Add($"this.AmountInCents = {this.AmountInCents}");
-            toStringOutput.Add($"this.RemainingAmountInCents = {this.RemainingAmountInCents}");
-            toStringOutput.Add($"this.RefundedAmountInCents = {(this.RefundedAmountInCents == null ? "null" : this.RefundedAmountInCents.ToString())}");
-            toStringOutput.Add($"this.Details = {this.Details ?? "null"}");
-            toStringOutput.Add($"this.External = {this.External}");
-            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
-            toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
-            toStringOutput.Add($"this.CreatedAt = {this.CreatedAt}");
+            toStringOutput.Add($"Id = {this.Id}");
+            toStringOutput.Add($"SubscriptionId = {this.SubscriptionId}");
+            toStringOutput.Add($"AmountInCents = {this.AmountInCents}");
+            toStringOutput.Add($"RemainingAmountInCents = {this.RemainingAmountInCents}");
+            toStringOutput.Add($"RefundedAmountInCents = {(this.RefundedAmountInCents == null ? "null" : this.RefundedAmountInCents.ToString())}");
+            toStringOutput.Add($"Details = {this.Details ?? "null"}");
+            toStringOutput.Add($"External = {this.External}");
+            toStringOutput.Add($"Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
+            toStringOutput.Add($"CreatedAt = {this.CreatedAt}");
 
             base.ToString(toStringOutput);
         }

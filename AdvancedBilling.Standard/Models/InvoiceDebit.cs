@@ -148,14 +148,14 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Uid = {this.Uid ?? "null"}");
-            toStringOutput.Add($"this.DebitNoteNumber = {this.DebitNoteNumber ?? "null"}");
-            toStringOutput.Add($"this.DebitNoteUid = {this.DebitNoteUid ?? "null"}");
-            toStringOutput.Add($"this.Role = {(this.Role == null ? "null" : this.Role.ToString())}");
-            toStringOutput.Add($"this.TransactionTime = {(this.TransactionTime == null ? "null" : this.TransactionTime.ToString())}");
-            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
-            toStringOutput.Add($"this.OriginalAmount = {this.OriginalAmount ?? "null"}");
-            toStringOutput.Add($"this.AppliedAmount = {this.AppliedAmount ?? "null"}");
+            toStringOutput.Add($"Uid = {this.Uid ?? "null"}");
+            toStringOutput.Add($"DebitNoteNumber = {this.DebitNoteNumber ?? "null"}");
+            toStringOutput.Add($"DebitNoteUid = {this.DebitNoteUid ?? "null"}");
+            toStringOutput.Add($"Role = {(this.Role == null ? "null" : this.Role.ToString())}");
+            toStringOutput.Add($"TransactionTime = {(this.TransactionTime == null ? "null" : this.TransactionTime.ToString())}");
+            toStringOutput.Add($"Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"OriginalAmount = {this.OriginalAmount ?? "null"}");
+            toStringOutput.Add($"AppliedAmount = {this.AppliedAmount ?? "null"}");
 
             base.ToString(toStringOutput);
         }

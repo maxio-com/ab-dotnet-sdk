@@ -81,8 +81,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.CurrentProformaInvoice = {(this.CurrentProformaInvoice == null ? "null" : this.CurrentProformaInvoice.ToString())}");
-            toStringOutput.Add($"this.NextProformaInvoice = {(this.NextProformaInvoice == null ? "null" : this.NextProformaInvoice.ToString())}");
+            toStringOutput.Add($"CurrentProformaInvoice = {(this.CurrentProformaInvoice == null ? "null" : this.CurrentProformaInvoice.ToString())}");
+            toStringOutput.Add($"NextProformaInvoice = {(this.NextProformaInvoice == null ? "null" : this.NextProformaInvoice.ToString())}");
 
             base.ToString(toStringOutput);
         }

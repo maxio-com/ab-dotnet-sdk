@@ -114,11 +114,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.OpenInvoices = {(this.OpenInvoices == null ? "null" : this.OpenInvoices.ToString())}");
-            toStringOutput.Add($"this.PendingInvoices = {(this.PendingInvoices == null ? "null" : this.PendingInvoices.ToString())}");
-            toStringOutput.Add($"this.PendingDiscounts = {(this.PendingDiscounts == null ? "null" : this.PendingDiscounts.ToString())}");
-            toStringOutput.Add($"this.ServiceCredits = {(this.ServiceCredits == null ? "null" : this.ServiceCredits.ToString())}");
-            toStringOutput.Add($"this.Prepayments = {(this.Prepayments == null ? "null" : this.Prepayments.ToString())}");
+            toStringOutput.Add($"OpenInvoices = {(this.OpenInvoices == null ? "null" : this.OpenInvoices.ToString())}");
+            toStringOutput.Add($"PendingInvoices = {(this.PendingInvoices == null ? "null" : this.PendingInvoices.ToString())}");
+            toStringOutput.Add($"PendingDiscounts = {(this.PendingDiscounts == null ? "null" : this.PendingDiscounts.ToString())}");
+            toStringOutput.Add($"ServiceCredits = {(this.ServiceCredits == null ? "null" : this.ServiceCredits.ToString())}");
+            toStringOutput.Add($"Prepayments = {(this.Prepayments == null ? "null" : this.Prepayments.ToString())}");
 
             base.ToString(toStringOutput);
         }

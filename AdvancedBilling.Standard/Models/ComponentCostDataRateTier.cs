@@ -153,11 +153,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.StartingQuantity = {(this.StartingQuantity == null ? "null" : this.StartingQuantity.ToString())}");
-            toStringOutput.Add($"this.EndingQuantity = {(this.EndingQuantity == null ? "null" : this.EndingQuantity.ToString())}");
-            toStringOutput.Add($"this.Quantity = {this.Quantity ?? "null"}");
-            toStringOutput.Add($"this.UnitPrice = {this.UnitPrice ?? "null"}");
-            toStringOutput.Add($"this.Amount = {this.Amount ?? "null"}");
+            toStringOutput.Add($"StartingQuantity = {(this.StartingQuantity == null ? "null" : this.StartingQuantity.ToString())}");
+            toStringOutput.Add($"EndingQuantity = {(this.EndingQuantity == null ? "null" : this.EndingQuantity.ToString())}");
+            toStringOutput.Add($"Quantity = {this.Quantity ?? "null"}");
+            toStringOutput.Add($"UnitPrice = {this.UnitPrice ?? "null"}");
+            toStringOutput.Add($"Amount = {this.Amount ?? "null"}");
 
             base.ToString(toStringOutput);
         }

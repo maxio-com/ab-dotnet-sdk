@@ -191,18 +191,18 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ChargifyToken = {this.ChargifyToken ?? "null"}");
-            toStringOutput.Add($"this.BankName = {this.BankName ?? "null"}");
-            toStringOutput.Add($"this.BankRoutingNumber = {this.BankRoutingNumber ?? "null"}");
-            toStringOutput.Add($"this.BankAccountNumber = {this.BankAccountNumber ?? "null"}");
-            toStringOutput.Add($"this.BankAccountType = {(this.BankAccountType == null ? "null" : this.BankAccountType.ToString())}");
-            toStringOutput.Add($"this.BankBranchCode = {this.BankBranchCode ?? "null"}");
-            toStringOutput.Add($"this.BankIban = {this.BankIban ?? "null"}");
-            toStringOutput.Add($"this.BankAccountHolderType = {(this.BankAccountHolderType == null ? "null" : this.BankAccountHolderType.ToString())}");
-            toStringOutput.Add($"this.PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
-            toStringOutput.Add($"this.CurrentVault = {(this.CurrentVault == null ? "null" : this.CurrentVault.ToString())}");
-            toStringOutput.Add($"this.VaultToken = {this.VaultToken ?? "null"}");
-            toStringOutput.Add($"this.CustomerVaultToken = {this.CustomerVaultToken ?? "null"}");
+            toStringOutput.Add($"ChargifyToken = {this.ChargifyToken ?? "null"}");
+            toStringOutput.Add($"BankName = {this.BankName ?? "null"}");
+            toStringOutput.Add($"BankRoutingNumber = {this.BankRoutingNumber ?? "null"}");
+            toStringOutput.Add($"BankAccountNumber = {this.BankAccountNumber ?? "null"}");
+            toStringOutput.Add($"BankAccountType = {(this.BankAccountType == null ? "null" : this.BankAccountType.ToString())}");
+            toStringOutput.Add($"BankBranchCode = {this.BankBranchCode ?? "null"}");
+            toStringOutput.Add($"BankIban = {this.BankIban ?? "null"}");
+            toStringOutput.Add($"BankAccountHolderType = {(this.BankAccountHolderType == null ? "null" : this.BankAccountHolderType.ToString())}");
+            toStringOutput.Add($"PaymentType = {(this.PaymentType == null ? "null" : this.PaymentType.ToString())}");
+            toStringOutput.Add($"CurrentVault = {(this.CurrentVault == null ? "null" : this.CurrentVault.ToString())}");
+            toStringOutput.Add($"VaultToken = {this.VaultToken ?? "null"}");
+            toStringOutput.Add($"CustomerVaultToken = {this.CustomerVaultToken ?? "null"}");
 
             base.ToString(toStringOutput);
         }

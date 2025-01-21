@@ -129,11 +129,11 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"Amount = {(this.Amount == null ? "null" : this.Amount.ToString())}");
-            toStringOutput.Add($"this.Memo = {this.Memo ?? "null"}");
-            toStringOutput.Add($"this.Method = {(this.Method == null ? "null" : this.Method.ToString())}");
-            toStringOutput.Add($"this.Details = {this.Details ?? "null"}");
-            toStringOutput.Add($"this.PaymentProfileId = {(this.PaymentProfileId == null ? "null" : this.PaymentProfileId.ToString())}");
-            toStringOutput.Add($"this.ReceivedOn = {(this.ReceivedOn == null ? "null" : this.ReceivedOn.ToString())}");
+            toStringOutput.Add($"Memo = {this.Memo ?? "null"}");
+            toStringOutput.Add($"Method = {(this.Method == null ? "null" : this.Method.ToString())}");
+            toStringOutput.Add($"Details = {this.Details ?? "null"}");
+            toStringOutput.Add($"PaymentProfileId = {(this.PaymentProfileId == null ? "null" : this.PaymentProfileId.ToString())}");
+            toStringOutput.Add($"ReceivedOn = {(this.ReceivedOn == null ? "null" : this.ReceivedOn.ToString())}");
 
             base.ToString(toStringOutput);
         }

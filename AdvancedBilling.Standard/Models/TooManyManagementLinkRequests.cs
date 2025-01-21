@@ -81,8 +81,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Error = {this.Error ?? "null"}");
-            toStringOutput.Add($"this.NewLinkAvailableAt = {this.NewLinkAvailableAt}");
+            toStringOutput.Add($"Error = {this.Error ?? "null"}");
+            toStringOutput.Add($"NewLinkAvailableAt = {this.NewLinkAvailableAt}");
 
             base.ToString(toStringOutput);
         }

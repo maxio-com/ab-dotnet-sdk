@@ -70,7 +70,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.ChargeUnbilledUsage = {(this.ChargeUnbilledUsage == null ? "null" : this.ChargeUnbilledUsage.ToString())}");
+            toStringOutput.Add($"ChargeUnbilledUsage = {(this.ChargeUnbilledUsage == null ? "null" : this.ChargeUnbilledUsage.ToString())}");
 
             base.ToString(toStringOutput);
         }

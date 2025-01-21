@@ -159,15 +159,15 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.NextAssessmentAt = {(this.NextAssessmentAt == null ? "null" : this.NextAssessmentAt.ToString())}");
-            toStringOutput.Add($"this.SubtotalInCents = {(this.SubtotalInCents == null ? "null" : this.SubtotalInCents.ToString())}");
-            toStringOutput.Add($"this.TotalTaxInCents = {(this.TotalTaxInCents == null ? "null" : this.TotalTaxInCents.ToString())}");
-            toStringOutput.Add($"this.TotalDiscountInCents = {(this.TotalDiscountInCents == null ? "null" : this.TotalDiscountInCents.ToString())}");
-            toStringOutput.Add($"this.TotalInCents = {(this.TotalInCents == null ? "null" : this.TotalInCents.ToString())}");
-            toStringOutput.Add($"this.ExistingBalanceInCents = {(this.ExistingBalanceInCents == null ? "null" : this.ExistingBalanceInCents.ToString())}");
-            toStringOutput.Add($"this.TotalAmountDueInCents = {(this.TotalAmountDueInCents == null ? "null" : this.TotalAmountDueInCents.ToString())}");
-            toStringOutput.Add($"this.UncalculatedTaxes = {(this.UncalculatedTaxes == null ? "null" : this.UncalculatedTaxes.ToString())}");
-            toStringOutput.Add($"this.LineItems = {(this.LineItems == null ? "null" : $"[{string.Join(", ", this.LineItems)} ]")}");
+            toStringOutput.Add($"NextAssessmentAt = {(this.NextAssessmentAt == null ? "null" : this.NextAssessmentAt.ToString())}");
+            toStringOutput.Add($"SubtotalInCents = {(this.SubtotalInCents == null ? "null" : this.SubtotalInCents.ToString())}");
+            toStringOutput.Add($"TotalTaxInCents = {(this.TotalTaxInCents == null ? "null" : this.TotalTaxInCents.ToString())}");
+            toStringOutput.Add($"TotalDiscountInCents = {(this.TotalDiscountInCents == null ? "null" : this.TotalDiscountInCents.ToString())}");
+            toStringOutput.Add($"TotalInCents = {(this.TotalInCents == null ? "null" : this.TotalInCents.ToString())}");
+            toStringOutput.Add($"ExistingBalanceInCents = {(this.ExistingBalanceInCents == null ? "null" : this.ExistingBalanceInCents.ToString())}");
+            toStringOutput.Add($"TotalAmountDueInCents = {(this.TotalAmountDueInCents == null ? "null" : this.TotalAmountDueInCents.ToString())}");
+            toStringOutput.Add($"UncalculatedTaxes = {(this.UncalculatedTaxes == null ? "null" : this.UncalculatedTaxes.ToString())}");
+            toStringOutput.Add($"LineItems = {(this.LineItems == null ? "null" : $"[{string.Join(", ", this.LineItems)} ]")}");
 
             base.ToString(toStringOutput);
         }

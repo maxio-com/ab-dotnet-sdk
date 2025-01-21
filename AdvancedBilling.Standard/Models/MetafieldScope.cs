@@ -136,13 +136,13 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Csv = {(this.Csv == null ? "null" : this.Csv.ToString())}");
-            toStringOutput.Add($"this.Invoices = {(this.Invoices == null ? "null" : this.Invoices.ToString())}");
-            toStringOutput.Add($"this.Statements = {(this.Statements == null ? "null" : this.Statements.ToString())}");
-            toStringOutput.Add($"this.Portal = {(this.Portal == null ? "null" : this.Portal.ToString())}");
-            toStringOutput.Add($"this.PublicShow = {(this.PublicShow == null ? "null" : this.PublicShow.ToString())}");
-            toStringOutput.Add($"this.PublicEdit = {(this.PublicEdit == null ? "null" : this.PublicEdit.ToString())}");
-            toStringOutput.Add($"this.Hosted = {(this.Hosted == null ? "null" : $"[{string.Join(", ", this.Hosted)} ]")}");
+            toStringOutput.Add($"Csv = {(this.Csv == null ? "null" : this.Csv.ToString())}");
+            toStringOutput.Add($"Invoices = {(this.Invoices == null ? "null" : this.Invoices.ToString())}");
+            toStringOutput.Add($"Statements = {(this.Statements == null ? "null" : this.Statements.ToString())}");
+            toStringOutput.Add($"Portal = {(this.Portal == null ? "null" : this.Portal.ToString())}");
+            toStringOutput.Add($"PublicShow = {(this.PublicShow == null ? "null" : this.PublicShow.ToString())}");
+            toStringOutput.Add($"PublicEdit = {(this.PublicEdit == null ? "null" : this.PublicEdit.ToString())}");
+            toStringOutput.Add($"Hosted = {(this.Hosted == null ? "null" : $"[{string.Join(", ", this.Hosted)} ]")}");
 
             base.ToString(toStringOutput);
         }

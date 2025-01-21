@@ -105,10 +105,10 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Reason = {this.Reason ?? "null"}");
-            toStringOutput.Add($"this.CurrentAccountBalanceInCents = {this.CurrentAccountBalanceInCents}");
-            toStringOutput.Add($"this.PrepaymentAccountBalanceInCents = {this.PrepaymentAccountBalanceInCents}");
-            toStringOutput.Add($"this.CurrentUsageAmountInCents = {this.CurrentUsageAmountInCents}");
+            toStringOutput.Add($"Reason = {this.Reason ?? "null"}");
+            toStringOutput.Add($"CurrentAccountBalanceInCents = {this.CurrentAccountBalanceInCents}");
+            toStringOutput.Add($"PrepaymentAccountBalanceInCents = {this.PrepaymentAccountBalanceInCents}");
+            toStringOutput.Add($"CurrentUsageAmountInCents = {this.CurrentUsageAmountInCents}");
 
             base.ToString(toStringOutput);
         }

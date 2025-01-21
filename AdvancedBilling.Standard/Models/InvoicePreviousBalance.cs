@@ -82,8 +82,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.CapturedAt = {(this.CapturedAt == null ? "null" : this.CapturedAt.ToString())}");
-            toStringOutput.Add($"this.Invoices = {(this.Invoices == null ? "null" : $"[{string.Join(", ", this.Invoices)} ]")}");
+            toStringOutput.Add($"CapturedAt = {(this.CapturedAt == null ? "null" : this.CapturedAt.ToString())}");
+            toStringOutput.Add($"Invoices = {(this.Invoices == null ? "null" : $"[{string.Join(", ", this.Invoices)} ]")}");
 
             base.ToString(toStringOutput);
         }

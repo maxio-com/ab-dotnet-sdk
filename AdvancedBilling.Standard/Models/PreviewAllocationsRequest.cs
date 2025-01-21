@@ -180,10 +180,10 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Allocations = {(this.Allocations == null ? "null" : $"[{string.Join(", ", this.Allocations)} ]")}");
-            toStringOutput.Add($"this.EffectiveProrationDate = {(this.EffectiveProrationDate == null ? "null" : this.EffectiveProrationDate.ToString())}");
-            toStringOutput.Add($"this.UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
-            toStringOutput.Add($"this.DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
+            toStringOutput.Add($"Allocations = {(this.Allocations == null ? "null" : $"[{string.Join(", ", this.Allocations)} ]")}");
+            toStringOutput.Add($"EffectiveProrationDate = {(this.EffectiveProrationDate == null ? "null" : this.EffectiveProrationDate.ToString())}");
+            toStringOutput.Add($"UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
+            toStringOutput.Add($"DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
 
             base.ToString(toStringOutput);
         }

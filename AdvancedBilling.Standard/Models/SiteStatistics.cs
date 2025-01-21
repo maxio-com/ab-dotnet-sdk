@@ -180,17 +180,17 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.TotalSubscriptions = {(this.TotalSubscriptions == null ? "null" : this.TotalSubscriptions.ToString())}");
-            toStringOutput.Add($"this.SubscriptionsToday = {(this.SubscriptionsToday == null ? "null" : this.SubscriptionsToday.ToString())}");
-            toStringOutput.Add($"this.TotalRevenue = {this.TotalRevenue ?? "null"}");
-            toStringOutput.Add($"this.RevenueToday = {this.RevenueToday ?? "null"}");
-            toStringOutput.Add($"this.RevenueThisMonth = {this.RevenueThisMonth ?? "null"}");
-            toStringOutput.Add($"this.RevenueThisYear = {this.RevenueThisYear ?? "null"}");
-            toStringOutput.Add($"this.TotalCanceledSubscriptions = {(this.TotalCanceledSubscriptions == null ? "null" : this.TotalCanceledSubscriptions.ToString())}");
-            toStringOutput.Add($"this.TotalActiveSubscriptions = {(this.TotalActiveSubscriptions == null ? "null" : this.TotalActiveSubscriptions.ToString())}");
-            toStringOutput.Add($"this.TotalPastDueSubscriptions = {(this.TotalPastDueSubscriptions == null ? "null" : this.TotalPastDueSubscriptions.ToString())}");
-            toStringOutput.Add($"this.TotalUnpaidSubscriptions = {(this.TotalUnpaidSubscriptions == null ? "null" : this.TotalUnpaidSubscriptions.ToString())}");
-            toStringOutput.Add($"this.TotalDunningSubscriptions = {(this.TotalDunningSubscriptions == null ? "null" : this.TotalDunningSubscriptions.ToString())}");
+            toStringOutput.Add($"TotalSubscriptions = {(this.TotalSubscriptions == null ? "null" : this.TotalSubscriptions.ToString())}");
+            toStringOutput.Add($"SubscriptionsToday = {(this.SubscriptionsToday == null ? "null" : this.SubscriptionsToday.ToString())}");
+            toStringOutput.Add($"TotalRevenue = {this.TotalRevenue ?? "null"}");
+            toStringOutput.Add($"RevenueToday = {this.RevenueToday ?? "null"}");
+            toStringOutput.Add($"RevenueThisMonth = {this.RevenueThisMonth ?? "null"}");
+            toStringOutput.Add($"RevenueThisYear = {this.RevenueThisYear ?? "null"}");
+            toStringOutput.Add($"TotalCanceledSubscriptions = {(this.TotalCanceledSubscriptions == null ? "null" : this.TotalCanceledSubscriptions.ToString())}");
+            toStringOutput.Add($"TotalActiveSubscriptions = {(this.TotalActiveSubscriptions == null ? "null" : this.TotalActiveSubscriptions.ToString())}");
+            toStringOutput.Add($"TotalPastDueSubscriptions = {(this.TotalPastDueSubscriptions == null ? "null" : this.TotalPastDueSubscriptions.ToString())}");
+            toStringOutput.Add($"TotalUnpaidSubscriptions = {(this.TotalUnpaidSubscriptions == null ? "null" : this.TotalUnpaidSubscriptions.ToString())}");
+            toStringOutput.Add($"TotalDunningSubscriptions = {(this.TotalDunningSubscriptions == null ? "null" : this.TotalDunningSubscriptions.ToString())}");
 
             base.ToString(toStringOutput);
         }

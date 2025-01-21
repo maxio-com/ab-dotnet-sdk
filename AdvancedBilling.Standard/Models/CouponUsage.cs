@@ -245,13 +245,13 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.Name = {this.Name ?? "null"}");
-            toStringOutput.Add($"this.Signups = {(this.Signups == null ? "null" : this.Signups.ToString())}");
-            toStringOutput.Add($"this.Savings = {(this.Savings == null ? "null" : this.Savings.ToString())}");
-            toStringOutput.Add($"this.SavingsInCents = {(this.SavingsInCents == null ? "null" : this.SavingsInCents.ToString())}");
-            toStringOutput.Add($"this.Revenue = {(this.Revenue == null ? "null" : this.Revenue.ToString())}");
-            toStringOutput.Add($"this.RevenueInCents = {(this.RevenueInCents == null ? "null" : this.RevenueInCents.ToString())}");
+            toStringOutput.Add($"Id = {(this.Id == null ? "null" : this.Id.ToString())}");
+            toStringOutput.Add($"Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"Signups = {(this.Signups == null ? "null" : this.Signups.ToString())}");
+            toStringOutput.Add($"Savings = {(this.Savings == null ? "null" : this.Savings.ToString())}");
+            toStringOutput.Add($"SavingsInCents = {(this.SavingsInCents == null ? "null" : this.SavingsInCents.ToString())}");
+            toStringOutput.Add($"Revenue = {(this.Revenue == null ? "null" : this.Revenue.ToString())}");
+            toStringOutput.Add($"RevenueInCents = {(this.RevenueInCents == null ? "null" : this.RevenueInCents.ToString())}");
 
             base.ToString(toStringOutput);
         }

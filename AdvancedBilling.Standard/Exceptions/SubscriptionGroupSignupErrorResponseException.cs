@@ -38,5 +38,23 @@ namespace AdvancedBilling.Standard.Exceptions
         /// </summary>
         [JsonProperty("errors")]
         public Models.SubscriptionGroupSignupError Errors { get; set; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            var toStringOutput = new List<string>();
+            this.ToString(toStringOutput);
+            return $"SubscriptionGroupSignupErrorResponseException : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// ToString overload.
+        /// </summary>
+        /// <param name="toStringOutput">List of strings.</param>
+        protected new void ToString(List<string> toStringOutput)
+        {
+            base.ToString(toStringOutput);
+            toStringOutput.Add($"Errors = {(this.Errors == null ? "null" : this.Errors.ToString())}");
+        }
     }
 }

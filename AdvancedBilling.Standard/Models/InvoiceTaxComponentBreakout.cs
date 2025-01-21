@@ -213,20 +213,20 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.TaxRuleId = {(this.TaxRuleId == null ? "null" : this.TaxRuleId.ToString())}");
-            toStringOutput.Add($"this.Percentage = {this.Percentage ?? "null"}");
-            toStringOutput.Add($"this.CountryCode = {this.CountryCode ?? "null"}");
-            toStringOutput.Add($"this.SubdivisionCode = {this.SubdivisionCode ?? "null"}");
-            toStringOutput.Add($"this.TaxAmount = {this.TaxAmount ?? "null"}");
-            toStringOutput.Add($"this.TaxableAmount = {this.TaxableAmount ?? "null"}");
-            toStringOutput.Add($"this.TaxExemptAmount = {this.TaxExemptAmount ?? "null"}");
-            toStringOutput.Add($"this.NonTaxableAmount = {this.NonTaxableAmount ?? "null"}");
-            toStringOutput.Add($"this.TaxName = {this.TaxName ?? "null"}");
-            toStringOutput.Add($"this.TaxType = {this.TaxType ?? "null"}");
-            toStringOutput.Add($"this.RateType = {this.RateType ?? "null"}");
-            toStringOutput.Add($"this.TaxAuthorityType = {(this.TaxAuthorityType == null ? "null" : this.TaxAuthorityType.ToString())}");
-            toStringOutput.Add($"this.StateAssignedNo = {this.StateAssignedNo ?? "null"}");
-            toStringOutput.Add($"this.TaxSubType = {this.TaxSubType ?? "null"}");
+            toStringOutput.Add($"TaxRuleId = {(this.TaxRuleId == null ? "null" : this.TaxRuleId.ToString())}");
+            toStringOutput.Add($"Percentage = {this.Percentage ?? "null"}");
+            toStringOutput.Add($"CountryCode = {this.CountryCode ?? "null"}");
+            toStringOutput.Add($"SubdivisionCode = {this.SubdivisionCode ?? "null"}");
+            toStringOutput.Add($"TaxAmount = {this.TaxAmount ?? "null"}");
+            toStringOutput.Add($"TaxableAmount = {this.TaxableAmount ?? "null"}");
+            toStringOutput.Add($"TaxExemptAmount = {this.TaxExemptAmount ?? "null"}");
+            toStringOutput.Add($"NonTaxableAmount = {this.NonTaxableAmount ?? "null"}");
+            toStringOutput.Add($"TaxName = {this.TaxName ?? "null"}");
+            toStringOutput.Add($"TaxType = {this.TaxType ?? "null"}");
+            toStringOutput.Add($"RateType = {this.RateType ?? "null"}");
+            toStringOutput.Add($"TaxAuthorityType = {(this.TaxAuthorityType == null ? "null" : this.TaxAuthorityType.ToString())}");
+            toStringOutput.Add($"StateAssignedNo = {this.StateAssignedNo ?? "null"}");
+            toStringOutput.Add($"TaxSubType = {this.TaxSubType ?? "null"}");
 
             base.ToString(toStringOutput);
         }

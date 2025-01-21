@@ -70,7 +70,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Webhook = {(this.Webhook == null ? "null" : this.Webhook.ToString())}");
+            toStringOutput.Add($"Webhook = {(this.Webhook == null ? "null" : this.Webhook.ToString())}");
 
             base.ToString(toStringOutput);
         }

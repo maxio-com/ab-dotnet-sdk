@@ -241,19 +241,19 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.FirstName = {this.FirstName ?? "null"}");
-            toStringOutput.Add($"this.LastName = {this.LastName ?? "null"}");
-            toStringOutput.Add($"this.FullNumber = {this.FullNumber ?? "null"}");
-            toStringOutput.Add($"this.CardType = {(this.CardType == null ? "null" : this.CardType.ToString())}");
-            toStringOutput.Add($"this.ExpirationMonth = {this.ExpirationMonth ?? "null"}");
-            toStringOutput.Add($"this.ExpirationYear = {this.ExpirationYear ?? "null"}");
-            toStringOutput.Add($"this.CurrentVault = {(this.CurrentVault == null ? "null" : this.CurrentVault.ToString())}");
-            toStringOutput.Add($"this.BillingAddress = {this.BillingAddress ?? "null"}");
-            toStringOutput.Add($"this.BillingCity = {this.BillingCity ?? "null"}");
-            toStringOutput.Add($"this.BillingState = {this.BillingState ?? "null"}");
-            toStringOutput.Add($"this.BillingZip = {this.BillingZip ?? "null"}");
-            toStringOutput.Add($"this.BillingCountry = {this.BillingCountry ?? "null"}");
-            toStringOutput.Add($"this.BillingAddress2 = {this.BillingAddress2 ?? "null"}");
+            toStringOutput.Add($"FirstName = {this.FirstName ?? "null"}");
+            toStringOutput.Add($"LastName = {this.LastName ?? "null"}");
+            toStringOutput.Add($"FullNumber = {this.FullNumber ?? "null"}");
+            toStringOutput.Add($"CardType = {(this.CardType == null ? "null" : this.CardType.ToString())}");
+            toStringOutput.Add($"ExpirationMonth = {this.ExpirationMonth ?? "null"}");
+            toStringOutput.Add($"ExpirationYear = {this.ExpirationYear ?? "null"}");
+            toStringOutput.Add($"CurrentVault = {(this.CurrentVault == null ? "null" : this.CurrentVault.ToString())}");
+            toStringOutput.Add($"BillingAddress = {this.BillingAddress ?? "null"}");
+            toStringOutput.Add($"BillingCity = {this.BillingCity ?? "null"}");
+            toStringOutput.Add($"BillingState = {this.BillingState ?? "null"}");
+            toStringOutput.Add($"BillingZip = {this.BillingZip ?? "null"}");
+            toStringOutput.Add($"BillingCountry = {this.BillingCountry ?? "null"}");
+            toStringOutput.Add($"BillingAddress2 = {this.BillingAddress2 ?? "null"}");
 
             base.ToString(toStringOutput);
         }

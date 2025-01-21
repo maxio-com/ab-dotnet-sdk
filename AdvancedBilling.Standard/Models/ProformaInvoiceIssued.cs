@@ -199,17 +199,17 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Uid = {this.Uid ?? "null"}");
-            toStringOutput.Add($"this.Number = {this.Number ?? "null"}");
-            toStringOutput.Add($"this.Role = {this.Role ?? "null"}");
-            toStringOutput.Add($"this.DeliveryDate = {this.DeliveryDate}");
-            toStringOutput.Add($"this.CreatedAt = {this.CreatedAt}");
-            toStringOutput.Add($"this.DueAmount = {this.DueAmount ?? "null"}");
-            toStringOutput.Add($"this.PaidAmount = {this.PaidAmount ?? "null"}");
-            toStringOutput.Add($"this.TaxAmount = {this.TaxAmount ?? "null"}");
-            toStringOutput.Add($"this.TotalAmount = {this.TotalAmount ?? "null"}");
-            toStringOutput.Add($"this.ProductName = {this.ProductName ?? "null"}");
-            toStringOutput.Add($"this.LineItems = {(this.LineItems == null ? "null" : $"[{string.Join(", ", this.LineItems)} ]")}");
+            toStringOutput.Add($"Uid = {this.Uid ?? "null"}");
+            toStringOutput.Add($"Number = {this.Number ?? "null"}");
+            toStringOutput.Add($"Role = {this.Role ?? "null"}");
+            toStringOutput.Add($"DeliveryDate = {this.DeliveryDate}");
+            toStringOutput.Add($"CreatedAt = {this.CreatedAt}");
+            toStringOutput.Add($"DueAmount = {this.DueAmount ?? "null"}");
+            toStringOutput.Add($"PaidAmount = {this.PaidAmount ?? "null"}");
+            toStringOutput.Add($"TaxAmount = {this.TaxAmount ?? "null"}");
+            toStringOutput.Add($"TotalAmount = {this.TotalAmount ?? "null"}");
+            toStringOutput.Add($"ProductName = {this.ProductName ?? "null"}");
+            toStringOutput.Add($"LineItems = {(this.LineItems == null ? "null" : $"[{string.Join(", ", this.LineItems)} ]")}");
 
             base.ToString(toStringOutput);
         }

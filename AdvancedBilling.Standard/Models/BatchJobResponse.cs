@@ -70,7 +70,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Batchjob = {(this.Batchjob == null ? "null" : this.Batchjob.ToString())}");
+            toStringOutput.Add($"Batchjob = {(this.Batchjob == null ? "null" : this.Batchjob.ToString())}");
 
             base.ToString(toStringOutput);
         }

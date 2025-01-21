@@ -126,12 +126,12 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
-            toStringOutput.Add($"this.AmountFormatted = {this.AmountFormatted ?? "null"}");
-            toStringOutput.Add($"this.Currency = {this.Currency ?? "null"}");
-            toStringOutput.Add($"this.CurrencySymbol = {this.CurrencySymbol ?? "null"}");
-            toStringOutput.Add($"this.Breakouts = {(this.Breakouts == null ? "null" : this.Breakouts.ToString())}");
-            toStringOutput.Add($"this.AtTime = {(this.AtTime == null ? "null" : this.AtTime.ToString())}");
+            toStringOutput.Add($"AmountInCents = {(this.AmountInCents == null ? "null" : this.AmountInCents.ToString())}");
+            toStringOutput.Add($"AmountFormatted = {this.AmountFormatted ?? "null"}");
+            toStringOutput.Add($"Currency = {this.Currency ?? "null"}");
+            toStringOutput.Add($"CurrencySymbol = {this.CurrencySymbol ?? "null"}");
+            toStringOutput.Add($"Breakouts = {(this.Breakouts == null ? "null" : this.Breakouts.ToString())}");
+            toStringOutput.Add($"AtTime = {(this.AtTime == null ? "null" : this.AtTime.ToString())}");
 
             base.ToString(toStringOutput);
         }

@@ -81,8 +81,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.RequireResume = {(this.RequireResume == null ? "null" : this.RequireResume.ToString())}");
-            toStringOutput.Add($"this.ForgiveBalance = {(this.ForgiveBalance == null ? "null" : this.ForgiveBalance.ToString())}");
+            toStringOutput.Add($"RequireResume = {(this.RequireResume == null ? "null" : this.RequireResume.ToString())}");
+            toStringOutput.Add($"ForgiveBalance = {(this.ForgiveBalance == null ? "null" : this.ForgiveBalance.ToString())}");
 
             base.ToString(toStringOutput);
         }

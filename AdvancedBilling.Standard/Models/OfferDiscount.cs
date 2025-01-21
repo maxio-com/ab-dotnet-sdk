@@ -92,9 +92,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.CouponCode = {this.CouponCode ?? "null"}");
-            toStringOutput.Add($"this.CouponId = {(this.CouponId == null ? "null" : this.CouponId.ToString())}");
-            toStringOutput.Add($"this.CouponName = {this.CouponName ?? "null"}");
+            toStringOutput.Add($"CouponCode = {this.CouponCode ?? "null"}");
+            toStringOutput.Add($"CouponId = {(this.CouponId == null ? "null" : this.CouponId.ToString())}");
+            toStringOutput.Add($"CouponName = {this.CouponName ?? "null"}");
 
             base.ToString(toStringOutput);
         }

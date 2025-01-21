@@ -635,28 +635,28 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.Id = {(this.Id == null ? "null" : this.Id.ToString())}");
-            toStringOutput.Add($"this.FirstName = {this.FirstName ?? "null"}");
-            toStringOutput.Add($"this.LastName = {this.LastName ?? "null"}");
-            toStringOutput.Add($"this.CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
-            toStringOutput.Add($"this.CurrentVault = {(this.CurrentVault == null ? "null" : this.CurrentVault.ToString())}");
-            toStringOutput.Add($"this.VaultToken = {this.VaultToken ?? "null"}");
-            toStringOutput.Add($"this.BillingAddress = {this.BillingAddress ?? "null"}");
-            toStringOutput.Add($"this.BillingCity = {this.BillingCity ?? "null"}");
-            toStringOutput.Add($"this.BillingState = {this.BillingState ?? "null"}");
-            toStringOutput.Add($"this.BillingZip = {this.BillingZip ?? "null"}");
-            toStringOutput.Add($"this.BillingCountry = {this.BillingCountry ?? "null"}");
-            toStringOutput.Add($"this.CustomerVaultToken = {this.CustomerVaultToken ?? "null"}");
-            toStringOutput.Add($"this.BillingAddress2 = {this.BillingAddress2 ?? "null"}");
-            toStringOutput.Add($"this.BankName = {this.BankName ?? "null"}");
-            toStringOutput.Add($"this.MaskedBankRoutingNumber = {this.MaskedBankRoutingNumber ?? "null"}");
-            toStringOutput.Add($"this.MaskedBankAccountNumber = {this.MaskedBankAccountNumber ?? "null"}");
-            toStringOutput.Add($"this.BankAccountType = {(this.BankAccountType == null ? "null" : this.BankAccountType.ToString())}");
-            toStringOutput.Add($"this.BankAccountHolderType = {(this.BankAccountHolderType == null ? "null" : this.BankAccountHolderType.ToString())}");
-            toStringOutput.Add($"this.PaymentType = {this.PaymentType}");
-            toStringOutput.Add($"this.Verified = {(this.Verified == null ? "null" : this.Verified.ToString())}");
-            toStringOutput.Add($"this.SiteGatewaySettingId = {(this.SiteGatewaySettingId == null ? "null" : this.SiteGatewaySettingId.ToString())}");
-            toStringOutput.Add($"this.GatewayHandle = {this.GatewayHandle ?? "null"}");
+            toStringOutput.Add($"Id = {(this.Id == null ? "null" : this.Id.ToString())}");
+            toStringOutput.Add($"FirstName = {this.FirstName ?? "null"}");
+            toStringOutput.Add($"LastName = {this.LastName ?? "null"}");
+            toStringOutput.Add($"CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
+            toStringOutput.Add($"CurrentVault = {(this.CurrentVault == null ? "null" : this.CurrentVault.ToString())}");
+            toStringOutput.Add($"VaultToken = {this.VaultToken ?? "null"}");
+            toStringOutput.Add($"BillingAddress = {this.BillingAddress ?? "null"}");
+            toStringOutput.Add($"BillingCity = {this.BillingCity ?? "null"}");
+            toStringOutput.Add($"BillingState = {this.BillingState ?? "null"}");
+            toStringOutput.Add($"BillingZip = {this.BillingZip ?? "null"}");
+            toStringOutput.Add($"BillingCountry = {this.BillingCountry ?? "null"}");
+            toStringOutput.Add($"CustomerVaultToken = {this.CustomerVaultToken ?? "null"}");
+            toStringOutput.Add($"BillingAddress2 = {this.BillingAddress2 ?? "null"}");
+            toStringOutput.Add($"BankName = {this.BankName ?? "null"}");
+            toStringOutput.Add($"MaskedBankRoutingNumber = {this.MaskedBankRoutingNumber ?? "null"}");
+            toStringOutput.Add($"MaskedBankAccountNumber = {this.MaskedBankAccountNumber ?? "null"}");
+            toStringOutput.Add($"BankAccountType = {(this.BankAccountType == null ? "null" : this.BankAccountType.ToString())}");
+            toStringOutput.Add($"BankAccountHolderType = {(this.BankAccountHolderType == null ? "null" : this.BankAccountHolderType.ToString())}");
+            toStringOutput.Add($"PaymentType = {this.PaymentType}");
+            toStringOutput.Add($"Verified = {(this.Verified == null ? "null" : this.Verified.ToString())}");
+            toStringOutput.Add($"SiteGatewaySettingId = {(this.SiteGatewaySettingId == null ? "null" : this.SiteGatewaySettingId.ToString())}");
+            toStringOutput.Add($"GatewayHandle = {this.GatewayHandle ?? "null"}");
 
             base.ToString(toStringOutput);
         }

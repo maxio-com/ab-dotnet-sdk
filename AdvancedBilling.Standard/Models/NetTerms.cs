@@ -114,11 +114,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"this.DefaultNetTerms = {(this.DefaultNetTerms == null ? "null" : this.DefaultNetTerms.ToString())}");
-            toStringOutput.Add($"this.AutomaticNetTerms = {(this.AutomaticNetTerms == null ? "null" : this.AutomaticNetTerms.ToString())}");
-            toStringOutput.Add($"this.RemittanceNetTerms = {(this.RemittanceNetTerms == null ? "null" : this.RemittanceNetTerms.ToString())}");
-            toStringOutput.Add($"this.NetTermsOnRemittanceSignupsEnabled = {(this.NetTermsOnRemittanceSignupsEnabled == null ? "null" : this.NetTermsOnRemittanceSignupsEnabled.ToString())}");
-            toStringOutput.Add($"this.CustomNetTermsEnabled = {(this.CustomNetTermsEnabled == null ? "null" : this.CustomNetTermsEnabled.ToString())}");
+            toStringOutput.Add($"DefaultNetTerms = {(this.DefaultNetTerms == null ? "null" : this.DefaultNetTerms.ToString())}");
+            toStringOutput.Add($"AutomaticNetTerms = {(this.AutomaticNetTerms == null ? "null" : this.AutomaticNetTerms.ToString())}");
+            toStringOutput.Add($"RemittanceNetTerms = {(this.RemittanceNetTerms == null ? "null" : this.RemittanceNetTerms.ToString())}");
+            toStringOutput.Add($"NetTermsOnRemittanceSignupsEnabled = {(this.NetTermsOnRemittanceSignupsEnabled == null ? "null" : this.NetTermsOnRemittanceSignupsEnabled.ToString())}");
+            toStringOutput.Add($"CustomNetTermsEnabled = {(this.CustomNetTermsEnabled == null ? "null" : this.CustomNetTermsEnabled.ToString())}");
 
             base.ToString(toStringOutput);
         }

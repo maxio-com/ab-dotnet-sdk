@@ -56,5 +56,26 @@ namespace AdvancedBilling.Standard.Exceptions
         /// </summary>
         [JsonProperty("subscription", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> Subscription { get; set; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            var toStringOutput = new List<string>();
+            this.ToString(toStringOutput);
+            return $"SubscriptionAddCouponErrorException : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// ToString overload.
+        /// </summary>
+        /// <param name="toStringOutput">List of strings.</param>
+        protected new void ToString(List<string> toStringOutput)
+        {
+            base.ToString(toStringOutput);
+            toStringOutput.Add($"Codes = {(this.Codes == null ? "null" : $"[{string.Join(", ", this.Codes)} ]")}");
+            toStringOutput.Add($"CouponCode = {(this.CouponCode == null ? "null" : $"[{string.Join(", ", this.CouponCode)} ]")}");
+            toStringOutput.Add($"CouponCodes = {(this.CouponCodes == null ? "null" : $"[{string.Join(", ", this.CouponCodes)} ]")}");
+            toStringOutput.Add($"Subscription = {(this.Subscription == null ? "null" : $"[{string.Join(", ", this.Subscription)} ]")}");
+        }
     }
 }
