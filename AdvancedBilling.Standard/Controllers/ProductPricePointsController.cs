@@ -38,7 +38,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// [Product Price Point Documentation](https://maxio.zendesk.com/hc/en-us/articles/24261111947789-Product-Price-Points).
         /// </summary>
         /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
         public Models.ProductPricePointResponse CreateProductPricePoint(
                 CreateProductPricePointProductId productId,
@@ -49,7 +49,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// [Product Price Point Documentation](https://maxio.zendesk.com/hc/en-us/articles/24261111947789-Product-Price-Points).
         /// </summary>
         /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
         public async Task<Models.ProductPricePointResponse> CreateProductPricePointAsync(
@@ -105,7 +105,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
         /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-price-point-handle` for a string handle..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
         public Models.ProductPricePointResponse UpdateProductPricePoint(
                 UpdateProductPricePointProductId productId,
@@ -119,7 +119,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
         /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-price-point-handle` for a string handle..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProductPricePointResponse response from the API call.</returns>
         public async Task<Models.ProductPricePointResponse> UpdateProductPricePointAsync(
@@ -275,7 +275,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Use this endpoint to create multiple product price points in one request.
         /// </summary>
         /// <param name="productId">Required parameter: The Advanced Billing id of the product to which the price points belong.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.BulkCreateProductPricePointsResponse response from the API call.</returns>
         public Models.BulkCreateProductPricePointsResponse BulkCreateProductPricePoints(
                 int productId,
@@ -286,7 +286,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Use this endpoint to create multiple product price points in one request.
         /// </summary>
         /// <param name="productId">Required parameter: The Advanced Billing id of the product to which the price points belong.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.BulkCreateProductPricePointsResponse response from the API call.</returns>
         public async Task<Models.BulkCreateProductPricePointsResponse> BulkCreateProductPricePointsAsync(
@@ -311,7 +311,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Note: Currency Prices are not able to be created for custom product price points.
         /// </summary>
         /// <param name="productPricePointId">Required parameter: The Advanced Billing id of the product price point.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.CurrencyPricesResponse response from the API call.</returns>
         public Models.CurrencyPricesResponse CreateProductCurrencyPrices(
                 int productPricePointId,
@@ -324,7 +324,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Note: Currency Prices are not able to be created for custom product price points.
         /// </summary>
         /// <param name="productPricePointId">Required parameter: The Advanced Billing id of the product price point.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.CurrencyPricesResponse response from the API call.</returns>
         public async Task<Models.CurrencyPricesResponse> CreateProductCurrencyPricesAsync(
@@ -349,7 +349,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Note: Currency Prices are not able to be updated for custom product price points.
         /// </summary>
         /// <param name="productPricePointId">Required parameter: The Advanced Billing id of the product price point.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.CurrencyPricesResponse response from the API call.</returns>
         public Models.CurrencyPricesResponse UpdateProductCurrencyPrices(
                 int productPricePointId,
@@ -362,7 +362,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Note: Currency Prices are not able to be updated for custom product price points.
         /// </summary>
         /// <param name="productPricePointId">Required parameter: The Advanced Billing id of the product price point.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.CurrencyPricesResponse response from the API call.</returns>
         public async Task<Models.CurrencyPricesResponse> UpdateProductCurrencyPricesAsync(

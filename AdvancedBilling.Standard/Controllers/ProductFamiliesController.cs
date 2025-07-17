@@ -68,14 +68,14 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("include_archived", input.IncludeArchived))
                       .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This method will create a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components and coupons.
         /// Full documentation on how Product Families operate within the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24261098936205-Product-Families).
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ProductFamilyResponse response from the API call.</returns>
         public Models.ProductFamilyResponse CreateProductFamily(
                 Models.CreateProductFamilyRequest body = null)
@@ -85,7 +85,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// This method will create a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components and coupons.
         /// Full documentation on how Product Families operate within the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24261098936205-Product-Families).
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProductFamilyResponse response from the API call.</returns>
         public async Task<Models.ProductFamilyResponse> CreateProductFamilyAsync(

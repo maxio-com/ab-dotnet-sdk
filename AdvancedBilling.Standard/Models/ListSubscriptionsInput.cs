@@ -37,6 +37,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="product">product.</param>
         /// <param name="productPricePointId">product_price_point_id.</param>
         /// <param name="coupon">coupon.</param>
+        /// <param name="couponCode">coupon_code.</param>
         /// <param name="dateField">date_field.</param>
         /// <param name="startDate">start_date.</param>
         /// <param name="endDate">end_date.</param>
@@ -53,6 +54,7 @@ namespace AdvancedBilling.Standard.Models
             int? product = null,
             int? productPricePointId = null,
             int? coupon = null,
+            string couponCode = null,
             Models.SubscriptionDateField? dateField = null,
             DateTime? startDate = null,
             DateTime? endDate = null,
@@ -69,6 +71,7 @@ namespace AdvancedBilling.Standard.Models
             this.Product = product;
             this.ProductPricePointId = productPricePointId;
             this.Coupon = coupon;
+            this.CouponCode = couponCode;
             this.DateField = dateField;
             this.StartDate = startDate;
             this.EndDate = endDate;
@@ -117,6 +120,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("coupon", NullValueHandling = NullValueHandling.Ignore)]
         public int? Coupon { get; set; }
+
+        /// <summary>
+        /// The coupon code currently applied to the subscription
+        /// </summary>
+        [JsonProperty("coupon_code", NullValueHandling = NullValueHandling.Ignore)]
+        public string CouponCode { get; set; }
 
         /// <summary>
         /// The type of filter you'd like to apply to your search.  Allowed Values: , current_period_ends_at, current_period_starts_at, created_at, activated_at, canceled_at, expires_at, trial_started_at, trial_ended_at, updated_at
@@ -206,6 +215,8 @@ namespace AdvancedBilling.Standard.Models
                  this.ProductPricePointId?.Equals(other.ProductPricePointId) == true) &&
                 (this.Coupon == null && other.Coupon == null ||
                  this.Coupon?.Equals(other.Coupon) == true) &&
+                (this.CouponCode == null && other.CouponCode == null ||
+                 this.CouponCode?.Equals(other.CouponCode) == true) &&
                 (this.DateField == null && other.DateField == null ||
                  this.DateField?.Equals(other.DateField) == true) &&
                 (this.StartDate == null && other.StartDate == null ||
@@ -239,6 +250,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Product = {(this.Product == null ? "null" : this.Product.ToString())}");
             toStringOutput.Add($"ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
             toStringOutput.Add($"Coupon = {(this.Coupon == null ? "null" : this.Coupon.ToString())}");
+            toStringOutput.Add($"CouponCode = {this.CouponCode ?? "null"}");
             toStringOutput.Add($"DateField = {(this.DateField == null ? "null" : this.DateField.ToString())}");
             toStringOutput.Add($"StartDate = {(this.StartDate == null ? "null" : this.StartDate.ToString())}");
             toStringOutput.Add($"EndDate = {(this.EndDate == null ? "null" : this.EndDate.ToString())}");

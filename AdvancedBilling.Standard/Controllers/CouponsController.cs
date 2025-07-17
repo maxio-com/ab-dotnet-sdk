@@ -46,7 +46,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ]]>
         /// </summary>
         /// <param name="productFamilyId">Required parameter: The Advanced Billing id of the product family to which the coupon belongs.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.CouponResponse response from the API call.</returns>
         public Models.CouponResponse CreateCoupon(
                 int productFamilyId,
@@ -66,7 +66,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ]]>
         /// </summary>
         /// <param name="productFamilyId">Required parameter: The Advanced Billing id of the product family to which the coupon belongs.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.CouponResponse response from the API call.</returns>
         public async Task<Models.CouponResponse> CreateCouponAsync(
@@ -207,7 +207,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="productFamilyId">Required parameter: The Advanced Billing id of the product family to which the coupon belongs.</param>
         /// <param name="couponId">Required parameter: The Advanced Billing id of the coupon.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.CouponResponse response from the API call.</returns>
         public Models.CouponResponse UpdateCoupon(
                 int productFamilyId,
@@ -225,7 +225,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="productFamilyId">Required parameter: The Advanced Billing id of the product family to which the coupon belongs.</param>
         /// <param name="couponId">Required parameter: The Advanced Billing id of the coupon.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.CouponResponse response from the API call.</returns>
         public async Task<Models.CouponResponse> UpdateCouponAsync(
@@ -403,7 +403,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("code", code).Required())
                       .Query(_query => _query.Setup("product_family_id", productFamilyId))))
               .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new SingleStringErrorResponseException(_reason, _context))))
+                  .ErrorCase("404", CreateErrorCase("Not Found: '{$response.body}'", (_reason, _context) => new SingleStringErrorResponseException(_reason, _context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -411,7 +411,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Currency pricing for coupons must mirror the setup of the primary coupon pricing - if the primary coupon is percentage based, you will not be able to define pricing in non-primary currencies.
         /// </summary>
         /// <param name="couponId">Required parameter: The Advanced Billing id of the coupon.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.CouponCurrencyResponse response from the API call.</returns>
         public Models.CouponCurrencyResponse CreateOrUpdateCouponCurrencyPrices(
                 int couponId,
@@ -423,7 +423,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Currency pricing for coupons must mirror the setup of the primary coupon pricing - if the primary coupon is percentage based, you will not be able to define pricing in non-primary currencies.
         /// </summary>
         /// <param name="couponId">Required parameter: The Advanced Billing id of the coupon.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.CouponCurrencyResponse response from the API call.</returns>
         public async Task<Models.CouponCurrencyResponse> CreateOrUpdateCouponCurrencyPricesAsync(
@@ -471,7 +471,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ]]>
         /// </summary>
         /// <param name="couponId">Required parameter: The Advanced Billing id of the coupon.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.CouponSubcodesResponse response from the API call.</returns>
         public Models.CouponSubcodesResponse CreateCouponSubcodes(
                 int couponId,
@@ -507,7 +507,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ]]>
         /// </summary>
         /// <param name="couponId">Required parameter: The Advanced Billing id of the coupon.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.CouponSubcodesResponse response from the API call.</returns>
         public async Task<Models.CouponSubcodesResponse> CreateCouponSubcodesAsync(
@@ -562,7 +562,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// + Any subcodes not created because they are invalid.
         /// </summary>
         /// <param name="couponId">Required parameter: The Advanced Billing id of the coupon.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.CouponSubcodesResponse response from the API call.</returns>
         public Models.CouponSubcodesResponse UpdateCouponSubcodes(
                 int couponId,
@@ -579,7 +579,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// + Any subcodes not created because they are invalid.
         /// </summary>
         /// <param name="couponId">Required parameter: The Advanced Billing id of the coupon.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.CouponSubcodesResponse response from the API call.</returns>
         public async Task<Models.CouponSubcodesResponse> UpdateCouponSubcodesAsync(

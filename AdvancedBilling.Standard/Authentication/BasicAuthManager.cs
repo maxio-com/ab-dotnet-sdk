@@ -104,7 +104,6 @@ namespace AdvancedBilling.Standard.Authentication
                 return this;
             }
 
-
             /// <summary>
             /// Sets Password.
             /// </summary>
@@ -115,7 +114,6 @@ namespace AdvancedBilling.Standard.Authentication
                 this.password = password ?? throw new ArgumentNullException(nameof(password));
                 return this;
             }
-
 
             /// <summary>
             /// Creates an object of the BasicAuthModel using the values provided for the builder.

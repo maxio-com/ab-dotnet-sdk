@@ -37,7 +37,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// A prepayment can be added for a subscription group identified by the group's `uid`. This endpoint requires a `amount`, `details`, `method`, and `memo`. On success, the prepayment will be added to the group's prepayment balance.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionGroupPrepaymentResponse response from the API call.</returns>
         public Models.SubscriptionGroupPrepaymentResponse CreateSubscriptionGroupPrepayment(
                 string uid,
@@ -48,7 +48,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// A prepayment can be added for a subscription group identified by the group's `uid`. This endpoint requires a `amount`, `details`, `method`, and `memo`. On success, the prepayment will be added to the group's prepayment balance.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionGroupPrepaymentResponse response from the API call.</returns>
         public async Task<Models.SubscriptionGroupPrepaymentResponse> CreateSubscriptionGroupPrepaymentAsync(
@@ -102,7 +102,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Credit can be issued for a subscription group identified by the group's `uid`. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ServiceCreditResponse response from the API call.</returns>
         public Models.ServiceCreditResponse IssueSubscriptionGroupServiceCredit(
                 string uid,
@@ -113,7 +113,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Credit can be issued for a subscription group identified by the group's `uid`. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ServiceCreditResponse response from the API call.</returns>
         public async Task<Models.ServiceCreditResponse> IssueSubscriptionGroupServiceCreditAsync(
@@ -136,7 +136,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ServiceCredit response from the API call.</returns>
         public Models.ServiceCredit DeductSubscriptionGroupServiceCredit(
                 string uid,
@@ -147,7 +147,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ServiceCredit response from the API call.</returns>
         public async Task<Models.ServiceCredit> DeductSubscriptionGroupServiceCreditAsync(

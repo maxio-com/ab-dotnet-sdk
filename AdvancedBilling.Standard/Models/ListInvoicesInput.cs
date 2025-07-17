@@ -36,6 +36,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="status">status.</param>
         /// <param name="subscriptionId">subscription_id.</param>
         /// <param name="subscriptionGroupUid">subscription_group_uid.</param>
+        /// <param name="consolidationLevel">consolidation_level.</param>
         /// <param name="page">page.</param>
         /// <param name="perPage">per_page.</param>
         /// <param name="direction">direction.</param>
@@ -59,6 +60,7 @@ namespace AdvancedBilling.Standard.Models
             Models.InvoiceStatus? status = null,
             int? subscriptionId = null,
             string subscriptionGroupUid = null,
+            string consolidationLevel = null,
             int? page = 1,
             int? perPage = 20,
             Models.Direction? direction = Models.Direction.Desc,
@@ -82,6 +84,7 @@ namespace AdvancedBilling.Standard.Models
             this.Status = status;
             this.SubscriptionId = subscriptionId;
             this.SubscriptionGroupUid = subscriptionGroupUid;
+            this.ConsolidationLevel = consolidationLevel;
             this.Page = page;
             this.PerPage = perPage;
             this.Direction = direction;
@@ -130,6 +133,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("subscription_group_uid", NullValueHandling = NullValueHandling.Ignore)]
         public string SubscriptionGroupUid { get; set; }
+
+        /// <summary>
+        /// The consolidation level of the invoice. Allowed Values: none, parent, child or comma-separated lists of thereof, e.g. none,parent.
+        /// </summary>
+        [JsonProperty("consolidation_level", NullValueHandling = NullValueHandling.Ignore)]
+        public string ConsolidationLevel { get; set; }
 
         /// <summary>
         /// Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.
@@ -260,6 +269,8 @@ namespace AdvancedBilling.Standard.Models
                  this.SubscriptionId?.Equals(other.SubscriptionId) == true) &&
                 (this.SubscriptionGroupUid == null && other.SubscriptionGroupUid == null ||
                  this.SubscriptionGroupUid?.Equals(other.SubscriptionGroupUid) == true) &&
+                (this.ConsolidationLevel == null && other.ConsolidationLevel == null ||
+                 this.ConsolidationLevel?.Equals(other.ConsolidationLevel) == true) &&
                 (this.Page == null && other.Page == null ||
                  this.Page?.Equals(other.Page) == true) &&
                 (this.PerPage == null && other.PerPage == null ||
@@ -308,6 +319,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Status = {(this.Status == null ? "null" : this.Status.ToString())}");
             toStringOutput.Add($"SubscriptionId = {(this.SubscriptionId == null ? "null" : this.SubscriptionId.ToString())}");
             toStringOutput.Add($"SubscriptionGroupUid = {this.SubscriptionGroupUid ?? "null"}");
+            toStringOutput.Add($"ConsolidationLevel = {this.ConsolidationLevel ?? "null"}");
             toStringOutput.Add($"Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
             toStringOutput.Add($"Direction = {(this.Direction == null ? "null" : this.Direction.ToString())}");

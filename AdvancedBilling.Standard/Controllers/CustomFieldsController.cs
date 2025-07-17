@@ -45,12 +45,12 @@ namespace AdvancedBilling.Standard.Controllers
         /// Use this endpoint to create metafields for your Site. Metafields can be populated with metadata after the fact.
         /// Each site is limited to 100 unique Metafields (i.e. keys, or names) per resource. This means you can have 100 Metafields for Subscription and another 100 for Customer.
         /// ### Metafields "On-the-Fly".
-        /// It is possible to create Metafields “on the fly” when you create your Metadata – if a non-existant name is passed when creating Metadata, a Metafield for that key will be automatically created. The Metafield API, however, gives you more control over your “keys”.
+        /// It is possible to create Metafields “on the fly” when you create your Metadata – if a non-existent name is passed when creating Metadata, a Metafield for that key will be automatically created. The Metafield API, however, gives you more control over your “keys”.
         /// ### Metafield Scope Warning.
         /// If configuring metafields in the Admin UI or via the API, be careful sending updates to metafields with the scope attribute – **if a partial update is sent it will overwrite the current configuration**.
         /// </summary>
         /// <param name="resourceType">Required parameter: the resource type to which the metafields belong.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the List of Models.Metafield response from the API call.</returns>
         public List<Models.Metafield> CreateMetafields(
                 Models.ResourceType resourceType,
@@ -68,12 +68,12 @@ namespace AdvancedBilling.Standard.Controllers
         /// Use this endpoint to create metafields for your Site. Metafields can be populated with metadata after the fact.
         /// Each site is limited to 100 unique Metafields (i.e. keys, or names) per resource. This means you can have 100 Metafields for Subscription and another 100 for Customer.
         /// ### Metafields "On-the-Fly".
-        /// It is possible to create Metafields “on the fly” when you create your Metadata – if a non-existant name is passed when creating Metadata, a Metafield for that key will be automatically created. The Metafield API, however, gives you more control over your “keys”.
+        /// It is possible to create Metafields “on the fly” when you create your Metadata – if a non-existent name is passed when creating Metadata, a Metafield for that key will be automatically created. The Metafield API, however, gives you more control over your “keys”.
         /// ### Metafield Scope Warning.
         /// If configuring metafields in the Admin UI or via the API, be careful sending updates to metafields with the scope attribute – **if a partial update is sent it will overwrite the current configuration**.
         /// </summary>
         /// <param name="resourceType">Required parameter: the resource type to which the metafields belong.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the List of Models.Metafield response from the API call.</returns>
         public async Task<List<Models.Metafield>> CreateMetafieldsAsync(
@@ -126,7 +126,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Use the following method to update metafields for your Site. Metafields can be populated with metadata after the fact.
         /// </summary>
         /// <param name="resourceType">Required parameter: the resource type to which the metafields belong.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the List of Models.Metafield response from the API call.</returns>
         public List<Models.Metafield> UpdateMetafield(
                 Models.ResourceType resourceType,
@@ -137,7 +137,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Use the following method to update metafields for your Site. Metafields can be populated with metadata after the fact.
         /// </summary>
         /// <param name="resourceType">Required parameter: the resource type to which the metafields belong.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the List of Models.Metafield response from the API call.</returns>
         public async Task<List<Models.Metafield>> UpdateMetafieldAsync(
@@ -206,7 +206,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="resourceType">Required parameter: the resource type to which the metafields belong.</param>
         /// <param name="resourceId">Required parameter: The Advanced Billing id of the customer or the subscription for which the metadata applies.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the List of Models.Metadata response from the API call.</returns>
         public List<Models.Metadata> CreateMetadata(
                 Models.ResourceType resourceType,
@@ -230,7 +230,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="resourceType">Required parameter: the resource type to which the metafields belong.</param>
         /// <param name="resourceId">Required parameter: The Advanced Billing id of the customer or the subscription for which the metadata applies.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the List of Models.Metadata response from the API call.</returns>
         public async Task<List<Models.Metadata>> CreateMetadataAsync(
@@ -289,7 +289,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="resourceType">Required parameter: the resource type to which the metafields belong.</param>
         /// <param name="resourceId">Required parameter: The Advanced Billing id of the customer or the subscription for which the metadata applies.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the List of Models.Metadata response from the API call.</returns>
         public List<Models.Metadata> UpdateMetadata(
                 Models.ResourceType resourceType,
@@ -302,7 +302,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="resourceType">Required parameter: the resource type to which the metafields belong.</param>
         /// <param name="resourceId">Required parameter: The Advanced Billing id of the customer or the subscription for which the metadata applies.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the List of Models.Metadata response from the API call.</returns>
         public async Task<List<Models.Metadata>> UpdateMetadataAsync(

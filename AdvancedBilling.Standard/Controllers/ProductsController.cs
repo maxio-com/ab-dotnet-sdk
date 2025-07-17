@@ -39,7 +39,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// + [Changing a Subscription's Product](https://maxio.zendesk.com/hc/en-us/articles/24252069837581-Product-Changes-and-Migrations).
         /// </summary>
         /// <param name="productFamilyId">Required parameter: Either the product family's id or its handle prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
         public Models.ProductResponse CreateProduct(
                 string productFamilyId,
@@ -52,7 +52,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// + [Changing a Subscription's Product](https://maxio.zendesk.com/hc/en-us/articles/24252069837581-Product-Changes-and-Migrations).
         /// </summary>
         /// <param name="productFamilyId">Required parameter: Either the product family's id or its handle prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
         public async Task<Models.ProductResponse> CreateProductAsync(
@@ -105,7 +105,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Updating a product using this endpoint will create a new price point and set it as the default price point for this product. If you should like to update an existing product price point, that must be done separately.
         /// </summary>
         /// <param name="productId">Required parameter: The Advanced Billing id of the product.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
         public Models.ProductResponse UpdateProduct(
                 int productId,
@@ -120,7 +120,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Updating a product using this endpoint will create a new price point and set it as the default price point for this product. If you should like to update an existing product price point, that must be done separately.
         /// </summary>
         /// <param name="productId">Required parameter: The Advanced Billing id of the product.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
         public async Task<Models.ProductResponse> UpdateProductAsync(

@@ -40,7 +40,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// For more information on components, please see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261141522189-Components-Overview).
         /// </summary>
         /// <param name="productFamilyId">Required parameter: Either the product family's id or its handle prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
         public Models.ComponentResponse CreateMeteredComponent(
                 string productFamilyId,
@@ -54,7 +54,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// For more information on components, please see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261141522189-Components-Overview).
         /// </summary>
         /// <param name="productFamilyId">Required parameter: Either the product family's id or its handle prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
         public async Task<Models.ComponentResponse> CreateMeteredComponentAsync(
@@ -85,7 +85,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// For more information on components, please see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261141522189-Components-Overview).
         /// </summary>
         /// <param name="productFamilyId">Required parameter: Either the product family's id or its handle prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
         public Models.ComponentResponse CreateQuantityBasedComponent(
                 string productFamilyId,
@@ -103,7 +103,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// For more information on components, please see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261141522189-Components-Overview).
         /// </summary>
         /// <param name="productFamilyId">Required parameter: Either the product family's id or its handle prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
         public async Task<Models.ComponentResponse> CreateQuantityBasedComponentAsync(
@@ -129,7 +129,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// For more information on components, please see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261141522189-Components-Overview).
         /// </summary>
         /// <param name="productFamilyId">Required parameter: Either the product family's id or its handle prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
         public Models.ComponentResponse CreateOnOffComponent(
                 string productFamilyId,
@@ -142,7 +142,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// For more information on components, please see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261141522189-Components-Overview).
         /// </summary>
         /// <param name="productFamilyId">Required parameter: Either the product family's id or its handle prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
         public async Task<Models.ComponentResponse> CreateOnOffComponentAsync(
@@ -168,7 +168,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// For more information on components, please see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261141522189-Components-Overview).
         /// </summary>
         /// <param name="productFamilyId">Required parameter: Either the product family's id or its handle prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
         public Models.ComponentResponse CreatePrepaidUsageComponent(
                 string productFamilyId,
@@ -181,7 +181,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// For more information on components, please see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261141522189-Components-Overview).
         /// </summary>
         /// <param name="productFamilyId">Required parameter: Either the product family's id or its handle prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
         public async Task<Models.ComponentResponse> CreatePrepaidUsageComponentAsync(
@@ -208,7 +208,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// For more information on components, please see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261141522189-Components-Overview).
         /// </summary>
         /// <param name="productFamilyId">Required parameter: Either the product family's id or its handle prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
         public Models.ComponentResponse CreateEventBasedComponent(
                 string productFamilyId,
@@ -222,7 +222,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// For more information on components, please see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261141522189-Components-Overview).
         /// </summary>
         /// <param name="productFamilyId">Required parameter: Either the product family's id or its handle prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
         public async Task<Models.ComponentResponse> CreateEventBasedComponentAsync(
@@ -307,7 +307,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="productFamilyId">Required parameter: The Advanced Billing id of the product family to which the component belongs.</param>
         /// <param name="componentId">Required parameter: Either the Advanced Billing id of the component or the handle for the component prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
         public Models.ComponentResponse UpdateProductFamilyComponent(
                 int productFamilyId,
@@ -321,7 +321,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="productFamilyId">Required parameter: The Advanced Billing id of the product family to which the component belongs.</param>
         /// <param name="componentId">Required parameter: Either the Advanced Billing id of the component or the handle for the component prefixed with `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
         public async Task<Models.ComponentResponse> UpdateProductFamilyComponentAsync(
@@ -414,7 +414,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// You may read the component by either the component's id or handle. When using the handle, it must be prefixed with `handle:`.
         /// </summary>
         /// <param name="componentId">Required parameter: The id or handle of the component.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
         public Models.ComponentResponse UpdateComponent(
                 string componentId,
@@ -426,7 +426,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// You may read the component by either the component's id or handle. When using the handle, it must be prefixed with `handle:`.
         /// </summary>
         /// <param name="componentId">Required parameter: The id or handle of the component.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentResponse response from the API call.</returns>
         public async Task<Models.ComponentResponse> UpdateComponentAsync(

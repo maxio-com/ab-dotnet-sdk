@@ -5,14 +5,18 @@ The following parameters are configurable for the API Client:
 
 | Parameter | Type | Description |
 |  --- | --- | --- |
-| `Site` | `string` | The subdomain for your Advanced Billing site.<br>*Default*: `"subdomain"` |
-| `Environment` | `Environment` | The API environment. <br> **Default: `Environment.US`** |
-| `Timeout` | `TimeSpan` | Http client timeout.<br>*Default*: `TimeSpan.FromSeconds(120)` |
-| `BasicAuthCredentials` | [`BasicAuthCredentials`](auth/basic-authentication.md) | The Credentials Setter for Basic Authentication |
+| Site | `string` | The subdomain for your Advanced Billing site.<br>*Default*: `"subdomain"` |
+| Environment | `Environment` | The API environment. <br> **Default: `Environment.US`** |
+| Timeout | `TimeSpan` | Http client timeout.<br>*Default*: `TimeSpan.FromSeconds(120)` |
+| HttpClientConfiguration | [`Action<HttpClientConfiguration.Builder>`](../doc/http-client-configuration-builder.md) | Action delegate that configures the HTTP client by using the HttpClientConfiguration.Builder for customizing API call settings.<br>*Default*: `new HttpClient()` |
+| BasicAuthCredentials | [`BasicAuthCredentials`](auth/basic-authentication.md) | The Credentials Setter for Basic Authentication |
 
 The API client can be initialized as follows:
 
 ```csharp
+using AdvancedBilling.Standard;
+using AdvancedBilling.Standard.Authentication;
+
 AdvancedBillingClient client = new AdvancedBillingClient.Builder()
     .BasicAuthCredentials(
         new BasicAuthModel.Builder(
@@ -70,7 +74,7 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 
 | Name | Description | Type |
 |  --- | --- | --- |
-| HttpClientConfiguration | Gets the configuration of the Http Client associated with this client. | [`IHttpClientConfiguration`](http-client-configuration.md) |
+| HttpClientConfiguration | Gets the configuration of the Http Client associated with this client. | [`IHttpClientConfiguration`](../doc/http-client-configuration.md) |
 | Timeout | Http client timeout. | `TimeSpan` |
 | Environment | Current API environment. | `Environment` |
 | Site | The subdomain for your Advanced Billing site. | `string` |
@@ -91,7 +95,7 @@ Class to build instances of Maxio Advanced BillingClient.
 
 | Name | Description | Return Type |
 |  --- | --- | --- |
-| `HttpClientConfiguration(Action<`[`HttpClientConfiguration.Builder`](http-client-configuration-builder.md)`> action)` | Gets the configuration of the Http Client associated with this client. | `Builder` |
+| `HttpClientConfiguration(Action<`[`HttpClientConfiguration.Builder`](../doc/http-client-configuration-builder.md)`> action)` | Gets the configuration of the Http Client associated with this client. | `Builder` |
 | `Timeout(TimeSpan timeout)` | Http client timeout. | `Builder` |
 | `Environment(Environment environment)` | Current API environment. | `Builder` |
 | `Site(string site)` | The subdomain for your Advanced Billing site. | `Builder` |

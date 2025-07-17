@@ -45,7 +45,10 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="nextProductId">next_product_id.</param>
         /// <param name="nextProductPricePointId">next_product_price_point_id.</param>
         /// <param name="snapDay">snap_day.</param>
+        /// <param name="initialBillingAt">initial_billing_at.</param>
+        /// <param name="deferSignup">defer_signup.</param>
         /// <param name="nextBillingAt">next_billing_at.</param>
+        /// <param name="expiresAt">expires_at.</param>
         /// <param name="paymentCollectionMethod">payment_collection_method.</param>
         /// <param name="receivesInvoiceEmails">receives_invoice_emails.</param>
         /// <param name="netTerms">net_terms.</param>
@@ -65,7 +68,10 @@ namespace AdvancedBilling.Standard.Models
             string nextProductId = null,
             string nextProductPricePointId = null,
             UpdateSubscriptionSnapDay snapDay = null,
+            DateTimeOffset? initialBillingAt = null,
+            bool? deferSignup = false,
             DateTimeOffset? nextBillingAt = null,
+            DateTimeOffset? expiresAt = null,
             string paymentCollectionMethod = null,
             bool? receivesInvoiceEmails = null,
             UpdateSubscriptionNetTerms netTerms = null,
@@ -85,7 +91,10 @@ namespace AdvancedBilling.Standard.Models
             this.NextProductId = nextProductId;
             this.NextProductPricePointId = nextProductPricePointId;
             this.SnapDay = snapDay;
+            this.InitialBillingAt = initialBillingAt;
+            this.DeferSignup = deferSignup;
             this.NextBillingAt = nextBillingAt;
+            this.ExpiresAt = expiresAt;
             this.PaymentCollectionMethod = paymentCollectionMethod;
             this.ReceivesInvoiceEmails = receivesInvoiceEmails;
             this.NetTerms = netTerms;
@@ -146,11 +155,31 @@ namespace AdvancedBilling.Standard.Models
         public UpdateSubscriptionSnapDay SnapDay { get; set; }
 
         /// <summary>
+        /// (Optional) Set this attribute to a future date/time to update a subscription in the Awaiting Signup Date state, to Awaiting Signup. In the Awaiting Signup state, a subscription behaves like any other. It can be canceled, allocated to, or have its billing date changed. etc. When the `initial_billing_at` date hits, the subscription will transition to the expected state. If the product has a trial, the subscription will enter a trial, otherwise it will go active. Setup fees will be respected either before or after the trial, as configured on the price point. If the payment is due at the initial_billing_at and it fails the subscription will be immediately canceled. You can omit the initial_billing_at date to activate the subscription immediately. See the [subscription import](https://maxio.zendesk.com/hc/en-us/articles/24251489107213-Advanced-Billing-Subscription-Imports#date-format) documentation for more information about Date/Time formats.
+        /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
+        [JsonProperty("initial_billing_at", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset? InitialBillingAt { get; set; }
+
+        /// <summary>
+        /// (Optional) Set this attribute to true to move the subscription from Awaiting Signup, to Awaiting Signup Date. Use this when you want to update a subscription that has an unknown initial billing date. When the first billing date is known, update a subscription to set the `initial_billing_at` date. The subscription moves to the awaiting signup with a scheduled initial billing date. You can omit the initial_billing_at date to activate the subscription immediately. See [Subscription States](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404222005773-Subscription-States) for more information.
+        /// </summary>
+        [JsonProperty("defer_signup", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? DeferSignup { get; set; }
+
+        /// <summary>
         /// Gets or sets NextBillingAt.
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("next_billing_at", NullValueHandling = NullValueHandling.Ignore)]
         public DateTimeOffset? NextBillingAt { get; set; }
+
+        /// <summary>
+        /// Timestamp giving the expiration date of this subscription (if any). You may manually change the expiration date at any point during a subscription period.
+        /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
+        [JsonProperty("expires_at", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset? ExpiresAt { get; set; }
 
         /// <summary>
         /// Gets or sets PaymentCollectionMethod.
@@ -276,8 +305,14 @@ namespace AdvancedBilling.Standard.Models
                  this.NextProductPricePointId?.Equals(other.NextProductPricePointId) == true) &&
                 (this.SnapDay == null && other.SnapDay == null ||
                  this.SnapDay?.Equals(other.SnapDay) == true) &&
+                (this.InitialBillingAt == null && other.InitialBillingAt == null ||
+                 this.InitialBillingAt?.Equals(other.InitialBillingAt) == true) &&
+                (this.DeferSignup == null && other.DeferSignup == null ||
+                 this.DeferSignup?.Equals(other.DeferSignup) == true) &&
                 (this.NextBillingAt == null && other.NextBillingAt == null ||
                  this.NextBillingAt?.Equals(other.NextBillingAt) == true) &&
+                (this.ExpiresAt == null && other.ExpiresAt == null ||
+                 this.ExpiresAt?.Equals(other.ExpiresAt) == true) &&
                 (this.PaymentCollectionMethod == null && other.PaymentCollectionMethod == null ||
                  this.PaymentCollectionMethod?.Equals(other.PaymentCollectionMethod) == true) &&
                 (this.ReceivesInvoiceEmails == null && other.ReceivesInvoiceEmails == null ||
@@ -316,7 +351,10 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"NextProductId = {this.NextProductId ?? "null"}");
             toStringOutput.Add($"NextProductPricePointId = {this.NextProductPricePointId ?? "null"}");
             toStringOutput.Add($"SnapDay = {(this.SnapDay == null ? "null" : this.SnapDay.ToString())}");
+            toStringOutput.Add($"InitialBillingAt = {(this.InitialBillingAt == null ? "null" : this.InitialBillingAt.ToString())}");
+            toStringOutput.Add($"DeferSignup = {(this.DeferSignup == null ? "null" : this.DeferSignup.ToString())}");
             toStringOutput.Add($"NextBillingAt = {(this.NextBillingAt == null ? "null" : this.NextBillingAt.ToString())}");
+            toStringOutput.Add($"ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt.ToString())}");
             toStringOutput.Add($"PaymentCollectionMethod = {this.PaymentCollectionMethod ?? "null"}");
             toStringOutput.Add($"ReceivesInvoiceEmails = {(this.ReceivesInvoiceEmails == null ? "null" : this.ReceivesInvoiceEmails.ToString())}");
             toStringOutput.Add($"NetTerms = {(this.NetTerms == null ? "null" : this.NetTerms.ToString())}");

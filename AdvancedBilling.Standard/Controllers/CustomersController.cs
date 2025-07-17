@@ -48,7 +48,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Advanced Billing allows you to attribute a language/region to your customer to deliver invoices in any required language.
         /// For more: [Customer Locale](https://maxio.zendesk.com/hc/en-us/articles/24286672013709-Customer-Locale).
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
         public Models.CustomerResponse CreateCustomer(
                 Models.CreateCustomerRequest body = null)
@@ -69,7 +69,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Advanced Billing allows you to attribute a language/region to your customer to deliver invoices in any required language.
         /// For more: [Customer Locale](https://maxio.zendesk.com/hc/en-us/articles/24286672013709-Customer-Locale).
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
         public async Task<Models.CustomerResponse> CreateCustomerAsync(
@@ -168,7 +168,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// This method allows to update the Customer.
         /// </summary>
         /// <param name="id">Required parameter: The Advanced Billing id of the customer.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
         public Models.CustomerResponse UpdateCustomer(
                 int id,
@@ -179,7 +179,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// This method allows to update the Customer.
         /// </summary>
         /// <param name="id">Required parameter: The Advanced Billing id of the customer.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
         public async Task<Models.CustomerResponse> UpdateCustomerAsync(

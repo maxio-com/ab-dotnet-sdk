@@ -38,7 +38,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// In order to cancel a subscription group while also charging for any unbilled usage on metered or prepaid components, the `charge_unbilled_usage=true` parameter must be included in the request.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         public void CancelSubscriptionsInGroup(
                 string uid,
                 Models.CancelGroupedSubscriptionsRequest body = null)
@@ -49,7 +49,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// In order to cancel a subscription group while also charging for any unbilled usage on metered or prepaid components, the `charge_unbilled_usage=true` parameter must be included in the request.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the void response from the API call.</returns>
         public async Task CancelSubscriptionsInGroupAsync(
@@ -137,7 +137,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// For calendar billing subscriptions, the new billing period created will be a partial one, spanning from the date of reactivation to the next corresponding calendar renewal date.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ReactivateSubscriptionGroupResponse response from the API call.</returns>
         public Models.ReactivateSubscriptionGroupResponse ReactivateSubscriptionGroup(
                 string uid,
@@ -157,7 +157,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// For calendar billing subscriptions, the new billing period created will be a partial one, spanning from the date of reactivation to the next corresponding calendar renewal date.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ReactivateSubscriptionGroupResponse response from the API call.</returns>
         public async Task<Models.ReactivateSubscriptionGroupResponse> ReactivateSubscriptionGroupAsync(

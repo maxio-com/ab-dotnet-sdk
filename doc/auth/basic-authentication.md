@@ -23,6 +23,9 @@ Documentation for accessing and setting credentials for BasicAuth.
 You must provide credentials in the client as shown in the following code snippet.
 
 ```csharp
+using AdvancedBilling.Standard;
+using AdvancedBilling.Standard.Authentication;
+
 AdvancedBillingClient client = new AdvancedBillingClient.Builder()
     .BasicAuthCredentials(
         new BasicAuthModel.Builder(

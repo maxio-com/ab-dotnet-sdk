@@ -77,6 +77,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="unitPrice">unit_price.</param>
         /// <param name="productFamilyId">product_family_id.</param>
         /// <param name="productFamilyName">product_family_name.</param>
+        /// <param name="productFamilyHandle">product_family_handle.</param>
         /// <param name="pricePerUnitInCents">price_per_unit_in_cents.</param>
         /// <param name="kind">kind.</param>
         /// <param name="archived">archived.</param>
@@ -112,6 +113,7 @@ namespace AdvancedBilling.Standard.Models
             string unitPrice = null,
             int? productFamilyId = null,
             string productFamilyName = null,
+            string productFamilyHandle = null,
             long? pricePerUnitInCents = null,
             Models.ComponentKind? kind = null,
             bool? archived = null,
@@ -159,6 +161,7 @@ namespace AdvancedBilling.Standard.Models
             }
             this.ProductFamilyId = productFamilyId;
             this.ProductFamilyName = productFamilyName;
+            this.ProductFamilyHandle = productFamilyHandle;
 
             if (pricePerUnitInCents != null)
             {
@@ -326,6 +329,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("product_family_name", NullValueHandling = NullValueHandling.Ignore)]
         public string ProductFamilyName { get; set; }
+
+        /// <summary>
+        /// The handle of the Product Family to which the Component belongs
+        /// </summary>
+        [JsonProperty("product_family_handle", NullValueHandling = NullValueHandling.Ignore)]
+        public string ProductFamilyHandle { get; set; }
 
         /// <summary>
         /// deprecated - use unit_price instead
@@ -976,6 +985,8 @@ namespace AdvancedBilling.Standard.Models
                  this.ProductFamilyId?.Equals(other.ProductFamilyId) == true) &&
                 (this.ProductFamilyName == null && other.ProductFamilyName == null ||
                  this.ProductFamilyName?.Equals(other.ProductFamilyName) == true) &&
+                (this.ProductFamilyHandle == null && other.ProductFamilyHandle == null ||
+                 this.ProductFamilyHandle?.Equals(other.ProductFamilyHandle) == true) &&
                 (this.PricePerUnitInCents == null && other.PricePerUnitInCents == null ||
                  this.PricePerUnitInCents?.Equals(other.PricePerUnitInCents) == true) &&
                 (this.Kind == null && other.Kind == null ||
@@ -1045,6 +1056,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"UnitPrice = {this.UnitPrice ?? "null"}");
             toStringOutput.Add($"ProductFamilyId = {(this.ProductFamilyId == null ? "null" : this.ProductFamilyId.ToString())}");
             toStringOutput.Add($"ProductFamilyName = {this.ProductFamilyName ?? "null"}");
+            toStringOutput.Add($"ProductFamilyHandle = {this.ProductFamilyHandle ?? "null"}");
             toStringOutput.Add($"PricePerUnitInCents = {(this.PricePerUnitInCents == null ? "null" : this.PricePerUnitInCents.ToString())}");
             toStringOutput.Add($"Kind = {(this.Kind == null ? "null" : this.Kind.ToString())}");
             toStringOutput.Add($"Archived = {(this.Archived == null ? "null" : this.Archived.ToString())}");

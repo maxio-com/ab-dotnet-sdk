@@ -40,7 +40,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// We recommend using either the create or preview endpoints for proforma invoices to preview this advance invoice before using this endpoint to generate it.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.Invoice response from the API call.</returns>
         public Models.Invoice IssueAdvanceInvoice(
                 int subscriptionId,
@@ -54,7 +54,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// We recommend using either the create or preview endpoints for proforma invoices to preview this advance invoice before using this endpoint to generate it.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.Invoice response from the API call.</returns>
         public async Task<Models.Invoice> IssueAdvanceInvoiceAsync(
@@ -107,7 +107,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// A `reason` is required in order to void, and the invoice must have an open status. Voiding will cause any prepayments and credits that were applied to the invoice to be returned to the subscription. For a full overview of the impact of voiding, please [see our help docs]($m/Invoice).
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.Invoice response from the API call.</returns>
         public Models.Invoice VoidAdvanceInvoice(
                 int subscriptionId,
@@ -119,7 +119,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// A `reason` is required in order to void, and the invoice must have an open status. Voiding will cause any prepayments and credits that were applied to the invoice to be returned to the subscription. For a full overview of the impact of voiding, please [see our help docs]($m/Invoice).
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.Invoice response from the API call.</returns>
         public async Task<Models.Invoice> VoidAdvanceInvoiceAsync(

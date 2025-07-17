@@ -40,7 +40,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// A $50.00 refund on a $100.00 consolidated invoice with one $60.00 and one $40.00 segment, the refunded amount will be applied as 50% of each ($30.00 and $20.00 respectively).
         /// </summary>
         /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.Invoice response from the API call.</returns>
         public Models.Invoice RefundInvoice(
                 string uid,
@@ -54,7 +54,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// A $50.00 refund on a $100.00 consolidated invoice with one $60.00 and one $40.00 segment, the refunded amount will be applied as 50% of each ($30.00 and $20.00 respectively).
         /// </summary>
         /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.Invoice response from the API call.</returns>
         public async Task<Models.Invoice> RefundInvoiceAsync(
@@ -101,6 +101,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(_query => _query.Setup("status", (input.Status.HasValue) ? ApiHelper.JsonSerialize(input.Status.Value).Trim('\"') : null))
                       .Query(_query => _query.Setup("subscription_id", input.SubscriptionId))
                       .Query(_query => _query.Setup("subscription_group_uid", input.SubscriptionGroupUid))
+                      .Query(_query => _query.Setup("consolidation_level", input.ConsolidationLevel))
                       .Query(_query => _query.Setup("page", input.Page))
                       .Query(_query => _query.Setup("per_page", input.PerPage))
                       .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "desc"))
@@ -239,43 +240,10 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This API call should be used when you want to record a payment of a given type against a specific invoice. If you would like to apply a payment across multiple invoices, you can use the Bulk Payment endpoint.
-        /// ## Create a Payment from the existing payment profile.
-        /// In order to apply a payment to an invoice using an existing payment profile, specify `type` as `payment`, the amount less than the invoice total, and the customer's `payment_profile_id`. The ID of a payment profile might be retrieved via the Payment Profiles API endpoint.
-        /// ```.
-        /// {.
-        ///   "type": "payment",.
-        ///   "payment": {.
-        ///     "amount": 10.00,.
-        ///     "payment_profile_id": 123.
-        ///   }.
-        /// }.
-        /// ```.
-        /// ## Create a Payment from the Subscription's Prepayment Account.
-        /// In order apply a prepayment to an invoice, specify the `type` as `prepayment`, and also the `amount`.
-        /// ```.
-        /// {.
-        ///   "type": "prepayment",.
-        ///   "payment": {.
-        ///     "amount": 10.00.
-        ///   }.
-        /// }.
-        /// ```.
-        /// Note that the `amount` must be less than or equal to the Subscription's Prepayment account balance.
-        /// ## Create a Payment from the Subscription's Service Credit Account.
-        /// In order to apply a service credit to an invoice, specify the `type` as `service_credit`, and also the `amount`:.
-        /// ```.
-        /// {.
-        ///   "type": "service_credit",.
-        ///   "payment": {.
-        ///     "amount": 10.00.
-        ///   }.
-        /// }.
-        /// ```.
-        /// Note that Advanced Billing will attempt to fully pay the invoice's `due_amount` from the Subscription's Service Credit account. At this time, partial payments from a Service Credit Account are only allowed for consolidated invoices (subscription groups). Therefore, for normal invoices the Service Credit account balance must be greater than or equal to the invoice's `due_amount`.
+        /// Applies a payment of a given type against a specific invoice. If you would like to apply a payment across multiple invoices, you can use the Bulk Payment endpoint.
         /// </summary>
         /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.Invoice response from the API call.</returns>
         public Models.Invoice RecordPaymentForInvoice(
                 string uid,
@@ -283,43 +251,10 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(RecordPaymentForInvoiceAsync(uid, body));
 
         /// <summary>
-        /// This API call should be used when you want to record a payment of a given type against a specific invoice. If you would like to apply a payment across multiple invoices, you can use the Bulk Payment endpoint.
-        /// ## Create a Payment from the existing payment profile.
-        /// In order to apply a payment to an invoice using an existing payment profile, specify `type` as `payment`, the amount less than the invoice total, and the customer's `payment_profile_id`. The ID of a payment profile might be retrieved via the Payment Profiles API endpoint.
-        /// ```.
-        /// {.
-        ///   "type": "payment",.
-        ///   "payment": {.
-        ///     "amount": 10.00,.
-        ///     "payment_profile_id": 123.
-        ///   }.
-        /// }.
-        /// ```.
-        /// ## Create a Payment from the Subscription's Prepayment Account.
-        /// In order apply a prepayment to an invoice, specify the `type` as `prepayment`, and also the `amount`.
-        /// ```.
-        /// {.
-        ///   "type": "prepayment",.
-        ///   "payment": {.
-        ///     "amount": 10.00.
-        ///   }.
-        /// }.
-        /// ```.
-        /// Note that the `amount` must be less than or equal to the Subscription's Prepayment account balance.
-        /// ## Create a Payment from the Subscription's Service Credit Account.
-        /// In order to apply a service credit to an invoice, specify the `type` as `service_credit`, and also the `amount`:.
-        /// ```.
-        /// {.
-        ///   "type": "service_credit",.
-        ///   "payment": {.
-        ///     "amount": 10.00.
-        ///   }.
-        /// }.
-        /// ```.
-        /// Note that Advanced Billing will attempt to fully pay the invoice's `due_amount` from the Subscription's Service Credit account. At this time, partial payments from a Service Credit Account are only allowed for consolidated invoices (subscription groups). Therefore, for normal invoices the Service Credit account balance must be greater than or equal to the invoice's `due_amount`.
+        /// Applies a payment of a given type against a specific invoice. If you would like to apply a payment across multiple invoices, you can use the Bulk Payment endpoint.
         /// </summary>
         /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.Invoice response from the API call.</returns>
         public async Task<Models.Invoice> RecordPaymentForInvoiceAsync(
@@ -363,7 +298,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ```.
         /// Note that the invoice payment amounts must be greater than 0. Total amount must be greater or equal to invoices payment amount sum.
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.MultiInvoicePaymentResponse response from the API call.</returns>
         public Models.MultiInvoicePaymentResponse RecordPaymentForMultipleInvoices(
                 Models.CreateMultiInvoicePaymentRequest body = null)
@@ -394,7 +329,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ```.
         /// Note that the invoice payment amounts must be greater than 0. Total amount must be greater or equal to invoices payment amount sum.
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.MultiInvoicePaymentResponse response from the API call.</returns>
         public async Task<Models.MultiInvoicePaymentResponse> RecordPaymentForMultipleInvoicesAsync(
@@ -479,7 +414,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Only ungrouped or primary subscriptions may be paid using the "bulk" payment request.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.RecordPaymentResponse response from the API call.</returns>
         public Models.RecordPaymentResponse RecordPaymentForSubscription(
                 int subscriptionId,
@@ -493,7 +428,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Only ungrouped or primary subscriptions may be paid using the "bulk" payment request.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.RecordPaymentResponse response from the API call.</returns>
         public async Task<Models.RecordPaymentResponse> RecordPaymentForSubscriptionAsync(
@@ -557,7 +492,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// This endpoint allows you to void any invoice with the "open" or "canceled" status.  It will also allow voiding of an invoice with the "pending" status if it is not a consolidated invoice.
         /// </summary>
         /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.Invoice response from the API call.</returns>
         public Models.Invoice VoidInvoice(
                 string uid,
@@ -568,7 +503,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// This endpoint allows you to void any invoice with the "open" or "canceled" status.  It will also allow voiding of an invoice with the "pending" status if it is not a consolidated invoice.
         /// </summary>
         /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.Invoice response from the API call.</returns>
         public async Task<Models.Invoice> VoidInvoiceAsync(
@@ -731,7 +666,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// By default, invoices will be created with open status. Possible alternative is `draft`.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.InvoiceResponse response from the API call.</returns>
         public Models.InvoiceResponse CreateInvoice(
                 int subscriptionId,
@@ -852,7 +787,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// By default, invoices will be created with open status. Possible alternative is `draft`.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.InvoiceResponse response from the API call.</returns>
         public async Task<Models.InvoiceResponse> CreateInvoiceAsync(
@@ -877,7 +812,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// On success, a 204 no-content response will be returned. Please note that this does not indicate that email(s) have been delivered, but instead indicates that emails have been successfully queued for delivery. If _any_ invalid or malformed email address is found in the request body, the entire request will be rejected and a 422 response will be returned.
         /// </summary>
         /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         public void SendInvoice(
                 string uid,
                 Models.SendInvoiceRequest body = null)
@@ -889,7 +824,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// On success, a 204 no-content response will be returned. Please note that this does not indicate that email(s) have been delivered, but instead indicates that emails have been successfully queued for delivery. If _any_ invalid or malformed email address is found in the request body, the entire request will be rejected and a 422 response will be returned.
         /// </summary>
         /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the void response from the API call.</returns>
         public async Task SendInvoiceAsync(
@@ -980,7 +915,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// - `initiate_dunning` - prepayments and credits applied to the invoice; invoice status set to "open"; email sent to the customer for the issued invoice (if setting applies); payment failure recorded in the invoice history; subscription will  most likely go into "past_due" or "canceled" state (depending upon net terms and dunning settings).
         /// </summary>
         /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.Invoice response from the API call.</returns>
         public Models.Invoice IssueInvoice(
                 string uid,
@@ -997,7 +932,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// - `initiate_dunning` - prepayments and credits applied to the invoice; invoice status set to "open"; email sent to the customer for the issued invoice (if setting applies); payment failure recorded in the invoice history; subscription will  most likely go into "past_due" or "canceled" state (depending upon net terms and dunning settings).
         /// </summary>
         /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.Invoice response from the API call.</returns>
         public async Task<Models.Invoice> IssueInvoiceAsync(

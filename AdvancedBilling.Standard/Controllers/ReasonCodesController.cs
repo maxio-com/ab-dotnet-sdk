@@ -35,7 +35,7 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// # Reason Codes Intro.
-        /// ReasonCodes are a way to gain a high level view of why your customers are cancelling the subcription to your product or service.
+        /// ReasonCodes are a way to gain a high level view of why your customers are cancelling the subscription to your product or service.
         /// Add a set of churn reason codes to be displayed in-app and/or the Maxio Billing Portal. As your subscribers decide to cancel their subscription, learn why they decided to cancel.
         /// ## Reason Code Documentation.
         /// Full documentation on how Reason Codes operate within Advanced Billing can be located under the following links.
@@ -43,7 +43,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ## Create Reason Code.
         /// This method gives a merchant the option to create a reason codes for a given Site.
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ReasonCodeResponse response from the API call.</returns>
         public Models.ReasonCodeResponse CreateReasonCode(
                 Models.CreateReasonCodeRequest body = null)
@@ -51,7 +51,7 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// # Reason Codes Intro.
-        /// ReasonCodes are a way to gain a high level view of why your customers are cancelling the subcription to your product or service.
+        /// ReasonCodes are a way to gain a high level view of why your customers are cancelling the subscription to your product or service.
         /// Add a set of churn reason codes to be displayed in-app and/or the Maxio Billing Portal. As your subscribers decide to cancel their subscription, learn why they decided to cancel.
         /// ## Reason Code Documentation.
         /// Full documentation on how Reason Codes operate within Advanced Billing can be located under the following links.
@@ -59,7 +59,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ## Create Reason Code.
         /// This method gives a merchant the option to create a reason codes for a given Site.
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ReasonCodeResponse response from the API call.</returns>
         public async Task<Models.ReasonCodeResponse> CreateReasonCodeAsync(
@@ -137,7 +137,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// This method gives a merchant the option to update an existing reason code for a given site.
         /// </summary>
         /// <param name="reasonCodeId">Required parameter: The Advanced Billing id of the reason code.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ReasonCodeResponse response from the API call.</returns>
         public Models.ReasonCodeResponse UpdateReasonCode(
                 int reasonCodeId,
@@ -148,7 +148,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// This method gives a merchant the option to update an existing reason code for a given site.
         /// </summary>
         /// <param name="reasonCodeId">Required parameter: The Advanced Billing id of the reason code.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ReasonCodeResponse response from the API call.</returns>
         public async Task<Models.ReasonCodeResponse> UpdateReasonCodeAsync(
@@ -169,7 +169,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This method gives a merchant the option to delete one reason code from the Churn Reason Codes. This code will be immediately removed. This action is not reversable.
+        /// This method gives a merchant the option to delete one reason code from the Churn Reason Codes. This code will be immediately removed. This action is not reversible.
         /// </summary>
         /// <param name="reasonCodeId">Required parameter: The Advanced Billing id of the reason code.</param>
         /// <returns>Returns the Models.OkResponse response from the API call.</returns>
@@ -178,7 +178,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(DeleteReasonCodeAsync(reasonCodeId));
 
         /// <summary>
-        /// This method gives a merchant the option to delete one reason code from the Churn Reason Codes. This code will be immediately removed. This action is not reversable.
+        /// This method gives a merchant the option to delete one reason code from the Churn Reason Codes. This code will be immediately removed. This action is not reversible.
         /// </summary>
         /// <param name="reasonCodeId">Required parameter: The Advanced Billing id of the reason code.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>

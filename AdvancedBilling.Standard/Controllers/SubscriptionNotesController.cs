@@ -41,7 +41,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Full documentation on how to use Notes in the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24251712214413-Subscription-Summary-Overview).
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
         public Models.SubscriptionNoteResponse CreateSubscriptionNote(
                 int subscriptionId,
@@ -56,7 +56,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Full documentation on how to use Notes in the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24251712214413-Subscription-Summary-Overview).
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
         public async Task<Models.SubscriptionNoteResponse> CreateSubscriptionNoteAsync(
@@ -141,7 +141,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="noteId">Required parameter: The Advanced Billing id of the note.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
         public Models.SubscriptionNoteResponse UpdateSubscriptionNote(
                 int subscriptionId,
@@ -154,7 +154,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="noteId">Required parameter: The Advanced Billing id of the note.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
         public async Task<Models.SubscriptionNoteResponse> UpdateSubscriptionNoteAsync(

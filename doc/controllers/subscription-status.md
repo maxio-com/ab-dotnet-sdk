@@ -402,7 +402,7 @@ ResumeSubscriptionAsync(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `calendarBillingResumptionCharge` | [`ResumptionCharge?`](../../doc/models/resumption-charge.md) | Query, Optional | (For calendar billing subscriptions only) The way that the resumed subscription's charge should be handled<br>**Default**: `ResumptionCharge.prorated` |
+| `calendarBillingResumptionCharge` | [`ResumptionCharge?`](../../doc/models/resumption-charge.md) | Query, Optional | (For calendar billing subscriptions only) The way that the resumed subscription's charge should be handled<br><br>**Default**: `ResumptionCharge.prorated` |
 
 ## Response Type
 
@@ -412,9 +412,9 @@ ResumeSubscriptionAsync(
 
 ```csharp
 int subscriptionId = 222;
-Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')try
+Liquid error: Value cannot be null. (Parameter 'key')try
 {
-    SubscriptionResponse result = await subscriptionStatusController.ResumeSubscriptionAsync(subscriptionId);
+    SubscriptionResponse result = await subscriptionStatusController.ResumeSubscriptionAsync(Liquid error: Value cannot be null. (Parameter 'key')subscriptionId);
 }
 catch (ApiException e)
 {

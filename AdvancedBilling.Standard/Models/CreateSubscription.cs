@@ -51,6 +51,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="customerId">customer_id.</param>
         /// <param name="nextBillingAt">next_billing_at.</param>
         /// <param name="initialBillingAt">initial_billing_at.</param>
+        /// <param name="deferSignup">defer_signup.</param>
         /// <param name="storedCredentialTransactionId">stored_credential_transaction_id.</param>
         /// <param name="salesRepId">sales_rep_id.</param>
         /// <param name="paymentProfileId">payment_profile_id.</param>
@@ -101,6 +102,7 @@ namespace AdvancedBilling.Standard.Models
             int? customerId = null,
             DateTimeOffset? nextBillingAt = null,
             DateTimeOffset? initialBillingAt = null,
+            bool? deferSignup = false,
             int? storedCredentialTransactionId = null,
             int? salesRepId = null,
             int? paymentProfileId = null,
@@ -151,6 +153,7 @@ namespace AdvancedBilling.Standard.Models
             this.CustomerId = customerId;
             this.NextBillingAt = nextBillingAt;
             this.InitialBillingAt = initialBillingAt;
+            this.DeferSignup = deferSignup;
             this.StoredCredentialTransactionId = storedCredentialTransactionId;
             this.SalesRepId = salesRepId;
             this.PaymentProfileId = paymentProfileId;
@@ -267,11 +270,17 @@ namespace AdvancedBilling.Standard.Models
         public DateTimeOffset? NextBillingAt { get; set; }
 
         /// <summary>
-        /// (Optional) Set this attribute to a future date/time to create a subscription in the "Awaiting Signup" state, rather than "Active" or "Trialing". See the notes on “Date/Time Format” in our [subscription import documentation](https://maxio.zendesk.com/hc/en-us/articles/24251489107213-Advanced-Billing-Subscription-Imports#date-format). In the "Awaiting Signup" state, a subscription behaves like any other. It can be canceled, allocated to, had its billing date changed. etc. When the initial_billing_at date hits, the subscription will transition to the expected state. If the product has a trial, the subscription will enter a trial, otherwise it will go active. Setup fees will be respected either before or after the trial, as configured on the price point. If the payment is due at the initial_billing_at and it fails the subscription will be immediately canceled. See further notes in the section on Delayed Signups.
+        /// (Optional) Set this attribute to a future date/time to create a subscription in the Awaiting Signup state, rather than Active or Trialing. You can omit the initial_billing_at date to activate the subscription immediately. In the Awaiting Signup state, a subscription behaves like any other. It can be canceled, allocated to, or have its billing date changed. etc. When the initial_billing_at date hits, the subscription will transition to the expected state. If the product has a trial, the subscription will enter a trial, otherwise it will go active. Setup fees will be respected either before or after the trial, as configured on the price point. If the payment is due at the initial_billing_at and it fails the subscription will be immediately canceled. See the [subscription import](https://maxio.zendesk.com/hc/en-us/articles/24251489107213-Advanced-Billing-Subscription-Imports#date-format) documentation for more information about Date/Time Formats.
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("initial_billing_at", NullValueHandling = NullValueHandling.Ignore)]
         public DateTimeOffset? InitialBillingAt { get; set; }
+
+        /// <summary>
+        /// (Optional) Set this attribute to true to create the subscription in the Awaiting Signup Date state. Use this when you want to create a subscription that has an unknown first  billing date. When the first billing date is known, update a subscription and set the `initial_billing_at` date. The subscription moves to the Awaiting Signup state with a scheduled initial billing date. You can omit the initial_billing_at date to activate the subscription immediately. See [Subscription States](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404222005773-Subscription-States) for more information.
+        /// </summary>
+        [JsonProperty("defer_signup", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? DeferSignup { get; set; }
 
         /// <summary>
         /// For European sites subject to PSD2 and using 3D Secure, this can be used to reference a previous transaction for the customer. This will ensure the card will be charged successfully at renewal.
@@ -292,7 +301,7 @@ namespace AdvancedBilling.Standard.Models
         public int? PaymentProfileId { get; set; }
 
         /// <summary>
-        /// The reference value (provided by your app) for the subscription itelf.
+        /// The reference value (provided by your app) for the subscription itself.
         /// </summary>
         [JsonProperty("reference", NullValueHandling = NullValueHandling.Ignore)]
         public string Reference { get; set; }
@@ -419,7 +428,7 @@ namespace AdvancedBilling.Standard.Models
         public string ReasonCode { get; set; }
 
         /// <summary>
-        /// (Optional, used only for Delayed Product Change When set to true, indicates that a changed value for product_handle should schedule the product change to the next subscription renewal.
+        /// (Optional) used only for Delayed Product Change When set to true, indicates that a changed value for product_handle should schedule the product change to the next subscription renewal.
         /// </summary>
         [JsonProperty("product_change_delayed", NullValueHandling = NullValueHandling.Ignore)]
         public bool? ProductChangeDelayed { get; set; }
@@ -563,6 +572,8 @@ namespace AdvancedBilling.Standard.Models
                  this.NextBillingAt?.Equals(other.NextBillingAt) == true) &&
                 (this.InitialBillingAt == null && other.InitialBillingAt == null ||
                  this.InitialBillingAt?.Equals(other.InitialBillingAt) == true) &&
+                (this.DeferSignup == null && other.DeferSignup == null ||
+                 this.DeferSignup?.Equals(other.DeferSignup) == true) &&
                 (this.StoredCredentialTransactionId == null && other.StoredCredentialTransactionId == null ||
                  this.StoredCredentialTransactionId?.Equals(other.StoredCredentialTransactionId) == true) &&
                 (this.SalesRepId == null && other.SalesRepId == null ||
@@ -657,6 +668,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
             toStringOutput.Add($"NextBillingAt = {(this.NextBillingAt == null ? "null" : this.NextBillingAt.ToString())}");
             toStringOutput.Add($"InitialBillingAt = {(this.InitialBillingAt == null ? "null" : this.InitialBillingAt.ToString())}");
+            toStringOutput.Add($"DeferSignup = {(this.DeferSignup == null ? "null" : this.DeferSignup.ToString())}");
             toStringOutput.Add($"StoredCredentialTransactionId = {(this.StoredCredentialTransactionId == null ? "null" : this.StoredCredentialTransactionId.ToString())}");
             toStringOutput.Add($"SalesRepId = {(this.SalesRepId == null ? "null" : this.SalesRepId.ToString())}");
             toStringOutput.Add($"PaymentProfileId = {(this.PaymentProfileId == null ? "null" : this.PaymentProfileId.ToString())}");
