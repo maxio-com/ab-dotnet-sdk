@@ -1387,6 +1387,7 @@ ActivateEventBasedComponent body = new ActivateEventBasedComponent
             {
                 StartingQuantity = PriceStartingQuantity.FromNumber(1),
                 UnitPrice = PriceUnitPrice.FromString("5.0"),
+                EndingQuantity = null,
             },
         },
         TaxIncluded = false,

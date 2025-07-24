@@ -1,5 +1,7 @@
 // <copyright file="UpdateSubscriptionNetTerms.cs" company="APIMatic">
-// Copyright (c) APIMatic. All rights reserved.
+// AdvancedBilling.Standard
+//
+// This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
 using APIMatic.Core.Utilities.Converters;
 using Newtonsoft.Json;

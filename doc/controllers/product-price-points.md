@@ -149,7 +149,8 @@ ListProductPricePointsInput listProductPricePointsInput = new ListProductPricePo
     ProductId = ListProductPricePointsInputProductId.FromNumber(124),
     Page = 2,
     PerPage = 10,
-Liquid error: Value cannot be null. (Parameter 'key')};
+    FilterType = Liquid error: Value cannot be null. (Parameter 'key'),
+};
 
 try
 {

@@ -412,9 +412,9 @@ ResumeSubscriptionAsync(
 
 ```csharp
 int subscriptionId = 222;
-Liquid error: Value cannot be null. (Parameter 'key')try
+try
 {
-    SubscriptionResponse result = await subscriptionStatusController.ResumeSubscriptionAsync(Liquid error: Value cannot be null. (Parameter 'key')subscriptionId);
+    SubscriptionResponse result = await subscriptionStatusController.ResumeSubscriptionAsync(subscriptionId);
 }
 catch (ApiException e)
 {

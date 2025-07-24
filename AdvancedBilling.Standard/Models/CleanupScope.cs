@@ -1,5 +1,7 @@
 // <copyright file="CleanupScope.cs" company="APIMatic">
-// Copyright (c) APIMatic. All rights reserved.
+// AdvancedBilling.Standard
+//
+// This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
 using System;
 using System.Collections.Generic;
