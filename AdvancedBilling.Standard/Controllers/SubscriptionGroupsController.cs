@@ -41,7 +41,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Only one of the `subscriptions` can have `"primary": true` attribute set.
         /// When passing product to a subscription you can use either `product_id` or `product_handle` or `offer_id`. You can also use `custom_price` instead.
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionGroupSignupResponse response from the API call.</returns>
         public Models.SubscriptionGroupSignupResponse SignupWithSubscriptionGroup(
                 Models.SubscriptionGroupSignupRequest body = null)
@@ -54,7 +54,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Only one of the `subscriptions` can have `"primary": true` attribute set.
         /// When passing product to a subscription you can use either `product_id` or `product_handle` or `offer_id`. You can also use `custom_price` instead.
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionGroupSignupResponse response from the API call.</returns>
         public async Task<Models.SubscriptionGroupSignupResponse> SignupWithSubscriptionGroupAsync(
@@ -74,7 +74,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Creates a subscription group with given members.
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionGroupResponse response from the API call.</returns>
         public Models.SubscriptionGroupResponse CreateSubscriptionGroup(
                 Models.CreateSubscriptionGroupRequest body = null)
@@ -83,7 +83,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Creates a subscription group with given members.
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionGroupResponse response from the API call.</returns>
         public async Task<Models.SubscriptionGroupResponse> CreateSubscriptionGroupAsync(
@@ -172,7 +172,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// `"member_ids"` should contain an array of both subscription IDs to set as group members and subscription IDs already present in the groups. Not including them will result in removing them from subscription group. To clean up members, just leave the array empty.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionGroupResponse response from the API call.</returns>
         public Models.SubscriptionGroupResponse UpdateSubscriptionGroupMembers(
                 string uid,
@@ -184,7 +184,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// `"member_ids"` should contain an array of both subscription IDs to set as group members and subscription IDs already present in the groups. Not including them will result in removing them from subscription group. To clean up members, just leave the array empty.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionGroupResponse response from the API call.</returns>
         public async Task<Models.SubscriptionGroupResponse> UpdateSubscriptionGroupMembersAsync(
@@ -275,7 +275,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// [Create Subscription in a Subscription Group](https://developers.chargify.com/docs/api-docs/d571659cf0f24-create-subscription#subscription-in-a-subscription-group).
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionGroupResponse response from the API call.</returns>
         public Models.SubscriptionGroupResponse AddSubscriptionToGroup(
                 int subscriptionId,
@@ -294,7 +294,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// [Create Subscription in a Subscription Group](https://developers.chargify.com/docs/api-docs/d571659cf0f24-create-subscription#subscription-in-a-subscription-group).
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionGroupResponse response from the API call.</returns>
         public async Task<Models.SubscriptionGroupResponse> AddSubscriptionToGroupAsync(

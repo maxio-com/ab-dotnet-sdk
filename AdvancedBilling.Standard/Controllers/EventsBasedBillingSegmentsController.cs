@@ -39,7 +39,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="componentId">Required parameter: ID or Handle for the Component.</param>
         /// <param name="pricePointId">Required parameter: ID or Handle for the Price Point belonging to the Component.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SegmentResponse response from the API call.</returns>
         public Models.SegmentResponse CreateSegment(
                 string componentId,
@@ -53,7 +53,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="componentId">Required parameter: ID or Handle for the Component.</param>
         /// <param name="pricePointId">Required parameter: ID or Handle for the Price Point belonging to the Component.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SegmentResponse response from the API call.</returns>
         public async Task<Models.SegmentResponse> CreateSegmentAsync(
@@ -119,7 +119,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="componentId">Required parameter: ID or Handle of the Component.</param>
         /// <param name="pricePointId">Required parameter: ID or Handle of the Price Point belonging to the Component.</param>
         /// <param name="id">Required parameter: The ID of the Segment.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SegmentResponse response from the API call.</returns>
         public Models.SegmentResponse UpdateSegment(
                 string componentId,
@@ -135,7 +135,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="componentId">Required parameter: ID or Handle of the Component.</param>
         /// <param name="pricePointId">Required parameter: ID or Handle of the Price Point belonging to the Component.</param>
         /// <param name="id">Required parameter: The ID of the Segment.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SegmentResponse response from the API call.</returns>
         public async Task<Models.SegmentResponse> UpdateSegmentAsync(
@@ -206,7 +206,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="componentId">Required parameter: ID or Handle for the Component.</param>
         /// <param name="pricePointId">Required parameter: ID or Handle for the Price Point belonging to the Component.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ListSegmentsResponse response from the API call.</returns>
         public Models.ListSegmentsResponse BulkCreateSegments(
                 string componentId,
@@ -221,7 +221,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="componentId">Required parameter: ID or Handle for the Component.</param>
         /// <param name="pricePointId">Required parameter: ID or Handle for the Price Point belonging to the Component.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ListSegmentsResponse response from the API call.</returns>
         public async Task<Models.ListSegmentsResponse> BulkCreateSegmentsAsync(
@@ -250,7 +250,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="componentId">Required parameter: ID or Handle for the Component.</param>
         /// <param name="pricePointId">Required parameter: ID or Handle for the Price Point belonging to the Component.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ListSegmentsResponse response from the API call.</returns>
         public Models.ListSegmentsResponse BulkUpdateSegments(
                 string componentId,
@@ -265,7 +265,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="componentId">Required parameter: ID or Handle for the Component.</param>
         /// <param name="pricePointId">Required parameter: ID or Handle for the Price Point belonging to the Component.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ListSegmentsResponse response from the API call.</returns>
         public async Task<Models.ListSegmentsResponse> BulkUpdateSegmentsAsync(

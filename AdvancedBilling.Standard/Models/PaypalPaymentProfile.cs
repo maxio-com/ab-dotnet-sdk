@@ -70,6 +70,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="siteGatewaySettingId">site_gateway_setting_id.</param>
         /// <param name="gatewayHandle">gateway_handle.</param>
         /// <param name="paypalEmail">paypal_email.</param>
+        /// <param name="createdAt">created_at.</param>
+        /// <param name="updatedAt">updated_at.</param>
         public PaypalPaymentProfile(
             Models.PaymentType paymentType,
             int? id = null,
@@ -87,7 +89,9 @@ namespace AdvancedBilling.Standard.Models
             string billingAddress2 = null,
             int? siteGatewaySettingId = null,
             string gatewayHandle = null,
-            string paypalEmail = null)
+            string paypalEmail = null,
+            DateTimeOffset? createdAt = null,
+            DateTimeOffset? updatedAt = null)
         {
             this.Id = id;
             this.FirstName = firstName;
@@ -142,6 +146,8 @@ namespace AdvancedBilling.Standard.Models
                 this.GatewayHandle = gatewayHandle;
             }
             this.PaypalEmail = paypalEmail;
+            this.CreatedAt = createdAt;
+            this.UpdatedAt = updatedAt;
         }
 
         /// <summary>
@@ -367,6 +373,20 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("paypal_email", NullValueHandling = NullValueHandling.Ignore)]
         public string PaypalEmail { get; set; }
 
+        /// <summary>
+        /// A timestamp indicating when this payment profile was created
+        /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
+        [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset? CreatedAt { get; set; }
+
+        /// <summary>
+        /// A timestamp indicating when this payment profile was last updated
+        /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
+        [JsonProperty("updated_at", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset? UpdatedAt { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -568,6 +588,10 @@ namespace AdvancedBilling.Standard.Models
                  this.GatewayHandle?.Equals(other.GatewayHandle) == true) &&
                 (this.PaypalEmail == null && other.PaypalEmail == null ||
                  this.PaypalEmail?.Equals(other.PaypalEmail) == true) &&
+                (this.CreatedAt == null && other.CreatedAt == null ||
+                 this.CreatedAt?.Equals(other.CreatedAt) == true) &&
+                (this.UpdatedAt == null && other.UpdatedAt == null ||
+                 this.UpdatedAt?.Equals(other.UpdatedAt) == true) &&
                 base.Equals(obj);
         }
 
@@ -594,6 +618,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"SiteGatewaySettingId = {(this.SiteGatewaySettingId == null ? "null" : this.SiteGatewaySettingId.ToString())}");
             toStringOutput.Add($"GatewayHandle = {this.GatewayHandle ?? "null"}");
             toStringOutput.Add($"PaypalEmail = {this.PaypalEmail ?? "null"}");
+            toStringOutput.Add($"CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
 
             base.ToString(toStringOutput);
         }

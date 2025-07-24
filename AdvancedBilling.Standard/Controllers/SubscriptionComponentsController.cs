@@ -117,7 +117,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// 3. `"_default"` string, which will reset the price point to the component's current default price point.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.BulkComponentsPricePointAssignment response from the API call.</returns>
         public Models.BulkComponentsPricePointAssignment BulkUpdateSubscriptionComponentsPricePoints(
                 int subscriptionId,
@@ -132,7 +132,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// 3. `"_default"` string, which will reset the price point to the component's current default price point.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.BulkComponentsPricePointAssignment response from the API call.</returns>
         public async Task<Models.BulkComponentsPricePointAssignment> BulkUpdateSubscriptionComponentsPricePointsAsync(
@@ -216,7 +216,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.AllocationResponse response from the API call.</returns>
         public Models.AllocationResponse AllocateComponent(
                 int subscriptionId,
@@ -261,7 +261,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.AllocationResponse response from the API call.</returns>
         public async Task<Models.AllocationResponse> AllocateComponentAsync(
@@ -353,7 +353,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// This endpoint only responds to JSON. It is not available for XML.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the List of Models.AllocationResponse response from the API call.</returns>
         public List<Models.AllocationResponse> AllocateComponents(
                 int subscriptionId,
@@ -366,7 +366,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// This endpoint only responds to JSON. It is not available for XML.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the List of Models.AllocationResponse response from the API call.</returns>
         public async Task<List<Models.AllocationResponse>> AllocateComponentsAsync(
@@ -393,7 +393,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// See example below for Fine-Grained Component Control response.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.AllocationPreviewResponse response from the API call.</returns>
         public Models.AllocationPreviewResponse PreviewAllocations(
                 int subscriptionId,
@@ -407,7 +407,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// See example below for Fine-Grained Component Control response.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.AllocationPreviewResponse response from the API call.</returns>
         public async Task<Models.AllocationPreviewResponse> PreviewAllocationsAsync(
@@ -438,7 +438,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
         /// <param name="allocationId">Required parameter: The Advanced Billing id of the allocation.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         public void UpdatePrepaidUsageAllocationExpirationDate(
                 int subscriptionId,
                 int componentId,
@@ -458,7 +458,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
         /// <param name="allocationId">Required parameter: The Advanced Billing id of the allocation.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the void response from the API call.</returns>
         public async Task UpdatePrepaidUsageAllocationExpirationDateAsync(
@@ -493,7 +493,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
         /// <param name="allocationId">Required parameter: The Advanced Billing id of the allocation.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         public void DeletePrepaidUsageAllocation(
                 int subscriptionId,
                 int componentId,
@@ -512,7 +512,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
         /// <param name="allocationId">Required parameter: The Advanced Billing id of the allocation.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the void response from the API call.</returns>
         public async Task DeletePrepaidUsageAllocationAsync(
@@ -576,7 +576,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="componentId">Required parameter: Either the Advanced Billing id for the component or the component's handle prefixed by `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.UsageResponse response from the API call.</returns>
         public Models.UsageResponse CreateUsage(
                 int subscriptionId,
@@ -624,7 +624,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
         /// <param name="componentId">Required parameter: Either the Advanced Billing id for the component or the component's handle prefixed by `handle:`.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.UsageResponse response from the API call.</returns>
         public async Task<Models.UsageResponse> CreateUsageAsync(
@@ -706,7 +706,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Advanced Billing id of the subscription.</param>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         public void ActivateEventBasedComponent(
                 int subscriptionId,
                 int componentId,
@@ -721,7 +721,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Advanced Billing id of the subscription.</param>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the void response from the API call.</returns>
         public async Task ActivateEventBasedComponentAsync(
@@ -785,7 +785,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="apiHandle">Required parameter: Identifies the Stream for which the event should be published..</param>
         /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         public void RecordEvent(
                 string apiHandle,
                 string storeUid = null,
@@ -807,7 +807,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="apiHandle">Required parameter: Identifies the Stream for which the event should be published..</param>
         /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the void response from the API call.</returns>
         public async Task RecordEventAsync(
@@ -834,7 +834,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="apiHandle">Required parameter: Identifies the Stream for which the events should be published..</param>
         /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         public void BulkRecordEvents(
                 string apiHandle,
                 string storeUid = null,
@@ -848,7 +848,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="apiHandle">Required parameter: Identifies the Stream for which the events should be published..</param>
         /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the void response from the API call.</returns>
         public async Task BulkRecordEventsAsync(

@@ -76,7 +76,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ]]>
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public Models.SubscriptionResponse MigrateSubscriptionProduct(
                 int subscriptionId,
@@ -126,7 +126,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ]]>
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public async Task<Models.SubscriptionResponse> MigrateSubscriptionProductAsync(
@@ -151,7 +151,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// This will calculate the prorated adjustment, charge, payment and credit applied values assuming the migration is done at that date in the future as opposed to right now.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionMigrationPreviewResponse response from the API call.</returns>
         public Models.SubscriptionMigrationPreviewResponse PreviewSubscriptionProductMigration(
                 int subscriptionId,
@@ -164,7 +164,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// This will calculate the prorated adjustment, charge, payment and credit applied values assuming the migration is done at that date in the future as opposed to right now.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionMigrationPreviewResponse response from the API call.</returns>
         public async Task<Models.SubscriptionMigrationPreviewResponse> PreviewSubscriptionProductMigrationAsync(

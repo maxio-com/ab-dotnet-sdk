@@ -73,7 +73,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// This endpoint can be used to create a new price point for an existing component.
         /// </summary>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ComponentPricePointResponse response from the API call.</returns>
         public Models.ComponentPricePointResponse CreateComponentPricePoint(
                 int componentId,
@@ -84,7 +84,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// This endpoint can be used to create a new price point for an existing component.
         /// </summary>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentPricePointResponse response from the API call.</returns>
         public async Task<Models.ComponentPricePointResponse> CreateComponentPricePointAsync(
@@ -143,7 +143,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Use this endpoint to create multiple component price points in one request.
         /// </summary>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component for which you want to fetch price points..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ComponentPricePointsResponse response from the API call.</returns>
         public Models.ComponentPricePointsResponse BulkCreateComponentPricePoints(
                 string componentId,
@@ -154,7 +154,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Use this endpoint to create multiple component price points in one request.
         /// </summary>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component for which you want to fetch price points..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentPricePointsResponse response from the API call.</returns>
         public async Task<Models.ComponentPricePointsResponse> BulkCreateComponentPricePointsAsync(
@@ -181,7 +181,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="componentId">Required parameter: The id or handle of the component. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
         /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-price_point-handle` for a string handle..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ComponentPricePointResponse response from the API call.</returns>
         public Models.ComponentPricePointResponse UpdateComponentPricePoint(
                 UpdateComponentPricePointComponentId componentId,
@@ -197,7 +197,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// </summary>
         /// <param name="componentId">Required parameter: The id or handle of the component. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
         /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-price_point-handle` for a string handle..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentPricePointResponse response from the API call.</returns>
         public async Task<Models.ComponentPricePointResponse> UpdateComponentPricePointAsync(
@@ -324,7 +324,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Note: Currency Prices are not able to be created for custom price points.
         /// </summary>
         /// <param name="pricePointId">Required parameter: The Advanced Billing id of the price point.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ComponentCurrencyPricesResponse response from the API call.</returns>
         public Models.ComponentCurrencyPricesResponse CreateCurrencyPrices(
                 int pricePointId,
@@ -337,7 +337,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Note: Currency Prices are not able to be created for custom price points.
         /// </summary>
         /// <param name="pricePointId">Required parameter: The Advanced Billing id of the price point.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentCurrencyPricesResponse response from the API call.</returns>
         public async Task<Models.ComponentCurrencyPricesResponse> CreateCurrencyPricesAsync(
@@ -361,7 +361,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Note: Currency Prices are not able to be updated for custom price points.
         /// </summary>
         /// <param name="pricePointId">Required parameter: The Advanced Billing id of the price point.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ComponentCurrencyPricesResponse response from the API call.</returns>
         public Models.ComponentCurrencyPricesResponse UpdateCurrencyPrices(
                 int pricePointId,
@@ -373,7 +373,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Note: Currency Prices are not able to be updated for custom price points.
         /// </summary>
         /// <param name="pricePointId">Required parameter: The Advanced Billing id of the price point.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ComponentCurrencyPricesResponse response from the API call.</returns>
         public async Task<Models.ComponentCurrencyPricesResponse> UpdateCurrencyPricesAsync(

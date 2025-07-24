@@ -214,7 +214,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// A reason for the void operation is required to be included in the request body. If one is not provided, the response will have HTTP status code 422 and an error message.
         /// </summary>
         /// <param name="proformaInvoiceUid">Required parameter: The uid of the proforma invoice.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
         public Models.ProformaInvoice VoidProformaInvoice(
                 string proformaInvoiceUid,
@@ -229,7 +229,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// A reason for the void operation is required to be included in the request body. If one is not provided, the response will have HTTP status code 422 and an error message.
         /// </summary>
         /// <param name="proformaInvoiceUid">Required parameter: The uid of the proforma invoice.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
         public async Task<Models.ProformaInvoice> VoidProformaInvoiceAsync(
@@ -290,7 +290,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Pass a payload that resembles a subscription create or signup preview request. For example, you can specify components, coupons/a referral, offers, custom pricing, and an existing customer or payment profile to populate a shipping or billing address.
         /// A product and customer first name, last name, and email are the minimum requirements. We recommend associating the proforma invoice with a customer_id to easily find their proforma invoices, since the subscription_id will always be blank.
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
         public Models.ProformaInvoice CreateSignupProformaInvoice(
                 Models.CreateSubscriptionRequest body = null)
@@ -302,7 +302,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Pass a payload that resembles a subscription create or signup preview request. For example, you can specify components, coupons/a referral, offers, custom pricing, and an existing customer or payment profile to populate a shipping or billing address.
         /// A product and customer first name, last name, and email are the minimum requirements. We recommend associating the proforma invoice with a customer_id to easily find their proforma invoices, since the subscription_id will always be blank.
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
         public async Task<Models.ProformaInvoice> CreateSignupProformaInvoiceAsync(
@@ -327,7 +327,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// A product and customer first name, last name, and email are the minimum requirements.
         /// </summary>
         /// <param name="include">Optional parameter: Choose to include a proforma invoice preview for the first renewal. Use in query `include=next_proforma_invoice`..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SignupProformaPreviewResponse response from the API call.</returns>
         public Models.SignupProformaPreviewResponse PreviewSignupProformaInvoice(
                 Models.CreateSignupProformaPreviewInclude? include = null,
@@ -341,7 +341,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// A product and customer first name, last name, and email are the minimum requirements.
         /// </summary>
         /// <param name="include">Optional parameter: Choose to include a proforma invoice preview for the first renewal. Use in query `include=next_proforma_invoice`..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SignupProformaPreviewResponse response from the API call.</returns>
         public async Task<Models.SignupProformaPreviewResponse> PreviewSignupProformaInvoiceAsync(

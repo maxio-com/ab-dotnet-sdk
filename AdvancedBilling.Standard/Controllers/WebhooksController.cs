@@ -84,7 +84,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// This method allows you to enable webhooks via API for your site.
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.EnableWebhooksResponse response from the API call.</returns>
         public Models.EnableWebhooksResponse EnableWebhooks(
                 Models.EnableWebhooksRequest body = null)
@@ -93,7 +93,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// This method allows you to enable webhooks via API for your site.
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.EnableWebhooksResponse response from the API call.</returns>
         public async Task<Models.EnableWebhooksResponse> EnableWebhooksAsync(
@@ -112,7 +112,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Posting to the replay endpoint does not immediately resend the webhooks. They are added to a queue and will be sent as soon as possible, depending on available system resources.
         /// You may submit an array of up to 1000 webhook IDs to replay in the request.
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ReplayWebhooksResponse response from the API call.</returns>
         public Models.ReplayWebhooksResponse ReplayWebhooks(
                 Models.ReplayWebhooksRequest body = null)
@@ -122,7 +122,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Posting to the replay endpoint does not immediately resend the webhooks. They are added to a queue and will be sent as soon as possible, depending on available system resources.
         /// You may submit an array of up to 1000 webhook IDs to replay in the request.
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ReplayWebhooksResponse response from the API call.</returns>
         public async Task<Models.ReplayWebhooksResponse> ReplayWebhooksAsync(
@@ -142,7 +142,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// You can check available events here.
         /// [Event keys](https://maxio.zendesk.com/hc/en-us/articles/24266136649869-Webhooks-Reference#events).
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.EndpointResponse response from the API call.</returns>
         public Models.EndpointResponse CreateEndpoint(
                 Models.CreateOrUpdateEndpointRequest body = null)
@@ -153,7 +153,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// You can check available events here.
         /// [Event keys](https://maxio.zendesk.com/hc/en-us/articles/24266136649869-Webhooks-Reference#events).
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.EndpointResponse response from the API call.</returns>
         public async Task<Models.EndpointResponse> CreateEndpointAsync(
@@ -198,7 +198,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// If you want unsubscribe from specific event, just send a list of `webhook_subscriptions` without the specific event key.
         /// </summary>
         /// <param name="endpointId">Required parameter: The Advanced Billing id for the endpoint that should be updated.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.EndpointResponse response from the API call.</returns>
         public Models.EndpointResponse UpdateEndpoint(
                 int endpointId,
@@ -214,7 +214,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// If you want unsubscribe from specific event, just send a list of `webhook_subscriptions` without the specific event key.
         /// </summary>
         /// <param name="endpointId">Required parameter: The Advanced Billing id for the endpoint that should be updated.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.EndpointResponse response from the API call.</returns>
         public async Task<Models.EndpointResponse> UpdateEndpointAsync(

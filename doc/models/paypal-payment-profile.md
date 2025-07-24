@@ -26,6 +26,8 @@
 | `SiteGatewaySettingId` | `int?` | Optional | - |
 | `GatewayHandle` | `string` | Optional | - |
 | `PaypalEmail` | `string` | Optional | - |
+| `CreatedAt` | `DateTimeOffset?` | Optional | A timestamp indicating when this payment profile was created |
+| `UpdatedAt` | `DateTimeOffset?` | Optional | A timestamp indicating when this payment profile was last updated |
 
 ## Example (as JSON)
 

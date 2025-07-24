@@ -32,9 +32,6 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionGroupCreditCard"/> class.
         /// </summary>
-        /// <param name="fullNumber">full_number.</param>
-        /// <param name="expirationMonth">expiration_month.</param>
-        /// <param name="expirationYear">expiration_year.</param>
         /// <param name="chargifyToken">chargify_token.</param>
         /// <param name="vaultToken">vault_token.</param>
         /// <param name="currentVault">current_vault.</param>
@@ -47,15 +44,15 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="billingState">billing_state.</param>
         /// <param name="billingZip">billing_zip.</param>
         /// <param name="billingCountry">billing_country.</param>
+        /// <param name="fullNumber">full_number.</param>
+        /// <param name="expirationMonth">expiration_month.</param>
+        /// <param name="expirationYear">expiration_year.</param>
         /// <param name="lastFour">last_four.</param>
         /// <param name="cardType">card_type.</param>
         /// <param name="customerVaultToken">customer_vault_token.</param>
         /// <param name="cvv">cvv.</param>
         /// <param name="paymentType">payment_type.</param>
         public SubscriptionGroupCreditCard(
-            SubscriptionGroupCreditCardFullNumber fullNumber = null,
-            SubscriptionGroupCreditCardExpirationMonth expirationMonth = null,
-            SubscriptionGroupCreditCardExpirationYear expirationYear = null,
             string chargifyToken = null,
             string vaultToken = null,
             Models.CreditCardVault? currentVault = null,
@@ -68,15 +65,15 @@ namespace AdvancedBilling.Standard.Models
             string billingState = null,
             string billingZip = null,
             string billingCountry = null,
+            SubscriptionGroupCreditCardFullNumber fullNumber = null,
+            SubscriptionGroupCreditCardExpirationMonth expirationMonth = null,
+            SubscriptionGroupCreditCardExpirationYear expirationYear = null,
             string lastFour = null,
             Models.CardType? cardType = null,
             string customerVaultToken = null,
             string cvv = null,
             string paymentType = null)
         {
-            this.FullNumber = fullNumber;
-            this.ExpirationMonth = expirationMonth;
-            this.ExpirationYear = expirationYear;
             this.ChargifyToken = chargifyToken;
             this.VaultToken = vaultToken;
             this.CurrentVault = currentVault;
@@ -89,30 +86,15 @@ namespace AdvancedBilling.Standard.Models
             this.BillingState = billingState;
             this.BillingZip = billingZip;
             this.BillingCountry = billingCountry;
+            this.FullNumber = fullNumber;
+            this.ExpirationMonth = expirationMonth;
+            this.ExpirationYear = expirationYear;
             this.LastFour = lastFour;
             this.CardType = cardType;
             this.CustomerVaultToken = customerVaultToken;
             this.Cvv = cvv;
             this.PaymentType = paymentType;
         }
-
-        /// <summary>
-        /// Gets or sets FullNumber.
-        /// </summary>
-        [JsonProperty("full_number", NullValueHandling = NullValueHandling.Ignore)]
-        public SubscriptionGroupCreditCardFullNumber FullNumber { get; set; }
-
-        /// <summary>
-        /// Gets or sets ExpirationMonth.
-        /// </summary>
-        [JsonProperty("expiration_month", NullValueHandling = NullValueHandling.Ignore)]
-        public SubscriptionGroupCreditCardExpirationMonth ExpirationMonth { get; set; }
-
-        /// <summary>
-        /// Gets or sets ExpirationYear.
-        /// </summary>
-        [JsonProperty("expiration_year", NullValueHandling = NullValueHandling.Ignore)]
-        public SubscriptionGroupCreditCardExpirationYear ExpirationYear { get; set; }
 
         /// <summary>
         /// Gets or sets ChargifyToken.
@@ -187,6 +169,24 @@ namespace AdvancedBilling.Standard.Models
         public string BillingCountry { get; set; }
 
         /// <summary>
+        /// Gets or sets FullNumber.
+        /// </summary>
+        [JsonProperty("full_number", NullValueHandling = NullValueHandling.Ignore)]
+        public SubscriptionGroupCreditCardFullNumber FullNumber { get; set; }
+
+        /// <summary>
+        /// Gets or sets ExpirationMonth.
+        /// </summary>
+        [JsonProperty("expiration_month", NullValueHandling = NullValueHandling.Ignore)]
+        public SubscriptionGroupCreditCardExpirationMonth ExpirationMonth { get; set; }
+
+        /// <summary>
+        /// Gets or sets ExpirationYear.
+        /// </summary>
+        [JsonProperty("expiration_year", NullValueHandling = NullValueHandling.Ignore)]
+        public SubscriptionGroupCreditCardExpirationYear ExpirationYear { get; set; }
+
+        /// <summary>
         /// Gets or sets LastFour.
         /// </summary>
         [JsonProperty("last_four", NullValueHandling = NullValueHandling.Ignore)]
@@ -231,12 +231,6 @@ namespace AdvancedBilling.Standard.Models
             if (ReferenceEquals(this, obj)) return true;
 
             return obj is SubscriptionGroupCreditCard other &&
-                (this.FullNumber == null && other.FullNumber == null ||
-                 this.FullNumber?.Equals(other.FullNumber) == true) &&
-                (this.ExpirationMonth == null && other.ExpirationMonth == null ||
-                 this.ExpirationMonth?.Equals(other.ExpirationMonth) == true) &&
-                (this.ExpirationYear == null && other.ExpirationYear == null ||
-                 this.ExpirationYear?.Equals(other.ExpirationYear) == true) &&
                 (this.ChargifyToken == null && other.ChargifyToken == null ||
                  this.ChargifyToken?.Equals(other.ChargifyToken) == true) &&
                 (this.VaultToken == null && other.VaultToken == null ||
@@ -261,6 +255,12 @@ namespace AdvancedBilling.Standard.Models
                  this.BillingZip?.Equals(other.BillingZip) == true) &&
                 (this.BillingCountry == null && other.BillingCountry == null ||
                  this.BillingCountry?.Equals(other.BillingCountry) == true) &&
+                (this.FullNumber == null && other.FullNumber == null ||
+                 this.FullNumber?.Equals(other.FullNumber) == true) &&
+                (this.ExpirationMonth == null && other.ExpirationMonth == null ||
+                 this.ExpirationMonth?.Equals(other.ExpirationMonth) == true) &&
+                (this.ExpirationYear == null && other.ExpirationYear == null ||
+                 this.ExpirationYear?.Equals(other.ExpirationYear) == true) &&
                 (this.LastFour == null && other.LastFour == null ||
                  this.LastFour?.Equals(other.LastFour) == true) &&
                 (this.CardType == null && other.CardType == null ||
@@ -280,9 +280,6 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"FullNumber = {(this.FullNumber == null ? "null" : this.FullNumber.ToString())}");
-            toStringOutput.Add($"ExpirationMonth = {(this.ExpirationMonth == null ? "null" : this.ExpirationMonth.ToString())}");
-            toStringOutput.Add($"ExpirationYear = {(this.ExpirationYear == null ? "null" : this.ExpirationYear.ToString())}");
             toStringOutput.Add($"ChargifyToken = {this.ChargifyToken ?? "null"}");
             toStringOutput.Add($"VaultToken = {this.VaultToken ?? "null"}");
             toStringOutput.Add($"CurrentVault = {(this.CurrentVault == null ? "null" : this.CurrentVault.ToString())}");
@@ -295,6 +292,9 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"BillingState = {this.BillingState ?? "null"}");
             toStringOutput.Add($"BillingZip = {this.BillingZip ?? "null"}");
             toStringOutput.Add($"BillingCountry = {this.BillingCountry ?? "null"}");
+            toStringOutput.Add($"FullNumber = {(this.FullNumber == null ? "null" : this.FullNumber.ToString())}");
+            toStringOutput.Add($"ExpirationMonth = {(this.ExpirationMonth == null ? "null" : this.ExpirationMonth.ToString())}");
+            toStringOutput.Add($"ExpirationYear = {(this.ExpirationYear == null ? "null" : this.ExpirationYear.ToString())}");
             toStringOutput.Add($"LastFour = {this.LastFour ?? "null"}");
             toStringOutput.Add($"CardType = {(this.CardType == null ? "null" : this.CardType.ToString())}");
             toStringOutput.Add($"CustomerVaultToken = {this.CustomerVaultToken ?? "null"}");

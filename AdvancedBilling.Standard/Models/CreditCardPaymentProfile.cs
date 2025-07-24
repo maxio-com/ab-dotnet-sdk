@@ -77,6 +77,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="chargifyToken">chargify_token.</param>
         /// <param name="siteGatewaySettingId">site_gateway_setting_id.</param>
         /// <param name="gatewayHandle">gateway_handle.</param>
+        /// <param name="createdAt">created_at.</param>
+        /// <param name="updatedAt">updated_at.</param>
         public CreditCardPaymentProfile(
             Models.PaymentType paymentType,
             int? id = null,
@@ -99,7 +101,9 @@ namespace AdvancedBilling.Standard.Models
             bool? disabled = null,
             string chargifyToken = null,
             int? siteGatewaySettingId = null,
-            string gatewayHandle = null)
+            string gatewayHandle = null,
+            DateTimeOffset? createdAt = null,
+            DateTimeOffset? updatedAt = null)
         {
             this.Id = id;
             this.FirstName = firstName;
@@ -163,6 +167,8 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.GatewayHandle = gatewayHandle;
             }
+            this.CreatedAt = createdAt;
+            this.UpdatedAt = updatedAt;
         }
 
         /// <summary>
@@ -431,6 +437,20 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// A timestamp indicating when this payment profile was created
+        /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
+        [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset? CreatedAt { get; set; }
+
+        /// <summary>
+        /// A timestamp indicating when this payment profile was last updated
+        /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
+        [JsonProperty("updated_at", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset? UpdatedAt { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -659,6 +679,10 @@ namespace AdvancedBilling.Standard.Models
                  this.SiteGatewaySettingId?.Equals(other.SiteGatewaySettingId) == true) &&
                 (this.GatewayHandle == null && other.GatewayHandle == null ||
                  this.GatewayHandle?.Equals(other.GatewayHandle) == true) &&
+                (this.CreatedAt == null && other.CreatedAt == null ||
+                 this.CreatedAt?.Equals(other.CreatedAt) == true) &&
+                (this.UpdatedAt == null && other.UpdatedAt == null ||
+                 this.UpdatedAt?.Equals(other.UpdatedAt) == true) &&
                 base.Equals(obj);
         }
 
@@ -690,6 +714,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"ChargifyToken = {this.ChargifyToken ?? "null"}");
             toStringOutput.Add($"SiteGatewaySettingId = {(this.SiteGatewaySettingId == null ? "null" : this.SiteGatewaySettingId.ToString())}");
             toStringOutput.Add($"GatewayHandle = {this.GatewayHandle ?? "null"}");
+            toStringOutput.Add($"CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
 
             base.ToString(toStringOutput);
         }

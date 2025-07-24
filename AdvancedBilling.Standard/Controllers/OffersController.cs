@@ -42,7 +42,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ## Using a Product Price Point.
         /// You can optionally pass in a `product_price_point_id` that corresponds with the `product_id` and the offer will use that price point. If a `product_price_point_id` is not passed in, the product's default price point will be used.
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.OfferResponse response from the API call.</returns>
         public Models.OfferResponse CreateOffer(
                 Models.CreateOfferRequest body = null)
@@ -57,7 +57,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ## Using a Product Price Point.
         /// You can optionally pass in a `product_price_point_id` that corresponds with the `product_id` and the offer will use that price point. If a `product_price_point_id` is not passed in, the product's default price point will be used.
         /// </summary>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.OfferResponse response from the API call.</returns>
         public async Task<Models.OfferResponse> CreateOfferAsync(

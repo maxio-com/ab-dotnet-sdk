@@ -516,6 +516,8 @@ namespace AdvancedBilling.Standard.Controllers
         ///     "id": 10089892,.
         ///     "first_name": "Chester",.
         ///     "last_name": "Tester",.
+        ///     "created_at": "2025-01-01T00:00:00-05:00",.
+        ///     "updated_at": "2025-01-01T00:00:00-05:00",.
         ///     "customer_id": 14543792,.
         ///     "current_vault": "bogus",.
         ///     "vault_token": "0011223344",.
@@ -555,6 +557,8 @@ namespace AdvancedBilling.Standard.Controllers
         ///     "id": 10089892,.
         ///     "first_name": "Chester",.
         ///     "last_name": "Tester",.
+        ///     "created_at": "2025-01-01T00:00:00-05:00",.
+        ///     "updated_at": "2025-01-01T00:00:00-05:00",.
         ///     "customer_id": 14543792,.
         ///     "current_vault": "bogus",.
         ///     "vault_token": "0011223344",.
@@ -620,7 +624,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// - If you are using Authorize.net or Stripe, you may elect to manually trigger a retry for a past due subscription after a partial update.
         /// </summary>
         /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.PaymentProfileResponse response from the API call.</returns>
         public Models.PaymentProfileResponse UpdatePaymentProfile(
                 int paymentProfileId,
@@ -654,7 +658,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// - If you are using Authorize.net or Stripe, you may elect to manually trigger a retry for a past due subscription after a partial update.
         /// </summary>
         /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.PaymentProfileResponse response from the API call.</returns>
         public async Task<Models.PaymentProfileResponse> UpdatePaymentProfileAsync(
@@ -742,7 +746,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Submit the two small deposit amounts the customer received in their bank account in order to verify the bank account. (Stripe only).
         /// </summary>
         /// <param name="bankAccountId">Required parameter: Identifier of the bank account in the system..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.BankAccountResponse response from the API call.</returns>
         public Models.BankAccountResponse VerifyBankAccount(
                 int bankAccountId,
@@ -753,7 +757,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Submit the two small deposit amounts the customer received in their bank account in order to verify the bank account. (Stripe only).
         /// </summary>
         /// <param name="bankAccountId">Required parameter: Identifier of the bank account in the system..</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.BankAccountResponse response from the API call.</returns>
         public async Task<Models.BankAccountResponse> VerifyBankAccountAsync(

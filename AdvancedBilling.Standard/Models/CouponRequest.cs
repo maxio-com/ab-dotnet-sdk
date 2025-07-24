@@ -51,13 +51,13 @@ namespace AdvancedBilling.Standard.Models
         public Models.CouponPayload Coupon { get; set; }
 
         /// <summary>
-        /// An object where the keys are product_ids and the values are booleans indicating if the coupon should be applicable to the product
+        /// An object where the keys are product IDs or handles (prefixed with 'handle:'), and the values are booleans indicating if the coupon should be applicable to the product
         /// </summary>
         [JsonProperty("restricted_products", NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<string, bool> RestrictedProducts { get; set; }
 
         /// <summary>
-        /// An object where the keys are component_ids and the values are booleans indicating if the coupon should be applicable to the component
+        /// An object where the keys are component IDs or handles (prefixed with 'handle:'), and the values are booleans indicating if the coupon should be applicable to the component
         /// </summary>
         [JsonProperty("restricted_components", NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<string, bool> RestrictedComponents { get; set; }

@@ -73,7 +73,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// The DELETE action causes the cancellation of the Subscription. This means, the method sets the Subscription state to "canceled".
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public Models.SubscriptionResponse CancelSubscription(
                 int subscriptionId,
@@ -84,7 +84,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// The DELETE action causes the cancellation of the Subscription. This means, the method sets the Subscription state to "canceled".
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public async Task<Models.SubscriptionResponse> CancelSubscriptionAsync(
@@ -143,7 +143,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// You may not place a subscription on hold if the `next_billing` date is within 24 hours.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public Models.SubscriptionResponse PauseSubscription(
                 int subscriptionId,
@@ -156,7 +156,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// You may not place a subscription on hold if the `next_billing` date is within 24 hours.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public async Task<Models.SubscriptionResponse> PauseSubscriptionAsync(
@@ -182,7 +182,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Alternately, you can change the `automatically_resume_at` to `null` if you would like the subscription to not have a resume date.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public Models.SubscriptionResponse UpdateAutomaticSubscriptionResumption(
                 int subscriptionId,
@@ -196,7 +196,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Alternately, you can change the `automatically_resume_at` to `null` if you would like the subscription to not have a resume date.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public async Task<Models.SubscriptionResponse> UpdateAutomaticSubscriptionResumptionAsync(
@@ -316,7 +316,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// + Any product-related charges should have been collected.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public Models.SubscriptionResponse ReactivateSubscription(
                 int subscriptionId,
@@ -424,7 +424,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// + Any product-related charges should have been collected.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public async Task<Models.SubscriptionResponse> ReactivateSubscriptionAsync(
@@ -449,7 +449,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Note that you cannot set `cancel_at_end_of_period` at subscription creation, or if the subscription is past due.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.DelayedCancellationResponse response from the API call.</returns>
         public Models.DelayedCancellationResponse InitiateDelayedCancellation(
                 int subscriptionId,
@@ -462,7 +462,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Note that you cannot set `cancel_at_end_of_period` at subscription creation, or if the subscription is past due.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.DelayedCancellationResponse response from the API call.</returns>
         public async Task<Models.DelayedCancellationResponse> InitiateDelayedCancellationAsync(
@@ -556,7 +556,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// You can request a `POST` to obtain this data from the endpoint without any side effects. Plain and simple, this will preview data, not log any changes against a subscription.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.RenewalPreviewResponse response from the API call.</returns>
         public Models.RenewalPreviewResponse PreviewRenewal(
                 int subscriptionId,
@@ -579,7 +579,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// You can request a `POST` to obtain this data from the endpoint without any side effects. Plain and simple, this will preview data, not log any changes against a subscription.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="body">Optional parameter: Example: .</param>
+        /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.RenewalPreviewResponse response from the API call.</returns>
         public async Task<Models.RenewalPreviewResponse> PreviewRenewalAsync(
