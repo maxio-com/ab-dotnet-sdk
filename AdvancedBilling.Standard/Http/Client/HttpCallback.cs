@@ -1,5 +1,7 @@
 // <copyright file="HttpCallback.cs" company="APIMatic">
-// Copyright (c) APIMatic. All rights reserved.
+// AdvancedBilling.Standard
+//
+// This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
 using AdvancedBilling.Standard.Http.Request;
 using AdvancedBilling.Standard.Http.Response;

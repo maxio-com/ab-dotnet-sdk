@@ -145,6 +145,7 @@ CreateComponentPricePointRequest body = new CreateComponentPricePointRequest
                 {
                     StartingQuantity = PriceStartingQuantity.FromString("101"),
                     UnitPrice = PriceUnitPrice.FromString("4.00"),
+                    EndingQuantity = null,
                 },
             },
             Handle = "wholesale-handle",
@@ -211,7 +212,8 @@ ListComponentPricePointsInput listComponentPricePointsInput = new ListComponentP
     ComponentId = 222,
     Page = 2,
     PerPage = 50,
-Liquid error: Value cannot be null. (Parameter 'key')};
+    FilterType = Liquid error: Value cannot be null. (Parameter 'key'),
+};
 
 try
 {
