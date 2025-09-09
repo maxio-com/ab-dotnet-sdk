@@ -17,6 +17,8 @@ The API client can be initialized as follows:
 using AdvancedBilling.Standard;
 using AdvancedBilling.Standard.Authentication;
 
+namespace ConsoleApp;
+
 AdvancedBillingClient client = new AdvancedBillingClient.Builder()
     .BasicAuthCredentials(
         new BasicAuthModel.Builder(
