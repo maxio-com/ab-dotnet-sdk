@@ -1172,7 +1172,7 @@ A. No. Usage should be reported as one API call per component on a single subscr
 
 ```csharp
 CreateUsageAsync(
-    int subscriptionId,
+    CreateUsageSubscriptionIdOrReference subscriptionIdOrReference,
     CreateUsageComponentId componentId,
     Models.CreateUsageRequest body = null)
 ```
@@ -1181,7 +1181,7 @@ CreateUsageAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionIdOrReference` | [`CreateUsageSubscriptionIdOrReference`](../../doc/models/containers/create-usage-subscription-id-or-reference.md) | Template, Required | This is a container for one-of cases. |
 | `componentId` | [`CreateUsageComponentId`](../../doc/models/containers/create-usage-component-id.md) | Template, Required | This is a container for one-of cases. |
 | `body` | [`CreateUsageRequest`](../../doc/models/create-usage-request.md) | Body, Optional | - |
 
@@ -1192,7 +1192,8 @@ CreateUsageAsync(
 ## Example Usage
 
 ```csharp
-int subscriptionId = 222;
+CreateUsageSubscriptionIdOrReference subscriptionIdOrReference = CreateUsageSubscriptionIdOrReference.FromNumber(234);
+
 CreateUsageComponentId componentId = CreateUsageComponentId.FromNumber(144);
 
 CreateUsageRequest body = new CreateUsageRequest
@@ -1208,7 +1209,7 @@ CreateUsageRequest body = new CreateUsageRequest
 try
 {
     UsageResponse result = await subscriptionComponentsController.CreateUsageAsync(
-        subscriptionId,
+        subscriptionIdOrReference,
         componentId,
         body
     );
@@ -1271,7 +1272,7 @@ ListUsagesAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionIdOrReference` | [`ListUsagesInputSubscriptionIdOrReference`](../../doc/models/containers/list-usages-input-subscription-id-or-reference.md) | Template, Required | This is a container for one-of cases. |
 | `componentId` | [`ListUsagesInputComponentId`](../../doc/models/containers/list-usages-input-component-id.md) | Template, Required | This is a container for one-of cases. |
 | `sinceId` | `long?` | Query, Optional | Returns usages with an id greater than or equal to the one specified |
 | `maxId` | `long?` | Query, Optional | Returns usages with an id less than or equal to the one specified |
@@ -1289,7 +1290,7 @@ ListUsagesAsync(
 ```csharp
 ListUsagesInput listUsagesInput = new ListUsagesInput
 {
-    SubscriptionId = 222,
+    SubscriptionIdOrReference = ListUsagesInputSubscriptionIdOrReference.FromNumber(234),
     ComponentId = ListUsagesInputComponentId.FromNumber(144),
     Page = 2,
     PerPage = 50,

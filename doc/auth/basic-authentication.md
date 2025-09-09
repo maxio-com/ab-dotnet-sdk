@@ -26,6 +26,8 @@ You must provide credentials in the client as shown in the following code snippe
 using AdvancedBilling.Standard;
 using AdvancedBilling.Standard.Authentication;
 
+namespace ConsoleApp;
+
 AdvancedBillingClient client = new AdvancedBillingClient.Builder()
     .BasicAuthCredentials(
         new BasicAuthModel.Builder(
