@@ -72,7 +72,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This endpoint can be used to create a new price point for an existing component.
+        /// Creates a price point for an existing component.
         /// </summary>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
         /// <param name="body">Optional parameter: .</param>
@@ -83,7 +83,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(CreateComponentPricePointAsync(componentId, body));
 
         /// <summary>
-        /// This endpoint can be used to create a new price point for an existing component.
+        /// Creates a price point for an existing component.
         /// </summary>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
         /// <param name="body">Optional parameter: .</param>

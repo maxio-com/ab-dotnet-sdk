@@ -103,7 +103,7 @@ catch (ApiException e)
 
 # Create Component Price Point
 
-This endpoint can be used to create a new price point for an existing component.
+Creates a price point for an existing component.
 
 ```csharp
 CreateComponentPricePointAsync(
@@ -145,7 +145,7 @@ CreateComponentPricePointRequest body = new CreateComponentPricePointRequest
                 {
                     StartingQuantity = PriceStartingQuantity.FromString("101"),
                     UnitPrice = PriceUnitPrice.FromString("4.00"),
-                    EndingQuantity = null,
+                    EndingQuantity = PriceEndingQuantity.FromString("200"),
                 },
             },
             Handle = "wholesale-handle",
