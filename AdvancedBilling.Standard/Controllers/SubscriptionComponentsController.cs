@@ -576,15 +576,15 @@ namespace AdvancedBilling.Standard.Controllers
         /// Q. Is it possible to record metered usage for more than one component at a time?.
         /// A. No. Usage should be reported as one API call per component on a single subscription. For example, to record that a subscriber has sent both an SMS Message and an Email, send an API call for each.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionIdOrReference">Required parameter: Either the Advanced Billing subscription ID (integer) or the subscription reference (string). Important: In cases where a numeric string value matches both an existing subscription ID and an existing subscription reference, the system will prioritize the subscription ID lookup. For example, if both subscription ID 123 and subscription reference "123" exist, passing "123" will return the subscription with ID 123..</param>
         /// <param name="componentId">Required parameter: Either the Advanced Billing id for the component or the component's handle prefixed by `handle:`.</param>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.UsageResponse response from the API call.</returns>
         public Models.UsageResponse CreateUsage(
-                int subscriptionId,
+                CreateUsageSubscriptionIdOrReference subscriptionIdOrReference,
                 CreateUsageComponentId componentId,
                 Models.CreateUsageRequest body = null)
-            => CoreHelper.RunTask(CreateUsageAsync(subscriptionId, componentId, body));
+            => CoreHelper.RunTask(CreateUsageAsync(subscriptionIdOrReference, componentId, body));
 
         /// <summary>
         /// ## Documentation.
@@ -624,23 +624,23 @@ namespace AdvancedBilling.Standard.Controllers
         /// Q. Is it possible to record metered usage for more than one component at a time?.
         /// A. No. Usage should be reported as one API call per component on a single subscription. For example, to record that a subscriber has sent both an SMS Message and an Email, send an API call for each.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionIdOrReference">Required parameter: Either the Advanced Billing subscription ID (integer) or the subscription reference (string). Important: In cases where a numeric string value matches both an existing subscription ID and an existing subscription reference, the system will prioritize the subscription ID lookup. For example, if both subscription ID 123 and subscription reference "123" exist, passing "123" will return the subscription with ID 123..</param>
         /// <param name="componentId">Required parameter: Either the Advanced Billing id for the component or the component's handle prefixed by `handle:`.</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.UsageResponse response from the API call.</returns>
         public async Task<Models.UsageResponse> CreateUsageAsync(
-                int subscriptionId,
+                CreateUsageSubscriptionIdOrReference subscriptionIdOrReference,
                 CreateUsageComponentId componentId,
                 Models.CreateUsageRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.UsageResponse>()
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/components/{component_id}/usages.json")
+                  .Setup(HttpMethod.Post, "/subscriptions/{subscription_id_or_reference}/components/{component_id}/usages.json")
                   .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
                       .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
+                      .Template(_template => _template.Setup("subscription_id_or_reference", subscriptionIdOrReference).Required())
                       .Template(_template => _template.Setup("component_id", componentId).Required())
                       .Header(_header => _header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(_responseHandler => _responseHandler
@@ -687,10 +687,10 @@ namespace AdvancedBilling.Standard.Controllers
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<List<Models.UsageResponse>>()
               .RequestBuilder(_requestBuilder => _requestBuilder
-                  .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/components/{component_id}/usages.json")
+                  .Setup(HttpMethod.Get, "/subscriptions/{subscription_id_or_reference}/components/{component_id}/usages.json")
                   .WithAuth("BasicAuth")
                   .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", input.SubscriptionId))
+                      .Template(_template => _template.Setup("subscription_id_or_reference", input.SubscriptionIdOrReference).Required())
                       .Template(_template => _template.Setup("component_id", input.ComponentId).Required())
                       .Query(_query => _query.Setup("since_id", input.SinceId))
                       .Query(_query => _query.Setup("max_id", input.MaxId))

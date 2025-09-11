@@ -34,7 +34,7 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="ListUsagesInput"/> class.
         /// </summary>
-        /// <param name="subscriptionId">subscription_id.</param>
+        /// <param name="subscriptionIdOrReference">subscription_id_or_reference.</param>
         /// <param name="componentId">component_id.</param>
         /// <param name="sinceId">since_id.</param>
         /// <param name="maxId">max_id.</param>
@@ -43,7 +43,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="page">page.</param>
         /// <param name="perPage">per_page.</param>
         public ListUsagesInput(
-            int subscriptionId,
+            ListUsagesInputSubscriptionIdOrReference subscriptionIdOrReference,
             ListUsagesInputComponentId componentId,
             long? sinceId = null,
             long? maxId = null,
@@ -52,7 +52,7 @@ namespace AdvancedBilling.Standard.Models
             int? page = 1,
             int? perPage = 20)
         {
-            this.SubscriptionId = subscriptionId;
+            this.SubscriptionIdOrReference = subscriptionIdOrReference;
             this.ComponentId = componentId;
             this.SinceId = sinceId;
             this.MaxId = maxId;
@@ -63,10 +63,10 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The Chargify id of the subscription
+        /// Either the Advanced Billing subscription ID (integer) or the subscription reference (string). Important: In cases where a numeric string value matches both an existing subscription ID and an existing subscription reference, the system will prioritize the subscription ID lookup. For example, if both subscription ID 123 and subscription reference "123" exist, passing "123" will return the subscription with ID 123.
         /// </summary>
-        [JsonProperty("subscription_id")]
-        public int SubscriptionId { get; set; }
+        [JsonProperty("subscription_id_or_reference")]
+        public ListUsagesInputSubscriptionIdOrReference SubscriptionIdOrReference { get; set; }
 
         /// <summary>
         /// Either the Advanced Billing id for the component or the component's handle prefixed by `handle:`
@@ -129,7 +129,8 @@ namespace AdvancedBilling.Standard.Models
             if (ReferenceEquals(this, obj)) return true;
 
             return obj is ListUsagesInput other &&
-                (this.SubscriptionId.Equals(other.SubscriptionId)) &&
+                (this.SubscriptionIdOrReference == null && other.SubscriptionIdOrReference == null ||
+                 this.SubscriptionIdOrReference?.Equals(other.SubscriptionIdOrReference) == true) &&
                 (this.ComponentId == null && other.ComponentId == null ||
                  this.ComponentId?.Equals(other.ComponentId) == true) &&
                 (this.SinceId == null && other.SinceId == null ||
@@ -153,7 +154,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"SubscriptionId = {this.SubscriptionId}");
+            toStringOutput.Add($"SubscriptionIdOrReference = {(this.SubscriptionIdOrReference == null ? "null" : this.SubscriptionIdOrReference.ToString())}");
             toStringOutput.Add($"ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"SinceId = {(this.SinceId == null ? "null" : this.SinceId.ToString())}");
             toStringOutput.Add($"MaxId = {(this.MaxId == null ? "null" : this.MaxId.ToString())}");

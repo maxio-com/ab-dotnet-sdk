@@ -271,8 +271,8 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This request will return information regarding a component from a specific product family.
-        /// You may read the component by either the component's id or handle. When using the handle, it must be prefixed with `handle:`.
+        /// Returns information regarding a component from a specific product family.
+        /// You can read the component by either the component's id or handle. When using the handle, it must be prefixed with `handle:`.
         /// </summary>
         /// <param name="productFamilyId">Required parameter: The Advanced Billing id of the product family to which the component belongs.</param>
         /// <param name="componentId">Required parameter: Either the Advanced Billing id of the component or the handle for the component prefixed with `handle:`.</param>
@@ -283,8 +283,8 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ReadComponentAsync(productFamilyId, componentId));
 
         /// <summary>
-        /// This request will return information regarding a component from a specific product family.
-        /// You may read the component by either the component's id or handle. When using the handle, it must be prefixed with `handle:`.
+        /// Returns information regarding a component from a specific product family.
+        /// You can read the component by either the component's id or handle. When using the handle, it must be prefixed with `handle:`.
         /// </summary>
         /// <param name="productFamilyId">Required parameter: The Advanced Billing id of the product family to which the component belongs.</param>
         /// <param name="componentId">Required parameter: Either the Advanced Billing id of the component or the handle for the component prefixed with `handle:`.</param>

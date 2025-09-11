@@ -141,7 +141,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This method allows to retrieve the Customer properties by Advanced Billing-generated Customer ID.
+        /// Retrieves the Customer properties by Advanced Billing-generated Customer ID.
         /// </summary>
         /// <param name="id">Required parameter: The Advanced Billing id of the customer.</param>
         /// <returns>Returns the Models.CustomerResponse response from the API call.</returns>
@@ -150,7 +150,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ReadCustomerAsync(id));
 
         /// <summary>
-        /// This method allows to retrieve the Customer properties by Advanced Billing-generated Customer ID.
+        /// Retrieves the Customer properties by Advanced Billing-generated Customer ID.
         /// </summary>
         /// <param name="id">Required parameter: The Advanced Billing id of the customer.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
