@@ -176,7 +176,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// When updating a price point, it's prices can be updated as well by creating new prices or editing / removing existing ones.
+        /// When updating a price point, prices can be updated as well by creating new prices or editing / removing existing ones.
         /// Passing in a price bracket without an `id` will attempt to create a new price.
         /// Including an `id` will update the corresponding price, and including the `_destroy` flag set to true along with the `id` will remove that price.
         /// Note: Custom price points cannot be updated directly. They must be edited through the Subscription.
@@ -192,7 +192,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(UpdateComponentPricePointAsync(componentId, pricePointId, body));
 
         /// <summary>
-        /// When updating a price point, it's prices can be updated as well by creating new prices or editing / removing existing ones.
+        /// When updating a price point, prices can be updated as well by creating new prices or editing / removing existing ones.
         /// Passing in a price bracket without an `id` will attempt to create a new price.
         /// Including an `id` will update the corresponding price, and including the `_destroy` flag set to true along with the `id` will remove that price.
         /// Note: Custom price points cannot be updated directly. They must be edited through the Subscription.

@@ -78,6 +78,7 @@ namespace AdvancedBilling.Standard.Exceptions
             toStringOutput.Add($"CouponCode = {(this.CouponCode == null ? "null" : $"[{string.Join(", ", this.CouponCode)} ]")}");
             toStringOutput.Add($"CouponCodes = {(this.CouponCodes == null ? "null" : $"[{string.Join(", ", this.CouponCodes)} ]")}");
             toStringOutput.Add($"Subscription = {(this.Subscription == null ? "null" : $"[{string.Join(", ", this.Subscription)} ]")}");
+            toStringOutput.Add($"StackTrace = {(StackTrace != null ? $"\n{StackTrace}" : "null")}");
         }
     }
 }

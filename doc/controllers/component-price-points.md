@@ -210,7 +210,7 @@ ListComponentPricePointsAsync(
 ListComponentPricePointsInput listComponentPricePointsInput = new ListComponentPricePointsInput
 {
     ComponentId = 222,
-    Page = 2,
+    Page = 1,
     PerPage = 50,
     FilterType = Liquid error: Value cannot be null. (Parameter 'key'),
 };
@@ -428,7 +428,7 @@ catch (ApiException e)
 
 # Update Component Price Point
 
-When updating a price point, it's prices can be updated as well by creating new prices or editing / removing existing ones.
+When updating a price point, prices can be updated as well by creating new prices or editing / removing existing ones.
 
 Passing in a price bracket without an `id` will attempt to create a new price.
 
@@ -911,7 +911,7 @@ ListAllComponentPricePointsAsync(
 ListAllComponentPricePointsInput listAllComponentPricePointsInput = new ListAllComponentPricePointsInput
 {
     Include = ListComponentsPricePointsInclude.CurrencyPrices,
-    Page = 2,
+    Page = 1,
     PerPage = 50,
     Filter = new ListPricePointsFilter
     {

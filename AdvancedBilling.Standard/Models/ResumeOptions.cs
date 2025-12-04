@@ -44,7 +44,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Chargify will only attempt to resume the subscription's billing period. If not resumable, the subscription will be left in it's current state.
+        /// Chargify will only attempt to resume the subscription's billing period. If not resumable, the subscription will be left in its current state.
         /// </summary>
         [JsonProperty("require_resume", NullValueHandling = NullValueHandling.Ignore)]
         public bool? RequireResume { get; set; }

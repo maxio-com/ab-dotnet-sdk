@@ -73,13 +73,13 @@ namespace AdvancedBilling.Standard.Models
         public Models.MetafieldScope Scope { get; set; }
 
         /// <summary>
-        /// Indicates how data should be added to the metafield. For example, a text type is just a string, so a given metafield of this type can have any value attached. On the other hand, dropdown and radio have a set of allowed values that can be input, and appear differently on a Public Signup Page. Defaults to 'text'
+        /// Indicates the type of metafield. A text metafield allows any string value. Dropdown and radio metafields have a set of values that can be selected.  Defaults to 'text'.
         /// </summary>
         [JsonProperty("input_type", NullValueHandling = NullValueHandling.Ignore)]
         public Models.MetafieldInput? InputType { get; set; }
 
         /// <summary>
-        /// Only applicable when input_type is radio or dropdown
+        /// Only applicable when input_type is radio or dropdown.
         /// </summary>
         [JsonConverter(typeof(CoreListConverter), typeof(JsonStringConverter))]
         [JsonProperty("enum", NullValueHandling = NullValueHandling.Ignore)]

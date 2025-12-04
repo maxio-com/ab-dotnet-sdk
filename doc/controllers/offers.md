@@ -161,7 +161,7 @@ ListOffersAsync(
 ```csharp
 ListOffersInput listOffersInput = new ListOffersInput
 {
-    Page = 2,
+    Page = 1,
     PerPage = 50,
     IncludeArchived = true,
 };

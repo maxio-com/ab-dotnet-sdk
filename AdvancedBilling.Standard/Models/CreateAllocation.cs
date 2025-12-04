@@ -193,7 +193,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// This attribute is particularly useful when you need to align billing events for different components on distinct schedules within a subscription. Please note this only works for site with Multifrequency enabled
+        /// This attribute is particularly useful when you need to align billing events for different components on distinct schedules within a subscription. This only works for site with Multifrequency enabled.
         /// </summary>
         [JsonProperty("billing_schedule", NullValueHandling = NullValueHandling.Ignore)]
         public Models.BillingSchedule BillingSchedule { get; set; }

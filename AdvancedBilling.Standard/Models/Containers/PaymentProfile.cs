@@ -14,13 +14,13 @@ namespace AdvancedBilling.Standard.Models.Containers
     /// </summary>
     [JsonConverter(
         typeof(UnionTypeConverter<PaymentProfile>),
-        new Type[] {
+        new[] {
             typeof(ApplePayPaymentProfileCase),
             typeof(BankAccountPaymentProfileCase),
             typeof(CreditCardPaymentProfileCase),
             typeof(PaypalPaymentProfileCase)
         },
-        new string[] {
+        new[] {
             "apple_pay",
             "bank_account",
             "credit_card",
@@ -89,155 +89,163 @@ namespace AdvancedBilling.Standard.Models.Containers
             Func<CreditCardPaymentProfile, T> creditCardPaymentProfile,
             Func<PaypalPaymentProfile, T> paypalPaymentProfile);
 
+        /// <summary>
+        /// Method to match from the provided any-of cases. The parameters represent
+        /// optional callback functions for any-of type cases. You may provide only
+        /// the callbacks you are interested in; others can be left as <c>null</c>. All
+        /// callback functions must have the same return type T. This typeparam T
+        /// represents the type that will be returned after applying the selected
+        /// callback function, or the default value if no callback is provided for the matched case.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public T MatchSome<T>(
+            Func<ApplePayPaymentProfile, T> applePayPaymentProfile = null,
+            Func<BankAccountPaymentProfile, T> bankAccountPaymentProfile = null,
+            Func<CreditCardPaymentProfile, T> creditCardPaymentProfile = null,
+            Func<PaypalPaymentProfile, T> paypalPaymentProfile = null) =>
+                Match(applePayPaymentProfile, bankAccountPaymentProfile, creditCardPaymentProfile, paypalPaymentProfile);
+
         [JsonConverter(typeof(UnionTypeCaseConverter<ApplePayPaymentProfileCase, ApplePayPaymentProfile>))]
         private sealed class ApplePayPaymentProfileCase : PaymentProfile, ICaseValue<ApplePayPaymentProfileCase, ApplePayPaymentProfile>
         {
-            public ApplePayPaymentProfile _value;
+            public ApplePayPaymentProfile Value;
 
             public override T Match<T>(
                 Func<ApplePayPaymentProfile, T> applePayPaymentProfile,
                 Func<BankAccountPaymentProfile, T> bankAccountPaymentProfile,
                 Func<CreditCardPaymentProfile, T> creditCardPaymentProfile,
-                Func<PaypalPaymentProfile, T> paypalPaymentProfile)
-            {
-                return applePayPaymentProfile(_value);
-            }
+                Func<PaypalPaymentProfile, T> paypalPaymentProfile) =>
+                   applePayPaymentProfile != null ? applePayPaymentProfile(Value) : default;
 
             public ApplePayPaymentProfileCase Set(ApplePayPaymentProfile value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public ApplePayPaymentProfile Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is ApplePayPaymentProfileCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<BankAccountPaymentProfileCase, BankAccountPaymentProfile>))]
         private sealed class BankAccountPaymentProfileCase : PaymentProfile, ICaseValue<BankAccountPaymentProfileCase, BankAccountPaymentProfile>
         {
-            public BankAccountPaymentProfile _value;
+            public BankAccountPaymentProfile Value;
 
             public override T Match<T>(
                 Func<ApplePayPaymentProfile, T> applePayPaymentProfile,
                 Func<BankAccountPaymentProfile, T> bankAccountPaymentProfile,
                 Func<CreditCardPaymentProfile, T> creditCardPaymentProfile,
-                Func<PaypalPaymentProfile, T> paypalPaymentProfile)
-            {
-                return bankAccountPaymentProfile(_value);
-            }
+                Func<PaypalPaymentProfile, T> paypalPaymentProfile) =>
+                   bankAccountPaymentProfile != null ? bankAccountPaymentProfile(Value) : default;
 
             public BankAccountPaymentProfileCase Set(BankAccountPaymentProfile value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public BankAccountPaymentProfile Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is BankAccountPaymentProfileCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<CreditCardPaymentProfileCase, CreditCardPaymentProfile>))]
         private sealed class CreditCardPaymentProfileCase : PaymentProfile, ICaseValue<CreditCardPaymentProfileCase, CreditCardPaymentProfile>
         {
-            public CreditCardPaymentProfile _value;
+            public CreditCardPaymentProfile Value;
 
             public override T Match<T>(
                 Func<ApplePayPaymentProfile, T> applePayPaymentProfile,
                 Func<BankAccountPaymentProfile, T> bankAccountPaymentProfile,
                 Func<CreditCardPaymentProfile, T> creditCardPaymentProfile,
-                Func<PaypalPaymentProfile, T> paypalPaymentProfile)
-            {
-                return creditCardPaymentProfile(_value);
-            }
+                Func<PaypalPaymentProfile, T> paypalPaymentProfile) =>
+                   creditCardPaymentProfile != null ? creditCardPaymentProfile(Value) : default;
 
             public CreditCardPaymentProfileCase Set(CreditCardPaymentProfile value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public CreditCardPaymentProfile Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is CreditCardPaymentProfileCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PaypalPaymentProfileCase, PaypalPaymentProfile>))]
         private sealed class PaypalPaymentProfileCase : PaymentProfile, ICaseValue<PaypalPaymentProfileCase, PaypalPaymentProfile>
         {
-            public PaypalPaymentProfile _value;
+            public PaypalPaymentProfile Value;
 
             public override T Match<T>(
                 Func<ApplePayPaymentProfile, T> applePayPaymentProfile,
                 Func<BankAccountPaymentProfile, T> bankAccountPaymentProfile,
                 Func<CreditCardPaymentProfile, T> creditCardPaymentProfile,
-                Func<PaypalPaymentProfile, T> paypalPaymentProfile)
-            {
-                return paypalPaymentProfile(_value);
-            }
+                Func<PaypalPaymentProfile, T> paypalPaymentProfile) =>
+                   paypalPaymentProfile != null ? paypalPaymentProfile(Value) : default;
 
             public PaypalPaymentProfileCase Set(PaypalPaymentProfile value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public PaypalPaymentProfile Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is PaypalPaymentProfileCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
     }

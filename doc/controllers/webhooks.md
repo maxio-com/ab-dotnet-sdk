@@ -48,7 +48,7 @@ ListWebhooksAsync(
 ```csharp
 ListWebhooksInput listWebhooksInput = new ListWebhooksInput
 {
-    Page = 2,
+    Page = 1,
     PerPage = 50,
 };
 

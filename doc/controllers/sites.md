@@ -170,7 +170,7 @@ ListChargifyJsPublicKeysAsync(
 ```csharp
 ListChargifyJsPublicKeysInput listChargifyJsPublicKeysInput = new ListChargifyJsPublicKeysInput
 {
-    Page = 2,
+    Page = 1,
     PerPage = 50,
 };
 

@@ -129,7 +129,7 @@ ListSegmentsForPricePointInput listSegmentsForPricePointInput = new ListSegments
 {
     ComponentId = "component_id8",
     PricePointId = "price_point_id8",
-    Page = 2,
+    Page = 1,
     PerPage = 50,
     Filter = new ListSegmentsFilter
     {

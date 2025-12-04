@@ -14,7 +14,7 @@ namespace AdvancedBilling.Standard.Models.Containers
     /// </summary>
     [JsonConverter(
         typeof(UnionTypeConverter<EventEventSpecificData>),
-        new Type[] {
+        new[] {
             typeof(SubscriptionProductChangeCase),
             typeof(SubscriptionStateChangeCase),
             typeof(PaymentRelatedEventsCase),
@@ -264,10 +264,40 @@ namespace AdvancedBilling.Standard.Models.Containers
             Func<ItemPricePointChanged, T> itemPricePointChanged,
             Func<CustomFieldValueChange, T> customFieldValueChange);
 
+        /// <summary>
+        /// Method to match from the provided one-of cases. The parameters represent
+        /// optional callback functions for one-of type cases. You may provide only
+        /// the callbacks you are interested in; others can be left as <c>null</c>. All
+        /// callback functions must have the same return type T. This typeparam T
+        /// represents the type that will be returned after applying the selected
+        /// callback function, or the default value if no callback is provided for the matched case.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public T MatchSome<T>(
+            Func<SubscriptionProductChange, T> subscriptionProductChange = null,
+            Func<SubscriptionStateChange, T> subscriptionStateChange = null,
+            Func<PaymentRelatedEvents, T> paymentRelatedEvents = null,
+            Func<RefundSuccess, T> refundSuccess = null,
+            Func<ComponentAllocationChange, T> componentAllocationChange = null,
+            Func<MeteredUsage, T> meteredUsage = null,
+            Func<PrepaidUsage, T> prepaidUsage = null,
+            Func<DunningStepReached, T> dunningStepReached = null,
+            Func<InvoiceIssued, T> invoiceIssued = null,
+            Func<PendingCancellationChange, T> pendingCancellationChange = null,
+            Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged = null,
+            Func<ProformaInvoiceIssued, T> proformaInvoiceIssued = null,
+            Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData = null,
+            Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged = null,
+            Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged = null,
+            Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged = null,
+            Func<ItemPricePointChanged, T> itemPricePointChanged = null,
+            Func<CustomFieldValueChange, T> customFieldValueChange = null) =>
+                Match(subscriptionProductChange, subscriptionStateChange, paymentRelatedEvents, refundSuccess, componentAllocationChange, meteredUsage, prepaidUsage, dunningStepReached, invoiceIssued, pendingCancellationChange, prepaidSubscriptionBalanceChanged, proformaInvoiceIssued, subscriptionGroupSignupEventData, creditAccountBalanceChanged, prepaymentAccountBalanceChanged, paymentCollectionMethodChanged, itemPricePointChanged, customFieldValueChange);
+
         [JsonConverter(typeof(UnionTypeCaseConverter<SubscriptionProductChangeCase, SubscriptionProductChange>))]
         private sealed class SubscriptionProductChangeCase : EventEventSpecificData, ICaseValue<SubscriptionProductChangeCase, SubscriptionProductChange>
         {
-            public SubscriptionProductChange _value;
+            public SubscriptionProductChange Value;
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
@@ -287,39 +317,37 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange)
-            {
-                return subscriptionProductChange(_value);
-            }
+                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                   subscriptionProductChange != null ? subscriptionProductChange(Value) : default;
 
             public SubscriptionProductChangeCase Set(SubscriptionProductChange value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public SubscriptionProductChange Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is SubscriptionProductChangeCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<SubscriptionStateChangeCase, SubscriptionStateChange>))]
         private sealed class SubscriptionStateChangeCase : EventEventSpecificData, ICaseValue<SubscriptionStateChangeCase, SubscriptionStateChange>
         {
-            public SubscriptionStateChange _value;
+            public SubscriptionStateChange Value;
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
@@ -339,39 +367,37 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange)
-            {
-                return subscriptionStateChange(_value);
-            }
+                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                   subscriptionStateChange != null ? subscriptionStateChange(Value) : default;
 
             public SubscriptionStateChangeCase Set(SubscriptionStateChange value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public SubscriptionStateChange Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is SubscriptionStateChangeCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PaymentRelatedEventsCase, PaymentRelatedEvents>))]
         private sealed class PaymentRelatedEventsCase : EventEventSpecificData, ICaseValue<PaymentRelatedEventsCase, PaymentRelatedEvents>
         {
-            public PaymentRelatedEvents _value;
+            public PaymentRelatedEvents Value;
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
@@ -391,39 +417,37 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange)
-            {
-                return paymentRelatedEvents(_value);
-            }
+                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                   paymentRelatedEvents != null ? paymentRelatedEvents(Value) : default;
 
             public PaymentRelatedEventsCase Set(PaymentRelatedEvents value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public PaymentRelatedEvents Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is PaymentRelatedEventsCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<RefundSuccessCase, RefundSuccess>))]
         private sealed class RefundSuccessCase : EventEventSpecificData, ICaseValue<RefundSuccessCase, RefundSuccess>
         {
-            public RefundSuccess _value;
+            public RefundSuccess Value;
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
@@ -443,39 +467,37 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange)
-            {
-                return refundSuccess(_value);
-            }
+                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                   refundSuccess != null ? refundSuccess(Value) : default;
 
             public RefundSuccessCase Set(RefundSuccess value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public RefundSuccess Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is RefundSuccessCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<ComponentAllocationChangeCase, ComponentAllocationChange>))]
         private sealed class ComponentAllocationChangeCase : EventEventSpecificData, ICaseValue<ComponentAllocationChangeCase, ComponentAllocationChange>
         {
-            public ComponentAllocationChange _value;
+            public ComponentAllocationChange Value;
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
@@ -495,39 +517,37 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange)
-            {
-                return componentAllocationChange(_value);
-            }
+                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                   componentAllocationChange != null ? componentAllocationChange(Value) : default;
 
             public ComponentAllocationChangeCase Set(ComponentAllocationChange value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public ComponentAllocationChange Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is ComponentAllocationChangeCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<MeteredUsageCase, MeteredUsage>))]
         private sealed class MeteredUsageCase : EventEventSpecificData, ICaseValue<MeteredUsageCase, MeteredUsage>
         {
-            public MeteredUsage _value;
+            public MeteredUsage Value;
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
@@ -547,39 +567,37 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange)
-            {
-                return meteredUsage(_value);
-            }
+                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                   meteredUsage != null ? meteredUsage(Value) : default;
 
             public MeteredUsageCase Set(MeteredUsage value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public MeteredUsage Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is MeteredUsageCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PrepaidUsageCase, PrepaidUsage>))]
         private sealed class PrepaidUsageCase : EventEventSpecificData, ICaseValue<PrepaidUsageCase, PrepaidUsage>
         {
-            public PrepaidUsage _value;
+            public PrepaidUsage Value;
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
@@ -599,39 +617,37 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange)
-            {
-                return prepaidUsage(_value);
-            }
+                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                   prepaidUsage != null ? prepaidUsage(Value) : default;
 
             public PrepaidUsageCase Set(PrepaidUsage value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public PrepaidUsage Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is PrepaidUsageCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<DunningStepReachedCase, DunningStepReached>))]
         private sealed class DunningStepReachedCase : EventEventSpecificData, ICaseValue<DunningStepReachedCase, DunningStepReached>
         {
-            public DunningStepReached _value;
+            public DunningStepReached Value;
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
@@ -651,39 +667,37 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange)
-            {
-                return dunningStepReached(_value);
-            }
+                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                   dunningStepReached != null ? dunningStepReached(Value) : default;
 
             public DunningStepReachedCase Set(DunningStepReached value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public DunningStepReached Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is DunningStepReachedCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<InvoiceIssuedCase, InvoiceIssued>))]
         private sealed class InvoiceIssuedCase : EventEventSpecificData, ICaseValue<InvoiceIssuedCase, InvoiceIssued>
         {
-            public InvoiceIssued _value;
+            public InvoiceIssued Value;
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
@@ -703,39 +717,37 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange)
-            {
-                return invoiceIssued(_value);
-            }
+                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                   invoiceIssued != null ? invoiceIssued(Value) : default;
 
             public InvoiceIssuedCase Set(InvoiceIssued value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public InvoiceIssued Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is InvoiceIssuedCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PendingCancellationChangeCase, PendingCancellationChange>))]
         private sealed class PendingCancellationChangeCase : EventEventSpecificData, ICaseValue<PendingCancellationChangeCase, PendingCancellationChange>
         {
-            public PendingCancellationChange _value;
+            public PendingCancellationChange Value;
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
@@ -755,39 +767,37 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange)
-            {
-                return pendingCancellationChange(_value);
-            }
+                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                   pendingCancellationChange != null ? pendingCancellationChange(Value) : default;
 
             public PendingCancellationChangeCase Set(PendingCancellationChange value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public PendingCancellationChange Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is PendingCancellationChangeCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PrepaidSubscriptionBalanceChangedCase, PrepaidSubscriptionBalanceChanged>))]
         private sealed class PrepaidSubscriptionBalanceChangedCase : EventEventSpecificData, ICaseValue<PrepaidSubscriptionBalanceChangedCase, PrepaidSubscriptionBalanceChanged>
         {
-            public PrepaidSubscriptionBalanceChanged _value;
+            public PrepaidSubscriptionBalanceChanged Value;
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
@@ -807,39 +817,37 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange)
-            {
-                return prepaidSubscriptionBalanceChanged(_value);
-            }
+                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                   prepaidSubscriptionBalanceChanged != null ? prepaidSubscriptionBalanceChanged(Value) : default;
 
             public PrepaidSubscriptionBalanceChangedCase Set(PrepaidSubscriptionBalanceChanged value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public PrepaidSubscriptionBalanceChanged Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is PrepaidSubscriptionBalanceChangedCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<ProformaInvoiceIssuedCase, ProformaInvoiceIssued>))]
         private sealed class ProformaInvoiceIssuedCase : EventEventSpecificData, ICaseValue<ProformaInvoiceIssuedCase, ProformaInvoiceIssued>
         {
-            public ProformaInvoiceIssued _value;
+            public ProformaInvoiceIssued Value;
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
@@ -859,39 +867,37 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange)
-            {
-                return proformaInvoiceIssued(_value);
-            }
+                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                   proformaInvoiceIssued != null ? proformaInvoiceIssued(Value) : default;
 
             public ProformaInvoiceIssuedCase Set(ProformaInvoiceIssued value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public ProformaInvoiceIssued Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is ProformaInvoiceIssuedCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<SubscriptionGroupSignupEventDataCase, SubscriptionGroupSignupEventData>))]
         private sealed class SubscriptionGroupSignupEventDataCase : EventEventSpecificData, ICaseValue<SubscriptionGroupSignupEventDataCase, SubscriptionGroupSignupEventData>
         {
-            public SubscriptionGroupSignupEventData _value;
+            public SubscriptionGroupSignupEventData Value;
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
@@ -911,39 +917,37 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange)
-            {
-                return subscriptionGroupSignupEventData(_value);
-            }
+                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                   subscriptionGroupSignupEventData != null ? subscriptionGroupSignupEventData(Value) : default;
 
             public SubscriptionGroupSignupEventDataCase Set(SubscriptionGroupSignupEventData value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public SubscriptionGroupSignupEventData Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is SubscriptionGroupSignupEventDataCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<CreditAccountBalanceChangedCase, CreditAccountBalanceChanged>))]
         private sealed class CreditAccountBalanceChangedCase : EventEventSpecificData, ICaseValue<CreditAccountBalanceChangedCase, CreditAccountBalanceChanged>
         {
-            public CreditAccountBalanceChanged _value;
+            public CreditAccountBalanceChanged Value;
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
@@ -963,39 +967,37 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange)
-            {
-                return creditAccountBalanceChanged(_value);
-            }
+                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                   creditAccountBalanceChanged != null ? creditAccountBalanceChanged(Value) : default;
 
             public CreditAccountBalanceChangedCase Set(CreditAccountBalanceChanged value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public CreditAccountBalanceChanged Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is CreditAccountBalanceChangedCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PrepaymentAccountBalanceChangedCase, PrepaymentAccountBalanceChanged>))]
         private sealed class PrepaymentAccountBalanceChangedCase : EventEventSpecificData, ICaseValue<PrepaymentAccountBalanceChangedCase, PrepaymentAccountBalanceChanged>
         {
-            public PrepaymentAccountBalanceChanged _value;
+            public PrepaymentAccountBalanceChanged Value;
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
@@ -1015,39 +1017,37 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange)
-            {
-                return prepaymentAccountBalanceChanged(_value);
-            }
+                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                   prepaymentAccountBalanceChanged != null ? prepaymentAccountBalanceChanged(Value) : default;
 
             public PrepaymentAccountBalanceChangedCase Set(PrepaymentAccountBalanceChanged value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public PrepaymentAccountBalanceChanged Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is PrepaymentAccountBalanceChangedCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PaymentCollectionMethodChangedCase, PaymentCollectionMethodChanged>))]
         private sealed class PaymentCollectionMethodChangedCase : EventEventSpecificData, ICaseValue<PaymentCollectionMethodChangedCase, PaymentCollectionMethodChanged>
         {
-            public PaymentCollectionMethodChanged _value;
+            public PaymentCollectionMethodChanged Value;
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
@@ -1067,39 +1067,37 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange)
-            {
-                return paymentCollectionMethodChanged(_value);
-            }
+                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                   paymentCollectionMethodChanged != null ? paymentCollectionMethodChanged(Value) : default;
 
             public PaymentCollectionMethodChangedCase Set(PaymentCollectionMethodChanged value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public PaymentCollectionMethodChanged Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is PaymentCollectionMethodChangedCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<ItemPricePointChangedCase, ItemPricePointChanged>))]
         private sealed class ItemPricePointChangedCase : EventEventSpecificData, ICaseValue<ItemPricePointChangedCase, ItemPricePointChanged>
         {
-            public ItemPricePointChanged _value;
+            public ItemPricePointChanged Value;
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
@@ -1119,39 +1117,37 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange)
-            {
-                return itemPricePointChanged(_value);
-            }
+                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                   itemPricePointChanged != null ? itemPricePointChanged(Value) : default;
 
             public ItemPricePointChangedCase Set(ItemPricePointChanged value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public ItemPricePointChanged Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is ItemPricePointChangedCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<CustomFieldValueChangeCase, CustomFieldValueChange>))]
         private sealed class CustomFieldValueChangeCase : EventEventSpecificData, ICaseValue<CustomFieldValueChangeCase, CustomFieldValueChange>
         {
-            public CustomFieldValueChange _value;
+            public CustomFieldValueChange Value;
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
@@ -1171,32 +1167,30 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange)
-            {
-                return customFieldValueChange(_value);
-            }
+                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                   customFieldValueChange != null ? customFieldValueChange(Value) : default;
 
             public CustomFieldValueChangeCase Set(CustomFieldValueChange value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public CustomFieldValueChange Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is CustomFieldValueChangeCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
     }

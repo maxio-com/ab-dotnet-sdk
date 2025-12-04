@@ -36,7 +36,8 @@ namespace AdvancedBilling.Standard.Controllers
         internal ProductsController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
-        /// Use this method to create a product within your Advanced Billing site.
+        /// Creates a product in your Advanced Billing site.
+        /// See the following product docuemation for more information:.
         /// + [Products Documentation](https://maxio.zendesk.com/hc/en-us/articles/24261090117645-Products-Overview).
         /// + [Changing a Subscription's Product](https://maxio.zendesk.com/hc/en-us/articles/24252069837581-Product-Changes-and-Migrations).
         /// </summary>
@@ -49,7 +50,8 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(CreateProductAsync(productFamilyId, body));
 
         /// <summary>
-        /// Use this method to create a product within your Advanced Billing site.
+        /// Creates a product in your Advanced Billing site.
+        /// See the following product docuemation for more information:.
         /// + [Products Documentation](https://maxio.zendesk.com/hc/en-us/articles/24261090117645-Products-Overview).
         /// + [Changing a Subscription's Product](https://maxio.zendesk.com/hc/en-us/articles/24252069837581-Product-Changes-and-Migrations).
         /// </summary>
@@ -74,7 +76,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This endpoint allows you to read the current details of a product that you've created in Advanced Billing.
+        /// Reads the current details of a product.
         /// </summary>
         /// <param name="productId">Required parameter: The Advanced Billing id of the product.</param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
@@ -83,7 +85,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ReadProductAsync(productId));
 
         /// <summary>
-        /// This endpoint allows you to read the current details of a product that you've created in Advanced Billing.
+        /// Reads the current details of a product.
         /// </summary>
         /// <param name="productId">Required parameter: The Advanced Billing id of the product.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -100,7 +102,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this method to change aspects of an existing product.
+        /// Updates aspects of an existing product.
         /// ### Input Attributes Update Notes.
         /// + `update_return_params` The parameters we will append to your `update_return_url`. See Return URLs and Parameters.
         /// ### Product Price Point.
@@ -115,7 +117,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(UpdateProductAsync(productId, body));
 
         /// <summary>
-        /// Use this method to change aspects of an existing product.
+        /// Updates aspects of an existing product.
         /// ### Input Attributes Update Notes.
         /// + `update_return_params` The parameters we will append to your `update_return_url`. See Return URLs and Parameters.
         /// ### Product Price Point.
@@ -142,7 +144,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Sending a DELETE request to this endpoint will archive the product. All current subscribers will be unffected; their subscription/purchase will continue to be charged monthly.
+        /// Archives the product. All current subscribers will be unffected; their subscription/purchase will continue to be charged monthly.
         /// This will restrict the option to chose the product for purchase via the Billing Portal, as well as disable Public Signup Pages for the product.
         /// </summary>
         /// <param name="productId">Required parameter: The Advanced Billing id of the product.</param>
@@ -152,7 +154,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ArchiveProductAsync(productId));
 
         /// <summary>
-        /// Sending a DELETE request to this endpoint will archive the product. All current subscribers will be unffected; their subscription/purchase will continue to be charged monthly.
+        /// Archives the product. All current subscribers will be unffected; their subscription/purchase will continue to be charged monthly.
         /// This will restrict the option to chose the product for purchase via the Billing Portal, as well as disable Public Signup Pages for the product.
         /// </summary>
         /// <param name="productId">Required parameter: The Advanced Billing id of the product.</param>
@@ -172,7 +174,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This method allows to retrieve a Product object by its `api_handle`.
+        /// Retrieves a Product object by its `api_handle`.
         /// </summary>
         /// <param name="apiHandle">Required parameter: The handle of the product.</param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
@@ -181,7 +183,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ReadProductByHandleAsync(apiHandle));
 
         /// <summary>
-        /// This method allows to retrieve a Product object by its `api_handle`.
+        /// Retrieves a Product object by its `api_handle`.
         /// </summary>
         /// <param name="apiHandle">Required parameter: The handle of the product.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>

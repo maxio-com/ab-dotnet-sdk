@@ -99,7 +99,7 @@ ListPrepaymentsForSubscriptionGroupAsync(
 ListPrepaymentsForSubscriptionGroupInput listPrepaymentsForSubscriptionGroupInput = new ListPrepaymentsForSubscriptionGroupInput
 {
     Uid = "uid0",
-    Page = 2,
+    Page = 1,
     PerPage = 50,
     Filter = new ListPrepaymentsFilter
     {

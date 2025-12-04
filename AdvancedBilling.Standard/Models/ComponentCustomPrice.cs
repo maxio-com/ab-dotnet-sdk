@@ -24,9 +24,13 @@ namespace AdvancedBilling.Standard.Models
     public class ComponentCustomPrice : BaseModel
     {
         private Models.IntervalUnit? intervalUnit;
+        private int? expirationInterval;
+        private Models.ExpirationIntervalUnit? expirationIntervalUnit;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "interval_unit", false },
+            { "expiration_interval", false },
+            { "expiration_interval_unit", false },
         };
 
         /// <summary>
@@ -44,12 +48,20 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="pricingScheme">pricing_scheme.</param>
         /// <param name="interval">interval.</param>
         /// <param name="intervalUnit">interval_unit.</param>
+        /// <param name="renewPrepaidAllocation">renew_prepaid_allocation.</param>
+        /// <param name="rolloverPrepaidRemainder">rollover_prepaid_remainder.</param>
+        /// <param name="expirationInterval">expiration_interval.</param>
+        /// <param name="expirationIntervalUnit">expiration_interval_unit.</param>
         public ComponentCustomPrice(
             List<Models.Price> prices,
             bool? taxIncluded = null,
             Models.PricingScheme? pricingScheme = null,
             int? interval = null,
-            Models.IntervalUnit? intervalUnit = null)
+            Models.IntervalUnit? intervalUnit = null,
+            bool? renewPrepaidAllocation = null,
+            bool? rolloverPrepaidRemainder = null,
+            int? expirationInterval = null,
+            Models.ExpirationIntervalUnit? expirationIntervalUnit = null)
         {
             this.TaxIncluded = taxIncluded;
             this.PricingScheme = pricingScheme;
@@ -60,6 +72,18 @@ namespace AdvancedBilling.Standard.Models
                 this.IntervalUnit = intervalUnit;
             }
             this.Prices = prices;
+            this.RenewPrepaidAllocation = renewPrepaidAllocation;
+            this.RolloverPrepaidRemainder = rolloverPrepaidRemainder;
+
+            if (expirationInterval != null)
+            {
+                this.ExpirationInterval = expirationInterval;
+            }
+
+            if (expirationIntervalUnit != null)
+            {
+                this.ExpirationIntervalUnit = expirationIntervalUnit;
+            }
         }
 
         /// <summary>
@@ -104,6 +128,54 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("prices")]
         public List<Models.Price> Prices { get; set; }
 
+        /// <summary>
+        /// Applicable only to prepaid usage components. Controls whether the allocated quantity renews each period.
+        /// </summary>
+        [JsonProperty("renew_prepaid_allocation", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? RenewPrepaidAllocation { get; set; }
+
+        /// <summary>
+        /// Applicable only to prepaid usage components. Controls whether remaining units roll over to the next period.
+        /// </summary>
+        [JsonProperty("rollover_prepaid_remainder", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? RolloverPrepaidRemainder { get; set; }
+
+        /// <summary>
+        /// Applicable only when rollover is enabled. Number of `expiration_interval_unit`s after which rollover amounts expire.
+        /// </summary>
+        [JsonProperty("expiration_interval")]
+        public int? ExpirationInterval
+        {
+            get
+            {
+                return this.expirationInterval;
+            }
+
+            set
+            {
+                this.shouldSerialize["expiration_interval"] = true;
+                this.expirationInterval = value;
+            }
+        }
+
+        /// <summary>
+        /// Applicable only when rollover is enabled. Interval unit for rollover expiration (month or day).
+        /// </summary>
+        [JsonProperty("expiration_interval_unit")]
+        public Models.ExpirationIntervalUnit? ExpirationIntervalUnit
+        {
+            get
+            {
+                return this.expirationIntervalUnit;
+            }
+
+            set
+            {
+                this.shouldSerialize["expiration_interval_unit"] = true;
+                this.expirationIntervalUnit = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -121,12 +193,46 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetExpirationInterval()
+        {
+            this.shouldSerialize["expiration_interval"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetExpirationIntervalUnit()
+        {
+            this.shouldSerialize["expiration_interval_unit"] = false;
+        }
+
+        /// <summary>
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
         public bool ShouldSerializeIntervalUnit()
         {
             return this.shouldSerialize["interval_unit"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeExpirationInterval()
+        {
+            return this.shouldSerialize["expiration_interval"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeExpirationIntervalUnit()
+        {
+            return this.shouldSerialize["expiration_interval_unit"];
         }
 
         /// <inheritdoc/>
@@ -146,6 +252,14 @@ namespace AdvancedBilling.Standard.Models
                  this.IntervalUnit?.Equals(other.IntervalUnit) == true) &&
                 (this.Prices == null && other.Prices == null ||
                  this.Prices?.Equals(other.Prices) == true) &&
+                (this.RenewPrepaidAllocation == null && other.RenewPrepaidAllocation == null ||
+                 this.RenewPrepaidAllocation?.Equals(other.RenewPrepaidAllocation) == true) &&
+                (this.RolloverPrepaidRemainder == null && other.RolloverPrepaidRemainder == null ||
+                 this.RolloverPrepaidRemainder?.Equals(other.RolloverPrepaidRemainder) == true) &&
+                (this.ExpirationInterval == null && other.ExpirationInterval == null ||
+                 this.ExpirationInterval?.Equals(other.ExpirationInterval) == true) &&
+                (this.ExpirationIntervalUnit == null && other.ExpirationIntervalUnit == null ||
+                 this.ExpirationIntervalUnit?.Equals(other.ExpirationIntervalUnit) == true) &&
                 base.Equals(obj);
         }
 
@@ -160,6 +274,10 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
             toStringOutput.Add($"Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
+            toStringOutput.Add($"RenewPrepaidAllocation = {(this.RenewPrepaidAllocation == null ? "null" : this.RenewPrepaidAllocation.ToString())}");
+            toStringOutput.Add($"RolloverPrepaidRemainder = {(this.RolloverPrepaidRemainder == null ? "null" : this.RolloverPrepaidRemainder.ToString())}");
+            toStringOutput.Add($"ExpirationInterval = {(this.ExpirationInterval == null ? "null" : this.ExpirationInterval.ToString())}");
+            toStringOutput.Add($"ExpirationIntervalUnit = {(this.ExpirationIntervalUnit == null ? "null" : this.ExpirationIntervalUnit.ToString())}");
 
             base.ToString(toStringOutput);
         }

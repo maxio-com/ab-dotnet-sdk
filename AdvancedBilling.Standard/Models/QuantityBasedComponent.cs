@@ -210,7 +210,7 @@ namespace AdvancedBilling.Standard.Models
         public QuantityBasedComponentUnitPrice UnitPrice { get; set; }
 
         /// <summary>
-        /// A string representing the tax code related to the component type. This is especially important when using the Avalara service to tax based on locale. This attribute has a max length of 10 characters.
+        /// A string representing the tax code related to the component type. This is especially important when using AvaTax to tax based on locale. This attribute has a max length of 25 characters.
         /// </summary>
         [JsonProperty("tax_code", NullValueHandling = NullValueHandling.Ignore)]
         public string TaxCode { get; set; }

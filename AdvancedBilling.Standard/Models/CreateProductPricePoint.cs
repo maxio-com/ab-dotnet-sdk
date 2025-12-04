@@ -23,9 +23,11 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class CreateProductPricePoint : BaseModel
     {
+        private Models.TrialType? trialType;
         private Models.ExpirationIntervalUnit? expirationIntervalUnit;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
+            { "trial_type", false },
             { "expiration_interval_unit", false },
         };
 
@@ -62,7 +64,7 @@ namespace AdvancedBilling.Standard.Models
             long? trialPriceInCents = null,
             int? trialInterval = null,
             Models.IntervalUnit? trialIntervalUnit = null,
-            string trialType = null,
+            Models.TrialType? trialType = null,
             long? initialChargeInCents = null,
             bool? initialChargeAfterTrial = null,
             int? expirationInterval = null,
@@ -77,7 +79,11 @@ namespace AdvancedBilling.Standard.Models
             this.TrialPriceInCents = trialPriceInCents;
             this.TrialInterval = trialInterval;
             this.TrialIntervalUnit = trialIntervalUnit;
-            this.TrialType = trialType;
+
+            if (trialType != null)
+            {
+                this.TrialType = trialType;
+            }
             this.InitialChargeInCents = initialChargeInCents;
             this.InitialChargeAfterTrial = initialChargeAfterTrial;
             this.ExpirationInterval = expirationInterval;
@@ -138,10 +144,22 @@ namespace AdvancedBilling.Standard.Models
         public Models.IntervalUnit? TrialIntervalUnit { get; set; }
 
         /// <summary>
-        /// Gets or sets TrialType.
+        /// Indicates how a trial is handled when the trail period ends and there is no credit card on file. For `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will send normal dunning emails and statements according to your other settings.
         /// </summary>
-        [JsonProperty("trial_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string TrialType { get; set; }
+        [JsonProperty("trial_type")]
+        public Models.TrialType? TrialType
+        {
+            get
+            {
+                return this.trialType;
+            }
+
+            set
+            {
+                this.shouldSerialize["trial_type"] = true;
+                this.trialType = value;
+            }
+        }
 
         /// <summary>
         /// The product price point initial charge, in integer cents
@@ -196,9 +214,26 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
+        public void UnsetTrialType()
+        {
+            this.shouldSerialize["trial_type"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
         public void UnsetExpirationIntervalUnit()
         {
             this.shouldSerialize["expiration_interval_unit"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeTrialType()
+        {
+            return this.shouldSerialize["trial_type"];
         }
 
         /// <summary>
@@ -259,7 +294,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"TrialPriceInCents = {(this.TrialPriceInCents == null ? "null" : this.TrialPriceInCents.ToString())}");
             toStringOutput.Add($"TrialInterval = {(this.TrialInterval == null ? "null" : this.TrialInterval.ToString())}");
             toStringOutput.Add($"TrialIntervalUnit = {(this.TrialIntervalUnit == null ? "null" : this.TrialIntervalUnit.ToString())}");
-            toStringOutput.Add($"TrialType = {this.TrialType ?? "null"}");
+            toStringOutput.Add($"TrialType = {(this.TrialType == null ? "null" : this.TrialType.ToString())}");
             toStringOutput.Add($"InitialChargeInCents = {(this.InitialChargeInCents == null ? "null" : this.InitialChargeInCents.ToString())}");
             toStringOutput.Add($"InitialChargeAfterTrial = {(this.InitialChargeAfterTrial == null ? "null" : this.InitialChargeAfterTrial.ToString())}");
             toStringOutput.Add($"ExpirationInterval = {(this.ExpirationInterval == null ? "null" : this.ExpirationInterval.ToString())}");

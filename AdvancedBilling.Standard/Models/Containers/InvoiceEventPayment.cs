@@ -14,14 +14,14 @@ namespace AdvancedBilling.Standard.Models.Containers
     /// </summary>
     [JsonConverter(
         typeof(UnionTypeConverter<InvoiceEventPayment>),
-        new Type[] {
+        new[] {
             typeof(PaymentMethodApplePayCase),
             typeof(PaymentMethodBankAccountCase),
             typeof(PaymentMethodCreditCardCase),
             typeof(PaymentMethodExternalCase),
             typeof(PaymentMethodPaypalCase)
         },
-        new string[] {
+        new[] {
             "apple_pay",
             "bank_account",
             "credit_card",
@@ -103,198 +103,205 @@ namespace AdvancedBilling.Standard.Models.Containers
             Func<PaymentMethodExternal, T> paymentMethodExternal,
             Func<PaymentMethodPaypal, T> paymentMethodPaypal);
 
+        /// <summary>
+        /// Method to match from the provided any-of cases. The parameters represent
+        /// optional callback functions for any-of type cases. You may provide only
+        /// the callbacks you are interested in; others can be left as <c>null</c>. All
+        /// callback functions must have the same return type T. This typeparam T
+        /// represents the type that will be returned after applying the selected
+        /// callback function, or the default value if no callback is provided for the matched case.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public T MatchSome<T>(
+            Func<PaymentMethodApplePay, T> paymentMethodApplePay = null,
+            Func<PaymentMethodBankAccount, T> paymentMethodBankAccount = null,
+            Func<PaymentMethodCreditCard, T> paymentMethodCreditCard = null,
+            Func<PaymentMethodExternal, T> paymentMethodExternal = null,
+            Func<PaymentMethodPaypal, T> paymentMethodPaypal = null) =>
+                Match(paymentMethodApplePay, paymentMethodBankAccount, paymentMethodCreditCard, paymentMethodExternal, paymentMethodPaypal);
+
         [JsonConverter(typeof(UnionTypeCaseConverter<PaymentMethodApplePayCase, PaymentMethodApplePay>))]
         private sealed class PaymentMethodApplePayCase : InvoiceEventPayment, ICaseValue<PaymentMethodApplePayCase, PaymentMethodApplePay>
         {
-            public PaymentMethodApplePay _value;
+            public PaymentMethodApplePay Value;
 
             public override T Match<T>(
                 Func<PaymentMethodApplePay, T> paymentMethodApplePay,
                 Func<PaymentMethodBankAccount, T> paymentMethodBankAccount,
                 Func<PaymentMethodCreditCard, T> paymentMethodCreditCard,
                 Func<PaymentMethodExternal, T> paymentMethodExternal,
-                Func<PaymentMethodPaypal, T> paymentMethodPaypal)
-            {
-                return paymentMethodApplePay(_value);
-            }
+                Func<PaymentMethodPaypal, T> paymentMethodPaypal) =>
+                   paymentMethodApplePay != null ? paymentMethodApplePay(Value) : default;
 
             public PaymentMethodApplePayCase Set(PaymentMethodApplePay value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public PaymentMethodApplePay Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is PaymentMethodApplePayCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PaymentMethodBankAccountCase, PaymentMethodBankAccount>))]
         private sealed class PaymentMethodBankAccountCase : InvoiceEventPayment, ICaseValue<PaymentMethodBankAccountCase, PaymentMethodBankAccount>
         {
-            public PaymentMethodBankAccount _value;
+            public PaymentMethodBankAccount Value;
 
             public override T Match<T>(
                 Func<PaymentMethodApplePay, T> paymentMethodApplePay,
                 Func<PaymentMethodBankAccount, T> paymentMethodBankAccount,
                 Func<PaymentMethodCreditCard, T> paymentMethodCreditCard,
                 Func<PaymentMethodExternal, T> paymentMethodExternal,
-                Func<PaymentMethodPaypal, T> paymentMethodPaypal)
-            {
-                return paymentMethodBankAccount(_value);
-            }
+                Func<PaymentMethodPaypal, T> paymentMethodPaypal) =>
+                   paymentMethodBankAccount != null ? paymentMethodBankAccount(Value) : default;
 
             public PaymentMethodBankAccountCase Set(PaymentMethodBankAccount value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public PaymentMethodBankAccount Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is PaymentMethodBankAccountCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PaymentMethodCreditCardCase, PaymentMethodCreditCard>))]
         private sealed class PaymentMethodCreditCardCase : InvoiceEventPayment, ICaseValue<PaymentMethodCreditCardCase, PaymentMethodCreditCard>
         {
-            public PaymentMethodCreditCard _value;
+            public PaymentMethodCreditCard Value;
 
             public override T Match<T>(
                 Func<PaymentMethodApplePay, T> paymentMethodApplePay,
                 Func<PaymentMethodBankAccount, T> paymentMethodBankAccount,
                 Func<PaymentMethodCreditCard, T> paymentMethodCreditCard,
                 Func<PaymentMethodExternal, T> paymentMethodExternal,
-                Func<PaymentMethodPaypal, T> paymentMethodPaypal)
-            {
-                return paymentMethodCreditCard(_value);
-            }
+                Func<PaymentMethodPaypal, T> paymentMethodPaypal) =>
+                   paymentMethodCreditCard != null ? paymentMethodCreditCard(Value) : default;
 
             public PaymentMethodCreditCardCase Set(PaymentMethodCreditCard value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public PaymentMethodCreditCard Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is PaymentMethodCreditCardCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PaymentMethodExternalCase, PaymentMethodExternal>))]
         private sealed class PaymentMethodExternalCase : InvoiceEventPayment, ICaseValue<PaymentMethodExternalCase, PaymentMethodExternal>
         {
-            public PaymentMethodExternal _value;
+            public PaymentMethodExternal Value;
 
             public override T Match<T>(
                 Func<PaymentMethodApplePay, T> paymentMethodApplePay,
                 Func<PaymentMethodBankAccount, T> paymentMethodBankAccount,
                 Func<PaymentMethodCreditCard, T> paymentMethodCreditCard,
                 Func<PaymentMethodExternal, T> paymentMethodExternal,
-                Func<PaymentMethodPaypal, T> paymentMethodPaypal)
-            {
-                return paymentMethodExternal(_value);
-            }
+                Func<PaymentMethodPaypal, T> paymentMethodPaypal) =>
+                   paymentMethodExternal != null ? paymentMethodExternal(Value) : default;
 
             public PaymentMethodExternalCase Set(PaymentMethodExternal value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public PaymentMethodExternal Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is PaymentMethodExternalCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PaymentMethodPaypalCase, PaymentMethodPaypal>))]
         private sealed class PaymentMethodPaypalCase : InvoiceEventPayment, ICaseValue<PaymentMethodPaypalCase, PaymentMethodPaypal>
         {
-            public PaymentMethodPaypal _value;
+            public PaymentMethodPaypal Value;
 
             public override T Match<T>(
                 Func<PaymentMethodApplePay, T> paymentMethodApplePay,
                 Func<PaymentMethodBankAccount, T> paymentMethodBankAccount,
                 Func<PaymentMethodCreditCard, T> paymentMethodCreditCard,
                 Func<PaymentMethodExternal, T> paymentMethodExternal,
-                Func<PaymentMethodPaypal, T> paymentMethodPaypal)
-            {
-                return paymentMethodPaypal(_value);
-            }
+                Func<PaymentMethodPaypal, T> paymentMethodPaypal) =>
+                   paymentMethodPaypal != null ? paymentMethodPaypal(Value) : default;
 
             public PaymentMethodPaypalCase Set(PaymentMethodPaypal value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public PaymentMethodPaypal Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is PaymentMethodPaypalCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
     }

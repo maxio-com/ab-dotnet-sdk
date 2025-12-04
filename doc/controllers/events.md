@@ -116,7 +116,7 @@ ListEventsAsync(
 ```csharp
 ListEventsInput listEventsInput = new ListEventsInput
 {
-    Page = 2,
+    Page = 1,
     PerPage = 50,
     Direction = Direction.Desc,
     Filter = new List<EventKey>
@@ -242,7 +242,7 @@ ListSubscriptionEventsAsync(
 ListSubscriptionEventsInput listSubscriptionEventsInput = new ListSubscriptionEventsInput
 {
     SubscriptionId = 222,
-    Page = 2,
+    Page = 1,
     PerPage = 50,
     Direction = Direction.Desc,
     Filter = new List<EventKey>
@@ -336,7 +336,7 @@ ReadEventsCountAsync(
 ```csharp
 ReadEventsCountInput readEventsCountInput = new ReadEventsCountInput
 {
-    Page = 2,
+    Page = 1,
     PerPage = 50,
     Direction = Direction.Desc,
     Filter = new List<EventKey>

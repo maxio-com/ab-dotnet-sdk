@@ -37,7 +37,7 @@ namespace AdvancedBilling.Standard.Controllers
         internal ProductPricePointsController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
-        /// [Product Price Point Documentation](https://maxio.zendesk.com/hc/en-us/articles/24261111947789-Product-Price-Points).
+        /// Creates a Product Price Point. See the [Product Price Point](https://maxio.zendesk.com/hc/en-us/articles/24261111947789-Product-Price-Points) documentation for details.
         /// </summary>
         /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
         /// <param name="body">Optional parameter: .</param>
@@ -48,7 +48,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(CreateProductPricePointAsync(productId, body));
 
         /// <summary>
-        /// [Product Price Point Documentation](https://maxio.zendesk.com/hc/en-us/articles/24261111947789-Product-Price-Points).
+        /// Creates a Product Price Point. See the [Product Price Point](https://maxio.zendesk.com/hc/en-us/articles/24261111947789-Product-Price-Points) documentation for details.
         /// </summary>
         /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`.</param>
         /// <param name="body">Optional parameter: .</param>
@@ -71,7 +71,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this endpoint to retrieve a list of product price points.
+        /// Retrieves a list of product price points.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the Models.ListProductPricePointsResponse response from the API call.</returns>
@@ -80,7 +80,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListProductPricePointsAsync(input));
 
         /// <summary>
-        /// Use this endpoint to retrieve a list of product price points.
+        /// Retrieves a list of product price points.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -102,8 +102,8 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this endpoint to update a product price point.
-        /// Note: Custom product price points are not able to be updated.
+        /// Updates a product price point.
+        /// Note: Custom product price points cannot be updated.
         /// </summary>
         /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
         /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-price-point-handle` for a string handle..</param>
@@ -116,8 +116,8 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(UpdateProductPricePointAsync(productId, pricePointId, body));
 
         /// <summary>
-        /// Use this endpoint to update a product price point.
-        /// Note: Custom product price points are not able to be updated.
+        /// Updates a product price point.
+        /// Note: Custom product price points cannot be updated.
         /// </summary>
         /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
         /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-price-point-handle` for a string handle..</param>
@@ -177,7 +177,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this endpoint to archive a product price point.
+        /// Archives a product price point.
         /// </summary>
         /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
         /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-price-point-handle` for a string handle..</param>
@@ -188,7 +188,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ArchiveProductPricePointAsync(productId, pricePointId));
 
         /// <summary>
-        /// Use this endpoint to archive a product price point.
+        /// Archives a product price point.
         /// </summary>
         /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
         /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-price-point-handle` for a string handle..</param>
@@ -241,8 +241,8 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this endpoint to make a product price point the default for the product.
-        /// Note: Custom product price points are not able to be set as the default for a product.
+        /// Sets a product price point as the default for the product.
+        /// Note: Custom product price points cannot be set as the default for a product.
         /// </summary>
         /// <param name="productId">Required parameter: The Advanced Billing id of the product to which the price point belongs.</param>
         /// <param name="pricePointId">Required parameter: The Advanced Billing id of the product price point.</param>
@@ -253,8 +253,8 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(PromoteProductPricePointToDefaultAsync(productId, pricePointId));
 
         /// <summary>
-        /// Use this endpoint to make a product price point the default for the product.
-        /// Note: Custom product price points are not able to be set as the default for a product.
+        /// Sets a product price point as the default for the product.
+        /// Note: Custom product price points cannot be set as the default for a product.
         /// </summary>
         /// <param name="productId">Required parameter: The Advanced Billing id of the product to which the price point belongs.</param>
         /// <param name="pricePointId">Required parameter: The Advanced Billing id of the product price point.</param>
@@ -274,7 +274,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this endpoint to create multiple product price points in one request.
+        /// Creates multiple product price points in one request.
         /// </summary>
         /// <param name="productId">Required parameter: The Advanced Billing id of the product to which the price points belong.</param>
         /// <param name="body">Optional parameter: .</param>
@@ -285,7 +285,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(BulkCreateProductPricePointsAsync(productId, body));
 
         /// <summary>
-        /// Use this endpoint to create multiple product price points in one request.
+        /// Creates multiple product price points in one request.
         /// </summary>
         /// <param name="productId">Required parameter: The Advanced Billing id of the product to which the price points belong.</param>
         /// <param name="body">Optional parameter: .</param>
@@ -308,7 +308,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This endpoint allows you to create currency prices for a given currency that has been defined on the site level in your settings.
+        /// Creates currency prices for a given currency that has been defined on the site level in your settings.
         /// When creating currency prices, they need to mirror the structure of your primary pricing. If the product price point defines a trial and/or setup fee, each currency must also define a trial and/or setup fee.
         /// Note: Currency Prices are not able to be created for custom product price points.
         /// </summary>
@@ -321,7 +321,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(CreateProductCurrencyPricesAsync(productPricePointId, body));
 
         /// <summary>
-        /// This endpoint allows you to create currency prices for a given currency that has been defined on the site level in your settings.
+        /// Creates currency prices for a given currency that has been defined on the site level in your settings.
         /// When creating currency prices, they need to mirror the structure of your primary pricing. If the product price point defines a trial and/or setup fee, each currency must also define a trial and/or setup fee.
         /// Note: Currency Prices are not able to be created for custom product price points.
         /// </summary>
@@ -346,9 +346,9 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This endpoint allows you to update the `price`s of currency prices for a given currency that exists on the product price point.
+        /// Updates the `price`s of currency prices for a given currency that exists on the product price point.
         /// When updating the pricing, it needs to mirror the structure of your primary pricing. If the product price point defines a trial and/or setup fee, each currency must also define a trial and/or setup fee.
-        /// Note: Currency Prices are not able to be updated for custom product price points.
+        /// Note: Currency Prices cannot be updated for custom product price points.
         /// </summary>
         /// <param name="productPricePointId">Required parameter: The Advanced Billing id of the product price point.</param>
         /// <param name="body">Optional parameter: .</param>
@@ -359,9 +359,9 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(UpdateProductCurrencyPricesAsync(productPricePointId, body));
 
         /// <summary>
-        /// This endpoint allows you to update the `price`s of currency prices for a given currency that exists on the product price point.
+        /// Updates the `price`s of currency prices for a given currency that exists on the product price point.
         /// When updating the pricing, it needs to mirror the structure of your primary pricing. If the product price point defines a trial and/or setup fee, each currency must also define a trial and/or setup fee.
-        /// Note: Currency Prices are not able to be updated for custom product price points.
+        /// Note: Currency Prices cannot be updated for custom product price points.
         /// </summary>
         /// <param name="productPricePointId">Required parameter: The Advanced Billing id of the product price point.</param>
         /// <param name="body">Optional parameter: .</param>

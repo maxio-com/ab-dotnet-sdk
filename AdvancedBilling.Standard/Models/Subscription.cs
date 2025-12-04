@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using APIMatic.Core.Utilities.Converters;
 using AdvancedBilling.Standard;
+using AdvancedBilling.Standard.Models.Containers;
 using AdvancedBilling.Standard.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -36,7 +37,7 @@ namespace AdvancedBilling.Standard.Models
         private DateTimeOffset? currentPeriodStartedAt;
         private DateTimeOffset? delayedCancelAt;
         private string couponCode;
-        private string snapDay;
+        private SubscriptionSnapDay snapDay;
         private Models.NestedSubscriptionGroup mGroup;
         private string paymentType;
         private string referralCode;
@@ -194,7 +195,7 @@ namespace AdvancedBilling.Standard.Models
             string signupRevenue = null,
             DateTimeOffset? delayedCancelAt = null,
             string couponCode = null,
-            string snapDay = null,
+            SubscriptionSnapDay snapDay = null,
             Models.CollectionMethod? paymentCollectionMethod = null,
             Models.Customer customer = null,
             Models.Product product = null,
@@ -771,7 +772,7 @@ namespace AdvancedBilling.Standard.Models
         /// The day of the month that the subscription will charge according to calendar billing rules, if used.
         /// </summary>
         [JsonProperty("snap_day")]
-        public string SnapDay
+        public SubscriptionSnapDay SnapDay
         {
             get
             {
@@ -1023,7 +1024,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The balance in cents plus the estimated renewal amount in cents. Returned ONLY for readSubscription operation as it's compute intensive operation.
+        /// The balance in cents plus the estimated renewal amount in cents. Returned ONLY for the readSubscription operation as it's a compute intensive operation.
         /// </summary>
         [JsonProperty("current_billing_amount_in_cents", NullValueHandling = NullValueHandling.Ignore)]
         public long? CurrentBillingAmountInCents { get; set; }
@@ -2035,7 +2036,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"SignupRevenue = {this.SignupRevenue ?? "null"}");
             toStringOutput.Add($"DelayedCancelAt = {(this.DelayedCancelAt == null ? "null" : this.DelayedCancelAt.ToString())}");
             toStringOutput.Add($"CouponCode = {this.CouponCode ?? "null"}");
-            toStringOutput.Add($"SnapDay = {this.SnapDay ?? "null"}");
+            toStringOutput.Add($"SnapDay = {(this.SnapDay == null ? "null" : this.SnapDay.ToString())}");
             toStringOutput.Add($"PaymentCollectionMethod = {(this.PaymentCollectionMethod == null ? "null" : this.PaymentCollectionMethod.ToString())}");
             toStringOutput.Add($"Customer = {(this.Customer == null ? "null" : this.Customer.ToString())}");
             toStringOutput.Add($"Product = {(this.Product == null ? "null" : this.Product.ToString())}");

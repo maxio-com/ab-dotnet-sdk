@@ -14,7 +14,7 @@ namespace AdvancedBilling.Standard.Models.Containers
     /// </summary>
     [JsonConverter(
         typeof(UnionTypeConverter<CreateComponentPricePointsRequestPricePoints>),
-        new Type[] {
+        new[] {
             typeof(CreateComponentPricePointCase),
             typeof(CreatePrepaidUsageComponentPricePointCase)
         },
@@ -54,71 +54,79 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// <typeparam name="T"></typeparam>
         public abstract T Match<T>(Func<CreateComponentPricePoint, T> createComponentPricePoint, Func<CreatePrepaidUsageComponentPricePoint, T> createPrepaidUsageComponentPricePoint);
 
+        /// <summary>
+        /// Method to match from the provided any-of cases. The parameters represent
+        /// optional callback functions for any-of type cases. You may provide only
+        /// the callbacks you are interested in; others can be left as <c>null</c>. All
+        /// callback functions must have the same return type T. This typeparam T
+        /// represents the type that will be returned after applying the selected
+        /// callback function, or the default value if no callback is provided for the matched case.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public T MatchSome<T>(Func<CreateComponentPricePoint, T> createComponentPricePoint = null, Func<CreatePrepaidUsageComponentPricePoint, T> createPrepaidUsageComponentPricePoint = null) =>
+                Match(createComponentPricePoint, createPrepaidUsageComponentPricePoint);
+
         [JsonConverter(typeof(UnionTypeCaseConverter<CreateComponentPricePointCase, CreateComponentPricePoint>))]
         private sealed class CreateComponentPricePointCase : CreateComponentPricePointsRequestPricePoints, ICaseValue<CreateComponentPricePointCase, CreateComponentPricePoint>
         {
-            public CreateComponentPricePoint _value;
+            public CreateComponentPricePoint Value;
 
-            public override T Match<T>(Func<CreateComponentPricePoint, T> createComponentPricePoint, Func<CreatePrepaidUsageComponentPricePoint, T> createPrepaidUsageComponentPricePoint)
-            {
-                return createComponentPricePoint(_value);
-            }
+            public override T Match<T>(Func<CreateComponentPricePoint, T> createComponentPricePoint, Func<CreatePrepaidUsageComponentPricePoint, T> createPrepaidUsageComponentPricePoint) =>
+                   createComponentPricePoint != null ? createComponentPricePoint(Value) : default;
 
             public CreateComponentPricePointCase Set(CreateComponentPricePoint value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public CreateComponentPricePoint Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is CreateComponentPricePointCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<CreatePrepaidUsageComponentPricePointCase, CreatePrepaidUsageComponentPricePoint>))]
         private sealed class CreatePrepaidUsageComponentPricePointCase : CreateComponentPricePointsRequestPricePoints, ICaseValue<CreatePrepaidUsageComponentPricePointCase, CreatePrepaidUsageComponentPricePoint>
         {
-            public CreatePrepaidUsageComponentPricePoint _value;
+            public CreatePrepaidUsageComponentPricePoint Value;
 
-            public override T Match<T>(Func<CreateComponentPricePoint, T> createComponentPricePoint, Func<CreatePrepaidUsageComponentPricePoint, T> createPrepaidUsageComponentPricePoint)
-            {
-                return createPrepaidUsageComponentPricePoint(_value);
-            }
+            public override T Match<T>(Func<CreateComponentPricePoint, T> createComponentPricePoint, Func<CreatePrepaidUsageComponentPricePoint, T> createPrepaidUsageComponentPricePoint) =>
+                   createPrepaidUsageComponentPricePoint != null ? createPrepaidUsageComponentPricePoint(Value) : default;
 
             public CreatePrepaidUsageComponentPricePointCase Set(CreatePrepaidUsageComponentPricePoint value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public CreatePrepaidUsageComponentPricePoint Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is CreatePrepaidUsageComponentPricePointCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
     }

@@ -13,6 +13,8 @@ The following parameters are configurable for the API Client:
 
 The API client can be initialized as follows:
 
+## Code-Based Initialization
+
 ```csharp
 using AdvancedBilling.Standard;
 using AdvancedBilling.Standard.Authentication;
@@ -30,6 +32,27 @@ AdvancedBillingClient client = new AdvancedBillingClient.Builder()
     .Site("subdomain")
     .Build();
 ```
+
+## Configuration-Based Initialization
+
+```csharp
+using AdvancedBilling.Standard;
+using Microsoft.Extensions.Configuration;
+
+namespace ConsoleApp;
+
+// Build the IConfiguration using .NET conventions (JSON, environment, etc.)
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("config.json")
+    .AddEnvironmentVariables() // [optional] read environment variables
+    .Build();
+
+// Instantiate your SDK and configure it from IConfiguration
+var client = AdvancedBillingClient
+    .FromConfiguration(configuration.GetSection("AdvancedBilling"));
+```
+
+See the [Configuration-Based Initialization](../doc/configuration-based-initialization.md) section for details.
 
 ## Maxio Advanced BillingClient Class
 

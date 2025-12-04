@@ -15,25 +15,14 @@ namespace AdvancedBilling.Standard.Models.Containers
     /// </summary>
     [JsonConverter(
         typeof(UnionTypeConverter<UpdateSubscriptionSnapDay>),
-        new Type[] {
-            typeof(SnapDayCase),
-            typeof(NumberCase)
+        new[] {
+            typeof(NumberCase),
+            typeof(SnapDayCase)
         },
         true
     )]
     public abstract class UpdateSubscriptionSnapDay
     {
-        /// <summary>
-        /// This is SnapDay case.
-        /// </summary>
-        /// <returns>
-        /// The UpdateSubscriptionSnapDay instance, wrapping the provided SnapDay value.
-        /// </returns>
-        public static UpdateSubscriptionSnapDay FromSnapDay(SnapDay snapDay)
-        {
-            return new SnapDayCase().Set(snapDay);
-        }
-
         /// <summary>
         /// This is Number case.
         /// </summary>
@@ -46,6 +35,17 @@ namespace AdvancedBilling.Standard.Models.Containers
         }
 
         /// <summary>
+        /// This is SnapDay case.
+        /// </summary>
+        /// <returns>
+        /// The UpdateSubscriptionSnapDay instance, wrapping the provided SnapDay value.
+        /// </returns>
+        public static UpdateSubscriptionSnapDay FromSnapDay(SnapDay snapDay)
+        {
+            return new SnapDayCase().Set(snapDay);
+        }
+
+        /// <summary>
         /// Method to match from the provided one-of cases. Here parameters
         /// represents the callback functions for one-of type cases. All
         /// callback functions must have the same return type T. This typeparam T
@@ -53,73 +53,81 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// callback function.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public abstract T Match<T>(Func<SnapDay, T> snapDay, Func<int, T> number);
+        public abstract T Match<T>(Func<int, T> number, Func<SnapDay, T> snapDay);
 
-        [JsonConverter(typeof(UnionTypeCaseConverter<SnapDayCase, SnapDay>))]
-        private sealed class SnapDayCase : UpdateSubscriptionSnapDay, ICaseValue<SnapDayCase, SnapDay>
-        {
-            public SnapDay _value;
-
-            public override T Match<T>(Func<SnapDay, T> snapDay, Func<int, T> number)
-            {
-                return snapDay(_value);
-            }
-
-            public SnapDayCase Set(SnapDay value)
-            {
-                _value = value;
-                return this;
-            }
-
-            public SnapDay Get()
-            {
-                return _value;
-            }
-
-            public override string ToString()
-            {
-                return _value.ToString();
-            }
-
-            public override bool Equals(object obj)
-            {
-                if (!(obj is SnapDayCase other)) return false;
-                if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value.Equals(other._value);
-            }
-        }
+        /// <summary>
+        /// Method to match from the provided one-of cases. The parameters represent
+        /// optional callback functions for one-of type cases. You may provide only
+        /// the callbacks you are interested in; others can be left as <c>null</c>. All
+        /// callback functions must have the same return type T. This typeparam T
+        /// represents the type that will be returned after applying the selected
+        /// callback function, or the default value if no callback is provided for the matched case.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public T MatchSome<T>(Func<int, T> number = null, Func<SnapDay, T> snapDay = null) =>
+                Match(number, snapDay);
 
         [JsonConverter(typeof(UnionTypeCaseConverter<NumberCase, int>), JTokenType.Integer)]
         private sealed class NumberCase : UpdateSubscriptionSnapDay, ICaseValue<NumberCase, int>
         {
-            public int _value;
+            public int Value;
 
-            public override T Match<T>(Func<SnapDay, T> snapDay, Func<int, T> number)
-            {
-                return number(_value);
-            }
+            public override T Match<T>(Func<int, T> number, Func<SnapDay, T> snapDay) =>
+                   number != null ? number(Value) : default;
 
             public NumberCase Set(int value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public int Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value.ToString();
+                return Value.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is NumberCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value.Equals(other._value);
+                return Value == null ? other.Value == null : Value.Equals(other.Value); 
+            }
+        }
+
+        [JsonConverter(typeof(UnionTypeCaseConverter<SnapDayCase, SnapDay>))]
+        private sealed class SnapDayCase : UpdateSubscriptionSnapDay, ICaseValue<SnapDayCase, SnapDay>
+        {
+            public SnapDay Value;
+
+            public override T Match<T>(Func<int, T> number, Func<SnapDay, T> snapDay) =>
+                   snapDay != null ? snapDay(Value) : default;
+
+            public SnapDayCase Set(SnapDay value)
+            {
+                Value = value;
+                return this;
+            }
+
+            public SnapDay Get()
+            {
+                return Value;
+            }
+
+            public override string ToString()
+            {
+                return Value.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is SnapDayCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return Value == null ? other.Value == null : Value.Equals(other.Value); 
             }
         }
     }

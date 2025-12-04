@@ -16,7 +16,7 @@ namespace AdvancedBilling.Standard.Models.Containers
     /// </summary>
     [JsonConverter(
         typeof(UnionTypeConverter<CustomerErrorResponseErrors>),
-        new Type[] {
+        new[] {
             typeof(CustomerErrorCase),
             typeof(ListOfStringCase)
         },
@@ -56,71 +56,79 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// <typeparam name="T"></typeparam>
         public abstract T Match<T>(Func<CustomerError, T> customerError, Func<List<string>, T> listOfString);
 
+        /// <summary>
+        /// Method to match from the provided one-of cases. The parameters represent
+        /// optional callback functions for one-of type cases. You may provide only
+        /// the callbacks you are interested in; others can be left as <c>null</c>. All
+        /// callback functions must have the same return type T. This typeparam T
+        /// represents the type that will be returned after applying the selected
+        /// callback function, or the default value if no callback is provided for the matched case.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public T MatchSome<T>(Func<CustomerError, T> customerError = null, Func<List<string>, T> listOfString = null) =>
+                Match(customerError, listOfString);
+
         [JsonConverter(typeof(UnionTypeCaseConverter<CustomerErrorCase, CustomerError>))]
         private sealed class CustomerErrorCase : CustomerErrorResponseErrors, ICaseValue<CustomerErrorCase, CustomerError>
         {
-            public CustomerError _value;
+            public CustomerError Value;
 
-            public override T Match<T>(Func<CustomerError, T> customerError, Func<List<string>, T> listOfString)
-            {
-                return customerError(_value);
-            }
+            public override T Match<T>(Func<CustomerError, T> customerError, Func<List<string>, T> listOfString) =>
+                   customerError != null ? customerError(Value) : default;
 
             public CustomerErrorCase Set(CustomerError value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public CustomerError Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is CustomerErrorCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<ListOfStringCase, List<string>>), JTokenType.String, JTokenType.Null)]
         private sealed class ListOfStringCase : CustomerErrorResponseErrors, ICaseValue<ListOfStringCase, List<string>>
         {
-            public List<string> _value;
+            public List<string> Value;
 
-            public override T Match<T>(Func<CustomerError, T> customerError, Func<List<string>, T> listOfString)
-            {
-                return listOfString(_value);
-            }
+            public override T Match<T>(Func<CustomerError, T> customerError, Func<List<string>, T> listOfString) =>
+                   listOfString != null ? listOfString(Value) : default;
 
             public ListOfStringCase Set(List<string> value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public List<string> Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is ListOfStringCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
     }

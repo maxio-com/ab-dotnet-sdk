@@ -15,7 +15,7 @@ namespace AdvancedBilling.Standard.Models.Containers
     /// </summary>
     [JsonConverter(
         typeof(UnionTypeConverter<UpdateMetafieldsRequestMetafields>),
-        new Type[] {
+        new[] {
             typeof(UpdateMetafieldCase),
             typeof(ListOfUpdateMetafieldCase)
         },
@@ -55,71 +55,79 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// <typeparam name="T"></typeparam>
         public abstract T Match<T>(Func<UpdateMetafield, T> updateMetafield, Func<List<UpdateMetafield>, T> listOfUpdateMetafield);
 
+        /// <summary>
+        /// Method to match from the provided one-of cases. The parameters represent
+        /// optional callback functions for one-of type cases. You may provide only
+        /// the callbacks you are interested in; others can be left as <c>null</c>. All
+        /// callback functions must have the same return type T. This typeparam T
+        /// represents the type that will be returned after applying the selected
+        /// callback function, or the default value if no callback is provided for the matched case.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public T MatchSome<T>(Func<UpdateMetafield, T> updateMetafield = null, Func<List<UpdateMetafield>, T> listOfUpdateMetafield = null) =>
+                Match(updateMetafield, listOfUpdateMetafield);
+
         [JsonConverter(typeof(UnionTypeCaseConverter<UpdateMetafieldCase, UpdateMetafield>))]
         private sealed class UpdateMetafieldCase : UpdateMetafieldsRequestMetafields, ICaseValue<UpdateMetafieldCase, UpdateMetafield>
         {
-            public UpdateMetafield _value;
+            public UpdateMetafield Value;
 
-            public override T Match<T>(Func<UpdateMetafield, T> updateMetafield, Func<List<UpdateMetafield>, T> listOfUpdateMetafield)
-            {
-                return updateMetafield(_value);
-            }
+            public override T Match<T>(Func<UpdateMetafield, T> updateMetafield, Func<List<UpdateMetafield>, T> listOfUpdateMetafield) =>
+                   updateMetafield != null ? updateMetafield(Value) : default;
 
             public UpdateMetafieldCase Set(UpdateMetafield value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public UpdateMetafield Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is UpdateMetafieldCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<ListOfUpdateMetafieldCase, List<UpdateMetafield>>))]
         private sealed class ListOfUpdateMetafieldCase : UpdateMetafieldsRequestMetafields, ICaseValue<ListOfUpdateMetafieldCase, List<UpdateMetafield>>
         {
-            public List<UpdateMetafield> _value;
+            public List<UpdateMetafield> Value;
 
-            public override T Match<T>(Func<UpdateMetafield, T> updateMetafield, Func<List<UpdateMetafield>, T> listOfUpdateMetafield)
-            {
-                return listOfUpdateMetafield(_value);
-            }
+            public override T Match<T>(Func<UpdateMetafield, T> updateMetafield, Func<List<UpdateMetafield>, T> listOfUpdateMetafield) =>
+                   listOfUpdateMetafield != null ? listOfUpdateMetafield(Value) : default;
 
             public ListOfUpdateMetafieldCase Set(List<UpdateMetafield> value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public List<UpdateMetafield> Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is ListOfUpdateMetafieldCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
     }

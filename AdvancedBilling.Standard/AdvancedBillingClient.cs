@@ -12,6 +12,7 @@ using AdvancedBilling.Standard.Authentication;
 using AdvancedBilling.Standard.Controllers;
 using AdvancedBilling.Standard.Http.Client;
 using AdvancedBilling.Standard.Utilities;
+using Microsoft.Extensions.Configuration;
 
 namespace AdvancedBilling.Standard
 {
@@ -42,7 +43,7 @@ namespace AdvancedBilling.Standard
         };
 
         private readonly GlobalConfiguration globalConfiguration;
-        private const string userAgent = "AB SDK DotNet:7.0.1 on OS {os-info}";
+        private const string userAgent = "AB SDK DotNet:8.0.0 on OS {os-info}";
         private readonly HttpCallback httpCallback;
         private readonly Lazy<APIExportsController> aPIExports;
         private readonly Lazy<AdvanceInvoiceController> advanceInvoice;
@@ -436,6 +437,13 @@ namespace AdvancedBilling.Standard
         }
 
         /// <summary>
+        /// Creates the client from configuration.
+        /// </summary>
+        /// <returns> AdvancedBillingClient.</returns>
+        public static AdvancedBillingClient FromConfiguration(IConfigurationSection configuration) =>
+            Builder.FromConfiguration(configuration).Build();
+
+        /// <summary>
         /// Builder class.
         /// </summary>
         public class Builder
@@ -500,6 +508,15 @@ namespace AdvancedBilling.Standard
                 return this;
             }
 
+            private Builder HttpClientConfig(HttpClientConfiguration.Builder httpClientConfigurationBuilder)
+            {
+                if (httpClientConfigurationBuilder != null)
+                {
+                    this.httpClientConfig = httpClientConfigurationBuilder;
+                }
+            
+                return this;
+            }
 
 
             /// <summary>
@@ -530,6 +547,34 @@ namespace AdvancedBilling.Standard
                     httpCallback,
                     httpClientConfig.Build());
             }
+
+            /// <summary>
+            /// Creates the client builder from configuration.
+            /// </summary>
+            /// <returns> Builder.</returns>
+            public static Builder FromConfiguration(IConfigurationSection config)
+            {
+                var builder = new Builder();
+                var options = config.Get<AdvancedBillingClientOptions>();
+                if (options == null) return builder;
+                if (options.Environment != null)
+                    builder.Environment(options.Environment.Value);
+                if (options.Site != null)
+                    builder.Site(options.Site);
+                if (options.BasicAuthCredentials != null)
+                    builder.BasicAuthCredentials(BasicAuthModel.FromOptions(options.BasicAuthCredentials));
+                if (options.HttpClientConfig != null)
+                    builder.HttpClientConfig(Http.Client.HttpClientConfiguration.FromOptions(options.HttpClientConfig));
+                return builder;
+            }
+        }
+
+        public class AdvancedBillingClientOptions
+        {
+            public Environment? Environment { get; set; }
+            public string Site { get; set; }
+            public BasicAuthModelOptions BasicAuthCredentials { get; set; }
+            public HttpClientConfigurationOptions HttpClientConfig { get; set; }
         }
     }
 }

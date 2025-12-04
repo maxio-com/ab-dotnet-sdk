@@ -35,6 +35,7 @@ namespace AdvancedBilling.Standard.Models
         /// Initializes a new instance of the <see cref="CreateInvoiceCoupon"/> class.
         /// </summary>
         /// <param name="code">code.</param>
+        /// <param name="subcode">subcode.</param>
         /// <param name="percentage">percentage.</param>
         /// <param name="amount">amount.</param>
         /// <param name="description">description.</param>
@@ -42,6 +43,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="compoundingStrategy">compounding_strategy.</param>
         public CreateInvoiceCoupon(
             string code = null,
+            string subcode = null,
             CreateInvoiceCouponPercentage percentage = null,
             CreateInvoiceCouponAmount amount = null,
             string description = null,
@@ -49,6 +51,7 @@ namespace AdvancedBilling.Standard.Models
             Models.CompoundingStrategy? compoundingStrategy = null)
         {
             this.Code = code;
+            this.Subcode = subcode;
             this.Percentage = percentage;
             this.Amount = amount;
             this.Description = description;
@@ -61,6 +64,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("code", NullValueHandling = NullValueHandling.Ignore)]
         public string Code { get; set; }
+
+        /// <summary>
+        /// Gets or sets Subcode.
+        /// </summary>
+        [JsonProperty("subcode", NullValueHandling = NullValueHandling.Ignore)]
+        public string Subcode { get; set; }
 
         /// <summary>
         /// Gets or sets Percentage.
@@ -109,6 +118,8 @@ namespace AdvancedBilling.Standard.Models
             return obj is CreateInvoiceCoupon other &&
                 (this.Code == null && other.Code == null ||
                  this.Code?.Equals(other.Code) == true) &&
+                (this.Subcode == null && other.Subcode == null ||
+                 this.Subcode?.Equals(other.Subcode) == true) &&
                 (this.Percentage == null && other.Percentage == null ||
                  this.Percentage?.Equals(other.Percentage) == true) &&
                 (this.Amount == null && other.Amount == null ||
@@ -129,6 +140,7 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"Code = {this.Code ?? "null"}");
+            toStringOutput.Add($"Subcode = {this.Subcode ?? "null"}");
             toStringOutput.Add($"Percentage = {(this.Percentage == null ? "null" : this.Percentage.ToString())}");
             toStringOutput.Add($"Amount = {(this.Amount == null ? "null" : this.Amount.ToString())}");
             toStringOutput.Add($"Description = {this.Description ?? "null"}");
