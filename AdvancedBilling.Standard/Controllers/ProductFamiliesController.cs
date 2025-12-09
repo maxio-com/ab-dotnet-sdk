@@ -36,7 +36,7 @@ namespace AdvancedBilling.Standard.Controllers
         internal ProductFamiliesController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
-        /// This method allows to retrieve a list of Products belonging to a Product Family.
+        /// Retrieves a list of Products belonging to a Product Family.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the List of Models.ProductResponse response from the API call.</returns>
@@ -45,7 +45,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListProductsForProductFamilyAsync(input));
 
         /// <summary>
-        /// This method allows to retrieve a list of Products belonging to a Product Family.
+        /// Retrieves a list of Products belonging to a Product Family.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -74,7 +74,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This method will create a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components and coupons.
+        /// Creates a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components and coupons.
         /// Full documentation on how Product Families operate within the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24261098936205-Product-Families).
         /// </summary>
         /// <param name="body">Optional parameter: .</param>
@@ -84,7 +84,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(CreateProductFamilyAsync(body));
 
         /// <summary>
-        /// This method will create a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components and coupons.
+        /// Creates a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components and coupons.
         /// Full documentation on how Product Families operate within the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24261098936205-Product-Families).
         /// </summary>
         /// <param name="body">Optional parameter: .</param>
@@ -105,7 +105,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This method allows to retrieve a list of Product Families for a site.
+        /// Retrieve a list of Product Families for a site.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the List of Models.ProductFamilyResponse response from the API call.</returns>
@@ -114,7 +114,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListProductFamiliesAsync(input));
 
         /// <summary>
-        /// This method allows to retrieve a list of Product Families for a site.
+        /// Retrieve a list of Product Families for a site.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -135,7 +135,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This method allows to retrieve a Product Family via the `product_family_id`. The response will contain a Product Family object.
+        /// Retrieves a Product Family via the `product_family_id`. The response will contain a Product Family object.
         /// The product family can be specified either with the id number, or with the `handle:my-family` format.
         /// </summary>
         /// <param name="id">Required parameter: The Advanced Billing id of the product family.</param>
@@ -145,7 +145,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ReadProductFamilyAsync(id));
 
         /// <summary>
-        /// This method allows to retrieve a Product Family via the `product_family_id`. The response will contain a Product Family object.
+        /// Retrieves a Product Family via the `product_family_id`. The response will contain a Product Family object.
         /// The product family can be specified either with the id number, or with the `handle:my-family` format.
         /// </summary>
         /// <param name="id">Required parameter: The Advanced Billing id of the product family.</param>

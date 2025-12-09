@@ -327,7 +327,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Deprecated value that can be ignored unless you have legacy hosted pages. For Public Signup Page users, please read this attribute from under the signup page.
+        /// Deprecated value that can be ignored unless you have legacy hosted pages. For Public Signup Page users, read this attribute from under the signup page.
         /// </summary>
         [JsonProperty("request_credit_card", NullValueHandling = NullValueHandling.Ignore)]
         public bool? RequestCreditCard { get; set; }
@@ -618,7 +618,7 @@ namespace AdvancedBilling.Standard.Models
         public bool? RequireShippingAddress { get; set; }
 
         /// <summary>
-        /// A string representing the tax code related to the product type. This is especially important when using the Avalara service to tax based on locale. This attribute has a max length of 10 characters.
+        /// A string representing the tax code related to the product type. This is especially important when using AvaTax to tax based on locale. This attribute has a max length of 25 characters.
         /// </summary>
         [JsonProperty("tax_code")]
         public string TaxCode

@@ -180,7 +180,7 @@ ListMrrMovementsAsync(
 ```csharp
 ListMrrMovementsInput listMrrMovementsInput = new ListMrrMovementsInput
 {
-    Page = 2,
+    Page = 1,
     PerPage = 20,
 };
 
@@ -288,7 +288,7 @@ ListMrrPerSubscriptionInput listMrrPerSubscriptionInput = new ListMrrPerSubscrip
         },
     },
     AtTime = "at_time=2022-01-10T10:00:00-05:00",
-    Page = 2,
+    Page = 1,
     PerPage = 50,
     Direction = Direction.Desc,
 };

@@ -83,13 +83,13 @@ namespace AdvancedBilling.Standard.Models
         public Models.IncludeOption? Portal { get; set; }
 
         /// <summary>
-        /// Include (1) or exclude (0) metafields from being viewable by your ecosystem.
+        /// Include (1) or exclude (0) metafields used in [Embeddable Components](page:development-tools/embeddable-components/overview) from being viewable by your ecosystem.
         /// </summary>
         [JsonProperty("public_show", NullValueHandling = NullValueHandling.Ignore)]
         public Models.IncludeOption? PublicShow { get; set; }
 
         /// <summary>
-        /// Include (1) or exclude (0) metafields from being edited by your ecosystem.
+        /// Include (1) or exclude (0) metafields used in [Embeddable Components](page:development-tools/embeddable-components/overview) from being editable by your ecosystem.
         /// </summary>
         [JsonProperty("public_edit", NullValueHandling = NullValueHandling.Ignore)]
         public Models.IncludeOption? PublicEdit { get; set; }

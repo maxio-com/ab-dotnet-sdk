@@ -21,7 +21,6 @@
 | `PricePerUnitInCents` | `long?` | Optional | deprecated - use unit_price instead |
 | `Kind` | [`ComponentKind?`](../../doc/models/component-kind.md) | Optional | A handle for the component type |
 | `Archived` | `bool?` | Optional | Boolean flag describing whether a component is archived or not. |
-| `Taxable` | `bool?` | Optional | Boolean flag describing whether a component is taxable or not. |
 | `Description` | `string` | Optional | The description of the component. |
 | `DefaultPricePointId` | `int?` | Optional | - |
 | `OveragePrices` | [`List<ComponentPrice>`](../../doc/models/component-price.md) | Optional | Applicable only to prepaid usage components. An array of overage price brackets. |
@@ -29,7 +28,8 @@
 | `PricePointCount` | `int?` | Optional | Count for the number of price points associated with the component |
 | `PricePointsUrl` | `string` | Optional | URL that points to the location to read the existing price points via GET request |
 | `DefaultPricePointName` | `string` | Optional | - |
-| `TaxCode` | `string` | Optional | A string representing the tax code related to the component type. This is especially important when using the Avalara service to tax based on locale. This attribute has a max length of 10 characters. |
+| `Taxable` | `bool?` | Optional | Boolean flag describing whether a component is taxable or not. |
+| `TaxCode` | `string` | Optional | A string representing the tax code related to the component type. This is especially important when using AvaTax to tax based on locale. This attribute has a max length of 25 characters. |
 | `Recurring` | `bool?` | Optional | - |
 | `UpgradeCharge` | [`CreditType?`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.<br>Available values: `full`, `prorated`, `none`. |
 | `DowngradeCredit` | [`CreditType?`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.<br>Available values: `full`, `prorated`, `none`. |

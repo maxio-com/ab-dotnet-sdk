@@ -130,5 +130,17 @@ namespace AdvancedBilling.Standard.Authentication
                 };
             }
         }
+
+        internal static BasicAuthModel FromOptions(BasicAuthModelOptions options)
+        {
+            var builder = new Builder(options.Username, options.Password);
+            return builder.Build();
+        }
+    }
+
+    public class BasicAuthModelOptions
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }

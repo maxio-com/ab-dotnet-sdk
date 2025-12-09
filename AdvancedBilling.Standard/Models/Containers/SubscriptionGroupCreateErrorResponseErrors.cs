@@ -15,7 +15,7 @@ namespace AdvancedBilling.Standard.Models.Containers
     /// </summary>
     [JsonConverter(
         typeof(UnionTypeConverter<SubscriptionGroupCreateErrorResponseErrors>),
-        new Type[] {
+        new[] {
             typeof(SubscriptionGroupMembersArrayErrorCase),
             typeof(SubscriptionGroupSingleErrorCase),
             typeof(MStringCase)
@@ -70,114 +70,123 @@ namespace AdvancedBilling.Standard.Models.Containers
             Func<SubscriptionGroupSingleError, T> subscriptionGroupSingleError,
             Func<string, T> mString);
 
+        /// <summary>
+        /// Method to match from the provided one-of cases. The parameters represent
+        /// optional callback functions for one-of type cases. You may provide only
+        /// the callbacks you are interested in; others can be left as <c>null</c>. All
+        /// callback functions must have the same return type T. This typeparam T
+        /// represents the type that will be returned after applying the selected
+        /// callback function, or the default value if no callback is provided for the matched case.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public T MatchSome<T>(
+            Func<SubscriptionGroupMembersArrayError, T> subscriptionGroupMembersArrayError = null,
+            Func<SubscriptionGroupSingleError, T> subscriptionGroupSingleError = null,
+            Func<string, T> mString = null) =>
+                Match(subscriptionGroupMembersArrayError, subscriptionGroupSingleError, mString);
+
         [JsonConverter(typeof(UnionTypeCaseConverter<SubscriptionGroupMembersArrayErrorCase, SubscriptionGroupMembersArrayError>))]
         private sealed class SubscriptionGroupMembersArrayErrorCase : SubscriptionGroupCreateErrorResponseErrors, ICaseValue<SubscriptionGroupMembersArrayErrorCase, SubscriptionGroupMembersArrayError>
         {
-            public SubscriptionGroupMembersArrayError _value;
+            public SubscriptionGroupMembersArrayError Value;
 
             public override T Match<T>(
                 Func<SubscriptionGroupMembersArrayError, T> subscriptionGroupMembersArrayError,
                 Func<SubscriptionGroupSingleError, T> subscriptionGroupSingleError,
-                Func<string, T> mString)
-            {
-                return subscriptionGroupMembersArrayError(_value);
-            }
+                Func<string, T> mString) =>
+                   subscriptionGroupMembersArrayError != null ? subscriptionGroupMembersArrayError(Value) : default;
 
             public SubscriptionGroupMembersArrayErrorCase Set(SubscriptionGroupMembersArrayError value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public SubscriptionGroupMembersArrayError Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is SubscriptionGroupMembersArrayErrorCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<SubscriptionGroupSingleErrorCase, SubscriptionGroupSingleError>))]
         private sealed class SubscriptionGroupSingleErrorCase : SubscriptionGroupCreateErrorResponseErrors, ICaseValue<SubscriptionGroupSingleErrorCase, SubscriptionGroupSingleError>
         {
-            public SubscriptionGroupSingleError _value;
+            public SubscriptionGroupSingleError Value;
 
             public override T Match<T>(
                 Func<SubscriptionGroupMembersArrayError, T> subscriptionGroupMembersArrayError,
                 Func<SubscriptionGroupSingleError, T> subscriptionGroupSingleError,
-                Func<string, T> mString)
-            {
-                return subscriptionGroupSingleError(_value);
-            }
+                Func<string, T> mString) =>
+                   subscriptionGroupSingleError != null ? subscriptionGroupSingleError(Value) : default;
 
             public SubscriptionGroupSingleErrorCase Set(SubscriptionGroupSingleError value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public SubscriptionGroupSingleError Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is SubscriptionGroupSingleErrorCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<MStringCase, string>), JTokenType.String, JTokenType.Null)]
         private sealed class MStringCase : SubscriptionGroupCreateErrorResponseErrors, ICaseValue<MStringCase, string>
         {
-            public string _value;
+            public string Value;
 
             public override T Match<T>(
                 Func<SubscriptionGroupMembersArrayError, T> subscriptionGroupMembersArrayError,
                 Func<SubscriptionGroupSingleError, T> subscriptionGroupSingleError,
-                Func<string, T> mString)
-            {
-                return mString(_value);
-            }
+                Func<string, T> mString) =>
+                   mString != null ? mString(Value) : default;
 
             public MStringCase Set(string value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public string Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is MStringCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
     }

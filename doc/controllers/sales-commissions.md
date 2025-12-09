@@ -23,7 +23,7 @@ Endpoint returns subscriptions with associated sales reps
 
 The Sales Commission API differs from other Chargify API endpoints. This resource is associated with the seller itself. Up to now all available resources were at the level of the site, therefore creating the API Key per site was a sufficient solution. To share resources at the seller level, a new authentication method was introduced, which is user authentication. Creating an API Key for a user is a required step to correctly use the Sales Commission API, more details [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication).
 
-Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Maxio support.
+Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics contact Maxio support.
 
 > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`
 
@@ -53,7 +53,7 @@ ListSalesCommissionSettingsInput listSalesCommissionSettingsInput = new ListSale
 {
     SellerId = "seller_id8",
     Authorization = "Bearer <<apiKey>>",
-    Page = 2,
+    Page = 1,
     PerPage = 100,
 };
 
@@ -111,7 +111,7 @@ Endpoint returns sales rep list with details
 
 The Sales Commission API differs from other Chargify API endpoints. This resource is associated with the seller itself. Up to now all available resources were at the level of the site, therefore creating the API Key per site was a sufficient solution. To share resources at the seller level, a new authentication method was introduced, which is user authentication. Creating an API Key for a user is a required step to correctly use the Sales Commission API, more details [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication).
 
-Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Maxio support.
+Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics contact Maxio support.
 
 > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`
 
@@ -141,7 +141,7 @@ ListSalesRepsInput listSalesRepsInput = new ListSalesRepsInput
 {
     SellerId = "seller_id8",
     Authorization = "Bearer <<apiKey>>",
-    Page = 2,
+    Page = 1,
     PerPage = 100,
 };
 
@@ -248,7 +248,7 @@ Endpoint returns sales rep and attached subscriptions details.
 
 The Sales Commission API differs from other Chargify API endpoints. This resource is associated with the seller itself. Up to now all available resources were at the level of the site, therefore creating the API Key per site was a sufficient solution. To share resources at the seller level, a new authentication method was introduced, which is user authentication. Creating an API Key for a user is a required step to correctly use the Sales Commission API, more details [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication).
 
-Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics please contact Maxio support.
+Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics contact Maxio support.
 
 > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`
 
@@ -283,7 +283,7 @@ ReadSalesRepAsync(
 string sellerId = "seller_id8";
 string salesRepId = "sales_rep_id4";
 string authorization = "Bearer <<apiKey>>";
-int? page = 2;
+int? page = 1;
 int? perPage = 100;
 try
 {

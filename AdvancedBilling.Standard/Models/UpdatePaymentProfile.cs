@@ -153,7 +153,7 @@ namespace AdvancedBilling.Standard.Models
         public string BillingZip { get; set; }
 
         /// <summary>
-        /// The credit card or bank account billing address country, required in [ISO_3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format (i.e. “US”). This value is merely passed through to the payment gateway. Some gateways require country codes in a specific format. Please check your gateway’s documentation. If creating an ACH subscription, only US is supported at this time.
+        /// The credit card or bank account billing address country, required in [ISO_3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format (i.e. “US”). This value is merely passed through to the payment gateway. Some gateways require country codes in a specific format. Check your gateway’s documentation. If creating an ACH subscription, only US is supported at this time.
         /// </summary>
         [JsonProperty("billing_country", NullValueHandling = NullValueHandling.Ignore)]
         public string BillingCountry { get; set; }

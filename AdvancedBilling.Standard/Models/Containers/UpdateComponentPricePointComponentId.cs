@@ -15,7 +15,7 @@ namespace AdvancedBilling.Standard.Models.Containers
     /// </summary>
     [JsonConverter(
         typeof(UnionTypeConverter<UpdateComponentPricePointComponentId>),
-        new Type[] {
+        new[] {
             typeof(NumberCase),
             typeof(MStringCase)
         },
@@ -55,71 +55,79 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// <typeparam name="T"></typeparam>
         public abstract T Match<T>(Func<int, T> number, Func<string, T> mString);
 
+        /// <summary>
+        /// Method to match from the provided one-of cases. The parameters represent
+        /// optional callback functions for one-of type cases. You may provide only
+        /// the callbacks you are interested in; others can be left as <c>null</c>. All
+        /// callback functions must have the same return type T. This typeparam T
+        /// represents the type that will be returned after applying the selected
+        /// callback function, or the default value if no callback is provided for the matched case.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public T MatchSome<T>(Func<int, T> number = null, Func<string, T> mString = null) =>
+                Match(number, mString);
+
         [JsonConverter(typeof(UnionTypeCaseConverter<NumberCase, int>), JTokenType.Integer)]
         private sealed class NumberCase : UpdateComponentPricePointComponentId, ICaseValue<NumberCase, int>
         {
-            public int _value;
+            public int Value;
 
-            public override T Match<T>(Func<int, T> number, Func<string, T> mString)
-            {
-                return number(_value);
-            }
+            public override T Match<T>(Func<int, T> number, Func<string, T> mString) =>
+                   number != null ? number(Value) : default;
 
             public NumberCase Set(int value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public int Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value.ToString();
+                return Value.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is NumberCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value.Equals(other._value);
+                return Value == null ? other.Value == null : Value.Equals(other.Value); 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<MStringCase, string>), JTokenType.String, JTokenType.Null)]
         private sealed class MStringCase : UpdateComponentPricePointComponentId, ICaseValue<MStringCase, string>
         {
-            public string _value;
+            public string Value;
 
-            public override T Match<T>(Func<int, T> number, Func<string, T> mString)
-            {
-                return mString(_value);
-            }
+            public override T Match<T>(Func<int, T> number, Func<string, T> mString) =>
+                   mString != null ? mString(Value) : default;
 
             public MStringCase Set(string value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public string Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is MStringCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
     }

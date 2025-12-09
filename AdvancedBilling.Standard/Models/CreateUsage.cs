@@ -37,16 +37,19 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="pricePointId">price_point_id.</param>
         /// <param name="memo">memo.</param>
         /// <param name="billingSchedule">billing_schedule.</param>
+        /// <param name="customPrice">custom_price.</param>
         public CreateUsage(
             double? quantity = null,
             string pricePointId = null,
             string memo = null,
-            Models.BillingSchedule billingSchedule = null)
+            Models.BillingSchedule billingSchedule = null,
+            Models.ComponentCustomPrice customPrice = null)
         {
             this.Quantity = quantity;
             this.PricePointId = pricePointId;
             this.Memo = memo;
             this.BillingSchedule = billingSchedule;
+            this.CustomPrice = customPrice;
         }
 
         /// <summary>
@@ -68,10 +71,16 @@ namespace AdvancedBilling.Standard.Models
         public string Memo { get; set; }
 
         /// <summary>
-        /// This attribute is particularly useful when you need to align billing events for different components on distinct schedules within a subscription. Please note this only works for site with Multifrequency enabled
+        /// This attribute is particularly useful when you need to align billing events for different components on distinct schedules within a subscription. This only works for site with Multifrequency enabled.
         /// </summary>
         [JsonProperty("billing_schedule", NullValueHandling = NullValueHandling.Ignore)]
         public Models.BillingSchedule BillingSchedule { get; set; }
+
+        /// <summary>
+        /// Create or update custom pricing unique to the subscription. Used in place of `price_point_id`.
+        /// </summary>
+        [JsonProperty("custom_price", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.ComponentCustomPrice CustomPrice { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -96,6 +105,8 @@ namespace AdvancedBilling.Standard.Models
                  this.Memo?.Equals(other.Memo) == true) &&
                 (this.BillingSchedule == null && other.BillingSchedule == null ||
                  this.BillingSchedule?.Equals(other.BillingSchedule) == true) &&
+                (this.CustomPrice == null && other.CustomPrice == null ||
+                 this.CustomPrice?.Equals(other.CustomPrice) == true) &&
                 base.Equals(obj);
         }
 
@@ -109,6 +120,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"PricePointId = {this.PricePointId ?? "null"}");
             toStringOutput.Add($"Memo = {this.Memo ?? "null"}");
             toStringOutput.Add($"BillingSchedule = {(this.BillingSchedule == null ? "null" : this.BillingSchedule.ToString())}");
+            toStringOutput.Add($"CustomPrice = {(this.CustomPrice == null ? "null" : this.CustomPrice.ToString())}");
 
             base.ToString(toStringOutput);
         }

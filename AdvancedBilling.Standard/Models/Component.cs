@@ -83,7 +83,6 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="pricePerUnitInCents">price_per_unit_in_cents.</param>
         /// <param name="kind">kind.</param>
         /// <param name="archived">archived.</param>
-        /// <param name="taxable">taxable.</param>
         /// <param name="description">description.</param>
         /// <param name="defaultPricePointId">default_price_point_id.</param>
         /// <param name="overagePrices">overage_prices.</param>
@@ -91,6 +90,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="pricePointCount">price_point_count.</param>
         /// <param name="pricePointsUrl">price_points_url.</param>
         /// <param name="defaultPricePointName">default_price_point_name.</param>
+        /// <param name="taxable">taxable.</param>
         /// <param name="taxCode">tax_code.</param>
         /// <param name="recurring">recurring.</param>
         /// <param name="upgradeCharge">upgrade_charge.</param>
@@ -119,7 +119,6 @@ namespace AdvancedBilling.Standard.Models
             long? pricePerUnitInCents = null,
             Models.ComponentKind? kind = null,
             bool? archived = null,
-            bool? taxable = null,
             string description = null,
             int? defaultPricePointId = null,
             List<Models.ComponentPrice> overagePrices = null,
@@ -127,6 +126,7 @@ namespace AdvancedBilling.Standard.Models
             int? pricePointCount = null,
             string pricePointsUrl = null,
             string defaultPricePointName = null,
+            bool? taxable = null,
             string taxCode = null,
             bool? recurring = null,
             Models.CreditType? upgradeCharge = null,
@@ -171,7 +171,6 @@ namespace AdvancedBilling.Standard.Models
             }
             this.Kind = kind;
             this.Archived = archived;
-            this.Taxable = taxable;
 
             if (description != null)
             {
@@ -199,6 +198,7 @@ namespace AdvancedBilling.Standard.Models
                 this.PricePointsUrl = pricePointsUrl;
             }
             this.DefaultPricePointName = defaultPricePointName;
+            this.Taxable = taxable;
 
             if (taxCode != null)
             {
@@ -369,12 +369,6 @@ namespace AdvancedBilling.Standard.Models
         public bool? Archived { get; set; }
 
         /// <summary>
-        /// Boolean flag describing whether a component is taxable or not.
-        /// </summary>
-        [JsonProperty("taxable", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? Taxable { get; set; }
-
-        /// <summary>
         /// The description of the component.
         /// </summary>
         [JsonProperty("description")]
@@ -477,7 +471,13 @@ namespace AdvancedBilling.Standard.Models
         public string DefaultPricePointName { get; set; }
 
         /// <summary>
-        /// A string representing the tax code related to the component type. This is especially important when using the Avalara service to tax based on locale. This attribute has a max length of 10 characters.
+        /// Boolean flag describing whether a component is taxable or not.
+        /// </summary>
+        [JsonProperty("taxable", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? Taxable { get; set; }
+
+        /// <summary>
+        /// A string representing the tax code related to the component type. This is especially important when using AvaTax to tax based on locale. This attribute has a max length of 25 characters.
         /// </summary>
         [JsonProperty("tax_code")]
         public string TaxCode
@@ -995,8 +995,6 @@ namespace AdvancedBilling.Standard.Models
                  this.Kind?.Equals(other.Kind) == true) &&
                 (this.Archived == null && other.Archived == null ||
                  this.Archived?.Equals(other.Archived) == true) &&
-                (this.Taxable == null && other.Taxable == null ||
-                 this.Taxable?.Equals(other.Taxable) == true) &&
                 (this.Description == null && other.Description == null ||
                  this.Description?.Equals(other.Description) == true) &&
                 (this.DefaultPricePointId == null && other.DefaultPricePointId == null ||
@@ -1011,6 +1009,8 @@ namespace AdvancedBilling.Standard.Models
                  this.PricePointsUrl?.Equals(other.PricePointsUrl) == true) &&
                 (this.DefaultPricePointName == null && other.DefaultPricePointName == null ||
                  this.DefaultPricePointName?.Equals(other.DefaultPricePointName) == true) &&
+                (this.Taxable == null && other.Taxable == null ||
+                 this.Taxable?.Equals(other.Taxable) == true) &&
                 (this.TaxCode == null && other.TaxCode == null ||
                  this.TaxCode?.Equals(other.TaxCode) == true) &&
                 (this.Recurring == null && other.Recurring == null ||
@@ -1062,7 +1062,6 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"PricePerUnitInCents = {(this.PricePerUnitInCents == null ? "null" : this.PricePerUnitInCents.ToString())}");
             toStringOutput.Add($"Kind = {(this.Kind == null ? "null" : this.Kind.ToString())}");
             toStringOutput.Add($"Archived = {(this.Archived == null ? "null" : this.Archived.ToString())}");
-            toStringOutput.Add($"Taxable = {(this.Taxable == null ? "null" : this.Taxable.ToString())}");
             toStringOutput.Add($"Description = {this.Description ?? "null"}");
             toStringOutput.Add($"DefaultPricePointId = {(this.DefaultPricePointId == null ? "null" : this.DefaultPricePointId.ToString())}");
             toStringOutput.Add($"OveragePrices = {(this.OveragePrices == null ? "null" : $"[{string.Join(", ", this.OveragePrices)} ]")}");
@@ -1070,6 +1069,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"PricePointCount = {(this.PricePointCount == null ? "null" : this.PricePointCount.ToString())}");
             toStringOutput.Add($"PricePointsUrl = {this.PricePointsUrl ?? "null"}");
             toStringOutput.Add($"DefaultPricePointName = {this.DefaultPricePointName ?? "null"}");
+            toStringOutput.Add($"Taxable = {(this.Taxable == null ? "null" : this.Taxable.ToString())}");
             toStringOutput.Add($"TaxCode = {this.TaxCode ?? "null"}");
             toStringOutput.Add($"Recurring = {(this.Recurring == null ? "null" : this.Recurring.ToString())}");
             toStringOutput.Add($"UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");

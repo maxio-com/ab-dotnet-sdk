@@ -14,7 +14,7 @@ namespace AdvancedBilling.Standard.Models.Containers
     /// </summary>
     [JsonConverter(
         typeof(UnionTypeConverter<RefundInvoiceRequestRefund>),
-        new Type[] {
+        new[] {
             typeof(RefundInvoiceCase),
             typeof(RefundConsolidatedInvoiceCase)
         },
@@ -54,71 +54,79 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// <typeparam name="T"></typeparam>
         public abstract T Match<T>(Func<RefundInvoice, T> refundInvoice, Func<RefundConsolidatedInvoice, T> refundConsolidatedInvoice);
 
+        /// <summary>
+        /// Method to match from the provided any-of cases. The parameters represent
+        /// optional callback functions for any-of type cases. You may provide only
+        /// the callbacks you are interested in; others can be left as <c>null</c>. All
+        /// callback functions must have the same return type T. This typeparam T
+        /// represents the type that will be returned after applying the selected
+        /// callback function, or the default value if no callback is provided for the matched case.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public T MatchSome<T>(Func<RefundInvoice, T> refundInvoice = null, Func<RefundConsolidatedInvoice, T> refundConsolidatedInvoice = null) =>
+                Match(refundInvoice, refundConsolidatedInvoice);
+
         [JsonConverter(typeof(UnionTypeCaseConverter<RefundInvoiceCase, RefundInvoice>))]
         private sealed class RefundInvoiceCase : RefundInvoiceRequestRefund, ICaseValue<RefundInvoiceCase, RefundInvoice>
         {
-            public RefundInvoice _value;
+            public RefundInvoice Value;
 
-            public override T Match<T>(Func<RefundInvoice, T> refundInvoice, Func<RefundConsolidatedInvoice, T> refundConsolidatedInvoice)
-            {
-                return refundInvoice(_value);
-            }
+            public override T Match<T>(Func<RefundInvoice, T> refundInvoice, Func<RefundConsolidatedInvoice, T> refundConsolidatedInvoice) =>
+                   refundInvoice != null ? refundInvoice(Value) : default;
 
             public RefundInvoiceCase Set(RefundInvoice value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public RefundInvoice Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is RefundInvoiceCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<RefundConsolidatedInvoiceCase, RefundConsolidatedInvoice>))]
         private sealed class RefundConsolidatedInvoiceCase : RefundInvoiceRequestRefund, ICaseValue<RefundConsolidatedInvoiceCase, RefundConsolidatedInvoice>
         {
-            public RefundConsolidatedInvoice _value;
+            public RefundConsolidatedInvoice Value;
 
-            public override T Match<T>(Func<RefundInvoice, T> refundInvoice, Func<RefundConsolidatedInvoice, T> refundConsolidatedInvoice)
-            {
-                return refundConsolidatedInvoice(_value);
-            }
+            public override T Match<T>(Func<RefundInvoice, T> refundInvoice, Func<RefundConsolidatedInvoice, T> refundConsolidatedInvoice) =>
+                   refundConsolidatedInvoice != null ? refundConsolidatedInvoice(Value) : default;
 
             public RefundConsolidatedInvoiceCase Set(RefundConsolidatedInvoice value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public RefundConsolidatedInvoice Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is RefundConsolidatedInvoiceCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
     }

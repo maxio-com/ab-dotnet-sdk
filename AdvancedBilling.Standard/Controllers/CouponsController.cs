@@ -38,8 +38,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// <![CDATA[
         /// ## Coupons Documentation.
-        /// Coupons can be administered in the Advanced Billing application or created via API. Please view our section on [creating coupons](https://maxio.zendesk.com/hc/en-us/articles/24261212433165-Creating-Editing-Deleting-Coupons) for more information.
-        /// Additionally, for documentation on how to apply a coupon to a subscription within the Advanced Billing UI, please see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261259337101-Coupons-and-Subscriptions).
+        /// Coupons can be administered in the Advanced Billing application or created via API. View our section on [creating coupons](https://maxio.zendesk.com/hc/en-us/articles/24261212433165-Creating-Editing-Deleting-Coupons) for more information.
+        /// Additionally, for documentation on how to apply a coupon to a subscription within the Advanced Billing UI, see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261259337101-Coupons-and-Subscriptions).
         /// ## Create Coupon.
         /// This request will create a coupon, based on the provided information.
         /// You can create either a flat amount coupon, by specyfing `amount_in_cents`, or percentage coupon by specyfing `percentage`.
@@ -58,8 +58,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// <![CDATA[
         /// ## Coupons Documentation.
-        /// Coupons can be administered in the Advanced Billing application or created via API. Please view our section on [creating coupons](https://maxio.zendesk.com/hc/en-us/articles/24261212433165-Creating-Editing-Deleting-Coupons) for more information.
-        /// Additionally, for documentation on how to apply a coupon to a subscription within the Advanced Billing UI, please see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261259337101-Coupons-and-Subscriptions).
+        /// Coupons can be administered in the Advanced Billing application or created via API. View our section on [creating coupons](https://maxio.zendesk.com/hc/en-us/articles/24261212433165-Creating-Editing-Deleting-Coupons) for more information.
+        /// Additionally, for documentation on how to apply a coupon to a subscription within the Advanced Billing UI, see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261259337101-Coupons-and-Subscriptions).
         /// ## Create Coupon.
         /// This request will create a coupon, based on the provided information.
         /// You can create either a flat amount coupon, by specyfing `amount_in_cents`, or percentage coupon by specyfing `percentage`.
@@ -89,7 +89,6 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// List coupons for a specific Product Family in a Site.
-        /// If the coupon is set to `use_site_exchange_rate: true`, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the List of Models.CouponResponse response from the API call.</returns>
@@ -99,7 +98,6 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// List coupons for a specific Product Family in a Site.
-        /// If the coupon is set to `use_site_exchange_rate: true`, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -285,7 +283,6 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// You can retrieve a list of coupons.
-        /// If the coupon is set to `use_site_exchange_rate: true`, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the List of Models.CouponResponse response from the API call.</returns>
@@ -295,7 +292,6 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// You can retrieve a list of coupons.
-        /// If the coupon is set to `use_site_exchange_rate: true`, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -317,8 +313,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// This request will provide details about the coupon usage as an array of data hashes, one per product.
         /// </summary>
-        /// <param name="productFamilyId">Required parameter: The Advanced Billing id of the product family to which the coupon belongs.</param>
-        /// <param name="couponId">Required parameter: The Advanced Billing id of the coupon.</param>
+        /// <param name="productFamilyId">Required parameter: The Advanced Billing id of the product family to which the coupon belongs..</param>
+        /// <param name="couponId">Required parameter: The Advanced Billing id of the coupon..</param>
         /// <returns>Returns the List of Models.CouponUsage response from the API call.</returns>
         public List<Models.CouponUsage> ReadCouponUsage(
                 int productFamilyId,
@@ -328,8 +324,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// This request will provide details about the coupon usage as an array of data hashes, one per product.
         /// </summary>
-        /// <param name="productFamilyId">Required parameter: The Advanced Billing id of the product family to which the coupon belongs.</param>
-        /// <param name="couponId">Required parameter: The Advanced Billing id of the coupon.</param>
+        /// <param name="productFamilyId">Required parameter: The Advanced Billing id of the product family to which the coupon belongs..</param>
+        /// <param name="couponId">Required parameter: The Advanced Billing id of the coupon..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the List of Models.CouponUsage response from the API call.</returns>
         public async Task<List<Models.CouponUsage>> ReadCouponUsageAsync(
@@ -459,7 +455,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// When creating a coupon subcode, you must specify a coupon to attach it to using the coupon_id. Valid coupon subcodes are all capital letters, contain only letters and numbers, and do not have any spaces. Lowercase letters will be capitalized before the subcode is created.
         /// ## Coupon Subcodes Documentation.
         /// Full documentation on how to create coupon subcodes in the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24261208729229-Coupon-Codes).
-        /// Additionally, for documentation on how to apply a coupon to a Subscription within the Advanced Billing UI, please see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261259337101-Coupons-and-Subscriptions).
+        /// Additionally, for documentation on how to apply a coupon to a Subscription within the Advanced Billing UI, see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261259337101-Coupons-and-Subscriptions).
         /// ## Create Coupon Subcode.
         /// This request allows you to create specific subcodes underneath an existing coupon code.
         /// *Note*: If you are using any of the allowed special characters ("%", "@", "+", "-", "_", and "."), you must encode them for use in the URL.
@@ -495,7 +491,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// When creating a coupon subcode, you must specify a coupon to attach it to using the coupon_id. Valid coupon subcodes are all capital letters, contain only letters and numbers, and do not have any spaces. Lowercase letters will be capitalized before the subcode is created.
         /// ## Coupon Subcodes Documentation.
         /// Full documentation on how to create coupon subcodes in the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24261208729229-Coupon-Codes).
-        /// Additionally, for documentation on how to apply a coupon to a Subscription within the Advanced Billing UI, please see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261259337101-Coupons-and-Subscriptions).
+        /// Additionally, for documentation on how to apply a coupon to a Subscription within the Advanced Billing UI, see our documentation [here](https://maxio.zendesk.com/hc/en-us/articles/24261259337101-Coupons-and-Subscriptions).
         /// ## Create Coupon Subcode.
         /// This request allows you to create specific subcodes underneath an existing coupon code.
         /// *Note*: If you are using any of the allowed special characters ("%", "@", "+", "-", "_", and "."), you must encode them for use in the URL.

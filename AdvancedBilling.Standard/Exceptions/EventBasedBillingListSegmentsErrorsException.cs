@@ -57,6 +57,7 @@ namespace AdvancedBilling.Standard.Exceptions
         {
             base.ToString(toStringOutput);
             toStringOutput.Add($"Errors = {(this.Errors == null ? "null" : this.Errors.ToString())}");
+            toStringOutput.Add($"StackTrace = {(StackTrace != null ? $"\n{StackTrace}" : "null")}");
         }
     }
 }

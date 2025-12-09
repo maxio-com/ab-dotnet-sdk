@@ -15,9 +15,9 @@ namespace AdvancedBilling.Standard.Models.Containers
     /// </summary>
     [JsonConverter(
         typeof(UnionTypeConverter<CalendarBillingSnapDay>),
-        new Type[] {
+        new[] {
             typeof(NumberCase),
-            typeof(MStringCase)
+            typeof(SnapDayCase)
         },
         true
     )]
@@ -35,14 +35,14 @@ namespace AdvancedBilling.Standard.Models.Containers
         }
 
         /// <summary>
-        /// This is String case.
+        /// This is SnapDay case.
         /// </summary>
         /// <returns>
-        /// The CalendarBillingSnapDay instance, wrapping the provided string value.
+        /// The CalendarBillingSnapDay instance, wrapping the provided SnapDay value.
         /// </returns>
-        public static CalendarBillingSnapDay FromString(string mString)
+        public static CalendarBillingSnapDay FromSnapDay(SnapDay snapDay)
         {
-            return new MStringCase().Set(mString);
+            return new SnapDayCase().Set(snapDay);
         }
 
         /// <summary>
@@ -53,73 +53,81 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// callback function.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public abstract T Match<T>(Func<int, T> number, Func<string, T> mString);
+        public abstract T Match<T>(Func<int, T> number, Func<SnapDay, T> snapDay);
+
+        /// <summary>
+        /// Method to match from the provided one-of cases. The parameters represent
+        /// optional callback functions for one-of type cases. You may provide only
+        /// the callbacks you are interested in; others can be left as <c>null</c>. All
+        /// callback functions must have the same return type T. This typeparam T
+        /// represents the type that will be returned after applying the selected
+        /// callback function, or the default value if no callback is provided for the matched case.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public T MatchSome<T>(Func<int, T> number = null, Func<SnapDay, T> snapDay = null) =>
+                Match(number, snapDay);
 
         [JsonConverter(typeof(UnionTypeCaseConverter<NumberCase, int>), JTokenType.Integer)]
         private sealed class NumberCase : CalendarBillingSnapDay, ICaseValue<NumberCase, int>
         {
-            public int _value;
+            public int Value;
 
-            public override T Match<T>(Func<int, T> number, Func<string, T> mString)
-            {
-                return number(_value);
-            }
+            public override T Match<T>(Func<int, T> number, Func<SnapDay, T> snapDay) =>
+                   number != null ? number(Value) : default;
 
             public NumberCase Set(int value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
             public int Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value.ToString();
+                return Value.ToString();
             }
 
             public override bool Equals(object obj)
             {
                 if (!(obj is NumberCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value.Equals(other._value);
+                return Value == null ? other.Value == null : Value.Equals(other.Value); 
             }
         }
 
-        [JsonConverter(typeof(UnionTypeCaseConverter<MStringCase, string>), JTokenType.String, JTokenType.Null)]
-        private sealed class MStringCase : CalendarBillingSnapDay, ICaseValue<MStringCase, string>
+        [JsonConverter(typeof(UnionTypeCaseConverter<SnapDayCase, SnapDay>))]
+        private sealed class SnapDayCase : CalendarBillingSnapDay, ICaseValue<SnapDayCase, SnapDay>
         {
-            public string _value;
+            public SnapDay Value;
 
-            public override T Match<T>(Func<int, T> number, Func<string, T> mString)
-            {
-                return mString(_value);
-            }
+            public override T Match<T>(Func<int, T> number, Func<SnapDay, T> snapDay) =>
+                   snapDay != null ? snapDay(Value) : default;
 
-            public MStringCase Set(string value)
+            public SnapDayCase Set(SnapDay value)
             {
-                _value = value;
+                Value = value;
                 return this;
             }
 
-            public string Get()
+            public SnapDay Get()
             {
-                return _value;
+                return Value;
             }
 
             public override string ToString()
             {
-                return _value?.ToString();
+                return Value.ToString();
             }
 
             public override bool Equals(object obj)
             {
-                if (!(obj is MStringCase other)) return false;
+                if (!(obj is SnapDayCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return _value == null ? other._value == null : _value?.Equals(other._value) == true;
+                return Value == null ? other.Value == null : Value.Equals(other.Value); 
             }
         }
     }

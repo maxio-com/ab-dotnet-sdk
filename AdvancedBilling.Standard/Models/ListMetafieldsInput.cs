@@ -53,13 +53,13 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// the resource type to which the metafields belong
+        /// The resource type to which the metafields belong.
         /// </summary>
         [JsonProperty("resource_type")]
         public Models.ResourceType ResourceType { get; set; }
 
         /// <summary>
-        /// filter by the name of the metafield
+        /// Filter by the name of the metafield.
         /// </summary>
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }

@@ -62,7 +62,7 @@ In order to specify a prepayment made against a subscription, specify the `amoun
 
 When the `method` specified is `"credit_card_on_file"`, the prepayment amount will be collected using the default credit card payment profile and applied to the prepayment account balance.  This is especially useful for manual replenishment of prepaid subscriptions.
 
-Please note that you **can't** pass `amount_in_cents`.
+Note that passing `amount_in_cents` is now allowed.
 
 ```csharp
 CreatePrepaymentAsync(
@@ -161,7 +161,7 @@ ListPrepaymentsAsync(
 ListPrepaymentsInput listPrepaymentsInput = new ListPrepaymentsInput
 {
     SubscriptionId = 222,
-    Page = 2,
+    Page = 1,
     PerPage = 50,
     Filter = new ListPrepaymentsFilter
     {
@@ -360,7 +360,7 @@ ListServiceCreditsAsync(
 
 ```csharp
 int subscriptionId = 222;
-int? page = 2;
+int? page = 1;
 int? perPage = 50;
 try
 {

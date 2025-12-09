@@ -18,7 +18,7 @@ ProductFamiliesController productFamiliesController = client.ProductFamiliesCont
 
 # List Products for Product Family
 
-This method allows to retrieve a list of Products belonging to a Product Family.
+Retrieves a list of Products belonging to a Product Family.
 
 ```csharp
 ListProductsForProductFamilyAsync(
@@ -51,7 +51,7 @@ ListProductsForProductFamilyAsync(
 ListProductsForProductFamilyInput listProductsForProductFamilyInput = new ListProductsForProductFamilyInput
 {
     ProductFamilyId = "product_family_id4",
-    Page = 2,
+    Page = 1,
     PerPage = 50,
     DateField = BasicDateField.UpdatedAt,
     Filter = new ListProductsFilter
@@ -185,7 +185,7 @@ catch (ApiException e)
 
 # Create Product Family
 
-This method will create a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components and coupons.
+Creates a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components and coupons.
 
 Full documentation on how Product Families operate within the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24261098936205-Product-Families).
 
@@ -250,7 +250,7 @@ catch (ApiException e)
 
 # List Product Families
 
-This method allows to retrieve a list of Product Families for a site.
+Retrieve a list of Product Families for a site.
 
 ```csharp
 ListProductFamiliesAsync(
@@ -322,7 +322,7 @@ catch (ApiException e)
 
 # Read Product Family
 
-This method allows to retrieve a Product Family via the `product_family_id`. The response will contain a Product Family object.
+Retrieves a Product Family via the `product_family_id`. The response will contain a Product Family object.
 
 The product family can be specified either with the id number, or with the `handle:my-family` format.
 

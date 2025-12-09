@@ -145,7 +145,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Token received after sending billing informations using chargify.js.
+        /// Token received after sending billing information using chargify.js.
         /// </summary>
         [JsonProperty("chargify_token", NullValueHandling = NullValueHandling.Ignore)]
         public string ChargifyToken { get; set; }
@@ -241,7 +241,7 @@ namespace AdvancedBilling.Standard.Models
         public string BillingState { get; set; }
 
         /// <summary>
-        /// The credit card or bank account billing address country, required in [ISO_3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format (i.e. “US”). This value is merely passed through to the payment gateway. Some gateways require country codes in a specific format. Please check your gateway’s documentation. If creating an ACH subscription, only US is supported at this time.
+        /// The credit card or bank account billing address country, required in [ISO_3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format (i.e. “US”). This value is merely passed through to the payment gateway. Some gateways require country codes in a specific format. Check your gateway’s documentation. If creating an ACH subscription, only US is supported at this time.
         /// </summary>
         [JsonProperty("billing_country", NullValueHandling = NullValueHandling.Ignore)]
         public string BillingCountry { get; set; }

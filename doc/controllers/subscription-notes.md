@@ -107,7 +107,7 @@ ListSubscriptionNotesAsync(
 ListSubscriptionNotesInput listSubscriptionNotesInput = new ListSubscriptionNotesInput
 {
     SubscriptionId = 222,
-    Page = 2,
+    Page = 1,
     PerPage = 50,
 };
 

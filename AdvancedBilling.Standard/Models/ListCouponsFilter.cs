@@ -41,6 +41,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="ids">ids.</param>
         /// <param name="codes">codes.</param>
         /// <param name="useSiteExchangeRate">use_site_exchange_rate.</param>
+        /// <param name="includeArchived">include_archived.</param>
         public ListCouponsFilter(
             Models.BasicDateField? dateField = null,
             DateTime? startDate = null,
@@ -49,7 +50,8 @@ namespace AdvancedBilling.Standard.Models
             DateTimeOffset? endDatetime = null,
             List<int> ids = null,
             List<string> codes = null,
-            bool? useSiteExchangeRate = null)
+            bool? useSiteExchangeRate = null,
+            bool? includeArchived = null)
         {
             this.DateField = dateField;
             this.StartDate = startDate;
@@ -59,6 +61,7 @@ namespace AdvancedBilling.Standard.Models
             this.Ids = ids;
             this.Codes = codes;
             this.UseSiteExchangeRate = useSiteExchangeRate;
+            this.IncludeArchived = includeArchived;
         }
 
         /// <summary>
@@ -108,10 +111,16 @@ namespace AdvancedBilling.Standard.Models
         public List<string> Codes { get; set; }
 
         /// <summary>
-        /// Allows fetching coupons with matching use_site_exchange_rate based on provided value. Use in query `filter[use_site_exchange_rate]=true`.
+        /// If true, restricts the list to coupons whose pricing is recalculated from the site’s current exchange rates, so their currency_prices array contains on-the-fly conversions rather than stored price records. If false, restricts the list to coupons that have manually defined amounts for each currency, ensuring the response includes the saved currency_prices entries instead of exchange-rate-derived values. Use in query `filter[use_site_exchange_rate]=true`.
         /// </summary>
         [JsonProperty("use_site_exchange_rate", NullValueHandling = NullValueHandling.Ignore)]
         public bool? UseSiteExchangeRate { get; set; }
+
+        /// <summary>
+        /// Controls returning archived coupons.
+        /// </summary>
+        [JsonProperty("include_archived", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? IncludeArchived { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -144,6 +153,8 @@ namespace AdvancedBilling.Standard.Models
                  this.Codes?.Equals(other.Codes) == true) &&
                 (this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null ||
                  this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true) &&
+                (this.IncludeArchived == null && other.IncludeArchived == null ||
+                 this.IncludeArchived?.Equals(other.IncludeArchived) == true) &&
                 base.Equals(obj);
         }
 
@@ -161,6 +172,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Ids = {(this.Ids == null ? "null" : $"[{string.Join(", ", this.Ids)} ]")}");
             toStringOutput.Add($"Codes = {(this.Codes == null ? "null" : $"[{string.Join(", ", this.Codes)} ]")}");
             toStringOutput.Add($"UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
+            toStringOutput.Add($"IncludeArchived = {(this.IncludeArchived == null ? "null" : this.IncludeArchived.ToString())}");
 
             base.ToString(toStringOutput);
         }

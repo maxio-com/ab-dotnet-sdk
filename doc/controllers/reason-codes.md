@@ -106,7 +106,7 @@ ListReasonCodesAsync(
 ```csharp
 ListReasonCodesInput listReasonCodesInput = new ListReasonCodesInput
 {
-    Page = 2,
+    Page = 1,
     PerPage = 50,
 };
 

@@ -24,10 +24,12 @@ namespace AdvancedBilling.Standard.Models
     public class CreateOrUpdateProduct : BaseModel
     {
         private Models.IntervalUnit? trialIntervalUnit;
+        private Models.TrialType? trialType;
         private Models.ExpirationIntervalUnit? expirationIntervalUnit;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "trial_interval_unit", false },
+            { "trial_type", false },
             { "expiration_interval_unit", false },
         };
 
@@ -69,7 +71,7 @@ namespace AdvancedBilling.Standard.Models
             long? trialPriceInCents = null,
             int? trialInterval = null,
             Models.IntervalUnit? trialIntervalUnit = null,
-            string trialType = null,
+            Models.TrialType? trialType = null,
             int? expirationInterval = null,
             Models.ExpirationIntervalUnit? expirationIntervalUnit = null,
             bool? autoCreateSignupPage = null,
@@ -90,7 +92,11 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.TrialIntervalUnit = trialIntervalUnit;
             }
-            this.TrialType = trialType;
+
+            if (trialType != null)
+            {
+                this.TrialType = trialType;
+            }
             this.ExpirationInterval = expirationInterval;
 
             if (expirationIntervalUnit != null)
@@ -126,7 +132,7 @@ namespace AdvancedBilling.Standard.Models
         public string AccountingCode { get; set; }
 
         /// <summary>
-        /// Deprecated value that can be ignored unless you have legacy hosted pages. For Public Signup Page users, please read this attribute from under the signup page.
+        /// Deprecated value that can be ignored unless you have legacy hosted pages. For Public Signup Page users, read this attribute from under the signup page.
         /// </summary>
         [JsonProperty("require_credit_card", NullValueHandling = NullValueHandling.Ignore)]
         public bool? RequireCreditCard { get; set; }
@@ -180,10 +186,22 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Gets or sets TrialType.
+        /// Indicates how a trial is handled when the trail period ends and there is no credit card on file. For `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will send normal dunning emails and statements according to your other settings.
         /// </summary>
-        [JsonProperty("trial_type", NullValueHandling = NullValueHandling.Ignore)]
-        public string TrialType { get; set; }
+        [JsonProperty("trial_type")]
+        public Models.TrialType? TrialType
+        {
+            get
+            {
+                return this.trialType;
+            }
+
+            set
+            {
+                this.shouldSerialize["trial_type"] = true;
+                this.trialType = value;
+            }
+        }
 
         /// <summary>
         /// The numerical expiration interval. i.e. an expiration_interval of ‘30’ coupled with an expiration_interval_unit of day would mean this product would expire after 30 days.
@@ -216,7 +234,7 @@ namespace AdvancedBilling.Standard.Models
         public bool? AutoCreateSignupPage { get; set; }
 
         /// <summary>
-        /// A string representing the tax code related to the product type. This is especially important when using the Avalara service to tax based on locale. This attribute has a max length of 10 characters.
+        /// A string representing the tax code related to the product type. This is especially important when using AvaTax to tax based on locale. This attribute has a max length of 25 characters.
         /// </summary>
         [JsonProperty("tax_code", NullValueHandling = NullValueHandling.Ignore)]
         public string TaxCode { get; set; }
@@ -240,6 +258,14 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
+        public void UnsetTrialType()
+        {
+            this.shouldSerialize["trial_type"] = false;
+        }
+
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
         public void UnsetExpirationIntervalUnit()
         {
             this.shouldSerialize["expiration_interval_unit"] = false;
@@ -252,6 +278,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeTrialIntervalUnit()
         {
             return this.shouldSerialize["trial_interval_unit"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeTrialType()
+        {
+            return this.shouldSerialize["trial_type"];
         }
 
         /// <summary>
@@ -319,7 +354,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"TrialPriceInCents = {(this.TrialPriceInCents == null ? "null" : this.TrialPriceInCents.ToString())}");
             toStringOutput.Add($"TrialInterval = {(this.TrialInterval == null ? "null" : this.TrialInterval.ToString())}");
             toStringOutput.Add($"TrialIntervalUnit = {(this.TrialIntervalUnit == null ? "null" : this.TrialIntervalUnit.ToString())}");
-            toStringOutput.Add($"TrialType = {this.TrialType ?? "null"}");
+            toStringOutput.Add($"TrialType = {(this.TrialType == null ? "null" : this.TrialType.ToString())}");
             toStringOutput.Add($"ExpirationInterval = {(this.ExpirationInterval == null ? "null" : this.ExpirationInterval.ToString())}");
             toStringOutput.Add($"ExpirationIntervalUnit = {(this.ExpirationIntervalUnit == null ? "null" : this.ExpirationIntervalUnit.ToString())}");
             toStringOutput.Add($"AutoCreateSignupPage = {(this.AutoCreateSignupPage == null ? "null" : this.AutoCreateSignupPage.ToString())}");
