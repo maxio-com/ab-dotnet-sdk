@@ -3,18 +3,11 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using APIMatic.Core.Utilities.Converters;
-using AdvancedBilling.Standard;
 using AdvancedBilling.Standard.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
+using System.Collections.Generic;
 
 namespace AdvancedBilling.Standard.Models
 {
@@ -686,7 +679,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["paid_date"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -694,7 +686,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["parent_invoice_id"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -702,7 +693,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["parent_invoice_uid"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -710,7 +700,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["subscription_group_id"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -718,7 +707,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["parent_invoice_number"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>

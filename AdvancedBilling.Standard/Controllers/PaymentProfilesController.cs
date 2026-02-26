@@ -3,25 +3,14 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Exceptions;
-using AdvancedBilling.Standard.Http.Client;
-using AdvancedBilling.Standard.Utilities;
 using APIMatic.Core;
 using APIMatic.Core.Types;
 using APIMatic.Core.Utilities;
-using APIMatic.Core.Utilities.Date.Xml;
-using Newtonsoft.Json.Converters;
+using AdvancedBilling.Standard.Exceptions;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AdvancedBilling.Standard.Controllers
 {
@@ -172,15 +161,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CreatePaymentProfileRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.PaymentProfileResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/payment_profiles.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -202,13 +191,13 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListPaymentProfilesInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<List<Models.PaymentProfileResponse>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/payment_profiles.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("customer_id", input.CustomerId))))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("customer_id", input.CustomerId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -294,13 +283,13 @@ namespace AdvancedBilling.Standard.Controllers
                 int paymentProfileId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.PaymentProfileResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/payment_profiles/{payment_profile_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("payment_profile_id", paymentProfileId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("payment_profile_id", paymentProfileId))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found", (errorReason, context) => new ApiException(errorReason, context))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -372,16 +361,16 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.UpdatePaymentProfileRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.PaymentProfileResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/payment_profiles/{payment_profile_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("payment_profile_id", paymentProfileId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context)))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorStringMapResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("payment_profile_id", paymentProfileId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found", (errorReason, context) => new ApiException(errorReason, context)))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorStringMapResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -404,22 +393,22 @@ namespace AdvancedBilling.Standard.Controllers
                 int paymentProfileId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Delete, "/payment_profiles/{payment_profile_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("payment_profile_id", paymentProfileId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context)))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("payment_profile_id", paymentProfileId))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found", (errorReason, context) => new ApiException(errorReason, context)))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This will delete a payment profile belonging to the customer on the subscription.
+        /// Deletes a payment profile belonging to the customer on the subscription.
         /// + If the customer has multiple subscriptions, the payment profile will be removed from all of them.
         /// + If you delete the default payment profile for a subscription, you will need to specify another payment profile to be the default through the api, or either prompt the user to enter a card in the billing portal or on the self-service page, or visit the Payment Details tab on the subscription in the Admin UI and use the “Add New Credit Card” or “Make Active Payment Method” link, (depending on whether there are other cards present).
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
         public void DeleteSubscriptionsPaymentProfile(
                 int subscriptionId,
@@ -427,11 +416,11 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunVoidTask(DeleteSubscriptionsPaymentProfileAsync(subscriptionId, paymentProfileId));
 
         /// <summary>
-        /// This will delete a payment profile belonging to the customer on the subscription.
+        /// Deletes a payment profile belonging to the customer on the subscription.
         /// + If the customer has multiple subscriptions, the payment profile will be removed from all of them.
         /// + If you delete the default payment profile for a subscription, you will need to specify another payment profile to be the default through the api, or either prompt the user to enter a card in the billing portal or on the self-service page, or visit the Payment Details tab on the subscription in the Admin UI and use the “Add New Credit Card” or “Make Active Payment Method” link, (depending on whether there are other cards present).
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the void response from the API call.</returns>
@@ -440,12 +429,12 @@ namespace AdvancedBilling.Standard.Controllers
                 int paymentProfileId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/payment_profiles/{payment_profile_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("payment_profile_id", paymentProfileId))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Template(template => template.Setup("payment_profile_id", paymentProfileId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -471,20 +460,20 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.BankAccountVerificationRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.BankAccountResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/bank_accounts/{bank_account_id}/verification.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("bank_account_id", bankAccountId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("bank_account_id", bankAccountId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This will delete a Payment Profile belonging to a Subscription Group.
+        /// Deletes a Payment Profile belonging to a Subscription Group.
         /// **Note**: If the Payment Profile belongs to multiple Subscription Groups and/or Subscriptions, it will be removed from all of them.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
@@ -495,7 +484,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunVoidTask(DeleteSubscriptionGroupPaymentProfileAsync(uid, paymentProfileId));
 
         /// <summary>
-        /// This will delete a Payment Profile belonging to a Subscription Group.
+        /// Deletes a Payment Profile belonging to a Subscription Group.
         /// **Note**: If the Payment Profile belongs to multiple Subscription Groups and/or Subscriptions, it will be removed from all of them.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
@@ -507,19 +496,19 @@ namespace AdvancedBilling.Standard.Controllers
                 int paymentProfileId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Delete, "/subscription_groups/{uid}/payment_profiles/{payment_profile_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("uid", uid).Required())
-                      .Template(_template => _template.Setup("payment_profile_id", paymentProfileId))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("uid", uid).Required())
+                      .Template(template => template.Setup("payment_profile_id", paymentProfileId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This will change the default payment profile on the subscription to the existing payment profile with the id specified.
         /// You must elect to change the existing payment profile to a new payment profile ID in order to receive a satisfactory response from this endpoint.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
         /// <returns>Returns the Models.PaymentProfileResponse response from the API call.</returns>
         public Models.PaymentProfileResponse ChangeSubscriptionDefaultPaymentProfile(
@@ -531,7 +520,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// This will change the default payment profile on the subscription to the existing payment profile with the id specified.
         /// You must elect to change the existing payment profile to a new payment profile ID in order to receive a satisfactory response from this endpoint.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="paymentProfileId">Required parameter: The Chargify id of the payment profile.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.PaymentProfileResponse response from the API call.</returns>
@@ -540,15 +529,15 @@ namespace AdvancedBilling.Standard.Controllers
                 int paymentProfileId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.PaymentProfileResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/payment_profiles/{payment_profile_id}/change_payment_profile.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("payment_profile_id", paymentProfileId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found", (_reason, _context) => new ApiException(_reason, _context)))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Template(template => template.Setup("payment_profile_id", paymentProfileId))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found", (errorReason, context) => new ApiException(errorReason, context)))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -578,14 +567,14 @@ namespace AdvancedBilling.Standard.Controllers
                 int paymentProfileId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.PaymentProfileResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscription_groups/{uid}/payment_profiles/{payment_profile_id}/change_payment_profile.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("uid", uid).Required())
-                      .Template(_template => _template.Setup("payment_profile_id", paymentProfileId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("uid", uid).Required())
+                      .Template(template => template.Setup("payment_profile_id", paymentProfileId))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -611,13 +600,13 @@ namespace AdvancedBilling.Standard.Controllers
                 string chargifyToken,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.GetOneTimeTokenRequest>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/one_time_tokens/{chargify_token}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("chargify_token", chargifyToken).Required())))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("chargify_token", chargifyToken).Required())))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -626,7 +615,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Additionally, if you attempt to send a "request payment update" email for a subscription that does not exist, you will receive a `404` error response. This error message will indicate that the subscription could not be found, and will provide instructions on how to correct the error and resubmit the request.
         /// These error responses are designed to prevent excessive or invalid requests, and to provide clear and helpful information to users who encounter errors during the request process.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         public void SendRequestUpdatePaymentEmail(
                 int subscriptionId)
             => CoreHelper.RunVoidTask(SendRequestUpdatePaymentEmailAsync(subscriptionId));
@@ -637,21 +626,21 @@ namespace AdvancedBilling.Standard.Controllers
         /// Additionally, if you attempt to send a "request payment update" email for a subscription that does not exist, you will receive a `404` error response. This error message will indicate that the subscription could not be found, and will provide instructions on how to correct the error and resubmit the request.
         /// These error responses are designed to prevent excessive or invalid requests, and to provide clear and helpful information to users who encounter errors during the request process.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the void response from the API call.</returns>
         public async Task SendRequestUpdatePaymentEmailAsync(
                 int subscriptionId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/request_payment_profiles_update.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", subscriptionId))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

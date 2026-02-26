@@ -31,8 +31,8 @@
 | `Taxable` | `bool?` | Optional | Boolean flag describing whether a component is taxable or not. |
 | `TaxCode` | `string` | Optional | A string representing the tax code related to the component type. This is especially important when using AvaTax to tax based on locale. This attribute has a max length of 25 characters. |
 | `Recurring` | `bool?` | Optional | - |
-| `UpgradeCharge` | [`CreditType?`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.<br>Available values: `full`, `prorated`, `none`. |
-| `DowngradeCredit` | [`CreditType?`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.<br>Available values: `full`, `prorated`, `none`. |
+| `UpgradeCharge` | [`CreditType?`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided. |
+| `DowngradeCredit` | [`CreditType?`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided. |
 | `CreatedAt` | `DateTimeOffset?` | Optional | Timestamp indicating when this component was created |
 | `UpdatedAt` | `DateTimeOffset?` | Optional | Timestamp indicating when this component was updated |
 | `ArchivedAt` | `DateTimeOffset?` | Optional | Timestamp indicating when this component was archived |

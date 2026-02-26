@@ -34,13 +34,13 @@ namespace AdvancedBilling.Standard.Controllers
         protected ApiCall<HttpRequest, HttpResponse, HttpContext, ApiException, T, T> CreateApiCall<T>(ArraySerialization arraySerialization = ArraySerialization.CSV)
             => new ApiCall<HttpRequest, HttpResponse, HttpContext, ApiException, T, T>(
                 globalConfiguration,
-                compatibilityFactory,
+                CompatibilityFactory,
                 serialization: arraySerialization,
-                globalErrors: globalErrors
+                globalErrors: GlobalErrors
             );
 
-        private static readonly CompatibilityFactory compatibilityFactory = new CompatibilityFactory();
-        private static readonly Dictionary<string, ErrorCase<HttpRequest, HttpResponse, HttpContext, ApiException>> globalErrors = new Dictionary<string, ErrorCase<HttpRequest, HttpResponse, HttpContext, ApiException>>
+        private static readonly CompatibilityFactory CompatibilityFactory = new CompatibilityFactory();
+        private static readonly Dictionary<string, ErrorCase<HttpRequest, HttpResponse, HttpContext, ApiException>> GlobalErrors = new Dictionary<string, ErrorCase<HttpRequest, HttpResponse, HttpContext, ApiException>>
         {
             { "404", CreateErrorCase("Not Found:'{$response.body}'", (reason, context) => new ApiException(reason, context), true) },
             { "0", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (reason, context) => new ApiException(reason, context), true) }

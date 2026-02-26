@@ -3,24 +3,12 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
+using APIMatic.Core;
+using APIMatic.Core.Utilities;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Http.Client;
-using AdvancedBilling.Standard.Utilities;
-using APIMatic.Core;
-using APIMatic.Core.Types;
-using APIMatic.Core.Utilities;
-using APIMatic.Core.Utilities.Date.Xml;
-using Newtonsoft.Json.Converters;
-using System.Net.Http;
 
 namespace AdvancedBilling.Standard.Controllers
 {
@@ -65,15 +53,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListSalesCommissionSettingsInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<List<Models.SaleRepSettings>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/sellers/{seller_id}/sales_commission_settings.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("seller_id", input.SellerId).Required())
-                      .Header(_header => _header.Setup("Authorization", input.Authorization))
-                      .Query(_query => _query.Setup("live_mode", input.LiveMode))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("seller_id", input.SellerId).Required())
+                      .Header(header => header.Setup("Authorization", input.Authorization))
+                      .Query(query => query.Setup("live_mode", input.LiveMode))
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -107,15 +95,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListSalesRepsInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<List<Models.ListSaleRepItem>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/sellers/{seller_id}/sales_reps.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("seller_id", input.SellerId).Required())
-                      .Header(_header => _header.Setup("Authorization", input.Authorization))
-                      .Query(_query => _query.Setup("live_mode", input.LiveMode))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("seller_id", input.SellerId).Required())
+                      .Header(header => header.Setup("Authorization", input.Authorization))
+                      .Query(query => query.Setup("live_mode", input.LiveMode))
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -169,16 +157,16 @@ namespace AdvancedBilling.Standard.Controllers
                 int? perPage = 100,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SaleRep>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/sellers/{seller_id}/sales_reps/{sales_rep_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("seller_id", sellerId).Required())
-                      .Template(_template => _template.Setup("sales_rep_id", salesRepId).Required())
-                      .Header(_header => _header.Setup("Authorization", authorization ?? "Bearer <<apiKey>>"))
-                      .Query(_query => _query.Setup("live_mode", liveMode))
-                      .Query(_query => _query.Setup("page", page ?? 1))
-                      .Query(_query => _query.Setup("per_page", perPage ?? 100))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("seller_id", sellerId).Required())
+                      .Template(template => template.Setup("sales_rep_id", salesRepId).Required())
+                      .Header(header => header.Setup("Authorization", authorization ?? "Bearer <<apiKey>>"))
+                      .Query(query => query.Setup("live_mode", liveMode))
+                      .Query(query => query.Setup("page", page ?? 1))
+                      .Query(query => query.Setup("per_page", perPage ?? 100))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

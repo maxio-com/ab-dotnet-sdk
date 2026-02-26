@@ -3,25 +3,13 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
+using APIMatic.Core;
+using APIMatic.Core.Utilities;
+using AdvancedBilling.Standard.Exceptions;
 using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Exceptions;
-using AdvancedBilling.Standard.Http.Client;
-using AdvancedBilling.Standard.Utilities;
-using APIMatic.Core;
-using APIMatic.Core.Types;
-using APIMatic.Core.Utilities;
-using APIMatic.Core.Utilities.Date.Xml;
-using Newtonsoft.Json.Converters;
-using System.Net.Http;
 
 namespace AdvancedBilling.Standard.Controllers
 {
@@ -59,7 +47,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <returns>Returns the Models.SiteSummary response from the API call.</returns>
         public async Task<Models.SiteSummary> ReadSiteStatsAsync(CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SiteSummary>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/stats.json")
                   .WithAuth("BasicAuth"))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
@@ -89,12 +77,12 @@ namespace AdvancedBilling.Standard.Controllers
                 int? subscriptionId = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.MRRResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/mrr.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("at_time", atTime.HasValue ? atTime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))
-                      .Query(_query => _query.Setup("subscription_id", subscriptionId))))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("at_time", atTime.HasValue ? atTime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))
+                      .Query(query => query.Setup("subscription_id", subscriptionId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -148,14 +136,14 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListMrrMovementsInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ListMRRResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/mrr_movements.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("subscription_id", input.SubscriptionId))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("subscription_id", input.SubscriptionId))
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("direction", (input.Direction.HasValue) ? CoreHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -179,17 +167,17 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListMrrPerSubscriptionInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionMRRResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions_mrr.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("filter", input.Filter))
-                      .Query(_query => _query.Setup("at_time", input.AtTime))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("400", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionsMrrErrorResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("filter", input.Filter))
+                      .Query(query => query.Setup("at_time", input.AtTime))
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("direction", (input.Direction.HasValue) ? CoreHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("400", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new SubscriptionsMrrErrorResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

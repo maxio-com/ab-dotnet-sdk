@@ -57,8 +57,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
 }
 ```
 
@@ -100,8 +103,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
 }
 ```
 
@@ -141,8 +147,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
 }
 ```
 
@@ -210,8 +219,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
 }
 ```
 

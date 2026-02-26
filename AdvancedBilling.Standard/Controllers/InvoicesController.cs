@@ -3,25 +3,14 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Exceptions;
-using AdvancedBilling.Standard.Http.Client;
-using AdvancedBilling.Standard.Utilities;
 using APIMatic.Core;
 using APIMatic.Core.Types;
 using APIMatic.Core.Utilities;
-using APIMatic.Core.Utilities.Date.Xml;
-using Newtonsoft.Json.Converters;
+using AdvancedBilling.Standard.Exceptions;
+using System.Linq;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AdvancedBilling.Standard.Controllers
 {
@@ -64,15 +53,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.RefundInvoiceRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.Invoice>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/refunds.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("uid", uid).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("uid", uid).Required())
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -94,33 +83,33 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListInvoicesInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ListInvoicesResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/invoices.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("start_date", input.StartDate))
-                      .Query(_query => _query.Setup("end_date", input.EndDate))
-                      .Query(_query => _query.Setup("status", (input.Status.HasValue) ? ApiHelper.JsonSerialize(input.Status.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("subscription_id", input.SubscriptionId))
-                      .Query(_query => _query.Setup("subscription_group_uid", input.SubscriptionGroupUid))
-                      .Query(_query => _query.Setup("consolidation_level", input.ConsolidationLevel))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "desc"))
-                      .Query(_query => _query.Setup("line_items", input.LineItems))
-                      .Query(_query => _query.Setup("discounts", input.Discounts))
-                      .Query(_query => _query.Setup("taxes", input.Taxes))
-                      .Query(_query => _query.Setup("credits", input.Credits))
-                      .Query(_query => _query.Setup("payments", input.Payments))
-                      .Query(_query => _query.Setup("custom_fields", input.CustomFields))
-                      .Query(_query => _query.Setup("refunds", input.Refunds))
-                      .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : "due_date"))
-                      .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
-                      .Query(_query => _query.Setup("end_datetime", input.EndDatetime))
-                      .Query(_query => _query.Setup("customer_ids", input.CustomerIds))
-                      .Query(_query => _query.Setup("number", input.Number))
-                      .Query(_query => _query.Setup("product_ids", input.ProductIds))
-                      .Query(_query => _query.Setup("sort", (input.Sort.HasValue) ? ApiHelper.JsonSerialize(input.Sort.Value).Trim('\"') : "number"))))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("start_date", input.StartDate))
+                      .Query(query => query.Setup("end_date", input.EndDate))
+                      .Query(query => query.Setup("status", (input.Status.HasValue) ? CoreHelper.JsonSerialize(input.Status.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("subscription_id", input.SubscriptionId))
+                      .Query(query => query.Setup("subscription_group_uid", input.SubscriptionGroupUid))
+                      .Query(query => query.Setup("consolidation_level", input.ConsolidationLevel))
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("direction", (input.Direction.HasValue) ? CoreHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "desc"))
+                      .Query(query => query.Setup("line_items", input.LineItems))
+                      .Query(query => query.Setup("discounts", input.Discounts))
+                      .Query(query => query.Setup("taxes", input.Taxes))
+                      .Query(query => query.Setup("credits", input.Credits))
+                      .Query(query => query.Setup("payments", input.Payments))
+                      .Query(query => query.Setup("custom_fields", input.CustomFields))
+                      .Query(query => query.Setup("refunds", input.Refunds))
+                      .Query(query => query.Setup("date_field", (input.DateField.HasValue) ? CoreHelper.JsonSerialize(input.DateField.Value).Trim('\"') : "due_date"))
+                      .Query(query => query.Setup("start_datetime", input.StartDatetime))
+                      .Query(query => query.Setup("end_datetime", input.EndDatetime))
+                      .Query(query => query.Setup("customer_ids", input.CustomerIds))
+                      .Query(query => query.Setup("number", input.Number))
+                      .Query(query => query.Setup("product_ids", input.ProductIds))
+                      .Query(query => query.Setup("sort", (input.Sort.HasValue) ? CoreHelper.JsonSerialize(input.Sort.Value).Trim('\"') : "number"))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -166,11 +155,11 @@ namespace AdvancedBilling.Standard.Controllers
                 string uid,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.Invoice>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/invoices/{uid}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("uid", uid).Required())))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("uid", uid).Required())))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -228,17 +217,17 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListInvoiceEventsInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ListInvoiceEventsResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/invoices/events.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("since_date", input.SinceDate))
-                      .Query(_query => _query.Setup("since_id", input.SinceId))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("invoice_uid", input.InvoiceUid))
-                      .Query(_query => _query.Setup("with_change_invoice_status", input.WithChangeInvoiceStatus))
-                      .Query(_query => _query.Setup("event_types", input.EventTypes?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("since_date", input.SinceDate))
+                      .Query(query => query.Setup("since_id", input.SinceId))
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("invoice_uid", input.InvoiceUid))
+                      .Query(query => query.Setup("with_change_invoice_status", input.WithChangeInvoiceStatus))
+                      .Query(query => query.Setup("event_types", input.EventTypes?.Select(a => CoreHelper.JsonSerialize(a).Trim('\"')).ToList()))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -264,15 +253,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CreateInvoicePaymentRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.Invoice>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/payments.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("uid", uid).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("uid", uid).Required())
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -338,14 +327,14 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CreateMultiInvoicePaymentRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.MultiInvoicePaymentResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/payments.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -369,18 +358,18 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListCreditNotesInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ListCreditNotesResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/credit_notes.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("subscription_id", input.SubscriptionId))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("line_items", input.LineItems))
-                      .Query(_query => _query.Setup("discounts", input.Discounts))
-                      .Query(_query => _query.Setup("taxes", input.Taxes))
-                      .Query(_query => _query.Setup("refunds", input.Refunds))
-                      .Query(_query => _query.Setup("applications", input.Applications))))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("subscription_id", input.SubscriptionId))
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("line_items", input.LineItems))
+                      .Query(query => query.Setup("discounts", input.Discounts))
+                      .Query(query => query.Setup("taxes", input.Taxes))
+                      .Query(query => query.Setup("refunds", input.Refunds))
+                      .Query(query => query.Setup("applications", input.Applications))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -402,11 +391,11 @@ namespace AdvancedBilling.Standard.Controllers
                 string uid,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CreditNote>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/credit_notes/{uid}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("uid", uid).Required())))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("uid", uid).Required())))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -415,7 +404,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Excess payment will result in the creation of a prepayment on the Invoice Account.
         /// Only ungrouped or primary subscriptions may be paid using the "bulk" payment request.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.RecordPaymentResponse response from the API call.</returns>
         public Models.RecordPaymentResponse RecordPaymentForSubscription(
@@ -429,7 +418,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Excess payment will result in the creation of a prepayment on the Invoice Account.
         /// Only ungrouped or primary subscriptions may be paid using the "bulk" payment request.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.RecordPaymentResponse response from the API call.</returns>
@@ -438,15 +427,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.RecordPaymentRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.RecordPaymentResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/payments.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -480,14 +469,14 @@ namespace AdvancedBilling.Standard.Controllers
                 string uid,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.Invoice>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/reopen.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("uid", uid).Required())))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("uid", uid).Required())))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -513,16 +502,16 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.VoidInvoiceRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.Invoice>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/void.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("uid", uid).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("uid", uid).Required())
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -544,14 +533,14 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListConsolidatedInvoiceSegmentsInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ConsolidatedInvoice>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/invoices/{invoice_uid}/segments.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("invoice_uid", input.InvoiceUid).Required())
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "asc"))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("invoice_uid", input.InvoiceUid).Required())
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("direction", (input.Direction.HasValue) ? CoreHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "asc"))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -698,7 +687,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// #### Status.
         /// By default, invoices will be created with open status. Possible alternative is `draft`.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.InvoiceResponse response from the API call.</returns>
         public Models.InvoiceResponse CreateInvoice(
@@ -850,7 +839,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// #### Status.
         /// By default, invoices will be created with open status. Possible alternative is `draft`.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.InvoiceResponse response from the API call.</returns>
@@ -859,19 +848,20 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CreateInvoiceRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.InvoiceResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/invoices.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorArrayMapResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorArrayMapResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This endpoint allows for invoices to be programmatically delivered via email. This endpoint supports the delivery of both ad-hoc and automatically generated invoices. Additionally, this endpoint supports email delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
+        /// **File Attachments**: You can attach files to invoice emails using `attachment_urls[]` parameter by providing URLs to the files you want to attach. When using attachments, the request must use `multipart/form-data` content type. Max 10 files, 10MB per file.
         /// If no recipient email addresses are specified in the request, then the subscription's default email configuration will be used. For example, if `recipient_emails` is left blank, then the invoice will be delivered to the subscription's customer email address.
         /// On success, a 204 no-content response will be returned. The response does not indicate that email(s) have been delivered, but instead indicates that emails have been successfully queued for delivery. If _any_ invalid or malformed email address is found in the request body, the entire request will be rejected and a 422 response will be returned.
         /// </summary>
@@ -884,6 +874,7 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// This endpoint allows for invoices to be programmatically delivered via email. This endpoint supports the delivery of both ad-hoc and automatically generated invoices. Additionally, this endpoint supports email delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
+        /// **File Attachments**: You can attach files to invoice emails using `attachment_urls[]` parameter by providing URLs to the files you want to attach. When using attachments, the request must use `multipart/form-data` content type. Max 10 files, 10MB per file.
         /// If no recipient email addresses are specified in the request, then the subscription's default email configuration will be used. For example, if `recipient_emails` is left blank, then the invoice will be delivered to the subscription's customer email address.
         /// On success, a 204 no-content response will be returned. The response does not indicate that email(s) have been delivered, but instead indicates that emails have been successfully queued for delivery. If _any_ invalid or malformed email address is found in the request body, the entire request will be rejected and a 422 response will be returned.
         /// </summary>
@@ -896,15 +887,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.SendInvoiceRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/deliveries.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("uid", uid).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("uid", uid).Required())
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -928,14 +919,14 @@ namespace AdvancedBilling.Standard.Controllers
                 string uid,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CustomerChangesPreviewResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/customer_information/preview.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("uid", uid).Required())))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ErrorListResponseException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("uid", uid).Required())))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ErrorListResponseException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -959,18 +950,18 @@ namespace AdvancedBilling.Standard.Controllers
                 string uid,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.Invoice>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/invoices/{uid}/customer_information.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("uid", uid).Required())))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ErrorListResponseException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("uid", uid).Required())))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ErrorListResponseException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This endpoint allows you to issue an invoice that is in "pending" status. For example, you can issue an invoice that was created when allocating new quantity on a component and using "accrue charges" option.
+        /// This endpoint allows you to issue an invoice that is in "pending" or "draft" status. For example, you can issue an invoice that was created when allocating new quantity on a component and using "accrue charges" option.
         /// You cannot issue a pending child invoice that was created for a member subscription in a group.
         /// For Remittance subscriptions, the invoice will go into "open" status and payment won't be attempted. The value for `on_failed_payment` would be rejected if sent. Any prepayments or service credits that exist on subscription will be automatically applied. Additionally, if setting is on, an email will be sent for issued invoice.
         /// For Automatic subscriptions, prepayments and service credits will apply to the invoice and before payment is attempted. On successful payment, the invoice will go into "paid" status and email will be sent to the customer (if setting applies). When payment fails, the next event depends on the `on_failed_payment` value:.
@@ -987,7 +978,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(IssueInvoiceAsync(uid, body));
 
         /// <summary>
-        /// This endpoint allows you to issue an invoice that is in "pending" status. For example, you can issue an invoice that was created when allocating new quantity on a component and using "accrue charges" option.
+        /// This endpoint allows you to issue an invoice that is in "pending" or "draft" status. For example, you can issue an invoice that was created when allocating new quantity on a component and using "accrue charges" option.
         /// You cannot issue a pending child invoice that was created for a member subscription in a group.
         /// For Remittance subscriptions, the invoice will go into "open" status and payment won't be attempted. The value for `on_failed_payment` would be rejected if sent. Any prepayments or service credits that exist on subscription will be automatically applied. Additionally, if setting is on, an email will be sent for issued invoice.
         /// For Automatic subscriptions, prepayments and service credits will apply to the invoice and before payment is attempted. On successful payment, the invoice will go into "paid" status and email will be sent to the customer (if setting applies). When payment fails, the next event depends on the `on_failed_payment` value:.
@@ -1004,16 +995,16 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.IssueInvoiceRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.Invoice>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/invoices/{uid}/issue.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("uid", uid).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("uid", uid).Required())
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

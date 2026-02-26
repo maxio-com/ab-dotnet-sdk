@@ -3,18 +3,10 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using APIMatic.Core.Utilities.Converters;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
+using System.Collections.Generic;
 
 namespace AdvancedBilling.Standard.Models
 {
@@ -502,7 +494,6 @@ namespace AdvancedBilling.Standard.Models
 
         /// <summary>
         /// The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.
-        /// Available values: `full`, `prorated`, `none`.
         /// </summary>
         [JsonProperty("upgrade_charge")]
         public Models.CreditType? UpgradeCharge
@@ -521,7 +512,6 @@ namespace AdvancedBilling.Standard.Models
 
         /// <summary>
         /// The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.
-        /// Available values: `full`, `prorated`, `none`.
         /// </summary>
         [JsonProperty("downgrade_credit")]
         public Models.CreditType? DowngradeCredit
@@ -682,7 +672,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["handle"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -690,7 +679,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["pricing_scheme"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -698,7 +686,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["unit_price"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -706,7 +693,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["price_per_unit_in_cents"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -714,7 +700,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["description"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -722,7 +707,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["default_price_point_id"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -730,7 +714,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["overage_prices"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -738,7 +721,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["prices"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -746,7 +728,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["price_points_url"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -754,7 +735,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["tax_code"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -762,7 +742,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["upgrade_charge"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -770,7 +749,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["downgrade_credit"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -778,7 +756,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["archived_at"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -786,7 +763,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["item_category"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -794,7 +770,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["use_site_exchange_rate"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -802,7 +777,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["accounting_code"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>

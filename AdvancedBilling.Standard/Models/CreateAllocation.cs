@@ -3,19 +3,9 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using APIMatic.Core.Utilities.Converters;
-using AdvancedBilling.Standard;
 using AdvancedBilling.Standard.Models.Containers;
-using AdvancedBilling.Standard.Utilities;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Collections.Generic;
 
 namespace AdvancedBilling.Standard.Models
 {
@@ -24,8 +14,8 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class CreateAllocation : BaseModel
     {
-        private Models.CreditType? downgradeCredit;
-        private Models.CreditType? upgradeCharge;
+        private Models.DowngradeCreditCreditType? downgradeCredit;
+        private Models.UpgradeChargeCreditType? upgradeCharge;
         private CreateAllocationPricePointId pricePointId;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
@@ -45,35 +35,45 @@ namespace AdvancedBilling.Standard.Models
         /// Initializes a new instance of the <see cref="CreateAllocation"/> class.
         /// </summary>
         /// <param name="quantity">quantity.</param>
+        /// <param name="decimalQuantity">decimal_quantity.</param>
+        /// <param name="previousQuantity">previous_quantity.</param>
+        /// <param name="decimalPreviousQuantity">decimal_previous_quantity.</param>
         /// <param name="componentId">component_id.</param>
         /// <param name="memo">memo.</param>
         /// <param name="prorationDowngradeScheme">proration_downgrade_scheme.</param>
         /// <param name="prorationUpgradeScheme">proration_upgrade_scheme.</param>
-        /// <param name="accrueCharge">accrue_charge.</param>
         /// <param name="downgradeCredit">downgrade_credit.</param>
         /// <param name="upgradeCharge">upgrade_charge.</param>
+        /// <param name="accrueCharge">accrue_charge.</param>
         /// <param name="initiateDunning">initiate_dunning.</param>
         /// <param name="pricePointId">price_point_id.</param>
         /// <param name="billingSchedule">billing_schedule.</param>
+        /// <param name="customPrice">custom_price.</param>
         public CreateAllocation(
             double quantity,
+            string decimalQuantity = null,
+            double? previousQuantity = null,
+            string decimalPreviousQuantity = null,
             int? componentId = null,
             string memo = null,
             string prorationDowngradeScheme = null,
             string prorationUpgradeScheme = null,
+            Models.DowngradeCreditCreditType? downgradeCredit = null,
+            Models.UpgradeChargeCreditType? upgradeCharge = null,
             bool? accrueCharge = null,
-            Models.CreditType? downgradeCredit = null,
-            Models.CreditType? upgradeCharge = null,
             bool? initiateDunning = null,
             CreateAllocationPricePointId pricePointId = null,
-            Models.BillingSchedule billingSchedule = null)
+            Models.BillingSchedule billingSchedule = null,
+            Models.ComponentCustomPrice customPrice = null)
         {
             this.Quantity = quantity;
+            this.DecimalQuantity = decimalQuantity;
+            this.PreviousQuantity = previousQuantity;
+            this.DecimalPreviousQuantity = decimalPreviousQuantity;
             this.ComponentId = componentId;
             this.Memo = memo;
             this.ProrationDowngradeScheme = prorationDowngradeScheme;
             this.ProrationUpgradeScheme = prorationUpgradeScheme;
-            this.AccrueCharge = accrueCharge;
 
             if (downgradeCredit != null)
             {
@@ -84,6 +84,7 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.UpgradeCharge = upgradeCharge;
             }
+            this.AccrueCharge = accrueCharge;
             this.InitiateDunning = initiateDunning;
 
             if (pricePointId != null)
@@ -91,6 +92,7 @@ namespace AdvancedBilling.Standard.Models
                 this.PricePointId = pricePointId;
             }
             this.BillingSchedule = billingSchedule;
+            this.CustomPrice = customPrice;
         }
 
         /// <summary>
@@ -100,13 +102,35 @@ namespace AdvancedBilling.Standard.Models
         public double Quantity { get; set; }
 
         /// <summary>
-        /// (required for the multiple allocations endpoint) The id associated with the component for which the allocation is being made
+        /// Decimal representation of the allocated quantity. Only valid when decimal
+        /// allocations are enabled for the component.
+        /// </summary>
+        [JsonProperty("decimal_quantity", NullValueHandling = NullValueHandling.Ignore)]
+        public string DecimalQuantity { get; set; }
+
+        /// <summary>
+        /// The quantity that was in effect before this allocation. Responses always
+        /// include this value; it may be supplied on preview requests to ensure the
+        /// expected change is evaluated.
+        /// </summary>
+        [JsonProperty("previous_quantity", NullValueHandling = NullValueHandling.Ignore)]
+        public double? PreviousQuantity { get; set; }
+
+        /// <summary>
+        /// Decimal representation of `previous_quantity`. Only valid when decimal
+        /// allocations are enabled for the component.
+        /// </summary>
+        [JsonProperty("decimal_previous_quantity", NullValueHandling = NullValueHandling.Ignore)]
+        public string DecimalPreviousQuantity { get; set; }
+
+        /// <summary>
+        /// (required for the multiple allocations endpoint) The id associated with the component for which the allocation is being made.
         /// </summary>
         [JsonProperty("component_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? ComponentId { get; set; }
 
         /// <summary>
-        /// A memo to record along with the allocation
+        /// A memo to record along with the allocation.
         /// </summary>
         [JsonProperty("memo", NullValueHandling = NullValueHandling.Ignore)]
         public string Memo { get; set; }
@@ -124,17 +148,13 @@ namespace AdvancedBilling.Standard.Models
         public string ProrationUpgradeScheme { get; set; }
 
         /// <summary>
-        /// If the change in cost is an upgrade, this determines if the charge should accrue to the next renewal or if capture should be attempted immediately. Defaults to the site setting if one is not provided.
-        /// </summary>
-        [JsonProperty("accrue_charge", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? AccrueCharge { get; set; }
-
-        /// <summary>
-        /// The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.
-        /// Available values: `full`, `prorated`, `none`.
+        /// The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided. Values are:
+        /// `full` -  A full price credit is added for the amount owed.
+        /// `prorated` - A prorated credit is added for the amount owed.
+        /// `none` - No charge is added.
         /// </summary>
         [JsonProperty("downgrade_credit")]
-        public Models.CreditType? DowngradeCredit
+        public Models.DowngradeCreditCreditType? DowngradeCredit
         {
             get
             {
@@ -149,11 +169,13 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.
-        /// Available values: `full`, `prorated`, `none`.
+        /// The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided. Values are:
+        /// `full` - A charge is added for the full price of the component.
+        /// `prorated` - A charge is added for the prorated price of the component change.
+        /// `none` - No charge is added.
         /// </summary>
         [JsonProperty("upgrade_charge")]
-        public Models.CreditType? UpgradeCharge
+        public Models.UpgradeChargeCreditType? UpgradeCharge
         {
             get
             {
@@ -166,6 +188,15 @@ namespace AdvancedBilling.Standard.Models
                 this.upgradeCharge = value;
             }
         }
+
+        /// <summary>
+        /// "If the change in cost is an upgrade, this determines if the charge should accrue to the next renewal or if capture should be attempted immediately.
+        /// `true` - Attempt to charge the customer at the next renewal.
+        /// `false` - Attempt to charge the customer right away. If it fails, the charge will be accrued until the next renewal.
+        /// Defaults to the site setting if unspecified in the request.
+        /// </summary>
+        [JsonProperty("accrue_charge", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? AccrueCharge { get; set; }
 
         /// <summary>
         /// If set to true, if the immediate component payment fails, initiate dunning for the subscription.
@@ -198,6 +229,12 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("billing_schedule", NullValueHandling = NullValueHandling.Ignore)]
         public Models.BillingSchedule BillingSchedule { get; set; }
 
+        /// <summary>
+        /// Create or update custom pricing unique to the subscription. Used in place of `price_point_id`.
+        /// </summary>
+        [JsonProperty("custom_price", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.ComponentCustomPrice CustomPrice { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -213,7 +250,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["downgrade_credit"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -221,7 +257,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["upgrade_charge"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -265,6 +300,12 @@ namespace AdvancedBilling.Standard.Models
 
             return obj is CreateAllocation other &&
                 (this.Quantity.Equals(other.Quantity)) &&
+                (this.DecimalQuantity == null && other.DecimalQuantity == null ||
+                 this.DecimalQuantity?.Equals(other.DecimalQuantity) == true) &&
+                (this.PreviousQuantity == null && other.PreviousQuantity == null ||
+                 this.PreviousQuantity?.Equals(other.PreviousQuantity) == true) &&
+                (this.DecimalPreviousQuantity == null && other.DecimalPreviousQuantity == null ||
+                 this.DecimalPreviousQuantity?.Equals(other.DecimalPreviousQuantity) == true) &&
                 (this.ComponentId == null && other.ComponentId == null ||
                  this.ComponentId?.Equals(other.ComponentId) == true) &&
                 (this.Memo == null && other.Memo == null ||
@@ -273,18 +314,20 @@ namespace AdvancedBilling.Standard.Models
                  this.ProrationDowngradeScheme?.Equals(other.ProrationDowngradeScheme) == true) &&
                 (this.ProrationUpgradeScheme == null && other.ProrationUpgradeScheme == null ||
                  this.ProrationUpgradeScheme?.Equals(other.ProrationUpgradeScheme) == true) &&
-                (this.AccrueCharge == null && other.AccrueCharge == null ||
-                 this.AccrueCharge?.Equals(other.AccrueCharge) == true) &&
                 (this.DowngradeCredit == null && other.DowngradeCredit == null ||
                  this.DowngradeCredit?.Equals(other.DowngradeCredit) == true) &&
                 (this.UpgradeCharge == null && other.UpgradeCharge == null ||
                  this.UpgradeCharge?.Equals(other.UpgradeCharge) == true) &&
+                (this.AccrueCharge == null && other.AccrueCharge == null ||
+                 this.AccrueCharge?.Equals(other.AccrueCharge) == true) &&
                 (this.InitiateDunning == null && other.InitiateDunning == null ||
                  this.InitiateDunning?.Equals(other.InitiateDunning) == true) &&
                 (this.PricePointId == null && other.PricePointId == null ||
                  this.PricePointId?.Equals(other.PricePointId) == true) &&
                 (this.BillingSchedule == null && other.BillingSchedule == null ||
                  this.BillingSchedule?.Equals(other.BillingSchedule) == true) &&
+                (this.CustomPrice == null && other.CustomPrice == null ||
+                 this.CustomPrice?.Equals(other.CustomPrice) == true) &&
                 base.Equals(obj);
         }
 
@@ -295,16 +338,20 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"Quantity = {this.Quantity}");
+            toStringOutput.Add($"DecimalQuantity = {this.DecimalQuantity ?? "null"}");
+            toStringOutput.Add($"PreviousQuantity = {(this.PreviousQuantity == null ? "null" : this.PreviousQuantity.ToString())}");
+            toStringOutput.Add($"DecimalPreviousQuantity = {this.DecimalPreviousQuantity ?? "null"}");
             toStringOutput.Add($"ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"Memo = {this.Memo ?? "null"}");
             toStringOutput.Add($"ProrationDowngradeScheme = {this.ProrationDowngradeScheme ?? "null"}");
             toStringOutput.Add($"ProrationUpgradeScheme = {this.ProrationUpgradeScheme ?? "null"}");
-            toStringOutput.Add($"AccrueCharge = {(this.AccrueCharge == null ? "null" : this.AccrueCharge.ToString())}");
             toStringOutput.Add($"DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
             toStringOutput.Add($"UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
+            toStringOutput.Add($"AccrueCharge = {(this.AccrueCharge == null ? "null" : this.AccrueCharge.ToString())}");
             toStringOutput.Add($"InitiateDunning = {(this.InitiateDunning == null ? "null" : this.InitiateDunning.ToString())}");
             toStringOutput.Add($"PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
             toStringOutput.Add($"BillingSchedule = {(this.BillingSchedule == null ? "null" : this.BillingSchedule.ToString())}");
+            toStringOutput.Add($"CustomPrice = {(this.CustomPrice == null ? "null" : this.CustomPrice.ToString())}");
 
             base.ToString(toStringOutput);
         }

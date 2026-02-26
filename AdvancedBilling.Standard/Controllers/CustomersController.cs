@@ -3,25 +3,14 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Exceptions;
-using AdvancedBilling.Standard.Http.Client;
-using AdvancedBilling.Standard.Utilities;
 using APIMatic.Core;
 using APIMatic.Core.Types;
 using APIMatic.Core.Utilities;
-using APIMatic.Core.Utilities.Date.Xml;
-using Newtonsoft.Json.Converters;
+using AdvancedBilling.Standard.Exceptions;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AdvancedBilling.Standard.Controllers
 {
@@ -78,14 +67,14 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CreateCustomerRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CustomerResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/customers.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new CustomerErrorResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new CustomerErrorResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -125,19 +114,19 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListCustomersInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<List<Models.CustomerResponse>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/customers.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("start_date", input.StartDate))
-                      .Query(_query => _query.Setup("end_date", input.EndDate))
-                      .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
-                      .Query(_query => _query.Setup("end_datetime", input.EndDatetime))
-                      .Query(_query => _query.Setup("q", input.Q))))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("direction", (input.Direction.HasValue) ? CoreHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("date_field", (input.DateField.HasValue) ? CoreHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("start_date", input.StartDate))
+                      .Query(query => query.Setup("end_date", input.EndDate))
+                      .Query(query => query.Setup("start_datetime", input.StartDatetime))
+                      .Query(query => query.Setup("end_datetime", input.EndDatetime))
+                      .Query(query => query.Setup("q", input.Q))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -159,11 +148,11 @@ namespace AdvancedBilling.Standard.Controllers
                 int id,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CustomerResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/customers/{id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("id", id))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("id", id))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -189,16 +178,16 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.UpdateCustomerRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CustomerResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/customers/{id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("id", id))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new CustomerErrorResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("id", id))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new CustomerErrorResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -219,11 +208,11 @@ namespace AdvancedBilling.Standard.Controllers
                 int id,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Delete, "/customers/{id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("id", id))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("id", id))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -245,11 +234,11 @@ namespace AdvancedBilling.Standard.Controllers
                 string reference,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CustomerResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/customers/lookup.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("reference", reference).Required())))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("reference", reference).Required())))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -271,11 +260,11 @@ namespace AdvancedBilling.Standard.Controllers
                 int customerId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<List<Models.SubscriptionResponse>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/customers/{customer_id}/subscriptions.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("customer_id", customerId))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("customer_id", customerId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

@@ -13,6 +13,7 @@ ProformaInvoicesController proformaInvoicesController = client.ProformaInvoicesC
 * [Create Consolidated Proforma Invoice](../../doc/controllers/proforma-invoices.md#create-consolidated-proforma-invoice)
 * [List Subscription Group Proforma Invoices](../../doc/controllers/proforma-invoices.md#list-subscription-group-proforma-invoices)
 * [Read Proforma Invoice](../../doc/controllers/proforma-invoices.md#read-proforma-invoice)
+* [Deliver Proforma Invoice](../../doc/controllers/proforma-invoices.md#deliver-proforma-invoice)
 * [Create Proforma Invoice](../../doc/controllers/proforma-invoices.md#create-proforma-invoice)
 * [List Proforma Invoices](../../doc/controllers/proforma-invoices.md#list-proforma-invoices)
 * [Void Proforma Invoice](../../doc/controllers/proforma-invoices.md#void-proforma-invoice)
@@ -56,8 +57,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
 }
 ```
 
@@ -83,13 +87,7 @@ ListSubscriptionGroupProformaInvoicesAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `uid` | `string` | Template, Required | The uid of the subscription group |
-| `lineItems` | `bool?` | Query, Optional | Include line items data<br><br>**Default**: `false` |
-| `discounts` | `bool?` | Query, Optional | Include discounts data<br><br>**Default**: `false` |
-| `taxes` | `bool?` | Query, Optional | Include taxes data<br><br>**Default**: `false` |
-| `credits` | `bool?` | Query, Optional | Include credits data<br><br>**Default**: `false` |
-| `payments` | `bool?` | Query, Optional | Include payments data<br><br>**Default**: `false` |
-| `customFields` | `bool?` | Query, Optional | Include custom fields data<br><br>**Default**: `false` |
+| `input` | [`Models.ListSubscriptionGroupProformaInvoicesInput`](../../doc/models/list-subscription-group-proforma-invoices-input.md) | Required | Input structure for the method ListSubscriptionGroupProformaInvoices |
 
 ## Response Type
 
@@ -115,7 +113,6 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
 }
 ```
@@ -160,7 +157,6 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
 }
 ```
@@ -170,6 +166,77 @@ catch (ApiException e)
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
+
+
+# Deliver Proforma Invoice
+
+Allows for proforma invoices to be programmatically delivered via email. Supports email
+delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
+
+If `recipient_emails` is omitted, the system will fall back to the primary recipient derived from the invoice or
+subscription. At least one recipient must be present, either via the request body or via this default behavior, so an
+empty body may still succeed when defaults are available.
+
+```csharp
+DeliverProformaInvoiceAsync(
+    string proformaInvoiceUid,
+    Models.DeliverProformaInvoiceRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `proformaInvoiceUid` | `string` | Template, Required | The uid of the proforma invoice |
+| `body` | [`DeliverProformaInvoiceRequest`](../../doc/models/deliver-proforma-invoice-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.ProformaInvoice>`](../../doc/models/proforma-invoice.md)
+
+## Example Usage
+
+```csharp
+string proformaInvoiceUid = "proforma_invoice_uid4";
+DeliverProformaInvoiceRequest body = new DeliverProformaInvoiceRequest
+{
+    RecipientEmails = new List<string>
+    {
+        "user0@example.com",
+    },
+    CcRecipientEmails = new List<string>
+    {
+        "user1@example.com",
+    },
+    BccRecipientEmails = new List<string>
+    {
+        "user2@example.com",
+    },
+};
+
+try
+{
+    ProformaInvoice result = await proformaInvoicesController.DeliverProformaInvoiceAsync(
+        proformaInvoiceUid,
+        body
+    );
+}
+catch (ApiException e)
+{
+    Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # Create Proforma Invoice
@@ -191,7 +258,7 @@ CreateProformaInvoiceAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
 
@@ -207,8 +274,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
 }
 ```
 
@@ -232,19 +302,7 @@ ListProformaInvoicesAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `startDate` | `string` | Query, Optional | The beginning date range for the invoice's Due Date, in the YYYY-MM-DD format. |
-| `endDate` | `string` | Query, Optional | The ending date range for the invoice's Due Date, in the YYYY-MM-DD format. |
-| `status` | [`ProformaInvoiceStatus?`](../../doc/models/proforma-invoice-status.md) | Query, Optional | The current status of the invoice.  Allowed Values: draft, open, paid, pending, voided |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br><br>**Default**: `1`<br><br>**Constraints**: `>= 1` |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br><br>**Default**: `20`<br><br>**Constraints**: `<= 200` |
-| `direction` | [`Direction?`](../../doc/models/direction.md) | Query, Optional | The sort direction of the returned invoices.<br><br>**Default**: `Direction.desc` |
-| `lineItems` | `bool?` | Query, Optional | Include line items data<br><br>**Default**: `false` |
-| `discounts` | `bool?` | Query, Optional | Include discounts data<br><br>**Default**: `false` |
-| `taxes` | `bool?` | Query, Optional | Include taxes data<br><br>**Default**: `false` |
-| `credits` | `bool?` | Query, Optional | Include credits data<br><br>**Default**: `false` |
-| `payments` | `bool?` | Query, Optional | Include payments data<br><br>**Default**: `false` |
-| `customFields` | `bool?` | Query, Optional | Include custom fields data<br><br>**Default**: `false` |
+| `input` | [`Models.ListProformaInvoicesInput`](../../doc/models/list-proforma-invoices-input.md) | Required | Input structure for the method ListProformaInvoices |
 
 ## Response Type
 
@@ -273,7 +331,6 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
 }
 ```
@@ -318,8 +375,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
 }
 ```
 
@@ -350,7 +410,7 @@ PreviewProformaInvoiceAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
 
@@ -366,8 +426,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
 }
 ```
 
@@ -427,8 +490,15 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ProformaBadRequestErrorResponseException)
+    {
+       // TODO: Handle ProformaBadRequestErrorResponseException exception here
+    }
+    if (e is ErrorArrayMapResponseException)
+    {
+       // TODO: Handle ErrorArrayMapResponseException exception here
+    }
 }
 ```
 
@@ -493,8 +563,15 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ProformaBadRequestErrorResponseException)
+    {
+       // TODO: Handle ProformaBadRequestErrorResponseException exception here
+    }
+    if (e is ErrorArrayMapResponseException)
+    {
+       // TODO: Handle ErrorArrayMapResponseException exception here
+    }
 }
 ```
 

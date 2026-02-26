@@ -3,26 +3,14 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Globalization;
-using System.IO;
+using APIMatic.Core;
+using APIMatic.Core.Utilities;
+using AdvancedBilling.Standard.Exceptions;
+using AdvancedBilling.Standard.Models.Containers;
 using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Exceptions;
-using AdvancedBilling.Standard.Http.Client;
-using AdvancedBilling.Standard.Models.Containers;
-using AdvancedBilling.Standard.Utilities;
-using APIMatic.Core;
-using APIMatic.Core.Types;
-using APIMatic.Core.Utilities;
-using APIMatic.Core.Utilities.Date.Xml;
-using Newtonsoft.Json.Converters;
-using System.Net.Http;
 
 namespace AdvancedBilling.Standard.Controllers
 {
@@ -59,15 +47,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CreateProductPricePointRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ProductPricePointResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/products/{product_id}/price_points.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("product_id", productId).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ProductPricePointErrorResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("product_id", productId).Required())
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ProductPricePointErrorResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -89,16 +77,16 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListProductPricePointsInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ListProductPricePointsResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/products/{product_id}/price_points.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("product_id", input.ProductId).Required())
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("currency_prices", input.CurrencyPrices))
-                      .Query(_query => _query.Setup("filter[type]", input.FilterType?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))
-                      .Query(_query => _query.Setup("archived", input.Archived))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("product_id", input.ProductId).Required())
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("currency_prices", input.CurrencyPrices))
+                      .Query(query => query.Setup("filter[type]", input.FilterType?.Select(a => CoreHelper.JsonSerialize(a).Trim('\"')).ToList()))
+                      .Query(query => query.Setup("archived", input.Archived))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -130,14 +118,14 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.UpdateProductPricePointRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ProductPricePointResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/products/{product_id}/price_points/{price_point_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("product_id", productId).Required())
-                      .Template(_template => _template.Setup("price_point_id", pricePointId).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("product_id", productId).Required())
+                      .Template(template => template.Setup("price_point_id", pricePointId).Required())
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -167,13 +155,13 @@ namespace AdvancedBilling.Standard.Controllers
                 bool? currencyPrices = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ProductPricePointResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/products/{product_id}/price_points/{price_point_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("product_id", productId).Required())
-                      .Template(_template => _template.Setup("price_point_id", pricePointId).Required())
-                      .Query(_query => _query.Setup("currency_prices", currencyPrices))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("product_id", productId).Required())
+                      .Template(template => template.Setup("price_point_id", pricePointId).Required())
+                      .Query(query => query.Setup("currency_prices", currencyPrices))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -199,14 +187,14 @@ namespace AdvancedBilling.Standard.Controllers
                 ArchiveProductPricePointPricePointId pricePointId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ProductPricePointResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Delete, "/products/{product_id}/price_points/{price_point_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("product_id", productId).Required())
-                      .Template(_template => _template.Setup("price_point_id", pricePointId).Required())))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("product_id", productId).Required())
+                      .Template(template => template.Setup("price_point_id", pricePointId).Required())))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -232,12 +220,12 @@ namespace AdvancedBilling.Standard.Controllers
                 int pricePointId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ProductPricePointResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(new HttpMethod("PATCH"), "/products/{product_id}/price_points/{price_point_id}/unarchive.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("product_id", productId))
-                      .Template(_template => _template.Setup("price_point_id", pricePointId))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("product_id", productId))
+                      .Template(template => template.Setup("price_point_id", pricePointId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -265,12 +253,12 @@ namespace AdvancedBilling.Standard.Controllers
                 int pricePointId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ProductResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(new HttpMethod("PATCH"), "/products/{product_id}/price_points/{price_point_id}/default.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("product_id", productId))
-                      .Template(_template => _template.Setup("price_point_id", pricePointId))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("product_id", productId))
+                      .Template(template => template.Setup("price_point_id", pricePointId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -296,15 +284,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.BulkCreateProductPricePointsRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.BulkCreateProductPricePointsResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/products/{product_id}/price_points/bulk.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("product_id", productId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ApiException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("product_id", productId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ApiException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -334,15 +322,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CreateProductCurrencyPricesRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CurrencyPricesResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/product_price_points/{product_price_point_id}/currency_prices.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("product_price_point_id", productPricePointId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorArrayMapResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("product_price_point_id", productPricePointId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorArrayMapResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -372,15 +360,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.UpdateCurrencyPricesRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CurrencyPricesResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/product_price_points/{product_price_point_id}/currency_prices.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("product_price_point_id", productPricePointId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorArrayMapResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("product_price_point_id", productPricePointId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorArrayMapResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -402,17 +390,17 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListAllProductPricePointsInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ListProductPricePointsResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/products_price_points.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("filter", input.Filter))
-                      .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("direction", (input.Direction.HasValue) ? CoreHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("filter", input.Filter))
+                      .Query(query => query.Setup("include", (input.Include.HasValue) ? CoreHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

@@ -3,26 +3,16 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Exceptions;
-using AdvancedBilling.Standard.Http.Client;
-using AdvancedBilling.Standard.Utilities;
 using APIMatic.Core;
 using APIMatic.Core.Http.Configuration;
 using APIMatic.Core.Types;
 using APIMatic.Core.Utilities;
-using APIMatic.Core.Utilities.Date.Xml;
-using Newtonsoft.Json.Converters;
+using AdvancedBilling.Standard.Exceptions;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AdvancedBilling.Standard.Controllers
 {
@@ -69,18 +59,18 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CreateSubscriptionRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This method will return an array of subscriptions from a Site. Pay close attention to query string filters and pagination in order to control responses from the server.
+        /// returns an array of subscriptions from a Site. Pay close attention to query string filters and pagination in order to control responses from the server.
         /// ## Search for a subscription.
         /// Use the query strings below to search for a subscription using the criteria available. The return value will be an array.
         /// ## Self-Service Page token.
@@ -93,7 +83,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListSubscriptionsAsync(input));
 
         /// <summary>
-        /// This method will return an array of subscriptions from a Site. Pay close attention to query string filters and pagination in order to control responses from the server.
+        /// returns an array of subscriptions from a Site. Pay close attention to query string filters and pagination in order to control responses from the server.
         /// ## Search for a subscription.
         /// Use the query strings below to search for a subscription using the criteria available. The return value will be an array.
         /// ## Self-Service Page token.
@@ -106,26 +96,26 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListSubscriptionsInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<List<Models.SubscriptionResponse>>(ArraySerialization.UnIndexed)
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("state", (input.State.HasValue) ? ApiHelper.JsonSerialize(input.State.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("product", input.Product))
-                      .Query(_query => _query.Setup("product_price_point_id", input.ProductPricePointId))
-                      .Query(_query => _query.Setup("coupon", input.Coupon))
-                      .Query(_query => _query.Setup("coupon_code", input.CouponCode))
-                      .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("start_date", input.StartDate.HasValue ? input.StartDate.Value.ToString("yyyy'-'MM'-'dd") : null))
-                      .Query(_query => _query.Setup("end_date", input.EndDate.HasValue ? input.EndDate.Value.ToString("yyyy'-'MM'-'dd") : null))
-                      .Query(_query => _query.Setup("start_datetime", input.StartDatetime.HasValue ? input.StartDatetime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))
-                      .Query(_query => _query.Setup("end_datetime", input.EndDatetime.HasValue ? input.EndDatetime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))
-                      .Query(_query => _query.Setup("metadata", input.Metadata))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("sort", (input.Sort.HasValue) ? ApiHelper.JsonSerialize(input.Sort.Value).Trim('\"') : "signup_date"))
-                      .Query(_query => _query.Setup("include", input.Include?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("state", (input.State.HasValue) ? CoreHelper.JsonSerialize(input.State.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("product", input.Product))
+                      .Query(query => query.Setup("product_price_point_id", input.ProductPricePointId))
+                      .Query(query => query.Setup("coupon", input.Coupon))
+                      .Query(query => query.Setup("coupon_code", input.CouponCode))
+                      .Query(query => query.Setup("date_field", (input.DateField.HasValue) ? CoreHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("start_date", input.StartDate.HasValue ? input.StartDate.Value.ToString("yyyy'-'MM'-'dd") : null))
+                      .Query(query => query.Setup("end_date", input.EndDate.HasValue ? input.EndDate.Value.ToString("yyyy'-'MM'-'dd") : null))
+                      .Query(query => query.Setup("start_datetime", input.StartDatetime.HasValue ? input.StartDatetime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))
+                      .Query(query => query.Setup("end_datetime", input.EndDatetime.HasValue ? input.EndDatetime.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK") : null))
+                      .Query(query => query.Setup("metadata", input.Metadata))
+                      .Query(query => query.Setup("direction", (input.Direction.HasValue) ? CoreHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("sort", (input.Sort.HasValue) ? CoreHelper.JsonSerialize(input.Sort.Value).Trim('\"') : "signup_date"))
+                      .Query(query => query.Setup("include", input.Include?.Select(a => CoreHelper.JsonSerialize(a).Trim('\"')).ToList()))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -155,7 +145,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// For a subscription using Calendar Billing, setting the next billing date is a bit different. Send the `snap_day` attribute to change the calendar billing date for **a subscription using a product eligible for calendar billing**.
         /// > Note: If you change the product associated with a subscription that contains a `snap_day` and immediately `READ/GET` the subscription data, it will still contain original `snap_day`. The `snap_day`will will reset to 'null on the next billing cycle. This is because  a product change is instantanous and only affects the product associated with a subscription.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public Models.SubscriptionResponse UpdateSubscription(
@@ -190,7 +180,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// For a subscription using Calendar Billing, setting the next billing date is a bit different. Send the `snap_day` attribute to change the calendar billing date for **a subscription using a product eligible for calendar billing**.
         /// > Note: If you change the product associated with a subscription that contains a `snap_day` and immediately `READ/GET` the subscription data, it will still contain original `snap_day`. The `snap_day`will will reset to 'null on the next billing cycle. This is because  a product change is instantanous and only affects the product associated with a subscription.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
@@ -199,23 +189,23 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.UpdateSubscriptionRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this endpoint to find subscription details.
+        /// Retrieves subscription details.
         /// ## Self-Service Page token.
         /// Self-Service Page token for the subscription is not returned by default. If this information is desired, the include[]=self_service_page_token parameter must be provided with the request.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="include"><![CDATA[Optional parameter: Allows including additional data in the response. Use in query: `include[]=coupons&include[]=self_service_page_token`..]]></param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public Models.SubscriptionResponse ReadSubscription(
@@ -224,11 +214,11 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ReadSubscriptionAsync(subscriptionId, include));
 
         /// <summary>
-        /// Use this endpoint to find subscription details.
+        /// Retrieves subscription details.
         /// ## Self-Service Page token.
         /// Self-Service Page token for the subscription is not returned by default. If this information is desired, the include[]=self_service_page_token parameter must be provided with the request.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="include"><![CDATA[Optional parameter: Allows including additional data in the response. Use in query: `include[]=coupons&include[]=self_service_page_token`..]]></param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
@@ -237,12 +227,12 @@ namespace AdvancedBilling.Standard.Controllers
                 List<Models.SubscriptionInclude> include = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionResponse>(ArraySerialization.UnIndexed)
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Query(_query => _query.Setup("include", include?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Query(query => query.Setup("include", include?.Select(a => CoreHelper.JsonSerialize(a).Trim('\"')).ToList()))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -258,7 +248,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// 3. The value passed must be before the current date/time.
         /// If unpermitted parameters are sent, a 400 HTTP response is sent along with a string giving the reason for the problem.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: Only these fields are available to be set..</param>
         public void OverrideSubscription(
                 int subscriptionId,
@@ -278,7 +268,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// 3. The value passed must be before the current date/time.
         /// If unpermitted parameters are sent, a 400 HTTP response is sent along with a string giving the reason for the problem.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: Only these fields are available to be set..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the void response from the API call.</returns>
@@ -287,15 +277,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.OverrideSubscriptionRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/override.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SingleErrorResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new SingleErrorResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -317,13 +307,13 @@ namespace AdvancedBilling.Standard.Controllers
                 string reference = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions/lookup.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("reference", reference))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("reference", reference))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -335,7 +325,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`.
         /// ]]>
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="ack">Required parameter: id of the customer..</param>
         /// <param name="cascade"><![CDATA[Optional parameter: Options are "customer" or "payment_profile". Use in query: `cascade[]=customer&cascade[]=payment_profile`..]]></param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
@@ -354,7 +344,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`.
         /// ]]>
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="ack">Required parameter: id of the customer..</param>
         /// <param name="cascade"><![CDATA[Optional parameter: Options are "customer" or "payment_profile". Use in query: `cascade[]=customer&cascade[]=payment_profile`..]]></param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -365,21 +355,21 @@ namespace AdvancedBilling.Standard.Controllers
                 List<Models.SubscriptionPurgeType> cascade = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionResponse>(ArraySerialization.UnIndexed)
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/purge.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Query(_query => _query.Setup("ack", ack))
-                      .Query(_query => _query.Setup("cascade", cascade?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("400", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionResponseErrorException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Query(query => query.Setup("ack", ack))
+                      .Query(query => query.Setup("cascade", cascade?.Select(a => CoreHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("400", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new SubscriptionResponseErrorException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Use this endpoint to update a subscription's prepaid configuration.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.PrepaidConfigurationResponse response from the API call.</returns>
         public Models.PrepaidConfigurationResponse UpdatePrepaidSubscriptionConfiguration(
@@ -390,7 +380,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Use this endpoint to update a subscription's prepaid configuration.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.PrepaidConfigurationResponse response from the API call.</returns>
@@ -399,15 +389,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.UpsertPrepaidConfigurationRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.PrepaidConfigurationResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/prepaid_configurations.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ApiException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ApiException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -455,12 +445,12 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CreateSubscriptionRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionPreviewResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/preview.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -469,7 +459,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Passing in a coupon code as a query parameter will add the code to the subscription, completely replacing all existing coupon codes on the subscription.
         /// For this reason, using this query parameter on this endpoint has been deprecated in favor of using the request body parameters as described below. When passing in request body parameters, the list of coupon codes will simply be added to any existing list of codes on the subscription.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="code">Optional parameter: A code for the coupon that would be applied to a subscription.</param>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
@@ -485,7 +475,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Passing in a coupon code as a query parameter will add the code to the subscription, completely replacing all existing coupon codes on the subscription.
         /// For this reason, using this query parameter on this endpoint has been deprecated in favor of using the request body parameters as described below. When passing in request body parameters, the list of coupon codes will simply be added to any existing list of codes on the subscription.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="code">Optional parameter: A code for the coupon that would be applied to a subscription.</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -496,23 +486,23 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.AddCouponsRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/add_coupon.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))
-                      .Query(_query => _query.Setup("code", code))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionAddCouponErrorException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))
+                      .Query(query => query.Setup("code", code))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new SubscriptionAddCouponErrorException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Use this endpoint to remove a coupon from an existing subscription.
         /// For more information on the expected behaviour of removing a coupon from a subscription, See our documentation [here.](https://maxio.zendesk.com/hc/en-us/articles/24261259337101-Coupons-and-Subscriptions#removing-a-coupon).
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="couponCode">Optional parameter: The coupon code.</param>
         /// <returns>Returns the string response from the API call.</returns>
         public string RemoveCouponFromSubscription(
@@ -524,7 +514,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Use this endpoint to remove a coupon from an existing subscription.
         /// For more information on the expected behaviour of removing a coupon from a subscription, See our documentation [here.](https://maxio.zendesk.com/hc/en-us/articles/24261259337101-Coupons-and-Subscriptions#removing-a-coupon).
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="couponCode">Optional parameter: The coupon code.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the string response from the API call.</returns>
@@ -533,14 +523,14 @@ namespace AdvancedBilling.Standard.Controllers
                 string couponCode = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<string>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/remove_coupon.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Query(_query => _query.Setup("coupon_code", couponCode))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionRemoveCouponErrorsException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Query(query => query.Setup("coupon_code", couponCode))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new SubscriptionRemoveCouponErrorsException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -576,7 +566,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// You can read more about the behavior of trialing subscriptions [here](https://maxio.zendesk.com/hc/en-us/articles/24252155721869-Trialing-Subscriptions).
         /// When the `revert_on_failure` parameter is set to `true`, the subscription's state will remain as Trialing, we will void the invoice from activation and return any prepayments and credits applied to the invoice back to the subscription.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public Models.SubscriptionResponse ActivateSubscription(
@@ -617,7 +607,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// You can read more about the behavior of trialing subscriptions [here](https://maxio.zendesk.com/hc/en-us/articles/24252155721869-Trialing-Subscriptions).
         /// When the `revert_on_failure` parameter is set to `true`, the subscription's state will remain as Trialing, we will void the invoice from activation and return any prepayments and credits applied to the invoice back to the subscription.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
@@ -626,15 +616,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ActivateSubscriptionRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/activate.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("400", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorArrayMapResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("400", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorArrayMapResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

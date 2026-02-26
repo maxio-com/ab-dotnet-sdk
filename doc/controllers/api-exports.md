@@ -36,9 +36,7 @@ ListExportedProformaInvoicesAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `batchId` | `string` | Template, Required | Id of a Batch Job. |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request.<br>Default value is 100.<br>The maximum allowed values is 10000; any per_page value over 10000 will be changed to 10000.<br><br>**Default**: `100`<br><br>**Constraints**: `>= 1`, `<= 10000` |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br><br>**Default**: `1`<br><br>**Constraints**: `>= 1` |
+| `input` | [`Models.ListExportedProformaInvoicesInput`](../../doc/models/list-exported-proforma-invoices-input.md) | Required | Input structure for the method ListExportedProformaInvoices |
 
 ## Response Type
 
@@ -60,7 +58,6 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
 }
 ```
@@ -87,9 +84,7 @@ ListExportedInvoicesAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `batchId` | `string` | Template, Required | Id of a Batch Job. |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request.<br>Default value is 100.<br>The maximum allowed values is 10000; any per_page value over 10000 will be changed to 10000.<br><br>**Default**: `100`<br><br>**Constraints**: `>= 1`, `<= 10000` |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br><br>**Default**: `1`<br><br>**Constraints**: `>= 1` |
+| `input` | [`Models.ListExportedInvoicesInput`](../../doc/models/list-exported-invoices-input.md) | Required | Input structure for the method ListExportedInvoices |
 
 ## Response Type
 
@@ -111,7 +106,6 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
 }
 ```
@@ -138,9 +132,7 @@ ListExportedSubscriptionsAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `batchId` | `string` | Template, Required | Id of a Batch Job. |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request.<br>Default value is 100.<br>The maximum allowed values is 10000; any per_page value over 10000 will be changed to 10000.<br><br>**Default**: `100`<br><br>**Constraints**: `>= 1`, `<= 10000` |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br><br>**Default**: `1`<br><br>**Constraints**: `>= 1` |
+| `input` | [`Models.ListExportedSubscriptionsInput`](../../doc/models/list-exported-subscriptions-input.md) | Required | Input structure for the method ListExportedSubscriptions |
 
 ## Response Type
 
@@ -162,7 +154,6 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
 }
 ```
@@ -197,8 +188,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is SingleErrorResponseException)
+    {
+       // TODO: Handle SingleErrorResponseException exception here
+    }
 }
 ```
 
@@ -231,8 +225,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is SingleErrorResponseException)
+    {
+       // TODO: Handle SingleErrorResponseException exception here
+    }
 }
 ```
 
@@ -265,8 +262,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is SingleErrorResponseException)
+    {
+       // TODO: Handle SingleErrorResponseException exception here
+    }
 }
 ```
 
@@ -306,7 +306,6 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
 }
 ```
@@ -347,7 +346,6 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
 }
 ```
@@ -388,7 +386,6 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
 }
 ```

@@ -46,7 +46,7 @@
 | `NextProductHandle` | `string` | Optional | If a delayed product change is scheduled, the handle of the product that the subscription will be changed to at the next renewal. |
 | `CouponUseCount` | `int?` | Optional | (deprecated) How many times the subscription's single coupon has been used. This field has no replacement for multiple coupons. |
 | `CouponUsesAllowed` | `int?` | Optional | (deprecated) How many times the subscription's single coupon may be used. This field has no replacement for multiple coupons. |
-| `ReasonCode` | `string` | Optional | If the subscription is canceled, this is their churn code. |
+| `ReasonCode` | `string` | Optional | The churn reason code associated to a cancelled subscription. |
 | `AutomaticallyResumeAt` | `DateTimeOffset?` | Optional | The date the subscription is scheduled to automatically resume from the on_hold state. |
 | `CouponCodes` | `List<string>` | Optional | An array for all the coupons attached to the subscription. |
 | `OfferId` | `int?` | Optional | The ID of the offer associated with the subscription. |
@@ -57,7 +57,7 @@
 | `NextProductPricePointId` | `int?` | Optional | If a delayed product change is scheduled, the ID of the product price point that the subscription will be changed to at the next renewal. |
 | `NetTerms` | `int?` | Optional | On Relationship Invoicing, the number of days before a renewal invoice is due. |
 | `StoredCredentialTransactionId` | `int?` | Optional | For European sites subject to PSD2 and using 3D Secure, this can be used to reference a previous transaction for the customer. This will ensure the card will be charged successfully at renewal. |
-| `Reference` | `string` | Optional | The reference value (provided by your app) for the subscription itelf. |
+| `Reference` | `string` | Optional | The reference value (provided by your app) for the subscription istelf. |
 | `OnHoldAt` | `DateTimeOffset?` | Optional | The timestamp of the most recent on hold action. |
 | `PrepaidDunning` | `bool?` | Optional | Boolean representing whether the subscription is prepaid and currently in dunning. Only returned for Relationship Invoicing sites with the feature enabled |
 | `Coupons` | [`List<SubscriptionIncludedCoupon>`](../../doc/models/subscription-included-coupon.md) | Optional | Additional coupon data. To use this data you also have to include the following param in the request`include[]=coupons`.<br>Only in Read Subscription Endpoint. |

@@ -3,18 +3,8 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using APIMatic.Core.Utilities.Converters;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Utilities;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Collections.Generic;
 
 namespace AdvancedBilling.Standard.Models
 {
@@ -380,7 +370,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["quantity_delta"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -388,7 +377,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["pricing_details_index"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -396,7 +384,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["tax_code"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -404,7 +391,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["product_price_point_id"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -412,7 +398,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["price_point_id"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -420,7 +405,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["component_id"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -428,7 +412,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["billing_schedule_item_id"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>

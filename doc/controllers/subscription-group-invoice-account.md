@@ -47,8 +47,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
 }
 ```
 
@@ -84,10 +87,7 @@ ListPrepaymentsForSubscriptionGroupAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `uid` | `string` | Template, Required | The uid of the subscription group |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br><br>**Default**: `1`<br><br>**Constraints**: `>= 1` |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br><br>**Default**: `20`<br><br>**Constraints**: `<= 200` |
-| `filter` | [`ListPrepaymentsFilter`](../../doc/models/list-prepayments-filter.md) | Query, Optional | Filter to use for List Prepayments operations |
+| `input` | [`Models.ListPrepaymentsForSubscriptionGroupInput`](../../doc/models/list-prepayments-for-subscription-group-input.md) | Required | Input structure for the method ListPrepaymentsForSubscriptionGroup |
 
 ## Response Type
 
@@ -115,7 +115,6 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
 }
 ```
@@ -192,8 +191,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
 }
 ```
 
@@ -261,8 +263,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
 }
 ```
 

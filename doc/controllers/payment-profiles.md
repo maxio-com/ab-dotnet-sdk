@@ -138,8 +138,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
 }
 ```
 
@@ -193,9 +196,7 @@ ListPaymentProfilesAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `page` | `int?` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br><br>**Default**: `1`<br><br>**Constraints**: `>= 1` |
-| `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br><br>**Default**: `20`<br><br>**Constraints**: `<= 200` |
-| `customerId` | `int?` | Query, Optional | The ID of the customer for which you wish to list payment profiles |
+| `input` | [`Models.ListPaymentProfilesInput`](../../doc/models/list-payment-profiles-input.md) | Required | Input structure for the method ListPaymentProfiles |
 
 ## Response Type
 
@@ -216,7 +217,6 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
 }
 ```
@@ -350,7 +350,6 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
 }
 ```
@@ -475,8 +474,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ErrorStringMapResponseException)
+    {
+       // TODO: Handle ErrorStringMapResponseException exception here
+    }
 }
 ```
 
@@ -538,8 +540,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
 }
 ```
 
@@ -553,7 +558,7 @@ catch (ApiException e)
 
 # Delete Subscriptions Payment Profile
 
-This will delete a payment profile belonging to the customer on the subscription.
+Deletes a payment profile belonging to the customer on the subscription.
 
 + If the customer has multiple subscriptions, the payment profile will be removed from all of them.
 
@@ -569,7 +574,7 @@ DeleteSubscriptionsPaymentProfileAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `paymentProfileId` | `int` | Template, Required | The Chargify id of the payment profile |
 
 ## Response Type
@@ -590,7 +595,6 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
 }
 ```
@@ -639,8 +643,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
 }
 ```
 
@@ -682,7 +689,7 @@ catch (ApiException e)
 
 # Delete Subscription Group Payment Profile
 
-This will delete a Payment Profile belonging to a Subscription Group.
+Deletes a Payment Profile belonging to a Subscription Group.
 
 **Note**: If the Payment Profile belongs to multiple Subscription Groups and/or Subscriptions, it will be removed from all of them.
 
@@ -717,7 +724,6 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
 }
 ```
@@ -739,7 +745,7 @@ ChangeSubscriptionDefaultPaymentProfileAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `paymentProfileId` | `int` | Template, Required | The Chargify id of the payment profile |
 
 ## Response Type
@@ -760,8 +766,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
 }
 ```
 
@@ -841,8 +850,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
 }
 ```
 
@@ -915,8 +927,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
 }
 ```
 
@@ -946,7 +961,7 @@ SendRequestUpdatePaymentEmailAsync(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
 
@@ -962,8 +977,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
 }
 ```
 

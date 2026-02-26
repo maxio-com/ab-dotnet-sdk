@@ -3,25 +3,12 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
+using APIMatic.Core;
+using APIMatic.Core.Utilities;
+using AdvancedBilling.Standard.Exceptions;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Exceptions;
-using AdvancedBilling.Standard.Http.Client;
-using AdvancedBilling.Standard.Utilities;
-using APIMatic.Core;
-using APIMatic.Core.Types;
-using APIMatic.Core.Utilities;
-using APIMatic.Core.Utilities.Date.Xml;
-using Newtonsoft.Json.Converters;
-using System.Net.Http;
 
 namespace AdvancedBilling.Standard.Controllers
 {
@@ -76,14 +63,14 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.AutoInvite? autoInvite = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CustomerResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/portal/customers/{customer_id}/enable.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("customer_id", customerId))
-                      .Query(_query => _query.Setup("auto_invite", (autoInvite.HasValue) ? (int?)autoInvite.Value : null))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("customer_id", customerId))
+                      .Query(query => query.Setup("auto_invite", (autoInvite.HasValue) ? (int?)autoInvite.Value : null))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -117,14 +104,14 @@ namespace AdvancedBilling.Standard.Controllers
                 int customerId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.PortalManagementLink>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/portal/customers/{customer_id}/management_link.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("customer_id", customerId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true))
-                  .ErrorCase("429", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new TooManyManagementLinkRequestsErrorException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("customer_id", customerId))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true))
+                  .ErrorCase("429", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new TooManyManagementLinkRequestsErrorException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -158,14 +145,14 @@ namespace AdvancedBilling.Standard.Controllers
                 int customerId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ResentInvitation>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/portal/customers/{customer_id}/invitations/invite.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("customer_id", customerId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("customer_id", customerId))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -193,11 +180,11 @@ namespace AdvancedBilling.Standard.Controllers
                 int customerId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.RevokedInvitation>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Delete, "/portal/customers/{customer_id}/invitations/revoke.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("customer_id", customerId))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("customer_id", customerId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

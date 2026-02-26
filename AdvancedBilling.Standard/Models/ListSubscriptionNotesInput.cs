@@ -3,18 +3,8 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using APIMatic.Core.Utilities.Converters;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Utilities;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Collections.Generic;
 
 namespace AdvancedBilling.Standard.Models
 {
@@ -47,7 +37,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The Chargify id of the subscription
+        /// The Chargify id of the subscription.
         /// </summary>
         [JsonProperty("subscription_id")]
         public int SubscriptionId { get; set; }

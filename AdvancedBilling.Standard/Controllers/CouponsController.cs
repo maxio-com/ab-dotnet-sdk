@@ -3,25 +3,14 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Exceptions;
-using AdvancedBilling.Standard.Http.Client;
-using AdvancedBilling.Standard.Utilities;
 using APIMatic.Core;
 using APIMatic.Core.Types;
 using APIMatic.Core.Utilities;
-using APIMatic.Core.Utilities.Date.Xml;
-using Newtonsoft.Json.Converters;
+using AdvancedBilling.Standard.Exceptions;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AdvancedBilling.Standard.Controllers
 {
@@ -76,15 +65,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CouponRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CouponResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/product_families/{product_family_id}/coupons.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("product_family_id", productFamilyId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("product_family_id", productFamilyId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -106,15 +95,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListCouponsForProductFamilyInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<List<Models.CouponResponse>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/product_families/{product_family_id}/coupons.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("product_family_id", input.ProductFamilyId))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("filter", input.Filter))
-                      .Query(_query => _query.Setup("currency_prices", input.CurrencyPrices))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("product_family_id", input.ProductFamilyId))
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("filter", input.Filter))
+                      .Query(query => query.Setup("currency_prices", input.CurrencyPrices))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -146,13 +135,13 @@ namespace AdvancedBilling.Standard.Controllers
                 bool? currencyPrices = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CouponResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/coupons/find.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("product_family_id", productFamilyId))
-                      .Query(_query => _query.Setup("code", code))
-                      .Query(_query => _query.Setup("currency_prices", currencyPrices))))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("product_family_id", productFamilyId))
+                      .Query(query => query.Setup("code", code))
+                      .Query(query => query.Setup("currency_prices", currencyPrices))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -188,13 +177,13 @@ namespace AdvancedBilling.Standard.Controllers
                 bool? currencyPrices = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CouponResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/product_families/{product_family_id}/coupons/{coupon_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("product_family_id", productFamilyId))
-                      .Template(_template => _template.Setup("coupon_id", couponId))
-                      .Query(_query => _query.Setup("currency_prices", currencyPrices))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("product_family_id", productFamilyId))
+                      .Template(template => template.Setup("coupon_id", couponId))
+                      .Query(query => query.Setup("currency_prices", currencyPrices))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -234,16 +223,16 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CouponRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CouponResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/product_families/{product_family_id}/coupons/{coupon_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("product_family_id", productFamilyId))
-                      .Template(_template => _template.Setup("coupon_id", couponId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("product_family_id", productFamilyId))
+                      .Template(template => template.Setup("coupon_id", couponId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -273,12 +262,12 @@ namespace AdvancedBilling.Standard.Controllers
                 int couponId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CouponResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Delete, "/product_families/{product_family_id}/coupons/{coupon_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("product_family_id", productFamilyId))
-                      .Template(_template => _template.Setup("coupon_id", couponId))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("product_family_id", productFamilyId))
+                      .Template(template => template.Setup("coupon_id", couponId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -300,14 +289,14 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListCouponsInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<List<Models.CouponResponse>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/coupons.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("filter", input.Filter))
-                      .Query(_query => _query.Setup("currency_prices", input.CurrencyPrices))))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("filter", input.Filter))
+                      .Query(query => query.Setup("currency_prices", input.CurrencyPrices))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -333,12 +322,12 @@ namespace AdvancedBilling.Standard.Controllers
                 int couponId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<List<Models.CouponUsage>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/product_families/{product_family_id}/coupons/{coupon_id}/usage.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("product_family_id", productFamilyId))
-                      .Template(_template => _template.Setup("coupon_id", couponId))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("product_family_id", productFamilyId))
+                      .Template(template => template.Setup("coupon_id", couponId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -394,14 +383,14 @@ namespace AdvancedBilling.Standard.Controllers
                 int? productFamilyId = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CouponResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/coupons/validate.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("code", code).Required())
-                      .Query(_query => _query.Setup("product_family_id", productFamilyId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found: '{$response.body}'", (_reason, _context) => new SingleStringErrorResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("code", code).Required())
+                      .Query(query => query.Setup("product_family_id", productFamilyId))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found: '{$response.body}'", (errorReason, context) => new SingleStringErrorResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -429,15 +418,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CouponCurrencyRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CouponCurrencyResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/coupons/{coupon_id}/currency_prices.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("coupon_id", couponId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorStringMapResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("coupon_id", couponId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorStringMapResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -513,13 +502,13 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CouponSubcodes body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CouponSubcodesResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/coupons/{coupon_id}/codes.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("coupon_id", couponId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("coupon_id", couponId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -541,13 +530,13 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListCouponSubcodesInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CouponSubcodes>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/coupons/{coupon_id}/codes.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("coupon_id", input.CouponId))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("coupon_id", input.CouponId))
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -585,13 +574,13 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CouponSubcodes body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CouponSubcodesResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/coupons/{coupon_id}/codes.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("coupon_id", couponId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("coupon_id", couponId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -650,14 +639,14 @@ namespace AdvancedBilling.Standard.Controllers
                 string subcode,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Delete, "/coupons/{coupon_id}/codes/{subcode}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("coupon_id", couponId))
-                      .Template(_template => _template.Setup("subcode", subcode).Required())))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("coupon_id", couponId))
+                      .Template(template => template.Setup("subcode", subcode).Required())))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

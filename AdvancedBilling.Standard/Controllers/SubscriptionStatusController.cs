@@ -3,25 +3,12 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
+using APIMatic.Core;
+using APIMatic.Core.Utilities;
+using AdvancedBilling.Standard.Exceptions;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Exceptions;
-using AdvancedBilling.Standard.Http.Client;
-using AdvancedBilling.Standard.Utilities;
-using APIMatic.Core;
-using APIMatic.Core.Types;
-using APIMatic.Core.Utilities;
-using APIMatic.Core.Utilities.Date.Xml;
-using Newtonsoft.Json.Converters;
-using System.Net.Http;
 
 namespace AdvancedBilling.Standard.Controllers
 {
@@ -42,7 +29,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ## Failed Reactivation.
         /// The response will be `422 "Unprocessable Entity`.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public Models.SubscriptionResponse RetrySubscription(
                 int subscriptionId)
@@ -55,26 +42,27 @@ namespace AdvancedBilling.Standard.Controllers
         /// ## Failed Reactivation.
         /// The response will be `422 "Unprocessable Entity`.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public async Task<Models.SubscriptionResponse> RetrySubscriptionAsync(
                 int subscriptionId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/retry.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", subscriptionId))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// The DELETE action causes the cancellation of the Subscription. This means, the method sets the Subscription state to "canceled".
+        /// Cancels the Subscription. The Delete method sets the Subscription state to `canceled`.
+        /// To cancel the subscription immediately, omit any schedule parameters from the request. To use the schedule options, the Schedule Subscription Cancellation feature must be enabled on your site.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public Models.SubscriptionResponse CancelSubscription(
@@ -83,9 +71,10 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(CancelSubscriptionAsync(subscriptionId, body));
 
         /// <summary>
-        /// The DELETE action causes the cancellation of the Subscription. This means, the method sets the Subscription state to "canceled".
+        /// Cancels the Subscription. The Delete method sets the Subscription state to `canceled`.
+        /// To cancel the subscription immediately, omit any schedule parameters from the request. To use the schedule options, the Schedule Subscription Cancellation feature must be enabled on your site.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
@@ -94,23 +83,23 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CancellationRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ApiException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ApiException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Resume a paused (on-hold) subscription. If the normal next renewal date has not passed, the subscription will return to active and will renew on that date.  Otherwise, it will behave like a reactivation, setting the billing date to 'now' and charging the subscriber.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="calendarBillingResumptionCharge">Optional parameter: (For calendar billing subscriptions only) The way that the resumed subscription's charge should be handled.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
+        /// <param name="calendarBillingResumptionCharge">Optional parameter: (For calendar billing subscriptions only) The way that the resumed subscription's charge should be handled..</param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public Models.SubscriptionResponse ResumeSubscription(
                 int subscriptionId,
@@ -120,8 +109,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Resume a paused (on-hold) subscription. If the normal next renewal date has not passed, the subscription will return to active and will renew on that date.  Otherwise, it will behave like a reactivation, setting the billing date to 'now' and charging the subscriber.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
-        /// <param name="calendarBillingResumptionCharge">Optional parameter: (For calendar billing subscriptions only) The way that the resumed subscription's charge should be handled.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
+        /// <param name="calendarBillingResumptionCharge">Optional parameter: (For calendar billing subscriptions only) The way that the resumed subscription's charge should be handled..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public async Task<Models.SubscriptionResponse> ResumeSubscriptionAsync(
@@ -129,14 +118,14 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ResumptionCharge? calendarBillingResumptionCharge = Models.ResumptionCharge.Prorated,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/resume.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Query(_query => _query.Setup("calendar_billing['resumption_charge']", (calendarBillingResumptionCharge.HasValue) ? ApiHelper.JsonSerialize(calendarBillingResumptionCharge.Value).Trim('\"') : "prorated"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Query(query => query.Setup("calendar_billing['resumption_charge']", (calendarBillingResumptionCharge.HasValue) ? CoreHelper.JsonSerialize(calendarBillingResumptionCharge.Value).Trim('\"') : "prorated"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -144,7 +133,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ## Limitations.
         /// You may not place a subscription on hold if the `next_billing_at` date is within 24 hours.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public Models.SubscriptionResponse PauseSubscription(
@@ -157,7 +146,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ## Limitations.
         /// You may not place a subscription on hold if the `next_billing_at` date is within 24 hours.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
@@ -166,15 +155,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.PauseRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/hold.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -183,7 +172,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ### Remove the resume date.
         /// Alternately, you can change the `automatically_resume_at` to `null` if you would like the subscription to not have a resume date.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public Models.SubscriptionResponse UpdateAutomaticSubscriptionResumption(
@@ -197,7 +186,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ### Remove the resume date.
         /// Alternately, you can change the `automatically_resume_at` to `null` if you would like the subscription to not have a resume date.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
@@ -206,19 +195,19 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.PauseRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/hold.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Advanced Billing offers the ability to reactivate a previously canceled subscription. For details on how the reactivation works, and how to reactivate subscriptions through the application, see [reactivation](https://maxio.zendesk.com/hc/en-us/articles/24252109503629-Reactivating-and-Resuming).
+        /// Reactivate a previously canceled subscription. For details on how the reactivation works, and how to reactivate subscriptions through the application, see [reactivation](https://maxio.zendesk.com/hc/en-us/articles/24252109503629-Reactivating-and-Resuming).
         /// **Note: The term "resume" is used also during another process in Advanced Billing. This occurs when an on-hold subscription is "resumed". This returns the subscription to an active state.**.
         /// + The response returns the subscription object in the `active` or `trialing` state.
         /// + The `canceled_at` and `cancellation_message` fields do not have values.
@@ -230,6 +219,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Consider a subscription which was created on June 1st, and would renew on July 1st. The subscription is then canceled on June 15.
         /// If a reactivation with `resume: true` were attempted _before_ what would have been the next billing date of July 1st, then Advanced Billing would resume the subscription.
         /// If a reactivation with `resume: true` were attempted _after_ what would have been the next billing date of July 1st, then Advanced Billing would not resume the subscription, and instead it would be reactivated with a new billing period.
+        /// If a reactivation with `resume: false`, or where 'resume" is omited were attempted, then Advanced Billing would reactivate the subscription with a new billing period regardless of whether or not resuming the previous billing period were possible.
         /// | Canceled | Reactivation | Resumable? |.
         /// |---|---|---|.
         /// | Jun 15 | June 28 | Yes |.
@@ -316,7 +306,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// + The next billing date should not have changed.
         /// + Any product-related charges should have been collected.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public Models.SubscriptionResponse ReactivateSubscription(
@@ -325,7 +315,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ReactivateSubscriptionAsync(subscriptionId, body));
 
         /// <summary>
-        /// Advanced Billing offers the ability to reactivate a previously canceled subscription. For details on how the reactivation works, and how to reactivate subscriptions through the application, see [reactivation](https://maxio.zendesk.com/hc/en-us/articles/24252109503629-Reactivating-and-Resuming).
+        /// Reactivate a previously canceled subscription. For details on how the reactivation works, and how to reactivate subscriptions through the application, see [reactivation](https://maxio.zendesk.com/hc/en-us/articles/24252109503629-Reactivating-and-Resuming).
         /// **Note: The term "resume" is used also during another process in Advanced Billing. This occurs when an on-hold subscription is "resumed". This returns the subscription to an active state.**.
         /// + The response returns the subscription object in the `active` or `trialing` state.
         /// + The `canceled_at` and `cancellation_message` fields do not have values.
@@ -337,6 +327,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Consider a subscription which was created on June 1st, and would renew on July 1st. The subscription is then canceled on June 15.
         /// If a reactivation with `resume: true` were attempted _before_ what would have been the next billing date of July 1st, then Advanced Billing would resume the subscription.
         /// If a reactivation with `resume: true` were attempted _after_ what would have been the next billing date of July 1st, then Advanced Billing would not resume the subscription, and instead it would be reactivated with a new billing period.
+        /// If a reactivation with `resume: false`, or where 'resume" is omited were attempted, then Advanced Billing would reactivate the subscription with a new billing period regardless of whether or not resuming the previous billing period were possible.
         /// | Canceled | Reactivation | Resumable? |.
         /// |---|---|---|.
         /// | Jun 15 | June 28 | Yes |.
@@ -423,7 +414,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// + The next billing date should not have changed.
         /// + Any product-related charges should have been collected.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
@@ -432,23 +423,21 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ReactivateSubscriptionRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/reactivate.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Advanced Billing offers the ability to cancel a subscription at the end of the current billing period. This period is set by its current product.
-        /// Requesting to cancel the subscription at the end of the period sets the `cancel_at_end_of_period` flag to true.
-        /// Note that you cannot set `cancel_at_end_of_period` at subscription creation, or if the subscription is past due.
+        /// Cancels a subscription at the end of the current billing period based on the subscription's current product. You cannot set `cancel_at_end_of_period` at subscription creation, or if the subscription is past due.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.DelayedCancellationResponse response from the API call.</returns>
         public Models.DelayedCancellationResponse InitiateDelayedCancellation(
@@ -457,11 +446,9 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(InitiateDelayedCancellationAsync(subscriptionId, body));
 
         /// <summary>
-        /// Advanced Billing offers the ability to cancel a subscription at the end of the current billing period. This period is set by its current product.
-        /// Requesting to cancel the subscription at the end of the period sets the `cancel_at_end_of_period` flag to true.
-        /// Note that you cannot set `cancel_at_end_of_period` at subscription creation, or if the subscription is past due.
+        /// Cancels a subscription at the end of the current billing period based on the subscription's current product. You cannot set `cancel_at_end_of_period` at subscription creation, or if the subscription is past due.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.DelayedCancellationResponse response from the API call.</returns>
@@ -470,23 +457,23 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CancellationRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.DelayedCancellationResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/delayed_cancel.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Removing the delayed cancellation on a subscription will ensure that it doesn't get canceled at the end of the period that it is in. The request will reset the `cancel_at_end_of_period` flag to `false`.
         /// This endpoint is idempotent. If the subscription was not set to cancel in the future, removing the delayed cancellation has no effect and the call will be successful.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <returns>Returns the Models.DelayedCancellationResponse response from the API call.</returns>
         public Models.DelayedCancellationResponse CancelDelayedCancellation(
                 int subscriptionId)
@@ -496,26 +483,26 @@ namespace AdvancedBilling.Standard.Controllers
         /// Removing the delayed cancellation on a subscription will ensure that it doesn't get canceled at the end of the period that it is in. The request will reset the `cancel_at_end_of_period` flag to `false`.
         /// This endpoint is idempotent. If the subscription was not set to cancel in the future, removing the delayed cancellation has no effect and the call will be successful.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.DelayedCancellationResponse response from the API call.</returns>
         public async Task<Models.DelayedCancellationResponse> CancelDelayedCancellationAsync(
                 int subscriptionId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.DelayedCancellationResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/delayed_cancel.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", subscriptionId))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// If a subscription is currently in dunning, the subscription will be set to active and the active Dunner will be resolved.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public Models.SubscriptionResponse CancelDunning(
                 int subscriptionId)
@@ -524,20 +511,20 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// If a subscription is currently in dunning, the subscription will be set to active and the active Dunner will be resolved.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public async Task<Models.SubscriptionResponse> CancelDunningAsync(
                 int subscriptionId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/cancel_dunning.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", subscriptionId))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -553,9 +540,9 @@ namespace AdvancedBilling.Standard.Controllers
         /// In the above statements, "current" means the quantity or value as of the call to the renewal preview endpoint. We do not predict end-of-period values for components, so metered or events-based usage may be less than it will eventually be at the end of the period.
         /// Optionally, **you may provide your own custom quantities** for any component to see a billing preview for non-current quantities. This is accomplished by sending a request body with data under the `components` key. See the request body documentation below.
         /// ## Subscription Side Effects.
-        /// You can request a `POST` to obtain this data from the endpoint without any side effects. Plain and simple, this will preview data, not log any changes against a subscription.
+        /// You can request a `POST` to obtain this data from the endpoint without any side effects. This method allows you to preview data, but does not log any changes against a subscription.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.RenewalPreviewResponse response from the API call.</returns>
         public Models.RenewalPreviewResponse PreviewRenewal(
@@ -576,9 +563,9 @@ namespace AdvancedBilling.Standard.Controllers
         /// In the above statements, "current" means the quantity or value as of the call to the renewal preview endpoint. We do not predict end-of-period values for components, so metered or events-based usage may be less than it will eventually be at the end of the period.
         /// Optionally, **you may provide your own custom quantities** for any component to see a billing preview for non-current quantities. This is accomplished by sending a request body with data under the `components` key. See the request body documentation below.
         /// ## Subscription Side Effects.
-        /// You can request a `POST` to obtain this data from the endpoint without any side effects. Plain and simple, this will preview data, not log any changes against a subscription.
+        /// You can request a `POST` to obtain this data from the endpoint without any side effects. This method allows you to preview data, but does not log any changes against a subscription.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.RenewalPreviewResponse response from the API call.</returns>
@@ -587,15 +574,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.RenewalPreviewRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.RenewalPreviewResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/renewals/preview.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

@@ -3,18 +3,8 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using APIMatic.Core.Utilities.Converters;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Utilities;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Collections.Generic;
 
 namespace AdvancedBilling.Standard.Models
 {
@@ -36,14 +26,17 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="recipientEmails">recipient_emails.</param>
         /// <param name="ccRecipientEmails">cc_recipient_emails.</param>
         /// <param name="bccRecipientEmails">bcc_recipient_emails.</param>
+        /// <param name="attachmentUrls">attachment_urls.</param>
         public SendInvoiceRequest(
             List<string> recipientEmails = null,
             List<string> ccRecipientEmails = null,
-            List<string> bccRecipientEmails = null)
+            List<string> bccRecipientEmails = null,
+            List<string> attachmentUrls = null)
         {
             this.RecipientEmails = recipientEmails;
             this.CcRecipientEmails = ccRecipientEmails;
             this.BccRecipientEmails = bccRecipientEmails;
+            this.AttachmentUrls = attachmentUrls;
         }
 
         /// <summary>
@@ -63,6 +56,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("bcc_recipient_emails", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> BccRecipientEmails { get; set; }
+
+        /// <summary>
+        /// Array of URLs to files to attach to the invoice email. Max 10 files, 10MB each.
+        /// </summary>
+        [JsonProperty("attachment_urls", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> AttachmentUrls { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -85,6 +84,8 @@ namespace AdvancedBilling.Standard.Models
                  this.CcRecipientEmails?.Equals(other.CcRecipientEmails) == true) &&
                 (this.BccRecipientEmails == null && other.BccRecipientEmails == null ||
                  this.BccRecipientEmails?.Equals(other.BccRecipientEmails) == true) &&
+                (this.AttachmentUrls == null && other.AttachmentUrls == null ||
+                 this.AttachmentUrls?.Equals(other.AttachmentUrls) == true) &&
                 base.Equals(obj);
         }
 
@@ -97,6 +98,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"RecipientEmails = {(this.RecipientEmails == null ? "null" : $"[{string.Join(", ", this.RecipientEmails)} ]")}");
             toStringOutput.Add($"CcRecipientEmails = {(this.CcRecipientEmails == null ? "null" : $"[{string.Join(", ", this.CcRecipientEmails)} ]")}");
             toStringOutput.Add($"BccRecipientEmails = {(this.BccRecipientEmails == null ? "null" : $"[{string.Join(", ", this.BccRecipientEmails)} ]")}");
+            toStringOutput.Add($"AttachmentUrls = {(this.AttachmentUrls == null ? "null" : $"[{string.Join(", ", this.AttachmentUrls)} ]")}");
 
             base.ToString(toStringOutput);
         }
