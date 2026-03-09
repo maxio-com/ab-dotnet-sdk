@@ -16,11 +16,9 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class UpdateSubscription : BaseModel
     {
-        private UpdateSubscriptionSnapDay snapDay;
         private string dunningCommunicationDelayTimeZone;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
-            { "snap_day", false },
             { "dunning_communication_delay_time_zone", false },
         };
 
@@ -86,11 +84,7 @@ namespace AdvancedBilling.Standard.Models
             this.ProductChangeDelayed = productChangeDelayed;
             this.NextProductId = nextProductId;
             this.NextProductPricePointId = nextProductPricePointId;
-
-            if (snapDay != null)
-            {
-                this.SnapDay = snapDay;
-            }
+            this.SnapDay = snapDay;
             this.InitialBillingAt = initialBillingAt;
             this.DeferSignup = deferSignup;
             this.NextBillingAt = nextBillingAt;
@@ -149,22 +143,10 @@ namespace AdvancedBilling.Standard.Models
         public string NextProductPricePointId { get; set; }
 
         /// <summary>
-        /// Use for subscriptions with product eligible for calendar billing only. Value can be 1-28 or 'end'.
+        /// A day of month that subscription will be processed on. Can be 1 up to 28 or 'end'.
         /// </summary>
-        [JsonProperty("snap_day")]
-        public UpdateSubscriptionSnapDay SnapDay
-        {
-            get
-            {
-                return this.snapDay;
-            }
-
-            set
-            {
-                this.shouldSerialize["snap_day"] = true;
-                this.snapDay = value;
-            }
-        }
+        [JsonProperty("snap_day", NullValueHandling = NullValueHandling.Ignore)]
+        public UpdateSubscriptionSnapDay SnapDay { get; set; }
 
         /// <summary>
         /// (Optional) Set this attribute to a future date/time to update a subscription in the Awaiting Signup Date state, to Awaiting Signup. In the Awaiting Signup state, a subscription behaves like any other. It can be canceled, allocated to, or have its billing date changed. etc. When the `initial_billing_at` date hits, the subscription will transition to the expected state. If the product has a trial, the subscription will enter a trial, otherwise it will go active. Setup fees will be respected either before or after the trial, as configured on the price point. If the payment is due at the initial_billing_at and it fails the subscription will be immediately canceled. You can omit the initial_billing_at date to activate the subscription immediately. See the [subscription import](https://maxio.zendesk.com/hc/en-us/articles/24251489107213-Advanced-Billing-Subscription-Imports#date-format) documentation for more information about Date/Time formats.
@@ -282,25 +264,9 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
-        public void UnsetSnapDay()
-        {
-            this.shouldSerialize["snap_day"] = false;
-        }
-        /// <summary>
-        /// Marks the field to not be serialized.
-        /// </summary>
         public void UnsetDunningCommunicationDelayTimeZone()
         {
             this.shouldSerialize["dunning_communication_delay_time_zone"] = false;
-        }
-
-        /// <summary>
-        /// Checks if the field should be serialized or not.
-        /// </summary>
-        /// <returns>A boolean weather the field should be serialized or not.</returns>
-        public bool ShouldSerializeSnapDay()
-        {
-            return this.shouldSerialize["snap_day"];
         }
 
         /// <summary>

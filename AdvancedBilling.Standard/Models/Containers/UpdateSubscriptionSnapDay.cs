@@ -16,13 +16,24 @@ namespace AdvancedBilling.Standard.Models.Containers
     [JsonConverter(
         typeof(UnionTypeConverter<UpdateSubscriptionSnapDay>),
         new[] {
-            typeof(NumberCase),
-            typeof(SnapDayCase)
+            typeof(MStringCase),
+            typeof(NumberCase)
         },
         true
     )]
     public abstract class UpdateSubscriptionSnapDay
     {
+        /// <summary>
+        /// This is String case.
+        /// </summary>
+        /// <returns>
+        /// The UpdateSubscriptionSnapDay instance, wrapping the provided string value.
+        /// </returns>
+        public static UpdateSubscriptionSnapDay FromString(string mString)
+        {
+            return new MStringCase().Set(mString);
+        }
+
         /// <summary>
         /// This is Number case.
         /// </summary>
@@ -35,17 +46,6 @@ namespace AdvancedBilling.Standard.Models.Containers
         }
 
         /// <summary>
-        /// This is SnapDay case.
-        /// </summary>
-        /// <returns>
-        /// The UpdateSubscriptionSnapDay instance, wrapping the provided SnapDay value.
-        /// </returns>
-        public static UpdateSubscriptionSnapDay FromSnapDay(SnapDay snapDay)
-        {
-            return new SnapDayCase().Set(snapDay);
-        }
-
-        /// <summary>
         /// Method to match from the provided one-of cases. Here parameters
         /// represents the callback functions for one-of type cases. All
         /// callback functions must have the same return type T. This typeparam T
@@ -53,7 +53,7 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// callback function.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public abstract T Match<T>(Func<int, T> number, Func<SnapDay, T> snapDay);
+        public abstract T Match<T>(Func<string, T> mString, Func<int, T> number);
 
         /// <summary>
         /// Method to match from the provided one-of cases. The parameters represent
@@ -64,15 +64,47 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// callback function, or the default value if no callback is provided for the matched case.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public T MatchSome<T>(Func<int, T> number = null, Func<SnapDay, T> snapDay = null) =>
-                Match(number, snapDay);
+        public T MatchSome<T>(Func<string, T> mString = null, Func<int, T> number = null) =>
+                Match(mString, number);
+
+        [JsonConverter(typeof(UnionTypeCaseConverter<MStringCase, string>), JTokenType.String, JTokenType.Null)]
+        private sealed class MStringCase : UpdateSubscriptionSnapDay, ICaseValue<MStringCase, string>
+        {
+            public string Value;
+
+            public override T Match<T>(Func<string, T> mString, Func<int, T> number) =>
+                   mString != null ? mString(Value) : default;
+
+            public MStringCase Set(string value)
+            {
+                Value = value;
+                return this;
+            }
+
+            public string Get()
+            {
+                return Value;
+            }
+
+            public override string ToString()
+            {
+                return Value?.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is MStringCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
+            }
+        }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<NumberCase, int>), JTokenType.Integer)]
         private sealed class NumberCase : UpdateSubscriptionSnapDay, ICaseValue<NumberCase, int>
         {
             public int Value;
 
-            public override T Match<T>(Func<int, T> number, Func<SnapDay, T> snapDay) =>
+            public override T Match<T>(Func<string, T> mString, Func<int, T> number) =>
                    number != null ? number(Value) : default;
 
             public NumberCase Set(int value)
@@ -94,38 +126,6 @@ namespace AdvancedBilling.Standard.Models.Containers
             public override bool Equals(object obj)
             {
                 if (!(obj is NumberCase other)) return false;
-                if (ReferenceEquals(this, other)) return true;
-                return Value.Equals(other.Value); 
-            }
-        }
-
-        [JsonConverter(typeof(UnionTypeCaseConverter<SnapDayCase, SnapDay>))]
-        private sealed class SnapDayCase : UpdateSubscriptionSnapDay, ICaseValue<SnapDayCase, SnapDay>
-        {
-            public SnapDay Value;
-
-            public override T Match<T>(Func<int, T> number, Func<SnapDay, T> snapDay) =>
-                   snapDay != null ? snapDay(Value) : default;
-
-            public SnapDayCase Set(SnapDay value)
-            {
-                Value = value;
-                return this;
-            }
-
-            public SnapDay Get()
-            {
-                return Value;
-            }
-
-            public override string ToString()
-            {
-                return Value.ToString();
-            }
-
-            public override bool Equals(object obj)
-            {
-                if (!(obj is SnapDayCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
                 return Value.Equals(other.Value); 
             }

@@ -10,5 +10,5 @@
 | Type | Factory Method |
 |  --- | --- |
 | `int` | CalendarBillingSnapDay.FromNumber(int number) |
-| [`SnapDay`](../../../doc/models/snap-day.md) | CalendarBillingSnapDay.FromSnapDay(SnapDay snapDay) |
+| `string` | CalendarBillingSnapDay.FromString(string mString) |
 

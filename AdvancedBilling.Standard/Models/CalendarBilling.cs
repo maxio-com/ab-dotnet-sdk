@@ -14,12 +14,6 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class CalendarBilling : BaseModel
     {
-        private CalendarBillingSnapDay snapDay;
-        private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
-        {
-            { "snap_day", false },
-        };
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarBilling"/> class.
         /// </summary>
@@ -36,31 +30,15 @@ namespace AdvancedBilling.Standard.Models
             CalendarBillingSnapDay snapDay = null,
             Models.FirstChargeType? calendarBillingFirstCharge = null)
         {
-
-            if (snapDay != null)
-            {
-                this.SnapDay = snapDay;
-            }
+            this.SnapDay = snapDay;
             this.CalendarBillingFirstCharge = calendarBillingFirstCharge;
         }
 
         /// <summary>
         /// A day of month that subscription will be processed on. Can be 1 up to 28 or 'end'.
         /// </summary>
-        [JsonProperty("snap_day")]
-        public CalendarBillingSnapDay SnapDay
-        {
-            get
-            {
-                return this.snapDay;
-            }
-
-            set
-            {
-                this.shouldSerialize["snap_day"] = true;
-                this.snapDay = value;
-            }
-        }
+        [JsonProperty("snap_day", NullValueHandling = NullValueHandling.Ignore)]
+        public CalendarBillingSnapDay SnapDay { get; set; }
 
         /// <summary>
         /// Gets or sets CalendarBillingFirstCharge.
@@ -74,23 +52,6 @@ namespace AdvancedBilling.Standard.Models
             var toStringOutput = new List<string>();
             this.ToString(toStringOutput);
             return $"CalendarBilling : ({string.Join(", ", toStringOutput)})";
-        }
-
-        /// <summary>
-        /// Marks the field to not be serialized.
-        /// </summary>
-        public void UnsetSnapDay()
-        {
-            this.shouldSerialize["snap_day"] = false;
-        }
-
-        /// <summary>
-        /// Checks if the field should be serialized or not.
-        /// </summary>
-        /// <returns>A boolean weather the field should be serialized or not.</returns>
-        public bool ShouldSerializeSnapDay()
-        {
-            return this.shouldSerialize["snap_day"];
         }
 
         /// <inheritdoc/>
