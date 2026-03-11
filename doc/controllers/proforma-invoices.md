@@ -13,9 +13,9 @@ ProformaInvoicesController proformaInvoicesController = client.ProformaInvoicesC
 * [Create Consolidated Proforma Invoice](../../doc/controllers/proforma-invoices.md#create-consolidated-proforma-invoice)
 * [List Subscription Group Proforma Invoices](../../doc/controllers/proforma-invoices.md#list-subscription-group-proforma-invoices)
 * [Read Proforma Invoice](../../doc/controllers/proforma-invoices.md#read-proforma-invoice)
-* [Deliver Proforma Invoice](../../doc/controllers/proforma-invoices.md#deliver-proforma-invoice)
 * [Create Proforma Invoice](../../doc/controllers/proforma-invoices.md#create-proforma-invoice)
 * [List Proforma Invoices](../../doc/controllers/proforma-invoices.md#list-proforma-invoices)
+* [Deliver Proforma Invoice](../../doc/controllers/proforma-invoices.md#deliver-proforma-invoice)
 * [Void Proforma Invoice](../../doc/controllers/proforma-invoices.md#void-proforma-invoice)
 * [Preview Proforma Invoice](../../doc/controllers/proforma-invoices.md#preview-proforma-invoice)
 * [Create Signup Proforma Invoice](../../doc/controllers/proforma-invoices.md#create-signup-proforma-invoice)
@@ -168,77 +168,6 @@ catch (ApiException e)
 | 404 | Not Found | `ApiException` |
 
 
-# Deliver Proforma Invoice
-
-Allows for proforma invoices to be programmatically delivered via email. Supports email
-delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
-
-If `recipient_emails` is omitted, the system will fall back to the primary recipient derived from the invoice or
-subscription. At least one recipient must be present, either via the request body or via this default behavior, so an
-empty body may still succeed when defaults are available.
-
-```csharp
-DeliverProformaInvoiceAsync(
-    string proformaInvoiceUid,
-    Models.DeliverProformaInvoiceRequest body = null)
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `proformaInvoiceUid` | `string` | Template, Required | The uid of the proforma invoice |
-| `body` | [`DeliverProformaInvoiceRequest`](../../doc/models/deliver-proforma-invoice-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`Task<Models.ProformaInvoice>`](../../doc/models/proforma-invoice.md)
-
-## Example Usage
-
-```csharp
-string proformaInvoiceUid = "proforma_invoice_uid4";
-DeliverProformaInvoiceRequest body = new DeliverProformaInvoiceRequest
-{
-    RecipientEmails = new List<string>
-    {
-        "user0@example.com",
-    },
-    CcRecipientEmails = new List<string>
-    {
-        "user1@example.com",
-    },
-    BccRecipientEmails = new List<string>
-    {
-        "user2@example.com",
-    },
-};
-
-try
-{
-    ProformaInvoice result = await proformaInvoicesController.DeliverProformaInvoiceAsync(
-        proformaInvoiceUid,
-        body
-    );
-}
-catch (ApiException e)
-{
-    Console.WriteLine(e.Message);
-    if (e is ErrorListResponseException)
-    {
-       // TODO: Handle ErrorListResponseException exception here
-    }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
 # Create Proforma Invoice
 
 This endpoint will create a proforma invoice and return it as a response. If the information becomes outdated, simply void the old proforma invoice and generate a new one.
@@ -334,6 +263,77 @@ catch (ApiException e)
     Console.WriteLine(e.Message);
 }
 ```
+
+
+# Deliver Proforma Invoice
+
+Allows for proforma invoices to be programmatically delivered via email. Supports email
+delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
+
+If `recipient_emails` is omitted, the system will fall back to the primary recipient derived from the invoice or
+subscription. At least one recipient must be present, either via the request body or via this default behavior, so an
+empty body may still succeed when defaults are available.
+
+```csharp
+DeliverProformaInvoiceAsync(
+    string proformaInvoiceUid,
+    Models.DeliverProformaInvoiceRequest body = null)
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `proformaInvoiceUid` | `string` | Template, Required | The uid of the proforma invoice |
+| `body` | [`DeliverProformaInvoiceRequest`](../../doc/models/deliver-proforma-invoice-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Task<Models.ProformaInvoice>`](../../doc/models/proforma-invoice.md)
+
+## Example Usage
+
+```csharp
+string proformaInvoiceUid = "proforma_invoice_uid4";
+DeliverProformaInvoiceRequest body = new DeliverProformaInvoiceRequest
+{
+    RecipientEmails = new List<string>
+    {
+        "user0@example.com",
+    },
+    CcRecipientEmails = new List<string>
+    {
+        "user1@example.com",
+    },
+    BccRecipientEmails = new List<string>
+    {
+        "user2@example.com",
+    },
+};
+
+try
+{
+    ProformaInvoice result = await proformaInvoicesController.DeliverProformaInvoiceAsync(
+        proformaInvoiceUid,
+        body
+    );
+}
+catch (ApiException e)
+{
+    Console.WriteLine(e.Message);
+    if (e is ErrorListResponseException)
+    {
+       // TODO: Handle ErrorListResponseException exception here
+    }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # Void Proforma Invoice

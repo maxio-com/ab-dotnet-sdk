@@ -125,49 +125,6 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Allows for proforma invoices to be programmatically delivered via email. Supports email.
-        /// delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
-        /// If `recipient_emails` is omitted, the system will fall back to the primary recipient derived from the invoice or.
-        /// subscription. At least one recipient must be present, either via the request body or via this default behavior, so an.
-        /// empty body may still succeed when defaults are available.
-        /// </summary>
-        /// <param name="proformaInvoiceUid">Required parameter: The uid of the proforma invoice.</param>
-        /// <param name="body">Optional parameter: .</param>
-        /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
-        public Models.ProformaInvoice DeliverProformaInvoice(
-                string proformaInvoiceUid,
-                Models.DeliverProformaInvoiceRequest body = null)
-            => CoreHelper.RunTask(DeliverProformaInvoiceAsync(proformaInvoiceUid, body));
-
-        /// <summary>
-        /// Allows for proforma invoices to be programmatically delivered via email. Supports email.
-        /// delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
-        /// If `recipient_emails` is omitted, the system will fall back to the primary recipient derived from the invoice or.
-        /// subscription. At least one recipient must be present, either via the request body or via this default behavior, so an.
-        /// empty body may still succeed when defaults are available.
-        /// </summary>
-        /// <param name="proformaInvoiceUid">Required parameter: The uid of the proforma invoice.</param>
-        /// <param name="body">Optional parameter: .</param>
-        /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
-        public async Task<Models.ProformaInvoice> DeliverProformaInvoiceAsync(
-                string proformaInvoiceUid,
-                Models.DeliverProformaInvoiceRequest body = null,
-                CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ProformaInvoice>()
-              .RequestBuilder(requestBuilder => requestBuilder
-                  .Setup(HttpMethod.Post, "/proforma_invoices/{proforma_invoice_uid}.json")
-                  .WithAuth("BasicAuth")
-                  .Parameters(parameters => parameters
-                      .Body(b => b.Setup(body))
-                      .Template(template => template.Setup("proforma_invoice_uid", proformaInvoiceUid).Required())
-                      .Header(header => header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(responseHandler => responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
-              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// This endpoint will create a proforma invoice and return it as a response. If the information becomes outdated, simply void the old proforma invoice and generate a new one.
         /// If you would like to preview the next billing amounts without generating a full proforma invoice, use the renewal preview endpoint.
         /// ## Restrictions.
@@ -237,6 +194,49 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(query => query.Setup("credits", input.Credits))
                       .Query(query => query.Setup("payments", input.Payments))
                       .Query(query => query.Setup("custom_fields", input.CustomFields))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Allows for proforma invoices to be programmatically delivered via email. Supports email.
+        /// delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
+        /// If `recipient_emails` is omitted, the system will fall back to the primary recipient derived from the invoice or.
+        /// subscription. At least one recipient must be present, either via the request body or via this default behavior, so an.
+        /// empty body may still succeed when defaults are available.
+        /// </summary>
+        /// <param name="proformaInvoiceUid">Required parameter: The uid of the proforma invoice.</param>
+        /// <param name="body">Optional parameter: .</param>
+        /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
+        public Models.ProformaInvoice DeliverProformaInvoice(
+                string proformaInvoiceUid,
+                Models.DeliverProformaInvoiceRequest body = null)
+            => CoreHelper.RunTask(DeliverProformaInvoiceAsync(proformaInvoiceUid, body));
+
+        /// <summary>
+        /// Allows for proforma invoices to be programmatically delivered via email. Supports email.
+        /// delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
+        /// If `recipient_emails` is omitted, the system will fall back to the primary recipient derived from the invoice or.
+        /// subscription. At least one recipient must be present, either via the request body or via this default behavior, so an.
+        /// empty body may still succeed when defaults are available.
+        /// </summary>
+        /// <param name="proformaInvoiceUid">Required parameter: The uid of the proforma invoice.</param>
+        /// <param name="body">Optional parameter: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
+        public async Task<Models.ProformaInvoice> DeliverProformaInvoiceAsync(
+                string proformaInvoiceUid,
+                Models.DeliverProformaInvoiceRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ProformaInvoice>()
+              .RequestBuilder(requestBuilder => requestBuilder
+                  .Setup(HttpMethod.Post, "/proforma_invoices/{proforma_invoice_uid}/deliveries.json")
+                  .WithAuth("BasicAuth")
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("proforma_invoice_uid", proformaInvoiceUid).Required())
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
