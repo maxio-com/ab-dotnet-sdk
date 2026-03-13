@@ -46,8 +46,11 @@ try
 }
 catch (ApiException e)
 {
-    // TODO: Handle exception here
     Console.WriteLine(e.Message);
+    if (e is SingleStringErrorResponseException)
+    {
+       // TODO: Handle SingleStringErrorResponseException exception here
+    }
 }
 ```
 

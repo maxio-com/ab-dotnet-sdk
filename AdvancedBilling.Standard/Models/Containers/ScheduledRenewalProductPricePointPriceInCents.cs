@@ -1,4 +1,4 @@
-// <copyright file="SubscriptionSnapDay.cs" company="APIMatic">
+// <copyright file="ScheduledRenewalProductPricePointPriceInCents.cs" company="APIMatic">
 // AdvancedBilling.Standard
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
@@ -14,35 +14,35 @@ namespace AdvancedBilling.Standard.Models.Containers
     /// This is a container class for one-of types.
     /// </summary>
     [JsonConverter(
-        typeof(UnionTypeConverter<SubscriptionSnapDay>),
+        typeof(UnionTypeConverter<ScheduledRenewalProductPricePointPriceInCents>),
         new[] {
-            typeof(NumberCase),
-            typeof(SnapDayCase)
+            typeof(MStringCase),
+            typeof(MLongCase)
         },
         true
     )]
-    public abstract class SubscriptionSnapDay
+    public abstract class ScheduledRenewalProductPricePointPriceInCents
     {
         /// <summary>
-        /// This is Number case.
+        /// This is String case.
         /// </summary>
         /// <returns>
-        /// The SubscriptionSnapDay instance, wrapping the provided int value.
+        /// The ScheduledRenewalProductPricePointPriceInCents instance, wrapping the provided string value.
         /// </returns>
-        public static SubscriptionSnapDay FromNumber(int number)
+        public static ScheduledRenewalProductPricePointPriceInCents FromString(string mString)
         {
-            return new NumberCase().Set(number);
+            return new MStringCase().Set(mString);
         }
 
         /// <summary>
-        /// This is SnapDay case.
+        /// This is Long case.
         /// </summary>
         /// <returns>
-        /// The SubscriptionSnapDay instance, wrapping the provided SnapDay value.
+        /// The ScheduledRenewalProductPricePointPriceInCents instance, wrapping the provided long value.
         /// </returns>
-        public static SubscriptionSnapDay FromSnapDay(SnapDay snapDay)
+        public static ScheduledRenewalProductPricePointPriceInCents FromLong(long mLong)
         {
-            return new SnapDayCase().Set(snapDay);
+            return new MLongCase().Set(mLong);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// callback function.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public abstract T Match<T>(Func<int, T> number, Func<SnapDay, T> snapDay);
+        public abstract T Match<T>(Func<string, T> mString, Func<long, T> mLong);
 
         /// <summary>
         /// Method to match from the provided one-of cases. The parameters represent
@@ -64,56 +64,56 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// callback function, or the default value if no callback is provided for the matched case.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public T MatchSome<T>(Func<int, T> number = null, Func<SnapDay, T> snapDay = null) =>
-                Match(number, snapDay);
+        public T MatchSome<T>(Func<string, T> mString = null, Func<long, T> mLong = null) =>
+                Match(mString, mLong);
 
-        [JsonConverter(typeof(UnionTypeCaseConverter<NumberCase, int>), JTokenType.Integer)]
-        private sealed class NumberCase : SubscriptionSnapDay, ICaseValue<NumberCase, int>
+        [JsonConverter(typeof(UnionTypeCaseConverter<MStringCase, string>), JTokenType.String, JTokenType.Null)]
+        private sealed class MStringCase : ScheduledRenewalProductPricePointPriceInCents, ICaseValue<MStringCase, string>
         {
-            public int Value;
+            public string Value;
 
-            public override T Match<T>(Func<int, T> number, Func<SnapDay, T> snapDay) =>
-                   number != null ? number(Value) : default;
+            public override T Match<T>(Func<string, T> mString, Func<long, T> mLong) =>
+                   mString != null ? mString(Value) : default;
 
-            public NumberCase Set(int value)
+            public MStringCase Set(string value)
             {
                 Value = value;
                 return this;
             }
 
-            public int Get()
+            public string Get()
             {
                 return Value;
             }
 
             public override string ToString()
             {
-                return Value.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
-                if (!(obj is NumberCase other)) return false;
+                if (!(obj is MStringCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return Value == null ? other.Value == null : Value.Equals(other.Value); 
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
 
-        [JsonConverter(typeof(UnionTypeCaseConverter<SnapDayCase, SnapDay>))]
-        private sealed class SnapDayCase : SubscriptionSnapDay, ICaseValue<SnapDayCase, SnapDay>
+        [JsonConverter(typeof(UnionTypeCaseConverter<MLongCase, long>))]
+        private sealed class MLongCase : ScheduledRenewalProductPricePointPriceInCents, ICaseValue<MLongCase, long>
         {
-            public SnapDay Value;
+            public long Value;
 
-            public override T Match<T>(Func<int, T> number, Func<SnapDay, T> snapDay) =>
-                   snapDay != null ? snapDay(Value) : default;
+            public override T Match<T>(Func<string, T> mString, Func<long, T> mLong) =>
+                   mLong != null ? mLong(Value) : default;
 
-            public SnapDayCase Set(SnapDay value)
+            public MLongCase Set(long value)
             {
                 Value = value;
                 return this;
             }
 
-            public SnapDay Get()
+            public long Get()
             {
                 return Value;
             }
@@ -125,9 +125,9 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override bool Equals(object obj)
             {
-                if (!(obj is SnapDayCase other)) return false;
+                if (!(obj is MLongCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return Value == null ? other.Value == null : Value.Equals(other.Value); 
+                return Value.Equals(other.Value); 
             }
         }
     }

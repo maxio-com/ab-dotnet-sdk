@@ -3,24 +3,13 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
+using APIMatic.Core;
+using APIMatic.Core.Utilities;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Http.Client;
-using AdvancedBilling.Standard.Utilities;
-using APIMatic.Core;
-using APIMatic.Core.Types;
-using APIMatic.Core.Utilities;
-using APIMatic.Core.Utilities.Date.Xml;
-using Newtonsoft.Json.Converters;
-using System.Net.Http;
 
 namespace AdvancedBilling.Standard.Controllers
 {
@@ -155,21 +144,21 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListEventsInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<List<Models.EventResponse>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/events.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("since_id", input.SinceId))
-                      .Query(_query => _query.Setup("max_id", input.MaxId))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "desc"))
-                      .Query(_query => _query.Setup("filter", input.Filter?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))
-                      .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("start_date", input.StartDate))
-                      .Query(_query => _query.Setup("end_date", input.EndDate))
-                      .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
-                      .Query(_query => _query.Setup("end_datetime", input.EndDatetime))))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("since_id", input.SinceId))
+                      .Query(query => query.Setup("max_id", input.MaxId))
+                      .Query(query => query.Setup("direction", (input.Direction.HasValue) ? CoreHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "desc"))
+                      .Query(query => query.Setup("filter", input.Filter?.Select(a => CoreHelper.JsonSerialize(a).Trim('\"')).ToList()))
+                      .Query(query => query.Setup("date_field", (input.DateField.HasValue) ? CoreHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("start_date", input.StartDate))
+                      .Query(query => query.Setup("end_date", input.EndDate))
+                      .Query(query => query.Setup("start_datetime", input.StartDatetime))
+                      .Query(query => query.Setup("end_datetime", input.EndDatetime))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -203,17 +192,17 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListSubscriptionEventsInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<List<Models.EventResponse>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/events.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", input.SubscriptionId))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("since_id", input.SinceId))
-                      .Query(_query => _query.Setup("max_id", input.MaxId))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "desc"))
-                      .Query(_query => _query.Setup("filter", input.Filter?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", input.SubscriptionId))
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("since_id", input.SinceId))
+                      .Query(query => query.Setup("max_id", input.MaxId))
+                      .Query(query => query.Setup("direction", (input.Direction.HasValue) ? CoreHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "desc"))
+                      .Query(query => query.Setup("filter", input.Filter?.Select(a => CoreHelper.JsonSerialize(a).Trim('\"')).ToList()))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -235,16 +224,16 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ReadEventsCountInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.CountResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/events/count.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("since_id", input.SinceId))
-                      .Query(_query => _query.Setup("max_id", input.MaxId))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "desc"))
-                      .Query(_query => _query.Setup("filter", input.Filter?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("since_id", input.SinceId))
+                      .Query(query => query.Setup("max_id", input.MaxId))
+                      .Query(query => query.Setup("direction", (input.Direction.HasValue) ? CoreHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "desc"))
+                      .Query(query => query.Setup("filter", input.Filter?.Select(a => CoreHelper.JsonSerialize(a).Trim('\"')).ToList()))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

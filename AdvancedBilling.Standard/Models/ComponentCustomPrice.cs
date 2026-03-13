@@ -3,18 +3,8 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using APIMatic.Core.Utilities.Converters;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Utilities;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Collections.Generic;
 
 namespace AdvancedBilling.Standard.Models
 {
@@ -24,11 +14,13 @@ namespace AdvancedBilling.Standard.Models
     public class ComponentCustomPrice : BaseModel
     {
         private Models.IntervalUnit? intervalUnit;
+        private int? listPricePointId;
         private int? expirationInterval;
         private Models.ExpirationIntervalUnit? expirationIntervalUnit;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "interval_unit", false },
+            { "list_price_point_id", false },
             { "expiration_interval", false },
             { "expiration_interval_unit", false },
         };
@@ -48,6 +40,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="pricingScheme">pricing_scheme.</param>
         /// <param name="interval">interval.</param>
         /// <param name="intervalUnit">interval_unit.</param>
+        /// <param name="listPricePointId">list_price_point_id.</param>
+        /// <param name="useDefaultListPrice">use_default_list_price.</param>
         /// <param name="renewPrepaidAllocation">renew_prepaid_allocation.</param>
         /// <param name="rolloverPrepaidRemainder">rollover_prepaid_remainder.</param>
         /// <param name="expirationInterval">expiration_interval.</param>
@@ -58,6 +52,8 @@ namespace AdvancedBilling.Standard.Models
             Models.PricingScheme? pricingScheme = null,
             int? interval = null,
             Models.IntervalUnit? intervalUnit = null,
+            int? listPricePointId = null,
+            bool? useDefaultListPrice = null,
             bool? renewPrepaidAllocation = null,
             bool? rolloverPrepaidRemainder = null,
             int? expirationInterval = null,
@@ -71,6 +67,12 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.IntervalUnit = intervalUnit;
             }
+
+            if (listPricePointId != null)
+            {
+                this.ListPricePointId = listPricePointId;
+            }
+            this.UseDefaultListPrice = useDefaultListPrice;
             this.Prices = prices;
             this.RenewPrepaidAllocation = renewPrepaidAllocation;
             this.RolloverPrepaidRemainder = rolloverPrepaidRemainder;
@@ -123,7 +125,32 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// On/off components only need one price bracket starting at 1
+        /// Optional id of the price point to use for list price calculations when
+        /// overriding the customer price.
+        /// </summary>
+        [JsonProperty("list_price_point_id")]
+        public int? ListPricePointId
+        {
+            get
+            {
+                return this.listPricePointId;
+            }
+
+            set
+            {
+                this.shouldSerialize["list_price_point_id"] = true;
+                this.listPricePointId = value;
+            }
+        }
+
+        /// <summary>
+        /// When true, list price calculations will continue to use the default price point even when a `custom_price` is supplied.
+        /// </summary>
+        [JsonProperty("use_default_list_price", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? UseDefaultListPrice { get; set; }
+
+        /// <summary>
+        /// On/off components only need one price bracket starting at 1.
         /// </summary>
         [JsonProperty("prices")]
         public List<Models.Price> Prices { get; set; }
@@ -191,7 +218,13 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["interval_unit"] = false;
         }
-
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetListPricePointId()
+        {
+            this.shouldSerialize["list_price_point_id"] = false;
+        }
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -199,7 +232,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["expiration_interval"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -215,6 +247,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeIntervalUnit()
         {
             return this.shouldSerialize["interval_unit"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeListPricePointId()
+        {
+            return this.shouldSerialize["list_price_point_id"];
         }
 
         /// <summary>
@@ -250,6 +291,10 @@ namespace AdvancedBilling.Standard.Models
                  this.Interval?.Equals(other.Interval) == true) &&
                 (this.IntervalUnit == null && other.IntervalUnit == null ||
                  this.IntervalUnit?.Equals(other.IntervalUnit) == true) &&
+                (this.ListPricePointId == null && other.ListPricePointId == null ||
+                 this.ListPricePointId?.Equals(other.ListPricePointId) == true) &&
+                (this.UseDefaultListPrice == null && other.UseDefaultListPrice == null ||
+                 this.UseDefaultListPrice?.Equals(other.UseDefaultListPrice) == true) &&
                 (this.Prices == null && other.Prices == null ||
                  this.Prices?.Equals(other.Prices) == true) &&
                 (this.RenewPrepaidAllocation == null && other.RenewPrepaidAllocation == null ||
@@ -273,6 +318,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
             toStringOutput.Add($"Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
+            toStringOutput.Add($"ListPricePointId = {(this.ListPricePointId == null ? "null" : this.ListPricePointId.ToString())}");
+            toStringOutput.Add($"UseDefaultListPrice = {(this.UseDefaultListPrice == null ? "null" : this.UseDefaultListPrice.ToString())}");
             toStringOutput.Add($"Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
             toStringOutput.Add($"RenewPrepaidAllocation = {(this.RenewPrepaidAllocation == null ? "null" : this.RenewPrepaidAllocation.ToString())}");
             toStringOutput.Add($"RolloverPrepaidRemainder = {(this.RolloverPrepaidRemainder == null ? "null" : this.RolloverPrepaidRemainder.ToString())}");

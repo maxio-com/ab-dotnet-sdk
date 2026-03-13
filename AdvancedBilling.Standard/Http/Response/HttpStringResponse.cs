@@ -3,8 +3,8 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 
 namespace AdvancedBilling.Standard.Http.Response
 {

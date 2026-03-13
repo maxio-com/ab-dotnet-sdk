@@ -3,11 +3,11 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
+using APIMatic.Core.Types;
+using APIMatic.Core.Types.Sdk;
 using AdvancedBilling.Standard.Http.Request;
 using AdvancedBilling.Standard.Http.Response;
 using AdvancedBilling.Standard.Utilities;
-using APIMatic.Core.Types;
-using APIMatic.Core.Types.Sdk;
 
 namespace AdvancedBilling.Standard.Http.Client
 {

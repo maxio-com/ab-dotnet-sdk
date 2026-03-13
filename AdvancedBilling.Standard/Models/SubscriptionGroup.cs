@@ -3,18 +3,10 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using APIMatic.Core.Utilities.Converters;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
+using System.Collections.Generic;
 
 namespace AdvancedBilling.Standard.Models
 {
@@ -33,24 +25,33 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionGroup"/> class.
         /// </summary>
+        /// <param name="uid">uid.</param>
         /// <param name="customerId">customer_id.</param>
         /// <param name="paymentProfile">payment_profile.</param>
         /// <param name="paymentCollectionMethod">payment_collection_method.</param>
         /// <param name="subscriptionIds">subscription_ids.</param>
         /// <param name="createdAt">created_at.</param>
         public SubscriptionGroup(
+            string uid = null,
             int? customerId = null,
             Models.SubscriptionGroupPaymentProfile paymentProfile = null,
             Models.CollectionMethod? paymentCollectionMethod = null,
             List<int> subscriptionIds = null,
             DateTimeOffset? createdAt = null)
         {
+            this.Uid = uid;
             this.CustomerId = customerId;
             this.PaymentProfile = paymentProfile;
             this.PaymentCollectionMethod = paymentCollectionMethod;
             this.SubscriptionIds = subscriptionIds;
             this.CreatedAt = createdAt;
         }
+
+        /// <summary>
+        /// Gets or sets Uid.
+        /// </summary>
+        [JsonProperty("uid", NullValueHandling = NullValueHandling.Ignore)]
+        public string Uid { get; set; }
 
         /// <summary>
         /// Gets or sets CustomerId.
@@ -98,6 +99,8 @@ namespace AdvancedBilling.Standard.Models
             if (ReferenceEquals(this, obj)) return true;
 
             return obj is SubscriptionGroup other &&
+                (this.Uid == null && other.Uid == null ||
+                 this.Uid?.Equals(other.Uid) == true) &&
                 (this.CustomerId == null && other.CustomerId == null ||
                  this.CustomerId?.Equals(other.CustomerId) == true) &&
                 (this.PaymentProfile == null && other.PaymentProfile == null ||
@@ -117,6 +120,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
+            toStringOutput.Add($"Uid = {this.Uid ?? "null"}");
             toStringOutput.Add($"CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
             toStringOutput.Add($"PaymentProfile = {(this.PaymentProfile == null ? "null" : this.PaymentProfile.ToString())}");
             toStringOutput.Add($"PaymentCollectionMethod = {(this.PaymentCollectionMethod == null ? "null" : this.PaymentCollectionMethod.ToString())}");

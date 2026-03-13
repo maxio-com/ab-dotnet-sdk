@@ -3,18 +3,10 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using APIMatic.Core.Utilities.Converters;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
+using System.Collections.Generic;
 
 namespace AdvancedBilling.Standard.Models
 {
@@ -25,10 +17,12 @@ namespace AdvancedBilling.Standard.Models
     {
         private string accountingCode;
         private string description;
+        private DateTimeOffset? archivedAt;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "accounting_code", false },
             { "description", false },
+            { "archived_at", false },
         };
 
         /// <summary>
@@ -48,6 +42,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="description">description.</param>
         /// <param name="createdAt">created_at.</param>
         /// <param name="updatedAt">updated_at.</param>
+        /// <param name="archivedAt">archived_at.</param>
         public ProductFamily(
             int? id = null,
             string name = null,
@@ -55,7 +50,8 @@ namespace AdvancedBilling.Standard.Models
             string accountingCode = null,
             string description = null,
             DateTimeOffset? createdAt = null,
-            DateTimeOffset? updatedAt = null)
+            DateTimeOffset? updatedAt = null,
+            DateTimeOffset? archivedAt = null)
         {
             this.Id = id;
             this.Name = name;
@@ -72,6 +68,11 @@ namespace AdvancedBilling.Standard.Models
             }
             this.CreatedAt = createdAt;
             this.UpdatedAt = updatedAt;
+
+            if (archivedAt != null)
+            {
+                this.ArchivedAt = archivedAt;
+            }
         }
 
         /// <summary>
@@ -142,6 +143,25 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("updated_at", NullValueHandling = NullValueHandling.Ignore)]
         public DateTimeOffset? UpdatedAt { get; set; }
 
+        /// <summary>
+        /// Timestamp indicating when this product family was archived. `null` if the product family is not archived.
+        /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
+        [JsonProperty("archived_at")]
+        public DateTimeOffset? ArchivedAt
+        {
+            get
+            {
+                return this.archivedAt;
+            }
+
+            set
+            {
+                this.shouldSerialize["archived_at"] = true;
+                this.archivedAt = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -157,13 +177,19 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["accounting_code"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
         public void UnsetDescription()
         {
             this.shouldSerialize["description"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetArchivedAt()
+        {
+            this.shouldSerialize["archived_at"] = false;
         }
 
         /// <summary>
@@ -182,6 +208,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeDescription()
         {
             return this.shouldSerialize["description"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeArchivedAt()
+        {
+            return this.shouldSerialize["archived_at"];
         }
 
         /// <inheritdoc/>
@@ -205,6 +240,8 @@ namespace AdvancedBilling.Standard.Models
                  this.CreatedAt?.Equals(other.CreatedAt) == true) &&
                 (this.UpdatedAt == null && other.UpdatedAt == null ||
                  this.UpdatedAt?.Equals(other.UpdatedAt) == true) &&
+                (this.ArchivedAt == null && other.ArchivedAt == null ||
+                 this.ArchivedAt?.Equals(other.ArchivedAt) == true) &&
                 base.Equals(obj);
         }
 
@@ -221,6 +258,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Description = {this.Description ?? "null"}");
             toStringOutput.Add($"CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
             toStringOutput.Add($"UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
+            toStringOutput.Add($"ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt.ToString())}");
 
             base.ToString(toStringOutput);
         }

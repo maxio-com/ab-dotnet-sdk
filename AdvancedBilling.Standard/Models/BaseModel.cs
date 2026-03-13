@@ -3,11 +3,9 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using AdvancedBilling.Standard.Utilities;
+using APIMatic.Core.Utilities;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace AdvancedBilling.Standard.Models
 {
@@ -28,7 +26,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"Additional Properties: {ApiHelper.JsonSerialize(this.AdditionalProperties)}");
+            toStringOutput.Add($"Additional Properties: {CoreHelper.JsonSerialize(this.AdditionalProperties)}");
         }
     }
 }

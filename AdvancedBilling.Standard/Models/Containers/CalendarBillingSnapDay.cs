@@ -17,7 +17,7 @@ namespace AdvancedBilling.Standard.Models.Containers
         typeof(UnionTypeConverter<CalendarBillingSnapDay>),
         new[] {
             typeof(NumberCase),
-            typeof(SnapDayCase)
+            typeof(MStringCase)
         },
         true
     )]
@@ -35,14 +35,14 @@ namespace AdvancedBilling.Standard.Models.Containers
         }
 
         /// <summary>
-        /// This is SnapDay case.
+        /// This is String case.
         /// </summary>
         /// <returns>
-        /// The CalendarBillingSnapDay instance, wrapping the provided SnapDay value.
+        /// The CalendarBillingSnapDay instance, wrapping the provided string value.
         /// </returns>
-        public static CalendarBillingSnapDay FromSnapDay(SnapDay snapDay)
+        public static CalendarBillingSnapDay FromString(string mString)
         {
-            return new SnapDayCase().Set(snapDay);
+            return new MStringCase().Set(mString);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// callback function.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public abstract T Match<T>(Func<int, T> number, Func<SnapDay, T> snapDay);
+        public abstract T Match<T>(Func<int, T> number, Func<string, T> mString);
 
         /// <summary>
         /// Method to match from the provided one-of cases. The parameters represent
@@ -64,15 +64,15 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// callback function, or the default value if no callback is provided for the matched case.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public T MatchSome<T>(Func<int, T> number = null, Func<SnapDay, T> snapDay = null) =>
-                Match(number, snapDay);
+        public T MatchSome<T>(Func<int, T> number = null, Func<string, T> mString = null) =>
+                Match(number, mString);
 
         [JsonConverter(typeof(UnionTypeCaseConverter<NumberCase, int>), JTokenType.Integer)]
         private sealed class NumberCase : CalendarBillingSnapDay, ICaseValue<NumberCase, int>
         {
             public int Value;
 
-            public override T Match<T>(Func<int, T> number, Func<SnapDay, T> snapDay) =>
+            public override T Match<T>(Func<int, T> number, Func<string, T> mString) =>
                    number != null ? number(Value) : default;
 
             public NumberCase Set(int value)
@@ -95,39 +95,39 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 if (!(obj is NumberCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return Value == null ? other.Value == null : Value.Equals(other.Value); 
+                return Value.Equals(other.Value); 
             }
         }
 
-        [JsonConverter(typeof(UnionTypeCaseConverter<SnapDayCase, SnapDay>))]
-        private sealed class SnapDayCase : CalendarBillingSnapDay, ICaseValue<SnapDayCase, SnapDay>
+        [JsonConverter(typeof(UnionTypeCaseConverter<MStringCase, string>), JTokenType.String, JTokenType.Null)]
+        private sealed class MStringCase : CalendarBillingSnapDay, ICaseValue<MStringCase, string>
         {
-            public SnapDay Value;
+            public string Value;
 
-            public override T Match<T>(Func<int, T> number, Func<SnapDay, T> snapDay) =>
-                   snapDay != null ? snapDay(Value) : default;
+            public override T Match<T>(Func<int, T> number, Func<string, T> mString) =>
+                   mString != null ? mString(Value) : default;
 
-            public SnapDayCase Set(SnapDay value)
+            public MStringCase Set(string value)
             {
                 Value = value;
                 return this;
             }
 
-            public SnapDay Get()
+            public string Get()
             {
                 return Value;
             }
 
             public override string ToString()
             {
-                return Value.ToString();
+                return Value?.ToString();
             }
 
             public override bool Equals(object obj)
             {
-                if (!(obj is SnapDayCase other)) return false;
+                if (!(obj is MStringCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return Value == null ? other.Value == null : Value.Equals(other.Value); 
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }
         }
     }

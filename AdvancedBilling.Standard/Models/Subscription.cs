@@ -3,19 +3,10 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using APIMatic.Core.Utilities.Converters;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Models.Containers;
-using AdvancedBilling.Standard.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
+using System.Collections.Generic;
 
 namespace AdvancedBilling.Standard.Models
 {
@@ -37,7 +28,7 @@ namespace AdvancedBilling.Standard.Models
         private DateTimeOffset? currentPeriodStartedAt;
         private DateTimeOffset? delayedCancelAt;
         private string couponCode;
-        private SubscriptionSnapDay snapDay;
+        private string snapDay;
         private Models.NestedSubscriptionGroup mGroup;
         private string paymentType;
         private string referralCode;
@@ -195,7 +186,7 @@ namespace AdvancedBilling.Standard.Models
             string signupRevenue = null,
             DateTimeOffset? delayedCancelAt = null,
             string couponCode = null,
-            SubscriptionSnapDay snapDay = null,
+            string snapDay = null,
             Models.CollectionMethod? paymentCollectionMethod = null,
             Models.Customer customer = null,
             Models.Product product = null,
@@ -769,10 +760,10 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The day of the month that the subscription will charge according to calendar billing rules, if used.
+        /// A day of month that subscription will be processed on. Can be 1 up to 28 or 'end'.
         /// </summary>
         [JsonProperty("snap_day")]
-        public SubscriptionSnapDay SnapDay
+        public string SnapDay
         {
             get
             {
@@ -943,7 +934,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// If the subscription is canceled, this is their churn code.
+        /// The churn reason code associated to a cancelled subscription.
         /// </summary>
         [JsonProperty("reason_code")]
         public string ReasonCode
@@ -1099,7 +1090,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The reference value (provided by your app) for the subscription itelf.
+        /// The reference value (provided by your app) for the subscription istelf.
         /// </summary>
         [JsonProperty("reference")]
         public string Reference
@@ -1284,7 +1275,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["current_period_ends_at"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1292,7 +1282,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["next_assessment_at"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1300,7 +1289,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["trial_started_at"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1308,7 +1296,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["trial_ended_at"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1316,7 +1303,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["activated_at"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1324,7 +1310,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["expires_at"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1332,7 +1317,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["cancellation_message"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1340,7 +1324,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["cancellation_method"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1348,7 +1331,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["cancel_at_end_of_period"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1356,7 +1338,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["canceled_at"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1364,7 +1345,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["current_period_started_at"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1372,7 +1352,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["delayed_cancel_at"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1380,7 +1359,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["coupon_code"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1388,7 +1366,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["snap_day"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1396,7 +1373,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["group"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1404,7 +1380,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["payment_type"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1412,7 +1387,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["referral_code"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1420,7 +1394,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["next_product_id"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1428,7 +1401,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["next_product_handle"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1436,7 +1408,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["coupon_use_count"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1444,7 +1415,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["coupon_uses_allowed"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1452,7 +1422,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["reason_code"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1460,7 +1429,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["automatically_resume_at"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1468,7 +1436,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["offer_id"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1476,7 +1443,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["payer_id"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1484,7 +1450,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["next_product_price_point_id"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1492,7 +1457,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["net_terms"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1500,7 +1464,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["stored_credential_transaction_id"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1508,7 +1471,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["reference"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1516,7 +1478,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["on_hold_at"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1524,7 +1485,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["dunning_communication_delay_time_zone"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1532,7 +1492,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["receives_invoice_emails"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1540,7 +1499,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["locale"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -1548,7 +1506,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["scheduled_cancellation_at"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -2036,7 +1993,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"SignupRevenue = {this.SignupRevenue ?? "null"}");
             toStringOutput.Add($"DelayedCancelAt = {(this.DelayedCancelAt == null ? "null" : this.DelayedCancelAt.ToString())}");
             toStringOutput.Add($"CouponCode = {this.CouponCode ?? "null"}");
-            toStringOutput.Add($"SnapDay = {(this.SnapDay == null ? "null" : this.SnapDay.ToString())}");
+            toStringOutput.Add($"SnapDay = {this.SnapDay ?? "null"}");
             toStringOutput.Add($"PaymentCollectionMethod = {(this.PaymentCollectionMethod == null ? "null" : this.PaymentCollectionMethod.ToString())}");
             toStringOutput.Add($"Customer = {(this.Customer == null ? "null" : this.Customer.ToString())}");
             toStringOutput.Add($"Product = {(this.Product == null ? "null" : this.Product.ToString())}");

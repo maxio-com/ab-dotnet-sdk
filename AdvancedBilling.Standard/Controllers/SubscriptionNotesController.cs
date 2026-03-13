@@ -3,25 +3,14 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Exceptions;
-using AdvancedBilling.Standard.Http.Client;
-using AdvancedBilling.Standard.Utilities;
 using APIMatic.Core;
 using APIMatic.Core.Types;
 using APIMatic.Core.Utilities;
-using APIMatic.Core.Utilities.Date.Xml;
-using Newtonsoft.Json.Converters;
+using AdvancedBilling.Standard.Exceptions;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AdvancedBilling.Standard.Controllers
 {
@@ -42,7 +31,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// If you have structured data such as birth date, color, etc., consider using Metadata instead.
         /// Full documentation on how to use Notes in the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24251712214413-Subscription-Summary-Overview).
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
         public Models.SubscriptionNoteResponse CreateSubscriptionNote(
@@ -57,7 +46,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// If you have structured data such as birth date, color, etc., consider using Metadata instead.
         /// Full documentation on how to use Notes in the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24251712214413-Subscription-Summary-Overview).
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
@@ -66,15 +55,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.UpdateSubscriptionNoteRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionNoteResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/notes.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -96,21 +85,21 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListSubscriptionNotesInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<List<Models.SubscriptionNoteResponse>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/notes.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", input.SubscriptionId))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", input.SubscriptionId))
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Once you have obtained the ID of the note you wish to read, use this method to show a particular note attached to a subscription.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="noteId">Required parameter: The Advanced Billing id of the note.</param>
         /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
         public Models.SubscriptionNoteResponse ReadSubscriptionNote(
@@ -121,7 +110,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Once you have obtained the ID of the note you wish to read, use this method to show a particular note attached to a subscription.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="noteId">Required parameter: The Advanced Billing id of the note.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
@@ -130,18 +119,18 @@ namespace AdvancedBilling.Standard.Controllers
                 int noteId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionNoteResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/notes/{note_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("note_id", noteId))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Template(template => template.Setup("note_id", noteId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Use the following method to update a note for a Subscription.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="noteId">Required parameter: The Advanced Billing id of the note.</param>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.SubscriptionNoteResponse response from the API call.</returns>
@@ -154,7 +143,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Use the following method to update a note for a Subscription.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="noteId">Required parameter: The Advanced Billing id of the note.</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -165,22 +154,22 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.UpdateSubscriptionNoteRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionNoteResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/notes/{note_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("note_id", noteId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Template(template => template.Setup("note_id", noteId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use the following method to delete a note for a Subscription.
+        /// Deletes a note for a Subscription.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="noteId">Required parameter: The Advanced Billing id of the note.</param>
         public void DeleteSubscriptionNote(
                 int subscriptionId,
@@ -188,9 +177,9 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunVoidTask(DeleteSubscriptionNoteAsync(subscriptionId, noteId));
 
         /// <summary>
-        /// Use the following method to delete a note for a Subscription.
+        /// Deletes a note for a Subscription.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="noteId">Required parameter: The Advanced Billing id of the note.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the void response from the API call.</returns>
@@ -199,12 +188,12 @@ namespace AdvancedBilling.Standard.Controllers
                 int noteId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/notes/{note_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("note_id", noteId))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Template(template => template.Setup("note_id", noteId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

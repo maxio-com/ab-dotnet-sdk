@@ -9,6 +9,6 @@
 
 | Type | Factory Method |
 |  --- | --- |
+| `string` | UpdateSubscriptionSnapDay.FromString(string mString) |
 | `int` | UpdateSubscriptionSnapDay.FromNumber(int number) |
-| [`SnapDay`](../../../doc/models/snap-day.md) | UpdateSubscriptionSnapDay.FromSnapDay(SnapDay snapDay) |
 

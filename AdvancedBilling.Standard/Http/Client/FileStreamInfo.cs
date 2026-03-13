@@ -4,7 +4,6 @@
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
 using APIMatic.Core.Types.Sdk;
-using System;
 using System.IO;
 
 namespace AdvancedBilling.Standard.Http.Client

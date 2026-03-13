@@ -3,26 +3,16 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Exceptions;
-using AdvancedBilling.Standard.Http.Client;
-using AdvancedBilling.Standard.Models.Containers;
-using AdvancedBilling.Standard.Utilities;
 using APIMatic.Core;
 using APIMatic.Core.Types;
 using APIMatic.Core.Utilities;
-using APIMatic.Core.Utilities.Date.Xml;
-using Newtonsoft.Json.Converters;
+using AdvancedBilling.Standard.Exceptions;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AdvancedBilling.Standard.Controllers
 {
@@ -39,7 +29,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// This request will list information regarding a specific component owned by a subscription.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component. Alternatively, the component's handle prefixed by `handle:`.</param>
         /// <returns>Returns the Models.SubscriptionComponentResponse response from the API call.</returns>
         public Models.SubscriptionComponentResponse ReadSubscriptionComponent(
@@ -50,7 +40,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// This request will list information regarding a specific component owned by a subscription.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component. Alternatively, the component's handle prefixed by `handle:`.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionComponentResponse response from the API call.</returns>
@@ -59,14 +49,14 @@ namespace AdvancedBilling.Standard.Controllers
                 int componentId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionComponentResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/components/{component_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("component_id", componentId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Template(template => template.Setup("component_id", componentId))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -92,23 +82,23 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListSubscriptionComponentsInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<List<Models.SubscriptionComponentResponse>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/components.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", input.SubscriptionId))
-                      .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("filter", input.Filter))
-                      .Query(_query => _query.Setup("end_date", input.EndDate))
-                      .Query(_query => _query.Setup("end_datetime", input.EndDatetime))
-                      .Query(_query => _query.Setup("price_point_ids", (input.PricePointIds.HasValue) ? ApiHelper.JsonSerialize(input.PricePointIds.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("product_family_ids", input.ProductFamilyIds))
-                      .Query(_query => _query.Setup("sort", (input.Sort.HasValue) ? ApiHelper.JsonSerialize(input.Sort.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("start_date", input.StartDate))
-                      .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
-                      .Query(_query => _query.Setup("include", input.Include?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))
-                      .Query(_query => _query.Setup("in_use", input.InUse))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", input.SubscriptionId))
+                      .Query(query => query.Setup("date_field", (input.DateField.HasValue) ? CoreHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("direction", (input.Direction.HasValue) ? CoreHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("filter", input.Filter))
+                      .Query(query => query.Setup("end_date", input.EndDate))
+                      .Query(query => query.Setup("end_datetime", input.EndDatetime))
+                      .Query(query => query.Setup("price_point_ids", (input.PricePointIds.HasValue) ? CoreHelper.JsonSerialize(input.PricePointIds.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("product_family_ids", input.ProductFamilyIds))
+                      .Query(query => query.Setup("sort", (input.Sort.HasValue) ? CoreHelper.JsonSerialize(input.Sort.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("start_date", input.StartDate))
+                      .Query(query => query.Setup("start_datetime", input.StartDatetime))
+                      .Query(query => query.Setup("include", input.Include?.Select(a => CoreHelper.JsonSerialize(a).Trim('\"')).ToList()))
+                      .Query(query => query.Setup("in_use", input.InUse))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -118,7 +108,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// 2. Price point handle (string).
         /// 3. `"_default"` string, which will reset the price point to the component's current default price point.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.BulkComponentsPricePointAssignment response from the API call.</returns>
         public Models.BulkComponentsPricePointAssignment BulkUpdateSubscriptionComponentsPricePoints(
@@ -133,7 +123,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// 2. Price point handle (string).
         /// 3. `"_default"` string, which will reset the price point to the component's current default price point.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.BulkComponentsPricePointAssignment response from the API call.</returns>
@@ -142,22 +132,22 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.BulkComponentsPricePointAssignment body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.BulkComponentsPricePointAssignment>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/price_points.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ComponentPricePointErrorException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ComponentPricePointErrorException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Resets all of a subscription's components to use the current default.
         /// **Note**: this will update the price point for all of the subscription's components, even ones that have not been allocated yet.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public Models.SubscriptionResponse BulkResetSubscriptionComponentsPricePoints(
                 int subscriptionId)
@@ -167,45 +157,25 @@ namespace AdvancedBilling.Standard.Controllers
         /// Resets all of a subscription's components to use the current default.
         /// **Note**: this will update the price point for all of the subscription's components, even ones that have not been allocated yet.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.SubscriptionResponse response from the API call.</returns>
         public async Task<Models.SubscriptionResponse> BulkResetSubscriptionComponentsPricePointsAsync(
                 int subscriptionId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SubscriptionResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/price_points/reset.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", subscriptionId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This endpoint creates a new allocation, setting the current allocated quantity for the Component and recording a memo.
-        /// **Notice**: Allocations can only be updated for Quantity, On/Off, and Prepaid Components.
-        /// ## Allocations Documentation.
-        /// Full documentation on how to record Allocations in the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24251883961485-Component-Allocations-Overview). It is focused on how allocations operate within the Advanced Billing UI.It goes into greater detail on how the user interface will react when recording allocations.
-        /// This documentation also goes into greater detail on how proration is taken into consideration when applying component allocations.
-        /// ## Proration Schemes.
-        /// Changing the allocated quantity of a component mid-period can result in either a Charge or Credit being applied to the subscription. When creating an allocation via the API, you can pass the `upgrade_charge`, `downgrade_credit`, and `accrue_charge` to be applied.
-        /// **Notice:** These proration and accural fields will be ignored for Prepaid Components since this component type always generate charges immediately without proration.
-        /// For background information on prorated components and upgrade/downgrade schemes, see [Setting Component Allocations.](https://maxio.zendesk.com/hc/en-us/articles/24251906165133-Component-Allocations-Proration).
-        /// See the tables below for valid values.
-        /// | upgrade_charge | Definition                                                        |.
-        /// |----------------|-------------------------------------------------------------------|.
-        /// | `full`         | A charge is added for the full price of the component.            |.
-        /// | `prorated`     | A charge is added for the prorated price of the component change. |.
-        /// | `none`         | No charge is added.                                               |.
-        /// | downgrade_credit | Definition                                        |.
-        /// |------------------|---------------------------------------------------|.
-        /// | `full`           | A full price credit is added for the amount owed. |.
-        /// | `prorated`       | A prorated credit is added for the amount owed.   |.
-        /// | `none`           | No charge is added.                               |.
-        /// | accrue_charge | Definition                                                                                                 |.
-        /// |---------------|------------------------------------------------------------------------------------------------------------|.
-        /// | `true`        | Attempt to charge the customer at next renewal.                                                            |.
-        /// | `false`       | Attempt to charge the customer right away. If it fails, the charge will be accrued until the next renewal. |.
+        /// Creates an allocation, sets the current allocated quantity for the component, and records a memo. Allocations can only be updated for Quantity, On/Off, and Prepaid Components.
+        /// When creating an allocation via the API, you can pass the `upgrade_charge`, `downgrade_credit`, and `accrue_charge` to be applied.
+        /// > **Note:** These proration and accural fields are ignored for Prepaid Components since this component type always generate charges immediately without proration.
+        /// For information on prorated components and upgrade/downgrade schemes, see [Setting Component Allocations.](https://maxio.zendesk.com/hc/en-us/articles/24251906165133-Component-Allocations-Proration).
         /// ### Order of Resolution for upgrade_charge and downgrade_credit.
         /// 1. Per allocation in API call (within a single allocation of the `allocations` array).
         /// 2. [Component-level default value](https://maxio.zendesk.com/hc/en-us/articles/24251883961485-Component-Allocations-Overview).
@@ -214,9 +184,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// ### Order of Resolution for accrue charge.
         /// 1. Allocation API call top level (outside of the `allocations` array).
         /// 2. [Site-level default value](https://maxio.zendesk.com/hc/en-us/articles/24251906165133-Component-Allocations-Proration#proration-schemes).
-        /// **NOTE: Proration uses the current price of the component as well as the current tax rates. Changes to either may cause the prorated charge/credit to be wrong.**.
+        /// > **Note:** Proration uses the current price of the component as well as the current tax rates. Changes to either may cause the prorated charge/credit to be wrong.
+        /// For more informaiton see the [Component Allocations](https://maxio.zendesk.com/hc/en-us/articles/24251883961485-Component-Allocations-Overview) product Documentation.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.AllocationResponse response from the API call.</returns>
@@ -227,30 +198,10 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(AllocateComponentAsync(subscriptionId, componentId, body));
 
         /// <summary>
-        /// This endpoint creates a new allocation, setting the current allocated quantity for the Component and recording a memo.
-        /// **Notice**: Allocations can only be updated for Quantity, On/Off, and Prepaid Components.
-        /// ## Allocations Documentation.
-        /// Full documentation on how to record Allocations in the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24251883961485-Component-Allocations-Overview). It is focused on how allocations operate within the Advanced Billing UI.It goes into greater detail on how the user interface will react when recording allocations.
-        /// This documentation also goes into greater detail on how proration is taken into consideration when applying component allocations.
-        /// ## Proration Schemes.
-        /// Changing the allocated quantity of a component mid-period can result in either a Charge or Credit being applied to the subscription. When creating an allocation via the API, you can pass the `upgrade_charge`, `downgrade_credit`, and `accrue_charge` to be applied.
-        /// **Notice:** These proration and accural fields will be ignored for Prepaid Components since this component type always generate charges immediately without proration.
-        /// For background information on prorated components and upgrade/downgrade schemes, see [Setting Component Allocations.](https://maxio.zendesk.com/hc/en-us/articles/24251906165133-Component-Allocations-Proration).
-        /// See the tables below for valid values.
-        /// | upgrade_charge | Definition                                                        |.
-        /// |----------------|-------------------------------------------------------------------|.
-        /// | `full`         | A charge is added for the full price of the component.            |.
-        /// | `prorated`     | A charge is added for the prorated price of the component change. |.
-        /// | `none`         | No charge is added.                                               |.
-        /// | downgrade_credit | Definition                                        |.
-        /// |------------------|---------------------------------------------------|.
-        /// | `full`           | A full price credit is added for the amount owed. |.
-        /// | `prorated`       | A prorated credit is added for the amount owed.   |.
-        /// | `none`           | No charge is added.                               |.
-        /// | accrue_charge | Definition                                                                                                 |.
-        /// |---------------|------------------------------------------------------------------------------------------------------------|.
-        /// | `true`        | Attempt to charge the customer at next renewal.                                                            |.
-        /// | `false`       | Attempt to charge the customer right away. If it fails, the charge will be accrued until the next renewal. |.
+        /// Creates an allocation, sets the current allocated quantity for the component, and records a memo. Allocations can only be updated for Quantity, On/Off, and Prepaid Components.
+        /// When creating an allocation via the API, you can pass the `upgrade_charge`, `downgrade_credit`, and `accrue_charge` to be applied.
+        /// > **Note:** These proration and accural fields are ignored for Prepaid Components since this component type always generate charges immediately without proration.
+        /// For information on prorated components and upgrade/downgrade schemes, see [Setting Component Allocations.](https://maxio.zendesk.com/hc/en-us/articles/24251906165133-Component-Allocations-Proration).
         /// ### Order of Resolution for upgrade_charge and downgrade_credit.
         /// 1. Per allocation in API call (within a single allocation of the `allocations` array).
         /// 2. [Component-level default value](https://maxio.zendesk.com/hc/en-us/articles/24251883961485-Component-Allocations-Overview).
@@ -259,9 +210,10 @@ namespace AdvancedBilling.Standard.Controllers
         /// ### Order of Resolution for accrue charge.
         /// 1. Allocation API call top level (outside of the `allocations` array).
         /// 2. [Site-level default value](https://maxio.zendesk.com/hc/en-us/articles/24251906165133-Component-Allocations-Proration#proration-schemes).
-        /// **NOTE: Proration uses the current price of the component as well as the current tax rates. Changes to either may cause the prorated charge/credit to be wrong.**.
+        /// > **Note:** Proration uses the current price of the component as well as the current tax rates. Changes to either may cause the prorated charge/credit to be wrong.
+        /// For more informaiton see the [Component Allocations](https://maxio.zendesk.com/hc/en-us/articles/24251883961485-Component-Allocations-Overview) product Documentation.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -272,35 +224,24 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CreateAllocationRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.AllocationResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/components/{component_id}/allocations.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("component_id", componentId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Template(template => template.Setup("component_id", componentId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This endpoint returns the 50 most recent Allocations, ordered by most recent first.
         /// ## On/Off Components.
         /// When a subscription's on/off component has been toggled to on (`1`) or off (`0`), usage will be logged in this response.
-        /// ## Querying data via Advanced Billing gem.
-        /// You can also query the current quantity via the [official Advanced Billing Gem.](http://github.com/chargify/chargify_api_ares).
-        /// ```# First way.
-        /// component = Chargify::Subscription::Component.find(1, :params => {:subscription_id => 7}).
-        /// puts component.allocated_quantity.
-        /// # => 23.
-        /// # Second way.
-        /// component = Chargify::Subscription.find(7).component(1).
-        /// puts component.allocated_quantity.
-        /// # => 23.
-        /// ```.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
         /// <param name="page">Optional parameter: Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned. Use in query `page=1`..</param>
         /// <returns>Returns the List of Models.AllocationResponse response from the API call.</returns>
@@ -314,19 +255,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// This endpoint returns the 50 most recent Allocations, ordered by most recent first.
         /// ## On/Off Components.
         /// When a subscription's on/off component has been toggled to on (`1`) or off (`0`), usage will be logged in this response.
-        /// ## Querying data via Advanced Billing gem.
-        /// You can also query the current quantity via the [official Advanced Billing Gem.](http://github.com/chargify/chargify_api_ares).
-        /// ```# First way.
-        /// component = Chargify::Subscription::Component.find(1, :params => {:subscription_id => 7}).
-        /// puts component.allocated_quantity.
-        /// # => 23.
-        /// # Second way.
-        /// component = Chargify::Subscription.find(7).component(1).
-        /// puts component.allocated_quantity.
-        /// # => 23.
-        /// ```.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
         /// <param name="page">Optional parameter: Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned. Use in query `page=1`..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -337,24 +267,33 @@ namespace AdvancedBilling.Standard.Controllers
                 int? page = 1,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<List<Models.AllocationResponse>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/components/{component_id}/allocations.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("component_id", componentId))
-                      .Query(_query => _query.Setup("page", page ?? 1))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Template(template => template.Setup("component_id", componentId))
+                      .Query(query => query.Setup("page", page ?? 1))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Creates multiple allocations, setting the current allocated quantity for each of the components and recording a memo. The charges and/or credits that are created will be rolled up into a single total which is used to determine whether this is an upgrade or a downgrade. Be aware of the Order of Resolutions explained below in determining the proration scheme.
-        /// A `component_id` is required for each allocation.
-        /// This endpoint only responds to JSON. It is not available for XML.
+        /// Creates multiple allocations, sets the current allocated quantity for each of the components, and recording a memo.   A `component_id` is required for each allocation.
+        /// The charges and/or credits that are created will be rolled up into a single total which is used to determine whether this is an upgrade or a downgrade.
+        /// ### Order of Resolution for upgrade_charge and downgrade_credit.
+        /// 1. Per allocation in API call (within a single allocation of the `allocations` array).
+        /// 2. [Component-level default value](https://maxio.zendesk.com/hc/en-us/articles/24251883961485-Component-Allocations-Overview).
+        /// 3. Allocation API call top level (outside of the `allocations` array).
+        /// 4. [Site-level default value](https://maxio.zendesk.com/hc/en-us/articles/24251906165133-Component-Allocations-Proration#proration-schemes).
+        /// ### Order of Resolution for accrue charge.
+        /// 1. Allocation API call top level (outside of the `allocations` array).
+        /// 2. [Site-level default value](https://maxio.zendesk.com/hc/en-us/articles/24251906165133-Component-Allocations-Proration#proration-schemes).
+        /// > **Note:** Proration uses the current price of the component as well as the current tax rates. Changes to either may cause the prorated charge/credit to be wrong.
+        /// For more informaiton see the [Component Allocations](https://maxio.zendesk.com/hc/en-us/articles/24251883961485-Component-Allocations-Overview) product Documentation.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the List of Models.AllocationResponse response from the API call.</returns>
         public List<Models.AllocationResponse> AllocateComponents(
@@ -363,11 +302,20 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(AllocateComponentsAsync(subscriptionId, body));
 
         /// <summary>
-        /// Creates multiple allocations, setting the current allocated quantity for each of the components and recording a memo. The charges and/or credits that are created will be rolled up into a single total which is used to determine whether this is an upgrade or a downgrade. Be aware of the Order of Resolutions explained below in determining the proration scheme.
-        /// A `component_id` is required for each allocation.
-        /// This endpoint only responds to JSON. It is not available for XML.
+        /// Creates multiple allocations, sets the current allocated quantity for each of the components, and recording a memo.   A `component_id` is required for each allocation.
+        /// The charges and/or credits that are created will be rolled up into a single total which is used to determine whether this is an upgrade or a downgrade.
+        /// ### Order of Resolution for upgrade_charge and downgrade_credit.
+        /// 1. Per allocation in API call (within a single allocation of the `allocations` array).
+        /// 2. [Component-level default value](https://maxio.zendesk.com/hc/en-us/articles/24251883961485-Component-Allocations-Overview).
+        /// 3. Allocation API call top level (outside of the `allocations` array).
+        /// 4. [Site-level default value](https://maxio.zendesk.com/hc/en-us/articles/24251906165133-Component-Allocations-Proration#proration-schemes).
+        /// ### Order of Resolution for accrue charge.
+        /// 1. Allocation API call top level (outside of the `allocations` array).
+        /// 2. [Site-level default value](https://maxio.zendesk.com/hc/en-us/articles/24251906165133-Component-Allocations-Proration#proration-schemes).
+        /// > **Note:** Proration uses the current price of the component as well as the current tax rates. Changes to either may cause the prorated charge/credit to be wrong.
+        /// For more informaiton see the [Component Allocations](https://maxio.zendesk.com/hc/en-us/articles/24251883961485-Component-Allocations-Overview) product Documentation.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the List of Models.AllocationResponse response from the API call.</returns>
@@ -376,16 +324,16 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.AllocateComponents body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<List<Models.AllocationResponse>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/allocations.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -394,7 +342,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// When the allocation uses multiple different types of `upgrade_charge`s or `downgrade_credit`s, the Allocation is viewed as an Allocation which uses "Fine-Grained Component Control". As a result, the response will not include `direction` and `proration` within the `allocation_preview`, but at the `line_items` and `allocations` level respectfully.
         /// See example below for Fine-Grained Component Control response.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.AllocationPreviewResponse response from the API call.</returns>
         public Models.AllocationPreviewResponse PreviewAllocations(
@@ -408,7 +356,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// When the allocation uses multiple different types of `upgrade_charge`s or `downgrade_credit`s, the Allocation is viewed as an Allocation which uses "Fine-Grained Component Control". As a result, the response will not include `direction` and `proration` within the `allocation_preview`, but at the `line_items` and `allocations` level respectfully.
         /// See example below for Fine-Grained Component Control response.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.AllocationPreviewResponse response from the API call.</returns>
@@ -417,15 +365,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.PreviewAllocationsRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.AllocationPreviewResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/allocations/preview.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ComponentAllocationErrorException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ComponentAllocationErrorException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -437,7 +385,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// - An expiration date can be changed towards the future with no limitations.
         /// - An expiration date can be changed towards the past (essentially expiring it) up to the subscription's current period beginning date.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
         /// <param name="allocationId">Required parameter: The Advanced Billing id of the allocation.</param>
         /// <param name="body">Optional parameter: .</param>
@@ -457,7 +405,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// - An expiration date can be changed towards the future with no limitations.
         /// - An expiration date can be changed towards the past (essentially expiring it) up to the subscription's current period beginning date.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
         /// <param name="allocationId">Required parameter: The Advanced Billing id of the allocation.</param>
         /// <param name="body">Optional parameter: .</param>
@@ -470,18 +418,18 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.UpdateAllocationExpirationDate body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/subscriptions/{subscription_id}/components/{component_id}/allocations/{allocation_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("component_id", componentId))
-                      .Template(_template => _template.Setup("allocation_id", allocationId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionComponentAllocationErrorException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Template(template => template.Setup("component_id", componentId))
+                      .Template(template => template.Setup("allocation_id", allocationId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new SubscriptionComponentAllocationErrorException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -492,7 +440,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// 2. `credit`: The allocation will be destroyed and the balances will be updated and a service credit will be generated. This is also the default behavior if the `credit_scheme` param is not passed.
         /// 3. `refund`: The allocation will be destroyed and the balances will be updated and a refund will be issued along with a Credit Note.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
         /// <param name="allocationId">Required parameter: The Advanced Billing id of the allocation.</param>
         /// <param name="body">Optional parameter: .</param>
@@ -511,7 +459,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// 2. `credit`: The allocation will be destroyed and the balances will be updated and a service credit will be generated. This is also the default behavior if the `credit_scheme` param is not passed.
         /// 3. `refund`: The allocation will be destroyed and the balances will be updated and a refund will be issued along with a Credit Note.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component.</param>
         /// <param name="allocationId">Required parameter: The Advanced Billing id of the allocation.</param>
         /// <param name="body">Optional parameter: .</param>
@@ -524,18 +472,18 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CreditSchemeRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Delete, "/subscriptions/{subscription_id}/components/{component_id}/allocations/{allocation_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("component_id", componentId))
-                      .Template(_template => _template.Setup("allocation_id", allocationId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new SubscriptionComponentAllocationErrorException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Template(template => template.Setup("component_id", componentId))
+                      .Template(template => template.Setup("allocation_id", allocationId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new SubscriptionComponentAllocationErrorException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -631,16 +579,16 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CreateUsageRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.UsageResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id_or_reference}/components/{component_id}/usages.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id_or_reference", subscriptionIdOrReference).Required())
-                      .Template(_template => _template.Setup("component_id", componentId).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id_or_reference", subscriptionIdOrReference).Required())
+                      .Template(template => template.Setup("component_id", componentId).Required())
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -682,18 +630,18 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListUsagesInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<List<Models.UsageResponse>>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions/{subscription_id_or_reference}/components/{component_id}/usages.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id_or_reference", input.SubscriptionIdOrReference).Required())
-                      .Template(_template => _template.Setup("component_id", input.ComponentId).Required())
-                      .Query(_query => _query.Setup("since_id", input.SinceId))
-                      .Query(_query => _query.Setup("max_id", input.MaxId))
-                      .Query(_query => _query.Setup("since_date", input.SinceDate.HasValue ? input.SinceDate.Value.ToString("yyyy'-'MM'-'dd") : null))
-                      .Query(_query => _query.Setup("until_date", input.UntilDate.HasValue ? input.UntilDate.Value.ToString("yyyy'-'MM'-'dd") : null))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id_or_reference", input.SubscriptionIdOrReference).Required())
+                      .Template(template => template.Setup("component_id", input.ComponentId).Required())
+                      .Query(query => query.Setup("since_id", input.SinceId))
+                      .Query(query => query.Setup("max_id", input.MaxId))
+                      .Query(query => query.Setup("since_date", input.SinceDate.HasValue ? input.SinceDate.Value.ToString("yyyy'-'MM'-'dd") : null))
+                      .Query(query => query.Setup("until_date", input.UntilDate.HasValue ? input.UntilDate.Value.ToString("yyyy'-'MM'-'dd") : null))
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -728,14 +676,14 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ActivateEventBasedComponent body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/event_based_billing/subscriptions/{subscription_id}/components/{component_id}/activate.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("component_id", componentId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Template(template => template.Setup("component_id", componentId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -760,12 +708,12 @@ namespace AdvancedBilling.Standard.Controllers
                 int componentId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/event_based_billing/subscriptions/{subscription_id}/components/{component_id}/deactivate.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))
-                      .Template(_template => _template.Setup("component_id", componentId))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", subscriptionId))
+                      .Template(template => template.Setup("component_id", componentId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -815,14 +763,14 @@ namespace AdvancedBilling.Standard.Controllers
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()
               .Server(Server.Ebb)
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/events/{api_handle}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("api_handle", apiHandle).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))
-                      .Query(_query => _query.Setup("store_uid", storeUid))))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("api_handle", apiHandle).Required())
+                      .Header(header => header.Setup("Content-Type", "application/json"))
+                      .Query(query => query.Setup("store_uid", storeUid))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -856,14 +804,14 @@ namespace AdvancedBilling.Standard.Controllers
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()
               .Server(Server.Ebb)
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/events/{api_handle}/bulk.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("api_handle", apiHandle).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))
-                      .Query(_query => _query.Setup("store_uid", storeUid))))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("api_handle", apiHandle).Required())
+                      .Header(header => header.Setup("Content-Type", "application/json"))
+                      .Query(query => query.Setup("store_uid", storeUid))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -885,24 +833,24 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListSubscriptionComponentsForSiteInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ListSubscriptionComponentsResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions_components.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("sort", (input.Sort.HasValue) ? ApiHelper.JsonSerialize(input.Sort.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("filter", input.Filter))
-                      .Query(_query => _query.Setup("date_field", (input.DateField.HasValue) ? ApiHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("start_date", input.StartDate))
-                      .Query(_query => _query.Setup("start_datetime", input.StartDatetime))
-                      .Query(_query => _query.Setup("end_date", input.EndDate))
-                      .Query(_query => _query.Setup("end_datetime", input.EndDatetime))
-                      .Query(_query => _query.Setup("subscription_ids", input.SubscriptionIds))
-                      .Query(_query => _query.Setup("price_point_ids", (input.PricePointIds.HasValue) ? ApiHelper.JsonSerialize(input.PricePointIds.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("product_family_ids", input.ProductFamilyIds))
-                      .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("sort", (input.Sort.HasValue) ? CoreHelper.JsonSerialize(input.Sort.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("direction", (input.Direction.HasValue) ? CoreHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("filter", input.Filter))
+                      .Query(query => query.Setup("date_field", (input.DateField.HasValue) ? CoreHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("start_date", input.StartDate))
+                      .Query(query => query.Setup("start_datetime", input.StartDatetime))
+                      .Query(query => query.Setup("end_date", input.EndDate))
+                      .Query(query => query.Setup("end_datetime", input.EndDatetime))
+                      .Query(query => query.Setup("subscription_ids", input.SubscriptionIds))
+                      .Query(query => query.Setup("price_point_ids", (input.PricePointIds.HasValue) ? CoreHelper.JsonSerialize(input.PricePointIds.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("product_family_ids", input.ProductFamilyIds))
+                      .Query(query => query.Setup("include", (input.Include.HasValue) ? CoreHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

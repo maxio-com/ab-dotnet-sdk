@@ -3,16 +3,15 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using APIMatic.Core;
 using APIMatic.Core.Authentication;
+using APIMatic.Core.Utilities;
 using AdvancedBilling.Standard.Authentication;
 using AdvancedBilling.Standard.Controllers;
 using AdvancedBilling.Standard.Http.Client;
-using AdvancedBilling.Standard.Utilities;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
 
 namespace AdvancedBilling.Standard
 {
@@ -43,7 +42,7 @@ namespace AdvancedBilling.Standard
         };
 
         private readonly GlobalConfiguration globalConfiguration;
-        private const string userAgent = "AB SDK DotNet:8.0.0 on OS {os-info}";
+        private const string userAgent = "AB SDK DotNet:9.0.0 on OS {os-info}";
         private readonly HttpCallback httpCallback;
         private readonly Lazy<APIExportsController> aPIExports;
         private readonly Lazy<AdvanceInvoiceController> advanceInvoice;
@@ -75,6 +74,7 @@ namespace AdvancedBilling.Standard
         private readonly Lazy<SubscriptionInvoiceAccountController> subscriptionInvoiceAccount;
         private readonly Lazy<SubscriptionNotesController> subscriptionNotes;
         private readonly Lazy<SubscriptionProductsController> subscriptionProducts;
+        private readonly Lazy<SubscriptionRenewalsController> subscriptionRenewals;
         private readonly Lazy<SubscriptionStatusController> subscriptionStatus;
         private readonly Lazy<WebhooksController> webhooks;
 
@@ -99,10 +99,10 @@ namespace AdvancedBilling.Standard
                 .HttpConfiguration(httpClientConfiguration)
                 .ServerUrls(EnvironmentsMap[environment], Server.Production)
                 .Parameters(globalParameter => globalParameter
-                    .Template(templateParameter => templateParameter.Setup("site", this.Site)))
+                    .Template(templateParameter => templateParameter.Setup("site", this.Site))
+                )
                 .UserAgent(userAgent)
                 .Build();
-
             BasicAuthCredentials = basicAuthManager;
 
             this.aPIExports = new Lazy<APIExportsController>(
@@ -165,6 +165,8 @@ namespace AdvancedBilling.Standard
                 () => new SubscriptionNotesController(globalConfiguration));
             this.subscriptionProducts = new Lazy<SubscriptionProductsController>(
                 () => new SubscriptionProductsController(globalConfiguration));
+            this.subscriptionRenewals = new Lazy<SubscriptionRenewalsController>(
+                () => new SubscriptionRenewalsController(globalConfiguration));
             this.subscriptionStatus = new Lazy<SubscriptionStatusController>(
                 () => new SubscriptionStatusController(globalConfiguration));
             this.webhooks = new Lazy<WebhooksController>(
@@ -322,6 +324,11 @@ namespace AdvancedBilling.Standard
         public SubscriptionProductsController SubscriptionProductsController => this.subscriptionProducts.Value;
 
         /// <summary>
+        /// Gets SubscriptionRenewalsController controller.
+        /// </summary>
+        public SubscriptionRenewalsController SubscriptionRenewalsController => this.subscriptionRenewals.Value;
+
+        /// <summary>
         /// Gets SubscriptionStatusController controller.
         /// </summary>
         public SubscriptionStatusController SubscriptionStatusController => this.subscriptionStatus.Value;
@@ -418,7 +425,7 @@ namespace AdvancedBilling.Standard
 
             if (environment != null)
             {
-                builder.Environment(ApiHelper.JsonDeserialize<Environment>($"\"{environment}\""));
+                builder.Environment(CoreHelper.JsonDeserialize<Environment>($"\"{environment}\""));
             }
 
             if (site != null)
@@ -448,11 +455,11 @@ namespace AdvancedBilling.Standard
         /// </summary>
         public class Builder
         {
-            private Environment environment = AdvancedBilling.Standard.Environment.US;
-            private string site = "subdomain";
-            private BasicAuthModel basicAuthModel = new BasicAuthModel();
-            private HttpClientConfiguration.Builder httpClientConfig = new HttpClientConfiguration.Builder();
-            private HttpCallback httpCallback;
+            private Environment _environment = AdvancedBilling.Standard.Environment.US;
+            private string _site = "subdomain";
+            private BasicAuthModel _basicAuthModel = new BasicAuthModel();
+            private HttpClientConfiguration.Builder _httpClientConfig = new HttpClientConfiguration.Builder();
+            private HttpCallback _httpCallback;
 
             /// <summary>
             /// Sets credentials for BasicAuth.
@@ -461,12 +468,8 @@ namespace AdvancedBilling.Standard
             /// <returns>Builder.</returns>
             public Builder BasicAuthCredentials(BasicAuthModel basicAuthModel)
             {
-                if (basicAuthModel is null)
-                {
+                _basicAuthModel = basicAuthModel ??
                     throw new ArgumentNullException(nameof(basicAuthModel));
-                }
-
-                this.basicAuthModel = basicAuthModel;
                 return this;
             }
 
@@ -477,7 +480,7 @@ namespace AdvancedBilling.Standard
             /// <returns> Builder. </returns>
             public Builder Environment(Environment environment)
             {
-                this.environment = environment;
+                _environment = environment;
                 return this;
             }
 
@@ -488,7 +491,7 @@ namespace AdvancedBilling.Standard
             /// <returns> Builder. </returns>
             public Builder Site(string site)
             {
-                this.site = site ?? throw new ArgumentNullException(nameof(site));
+                _site = site ?? throw new ArgumentNullException(nameof(site));
                 return this;
             }
 
@@ -504,7 +507,7 @@ namespace AdvancedBilling.Standard
                     throw new ArgumentNullException(nameof(action));
                 }
 
-                action(this.httpClientConfig);
+                action(_httpClientConfig);
                 return this;
             }
 
@@ -512,12 +515,11 @@ namespace AdvancedBilling.Standard
             {
                 if (httpClientConfigurationBuilder != null)
                 {
-                    this.httpClientConfig = httpClientConfigurationBuilder;
+                    _httpClientConfig = httpClientConfigurationBuilder;
                 }
-            
+
                 return this;
             }
-
 
             /// <summary>
             /// Sets the HttpCallback for the Builder.
@@ -526,7 +528,7 @@ namespace AdvancedBilling.Standard
             /// <returns>Builder.</returns>
             public Builder HttpCallback(HttpCallback httpCallback)
             {
-                this.httpCallback = httpCallback;
+                _httpCallback = httpCallback;
                 return this;
             }
 
@@ -536,16 +538,16 @@ namespace AdvancedBilling.Standard
             /// <returns>AdvancedBillingClient.</returns>
             public AdvancedBillingClient Build()
             {
-                if (basicAuthModel.Username == null || basicAuthModel.Password == null)
+                if (_basicAuthModel.Username == null || _basicAuthModel.Password == null)
                 {
-                    basicAuthModel = null;
+                    _basicAuthModel = null;
                 }
                 return new AdvancedBillingClient(
-                    environment,
-                    site,
-                    basicAuthModel,
-                    httpCallback,
-                    httpClientConfig.Build());
+                    _environment,
+                    _site,
+                    _basicAuthModel,
+                    _httpCallback,
+                    _httpClientConfig.Build());
             }
 
             /// <summary>

@@ -1,4 +1,4 @@
-﻿using AdvancedBilling.Standard;
+using AdvancedBilling.Standard;
 using AdvancedBilling.Standard.Exceptions;
 using AdvancedBilling.Standard.Models.Containers;
 using AdvancedBilling.Standard.Models;
@@ -51,7 +51,7 @@ namespace AdvancedBillingTests
 
             var allocationsList = new List<CreateAllocation>()
             {
-                new(onOffAmount, onOffComponentResponse.Component.Id)
+                new(quantity: onOffAmount, componentId: onOffComponentResponse.Component.Id)
             };
 
             await _client.Invoking(s => s.SubscriptionComponentsController.PreviewAllocationsAsync(
@@ -206,8 +206,8 @@ namespace AdvancedBillingTests
 
             var allocationsList = new List<CreateAllocation>()
             {
-                new(quantityAmount, quantityComponentResponse.Component.Id),
-                new(onOffAmount, onOffComponentResponse.Component.Id)
+                new(quantity: quantityAmount, componentId: quantityComponentResponse.Component.Id),
+                new(quantity: onOffAmount, componentId: onOffComponentResponse.Component.Id)
             };
 
             var allocationsPreview = await _client.SubscriptionComponentsController.PreviewAllocationsAsync(

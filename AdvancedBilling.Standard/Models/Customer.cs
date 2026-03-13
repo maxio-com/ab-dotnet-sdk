@@ -3,18 +3,10 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using APIMatic.Core.Utilities.Converters;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
+using System.Collections.Generic;
 
 namespace AdvancedBilling.Standard.Models
 {
@@ -745,7 +737,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["cc_emails"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -753,7 +744,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["organization"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -761,7 +751,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["reference"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -769,7 +758,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["address"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -777,7 +765,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["address_2"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -785,7 +772,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["city"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -793,7 +779,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["state"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -801,7 +786,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["state_name"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -809,7 +793,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["zip"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -817,7 +800,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["country"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -825,7 +807,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["country_name"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -833,7 +814,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["phone"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -841,7 +821,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["verified"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -849,7 +828,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["portal_customer_created_at"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -857,7 +835,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["portal_invite_last_sent_at"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -865,7 +842,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["portal_invite_last_accepted_at"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -873,7 +849,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["vat_number"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -881,7 +856,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["parent_id"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -889,7 +863,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["locale"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -897,7 +870,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["default_subscription_group_uid"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -905,7 +877,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["salesforce_id"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -913,7 +884,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["tax_exempt_reason"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>

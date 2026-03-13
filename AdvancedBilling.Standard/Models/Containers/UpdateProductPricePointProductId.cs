@@ -95,7 +95,7 @@ namespace AdvancedBilling.Standard.Models.Containers
             {
                 if (!(obj is NumberCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return Value == null ? other.Value == null : Value.Equals(other.Value); 
+                return Value.Equals(other.Value); 
             }
         }
 

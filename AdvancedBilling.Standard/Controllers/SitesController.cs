@@ -3,24 +3,12 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Http.Client;
-using AdvancedBilling.Standard.Utilities;
 using APIMatic.Core;
 using APIMatic.Core.Types;
 using APIMatic.Core.Utilities;
-using APIMatic.Core.Utilities.Date.Xml;
-using Newtonsoft.Json.Converters;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AdvancedBilling.Standard.Controllers
 {
@@ -70,7 +58,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <returns>Returns the Models.SiteResponse response from the API call.</returns>
         public async Task<Models.SiteResponse> ReadSiteAsync(CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SiteResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/site.json")
                   .WithAuth("BasicAuth"))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
@@ -95,11 +83,11 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CleanupScope? cleanupScope = Models.CleanupScope.All,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/sites/clear_data.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("cleanup_scope", (cleanupScope.HasValue) ? ApiHelper.JsonSerialize(cleanupScope.Value).Trim('\"') : "all"))))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("cleanup_scope", (cleanupScope.HasValue) ? CoreHelper.JsonSerialize(cleanupScope.Value).Trim('\"') : "all"))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -121,12 +109,12 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListChargifyJsPublicKeysInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ListPublicKeysResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/chargify_js_keys.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

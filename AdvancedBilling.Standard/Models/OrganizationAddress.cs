@@ -3,18 +3,8 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using APIMatic.Core.Utilities.Converters;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Utilities;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Collections.Generic;
 
 namespace AdvancedBilling.Standard.Models
 {
@@ -272,7 +262,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["street"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -280,7 +269,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["line2"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -288,7 +276,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["city"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -296,7 +283,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["state"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -304,7 +290,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["zip"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -312,7 +297,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["country"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -320,7 +304,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["name"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>

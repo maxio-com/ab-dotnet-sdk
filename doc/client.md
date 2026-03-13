@@ -6,7 +6,7 @@ The following parameters are configurable for the API Client:
 | Parameter | Type | Description |
 |  --- | --- | --- |
 | Site | `string` | The subdomain for your Advanced Billing site.<br>*Default*: `"subdomain"` |
-| Environment | `Environment` | The API environment. <br> **Default: `Environment.US`** |
+| Environment | [`Environment`](../README.md#environments) | The API environment. <br> **Default: `Environment.US`** |
 | Timeout | `TimeSpan` | Http client timeout.<br>*Default*: `TimeSpan.FromSeconds(120)` |
 | HttpClientConfiguration | [`Action<HttpClientConfiguration.Builder>`](../doc/http-client-configuration-builder.md) | Action delegate that configures the HTTP client by using the HttpClientConfiguration.Builder for customizing API call settings.<br>*Default*: `new HttpClient()` |
 | BasicAuthCredentials | [`BasicAuthCredentials`](auth/basic-authentication.md) | The Credentials Setter for Basic Authentication |
@@ -28,6 +28,8 @@ AdvancedBillingClient client = new AdvancedBillingClient.Builder()
             "BasicAuthPassword"
         )
         .Build())
+    .HttpClientConfig(httpClientConfig =>
+        httpClientConfig.Timeout(TimeSpan.FromSeconds(100)))
     .Environment(AdvancedBilling.Standard.Environment.US)
     .Site("subdomain")
     .Build();
@@ -92,6 +94,7 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 | SubscriptionInvoiceAccountController | Gets SubscriptionInvoiceAccountController controller. |
 | SubscriptionNotesController | Gets SubscriptionNotesController controller. |
 | SubscriptionProductsController | Gets SubscriptionProductsController controller. |
+| SubscriptionRenewalsController | Gets SubscriptionRenewalsController controller. |
 | SubscriptionStatusController | Gets SubscriptionStatusController controller. |
 | WebhooksController | Gets WebhooksController controller. |
 

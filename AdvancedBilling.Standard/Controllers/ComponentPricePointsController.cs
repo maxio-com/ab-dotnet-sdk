@@ -3,26 +3,14 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Globalization;
-using System.IO;
+using APIMatic.Core;
+using APIMatic.Core.Utilities;
+using AdvancedBilling.Standard.Exceptions;
+using AdvancedBilling.Standard.Models.Containers;
 using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Exceptions;
-using AdvancedBilling.Standard.Http.Client;
-using AdvancedBilling.Standard.Models.Containers;
-using AdvancedBilling.Standard.Utilities;
-using APIMatic.Core;
-using APIMatic.Core.Types;
-using APIMatic.Core.Utilities;
-using APIMatic.Core.Utilities.Date.Xml;
-using Newtonsoft.Json.Converters;
-using System.Net.Http;
 
 namespace AdvancedBilling.Standard.Controllers
 {
@@ -63,12 +51,12 @@ namespace AdvancedBilling.Standard.Controllers
                 int pricePointId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ComponentResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/components/{component_id}/price_points/{price_point_id}/default.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("component_id", componentId))
-                      .Template(_template => _template.Setup("price_point_id", pricePointId))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("component_id", componentId))
+                      .Template(template => template.Setup("price_point_id", pricePointId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -94,15 +82,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CreateComponentPricePointRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ComponentPricePointResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/components/{component_id}/price_points.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("component_id", componentId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorArrayMapResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("component_id", componentId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorArrayMapResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -130,15 +118,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListComponentPricePointsInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ComponentPricePointsResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/components/{component_id}/price_points.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("component_id", input.ComponentId))
-                      .Query(_query => _query.Setup("currency_prices", input.CurrencyPrices))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("filter[type]", input.FilterType?.Select(a => ApiHelper.JsonSerialize(a).Trim('\"')).ToList()))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("component_id", input.ComponentId))
+                      .Query(query => query.Setup("currency_prices", input.CurrencyPrices))
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("filter[type]", input.FilterType?.Select(a => CoreHelper.JsonSerialize(a).Trim('\"')).ToList()))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -164,15 +152,69 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CreateComponentPricePointsRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ComponentPricePointsResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/components/{component_id}/price_points/bulk.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("component_id", componentId).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("component_id", componentId).Required())
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Clones a component price point. Custom price points (tied to a specific subscription) cannot be cloned. The following attributes are copied from the source price point:.
+        /// - Pricing scheme.
+        /// - All price tiers (with starting/ending quantities and unit prices).
+        /// - Tax included setting.
+        /// - Currency prices (if definitive pricing is set).
+        /// - Overage pricing (for prepaid usage components).
+        /// - Interval settings (if multi-frequency is enabled).
+        /// - Event-based billing segments (if applicable).
+        /// </summary>
+        /// <param name="componentId">Required parameter: The id or handle of the component. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
+        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-price_point-handle` for a string handle..</param>
+        /// <param name="body">Optional parameter: .</param>
+        /// <returns>Returns the Models.ComponentPricePointCurrencyOverageResponse response from the API call.</returns>
+        public Models.ComponentPricePointCurrencyOverageResponse CloneComponentPricePoint(
+                CloneComponentPricePointComponentId componentId,
+                CloneComponentPricePointPricePointId pricePointId,
+                Models.CloneComponentPricePointRequest body = null)
+            => CoreHelper.RunTask(CloneComponentPricePointAsync(componentId, pricePointId, body));
+
+        /// <summary>
+        /// Clones a component price point. Custom price points (tied to a specific subscription) cannot be cloned. The following attributes are copied from the source price point:.
+        /// - Pricing scheme.
+        /// - All price tiers (with starting/ending quantities and unit prices).
+        /// - Tax included setting.
+        /// - Currency prices (if definitive pricing is set).
+        /// - Overage pricing (for prepaid usage components).
+        /// - Interval settings (if multi-frequency is enabled).
+        /// - Event-based billing segments (if applicable).
+        /// </summary>
+        /// <param name="componentId">Required parameter: The id or handle of the component. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
+        /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-price_point-handle` for a string handle..</param>
+        /// <param name="body">Optional parameter: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ComponentPricePointCurrencyOverageResponse response from the API call.</returns>
+        public async Task<Models.ComponentPricePointCurrencyOverageResponse> CloneComponentPricePointAsync(
+                CloneComponentPricePointComponentId componentId,
+                CloneComponentPricePointPricePointId pricePointId,
+                Models.CloneComponentPricePointRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ComponentPricePointCurrencyOverageResponse>()
+              .RequestBuilder(requestBuilder => requestBuilder
+                  .Setup(HttpMethod.Post, "/components/{component_id}/price_points/{price_point_id}/clone.json")
+                  .WithAuth("BasicAuth")
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("component_id", componentId).Required())
+                      .Template(template => template.Setup("price_point_id", pricePointId).Required())
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -208,16 +250,16 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.UpdateComponentPricePointRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ComponentPricePointResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/components/{component_id}/price_points/{price_point_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("component_id", componentId).Required())
-                      .Template(_template => _template.Setup("price_point_id", pricePointId).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorArrayMapResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("component_id", componentId).Required())
+                      .Template(template => template.Setup("price_point_id", pricePointId).Required())
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorArrayMapResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -226,8 +268,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="componentId">Required parameter: The id or handle of the component. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
         /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-price_point-handle` for a string handle..</param>
         /// <param name="currencyPrices">Optional parameter: Include an array of currency price data.</param>
-        /// <returns>Returns the Models.ComponentPricePointResponse response from the API call.</returns>
-        public Models.ComponentPricePointResponse ReadComponentPricePoint(
+        /// <returns>Returns the Models.ComponentPricePointCurrencyOverageResponse response from the API call.</returns>
+        public Models.ComponentPricePointCurrencyOverageResponse ReadComponentPricePoint(
                 ReadComponentPricePointComponentId componentId,
                 ReadComponentPricePointPricePointId pricePointId,
                 bool? currencyPrices = null)
@@ -240,20 +282,20 @@ namespace AdvancedBilling.Standard.Controllers
         /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-price_point-handle` for a string handle..</param>
         /// <param name="currencyPrices">Optional parameter: Include an array of currency price data.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
-        /// <returns>Returns the Models.ComponentPricePointResponse response from the API call.</returns>
-        public async Task<Models.ComponentPricePointResponse> ReadComponentPricePointAsync(
+        /// <returns>Returns the Models.ComponentPricePointCurrencyOverageResponse response from the API call.</returns>
+        public async Task<Models.ComponentPricePointCurrencyOverageResponse> ReadComponentPricePointAsync(
                 ReadComponentPricePointComponentId componentId,
                 ReadComponentPricePointPricePointId pricePointId,
                 bool? currencyPrices = null,
                 CancellationToken cancellationToken = default)
-            => await CreateApiCall<Models.ComponentPricePointResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+            => await CreateApiCall<Models.ComponentPricePointCurrencyOverageResponse>()
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/components/{component_id}/price_points/{price_point_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("component_id", componentId).Required())
-                      .Template(_template => _template.Setup("price_point_id", pricePointId).Required())
-                      .Query(_query => _query.Setup("currency_prices", currencyPrices))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("component_id", componentId).Required())
+                      .Template(template => template.Setup("price_point_id", pricePointId).Required())
+                      .Query(query => query.Setup("currency_prices", currencyPrices))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -279,14 +321,14 @@ namespace AdvancedBilling.Standard.Controllers
                 ArchiveComponentPricePointPricePointId pricePointId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ComponentPricePointResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Delete, "/components/{component_id}/price_points/{price_point_id}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("component_id", componentId).Required())
-                      .Template(_template => _template.Setup("price_point_id", pricePointId).Required())))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("component_id", componentId).Required())
+                      .Template(template => template.Setup("price_point_id", pricePointId).Required())))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -312,12 +354,12 @@ namespace AdvancedBilling.Standard.Controllers
                 int pricePointId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ComponentPricePointResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/components/{component_id}/price_points/{price_point_id}/unarchive.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("component_id", componentId))
-                      .Template(_template => _template.Setup("price_point_id", pricePointId))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("component_id", componentId))
+                      .Template(template => template.Setup("price_point_id", pricePointId))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -347,15 +389,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CreateCurrencyPricesRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ComponentCurrencyPricesResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/price_points/{price_point_id}/currency_prices.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("price_point_id", pricePointId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorArrayMapResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("price_point_id", pricePointId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorArrayMapResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -383,15 +425,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.UpdateCurrencyPricesRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ComponentCurrencyPricesResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Put, "/price_points/{price_point_id}/currency_prices.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("price_point_id", pricePointId))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorArrayMapResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("price_point_id", pricePointId))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorArrayMapResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -413,17 +455,17 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListAllComponentPricePointsInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ListComponentsPricePointsResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/components_price_points.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Query(_query => _query.Setup("include", (input.Include.HasValue) ? ApiHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("filter", input.Filter))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Query(query => query.Setup("include", (input.Include.HasValue) ? CoreHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("direction", (input.Direction.HasValue) ? CoreHelper.JsonSerialize(input.Direction.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("filter", input.Filter))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

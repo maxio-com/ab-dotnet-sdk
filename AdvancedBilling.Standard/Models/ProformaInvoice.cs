@@ -3,18 +3,11 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using APIMatic.Core.Utilities.Converters;
-using AdvancedBilling.Standard;
 using AdvancedBilling.Standard.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
+using System.Collections.Generic;
 
 namespace AdvancedBilling.Standard.Models
 {
@@ -83,6 +76,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="payments">payments.</param>
         /// <param name="customFields">custom_fields.</param>
         /// <param name="publicUrl">public_url.</param>
+        /// <param name="availableActions">available_actions.</param>
         public ProformaInvoice(
             string uid = null,
             int? siteId = null,
@@ -119,7 +113,8 @@ namespace AdvancedBilling.Standard.Models
             List<Models.ProformaInvoiceCredit> credits = null,
             List<Models.ProformaInvoicePayment> payments = null,
             List<Models.InvoiceCustomField> customFields = null,
-            string publicUrl = null)
+            string publicUrl = null,
+            Models.AvailableActions availableActions = null)
         {
             this.Uid = uid;
             this.SiteId = siteId;
@@ -177,6 +172,7 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.PublicUrl = publicUrl;
             }
+            this.AvailableActions = availableActions;
         }
 
         /// <summary>
@@ -462,6 +458,12 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// Gets or sets AvailableActions.
+        /// </summary>
+        [JsonProperty("available_actions", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.AvailableActions AvailableActions { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -477,7 +479,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["customer_id"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -485,7 +486,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["subscription_id"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -493,7 +493,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["number"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -501,7 +500,6 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["sequence_number"] = false;
         }
-
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -634,6 +632,8 @@ namespace AdvancedBilling.Standard.Models
                  this.CustomFields?.Equals(other.CustomFields) == true) &&
                 (this.PublicUrl == null && other.PublicUrl == null ||
                  this.PublicUrl?.Equals(other.PublicUrl) == true) &&
+                (this.AvailableActions == null && other.AvailableActions == null ||
+                 this.AvailableActions?.Equals(other.AvailableActions) == true) &&
                 base.Equals(obj);
         }
 
@@ -679,6 +679,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Payments = {(this.Payments == null ? "null" : $"[{string.Join(", ", this.Payments)} ]")}");
             toStringOutput.Add($"CustomFields = {(this.CustomFields == null ? "null" : $"[{string.Join(", ", this.CustomFields)} ]")}");
             toStringOutput.Add($"PublicUrl = {this.PublicUrl ?? "null"}");
+            toStringOutput.Add($"AvailableActions = {(this.AvailableActions == null ? "null" : this.AvailableActions.ToString())}");
 
             base.ToString(toStringOutput);
         }

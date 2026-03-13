@@ -3,25 +3,13 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AdvancedBilling.Standard;
-using AdvancedBilling.Standard.Exceptions;
-using AdvancedBilling.Standard.Http.Client;
-using AdvancedBilling.Standard.Utilities;
 using APIMatic.Core;
 using APIMatic.Core.Types;
 using APIMatic.Core.Utilities;
-using APIMatic.Core.Utilities.Date.Xml;
-using Newtonsoft.Json.Converters;
+using AdvancedBilling.Standard.Exceptions;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AdvancedBilling.Standard.Controllers
 {
@@ -59,13 +47,13 @@ namespace AdvancedBilling.Standard.Controllers
                 string uid,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<VoidType>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscription_groups/{uid}/proforma_invoices.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("uid", uid).Required())))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("uid", uid).Required())))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -89,19 +77,19 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListSubscriptionGroupProformaInvoicesInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ListProformaInvoicesResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/subscription_groups/{uid}/proforma_invoices.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("uid", input.Uid).Required())
-                      .Query(_query => _query.Setup("line_items", input.LineItems))
-                      .Query(_query => _query.Setup("discounts", input.Discounts))
-                      .Query(_query => _query.Setup("taxes", input.Taxes))
-                      .Query(_query => _query.Setup("credits", input.Credits))
-                      .Query(_query => _query.Setup("payments", input.Payments))
-                      .Query(_query => _query.Setup("custom_fields", input.CustomFields))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("uid", input.Uid).Required())
+                      .Query(query => query.Setup("line_items", input.LineItems))
+                      .Query(query => query.Setup("discounts", input.Discounts))
+                      .Query(query => query.Setup("taxes", input.Taxes))
+                      .Query(query => query.Setup("credits", input.Credits))
+                      .Query(query => query.Setup("payments", input.Payments))
+                      .Query(query => query.Setup("custom_fields", input.CustomFields))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -127,13 +115,13 @@ namespace AdvancedBilling.Standard.Controllers
                 string proformaInvoiceUid,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ProformaInvoice>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/proforma_invoices/{proforma_invoice_uid}.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("proforma_invoice_uid", proformaInvoiceUid).Required())))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("proforma_invoice_uid", proformaInvoiceUid).Required())))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -142,7 +130,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ## Restrictions.
         /// Proforma invoices are only available on Relationship Invoicing sites. To create a proforma invoice, the subscription must not be in a group, must not be prepaid, and must be in a live state.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
         public Models.ProformaInvoice CreateProformaInvoice(
                 int subscriptionId)
@@ -154,20 +142,20 @@ namespace AdvancedBilling.Standard.Controllers
         /// ## Restrictions.
         /// Proforma invoices are only available on Relationship Invoicing sites. To create a proforma invoice, the subscription must not be in a group, must not be prepaid, and must be in a live state.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
         public async Task<Models.ProformaInvoice> CreateProformaInvoiceAsync(
                 int subscriptionId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ProformaInvoice>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/proforma_invoices.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", subscriptionId))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -189,23 +177,66 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.ListProformaInvoicesInput input,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ListProformaInvoicesResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/subscriptions/{subscription_id}/proforma_invoices.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", input.SubscriptionId))
-                      .Query(_query => _query.Setup("start_date", input.StartDate))
-                      .Query(_query => _query.Setup("end_date", input.EndDate))
-                      .Query(_query => _query.Setup("status", (input.Status.HasValue) ? ApiHelper.JsonSerialize(input.Status.Value).Trim('\"') : null))
-                      .Query(_query => _query.Setup("page", input.Page))
-                      .Query(_query => _query.Setup("per_page", input.PerPage))
-                      .Query(_query => _query.Setup("direction", (input.Direction.HasValue) ? ApiHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "desc"))
-                      .Query(_query => _query.Setup("line_items", input.LineItems))
-                      .Query(_query => _query.Setup("discounts", input.Discounts))
-                      .Query(_query => _query.Setup("taxes", input.Taxes))
-                      .Query(_query => _query.Setup("credits", input.Credits))
-                      .Query(_query => _query.Setup("payments", input.Payments))
-                      .Query(_query => _query.Setup("custom_fields", input.CustomFields))))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", input.SubscriptionId))
+                      .Query(query => query.Setup("start_date", input.StartDate))
+                      .Query(query => query.Setup("end_date", input.EndDate))
+                      .Query(query => query.Setup("status", (input.Status.HasValue) ? CoreHelper.JsonSerialize(input.Status.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("page", input.Page))
+                      .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("direction", (input.Direction.HasValue) ? CoreHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "desc"))
+                      .Query(query => query.Setup("line_items", input.LineItems))
+                      .Query(query => query.Setup("discounts", input.Discounts))
+                      .Query(query => query.Setup("taxes", input.Taxes))
+                      .Query(query => query.Setup("credits", input.Credits))
+                      .Query(query => query.Setup("payments", input.Payments))
+                      .Query(query => query.Setup("custom_fields", input.CustomFields))))
+              .ExecuteAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Allows for proforma invoices to be programmatically delivered via email. Supports email.
+        /// delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
+        /// If `recipient_emails` is omitted, the system will fall back to the primary recipient derived from the invoice or.
+        /// subscription. At least one recipient must be present, either via the request body or via this default behavior, so an.
+        /// empty body may still succeed when defaults are available.
+        /// </summary>
+        /// <param name="proformaInvoiceUid">Required parameter: The uid of the proforma invoice.</param>
+        /// <param name="body">Optional parameter: .</param>
+        /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
+        public Models.ProformaInvoice DeliverProformaInvoice(
+                string proformaInvoiceUid,
+                Models.DeliverProformaInvoiceRequest body = null)
+            => CoreHelper.RunTask(DeliverProformaInvoiceAsync(proformaInvoiceUid, body));
+
+        /// <summary>
+        /// Allows for proforma invoices to be programmatically delivered via email. Supports email.
+        /// delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
+        /// If `recipient_emails` is omitted, the system will fall back to the primary recipient derived from the invoice or.
+        /// subscription. At least one recipient must be present, either via the request body or via this default behavior, so an.
+        /// empty body may still succeed when defaults are available.
+        /// </summary>
+        /// <param name="proformaInvoiceUid">Required parameter: The uid of the proforma invoice.</param>
+        /// <param name="body">Optional parameter: .</param>
+        /// <param name="cancellationToken"> cancellationToken. </param>
+        /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
+        public async Task<Models.ProformaInvoice> DeliverProformaInvoiceAsync(
+                string proformaInvoiceUid,
+                Models.DeliverProformaInvoiceRequest body = null,
+                CancellationToken cancellationToken = default)
+            => await CreateApiCall<Models.ProformaInvoice>()
+              .RequestBuilder(requestBuilder => requestBuilder
+                  .Setup(HttpMethod.Post, "/proforma_invoices/{proforma_invoice_uid}/deliveries.json")
+                  .WithAuth("BasicAuth")
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("proforma_invoice_uid", proformaInvoiceUid).Required())
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -239,16 +270,16 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.VoidInvoiceRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ProformaInvoice>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/proforma_invoices/{proforma_invoice_uid}/void.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Template(_template => _template.Setup("proforma_invoice_uid", proformaInvoiceUid).Required())
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Template(template => template.Setup("proforma_invoice_uid", proformaInvoiceUid).Required())
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -257,7 +288,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// If all the data returned in the preview is as expected, you may then create a static proforma invoice and send it to your customer. The data within a preview will not be saved and will not be accessible after the call is made.
         /// Alternatively, if you have some proforma invoices already, you may make a preview call to determine whether any billing information for the subscription's upcoming renewal has changed.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
         public Models.ProformaInvoice PreviewProformaInvoice(
                 int subscriptionId)
@@ -269,21 +300,21 @@ namespace AdvancedBilling.Standard.Controllers
         /// If all the data returned in the preview is as expected, you may then create a static proforma invoice and send it to your customer. The data within a preview will not be saved and will not be accessible after the call is made.
         /// Alternatively, if you have some proforma invoices already, you may make a preview call to determine whether any billing information for the subscription's upcoming renewal has changed.
         /// </summary>
-        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription.</param>
+        /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProformaInvoice response from the API call.</returns>
         public async Task<Models.ProformaInvoice> PreviewProformaInvoiceAsync(
                 int subscriptionId,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ProformaInvoice>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/{subscription_id}/proforma_invoices/preview.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Template(_template => _template.Setup("subscription_id", subscriptionId))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (_reason, _context) => new ApiException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorListResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Template(template => template.Setup("subscription_id", subscriptionId))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorListResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -311,15 +342,15 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CreateSubscriptionRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ProformaInvoice>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/proforma_invoices.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("400", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ProformaBadRequestErrorResponseException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorArrayMapResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Header(header => header.Setup("Content-Type", "application/json"))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("400", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ProformaBadRequestErrorResponseException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorArrayMapResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -351,16 +382,16 @@ namespace AdvancedBilling.Standard.Controllers
                 Models.CreateSubscriptionRequest body = null,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.SignupProformaPreviewResponse>()
-              .RequestBuilder(_requestBuilder => _requestBuilder
+              .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Post, "/subscriptions/proforma_invoices/preview.json")
                   .WithAuth("BasicAuth")
-                  .Parameters(_parameters => _parameters
-                      .Body(_bodyParameter => _bodyParameter.Setup(body))
-                      .Header(_header => _header.Setup("Content-Type", "application/json"))
-                      .Query(_query => _query.Setup("include", (include.HasValue) ? ApiHelper.JsonSerialize(include.Value).Trim('\"') : null))))
-              .ResponseHandler(_responseHandler => _responseHandler
-                  .ErrorCase("400", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ProformaBadRequestErrorResponseException(_reason, _context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (_reason, _context) => new ErrorArrayMapResponseException(_reason, _context), true)))
+                  .Parameters(parameters => parameters
+                      .Body(b => b.Setup(body))
+                      .Header(header => header.Setup("Content-Type", "application/json"))
+                      .Query(query => query.Setup("include", (include.HasValue) ? CoreHelper.JsonSerialize(include.Value).Trim('\"') : null))))
+              .ResponseHandler(responseHandler => responseHandler
+                  .ErrorCase("400", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ProformaBadRequestErrorResponseException(errorReason, context), true))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ErrorArrayMapResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }
