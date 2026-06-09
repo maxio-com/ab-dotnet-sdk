@@ -12,3 +12,23 @@
 | `int` | PriceEndingQuantity.FromNumber(int number) |
 | `string` | PriceEndingQuantity.FromString(string mString) |
 
+## int
+
+### Initialization Code
+
+#### Example
+
+```csharp
+PriceEndingQuantity value = PriceEndingQuantity.FromNumber(0);
+```
+
+## string
+
+### Initialization Code
+
+#### Example
+
+```csharp
+PriceEndingQuantity value = PriceEndingQuantity.FromString("String0");
+```
+

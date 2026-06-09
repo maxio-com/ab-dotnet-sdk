@@ -38,6 +38,10 @@ CreateOfferAsync(
     Models.CreateOfferRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -45,6 +49,8 @@ CreateOfferAsync(
 | `body` | [`CreateOfferRequest`](../../doc/models/create-offer-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.OfferResponse>`](../../doc/models/offer-response.md)
 
@@ -147,6 +153,10 @@ ListOffersAsync(
     Models.ListOffersInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -154,6 +164,8 @@ ListOffersAsync(
 | `input` | [`Models.ListOffersInput`](../../doc/models/list-offers-input.md) | Required | Input structure for the method ListOffers |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ListOffersResponse>`](../../doc/models/list-offers-response.md)
 
@@ -252,6 +264,10 @@ ReadOfferAsync(
     int offerId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -259,6 +275,8 @@ ReadOfferAsync(
 | `offerId` | `int` | Template, Required | The Chargify id of the offer |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.OfferResponse>`](../../doc/models/offer-response.md)
 
@@ -286,6 +304,10 @@ ArchiveOfferAsync(
     int offerId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -293,6 +315,8 @@ ArchiveOfferAsync(
 | `offerId` | `int` | Template, Required | The Chargify id of the offer |
 
 ## Response Type
+
+**200**: OK
 
 `Task`
 
@@ -320,6 +344,10 @@ UnarchiveOfferAsync(
     int offerId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -327,6 +355,8 @@ UnarchiveOfferAsync(
 | `offerId` | `int` | Template, Required | The Chargify id of the offer |
 
 ## Response Type
+
+**200**: OK
 
 `Task`
 

@@ -12,3 +12,23 @@
 | `int` | UpdateProductPricePointPricePointId.FromNumber(int number) |
 | `string` | UpdateProductPricePointPricePointId.FromString(string mString) |
 
+## int
+
+### Initialization Code
+
+#### Example
+
+```csharp
+UpdateProductPricePointPricePointId value = UpdateProductPricePointPricePointId.FromNumber(0);
+```
+
+## string
+
+### Initialization Code
+
+#### Example
+
+```csharp
+UpdateProductPricePointPricePointId value = UpdateProductPricePointPricePointId.FromString("String0");
+```
+

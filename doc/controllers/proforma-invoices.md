@@ -37,6 +37,10 @@ CreateConsolidatedProformaInvoiceAsync(
     string uid)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -44,6 +48,8 @@ CreateConsolidatedProformaInvoiceAsync(
 | `uid` | `string` | Template, Required | The uid of the subscription group |
 
 ## Response Type
+
+**201**: Created
 
 `Task`
 
@@ -83,6 +89,10 @@ ListSubscriptionGroupProformaInvoicesAsync(
     Models.ListSubscriptionGroupProformaInvoicesInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -90,6 +100,8 @@ ListSubscriptionGroupProformaInvoicesAsync(
 | `input` | [`Models.ListSubscriptionGroupProformaInvoicesInput`](../../doc/models/list-subscription-group-proforma-invoices-input.md) | Required | Input structure for the method ListSubscriptionGroupProformaInvoices |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ListProformaInvoicesResponse>`](../../doc/models/list-proforma-invoices-response.md)
 
@@ -137,6 +149,10 @@ ReadProformaInvoiceAsync(
     string proformaInvoiceUid)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -144,6 +160,8 @@ ReadProformaInvoiceAsync(
 | `proformaInvoiceUid` | `string` | Template, Required | The uid of the proforma invoice |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ProformaInvoice>`](../../doc/models/proforma-invoice.md)
 
@@ -183,6 +201,10 @@ CreateProformaInvoiceAsync(
     int subscriptionId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -190,6 +212,8 @@ CreateProformaInvoiceAsync(
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ProformaInvoice>`](../../doc/models/proforma-invoice.md)
 
@@ -227,6 +251,10 @@ ListProformaInvoicesAsync(
     Models.ListProformaInvoicesInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -234,6 +262,8 @@ ListProformaInvoicesAsync(
 | `input` | [`Models.ListProformaInvoicesInput`](../../doc/models/list-proforma-invoices-input.md) | Required | Input structure for the method ListProformaInvoices |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ListProformaInvoicesResponse>`](../../doc/models/list-proforma-invoices-response.md)
 
@@ -280,6 +310,10 @@ DeliverProformaInvoiceAsync(
     Models.DeliverProformaInvoiceRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -288,6 +322,8 @@ DeliverProformaInvoiceAsync(
 | `body` | [`DeliverProformaInvoiceRequest`](../../doc/models/deliver-proforma-invoice-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.ProformaInvoice>`](../../doc/models/proforma-invoice.md)
 
@@ -354,6 +390,10 @@ VoidProformaInvoiceAsync(
     Models.VoidInvoiceRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -362,6 +402,8 @@ VoidProformaInvoiceAsync(
 | `body` | [`VoidInvoiceRequest`](../../doc/models/void-invoice-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ProformaInvoice>`](../../doc/models/proforma-invoice.md)
 
@@ -406,6 +448,10 @@ PreviewProformaInvoiceAsync(
     int subscriptionId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -413,6 +459,8 @@ PreviewProformaInvoiceAsync(
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ProformaInvoice>`](../../doc/models/proforma-invoice.md)
 
@@ -457,6 +505,10 @@ CreateSignupProformaInvoiceAsync(
     Models.CreateSubscriptionRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -464,6 +516,8 @@ CreateSignupProformaInvoiceAsync(
 | `body` | [`CreateSubscriptionRequest`](../../doc/models/create-subscription-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.ProformaInvoice>`](../../doc/models/proforma-invoice.md)
 
@@ -526,6 +580,10 @@ PreviewSignupProformaInvoiceAsync(
     Models.CreateSubscriptionRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -534,6 +592,8 @@ PreviewSignupProformaInvoiceAsync(
 | `body` | [`CreateSubscriptionRequest`](../../doc/models/create-subscription-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.SignupProformaPreviewResponse>`](../../doc/models/signup-proforma-preview-response.md)
 

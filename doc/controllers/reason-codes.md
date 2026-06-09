@@ -40,6 +40,10 @@ CreateReasonCodeAsync(
     Models.CreateReasonCodeRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -47,6 +51,8 @@ CreateReasonCodeAsync(
 | `body` | [`CreateReasonCodeRequest`](../../doc/models/create-reason-code-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ReasonCodeResponse>`](../../doc/models/reason-code-response.md)
 
@@ -93,6 +99,10 @@ ListReasonCodesAsync(
     Models.ListReasonCodesInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -100,6 +110,8 @@ ListReasonCodesAsync(
 | `input` | [`Models.ListReasonCodesInput`](../../doc/models/list-reason-codes-input.md) | Required | Input structure for the method ListReasonCodes |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.ReasonCodeResponse>>`](../../doc/models/reason-code-response.md)
 
@@ -182,6 +194,10 @@ ReadReasonCodeAsync(
     int reasonCodeId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -189,6 +205,8 @@ ReadReasonCodeAsync(
 | `reasonCodeId` | `int` | Template, Required | The Advanced Billing id of the reason code |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ReasonCodeResponse>`](../../doc/models/reason-code-response.md)
 
@@ -223,6 +241,10 @@ UpdateReasonCodeAsync(
     Models.UpdateReasonCodeRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -231,6 +253,8 @@ UpdateReasonCodeAsync(
 | `body` | [`UpdateReasonCodeRequest`](../../doc/models/update-reason-code-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ReasonCodeResponse>`](../../doc/models/reason-code-response.md)
 
@@ -269,6 +293,10 @@ DeleteReasonCodeAsync(
     int reasonCodeId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -276,6 +304,8 @@ DeleteReasonCodeAsync(
 | `reasonCodeId` | `int` | Template, Required | The Advanced Billing id of the reason code |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.OkResponse>`](../../doc/models/ok-response.md)
 

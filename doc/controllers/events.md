@@ -91,6 +91,10 @@ ListEventsAsync(
     Models.ListEventsInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -98,6 +102,8 @@ ListEventsAsync(
 | `input` | [`Models.ListEventsInput`](../../doc/models/list-events-input.md) | Required | Input structure for the method ListEvents |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.EventResponse>>`](../../doc/models/event-response.md)
 
@@ -209,6 +215,10 @@ ListSubscriptionEventsAsync(
     Models.ListSubscriptionEventsInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -216,6 +226,8 @@ ListSubscriptionEventsAsync(
 | `input` | [`Models.ListSubscriptionEventsInput`](../../doc/models/list-subscription-events-input.md) | Required | Input structure for the method ListSubscriptionEvents |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.EventResponse>>`](../../doc/models/event-response.md)
 
@@ -298,6 +310,10 @@ ReadEventsCountAsync(
     Models.ReadEventsCountInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -305,6 +321,8 @@ ReadEventsCountAsync(
 | `input` | [`Models.ReadEventsCountInput`](../../doc/models/read-events-count-input.md) | Required | Input structure for the method ReadEventsCount |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.CountResponse>`](../../doc/models/count-response.md)
 

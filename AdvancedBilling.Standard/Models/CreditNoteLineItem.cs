@@ -43,6 +43,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="subtotalAmount">subtotal_amount.</param>
         /// <param name="discountAmount">discount_amount.</param>
         /// <param name="taxAmount">tax_amount.</param>
+        /// <param name="taxIncluded">tax_included.</param>
         /// <param name="totalAmount">total_amount.</param>
         /// <param name="tieredUnitPrice">tiered_unit_price.</param>
         /// <param name="periodRangeStart">period_range_start.</param>
@@ -62,6 +63,7 @@ namespace AdvancedBilling.Standard.Models
             string subtotalAmount = null,
             string discountAmount = null,
             string taxAmount = null,
+            bool? taxIncluded = null,
             string totalAmount = null,
             bool? tieredUnitPrice = null,
             DateTime? periodRangeStart = null,
@@ -81,6 +83,7 @@ namespace AdvancedBilling.Standard.Models
             this.SubtotalAmount = subtotalAmount;
             this.DiscountAmount = discountAmount;
             this.TaxAmount = taxAmount;
+            this.TaxIncluded = taxIncluded;
             this.TotalAmount = totalAmount;
             this.TieredUnitPrice = tieredUnitPrice;
             this.PeriodRangeStart = periodRangeStart;
@@ -157,6 +160,14 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("tax_amount", NullValueHandling = NullValueHandling.Ignore)]
         public string TaxAmount { get; set; }
+
+        /// <summary>
+        /// Whether the unit price for this line item is tax-inclusive.
+        /// When `true`, `unit_price` already includes tax and `tax_amount` represents the portion of the price attributable to tax. When `false`, any applicable tax is added on top of the price.
+        /// The value is inherited from the source price point's `tax_included` setting. Custom or ad-hoc line items (which have no associated price point) always return `false`.
+        /// </summary>
+        [JsonProperty("tax_included", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? TaxIncluded { get; set; }
 
         /// <summary>
         /// The non-canonical total amount for the line.
@@ -338,6 +349,8 @@ namespace AdvancedBilling.Standard.Models
                  this.DiscountAmount?.Equals(other.DiscountAmount) == true) &&
                 (this.TaxAmount == null && other.TaxAmount == null ||
                  this.TaxAmount?.Equals(other.TaxAmount) == true) &&
+                (this.TaxIncluded == null && other.TaxIncluded == null ||
+                 this.TaxIncluded?.Equals(other.TaxIncluded) == true) &&
                 (this.TotalAmount == null && other.TotalAmount == null ||
                  this.TotalAmount?.Equals(other.TotalAmount) == true) &&
                 (this.TieredUnitPrice == null && other.TieredUnitPrice == null ||
@@ -375,6 +388,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"SubtotalAmount = {this.SubtotalAmount ?? "null"}");
             toStringOutput.Add($"DiscountAmount = {this.DiscountAmount ?? "null"}");
             toStringOutput.Add($"TaxAmount = {this.TaxAmount ?? "null"}");
+            toStringOutput.Add($"TaxIncluded = {(this.TaxIncluded == null ? "null" : this.TaxIncluded.ToString())}");
             toStringOutput.Add($"TotalAmount = {this.TotalAmount ?? "null"}");
             toStringOutput.Add($"TieredUnitPrice = {(this.TieredUnitPrice == null ? "null" : this.TieredUnitPrice.ToString())}");
             toStringOutput.Add($"PeriodRangeStart = {(this.PeriodRangeStart == null ? "null" : this.PeriodRangeStart.ToString())}");

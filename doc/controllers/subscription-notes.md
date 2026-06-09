@@ -19,7 +19,7 @@ SubscriptionNotesController subscriptionNotesController = client.SubscriptionNot
 
 # Create Subscription Note
 
-Use the following method to create a note for a subscription.
+Creates a note for a subscription.
 
 ## How to Use Subscription Notes
 
@@ -35,6 +35,10 @@ CreateSubscriptionNoteAsync(
     Models.UpdateSubscriptionNoteRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -43,6 +47,8 @@ CreateSubscriptionNoteAsync(
 | `body` | [`UpdateSubscriptionNoteRequest`](../../doc/models/update-subscription-note-request.md) | Body, Optional | Updatable fields for Subscription Note |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.SubscriptionNoteResponse>`](../../doc/models/subscription-note-response.md)
 
@@ -85,12 +91,16 @@ catch (ApiException e)
 
 # List Subscription Notes
 
-Use this method to retrieve a list of Notes associated with a Subscription. The response will be an array of Notes.
+Retrieves a list of notes associated with a subscription. The response will be an array of Notes.
 
 ```csharp
 ListSubscriptionNotesAsync(
     Models.ListSubscriptionNotesInput input)
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -99,6 +109,8 @@ ListSubscriptionNotesAsync(
 | `input` | [`Models.ListSubscriptionNotesInput`](../../doc/models/list-subscription-notes-input.md) | Required | Input structure for the method ListSubscriptionNotes |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.SubscriptionNoteResponse>>`](../../doc/models/subscription-note-response.md)
 
@@ -162,13 +174,17 @@ catch (ApiException e)
 
 # Read Subscription Note
 
-Once you have obtained the ID of the note you wish to read, use this method to show a particular note attached to a subscription.
+Retrieves a specific note attached to a subscription.
 
 ```csharp
 ReadSubscriptionNoteAsync(
     int subscriptionId,
     int noteId)
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -178,6 +194,8 @@ ReadSubscriptionNoteAsync(
 | `noteId` | `int` | Template, Required | The Advanced Billing id of the note |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.SubscriptionNoteResponse>`](../../doc/models/subscription-note-response.md)
 
@@ -217,7 +235,7 @@ catch (ApiException e)
 
 # Update Subscription Note
 
-Use the following method to update a note for a Subscription.
+Updates a note for a subscription.
 
 ```csharp
 UpdateSubscriptionNoteAsync(
@@ -225,6 +243,10 @@ UpdateSubscriptionNoteAsync(
     int noteId,
     Models.UpdateSubscriptionNoteRequest body = null)
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -235,6 +257,8 @@ UpdateSubscriptionNoteAsync(
 | `body` | [`UpdateSubscriptionNoteRequest`](../../doc/models/update-subscription-note-request.md) | Body, Optional | Updatable fields for Subscription Note |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.SubscriptionNoteResponse>`](../../doc/models/subscription-note-response.md)
 
@@ -287,6 +311,10 @@ DeleteSubscriptionNoteAsync(
     int noteId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -295,6 +323,8 @@ DeleteSubscriptionNoteAsync(
 | `noteId` | `int` | Template, Required | The Advanced Billing id of the note |
 
 ## Response Type
+
+**200**: OK
 
 `Task`
 

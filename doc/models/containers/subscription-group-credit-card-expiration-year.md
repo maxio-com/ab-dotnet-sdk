@@ -12,3 +12,23 @@
 | `string` | SubscriptionGroupCreditCardExpirationYear.FromString(string mString) |
 | `int` | SubscriptionGroupCreditCardExpirationYear.FromNumber(int number) |
 
+## string
+
+### Initialization Code
+
+#### Example
+
+```csharp
+SubscriptionGroupCreditCardExpirationYear value = SubscriptionGroupCreditCardExpirationYear.FromString("String0");
+```
+
+## int
+
+### Initialization Code
+
+#### Example
+
+```csharp
+SubscriptionGroupCreditCardExpirationYear value = SubscriptionGroupCreditCardExpirationYear.FromNumber(0);
+```
+

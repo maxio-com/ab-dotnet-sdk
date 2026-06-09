@@ -44,6 +44,10 @@ CreateMetafieldsAsync(
     Models.CreateMetafieldsRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -52,6 +56,8 @@ CreateMetafieldsAsync(
 | `body` | [`CreateMetafieldsRequest`](../../doc/models/create-metafields-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.Metafield>>`](../../doc/models/metafield.md)
 
@@ -146,6 +152,10 @@ ListMetafieldsAsync(
     Models.ListMetafieldsInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -153,6 +163,8 @@ ListMetafieldsAsync(
 | `input` | [`Models.ListMetafieldsInput`](../../doc/models/list-metafields-input.md) | Required | Input structure for the method ListMetafields |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ListMetafieldsResponse>`](../../doc/models/list-metafields-response.md)
 
@@ -241,6 +253,10 @@ UpdateMetafieldAsync(
     Models.UpdateMetafieldsRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -249,6 +265,8 @@ UpdateMetafieldAsync(
 | `body` | [`UpdateMetafieldsRequest`](../../doc/models/update-metafields-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.Metafield>>`](../../doc/models/metafield.md)
 
@@ -287,6 +305,10 @@ DeleteMetafieldAsync(
     string name = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -295,6 +317,8 @@ DeleteMetafieldAsync(
 | `name` | `string` | Query, Optional | The name of the metafield to be deleted |
 
 ## Response Type
+
+**200**: OK
 
 `Task`
 
@@ -334,6 +358,10 @@ CreateMetadataAsync(
     Models.CreateMetadataRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -343,6 +371,8 @@ CreateMetadataAsync(
 | `body` | [`CreateMetadataRequest`](../../doc/models/create-metadata-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.Metadata>>`](../../doc/models/metadata.md)
 
@@ -402,6 +432,10 @@ ListMetadataAsync(
     Models.ListMetadataInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -409,6 +443,8 @@ ListMetadataAsync(
 | `input` | [`Models.ListMetadataInput`](../../doc/models/list-metadata-input.md) | Required | Input structure for the method ListMetadata |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.PaginatedMetadata>`](../../doc/models/paginated-metadata.md)
 
@@ -470,6 +506,10 @@ UpdateMetadataAsync(
     Models.UpdateMetadataRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -479,6 +519,8 @@ UpdateMetadataAsync(
 | `body` | [`UpdateMetadataRequest`](../../doc/models/update-metadata-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.Metadata>>`](../../doc/models/metadata.md)
 
@@ -523,6 +565,10 @@ DeleteMetadataAsync(
     List<string> names = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -533,6 +579,8 @@ DeleteMetadataAsync(
 | `names` | `List<string>` | Query, Optional | Names of fields to be removed. Use in query: `names[]=field1&names[]=my-field&names[]=another-field`. |
 
 ## Response Type
+
+**200**: OK
 
 `Task`
 
@@ -570,6 +618,10 @@ ListMetadataForResourceTypeAsync(
     Models.ListMetadataForResourceTypeInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -577,6 +629,8 @@ ListMetadataForResourceTypeAsync(
 | `input` | [`Models.ListMetadataForResourceTypeInput`](../../doc/models/list-metadata-for-resource-type-input.md) | Required | Input structure for the method ListMetadataForResourceType |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.PaginatedMetadata>`](../../doc/models/paginated-metadata.md)
 

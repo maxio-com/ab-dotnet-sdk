@@ -33,6 +33,10 @@ CreateProductPricePointAsync(
     Models.CreateProductPricePointRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -41,6 +45,8 @@ CreateProductPricePointAsync(
 | `body` | [`CreateProductPricePointRequest`](../../doc/models/create-product-price-point-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.ProductPricePointResponse>`](../../doc/models/product-price-point-response.md)
 
@@ -129,6 +135,10 @@ ListProductPricePointsAsync(
     Models.ListProductPricePointsInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -136,6 +146,8 @@ ListProductPricePointsAsync(
 | `input` | [`Models.ListProductPricePointsInput`](../../doc/models/list-product-price-points-input.md) | Required | Input structure for the method ListProductPricePoints |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ListProductPricePointsResponse>`](../../doc/models/list-product-price-points-response.md)
 
@@ -203,6 +215,10 @@ UpdateProductPricePointAsync(
     Models.UpdateProductPricePointRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -212,6 +228,8 @@ UpdateProductPricePointAsync(
 | `body` | [`UpdateProductPricePointRequest`](../../doc/models/update-product-price-point-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ProductPricePointResponse>`](../../doc/models/product-price-point-response.md)
 
@@ -284,6 +302,10 @@ ReadProductPricePointAsync(
     bool? currencyPrices = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -293,6 +315,8 @@ ReadProductPricePointAsync(
 | `currencyPrices` | `bool?` | Query, Optional | When fetching a product's price points, if you have defined multiple currencies at the site level, you can optionally pass the ?currency_prices=true query param to include an array of currency price data in the response. If the product price point is set to use_site_exchange_rate: true, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency. |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ProductPricePointResponse>`](../../doc/models/product-price-point-response.md)
 
@@ -354,6 +378,10 @@ ArchiveProductPricePointAsync(
     ArchiveProductPricePointPricePointId pricePointId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -362,6 +390,8 @@ ArchiveProductPricePointAsync(
 | `pricePointId` | [`ArchiveProductPricePointPricePointId`](../../doc/models/containers/archive-product-price-point-price-point-id.md) | Template, Required | This is a container for one-of cases. |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ProductPricePointResponse>`](../../doc/models/product-price-point-response.md)
 
@@ -433,6 +463,10 @@ UnarchiveProductPricePointAsync(
     int pricePointId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -441,6 +475,8 @@ UnarchiveProductPricePointAsync(
 | `pricePointId` | `int` | Template, Required | The Advanced Billing id of the product price point |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ProductPricePointResponse>`](../../doc/models/product-price-point-response.md)
 
@@ -502,6 +538,10 @@ PromoteProductPricePointToDefaultAsync(
     int pricePointId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -510,6 +550,8 @@ PromoteProductPricePointToDefaultAsync(
 | `pricePointId` | `int` | Template, Required | The Advanced Billing id of the product price point |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ProductResponse>`](../../doc/models/product-response.md)
 
@@ -595,6 +637,10 @@ BulkCreateProductPricePointsAsync(
     Models.BulkCreateProductPricePointsRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -603,6 +649,8 @@ BulkCreateProductPricePointsAsync(
 | `body` | [`BulkCreateProductPricePointsRequest`](../../doc/models/bulk-create-product-price-points-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.BulkCreateProductPricePointsResponse>`](../../doc/models/bulk-create-product-price-points-response.md)
 
@@ -712,6 +760,10 @@ CreateProductCurrencyPricesAsync(
     Models.CreateProductCurrencyPricesRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -720,6 +772,8 @@ CreateProductCurrencyPricesAsync(
 | `body` | [`CreateProductCurrencyPricesRequest`](../../doc/models/create-product-currency-prices-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.CurrencyPricesResponse>`](../../doc/models/currency-prices-response.md)
 
@@ -807,6 +861,10 @@ UpdateProductCurrencyPricesAsync(
     Models.UpdateCurrencyPricesRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -815,6 +873,8 @@ UpdateProductCurrencyPricesAsync(
 | `body` | [`UpdateCurrencyPricesRequest`](../../doc/models/update-currency-prices-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.CurrencyPricesResponse>`](../../doc/models/currency-prices-response.md)
 
@@ -889,6 +949,10 @@ ListAllProductPricePointsAsync(
     Models.ListAllProductPricePointsInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -896,6 +960,8 @@ ListAllProductPricePointsAsync(
 | `input` | [`Models.ListAllProductPricePointsInput`](../../doc/models/list-all-product-price-points-input.md) | Required | Input structure for the method ListAllProductPricePoints |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ListProductPricePointsResponse>`](../../doc/models/list-product-price-points-response.md)
 

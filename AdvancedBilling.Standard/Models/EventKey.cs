@@ -215,6 +215,12 @@ namespace AdvancedBilling.Standard.Models
         InvoiceIssued,
 
         /// <summary>
+        /// InvoicePending.
+        /// </summary>
+        [EnumMember(Value = "invoice_pending")]
+        InvoicePending,
+
+        /// <summary>
         /// PrepaidSubscriptionBalanceChanged.
         /// </summary>
         [EnumMember(Value = "prepaid_subscription_balance_changed")]

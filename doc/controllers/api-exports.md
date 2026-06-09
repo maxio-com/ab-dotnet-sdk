@@ -32,6 +32,10 @@ ListExportedProformaInvoicesAsync(
     Models.ListExportedProformaInvoicesInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -39,6 +43,8 @@ ListExportedProformaInvoicesAsync(
 | `input` | [`Models.ListExportedProformaInvoicesInput`](../../doc/models/list-exported-proforma-invoices-input.md) | Required | Input structure for the method ListExportedProformaInvoices |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.ProformaInvoice>>`](../../doc/models/proforma-invoice.md)
 
@@ -80,6 +86,10 @@ ListExportedInvoicesAsync(
     Models.ListExportedInvoicesInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -87,6 +97,8 @@ ListExportedInvoicesAsync(
 | `input` | [`Models.ListExportedInvoicesInput`](../../doc/models/list-exported-invoices-input.md) | Required | Input structure for the method ListExportedInvoices |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.Invoice>>`](../../doc/models/invoice.md)
 
@@ -128,6 +140,10 @@ ListExportedSubscriptionsAsync(
     Models.ListExportedSubscriptionsInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -135,6 +151,8 @@ ListExportedSubscriptionsAsync(
 | `input` | [`Models.ListExportedSubscriptionsInput`](../../doc/models/list-exported-subscriptions-input.md) | Required | Input structure for the method ListExportedSubscriptions |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.Subscription>>`](../../doc/models/subscription.md)
 
@@ -175,7 +193,13 @@ It is only available for Relationship Invoicing architecture.
 ExportProformaInvoicesAsync()
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.BatchJobResponse>`](../../doc/models/batch-job-response.md)
 
@@ -212,7 +236,13 @@ This API creates an invoices export and returns a batchjob object.
 ExportInvoicesAsync()
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.BatchJobResponse>`](../../doc/models/batch-job-response.md)
 
@@ -249,7 +279,13 @@ This API creates a subscriptions export and returns a batchjob object.
 ExportSubscriptionsAsync()
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.BatchJobResponse>`](../../doc/models/batch-job-response.md)
 
@@ -286,6 +322,10 @@ ReadProformaInvoicesExportAsync(
     string batchId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -293,6 +333,8 @@ ReadProformaInvoicesExportAsync(
 | `batchId` | `string` | Template, Required | Id of a Batch Job. |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.BatchJobResponse>`](../../doc/models/batch-job-response.md)
 
@@ -326,6 +368,10 @@ ReadInvoicesExportAsync(
     string batchId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -333,6 +379,8 @@ ReadInvoicesExportAsync(
 | `batchId` | `string` | Template, Required | Id of a Batch Job. |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.BatchJobResponse>`](../../doc/models/batch-job-response.md)
 
@@ -366,6 +414,10 @@ ReadSubscriptionsExportAsync(
     string batchId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -373,6 +425,8 @@ ReadSubscriptionsExportAsync(
 | `batchId` | `string` | Template, Required | Id of a Batch Job. |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.BatchJobResponse>`](../../doc/models/batch-job-response.md)
 

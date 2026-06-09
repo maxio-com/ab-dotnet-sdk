@@ -23,7 +23,7 @@ namespace AdvancedBilling.Standard.Controllers
         internal SubscriptionGroupInvoiceAccountController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
-        /// A prepayment can be added for a subscription group identified by the group's `uid`. This endpoint requires a `amount`, `details`, `method`, and `memo`. On success, the prepayment will be added to the group's prepayment balance.
+        /// Adds a prepayment for a subscription group. This endpoint requires an `amount`, `details`, `method`, and `memo`. On success, the prepayment will be added to the group's prepayment balance.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
         /// <param name="body">Optional parameter: .</param>
@@ -34,7 +34,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(CreateSubscriptionGroupPrepaymentAsync(uid, body));
 
         /// <summary>
-        /// A prepayment can be added for a subscription group identified by the group's `uid`. This endpoint requires a `amount`, `details`, `method`, and `memo`. On success, the prepayment will be added to the group's prepayment balance.
+        /// Adds a prepayment for a subscription group. This endpoint requires an `amount`, `details`, `method`, and `memo`. On success, the prepayment will be added to the group's prepayment balance.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
         /// <param name="body">Optional parameter: .</param>
@@ -57,7 +57,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This request will list a subscription group's prepayments.
+        /// Lists a subscription group's prepayments.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the Models.ListSubscriptionGroupPrepaymentResponse response from the API call.</returns>
@@ -66,7 +66,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListPrepaymentsForSubscriptionGroupAsync(input));
 
         /// <summary>
-        /// This request will list a subscription group's prepayments.
+        /// Lists a subscription group's prepayments.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -88,7 +88,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Credit can be issued for a subscription group identified by the group's `uid`. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
+        /// Issues service credit for a subscription group. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
         /// <param name="body">Optional parameter: .</param>
@@ -99,7 +99,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(IssueSubscriptionGroupServiceCreditAsync(uid, body));
 
         /// <summary>
-        /// Credit can be issued for a subscription group identified by the group's `uid`. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
+        /// Issues service credit for a subscription group. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
         /// <param name="body">Optional parameter: .</param>
@@ -122,7 +122,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
+        /// Deducts service credit for a subscription group. Credit will be deducted from the group in the amount specified in the request body.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
         /// <param name="body">Optional parameter: .</param>
@@ -133,7 +133,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(DeductSubscriptionGroupServiceCreditAsync(uid, body));
 
         /// <summary>
-        /// Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
+        /// Deducts service credit for a subscription group. Credit will be deducted from the group in the amount specified in the request body.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
         /// <param name="body">Optional parameter: .</param>

@@ -25,7 +25,7 @@ namespace AdvancedBilling.Standard.Controllers
         internal SubscriptionNotesController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
-        /// Use the following method to create a note for a subscription.
+        /// Creates a note for a subscription.
         /// ## How to Use Subscription Notes.
         /// Notes allow you to record information about a particular Subscription in a free text format.
         /// If you have structured data such as birth date, color, etc., consider using Metadata instead.
@@ -40,7 +40,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(CreateSubscriptionNoteAsync(subscriptionId, body));
 
         /// <summary>
-        /// Use the following method to create a note for a subscription.
+        /// Creates a note for a subscription.
         /// ## How to Use Subscription Notes.
         /// Notes allow you to record information about a particular Subscription in a free text format.
         /// If you have structured data such as birth date, color, etc., consider using Metadata instead.
@@ -67,7 +67,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this method to retrieve a list of Notes associated with a Subscription. The response will be an array of Notes.
+        /// Retrieves a list of notes associated with a subscription. The response will be an array of Notes.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the List of Models.SubscriptionNoteResponse response from the API call.</returns>
@@ -76,7 +76,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListSubscriptionNotesAsync(input));
 
         /// <summary>
-        /// Use this method to retrieve a list of Notes associated with a Subscription. The response will be an array of Notes.
+        /// Retrieves a list of notes associated with a subscription. The response will be an array of Notes.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -97,7 +97,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Once you have obtained the ID of the note you wish to read, use this method to show a particular note attached to a subscription.
+        /// Retrieves a specific note attached to a subscription.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="noteId">Required parameter: The Advanced Billing id of the note.</param>
@@ -108,7 +108,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ReadSubscriptionNoteAsync(subscriptionId, noteId));
 
         /// <summary>
-        /// Once you have obtained the ID of the note you wish to read, use this method to show a particular note attached to a subscription.
+        /// Retrieves a specific note attached to a subscription.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="noteId">Required parameter: The Advanced Billing id of the note.</param>
@@ -128,7 +128,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use the following method to update a note for a Subscription.
+        /// Updates a note for a subscription.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="noteId">Required parameter: The Advanced Billing id of the note.</param>
@@ -141,7 +141,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(UpdateSubscriptionNoteAsync(subscriptionId, noteId, body));
 
         /// <summary>
-        /// Use the following method to update a note for a Subscription.
+        /// Updates a note for a subscription.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="noteId">Required parameter: The Advanced Billing id of the note.</param>

@@ -26,6 +26,10 @@ ValidateReferralCodeAsync(
     string code)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -33,6 +37,8 @@ ValidateReferralCodeAsync(
 | `code` | `string` | Query, Required | The referral code you are trying to validate |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ReferralValidationResponse>`](../../doc/models/referral-validation-response.md)
 

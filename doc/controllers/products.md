@@ -33,6 +33,10 @@ CreateProductAsync(
     Models.CreateOrUpdateProductRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -41,6 +45,8 @@ CreateProductAsync(
 | `body` | [`CreateOrUpdateProductRequest`](../../doc/models/create-or-update-product-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.ProductResponse>`](../../doc/models/product-response.md)
 
@@ -147,6 +153,10 @@ ReadProductAsync(
     int productId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -154,6 +164,8 @@ ReadProductAsync(
 | `productId` | `int` | Template, Required | The Advanced Billing id of the product |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ProductResponse>`](../../doc/models/product-response.md)
 
@@ -233,6 +245,10 @@ UpdateProductAsync(
     Models.CreateOrUpdateProductRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -241,6 +257,8 @@ UpdateProductAsync(
 | `body` | [`CreateOrUpdateProductRequest`](../../doc/models/create-or-update-product-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ProductResponse>`](../../doc/models/product-response.md)
 
@@ -328,6 +346,10 @@ ArchiveProductAsync(
     int productId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -335,6 +357,8 @@ ArchiveProductAsync(
 | `productId` | `int` | Template, Required | The Advanced Billing id of the product |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ProductResponse>`](../../doc/models/product-response.md)
 
@@ -415,6 +439,10 @@ ReadProductByHandleAsync(
     string apiHandle)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -422,6 +450,8 @@ ReadProductByHandleAsync(
 | `apiHandle` | `string` | Template, Required | The handle of the product |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ProductResponse>`](../../doc/models/product-response.md)
 
@@ -517,6 +547,10 @@ ListProductsAsync(
     Models.ListProductsInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -524,6 +558,8 @@ ListProductsAsync(
 | `input` | [`Models.ListProductsInput`](../../doc/models/list-products-input.md) | Required | Input structure for the method ListProducts |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.ProductResponse>>`](../../doc/models/product-response.md)
 

@@ -12,7 +12,7 @@ ComponentsController componentsController = client.ComponentsController;
 
 * [Create Metered Component](../../doc/controllers/components.md#create-metered-component)
 * [Create Quantity Based Component](../../doc/controllers/components.md#create-quantity-based-component)
-* [Create on Off Component](../../doc/controllers/components.md#create-on-off-component)
+* [Create On Off Component](../../doc/controllers/components.md#create-on-off-component)
 * [Create Prepaid Usage Component](../../doc/controllers/components.md#create-prepaid-usage-component)
 * [Create Event Based Component](../../doc/controllers/components.md#create-event-based-component)
 * [Find Component](../../doc/controllers/components.md#find-component)
@@ -28,7 +28,7 @@ ComponentsController componentsController = client.ComponentsController;
 
 This request will create a component definition of kind **metered_component** under the specified product family. Metered component can then be added and “allocated” for a subscription.
 
-Metered components are used to bill for any type of unit that resets to 0 at the end of the billing period (think daily Google Adwords clicks or monthly cell phone minutes). This is most commonly associated with usage-based billing and many other pricing schemes.
+Metered components are used to bill for any type of unit that resets to 0 at the end of the billing period (think daily Google Ads clicks or monthly cell phone minutes). This is most commonly associated with usage-based billing and many other pricing schemes.
 
 Note that this is different from recurring quantity-based components, which DO NOT reset to zero at the start of every billing period. If you want to bill for a quantity of something that does not change unless you change it, then you want quantity components, instead.
 
@@ -40,6 +40,10 @@ CreateMeteredComponentAsync(
     Models.CreateMeteredComponent body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -48,6 +52,8 @@ CreateMeteredComponentAsync(
 | `body` | [`CreateMeteredComponent`](../../doc/models/create-metered-component.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.ComponentResponse>`](../../doc/models/component-response.md)
 
@@ -173,6 +179,10 @@ CreateQuantityBasedComponentAsync(
     Models.CreateQuantityBasedComponent body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -181,6 +191,8 @@ CreateQuantityBasedComponentAsync(
 | `body` | [`CreateQuantityBasedComponent`](../../doc/models/create-quantity-based-component.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.ComponentResponse>`](../../doc/models/component-response.md)
 
@@ -282,7 +294,7 @@ catch (ApiException e)
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
-# Create on Off Component
+# Create On Off Component
 
 This request will create a component definition of kind **on_off_component** under the specified product family. On/Off component can then be added and “allocated” for a subscription.
 
@@ -296,6 +308,10 @@ CreateOnOffComponentAsync(
     Models.CreateOnOffComponent body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -304,6 +320,8 @@ CreateOnOffComponentAsync(
 | `body` | [`CreateOnOffComponent`](../../doc/models/create-on-off-component.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.ComponentResponse>`](../../doc/models/component-response.md)
 
@@ -404,6 +422,10 @@ CreatePrepaidUsageComponentAsync(
     Models.CreatePrepaidComponent body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -412,6 +434,8 @@ CreatePrepaidUsageComponentAsync(
 | `body` | [`CreatePrepaidComponent`](../../doc/models/create-prepaid-component.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.ComponentResponse>`](../../doc/models/component-response.md)
 
@@ -555,6 +579,10 @@ CreateEventBasedComponentAsync(
     Models.CreateEBBComponent body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -563,6 +591,8 @@ CreateEventBasedComponentAsync(
 | `body` | [`CreateEBBComponent`](../../doc/models/create-ebb-component.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.ComponentResponse>`](../../doc/models/component-response.md)
 
@@ -665,6 +695,10 @@ FindComponentAsync(
     string handle)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -672,6 +706,8 @@ FindComponentAsync(
 | `handle` | `string` | Query, Required | The handle of the component to find |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentResponse>`](../../doc/models/component-response.md)
 
@@ -732,6 +768,10 @@ ReadComponentAsync(
     string componentId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -740,6 +780,8 @@ ReadComponentAsync(
 | `componentId` | `string` | Template, Required | Either the Advanced Billing id of the component or the handle for the component prefixed with `handle:`<br><br>**Constraints**: *Pattern*: `/\A(?:\d+\|handle:(?:uuid:\|[a-z])(?:\w\|-)+)\z/` |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentResponse>`](../../doc/models/component-response.md)
 
@@ -806,6 +848,10 @@ UpdateProductFamilyComponentAsync(
     Models.UpdateComponentRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -815,6 +861,8 @@ UpdateProductFamilyComponentAsync(
 | `body` | [`UpdateComponentRequest`](../../doc/models/update-component-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentResponse>`](../../doc/models/component-response.md)
 
@@ -896,6 +944,10 @@ ArchiveComponentAsync(
     string componentId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -904,6 +956,8 @@ ArchiveComponentAsync(
 | `componentId` | `string` | Template, Required | Either the Advanced Billing id of the component or the handle for the component prefixed with `handle:`<br><br>**Constraints**: *Pattern*: `/\A(?:\d+\|handle:(?:uuid:\|[a-z])(?:\w\|-)+)\z/` |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.Component>`](../../doc/models/component.md)
 
@@ -971,6 +1025,10 @@ ListComponentsAsync(
     Models.ListComponentsInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -978,6 +1036,8 @@ ListComponentsAsync(
 | `input` | [`Models.ListComponentsInput`](../../doc/models/list-components-input.md) | Required | Input structure for the method ListComponents |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.ComponentResponse>>`](../../doc/models/component-response.md)
 
@@ -1122,6 +1182,10 @@ UpdateComponentAsync(
     Models.UpdateComponentRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -1130,6 +1194,8 @@ UpdateComponentAsync(
 | `body` | [`UpdateComponentRequest`](../../doc/models/update-component-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentResponse>`](../../doc/models/component-response.md)
 
@@ -1208,6 +1274,10 @@ ListComponentsForProductFamilyAsync(
     Models.ListComponentsForProductFamilyInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -1215,6 +1285,8 @@ ListComponentsForProductFamilyAsync(
 | `input` | [`Models.ListComponentsForProductFamilyInput`](../../doc/models/list-components-for-product-family-input.md) | Required | Input structure for the method ListComponentsForProductFamily |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.ComponentResponse>>`](../../doc/models/component-response.md)
 

@@ -12,3 +12,23 @@
 | `int` | ReadProductPricePointPricePointId.FromNumber(int number) |
 | `string` | ReadProductPricePointPricePointId.FromString(string mString) |
 
+## int
+
+### Initialization Code
+
+#### Example
+
+```csharp
+ReadProductPricePointPricePointId value = ReadProductPricePointPricePointId.FromNumber(0);
+```
+
+## string
+
+### Initialization Code
+
+#### Example
+
+```csharp
+ReadProductPricePointPricePointId value = ReadProductPricePointPricePointId.FromString("String0");
+```
+

@@ -38,6 +38,10 @@ PromoteComponentPricePointToDefaultAsync(
     int pricePointId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -46,6 +50,8 @@ PromoteComponentPricePointToDefaultAsync(
 | `pricePointId` | `int` | Template, Required | The Advanced Billing id of the price point |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentResponse>`](../../doc/models/component-response.md)
 
@@ -111,6 +117,10 @@ CreateComponentPricePointAsync(
     Models.CreateComponentPricePointRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -119,6 +129,8 @@ CreateComponentPricePointAsync(
 | `body` | [`CreateComponentPricePointRequest`](../../doc/models/create-component-price-point-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentPricePointResponse>`](../../doc/models/component-price-point-response.md)
 
@@ -193,6 +205,10 @@ ListComponentPricePointsAsync(
     Models.ListComponentPricePointsInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -200,6 +216,8 @@ ListComponentPricePointsAsync(
 | `input` | [`Models.ListComponentPricePointsInput`](../../doc/models/list-component-price-points-input.md) | Required | Input structure for the method ListComponentPricePoints |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.ComponentPricePointsResponse>`](../../doc/models/component-price-points-response.md)
 
@@ -284,6 +302,10 @@ BulkCreateComponentPricePointsAsync(
     Models.CreateComponentPricePointsRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -292,6 +314,8 @@ BulkCreateComponentPricePointsAsync(
 | `body` | [`CreateComponentPricePointsRequest`](../../doc/models/create-component-price-points-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentPricePointsResponse>`](../../doc/models/component-price-points-response.md)
 
@@ -446,6 +470,10 @@ CloneComponentPricePointAsync(
     Models.CloneComponentPricePointRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -455,6 +483,8 @@ CloneComponentPricePointAsync(
 | `body` | [`CloneComponentPricePointRequest`](../../doc/models/clone-component-price-point-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.ComponentPricePointCurrencyOverageResponse>`](../../doc/models/component-price-point-currency-overage-response.md)
 
@@ -588,6 +618,10 @@ UpdateComponentPricePointAsync(
     Models.UpdateComponentPricePointRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -597,6 +631,8 @@ UpdateComponentPricePointAsync(
 | `body` | [`UpdateComponentPricePointRequest`](../../doc/models/update-component-price-point-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentPricePointResponse>`](../../doc/models/component-price-point-response.md)
 
@@ -670,6 +706,10 @@ ReadComponentPricePointAsync(
     bool? currencyPrices = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -679,6 +719,8 @@ ReadComponentPricePointAsync(
 | `currencyPrices` | `bool?` | Query, Optional | Include an array of currency price data |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentPricePointCurrencyOverageResponse>`](../../doc/models/component-price-point-currency-overage-response.md)
 
@@ -713,6 +755,10 @@ ArchiveComponentPricePointAsync(
     ArchiveComponentPricePointPricePointId pricePointId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -721,6 +767,8 @@ ArchiveComponentPricePointAsync(
 | `pricePointId` | [`ArchiveComponentPricePointPricePointId`](../../doc/models/containers/archive-component-price-point-price-point-id.md) | Template, Required | This is a container for one-of cases. |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentPricePointResponse>`](../../doc/models/component-price-point-response.md)
 
@@ -799,6 +847,10 @@ UnarchiveComponentPricePointAsync(
     int pricePointId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -807,6 +859,8 @@ UnarchiveComponentPricePointAsync(
 | `pricePointId` | `int` | Template, Required | The Advanced Billing id of the price point |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentPricePointResponse>`](../../doc/models/component-price-point-response.md)
 
@@ -877,6 +931,10 @@ CreateCurrencyPricesAsync(
     Models.CreateCurrencyPricesRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -885,6 +943,8 @@ CreateCurrencyPricesAsync(
 | `body` | [`CreateCurrencyPricesRequest`](../../doc/models/create-currency-prices-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentCurrencyPricesResponse>`](../../doc/models/component-currency-prices-response.md)
 
@@ -964,6 +1024,10 @@ UpdateCurrencyPricesAsync(
     Models.UpdateCurrencyPricesRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -972,6 +1036,8 @@ UpdateCurrencyPricesAsync(
 | `body` | [`UpdateCurrencyPricesRequest`](../../doc/models/update-currency-prices-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentCurrencyPricesResponse>`](../../doc/models/component-currency-prices-response.md)
 
@@ -1046,6 +1112,10 @@ ListAllComponentPricePointsAsync(
     Models.ListAllComponentPricePointsInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -1053,6 +1123,8 @@ ListAllComponentPricePointsAsync(
 | `input` | [`Models.ListAllComponentPricePointsInput`](../../doc/models/list-all-component-price-points-input.md) | Required | Input structure for the method ListAllComponentPricePoints |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ListComponentsPricePointsResponse>`](../../doc/models/list-components-price-points-response.md)
 

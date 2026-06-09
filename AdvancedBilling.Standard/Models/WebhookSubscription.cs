@@ -65,6 +65,12 @@ namespace AdvancedBilling.Standard.Models
         InvoiceIssued,
 
         /// <summary>
+        /// InvoicePending.
+        /// </summary>
+        [EnumMember(Value = "invoice_pending")]
+        InvoicePending,
+
+        /// <summary>
         /// MeteredUsage.
         /// </summary>
         [EnumMember(Value = "metered_usage")]

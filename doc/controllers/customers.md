@@ -51,6 +51,10 @@ CreateCustomerAsync(
     Models.CreateCustomerRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -58,6 +62,8 @@ CreateCustomerAsync(
 | `body` | [`CreateCustomerRequest`](../../doc/models/create-customer-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.CustomerResponse>`](../../doc/models/customer-response.md)
 
@@ -164,6 +170,10 @@ ListCustomersAsync(
     Models.ListCustomersInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -171,6 +181,8 @@ ListCustomersAsync(
 | `input` | [`Models.ListCustomersInput`](../../doc/models/list-customers-input.md) | Required | Input structure for the method ListCustomers |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.CustomerResponse>>`](../../doc/models/customer-response.md)
 
@@ -288,6 +300,10 @@ ReadCustomerAsync(
     int id)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -295,6 +311,8 @@ ReadCustomerAsync(
 | `id` | `int` | Template, Required | The Advanced Billing id of the customer |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.CustomerResponse>`](../../doc/models/customer-response.md)
 
@@ -360,6 +378,10 @@ UpdateCustomerAsync(
     Models.UpdateCustomerRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -368,6 +390,8 @@ UpdateCustomerAsync(
 | `body` | [`UpdateCustomerRequest`](../../doc/models/update-customer-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.CustomerResponse>`](../../doc/models/customer-response.md)
 
@@ -450,6 +474,10 @@ DeleteCustomerAsync(
     int id)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -457,6 +485,8 @@ DeleteCustomerAsync(
 | `id` | `int` | Template, Required | The Advanced Billing id of the customer |
 
 ## Response Type
+
+**204**: No Content
 
 `Task`
 
@@ -484,6 +514,10 @@ ReadCustomerByReferenceAsync(
     string reference)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -491,6 +525,8 @@ ReadCustomerByReferenceAsync(
 | `reference` | `string` | Query, Required | Customer reference |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.CustomerResponse>`](../../doc/models/customer-response.md)
 
@@ -518,6 +554,10 @@ ListCustomerSubscriptionsAsync(
     int customerId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -525,6 +565,8 @@ ListCustomerSubscriptionsAsync(
 | `customerId` | `int` | Template, Required | The Chargify id of the customer |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.SubscriptionResponse>>`](../../doc/models/subscription-response.md)
 

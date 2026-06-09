@@ -31,6 +31,10 @@ CreateSegmentAsync(
     Models.CreateSegmentRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -40,6 +44,8 @@ CreateSegmentAsync(
 | `body` | [`CreateSegmentRequest`](../../doc/models/create-segment-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.SegmentResponse>`](../../doc/models/segment-response.md)
 
@@ -111,6 +117,10 @@ ListSegmentsForPricePointAsync(
     Models.ListSegmentsForPricePointInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -118,6 +128,8 @@ ListSegmentsForPricePointAsync(
 | `input` | [`Models.ListSegmentsForPricePointInput`](../../doc/models/list-segments-for-price-point-input.md) | Required | Input structure for the method ListSegmentsForPricePoint |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ListSegmentsResponse>`](../../doc/models/list-segments-response.md)
 
@@ -172,6 +184,10 @@ UpdateSegmentAsync(
     Models.UpdateSegmentRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -182,6 +198,8 @@ UpdateSegmentAsync(
 | `body` | [`UpdateSegmentRequest`](../../doc/models/update-segment-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.SegmentResponse>`](../../doc/models/segment-response.md)
 
@@ -230,6 +248,10 @@ DeleteSegmentAsync(
     double id)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -239,6 +261,8 @@ DeleteSegmentAsync(
 | `id` | `double` | Template, Required | The ID of the Segment |
 
 ## Response Type
+
+**204**: No Content
 
 `Task`
 
@@ -285,6 +309,10 @@ BulkCreateSegmentsAsync(
     Models.BulkCreateSegments body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -294,6 +322,8 @@ BulkCreateSegmentsAsync(
 | `body` | [`BulkCreateSegments`](../../doc/models/bulk-create-segments.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.ListSegmentsResponse>`](../../doc/models/list-segments-response.md)
 
@@ -342,6 +372,10 @@ BulkUpdateSegmentsAsync(
     Models.BulkUpdateSegments body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -351,6 +385,8 @@ BulkUpdateSegmentsAsync(
 | `body` | [`BulkUpdateSegments`](../../doc/models/bulk-update-segments.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ListSegmentsResponse>`](../../doc/models/list-segments-response.md)
 

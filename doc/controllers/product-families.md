@@ -25,6 +25,10 @@ ListProductsForProductFamilyAsync(
     Models.ListProductsForProductFamilyInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -32,6 +36,8 @@ ListProductsForProductFamilyAsync(
 | `input` | [`Models.ListProductsForProductFamilyInput`](../../doc/models/list-products-for-product-family-input.md) | Required | Input structure for the method ListProductsForProductFamily |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.ProductResponse>>`](../../doc/models/product-response.md)
 
@@ -183,6 +189,10 @@ CreateProductFamilyAsync(
     Models.CreateProductFamilyRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -190,6 +200,8 @@ CreateProductFamilyAsync(
 | `body` | [`CreateProductFamilyRequest`](../../doc/models/create-product-family-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.ProductFamilyResponse>`](../../doc/models/product-family-response.md)
 
@@ -249,6 +261,10 @@ ListProductFamiliesAsync(
     Models.ListProductFamiliesInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -256,6 +272,8 @@ ListProductFamiliesAsync(
 | `input` | [`Models.ListProductFamiliesInput`](../../doc/models/list-product-families-input.md) | Required | Input structure for the method ListProductFamilies |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.ProductFamilyResponse>>`](../../doc/models/product-family-response.md)
 
@@ -320,6 +338,10 @@ ReadProductFamilyAsync(
     int id)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -327,6 +349,8 @@ ReadProductFamilyAsync(
 | `id` | `int` | Template, Required | The Advanced Billing id of the product family |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ProductFamilyResponse>`](../../doc/models/product-family-response.md)
 

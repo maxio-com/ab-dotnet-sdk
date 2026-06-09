@@ -28,6 +28,10 @@ IssueAdvanceInvoiceAsync(
     Models.IssueAdvanceInvoiceRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -36,6 +40,8 @@ IssueAdvanceInvoiceAsync(
 | `body` | [`IssueAdvanceInvoiceRequest`](../../doc/models/issue-advance-invoice-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.Invoice>`](../../doc/models/invoice.md)
 
@@ -82,6 +88,10 @@ ReadAdvanceInvoiceAsync(
     int subscriptionId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -89,6 +99,8 @@ ReadAdvanceInvoiceAsync(
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.Invoice>`](../../doc/models/invoice.md)
 
@@ -124,6 +136,10 @@ VoidAdvanceInvoiceAsync(
     Models.VoidInvoiceRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -132,6 +148,8 @@ VoidAdvanceInvoiceAsync(
 | `body` | [`VoidInvoiceRequest`](../../doc/models/void-invoice-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.Invoice>`](../../doc/models/invoice.md)
 

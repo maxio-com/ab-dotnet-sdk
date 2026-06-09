@@ -40,6 +40,10 @@ EnableBillingPortalForCustomerAsync(
     Models.AutoInvite? autoInvite = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -48,6 +52,8 @@ EnableBillingPortalForCustomerAsync(
 | `autoInvite` | [`AutoInvite?`](../../doc/models/auto-invite.md) | Query, Optional | When set to 1, an Invitation email will be sent to the Customer.<br>When set to 0, or not sent, an email will not be sent.<br>Use in query: `auto_invite=1`. |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.CustomerResponse>`](../../doc/models/customer-response.md)
 
@@ -93,6 +99,10 @@ ReadBillingPortalLinkAsync(
     int customerId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -100,6 +110,8 @@ ReadBillingPortalLinkAsync(
 | `customerId` | `int` | Template, Required | The Chargify id of the customer |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.PortalManagementLink>`](../../doc/models/portal-management-link.md)
 
@@ -167,6 +179,10 @@ ResendBillingPortalInvitationAsync(
     int customerId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -174,6 +190,8 @@ ResendBillingPortalInvitationAsync(
 | `customerId` | `int` | Template, Required | The Chargify id of the customer |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ResentInvitation>`](../../doc/models/resent-invitation.md)
 
@@ -229,6 +247,10 @@ RevokeBillingPortalAccessAsync(
     int customerId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -236,6 +258,8 @@ RevokeBillingPortalAccessAsync(
 | `customerId` | `int` | Template, Required | The Chargify id of the customer |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.RevokedInvitation>`](../../doc/models/revoked-invitation.md)
 

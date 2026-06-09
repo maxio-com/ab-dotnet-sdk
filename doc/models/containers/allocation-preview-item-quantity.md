@@ -12,3 +12,23 @@
 | `int` | AllocationPreviewItemQuantity.FromNumber(int number) |
 | `string` | AllocationPreviewItemQuantity.FromString(string mString) |
 
+## int
+
+### Initialization Code
+
+#### Example
+
+```csharp
+AllocationPreviewItemQuantity value = AllocationPreviewItemQuantity.FromNumber(0);
+```
+
+## string
+
+### Initialization Code
+
+#### Example
+
+```csharp
+AllocationPreviewItemQuantity value = AllocationPreviewItemQuantity.FromString("String0");
+```
+
