@@ -32,7 +32,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="paymentProfile">payment_profile.</param>
         /// <param name="gatewayCustomerId">gateway_customer_id.</param>
         public ChjsTokenizationSuccess(
-            Models.PaymentProfile paymentProfile,
+            Models.TokenizedPaymentProfile paymentProfile,
             int? gatewayCustomerId = null)
         {
             this.PaymentProfile = paymentProfile;
@@ -48,7 +48,7 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("payment_profile")]
         [JsonRequired]
-        public Models.PaymentProfile PaymentProfile { get; set; }
+        public Models.TokenizedPaymentProfile PaymentProfile { get; set; }
 
         /// <summary>
         /// Gets or sets GatewayCustomerId.

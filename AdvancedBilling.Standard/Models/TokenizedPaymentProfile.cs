@@ -1,4 +1,4 @@
-// <copyright file="PaymentProfile.cs" company="APIMatic">
+// <copyright file="TokenizedPaymentProfile.cs" company="APIMatic">
 // AdvancedBilling.Standard
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
@@ -9,9 +9,9 @@ using System.Collections.Generic;
 namespace AdvancedBilling.Standard.Models
 {
     /// <summary>
-    /// PaymentProfile.
+    /// TokenizedPaymentProfile.
     /// </summary>
-    public class PaymentProfile : BaseModel
+    public class TokenizedPaymentProfile : BaseModel
     {
         private string gatewayHandle;
         private string customerVaultToken;
@@ -22,20 +22,20 @@ namespace AdvancedBilling.Standard.Models
         };
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PaymentProfile"/> class.
+        /// Initializes a new instance of the <see cref="TokenizedPaymentProfile"/> class.
         /// </summary>
-        public PaymentProfile()
+        public TokenizedPaymentProfile()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PaymentProfile"/> class.
+        /// Initializes a new instance of the <see cref="TokenizedPaymentProfile"/> class.
         /// </summary>
         /// <param name="id">id.</param>
         /// <param name="vaultToken">vault_token.</param>
         /// <param name="gatewayHandle">gateway_handle.</param>
         /// <param name="customerVaultToken">customer_vault_token.</param>
-        public PaymentProfile(
+        public TokenizedPaymentProfile(
             int id,
             string vaultToken = null,
             string gatewayHandle = null,
@@ -108,7 +108,7 @@ namespace AdvancedBilling.Standard.Models
         {
             var toStringOutput = new List<string>();
             this.ToString(toStringOutput);
-            return $"PaymentProfile : ({string.Join(", ", toStringOutput)})";
+            return $"TokenizedPaymentProfile : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace AdvancedBilling.Standard.Models
             if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is PaymentProfile other &&
+            return obj is TokenizedPaymentProfile other &&
                 (this.Id.Equals(other.Id)) &&
                 (this.VaultToken == null && other.VaultToken == null ||
                  this.VaultToken?.Equals(other.VaultToken) == true) &&

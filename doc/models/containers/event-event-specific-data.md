@@ -439,7 +439,7 @@ EventEventSpecificData value = EventEventSpecificData.FromCustomFieldValueChange
 EventEventSpecificData value = EventEventSpecificData.FromChjsTokenizationSuccess(
     new ChjsTokenizationSuccess
     {
-        PaymentProfile = new PaymentProfile
+        PaymentProfile = new TokenizedPaymentProfile
         {
             Id = 44,
         },

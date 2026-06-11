@@ -1,18 +1,18 @@
 
-# Payment Profile 2
+# Payment Profile
 
 ## Class Name
 
-`PaymentProfile2`
+`PaymentProfile`
 
 ## Cases
 
 | Type | Factory Method |
 |  --- | --- |
-| [`ApplePayPaymentProfile`](../../../doc/models/apple-pay-payment-profile.md) | PaymentProfile2.FromApplePayPaymentProfile(ApplePayPaymentProfile applePayPaymentProfile) |
-| [`BankAccountPaymentProfile`](../../../doc/models/bank-account-payment-profile.md) | PaymentProfile2.FromBankAccountPaymentProfile(BankAccountPaymentProfile bankAccountPaymentProfile) |
-| [`CreditCardPaymentProfile`](../../../doc/models/credit-card-payment-profile.md) | PaymentProfile2.FromCreditCardPaymentProfile(CreditCardPaymentProfile creditCardPaymentProfile) |
-| [`PaypalPaymentProfile`](../../../doc/models/paypal-payment-profile.md) | PaymentProfile2.FromPaypalPaymentProfile(PaypalPaymentProfile paypalPaymentProfile) |
+| [`ApplePayPaymentProfile`](../../../doc/models/apple-pay-payment-profile.md) | PaymentProfile.FromApplePayPaymentProfile(ApplePayPaymentProfile applePayPaymentProfile) |
+| [`BankAccountPaymentProfile`](../../../doc/models/bank-account-payment-profile.md) | PaymentProfile.FromBankAccountPaymentProfile(BankAccountPaymentProfile bankAccountPaymentProfile) |
+| [`CreditCardPaymentProfile`](../../../doc/models/credit-card-payment-profile.md) | PaymentProfile.FromCreditCardPaymentProfile(CreditCardPaymentProfile creditCardPaymentProfile) |
+| [`PaypalPaymentProfile`](../../../doc/models/paypal-payment-profile.md) | PaymentProfile.FromPaypalPaymentProfile(PaypalPaymentProfile paypalPaymentProfile) |
 
 ## ApplePayPaymentProfile
 
@@ -21,7 +21,7 @@
 #### Example
 
 ```csharp
-PaymentProfile2 value = PaymentProfile2.FromApplePayPaymentProfile(
+PaymentProfile value = PaymentProfile.FromApplePayPaymentProfile(
     new ApplePayPaymentProfile
     {
         PaymentType = PaymentType.ApplePay,
@@ -36,7 +36,7 @@ PaymentProfile2 value = PaymentProfile2.FromApplePayPaymentProfile(
 #### Example
 
 ```csharp
-PaymentProfile2 value = PaymentProfile2.FromBankAccountPaymentProfile(
+PaymentProfile value = PaymentProfile.FromBankAccountPaymentProfile(
     new BankAccountPaymentProfile
     {
         PaymentType = PaymentType.BankAccount,
@@ -52,7 +52,7 @@ PaymentProfile2 value = PaymentProfile2.FromBankAccountPaymentProfile(
 #### Example
 
 ```csharp
-PaymentProfile2 value = PaymentProfile2.FromCreditCardPaymentProfile(
+PaymentProfile value = PaymentProfile.FromCreditCardPaymentProfile(
     new CreditCardPaymentProfile
     {
         PaymentType = PaymentType.CreditCard,
@@ -86,7 +86,7 @@ PaymentProfile2 value = PaymentProfile2.FromCreditCardPaymentProfile(
 #### Example
 
 ```csharp
-PaymentProfile2 value = PaymentProfile2.FromPaypalPaymentProfile(
+PaymentProfile value = PaymentProfile.FromPaypalPaymentProfile(
     new PaypalPaymentProfile
     {
         PaymentType = PaymentType.PaypalAccount,

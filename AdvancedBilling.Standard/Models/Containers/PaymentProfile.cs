@@ -1,4 +1,4 @@
-// <copyright file="PaymentProfile2.cs" company="APIMatic">
+// <copyright file="PaymentProfile.cs" company="APIMatic">
 // AdvancedBilling.Standard
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
@@ -13,7 +13,7 @@ namespace AdvancedBilling.Standard.Models.Containers
     /// This is a container class for any-of types.
     /// </summary>
     [JsonConverter(
-        typeof(UnionTypeConverter<PaymentProfile2>),
+        typeof(UnionTypeConverter<PaymentProfile>),
         new[] {
             typeof(ApplePayPaymentProfileCase),
             typeof(BankAccountPaymentProfileCase),
@@ -29,15 +29,15 @@ namespace AdvancedBilling.Standard.Models.Containers
         "payment_type",
         false
     )]
-    public abstract class PaymentProfile2
+    public abstract class PaymentProfile
     {
         /// <summary>
         /// This is ApplePay Payment Profile case.
         /// </summary>
         /// <returns>
-        /// The PaymentProfile2 instance, wrapping the provided ApplePayPaymentProfile value.
+        /// The PaymentProfile instance, wrapping the provided ApplePayPaymentProfile value.
         /// </returns>
-        public static PaymentProfile2 FromApplePayPaymentProfile(ApplePayPaymentProfile applePayPaymentProfile)
+        public static PaymentProfile FromApplePayPaymentProfile(ApplePayPaymentProfile applePayPaymentProfile)
         {
             return new ApplePayPaymentProfileCase().Set(applePayPaymentProfile);
         }
@@ -46,9 +46,9 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// This is Bank Account Payment Profile case.
         /// </summary>
         /// <returns>
-        /// The PaymentProfile2 instance, wrapping the provided BankAccountPaymentProfile value.
+        /// The PaymentProfile instance, wrapping the provided BankAccountPaymentProfile value.
         /// </returns>
-        public static PaymentProfile2 FromBankAccountPaymentProfile(BankAccountPaymentProfile bankAccountPaymentProfile)
+        public static PaymentProfile FromBankAccountPaymentProfile(BankAccountPaymentProfile bankAccountPaymentProfile)
         {
             return new BankAccountPaymentProfileCase().Set(bankAccountPaymentProfile);
         }
@@ -57,9 +57,9 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// This is Credit Card Payment Profile case.
         /// </summary>
         /// <returns>
-        /// The PaymentProfile2 instance, wrapping the provided CreditCardPaymentProfile value.
+        /// The PaymentProfile instance, wrapping the provided CreditCardPaymentProfile value.
         /// </returns>
-        public static PaymentProfile2 FromCreditCardPaymentProfile(CreditCardPaymentProfile creditCardPaymentProfile)
+        public static PaymentProfile FromCreditCardPaymentProfile(CreditCardPaymentProfile creditCardPaymentProfile)
         {
             return new CreditCardPaymentProfileCase().Set(creditCardPaymentProfile);
         }
@@ -68,9 +68,9 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// This is Paypal Payment Profile case.
         /// </summary>
         /// <returns>
-        /// The PaymentProfile2 instance, wrapping the provided PaypalPaymentProfile value.
+        /// The PaymentProfile instance, wrapping the provided PaypalPaymentProfile value.
         /// </returns>
-        public static PaymentProfile2 FromPaypalPaymentProfile(PaypalPaymentProfile paypalPaymentProfile)
+        public static PaymentProfile FromPaypalPaymentProfile(PaypalPaymentProfile paypalPaymentProfile)
         {
             return new PaypalPaymentProfileCase().Set(paypalPaymentProfile);
         }
@@ -106,7 +106,7 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Match(applePayPaymentProfile, bankAccountPaymentProfile, creditCardPaymentProfile, paypalPaymentProfile);
 
         [JsonConverter(typeof(UnionTypeCaseConverter<ApplePayPaymentProfileCase, ApplePayPaymentProfile>))]
-        private sealed class ApplePayPaymentProfileCase : PaymentProfile2, ICaseValue<ApplePayPaymentProfileCase, ApplePayPaymentProfile>
+        private sealed class ApplePayPaymentProfileCase : PaymentProfile, ICaseValue<ApplePayPaymentProfileCase, ApplePayPaymentProfile>
         {
             public ApplePayPaymentProfile Value;
 
@@ -142,7 +142,7 @@ namespace AdvancedBilling.Standard.Models.Containers
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<BankAccountPaymentProfileCase, BankAccountPaymentProfile>))]
-        private sealed class BankAccountPaymentProfileCase : PaymentProfile2, ICaseValue<BankAccountPaymentProfileCase, BankAccountPaymentProfile>
+        private sealed class BankAccountPaymentProfileCase : PaymentProfile, ICaseValue<BankAccountPaymentProfileCase, BankAccountPaymentProfile>
         {
             public BankAccountPaymentProfile Value;
 
@@ -178,7 +178,7 @@ namespace AdvancedBilling.Standard.Models.Containers
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<CreditCardPaymentProfileCase, CreditCardPaymentProfile>))]
-        private sealed class CreditCardPaymentProfileCase : PaymentProfile2, ICaseValue<CreditCardPaymentProfileCase, CreditCardPaymentProfile>
+        private sealed class CreditCardPaymentProfileCase : PaymentProfile, ICaseValue<CreditCardPaymentProfileCase, CreditCardPaymentProfile>
         {
             public CreditCardPaymentProfile Value;
 
@@ -214,7 +214,7 @@ namespace AdvancedBilling.Standard.Models.Containers
         }
 
         [JsonConverter(typeof(UnionTypeCaseConverter<PaypalPaymentProfileCase, PaypalPaymentProfile>))]
-        private sealed class PaypalPaymentProfileCase : PaymentProfile2, ICaseValue<PaypalPaymentProfileCase, PaypalPaymentProfile>
+        private sealed class PaypalPaymentProfileCase : PaymentProfile, ICaseValue<PaypalPaymentProfileCase, PaypalPaymentProfile>
         {
             public PaypalPaymentProfile Value;
 
