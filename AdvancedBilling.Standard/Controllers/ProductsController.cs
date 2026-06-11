@@ -25,7 +25,7 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// Creates a product in your Advanced Billing site.
-        /// See the following product docuemation for more information:.
+        /// See the following product documentation for more information:.
         /// + [Products Documentation](https://maxio.zendesk.com/hc/en-us/articles/24261090117645-Products-Overview).
         /// + [Changing a Subscription's Product](https://maxio.zendesk.com/hc/en-us/articles/24252069837581-Product-Changes-and-Migrations).
         /// </summary>
@@ -39,7 +39,7 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// Creates a product in your Advanced Billing site.
-        /// See the following product docuemation for more information:.
+        /// See the following product documentation for more information:.
         /// + [Products Documentation](https://maxio.zendesk.com/hc/en-us/articles/24261090117645-Products-Overview).
         /// + [Changing a Subscription's Product](https://maxio.zendesk.com/hc/en-us/articles/24252069837581-Product-Changes-and-Migrations).
         /// </summary>
@@ -132,7 +132,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Archives the product. All current subscribers will be unffected; their subscription/purchase will continue to be charged monthly.
+        /// Archives the product. All current subscribers will be unaffected; their subscription/purchase will continue to be charged monthly.
         /// This will restrict the option to chose the product for purchase via the Billing Portal, as well as disable Public Signup Pages for the product.
         /// </summary>
         /// <param name="productId">Required parameter: The Advanced Billing id of the product.</param>
@@ -142,7 +142,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ArchiveProductAsync(productId));
 
         /// <summary>
-        /// Archives the product. All current subscribers will be unffected; their subscription/purchase will continue to be charged monthly.
+        /// Archives the product. All current subscribers will be unaffected; their subscription/purchase will continue to be charged monthly.
         /// This will restrict the option to chose the product for purchase via the Billing Portal, as well as disable Public Signup Pages for the product.
         /// </summary>
         /// <param name="productId">Required parameter: The Advanced Billing id of the product.</param>
@@ -188,7 +188,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This method allows to retrieve a list of Products belonging to a Site.
+        /// Lists products belonging to a site.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the List of Models.ProductResponse response from the API call.</returns>
@@ -197,7 +197,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListProductsAsync(input));
 
         /// <summary>
-        /// This method allows to retrieve a list of Products belonging to a Site.
+        /// Lists products belonging to a site.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>

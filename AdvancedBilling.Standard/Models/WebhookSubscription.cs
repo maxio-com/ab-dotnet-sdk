@@ -29,6 +29,18 @@ namespace AdvancedBilling.Standard.Models
         ComponentAllocationChange,
 
         /// <summary>
+        /// ChjsTokenizationFailure.
+        /// </summary>
+        [EnumMember(Value = "chjs_tokenization_failure")]
+        ChjsTokenizationFailure,
+
+        /// <summary>
+        /// ChjsTokenizationSuccess.
+        /// </summary>
+        [EnumMember(Value = "chjs_tokenization_success")]
+        ChjsTokenizationSuccess,
+
+        /// <summary>
         /// CustomerCreate.
         /// </summary>
         [EnumMember(Value = "customer_create")]

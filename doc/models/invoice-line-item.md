@@ -33,6 +33,7 @@
 | `ProductPricePointId` | `int?` | Optional | The price point ID of the line item's product |
 | `CustomItem` | `bool?` | Optional | - |
 | `Kind` | `string` | Optional | - |
+| `PrepaidAllocationExpiresAt` | `DateTime?` | Optional | The date a prepaid allocation is set to expire. Only present on line items representing prepaid component allocations. The format is `"YYYY-MM-DD"`. |
 
 ## Example (as JSON)
 

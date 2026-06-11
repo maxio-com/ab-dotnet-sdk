@@ -18,7 +18,7 @@ InsightsController insightsController = client.InsightsController;
 
 # Read Site Stats
 
-The Stats API is a very basic view of some Site-level stats. This API call only answers with JSON responses. An XML version is not provided.
+Returns basic site-level stats. This API call only answers with JSON responses. An XML version is not provided.
 
 ## Stats Documentation
 
@@ -79,7 +79,7 @@ catch (ApiException e)
 
 **This endpoint is deprecated.**
 
-This endpoint returns your site's current MRR, including plan and usage breakouts.
+Returns your site's current MRR, including plan and usage breakouts.
 
 ```csharp
 ReadMrrAsync(
@@ -142,7 +142,7 @@ catch (ApiException e)
 
 **This endpoint is deprecated.**
 
-This endpoint returns your site's MRR movements.
+Lists your site's MRR movements.
 
 ## Understanding MRR movements
 

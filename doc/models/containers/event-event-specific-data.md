@@ -27,6 +27,8 @@
 | [`PaymentCollectionMethodChanged`](../../../doc/models/payment-collection-method-changed.md) | EventEventSpecificData.FromPaymentCollectionMethodChanged(PaymentCollectionMethodChanged paymentCollectionMethodChanged) |
 | [`ItemPricePointChanged`](../../../doc/models/item-price-point-changed.md) | EventEventSpecificData.FromItemPricePointChanged(ItemPricePointChanged itemPricePointChanged) |
 | [`CustomFieldValueChange`](../../../doc/models/custom-field-value-change.md) | EventEventSpecificData.FromCustomFieldValueChange(CustomFieldValueChange customFieldValueChange) |
+| [`ChjsTokenizationSuccess`](../../../doc/models/chjs-tokenization-success.md) | EventEventSpecificData.FromChjsTokenizationSuccess(ChjsTokenizationSuccess chjsTokenizationSuccess) |
+| [`ChjsTokenizationFailure`](../../../doc/models/chjs-tokenization-failure.md) | EventEventSpecificData.FromChjsTokenizationFailure(ChjsTokenizationFailure chjsTokenizationFailure) |
 
 ## SubscriptionProductChange
 
@@ -423,6 +425,39 @@ EventEventSpecificData value = EventEventSpecificData.FromCustomFieldValueChange
         NewValue = "new_value8",
         ResourceType = "resource_type2",
         ResourceId = 74,
+    }
+);
+```
+
+## ChjsTokenizationSuccess
+
+### Initialization Code
+
+#### Example
+
+```csharp
+EventEventSpecificData value = EventEventSpecificData.FromChjsTokenizationSuccess(
+    new ChjsTokenizationSuccess
+    {
+        PaymentProfile = new PaymentProfile
+        {
+            Id = 44,
+        },
+    }
+);
+```
+
+## ChjsTokenizationFailure
+
+### Initialization Code
+
+#### Example
+
+```csharp
+EventEventSpecificData value = EventEventSpecificData.FromChjsTokenizationFailure(
+    new ChjsTokenizationFailure
+    {
+        Errors = "errors2",
     }
 );
 ```

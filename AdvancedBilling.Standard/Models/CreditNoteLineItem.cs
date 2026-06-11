@@ -18,11 +18,13 @@ namespace AdvancedBilling.Standard.Models
         private int? componentId;
         private int? pricePointId;
         private int? billingScheduleItemId;
+        private DateTime? prepaidAllocationExpiresAt;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "component_id", false },
             { "price_point_id", false },
             { "billing_schedule_item_id", false },
+            { "prepaid_allocation_expires_at", false },
         };
 
         /// <summary>
@@ -54,6 +56,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="pricePointId">price_point_id.</param>
         /// <param name="billingScheduleItemId">billing_schedule_item_id.</param>
         /// <param name="customItem">custom_item.</param>
+        /// <param name="prepaidAllocationExpiresAt">prepaid_allocation_expires_at.</param>
         public CreditNoteLineItem(
             string uid = null,
             string title = null,
@@ -73,7 +76,8 @@ namespace AdvancedBilling.Standard.Models
             int? componentId = null,
             int? pricePointId = null,
             int? billingScheduleItemId = null,
-            bool? customItem = null)
+            bool? customItem = null,
+            DateTime? prepaidAllocationExpiresAt = null)
         {
             this.Uid = uid;
             this.Title = title;
@@ -106,6 +110,11 @@ namespace AdvancedBilling.Standard.Models
                 this.BillingScheduleItemId = billingScheduleItemId;
             }
             this.CustomItem = customItem;
+
+            if (prepaidAllocationExpiresAt != null)
+            {
+                this.PrepaidAllocationExpiresAt = prepaidAllocationExpiresAt;
+            }
         }
 
         /// <summary>
@@ -269,6 +278,25 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("custom_item", NullValueHandling = NullValueHandling.Ignore)]
         public bool? CustomItem { get; set; }
 
+        /// <summary>
+        /// The date a prepaid allocation is set to expire. Only present on line items representing prepaid component allocations. The format is `"YYYY-MM-DD"`.
+        /// </summary>
+        [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
+        [JsonProperty("prepaid_allocation_expires_at")]
+        public DateTime? PrepaidAllocationExpiresAt
+        {
+            get
+            {
+                return this.prepaidAllocationExpiresAt;
+            }
+
+            set
+            {
+                this.shouldSerialize["prepaid_allocation_expires_at"] = true;
+                this.prepaidAllocationExpiresAt = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -298,6 +326,13 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["billing_schedule_item_id"] = false;
         }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetPrepaidAllocationExpiresAt()
+        {
+            this.shouldSerialize["prepaid_allocation_expires_at"] = false;
+        }
 
         /// <summary>
         /// Checks if the field should be serialized or not.
@@ -324,6 +359,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeBillingScheduleItemId()
         {
             return this.shouldSerialize["billing_schedule_item_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializePrepaidAllocationExpiresAt()
+        {
+            return this.shouldSerialize["prepaid_allocation_expires_at"];
         }
 
         /// <inheritdoc/>
@@ -371,6 +415,8 @@ namespace AdvancedBilling.Standard.Models
                  this.BillingScheduleItemId?.Equals(other.BillingScheduleItemId) == true) &&
                 (this.CustomItem == null && other.CustomItem == null ||
                  this.CustomItem?.Equals(other.CustomItem) == true) &&
+                (this.PrepaidAllocationExpiresAt == null && other.PrepaidAllocationExpiresAt == null ||
+                 this.PrepaidAllocationExpiresAt?.Equals(other.PrepaidAllocationExpiresAt) == true) &&
                 base.Equals(obj);
         }
 
@@ -399,6 +445,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
             toStringOutput.Add($"BillingScheduleItemId = {(this.BillingScheduleItemId == null ? "null" : this.BillingScheduleItemId.ToString())}");
             toStringOutput.Add($"CustomItem = {(this.CustomItem == null ? "null" : this.CustomItem.ToString())}");
+            toStringOutput.Add($"PrepaidAllocationExpiresAt = {(this.PrepaidAllocationExpiresAt == null ? "null" : this.PrepaidAllocationExpiresAt.ToString())}");
 
             base.ToString(toStringOutput);
         }

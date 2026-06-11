@@ -479,6 +479,18 @@ namespace AdvancedBilling.Standard.Models
         ComponentBillingDateChanged,
 
         /// <summary>
+        /// ChjsTokenizationFailure.
+        /// </summary>
+        [EnumMember(Value = "chjs_tokenization_failure")]
+        ChjsTokenizationFailure,
+
+        /// <summary>
+        /// ChjsTokenizationSuccess.
+        /// </summary>
+        [EnumMember(Value = "chjs_tokenization_success")]
+        ChjsTokenizationSuccess,
+
+        /// <summary>
         /// SubscriptionTermRenewalScheduled.
         /// </summary>
         [EnumMember(Value = "subscription_term_renewal_scheduled")]

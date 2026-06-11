@@ -40,7 +40,7 @@ namespace AdvancedBilling.Standard.Controllers
         ///     + [Maxio.js with GoCardless - full example](https://docs.maxio.com/hc/en-us/articles/38206331271693-Examples#h_01K0PJ15QR09JVHWW0MCA7HVJV).
         ///     + [Maxio.js with Stripe Direct Debit - minimal example](https://docs.maxio.com/hc/en-us/articles/38206331271693-Examples#h_01K0PJ15QQFKKN8Z7B7DZ9AJS5).
         ///     + [Maxio.js with Stripe Direct Debit - full example](https://docs.maxio.com/hc/en-us/articles/38206331271693-Examples#h_01K0PJ15QRECQQ4ECS3ZA55GY7).
-        ///     + [CMaxio.js with Stripe BECS Direct Debit - minimal example](https://developers.chargify.com/docs/developer-docs/ZG9jOjE0NjAzNDIy-examples#minimal-example-with-sepa-or-becs-direct-debit-stripe-gateway).
+        ///     + [Maxio.js with Stripe BECS Direct Debit - minimal example](https://developers.chargify.com/docs/developer-docs/ZG9jOjE0NjAzNDIy-examples#minimal-example-with-sepa-or-becs-direct-debit-stripe-gateway).
         ///     + [Maxio.js with Stripe BECS Direct Debit - full example](https://developers.chargify.com/docs/developer-docs/ZG9jOjE0NjAzNDIy-examples#full-example-with-sepa-direct-debit-stripe-gateway).
         /// + [Full documentation on GoCardless](https://maxio.zendesk.com/hc/en-us/articles/24176159136909-GoCardless).
         /// + [Full documentation on Stripe SEPA Direct Debit](https://maxio.zendesk.com/hc/en-us/articles/24176170430093-Stripe-SEPA-and-BECS-Direct-Debit).
@@ -72,7 +72,7 @@ namespace AdvancedBilling.Standard.Controllers
         ///     + [Maxio.js with GoCardless - full example](https://docs.maxio.com/hc/en-us/articles/38206331271693-Examples#h_01K0PJ15QR09JVHWW0MCA7HVJV).
         ///     + [Maxio.js with Stripe Direct Debit - minimal example](https://docs.maxio.com/hc/en-us/articles/38206331271693-Examples#h_01K0PJ15QQFKKN8Z7B7DZ9AJS5).
         ///     + [Maxio.js with Stripe Direct Debit - full example](https://docs.maxio.com/hc/en-us/articles/38206331271693-Examples#h_01K0PJ15QRECQQ4ECS3ZA55GY7).
-        ///     + [CMaxio.js with Stripe BECS Direct Debit - minimal example](https://developers.chargify.com/docs/developer-docs/ZG9jOjE0NjAzNDIy-examples#minimal-example-with-sepa-or-becs-direct-debit-stripe-gateway).
+        ///     + [Maxio.js with Stripe BECS Direct Debit - minimal example](https://developers.chargify.com/docs/developer-docs/ZG9jOjE0NjAzNDIy-examples#minimal-example-with-sepa-or-becs-direct-debit-stripe-gateway).
         ///     + [Maxio.js with Stripe BECS Direct Debit - full example](https://developers.chargify.com/docs/developer-docs/ZG9jOjE0NjAzNDIy-examples#full-example-with-sepa-direct-debit-stripe-gateway).
         /// + [Full documentation on GoCardless](https://maxio.zendesk.com/hc/en-us/articles/24176159136909-GoCardless).
         /// + [Full documentation on Stripe SEPA Direct Debit](https://maxio.zendesk.com/hc/en-us/articles/24176170430093-Stripe-SEPA-and-BECS-Direct-Debit).
@@ -101,7 +101,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This method will return all of the active `payment_profiles` for a Site, or for one Customer within a site.  If no payment profiles are found, this endpoint will return an empty array, not a 404.
+        /// Returns all active payment profiles for a site, or for one customer within a site. If no payment profiles are found, this endpoint will return an empty array, not a 404.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the List of Models.PaymentProfileResponse response from the API call.</returns>
@@ -110,7 +110,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListPaymentProfilesAsync(input));
 
         /// <summary>
-        /// This method will return all of the active `payment_profiles` for a Site, or for one Customer within a site.  If no payment profiles are found, this endpoint will return an empty array, not a 404.
+        /// Returns all active payment profiles for a site, or for one customer within a site. If no payment profiles are found, this endpoint will return an empty array, not a 404.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -129,7 +129,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Using the GET method you can retrieve a Payment Profile identified by its unique ID.
+        /// Returns a payment profile identified by its unique ID.
         /// Note that a different JSON object will be returned if the card method on file is a bank account.
         /// ### Response for Bank Account.
         /// Example response for Bank Account:.
@@ -170,7 +170,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ReadPaymentProfileAsync(paymentProfileId));
 
         /// <summary>
-        /// Using the GET method you can retrieve a Payment Profile identified by its unique ID.
+        /// Returns a payment profile identified by its unique ID.
         /// Note that a different JSON object will be returned if the card method on file is a bank account.
         /// ### Response for Bank Account.
         /// Example response for Bank Account:.
@@ -221,6 +221,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
+        /// Updates a payment profile.
         /// ## Partial Card Updates.
         /// In the event that you are using the Authorize.net, Stripe, Cybersource, Forte or Braintree Blue payment gateways, you can update just the billing and contact information for a payment method. Note the lack of credit-card related data contained in the JSON payload.
         /// In this case, the following JSON is acceptable:.
@@ -255,6 +256,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(UpdatePaymentProfileAsync(paymentProfileId, body));
 
         /// <summary>
+        /// Updates a payment profile.
         /// ## Partial Card Updates.
         /// In the event that you are using the Authorize.net, Stripe, Cybersource, Forte or Braintree Blue payment gateways, you can update just the billing and contact information for a payment method. Note the lack of credit-card related data contained in the JSON payload.
         /// In this case, the following JSON is acceptable:.
@@ -366,7 +368,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Submit the two small deposit amounts the customer received in their bank account in order to verify the bank account. (Stripe only).
+        /// Verifies a bank account. Submit the two small deposit amounts the customer received in their bank account to verify the bank account. (Stripe only).
         /// </summary>
         /// <param name="bankAccountId">Required parameter: Identifier of the bank account in the system..</param>
         /// <param name="body">Optional parameter: .</param>
@@ -377,7 +379,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(VerifyBankAccountAsync(bankAccountId, body));
 
         /// <summary>
-        /// Submit the two small deposit amounts the customer received in their bank account in order to verify the bank account. (Stripe only).
+        /// Verifies a bank account. Submit the two small deposit amounts the customer received in their bank account to verify the bank account. (Stripe only).
         /// </summary>
         /// <param name="bankAccountId">Required parameter: Identifier of the bank account in the system..</param>
         /// <param name="body">Optional parameter: .</param>
@@ -433,7 +435,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This will change the default payment profile on the subscription to the existing payment profile with the id specified.
+        /// Changes the default payment profile on the subscription to the existing payment profile with the specified ID.
         /// You must elect to change the existing payment profile to a new payment profile ID in order to receive a satisfactory response from this endpoint.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
@@ -445,7 +447,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ChangeSubscriptionDefaultPaymentProfileAsync(subscriptionId, paymentProfileId));
 
         /// <summary>
-        /// This will change the default payment profile on the subscription to the existing payment profile with the id specified.
+        /// Changes the default payment profile on the subscription to the existing payment profile with the specified ID.
         /// You must elect to change the existing payment profile to a new payment profile ID in order to receive a satisfactory response from this endpoint.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>

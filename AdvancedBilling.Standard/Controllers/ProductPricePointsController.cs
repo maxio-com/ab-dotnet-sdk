@@ -129,7 +129,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this endpoint to retrieve details for a specific product price point. You can achieve this by using either the product price point ID or handle.
+        /// Returns details for a specific product price point. You can achieve this by using either the product price point ID or handle.
         /// </summary>
         /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
         /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-price-point-handle` for a string handle..</param>
@@ -142,7 +142,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ReadProductPricePointAsync(productId, pricePointId, currencyPrices));
 
         /// <summary>
-        /// Use this endpoint to retrieve details for a specific product price point. You can achieve this by using either the product price point ID or handle.
+        /// Returns details for a specific product price point. You can achieve this by using either the product price point ID or handle.
         /// </summary>
         /// <param name="productId">Required parameter: The id or handle of the product. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
         /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-price-point-handle` for a string handle..</param>
@@ -198,7 +198,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this endpoint to unarchive an archived product price point.
+        /// Unarchives an archived product price point.
         /// </summary>
         /// <param name="productId">Required parameter: The Advanced Billing id of the product to which the price point belongs.</param>
         /// <param name="pricePointId">Required parameter: The Advanced Billing id of the product price point.</param>
@@ -209,7 +209,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(UnarchiveProductPricePointAsync(productId, pricePointId));
 
         /// <summary>
-        /// Use this endpoint to unarchive an archived product price point.
+        /// Unarchives an archived product price point.
         /// </summary>
         /// <param name="productId">Required parameter: The Advanced Billing id of the product to which the price point belongs.</param>
         /// <param name="pricePointId">Required parameter: The Advanced Billing id of the product price point.</param>
@@ -372,7 +372,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This method allows retrieval of a list of Products Price Points belonging to a Site.
+        /// Lists Product Price Points belonging to a site.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the Models.ListProductPricePointsResponse response from the API call.</returns>
@@ -381,7 +381,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListAllProductPricePointsAsync(input));
 
         /// <summary>
-        /// This method allows retrieval of a list of Products Price Points belonging to a Site.
+        /// Lists Product Price Points belonging to a site.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>

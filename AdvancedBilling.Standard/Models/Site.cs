@@ -39,6 +39,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="organizationAddress">organization_address.</param>
         /// <param name="taxConfiguration">tax_configuration.</param>
         /// <param name="netTerms">net_terms.</param>
+        /// <param name="multiFrequencyEnabled">multi_frequency_enabled.</param>
+        /// <param name="autoRenewalsEnabled">auto_renewals_enabled.</param>
+        /// <param name="portalEnabled">portal_enabled.</param>
         /// <param name="test">test.</param>
         public Site(
             int? id = null,
@@ -57,6 +60,9 @@ namespace AdvancedBilling.Standard.Models
             Models.OrganizationAddress organizationAddress = null,
             Models.TaxConfiguration taxConfiguration = null,
             Models.NetTerms netTerms = null,
+            bool? multiFrequencyEnabled = null,
+            bool? autoRenewalsEnabled = null,
+            bool? portalEnabled = null,
             bool? test = null)
         {
             this.Id = id;
@@ -75,6 +81,9 @@ namespace AdvancedBilling.Standard.Models
             this.OrganizationAddress = organizationAddress;
             this.TaxConfiguration = taxConfiguration;
             this.NetTerms = netTerms;
+            this.MultiFrequencyEnabled = multiFrequencyEnabled;
+            this.AutoRenewalsEnabled = autoRenewalsEnabled;
+            this.PortalEnabled = portalEnabled;
             this.Test = test;
         }
 
@@ -175,6 +184,24 @@ namespace AdvancedBilling.Standard.Models
         public Models.NetTerms NetTerms { get; set; }
 
         /// <summary>
+        /// Whether the site has the multi-frequency billing feature enabled. Only present when relationship invoicing is active.
+        /// </summary>
+        [JsonProperty("multi_frequency_enabled", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? MultiFrequencyEnabled { get; set; }
+
+        /// <summary>
+        /// Whether the auto-renewals feature is enabled for this site.
+        /// </summary>
+        [JsonProperty("auto_renewals_enabled", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? AutoRenewalsEnabled { get; set; }
+
+        /// <summary>
+        /// Whether the Billing Portal is enabled for this site.
+        /// </summary>
+        [JsonProperty("portal_enabled", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? PortalEnabled { get; set; }
+
+        /// <summary>
         /// Gets or sets Test.
         /// </summary>
         [JsonProperty("test", NullValueHandling = NullValueHandling.Ignore)]
@@ -227,6 +254,12 @@ namespace AdvancedBilling.Standard.Models
                  this.TaxConfiguration?.Equals(other.TaxConfiguration) == true) &&
                 (this.NetTerms == null && other.NetTerms == null ||
                  this.NetTerms?.Equals(other.NetTerms) == true) &&
+                (this.MultiFrequencyEnabled == null && other.MultiFrequencyEnabled == null ||
+                 this.MultiFrequencyEnabled?.Equals(other.MultiFrequencyEnabled) == true) &&
+                (this.AutoRenewalsEnabled == null && other.AutoRenewalsEnabled == null ||
+                 this.AutoRenewalsEnabled?.Equals(other.AutoRenewalsEnabled) == true) &&
+                (this.PortalEnabled == null && other.PortalEnabled == null ||
+                 this.PortalEnabled?.Equals(other.PortalEnabled) == true) &&
                 (this.Test == null && other.Test == null ||
                  this.Test?.Equals(other.Test) == true) &&
                 base.Equals(obj);
@@ -254,6 +287,9 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"OrganizationAddress = {(this.OrganizationAddress == null ? "null" : this.OrganizationAddress.ToString())}");
             toStringOutput.Add($"TaxConfiguration = {(this.TaxConfiguration == null ? "null" : this.TaxConfiguration.ToString())}");
             toStringOutput.Add($"NetTerms = {(this.NetTerms == null ? "null" : this.NetTerms.ToString())}");
+            toStringOutput.Add($"MultiFrequencyEnabled = {(this.MultiFrequencyEnabled == null ? "null" : this.MultiFrequencyEnabled.ToString())}");
+            toStringOutput.Add($"AutoRenewalsEnabled = {(this.AutoRenewalsEnabled == null ? "null" : this.AutoRenewalsEnabled.ToString())}");
+            toStringOutput.Add($"PortalEnabled = {(this.PortalEnabled == null ? "null" : this.PortalEnabled.ToString())}");
             toStringOutput.Add($"Test = {(this.Test == null ? "null" : this.Test.ToString())}");
 
             base.ToString(toStringOutput);

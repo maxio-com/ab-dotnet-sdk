@@ -293,7 +293,7 @@ catch (ApiException e)
 
 # Read Product Price Point
 
-Use this endpoint to retrieve details for a specific product price point. You can achieve this by using either the product price point ID or handle.
+Returns details for a specific product price point. You can achieve this by using either the product price point ID or handle.
 
 ```csharp
 ReadProductPricePointAsync(
@@ -455,7 +455,7 @@ catch (ApiException e)
 
 # Unarchive Product Price Point
 
-Use this endpoint to unarchive an archived product price point.
+Unarchives an archived product price point.
 
 ```csharp
 UnarchiveProductPricePointAsync(
@@ -942,7 +942,7 @@ catch (ApiException e)
 
 # List All Product Price Points
 
-This method allows retrieval of a list of Products Price Points belonging to a Site.
+Lists Product Price Points belonging to a site.
 
 ```csharp
 ListAllProductPricePointsAsync(
