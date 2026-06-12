@@ -114,7 +114,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// (Optional) Token received after sending billing information using chargify.js. This token must be passed as a sole attribute of `payment_profile_attributes` (i.e. tok_9g6hw85pnpt6knmskpwp4ttt)
+        /// (Optional) Token received after sending billing information using Maxio.js (formerly Chargify.js). This token must be passed as a sole attribute of `payment_profile_attributes` (i.e. tok_9g6hw85pnpt6knmskpwp4ttt)
         /// </summary>
         [JsonProperty("chargify_token", NullValueHandling = NullValueHandling.Ignore)]
         public string ChargifyToken { get; set; }

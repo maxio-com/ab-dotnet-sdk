@@ -132,7 +132,7 @@ namespace AdvancedBilling.Standard.Models
             Models.ACHAgreement achAgreement = null,
             bool? dunningCommunicationDelayEnabled = false,
             string dunningCommunicationDelayTimeZone = null,
-            bool? skipBillingManifestTaxes = false)
+            bool? skipBillingManifestTaxes = null)
         {
             this.ProductHandle = productHandle;
             this.ProductId = productId;
@@ -503,7 +503,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Valid only for the Subscription Preview endpoint. When set to `true` it skips calculating taxes for the current and next billing manifests.
+        /// Valid only for the Subscription Preview endpoint. When set to `true` it skips calculating taxes for the current and next billing manifests. Defaults to `false` when not provided.
         /// </summary>
         [JsonProperty("skip_billing_manifest_taxes", NullValueHandling = NullValueHandling.Ignore)]
         public bool? SkipBillingManifestTaxes { get; set; }

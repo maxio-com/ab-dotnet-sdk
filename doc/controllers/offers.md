@@ -19,7 +19,7 @@ OffersController offersController = client.OffersController;
 
 # Create Offer
 
-Create an offer within your Advanced Billing site by sending a POST request.
+Creates an offer within your Advanced Billing site.
 
 ## Documentation
 
@@ -38,6 +38,10 @@ CreateOfferAsync(
     Models.CreateOfferRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -45,6 +49,8 @@ CreateOfferAsync(
 | `body` | [`CreateOfferRequest`](../../doc/models/create-offer-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.OfferResponse>`](../../doc/models/offer-response.md)
 
@@ -140,12 +146,16 @@ catch (ApiException e)
 
 # List Offers
 
-This endpoint will list offers for a site.
+Lists offers for a site.
 
 ```csharp
 ListOffersAsync(
     Models.ListOffersInput input)
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -154,6 +164,8 @@ ListOffersAsync(
 | `input` | [`Models.ListOffersInput`](../../doc/models/list-offers-input.md) | Required | Input structure for the method ListOffers |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ListOffersResponse>`](../../doc/models/list-offers-response.md)
 
@@ -245,12 +257,16 @@ catch (ApiException e)
 
 # Read Offer
 
-This method allows you to list a specific offer's attributes. This is different than list all offers for a site, as it requires an `offer_id`.
+Returns a specific offer's attributes. This is different from listing all offers for a site, as it requires an `offer_id`.
 
 ```csharp
 ReadOfferAsync(
     int offerId)
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -259,6 +275,8 @@ ReadOfferAsync(
 | `offerId` | `int` | Template, Required | The Chargify id of the offer |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.OfferResponse>`](../../doc/models/offer-response.md)
 
@@ -279,12 +297,16 @@ catch (ApiException e)
 
 # Archive Offer
 
-Archive an existing offer. Please provide an `offer_id` in order to archive the correct item.
+Archives an existing offer. Please provide an `offer_id` in order to archive the correct item.
 
 ```csharp
 ArchiveOfferAsync(
     int offerId)
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -293,6 +315,8 @@ ArchiveOfferAsync(
 | `offerId` | `int` | Template, Required | The Chargify id of the offer |
 
 ## Response Type
+
+**200**: OK
 
 `Task`
 
@@ -313,12 +337,16 @@ catch (ApiException e)
 
 # Unarchive Offer
 
-Unarchive a previously archived offer. Please provide an `offer_id` in order to un-archive the correct item.
+Unarchives a previously archived offer. Please provide an `offer_id` in order to unarchive the correct item.
 
 ```csharp
 UnarchiveOfferAsync(
     int offerId)
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -327,6 +355,8 @@ UnarchiveOfferAsync(
 | `offerId` | `int` | Template, Required | The Chargify id of the offer |
 
 ## Response Type
+
+**200**: OK
 
 `Task`
 

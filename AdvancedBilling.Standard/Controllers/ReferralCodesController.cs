@@ -23,7 +23,7 @@ namespace AdvancedBilling.Standard.Controllers
         internal ReferralCodesController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
-        /// Use this method to determine if the referral code is valid and applicable within your Site. This method is useful for validating referral codes that are entered by a customer.
+        /// Validates whether a referral code is valid and applicable within your site. This method is useful for validating referral codes that are entered by a customer.
         /// ## Referrals Documentation.
         /// Full documentation on how to use the referrals feature in the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/sections/24286965611405-Referrals).
         /// ## Server Response.
@@ -36,7 +36,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ValidateReferralCodeAsync(code));
 
         /// <summary>
-        /// Use this method to determine if the referral code is valid and applicable within your Site. This method is useful for validating referral codes that are entered by a customer.
+        /// Validates whether a referral code is valid and applicable within your site. This method is useful for validating referral codes that are entered by a customer.
         /// ## Referrals Documentation.
         /// Full documentation on how to use the referrals feature in the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/sections/24286965611405-Referrals).
         /// ## Server Response.

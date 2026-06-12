@@ -32,7 +32,9 @@ namespace AdvancedBilling.Standard.Models.Containers
             typeof(PrepaymentAccountBalanceChangedCase),
             typeof(PaymentCollectionMethodChangedCase),
             typeof(ItemPricePointChangedCase),
-            typeof(CustomFieldValueChangeCase)
+            typeof(CustomFieldValueChangeCase),
+            typeof(ChjsTokenizationSuccessCase),
+            typeof(ChjsTokenizationFailureCase)
         },
         true
     )]
@@ -237,6 +239,28 @@ namespace AdvancedBilling.Standard.Models.Containers
         }
 
         /// <summary>
+        /// This is Chjs Tokenization Success case.
+        /// </summary>
+        /// <returns>
+        /// The EventEventSpecificData instance, wrapping the provided ChjsTokenizationSuccess value.
+        /// </returns>
+        public static EventEventSpecificData FromChjsTokenizationSuccess(ChjsTokenizationSuccess chjsTokenizationSuccess)
+        {
+            return new ChjsTokenizationSuccessCase().Set(chjsTokenizationSuccess);
+        }
+
+        /// <summary>
+        /// This is Chjs Tokenization Failure case.
+        /// </summary>
+        /// <returns>
+        /// The EventEventSpecificData instance, wrapping the provided ChjsTokenizationFailure value.
+        /// </returns>
+        public static EventEventSpecificData FromChjsTokenizationFailure(ChjsTokenizationFailure chjsTokenizationFailure)
+        {
+            return new ChjsTokenizationFailureCase().Set(chjsTokenizationFailure);
+        }
+
+        /// <summary>
         /// Method to match from the provided one-of cases. Here parameters
         /// represents the callback functions for one-of type cases. All
         /// callback functions must have the same return type T. This typeparam T
@@ -262,7 +286,9 @@ namespace AdvancedBilling.Standard.Models.Containers
             Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
             Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
             Func<ItemPricePointChanged, T> itemPricePointChanged,
-            Func<CustomFieldValueChange, T> customFieldValueChange);
+            Func<CustomFieldValueChange, T> customFieldValueChange,
+            Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+            Func<ChjsTokenizationFailure, T> chjsTokenizationFailure);
 
         /// <summary>
         /// Method to match from the provided one-of cases. The parameters represent
@@ -291,8 +317,10 @@ namespace AdvancedBilling.Standard.Models.Containers
             Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged = null,
             Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged = null,
             Func<ItemPricePointChanged, T> itemPricePointChanged = null,
-            Func<CustomFieldValueChange, T> customFieldValueChange = null) =>
-                Match(subscriptionProductChange, subscriptionStateChange, paymentRelatedEvents, refundSuccess, componentAllocationChange, meteredUsage, prepaidUsage, dunningStepReached, invoiceIssued, pendingCancellationChange, prepaidSubscriptionBalanceChanged, proformaInvoiceIssued, subscriptionGroupSignupEventData, creditAccountBalanceChanged, prepaymentAccountBalanceChanged, paymentCollectionMethodChanged, itemPricePointChanged, customFieldValueChange);
+            Func<CustomFieldValueChange, T> customFieldValueChange = null,
+            Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess = null,
+            Func<ChjsTokenizationFailure, T> chjsTokenizationFailure = null) =>
+                Match(subscriptionProductChange, subscriptionStateChange, paymentRelatedEvents, refundSuccess, componentAllocationChange, meteredUsage, prepaidUsage, dunningStepReached, invoiceIssued, pendingCancellationChange, prepaidSubscriptionBalanceChanged, proformaInvoiceIssued, subscriptionGroupSignupEventData, creditAccountBalanceChanged, prepaymentAccountBalanceChanged, paymentCollectionMethodChanged, itemPricePointChanged, customFieldValueChange, chjsTokenizationSuccess, chjsTokenizationFailure);
 
         [JsonConverter(typeof(UnionTypeCaseConverter<SubscriptionProductChangeCase, SubscriptionProductChange>))]
         private sealed class SubscriptionProductChangeCase : EventEventSpecificData, ICaseValue<SubscriptionProductChangeCase, SubscriptionProductChange>
@@ -317,7 +345,9 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
                    subscriptionProductChange != null ? subscriptionProductChange(Value) : default;
 
             public SubscriptionProductChangeCase Set(SubscriptionProductChange value)
@@ -367,7 +397,9 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
                    subscriptionStateChange != null ? subscriptionStateChange(Value) : default;
 
             public SubscriptionStateChangeCase Set(SubscriptionStateChange value)
@@ -417,7 +449,9 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
                    paymentRelatedEvents != null ? paymentRelatedEvents(Value) : default;
 
             public PaymentRelatedEventsCase Set(PaymentRelatedEvents value)
@@ -467,7 +501,9 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
                    refundSuccess != null ? refundSuccess(Value) : default;
 
             public RefundSuccessCase Set(RefundSuccess value)
@@ -517,7 +553,9 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
                    componentAllocationChange != null ? componentAllocationChange(Value) : default;
 
             public ComponentAllocationChangeCase Set(ComponentAllocationChange value)
@@ -567,7 +605,9 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
                    meteredUsage != null ? meteredUsage(Value) : default;
 
             public MeteredUsageCase Set(MeteredUsage value)
@@ -617,7 +657,9 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
                    prepaidUsage != null ? prepaidUsage(Value) : default;
 
             public PrepaidUsageCase Set(PrepaidUsage value)
@@ -667,7 +709,9 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
                    dunningStepReached != null ? dunningStepReached(Value) : default;
 
             public DunningStepReachedCase Set(DunningStepReached value)
@@ -717,7 +761,9 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
                    invoiceIssued != null ? invoiceIssued(Value) : default;
 
             public InvoiceIssuedCase Set(InvoiceIssued value)
@@ -767,7 +813,9 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
                    pendingCancellationChange != null ? pendingCancellationChange(Value) : default;
 
             public PendingCancellationChangeCase Set(PendingCancellationChange value)
@@ -817,7 +865,9 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
                    prepaidSubscriptionBalanceChanged != null ? prepaidSubscriptionBalanceChanged(Value) : default;
 
             public PrepaidSubscriptionBalanceChangedCase Set(PrepaidSubscriptionBalanceChanged value)
@@ -867,7 +917,9 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
                    proformaInvoiceIssued != null ? proformaInvoiceIssued(Value) : default;
 
             public ProformaInvoiceIssuedCase Set(ProformaInvoiceIssued value)
@@ -917,7 +969,9 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
                    subscriptionGroupSignupEventData != null ? subscriptionGroupSignupEventData(Value) : default;
 
             public SubscriptionGroupSignupEventDataCase Set(SubscriptionGroupSignupEventData value)
@@ -967,7 +1021,9 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
                    creditAccountBalanceChanged != null ? creditAccountBalanceChanged(Value) : default;
 
             public CreditAccountBalanceChangedCase Set(CreditAccountBalanceChanged value)
@@ -1017,7 +1073,9 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
                    prepaymentAccountBalanceChanged != null ? prepaymentAccountBalanceChanged(Value) : default;
 
             public PrepaymentAccountBalanceChangedCase Set(PrepaymentAccountBalanceChanged value)
@@ -1067,7 +1125,9 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
                    paymentCollectionMethodChanged != null ? paymentCollectionMethodChanged(Value) : default;
 
             public PaymentCollectionMethodChangedCase Set(PaymentCollectionMethodChanged value)
@@ -1117,7 +1177,9 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
                    itemPricePointChanged != null ? itemPricePointChanged(Value) : default;
 
             public ItemPricePointChangedCase Set(ItemPricePointChanged value)
@@ -1167,7 +1229,9 @@ namespace AdvancedBilling.Standard.Models.Containers
                 Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
                 Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
                 Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange) =>
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
                    customFieldValueChange != null ? customFieldValueChange(Value) : default;
 
             public CustomFieldValueChangeCase Set(CustomFieldValueChange value)
@@ -1189,6 +1253,110 @@ namespace AdvancedBilling.Standard.Models.Containers
             public override bool Equals(object obj)
             {
                 if (!(obj is CustomFieldValueChangeCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
+            }
+        }
+
+        [JsonConverter(typeof(UnionTypeCaseConverter<ChjsTokenizationSuccessCase, ChjsTokenizationSuccess>))]
+        private sealed class ChjsTokenizationSuccessCase : EventEventSpecificData, ICaseValue<ChjsTokenizationSuccessCase, ChjsTokenizationSuccess>
+        {
+            public ChjsTokenizationSuccess Value;
+
+            public override T Match<T>(
+                Func<SubscriptionProductChange, T> subscriptionProductChange,
+                Func<SubscriptionStateChange, T> subscriptionStateChange,
+                Func<PaymentRelatedEvents, T> paymentRelatedEvents,
+                Func<RefundSuccess, T> refundSuccess,
+                Func<ComponentAllocationChange, T> componentAllocationChange,
+                Func<MeteredUsage, T> meteredUsage,
+                Func<PrepaidUsage, T> prepaidUsage,
+                Func<DunningStepReached, T> dunningStepReached,
+                Func<InvoiceIssued, T> invoiceIssued,
+                Func<PendingCancellationChange, T> pendingCancellationChange,
+                Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
+                Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
+                Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
+                Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
+                Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
+                Func<ItemPricePointChanged, T> itemPricePointChanged,
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
+                   chjsTokenizationSuccess != null ? chjsTokenizationSuccess(Value) : default;
+
+            public ChjsTokenizationSuccessCase Set(ChjsTokenizationSuccess value)
+            {
+                Value = value;
+                return this;
+            }
+
+            public ChjsTokenizationSuccess Get()
+            {
+                return Value;
+            }
+
+            public override string ToString()
+            {
+                return Value?.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is ChjsTokenizationSuccessCase other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
+            }
+        }
+
+        [JsonConverter(typeof(UnionTypeCaseConverter<ChjsTokenizationFailureCase, ChjsTokenizationFailure>))]
+        private sealed class ChjsTokenizationFailureCase : EventEventSpecificData, ICaseValue<ChjsTokenizationFailureCase, ChjsTokenizationFailure>
+        {
+            public ChjsTokenizationFailure Value;
+
+            public override T Match<T>(
+                Func<SubscriptionProductChange, T> subscriptionProductChange,
+                Func<SubscriptionStateChange, T> subscriptionStateChange,
+                Func<PaymentRelatedEvents, T> paymentRelatedEvents,
+                Func<RefundSuccess, T> refundSuccess,
+                Func<ComponentAllocationChange, T> componentAllocationChange,
+                Func<MeteredUsage, T> meteredUsage,
+                Func<PrepaidUsage, T> prepaidUsage,
+                Func<DunningStepReached, T> dunningStepReached,
+                Func<InvoiceIssued, T> invoiceIssued,
+                Func<PendingCancellationChange, T> pendingCancellationChange,
+                Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
+                Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
+                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
+                Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
+                Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
+                Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
+                Func<ItemPricePointChanged, T> itemPricePointChanged,
+                Func<CustomFieldValueChange, T> customFieldValueChange,
+                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
+                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
+                   chjsTokenizationFailure != null ? chjsTokenizationFailure(Value) : default;
+
+            public ChjsTokenizationFailureCase Set(ChjsTokenizationFailure value)
+            {
+                Value = value;
+                return this;
+            }
+
+            public ChjsTokenizationFailure Get()
+            {
+                return Value;
+            }
+
+            public override string ToString()
+            {
+                return Value?.ToString();
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is ChjsTokenizationFailureCase other)) return false;
                 if (ReferenceEquals(this, other)) return true;
                 return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
             }

@@ -62,7 +62,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Creates a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components and coupons.
+        /// Creates a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components, and coupons.
         /// Full documentation on how Product Families operate within the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24261098936205-Product-Families).
         /// </summary>
         /// <param name="body">Optional parameter: .</param>
@@ -72,7 +72,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(CreateProductFamilyAsync(body));
 
         /// <summary>
-        /// Creates a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components and coupons.
+        /// Creates a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components, and coupons.
         /// Full documentation on how Product Families operate within the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24261098936205-Product-Families).
         /// </summary>
         /// <param name="body">Optional parameter: .</param>
@@ -93,7 +93,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Retrieve a list of Product Families for a site.
+        /// Returns a list of Product Families for a site.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the List of Models.ProductFamilyResponse response from the API call.</returns>
@@ -102,7 +102,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListProductFamiliesAsync(input));
 
         /// <summary>
-        /// Retrieve a list of Product Families for a site.
+        /// Returns a list of Product Families for a site.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>

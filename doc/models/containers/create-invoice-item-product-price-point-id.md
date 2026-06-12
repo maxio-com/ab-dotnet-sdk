@@ -12,3 +12,23 @@
 | `string` | CreateInvoiceItemProductPricePointId.FromString(string mString) |
 | `int` | CreateInvoiceItemProductPricePointId.FromNumber(int number) |
 
+## string
+
+### Initialization Code
+
+#### Example
+
+```csharp
+CreateInvoiceItemProductPricePointId value = CreateInvoiceItemProductPricePointId.FromString("String0");
+```
+
+## int
+
+### Initialization Code
+
+#### Example
+
+```csharp
+CreateInvoiceItemProductPricePointId value = CreateInvoiceItemProductPricePointId.FromNumber(0);
+```
+

@@ -38,6 +38,10 @@ PromoteComponentPricePointToDefaultAsync(
     int pricePointId)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -46,6 +50,8 @@ PromoteComponentPricePointToDefaultAsync(
 | `pricePointId` | `int` | Template, Required | The Advanced Billing id of the price point |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentResponse>`](../../doc/models/component-response.md)
 
@@ -111,6 +117,10 @@ CreateComponentPricePointAsync(
     Models.CreateComponentPricePointRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -119,6 +129,8 @@ CreateComponentPricePointAsync(
 | `body` | [`CreateComponentPricePointRequest`](../../doc/models/create-component-price-point-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentPricePointResponse>`](../../doc/models/component-price-point-response.md)
 
@@ -180,7 +192,7 @@ catch (ApiException e)
 
 # List Component Price Points
 
-Use this endpoint to read current price points that are associated with a component.
+Lists the price points associated with a component.
 
 You may specify the component by using either the numeric id or the `handle:gold` syntax.
 
@@ -193,6 +205,10 @@ ListComponentPricePointsAsync(
     Models.ListComponentPricePointsInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -200,6 +216,8 @@ ListComponentPricePointsAsync(
 | `input` | [`Models.ListComponentPricePointsInput`](../../doc/models/list-component-price-points-input.md) | Required | Input structure for the method ListComponentPricePoints |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.ComponentPricePointsResponse>`](../../doc/models/component-price-points-response.md)
 
@@ -276,13 +294,17 @@ catch (ApiException e)
 
 # Bulk Create Component Price Points
 
-Use this endpoint to create multiple component price points in one request.
+Creates multiple component price points in one request.
 
 ```csharp
 BulkCreateComponentPricePointsAsync(
     string componentId,
     Models.CreateComponentPricePointsRequest body = null)
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -292,6 +314,8 @@ BulkCreateComponentPricePointsAsync(
 | `body` | [`CreateComponentPricePointsRequest`](../../doc/models/create-component-price-points-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentPricePointsResponse>`](../../doc/models/component-price-points-response.md)
 
@@ -446,6 +470,10 @@ CloneComponentPricePointAsync(
     Models.CloneComponentPricePointRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -455,6 +483,8 @@ CloneComponentPricePointAsync(
 | `body` | [`CloneComponentPricePointRequest`](../../doc/models/clone-component-price-point-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.ComponentPricePointCurrencyOverageResponse>`](../../doc/models/component-price-point-currency-overage-response.md)
 
@@ -573,7 +603,7 @@ catch (ApiException e)
 
 # Update Component Price Point
 
-When updating a price point, prices can be updated as well by creating new prices or editing / removing existing ones.
+Updates a component price point and its associated prices.
 
 Passing in a price bracket without an `id` will attempt to create a new price.
 
@@ -588,6 +618,10 @@ UpdateComponentPricePointAsync(
     Models.UpdateComponentPricePointRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -597,6 +631,8 @@ UpdateComponentPricePointAsync(
 | `body` | [`UpdateComponentPricePointRequest`](../../doc/models/update-component-price-point-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentPricePointResponse>`](../../doc/models/component-price-point-response.md)
 
@@ -661,7 +697,7 @@ catch (ApiException e)
 
 # Read Component Price Point
 
-Use this endpoint to retrieve details for a specific component price point. You can achieve this by using either the component price point ID or handle.
+Returns details for a specific component price point. You can achieve this by using either the component price point ID or handle.
 
 ```csharp
 ReadComponentPricePointAsync(
@@ -669,6 +705,10 @@ ReadComponentPricePointAsync(
     ReadComponentPricePointPricePointId pricePointId,
     bool? currencyPrices = null)
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -679,6 +719,8 @@ ReadComponentPricePointAsync(
 | `currencyPrices` | `bool?` | Query, Optional | Include an array of currency price data |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentPricePointCurrencyOverageResponse>`](../../doc/models/component-price-point-currency-overage-response.md)
 
@@ -705,13 +747,17 @@ catch (ApiException e)
 
 # Archive Component Price Point
 
-A price point can be archived at any time. Subscriptions using a price point that has been archived will continue using it until they're moved to another price point.
+Archives a component price point. Subscriptions using a price point that has been archived will continue using it until they're moved to another price point.
 
 ```csharp
 ArchiveComponentPricePointAsync(
     ArchiveComponentPricePointComponentId componentId,
     ArchiveComponentPricePointPricePointId pricePointId)
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -721,6 +767,8 @@ ArchiveComponentPricePointAsync(
 | `pricePointId` | [`ArchiveComponentPricePointPricePointId`](../../doc/models/containers/archive-component-price-point-price-point-id.md) | Template, Required | This is a container for one-of cases. |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentPricePointResponse>`](../../doc/models/component-price-point-response.md)
 
@@ -791,13 +839,17 @@ catch (ApiException e)
 
 # Unarchive Component Price Point
 
-Use this endpoint to unarchive a component price point.
+Unarchives a component price point.
 
 ```csharp
 UnarchiveComponentPricePointAsync(
     int componentId,
     int pricePointId)
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -807,6 +859,8 @@ UnarchiveComponentPricePointAsync(
 | `pricePointId` | `int` | Template, Required | The Advanced Billing id of the price point |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentPricePointResponse>`](../../doc/models/component-price-point-response.md)
 
@@ -865,7 +919,7 @@ catch (ApiException e)
 
 # Create Currency Prices
 
-This endpoint allows you to create currency prices for a given currency that has been defined on the site level in your settings.
+Creates currency prices for a given currency defined at the site level.
 
 When creating currency prices, they need to mirror the structure of your primary pricing. For each price level defined on the component price point, there should be a matching price level created in the given currency.
 
@@ -877,6 +931,10 @@ CreateCurrencyPricesAsync(
     Models.CreateCurrencyPricesRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -885,6 +943,8 @@ CreateCurrencyPricesAsync(
 | `body` | [`CreateCurrencyPricesRequest`](../../doc/models/create-currency-prices-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentCurrencyPricesResponse>`](../../doc/models/component-currency-prices-response.md)
 
@@ -954,7 +1014,7 @@ catch (ApiException e)
 
 # Update Currency Prices
 
-This endpoint allows you to update currency prices for a given currency that has been defined on the site level in your settings.
+Updates currency prices for a given currency defined at the site level.
 
 Note: Currency Prices are not able to be updated for custom price points.
 
@@ -964,6 +1024,10 @@ UpdateCurrencyPricesAsync(
     Models.UpdateCurrencyPricesRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -972,6 +1036,8 @@ UpdateCurrencyPricesAsync(
 | `body` | [`UpdateCurrencyPricesRequest`](../../doc/models/update-currency-prices-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ComponentCurrencyPricesResponse>`](../../doc/models/component-currency-prices-response.md)
 
@@ -1039,12 +1105,16 @@ catch (ApiException e)
 
 # List All Component Price Points
 
-This method allows to retrieve a list of Components Price Points belonging to a Site.
+Lists all component price points belonging to a site.
 
 ```csharp
 ListAllComponentPricePointsAsync(
     Models.ListAllComponentPricePointsInput input)
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -1053,6 +1123,8 @@ ListAllComponentPricePointsAsync(
 | `input` | [`Models.ListAllComponentPricePointsInput`](../../doc/models/list-all-component-price-points-input.md) | Required | Input structure for the method ListAllComponentPricePoints |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ListComponentsPricePointsResponse>`](../../doc/models/list-components-price-points-response.md)
 

@@ -15,6 +15,12 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class BillingSchedule : BaseModel
     {
+        private DateTime? initialBillingAt;
+        private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
+        {
+            { "initial_billing_at", false },
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BillingSchedule"/> class.
         /// </summary>
@@ -29,15 +35,31 @@ namespace AdvancedBilling.Standard.Models
         public BillingSchedule(
             DateTime? initialBillingAt = null)
         {
-            this.InitialBillingAt = initialBillingAt;
+
+            if (initialBillingAt != null)
+            {
+                this.InitialBillingAt = initialBillingAt;
+            }
         }
 
         /// <summary>
-        /// The initial_billing_at attribute in Maxio allows you to specify a custom starting date for billing cycles associated with components that have their own billing frequency set. Only ISO8601 format is supported.
+        /// Custom start date (ISO 8601 date, YYYY-MM-DD) for the component's first billing period. If omitted or null, billing aligns with the product schedule. If provided, date must be on or after the minimum allowed date for the subscription or component.
         /// </summary>
         [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
-        [JsonProperty("initial_billing_at", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime? InitialBillingAt { get; set; }
+        [JsonProperty("initial_billing_at")]
+        public DateTime? InitialBillingAt
+        {
+            get
+            {
+                return this.initialBillingAt;
+            }
+
+            set
+            {
+                this.shouldSerialize["initial_billing_at"] = true;
+                this.initialBillingAt = value;
+            }
+        }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -45,6 +67,23 @@ namespace AdvancedBilling.Standard.Models
             var toStringOutput = new List<string>();
             this.ToString(toStringOutput);
             return $"BillingSchedule : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetInitialBillingAt()
+        {
+            this.shouldSerialize["initial_billing_at"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeInitialBillingAt()
+        {
+            return this.shouldSerialize["initial_billing_at"];
         }
 
         /// <inheritdoc/>

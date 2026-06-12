@@ -135,7 +135,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Token received after sending billing information using chargify.js.
+        /// Token received after sending billing information using Maxio.js (formerly Chargify.js).
         /// </summary>
         [JsonProperty("chargify_token", NullValueHandling = NullValueHandling.Ignore)]
         public string ChargifyToken { get; set; }
@@ -267,13 +267,13 @@ namespace AdvancedBilling.Standard.Models
         public int? CustomerId { get; set; }
 
         /// <summary>
-        /// used by merchants that implemented BraintreeBlue javaScript libraries on their own. We recommend using Chargify.js instead.
+        /// used by merchants that implemented BraintreeBlue javaScript libraries on their own. We recommend using Maxio.js (formerly Chargify.js) instead.
         /// </summary>
         [JsonProperty("paypal_email", NullValueHandling = NullValueHandling.Ignore)]
         public string PaypalEmail { get; set; }
 
         /// <summary>
-        /// used by merchants that implemented BraintreeBlue javaScript libraries on their own. We recommend using Chargify.js instead.
+        /// used by merchants that implemented BraintreeBlue javaScript libraries on their own. We recommend using Maxio.js (formerly Chargify.js) instead.
         /// </summary>
         [JsonProperty("payment_method_nonce", NullValueHandling = NullValueHandling.Ignore)]
         public string PaymentMethodNonce { get; set; }

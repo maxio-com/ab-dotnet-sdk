@@ -66,7 +66,7 @@ namespace AdvancedBilling.Standard.Models
         public List<Models.CreateInvoiceItem> LineItems { get; set; }
 
         /// <summary>
-        /// Gets or sets IssueDate.
+        /// Date on which the invoice will be issued (format YYYY-MM-DD). This date is interpreted and validated in your site's time zone. It must be today or a date in the past — future dates are not accepted. If omitted, defaults to today in your site's time zone.
         /// </summary>
         [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
         [JsonProperty("issue_date", NullValueHandling = NullValueHandling.Ignore)]

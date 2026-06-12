@@ -13,12 +13,12 @@ InsightsController insightsController = client.InsightsController;
 * [Read Site Stats](../../doc/controllers/insights.md#read-site-stats)
 * [Read Mrr](../../doc/controllers/insights.md#read-mrr)
 * [List Mrr Movements](../../doc/controllers/insights.md#list-mrr-movements)
-* [List Mrr Per Subscription](../../doc/controllers/insights.md#list-mrr-per-subscription)
+* [List Mrr per Subscription](../../doc/controllers/insights.md#list-mrr-per-subscription)
 
 
 # Read Site Stats
 
-The Stats API is a very basic view of some Site-level stats. This API call only answers with JSON responses. An XML version is not provided.
+Returns basic site-level stats. This API call only answers with JSON responses. An XML version is not provided.
 
 ## Stats Documentation
 
@@ -32,7 +32,13 @@ https://subdomain.chargify.com/dashboard
 ReadSiteStatsAsync()
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.SiteSummary>`](../../doc/models/site-summary.md)
 
@@ -73,13 +79,17 @@ catch (ApiException e)
 
 **This endpoint is deprecated.**
 
-This endpoint returns your site's current MRR, including plan and usage breakouts.
+Returns your site's current MRR, including plan and usage breakouts.
 
 ```csharp
 ReadMrrAsync(
     DateTimeOffset? atTime = null,
     int? subscriptionId = null)
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -89,6 +99,8 @@ ReadMrrAsync(
 | `subscriptionId` | `int?` | Query, Optional | submit the id of a subscription in order to limit results |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.MRRResponse>`](../../doc/models/mrr-response.md)
 
@@ -130,7 +142,7 @@ catch (ApiException e)
 
 **This endpoint is deprecated.**
 
-This endpoint returns your site's MRR movements.
+Lists your site's MRR movements.
 
 ## Understanding MRR movements
 
@@ -160,6 +172,10 @@ ListMrrMovementsAsync(
     Models.ListMrrMovementsInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -167,6 +183,8 @@ ListMrrMovementsAsync(
 | `input` | [`Models.ListMrrMovementsInput`](../../doc/models/list-mrr-movements-input.md) | Required | Input structure for the method ListMrrMovements |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ListMRRResponse>`](../../doc/models/list-mrr-response.md)
 
@@ -242,7 +260,7 @@ catch (ApiException e)
 ```
 
 
-# List Mrr Per Subscription
+# List Mrr per Subscription
 
 **This endpoint is deprecated.**
 
@@ -253,6 +271,10 @@ ListMrrPerSubscriptionAsync(
     Models.ListMrrPerSubscriptionInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -260,6 +282,8 @@ ListMrrPerSubscriptionAsync(
 | `input` | [`Models.ListMrrPerSubscriptionInput`](../../doc/models/list-mrr-per-subscription-input.md) | Required | Input structure for the method ListMrrPerSubscription |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.SubscriptionMRRResponse>`](../../doc/models/subscription-mrr-response.md)
 

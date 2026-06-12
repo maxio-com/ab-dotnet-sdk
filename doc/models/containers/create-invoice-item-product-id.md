@@ -12,3 +12,23 @@
 | `string` | CreateInvoiceItemProductId.FromString(string mString) |
 | `int` | CreateInvoiceItemProductId.FromNumber(int number) |
 
+## string
+
+### Initialization Code
+
+#### Example
+
+```csharp
+CreateInvoiceItemProductId value = CreateInvoiceItemProductId.FromString("String0");
+```
+
+## int
+
+### Initialization Code
+
+#### Example
+
+```csharp
+CreateInvoiceItemProductId value = CreateInvoiceItemProductId.FromNumber(0);
+```
+

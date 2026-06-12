@@ -215,6 +215,12 @@ namespace AdvancedBilling.Standard.Models
         InvoiceIssued,
 
         /// <summary>
+        /// InvoicePending.
+        /// </summary>
+        [EnumMember(Value = "invoice_pending")]
+        InvoicePending,
+
+        /// <summary>
         /// PrepaidSubscriptionBalanceChanged.
         /// </summary>
         [EnumMember(Value = "prepaid_subscription_balance_changed")]
@@ -471,6 +477,18 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [EnumMember(Value = "component_billing_date_changed")]
         ComponentBillingDateChanged,
+
+        /// <summary>
+        /// ChjsTokenizationFailure.
+        /// </summary>
+        [EnumMember(Value = "chjs_tokenization_failure")]
+        ChjsTokenizationFailure,
+
+        /// <summary>
+        /// ChjsTokenizationSuccess.
+        /// </summary>
+        [EnumMember(Value = "chjs_tokenization_success")]
+        ChjsTokenizationSuccess,
 
         /// <summary>
         /// SubscriptionTermRenewalScheduled.

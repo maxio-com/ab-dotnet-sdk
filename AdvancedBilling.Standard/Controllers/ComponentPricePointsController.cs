@@ -94,7 +94,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this endpoint to read current price points that are associated with a component.
+        /// Lists the price points associated with a component.
         /// You may specify the component by using either the numeric id or the `handle:gold` syntax.
         /// When fetching a component's price points, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response.
         /// If the price point is set to `use_site_exchange_rate: true`, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency.
@@ -106,7 +106,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListComponentPricePointsAsync(input));
 
         /// <summary>
-        /// Use this endpoint to read current price points that are associated with a component.
+        /// Lists the price points associated with a component.
         /// You may specify the component by using either the numeric id or the `handle:gold` syntax.
         /// When fetching a component's price points, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response.
         /// If the price point is set to `use_site_exchange_rate: true`, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency.
@@ -130,7 +130,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this endpoint to create multiple component price points in one request.
+        /// Creates multiple component price points in one request.
         /// </summary>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component for which you want to fetch price points..</param>
         /// <param name="body">Optional parameter: .</param>
@@ -141,7 +141,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(BulkCreateComponentPricePointsAsync(componentId, body));
 
         /// <summary>
-        /// Use this endpoint to create multiple component price points in one request.
+        /// Creates multiple component price points in one request.
         /// </summary>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component for which you want to fetch price points..</param>
         /// <param name="body">Optional parameter: .</param>
@@ -218,7 +218,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// When updating a price point, prices can be updated as well by creating new prices or editing / removing existing ones.
+        /// Updates a component price point and its associated prices.
         /// Passing in a price bracket without an `id` will attempt to create a new price.
         /// Including an `id` will update the corresponding price, and including the `_destroy` flag set to true along with the `id` will remove that price.
         /// Note: Custom price points cannot be updated directly. They must be edited through the Subscription.
@@ -234,7 +234,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(UpdateComponentPricePointAsync(componentId, pricePointId, body));
 
         /// <summary>
-        /// When updating a price point, prices can be updated as well by creating new prices or editing / removing existing ones.
+        /// Updates a component price point and its associated prices.
         /// Passing in a price bracket without an `id` will attempt to create a new price.
         /// Including an `id` will update the corresponding price, and including the `_destroy` flag set to true along with the `id` will remove that price.
         /// Note: Custom price points cannot be updated directly. They must be edited through the Subscription.
@@ -263,7 +263,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this endpoint to retrieve details for a specific component price point. You can achieve this by using either the component price point ID or handle.
+        /// Returns details for a specific component price point. You can achieve this by using either the component price point ID or handle.
         /// </summary>
         /// <param name="componentId">Required parameter: The id or handle of the component. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
         /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-price_point-handle` for a string handle..</param>
@@ -276,7 +276,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ReadComponentPricePointAsync(componentId, pricePointId, currencyPrices));
 
         /// <summary>
-        /// Use this endpoint to retrieve details for a specific component price point. You can achieve this by using either the component price point ID or handle.
+        /// Returns details for a specific component price point. You can achieve this by using either the component price point ID or handle.
         /// </summary>
         /// <param name="componentId">Required parameter: The id or handle of the component. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
         /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-price_point-handle` for a string handle..</param>
@@ -299,7 +299,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// A price point can be archived at any time. Subscriptions using a price point that has been archived will continue using it until they're moved to another price point.
+        /// Archives a component price point. Subscriptions using a price point that has been archived will continue using it until they're moved to another price point.
         /// </summary>
         /// <param name="componentId">Required parameter: The id or handle of the component. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
         /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-price_point-handle` for a string handle..</param>
@@ -310,7 +310,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ArchiveComponentPricePointAsync(componentId, pricePointId));
 
         /// <summary>
-        /// A price point can be archived at any time. Subscriptions using a price point that has been archived will continue using it until they're moved to another price point.
+        /// Archives a component price point. Subscriptions using a price point that has been archived will continue using it until they're moved to another price point.
         /// </summary>
         /// <param name="componentId">Required parameter: The id or handle of the component. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-product-handle` for a string handle..</param>
         /// <param name="pricePointId">Required parameter: The id or handle of the price point. When using the handle, it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-price_point-handle` for a string handle..</param>
@@ -332,7 +332,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Use this endpoint to unarchive a component price point.
+        /// Unarchives a component price point.
         /// </summary>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component to which the price point belongs.</param>
         /// <param name="pricePointId">Required parameter: The Advanced Billing id of the price point.</param>
@@ -343,7 +343,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(UnarchiveComponentPricePointAsync(componentId, pricePointId));
 
         /// <summary>
-        /// Use this endpoint to unarchive a component price point.
+        /// Unarchives a component price point.
         /// </summary>
         /// <param name="componentId">Required parameter: The Advanced Billing id of the component to which the price point belongs.</param>
         /// <param name="pricePointId">Required parameter: The Advanced Billing id of the price point.</param>
@@ -363,7 +363,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This endpoint allows you to create currency prices for a given currency that has been defined on the site level in your settings.
+        /// Creates currency prices for a given currency defined at the site level.
         /// When creating currency prices, they need to mirror the structure of your primary pricing. For each price level defined on the component price point, there should be a matching price level created in the given currency.
         /// Note: Currency Prices are not able to be created for custom price points.
         /// </summary>
@@ -376,7 +376,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(CreateCurrencyPricesAsync(pricePointId, body));
 
         /// <summary>
-        /// This endpoint allows you to create currency prices for a given currency that has been defined on the site level in your settings.
+        /// Creates currency prices for a given currency defined at the site level.
         /// When creating currency prices, they need to mirror the structure of your primary pricing. For each price level defined on the component price point, there should be a matching price level created in the given currency.
         /// Note: Currency Prices are not able to be created for custom price points.
         /// </summary>
@@ -401,7 +401,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This endpoint allows you to update currency prices for a given currency that has been defined on the site level in your settings.
+        /// Updates currency prices for a given currency defined at the site level.
         /// Note: Currency Prices are not able to be updated for custom price points.
         /// </summary>
         /// <param name="pricePointId">Required parameter: The Advanced Billing id of the price point.</param>
@@ -413,7 +413,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(UpdateCurrencyPricesAsync(pricePointId, body));
 
         /// <summary>
-        /// This endpoint allows you to update currency prices for a given currency that has been defined on the site level in your settings.
+        /// Updates currency prices for a given currency defined at the site level.
         /// Note: Currency Prices are not able to be updated for custom price points.
         /// </summary>
         /// <param name="pricePointId">Required parameter: The Advanced Billing id of the price point.</param>
@@ -437,7 +437,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This method allows to retrieve a list of Components Price Points belonging to a Site.
+        /// Lists all component price points belonging to a site.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the Models.ListComponentsPricePointsResponse response from the API call.</returns>
@@ -446,7 +446,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListAllComponentPricePointsAsync(input));
 
         /// <summary>
-        /// This method allows to retrieve a list of Components Price Points belonging to a Site.
+        /// Lists all component price points belonging to a site.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>

@@ -12,3 +12,23 @@
 | `string` | SubscriptionGroupSignupComponentPricePointId.FromString(string mString) |
 | `int` | SubscriptionGroupSignupComponentPricePointId.FromNumber(int number) |
 
+## string
+
+### Initialization Code
+
+#### Example
+
+```csharp
+SubscriptionGroupSignupComponentPricePointId value = SubscriptionGroupSignupComponentPricePointId.FromString("String0");
+```
+
+## int
+
+### Initialization Code
+
+#### Example
+
+```csharp
+SubscriptionGroupSignupComponentPricePointId value = SubscriptionGroupSignupComponentPricePointId.FromNumber(0);
+```
+

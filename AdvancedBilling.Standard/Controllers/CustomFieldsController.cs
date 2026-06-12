@@ -114,7 +114,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// - Add metadata values to the existing metadata for a dropdown or radio metafield. .
         ///   >Note: Updates to metadata overwrite. To add one or more values, you must specify all metadata values including the new value you want to add.
         /// - Add new metadata to a dropdown or radio for a metafield that was created without metadata.
-        /// - Remove  metadata for a dropdown or radio for a metafield.  .
+        /// - Remove metadata for a dropdown or radio for a metafield.
         ///   >Note: Updates to metadata overwrite existing values. To remove one or more values, specify all metadata values except those you want to remove.
         /// - Add or update scope settings for a metafield.
         ///   >Note: Scope changes overwrite existing settings. You must specify the complete scope, including the changes you want to make.
@@ -138,7 +138,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// - Add metadata values to the existing metadata for a dropdown or radio metafield. .
         ///   >Note: Updates to metadata overwrite. To add one or more values, you must specify all metadata values including the new value you want to add.
         /// - Add new metadata to a dropdown or radio for a metafield that was created without metadata.
-        /// - Remove  metadata for a dropdown or radio for a metafield.  .
+        /// - Remove metadata for a dropdown or radio for a metafield.
         ///   >Note: Updates to metadata overwrite existing values. To remove one or more values, specify all metadata values except those you want to remove.
         /// - Add or update scope settings for a metafield.
         ///   >Note: Scope changes overwrite existing settings. You must specify the complete scope, including the changes you want to make.
@@ -270,7 +270,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Updates metadata and metafields on the Site and the customer or subscription specified, and updates the metadata value on a subscription or customer.
         /// If you update metadata on a subscription or customer with a metafield that does not already exist, the metafield is created with the metadata you specify and it is always added as a text field to the Site and to the subscription or customer you specify. You can update the input_type for the metafield with the Update Metafield endpoint. .
-        /// Each site is limited to 100 unique metafields per resource. This means you can have 100 metafields for Subscription and another 100 for Customer.
+        /// Each site is limited to 100 unique metafields per resource. This means you can have 100 metafields for the Subscription resource and another 100 for the Customer resource.
         /// </summary>
         /// <param name="resourceType">Required parameter: The resource type to which the metafields belong..</param>
         /// <param name="resourceId">Required parameter: The Advanced Billing id of the customer or the subscription for which the metadata applies.</param>
@@ -285,7 +285,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Updates metadata and metafields on the Site and the customer or subscription specified, and updates the metadata value on a subscription or customer.
         /// If you update metadata on a subscription or customer with a metafield that does not already exist, the metafield is created with the metadata you specify and it is always added as a text field to the Site and to the subscription or customer you specify. You can update the input_type for the metafield with the Update Metafield endpoint. .
-        /// Each site is limited to 100 unique metafields per resource. This means you can have 100 metafields for Subscription and another 100 for Customer.
+        /// Each site is limited to 100 unique metafields per resource. This means you can have 100 metafields for the Subscription resource and another 100 for the Customer resource.
         /// </summary>
         /// <param name="resourceType">Required parameter: The resource type to which the metafields belong..</param>
         /// <param name="resourceId">Required parameter: The Advanced Billing id of the customer or the subscription for which the metadata applies.</param>
@@ -353,7 +353,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Lists  metadata for a specified array of subscriptions or customers.
+        /// Lists metadata for a specified array of subscriptions or customers.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the Models.PaginatedMetadata response from the API call.</returns>
@@ -362,7 +362,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListMetadataForResourceTypeAsync(input));
 
         /// <summary>
-        /// Lists  metadata for a specified array of subscriptions or customers.
+        /// Lists metadata for a specified array of subscriptions or customers.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>

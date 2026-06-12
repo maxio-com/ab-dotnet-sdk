@@ -17,11 +17,13 @@ EventsController eventsController = client.EventsController;
 
 # List Events
 
+Lists events for a site.
+
 ## Events Intro
 
 Advanced Billing Events include various activity that happens around a Site. This information is **especially** useful to track down issues that arise when subscriptions are not created due to errors.
 
-Within the Advanced Billing UI, "Events" are referred to as "Site Activity".  Full documentation on how to record view Events / Site Activty in the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24250671733517-Site-Activity).
+Within the Advanced Billing UI, "Events" are referred to as "Site Activity".  Full documentation on how to view Events / Site Activity in the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24250671733517-Site-Activity).
 
 ## List Events for a Site
 
@@ -91,6 +93,10 @@ ListEventsAsync(
     Models.ListEventsInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -98,6 +104,8 @@ ListEventsAsync(
 | `input` | [`Models.ListEventsInput`](../../doc/models/list-events-input.md) | Required | Input structure for the method ListEvents |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.EventResponse>>`](../../doc/models/event-response.md)
 
@@ -192,7 +200,7 @@ catch (ApiException e)
 
 # List Subscription Events
 
-The following request will return a list of events for a subscription.
+Lists events for a subscription.
 
 ## Event Key
 
@@ -209,6 +217,10 @@ ListSubscriptionEventsAsync(
     Models.ListSubscriptionEventsInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -216,6 +228,8 @@ ListSubscriptionEventsAsync(
 | `input` | [`Models.ListSubscriptionEventsInput`](../../doc/models/list-subscription-events-input.md) | Required | Input structure for the method ListSubscriptionEvents |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.EventResponse>>`](../../doc/models/event-response.md)
 
@@ -291,12 +305,16 @@ catch (ApiException e)
 
 # Read Events Count
 
-Get a count of all the events for a given site by using this method.
+Returns the total count of events for a given site.
 
 ```csharp
 ReadEventsCountAsync(
     Models.ReadEventsCountInput input)
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -305,6 +323,8 @@ ReadEventsCountAsync(
 | `input` | [`Models.ReadEventsCountInput`](../../doc/models/read-events-count-input.md) | Required | Input structure for the method ReadEventsCount |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.CountResponse>`](../../doc/models/count-response.md)
 

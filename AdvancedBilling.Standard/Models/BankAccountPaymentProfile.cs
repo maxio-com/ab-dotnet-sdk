@@ -23,6 +23,8 @@ namespace AdvancedBilling.Standard.Models
         private string billingCountry;
         private string customerVaultToken;
         private string billingAddress2;
+        private string maskedBankRoutingNumber;
+        private string maskedBankAccountNumber;
         private int? siteGatewaySettingId;
         private string gatewayHandle;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -34,6 +36,8 @@ namespace AdvancedBilling.Standard.Models
             { "billing_country", false },
             { "customer_vault_token", false },
             { "billing_address_2", false },
+            { "masked_bank_routing_number", false },
+            { "masked_bank_account_number", false },
             { "site_gateway_setting_id", false },
             { "gateway_handle", false },
         };
@@ -48,7 +52,6 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="BankAccountPaymentProfile"/> class.
         /// </summary>
-        /// <param name="maskedBankAccountNumber">masked_bank_account_number.</param>
         /// <param name="paymentType">payment_type.</param>
         /// <param name="id">id.</param>
         /// <param name="firstName">first_name.</param>
@@ -65,6 +68,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="billingAddress2">billing_address_2.</param>
         /// <param name="bankName">bank_name.</param>
         /// <param name="maskedBankRoutingNumber">masked_bank_routing_number.</param>
+        /// <param name="maskedBankAccountNumber">masked_bank_account_number.</param>
         /// <param name="bankAccountType">bank_account_type.</param>
         /// <param name="bankAccountHolderType">bank_account_holder_type.</param>
         /// <param name="verified">verified.</param>
@@ -73,7 +77,6 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="createdAt">created_at.</param>
         /// <param name="updatedAt">updated_at.</param>
         public BankAccountPaymentProfile(
-            string maskedBankAccountNumber,
             Models.PaymentType paymentType,
             int? id = null,
             string firstName = null,
@@ -90,6 +93,7 @@ namespace AdvancedBilling.Standard.Models
             string billingAddress2 = null,
             string bankName = null,
             string maskedBankRoutingNumber = null,
+            string maskedBankAccountNumber = null,
             Models.BankAccountType? bankAccountType = null,
             Models.BankAccountHolderType? bankAccountHolderType = null,
             bool? verified = false,
@@ -140,8 +144,16 @@ namespace AdvancedBilling.Standard.Models
                 this.BillingAddress2 = billingAddress2;
             }
             this.BankName = bankName;
-            this.MaskedBankRoutingNumber = maskedBankRoutingNumber;
-            this.MaskedBankAccountNumber = maskedBankAccountNumber;
+
+            if (maskedBankRoutingNumber != null)
+            {
+                this.MaskedBankRoutingNumber = maskedBankRoutingNumber;
+            }
+
+            if (maskedBankAccountNumber != null)
+            {
+                this.MaskedBankAccountNumber = maskedBankAccountNumber;
+            }
             this.BankAccountType = bankAccountType;
             this.BankAccountHolderType = bankAccountHolderType;
             this.PaymentType = paymentType;
@@ -193,7 +205,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.BankAccountVault? CurrentVault { get; set; }
 
         /// <summary>
-        /// The “token” provided by your vault storage for an already stored payment profile
+        /// The "token" provided by your vault storage for an already stored payment profile
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("vault_token", NullValueHandling = NullValueHandling.Ignore)]
@@ -340,19 +352,42 @@ namespace AdvancedBilling.Standard.Models
         public string BankName { get; set; }
 
         /// <summary>
-        /// A string representation of the stored bank routing number with all but the last 4 digits marked with X’s (i.e. ‘XXXXXXX1111’). payment_type will be bank_account
+        /// A string representation of the stored bank routing number with all but the last 4 digits marked with X's (i.e. 'XXXXXXX1111'). payment_type will be bank_account
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter))]
-        [JsonProperty("masked_bank_routing_number", NullValueHandling = NullValueHandling.Ignore)]
-        public string MaskedBankRoutingNumber { get; set; }
+        [JsonProperty("masked_bank_routing_number")]
+        public string MaskedBankRoutingNumber
+        {
+            get
+            {
+                return this.maskedBankRoutingNumber;
+            }
+
+            set
+            {
+                this.shouldSerialize["masked_bank_routing_number"] = true;
+                this.maskedBankRoutingNumber = value;
+            }
+        }
 
         /// <summary>
-        /// A string representation of the stored bank account number with all but the last 4 digits marked with X’s (i.e. ‘XXXXXXX1111’)
+        /// A string representation of the stored bank account number with all but the last 4 digits marked with X's (i.e. 'XXXXXXX1111')
         /// </summary>
-        [JsonConverter(typeof(JsonStringConverter), true)]
+        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("masked_bank_account_number")]
-        [JsonRequired]
-        public string MaskedBankAccountNumber { get; set; }
+        public string MaskedBankAccountNumber
+        {
+            get
+            {
+                return this.maskedBankAccountNumber;
+            }
+
+            set
+            {
+                this.shouldSerialize["masked_bank_account_number"] = true;
+                this.maskedBankAccountNumber = value;
+            }
+        }
 
         /// <summary>
         /// Defaults to checking
@@ -490,6 +525,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
+        public void UnsetMaskedBankRoutingNumber()
+        {
+            this.shouldSerialize["masked_bank_routing_number"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetMaskedBankAccountNumber()
+        {
+            this.shouldSerialize["masked_bank_account_number"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
         public void UnsetSiteGatewaySettingId()
         {
             this.shouldSerialize["site_gateway_setting_id"] = false;
@@ -563,6 +612,24 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeBillingAddress2()
         {
             return this.shouldSerialize["billing_address_2"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeMaskedBankRoutingNumber()
+        {
+            return this.shouldSerialize["masked_bank_routing_number"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeMaskedBankAccountNumber()
+        {
+            return this.shouldSerialize["masked_bank_account_number"];
         }
 
         /// <summary>

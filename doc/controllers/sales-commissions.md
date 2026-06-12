@@ -17,7 +17,7 @@ SalesCommissionsController salesCommissionsController = client.SalesCommissionsC
 
 # List Sales Commission Settings
 
-Endpoint returns subscriptions with associated sales reps
+Lists subscriptions with associated sales reps.
 
 ## Modified Authentication Process
 
@@ -32,6 +32,10 @@ ListSalesCommissionSettingsAsync(
     Models.ListSalesCommissionSettingsInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -39,6 +43,8 @@ ListSalesCommissionSettingsAsync(
 | `input` | [`Models.ListSalesCommissionSettingsInput`](../../doc/models/list-sales-commission-settings-input.md) | Required | Input structure for the method ListSalesCommissionSettings |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.SaleRepSettings>>`](../../doc/models/sale-rep-settings.md)
 
@@ -100,7 +106,7 @@ catch (ApiException e)
 
 # List Sales Reps
 
-Endpoint returns sales rep list with details
+Returns a sales rep list with details.
 
 ## Modified Authentication Process
 
@@ -115,6 +121,10 @@ ListSalesRepsAsync(
     Models.ListSalesRepsInput input)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -122,6 +132,8 @@ ListSalesRepsAsync(
 | `input` | [`Models.ListSalesRepsInput`](../../doc/models/list-sales-reps-input.md) | Required | Input structure for the method ListSalesReps |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<List<Models.ListSaleRepItem>>`](../../doc/models/list-sale-rep-item.md)
 
@@ -232,7 +244,7 @@ catch (ApiException e)
 
 # Read Sales Rep
 
-Endpoint returns sales rep and attached subscriptions details.
+Returns a sales rep and attached subscription details.
 
 ## Modified Authentication Process
 
@@ -252,6 +264,10 @@ ReadSalesRepAsync(
     int? perPage = 100)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -264,6 +280,8 @@ ReadSalesRepAsync(
 | `perPage` | `int?` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 100.<br><br>**Default**: `100` |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.SaleRep>`](../../doc/models/sale-rep.md)
 

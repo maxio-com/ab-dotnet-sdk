@@ -24,7 +24,7 @@ namespace AdvancedBilling.Standard.Controllers
         internal InsightsController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
-        /// The Stats API is a very basic view of some Site-level stats. This API call only answers with JSON responses. An XML version is not provided.
+        /// Returns basic site-level stats. This API call only answers with JSON responses. An XML version is not provided.
         /// ## Stats Documentation.
         /// There currently is not a complimentary matching set of documentation that compliments this endpoint. However, each Site's dashboard will reflect the summary of information provided in the Stats response.
         /// ```.
@@ -36,7 +36,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ReadSiteStatsAsync());
 
         /// <summary>
-        /// The Stats API is a very basic view of some Site-level stats. This API call only answers with JSON responses. An XML version is not provided.
+        /// Returns basic site-level stats. This API call only answers with JSON responses. An XML version is not provided.
         /// ## Stats Documentation.
         /// There currently is not a complimentary matching set of documentation that compliments this endpoint. However, each Site's dashboard will reflect the summary of information provided in the Stats response.
         /// ```.
@@ -53,7 +53,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This endpoint returns your site's current MRR, including plan and usage breakouts.
+        /// Returns your site's current MRR, including plan and usage breakouts.
         /// </summary>
         /// <param name="atTime">Optional parameter: submit a timestamp in ISO8601 format to request MRR for a historic time.</param>
         /// <param name="subscriptionId">Optional parameter: submit the id of a subscription in order to limit results.</param>
@@ -65,7 +65,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ReadMrrAsync(atTime, subscriptionId));
 
         /// <summary>
-        /// This endpoint returns your site's current MRR, including plan and usage breakouts.
+        /// Returns your site's current MRR, including plan and usage breakouts.
         /// </summary>
         /// <param name="atTime">Optional parameter: submit a timestamp in ISO8601 format to request MRR for a historic time.</param>
         /// <param name="subscriptionId">Optional parameter: submit the id of a subscription in order to limit results.</param>
@@ -87,7 +87,7 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// <![CDATA[
-        /// This endpoint returns your site's MRR movements.
+        /// Lists your site's MRR movements.
         /// ## Understanding MRR movements.
         /// This endpoint will aid in accessing your site's [MRR Report](https://maxio.zendesk.com/hc/en-us/articles/24285894587021-MRR-Analytics) data.
         /// Whenever a subscription event occurs that causes your site's MRR to change (such as a signup or upgrade), we record an MRR movement. These records are accessible via the MRR Movements endpoint.
@@ -112,7 +112,7 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// <![CDATA[
-        /// This endpoint returns your site's MRR movements.
+        /// Lists your site's MRR movements.
         /// ## Understanding MRR movements.
         /// This endpoint will aid in accessing your site's [MRR Report](https://maxio.zendesk.com/hc/en-us/articles/24285894587021-MRR-Analytics) data.
         /// Whenever a subscription event occurs that causes your site's MRR to change (such as a signup or upgrade), we record an MRR movement. These records are accessible via the MRR Movements endpoint.

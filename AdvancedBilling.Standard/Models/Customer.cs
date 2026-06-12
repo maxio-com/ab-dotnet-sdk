@@ -38,6 +38,7 @@ namespace AdvancedBilling.Standard.Models
         private string salesforceId;
         private string taxExemptReason;
         private int? defaultAutoRenewalProfileId;
+        private string maxioid;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "cc_emails", false },
@@ -63,6 +64,7 @@ namespace AdvancedBilling.Standard.Models
             { "salesforce_id", false },
             { "tax_exempt_reason", false },
             { "default_auto_renewal_profile_id", false },
+            { "maxioid", false },
         };
 
         /// <summary>
@@ -105,6 +107,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="salesforceId">salesforce_id.</param>
         /// <param name="taxExemptReason">tax_exempt_reason.</param>
         /// <param name="defaultAutoRenewalProfileId">default_auto_renewal_profile_id.</param>
+        /// <param name="maxioid">maxioid.</param>
         public Customer(
             string firstName = null,
             string lastName = null,
@@ -135,7 +138,8 @@ namespace AdvancedBilling.Standard.Models
             string defaultSubscriptionGroupUid = null,
             string salesforceId = null,
             string taxExemptReason = null,
-            int? defaultAutoRenewalProfileId = null)
+            int? defaultAutoRenewalProfileId = null,
+            string maxioid = null)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
@@ -258,6 +262,11 @@ namespace AdvancedBilling.Standard.Models
             if (defaultAutoRenewalProfileId != null)
             {
                 this.DefaultAutoRenewalProfileId = defaultAutoRenewalProfileId;
+            }
+
+            if (maxioid != null)
+            {
+                this.Maxioid = maxioid;
             }
         }
 
@@ -722,6 +731,24 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// The Maxio-generated unique identifier for the customer.
+        /// </summary>
+        [JsonProperty("maxioid")]
+        public string Maxioid
+        {
+            get
+            {
+                return this.maxioid;
+            }
+
+            set
+            {
+                this.shouldSerialize["maxioid"] = true;
+                this.maxioid = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -890,6 +917,13 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetDefaultAutoRenewalProfileId()
         {
             this.shouldSerialize["default_auto_renewal_profile_id"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetMaxioid()
+        {
+            this.shouldSerialize["maxioid"] = false;
         }
 
         /// <summary>
@@ -1099,6 +1133,15 @@ namespace AdvancedBilling.Standard.Models
             return this.shouldSerialize["default_auto_renewal_profile_id"];
         }
 
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeMaxioid()
+        {
+            return this.shouldSerialize["maxioid"];
+        }
+
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
@@ -1166,6 +1209,8 @@ namespace AdvancedBilling.Standard.Models
                  this.TaxExemptReason?.Equals(other.TaxExemptReason) == true) &&
                 (this.DefaultAutoRenewalProfileId == null && other.DefaultAutoRenewalProfileId == null ||
                  this.DefaultAutoRenewalProfileId?.Equals(other.DefaultAutoRenewalProfileId) == true) &&
+                (this.Maxioid == null && other.Maxioid == null ||
+                 this.Maxioid?.Equals(other.Maxioid) == true) &&
                 base.Equals(obj);
         }
 
@@ -1205,6 +1250,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"SalesforceId = {this.SalesforceId ?? "null"}");
             toStringOutput.Add($"TaxExemptReason = {this.TaxExemptReason ?? "null"}");
             toStringOutput.Add($"DefaultAutoRenewalProfileId = {(this.DefaultAutoRenewalProfileId == null ? "null" : this.DefaultAutoRenewalProfileId.ToString())}");
+            toStringOutput.Add($"Maxioid = {this.Maxioid ?? "null"}");
 
             base.ToString(toStringOutput);
         }

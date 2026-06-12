@@ -24,7 +24,7 @@ namespace AdvancedBilling.Standard.Controllers
         internal OffersController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
-        /// Create an offer within your Advanced Billing site by sending a POST request.
+        /// Creates an offer within your Advanced Billing site.
         /// ## Documentation.
         /// Offers allow you to package complicated combinations of products, components and coupons into a convenient package which can then be subscribed to just like products.
         /// Once an offer is defined it can be used as an alternative to the product when creating subscriptions.
@@ -39,7 +39,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(CreateOfferAsync(body));
 
         /// <summary>
-        /// Create an offer within your Advanced Billing site by sending a POST request.
+        /// Creates an offer within your Advanced Billing site.
         /// ## Documentation.
         /// Offers allow you to package complicated combinations of products, components and coupons into a convenient package which can then be subscribed to just like products.
         /// Once an offer is defined it can be used as an alternative to the product when creating subscriptions.
@@ -65,7 +65,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This endpoint will list offers for a site.
+        /// Lists offers for a site.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the Models.ListOffersResponse response from the API call.</returns>
@@ -74,7 +74,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListOffersAsync(input));
 
         /// <summary>
-        /// This endpoint will list offers for a site.
+        /// Lists offers for a site.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -95,7 +95,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This method allows you to list a specific offer's attributes. This is different than list all offers for a site, as it requires an `offer_id`.
+        /// Returns a specific offer's attributes. This is different from listing all offers for a site, as it requires an `offer_id`.
         /// </summary>
         /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
         /// <returns>Returns the Models.OfferResponse response from the API call.</returns>
@@ -104,7 +104,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ReadOfferAsync(offerId));
 
         /// <summary>
-        /// This method allows you to list a specific offer's attributes. This is different than list all offers for a site, as it requires an `offer_id`.
+        /// Returns a specific offer's attributes. This is different from listing all offers for a site, as it requires an `offer_id`.
         /// </summary>
         /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -121,7 +121,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Archive an existing offer. Please provide an `offer_id` in order to archive the correct item.
+        /// Archives an existing offer. Please provide an `offer_id` in order to archive the correct item.
         /// </summary>
         /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
         public void ArchiveOffer(
@@ -129,7 +129,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunVoidTask(ArchiveOfferAsync(offerId));
 
         /// <summary>
-        /// Archive an existing offer. Please provide an `offer_id` in order to archive the correct item.
+        /// Archives an existing offer. Please provide an `offer_id` in order to archive the correct item.
         /// </summary>
         /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -146,7 +146,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Unarchive a previously archived offer. Please provide an `offer_id` in order to un-archive the correct item.
+        /// Unarchives a previously archived offer. Please provide an `offer_id` in order to unarchive the correct item.
         /// </summary>
         /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
         public void UnarchiveOffer(
@@ -154,7 +154,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunVoidTask(UnarchiveOfferAsync(offerId));
 
         /// <summary>
-        /// Unarchive a previously archived offer. Please provide an `offer_id` in order to un-archive the correct item.
+        /// Unarchives a previously archived offer. Please provide an `offer_id` in order to unarchive the correct item.
         /// </summary>
         /// <param name="offerId">Required parameter: The Chargify id of the offer.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>

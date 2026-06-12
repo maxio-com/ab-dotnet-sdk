@@ -33,6 +33,10 @@ CreateScheduledRenewalConfigurationAsync(
     Models.ScheduledRenewalConfigurationRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -41,6 +45,8 @@ CreateScheduledRenewalConfigurationAsync(
 | `body` | [`ScheduledRenewalConfigurationRequest`](../../doc/models/scheduled-renewal-configuration-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.ScheduledRenewalConfigurationResponse>`](../../doc/models/scheduled-renewal-configuration-response.md)
 
@@ -142,6 +148,10 @@ ListScheduledRenewalConfigurationsAsync(
     Models.Status? status = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -150,6 +160,8 @@ ListScheduledRenewalConfigurationsAsync(
 | `status` | [`Status?`](../../doc/models/status.md) | Query, Optional | (Optional) Status filter for scheduled renewal configurations. |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ScheduledRenewalConfigurationsResponse>`](../../doc/models/scheduled-renewal-configurations-response.md)
 
@@ -223,6 +235,10 @@ ReadScheduledRenewalConfigurationAsync(
     int id)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -231,6 +247,8 @@ ReadScheduledRenewalConfigurationAsync(
 | `id` | `int` | Template, Required | The renewal id. |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ScheduledRenewalConfigurationResponse>`](../../doc/models/scheduled-renewal-configuration-response.md)
 
@@ -307,6 +325,10 @@ UpdateScheduledRenewalConfigurationAsync(
     Models.ScheduledRenewalConfigurationRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -316,6 +338,8 @@ UpdateScheduledRenewalConfigurationAsync(
 | `body` | [`ScheduledRenewalConfigurationRequest`](../../doc/models/scheduled-renewal-configuration-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ScheduledRenewalConfigurationResponse>`](../../doc/models/scheduled-renewal-configuration-response.md)
 
@@ -419,6 +443,10 @@ ScheduleScheduledRenewalLockInAsync(
     Models.ScheduledRenewalLockInRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -428,6 +456,8 @@ ScheduleScheduledRenewalLockInAsync(
 | `body` | [`ScheduledRenewalLockInRequest`](../../doc/models/scheduled-renewal-lock-in-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ScheduledRenewalConfigurationResponse>`](../../doc/models/scheduled-renewal-configuration-response.md)
 
@@ -519,6 +549,10 @@ LockInScheduledRenewalImmediatelyAsync(
     int id)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -527,6 +561,8 @@ LockInScheduledRenewalImmediatelyAsync(
 | `id` | `int` | Template, Required | The renewal id. |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ScheduledRenewalConfigurationResponse>`](../../doc/models/scheduled-renewal-configuration-response.md)
 
@@ -611,6 +647,10 @@ UnpublishScheduledRenewalConfigurationAsync(
     int id)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -619,6 +659,8 @@ UnpublishScheduledRenewalConfigurationAsync(
 | `id` | `int` | Template, Required | The renewal id. |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ScheduledRenewalConfigurationResponse>`](../../doc/models/scheduled-renewal-configuration-response.md)
 
@@ -695,6 +737,10 @@ CancelScheduledRenewalConfigurationAsync(
     int id)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -703,6 +749,8 @@ CancelScheduledRenewalConfigurationAsync(
 | `id` | `int` | Template, Required | The renewal id. |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ScheduledRenewalConfigurationResponse>`](../../doc/models/scheduled-renewal-configuration-response.md)
 
@@ -780,6 +828,10 @@ CreateScheduledRenewalConfigurationItemAsync(
     Models.ScheduledRenewalConfigurationItemRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -789,6 +841,8 @@ CreateScheduledRenewalConfigurationItemAsync(
 | `body` | [`ScheduledRenewalConfigurationItemRequest`](../../doc/models/scheduled-renewal-configuration-item-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Task<Models.ScheduledRenewalConfigurationItemResponse>`](../../doc/models/scheduled-renewal-configuration-item-response.md)
 
@@ -879,6 +933,10 @@ UpdateScheduledRenewalConfigurationItemAsync(
     Models.ScheduledRenewalUpdateRequest body = null)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -889,6 +947,8 @@ UpdateScheduledRenewalConfigurationItemAsync(
 | `body` | [`ScheduledRenewalUpdateRequest`](../../doc/models/scheduled-renewal-update-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Task<Models.ScheduledRenewalConfigurationItemResponse>`](../../doc/models/scheduled-renewal-configuration-item-response.md)
 
@@ -980,6 +1040,10 @@ DeleteScheduledRenewalConfigurationItemAsync(
     int id)
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -989,6 +1053,8 @@ DeleteScheduledRenewalConfigurationItemAsync(
 | `id` | `int` | Template, Required | The scheduled renewal configuration item id. |
 
 ## Response Type
+
+**204**: No Content
 
 `Task`
 
