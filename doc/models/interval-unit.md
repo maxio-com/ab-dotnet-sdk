@@ -12,3 +12,11 @@
 | `Day` |
 | `Month` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+IntervalUnit intervalUnit = IntervalUnit.Day;
+```
+

@@ -82,7 +82,7 @@ namespace AdvancedBilling.Standard.Models
         public string MEvent { get; set; }
 
         /// <summary>
-        /// The unique identifier for the webhooks (unique across all of Chargify). This is not changed on a retry/replay of the same webhook, so it may be used to avoid duplicate action for the same event.
+        /// The unique identifier for the webhook (unique across all of Chargify). This is not changed on a retry/replay of the same webhook, so it may be used to avoid duplicate action for the same event.
         /// </summary>
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public long? Id { get; set; }
@@ -140,7 +140,7 @@ namespace AdvancedBilling.Standard.Models
         public string LastSentUrl { get; set; }
 
         /// <summary>
-        /// A boolean flag describing whether the webhook was accepted by the webhook endpoint for the most recent attempt. (Acceptance is defined by receiving a “200 OK” HTTP response within a reasonable timeframe, i.e. 15 seconds)
+        /// “A boolean flag describing whether the webhook was accepted by the webhook endpoint for the most recent attempt. (Acceptance is defined by receiving a “200 OK” HTTP response within a reasonable timeframe, e.g., 15 seconds.)”
         /// </summary>
         [JsonProperty("successful", NullValueHandling = NullValueHandling.Ignore)]
         public bool? Successful { get; set; }

@@ -19,3 +19,11 @@ Price point type. We expose the following types:
 | `Default` |
 | `Custom` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PricePointType pricePointType = PricePointType.Default;
+```
+

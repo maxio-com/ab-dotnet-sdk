@@ -11,18 +11,22 @@
 |  --- | --- | --- | --- |
 | `Component` | [`Component`](../../doc/models/component.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ComponentResponse componentResponse = new ComponentResponse
 {
-  "component": {
-    "item_category": "Business Software",
-    "id": 80,
-    "name": "name8",
-    "handle": "handle4",
-    "pricing_scheme": "per_unit",
-    "unit_name": "unit_name0"
-  }
-}
+    Component = new Component
+    {
+        Id = 80,
+        Name = "name8",
+        Handle = "handle4",
+        PricingScheme = PricingScheme.PerUnit,
+        UnitName = "unit_name0",
+        ItemCategory = ItemCategory.EnumBusinessSoftware,
+    },
+};
 ```
 

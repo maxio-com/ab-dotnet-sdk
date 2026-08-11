@@ -11,25 +11,32 @@
 |  --- | --- | --- | --- |
 | `SubscriptionGroup` | [`SubscriptionGroup`](../../doc/models/subscription-group.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+SubscriptionGroupResponse subscriptionGroupResponse = new SubscriptionGroupResponse
 {
-  "subscription_group": {
-    "uid": "uid8",
-    "customer_id": 220,
-    "payment_profile": {
-      "id": 44,
-      "first_name": "first_name4",
-      "last_name": "last_name2",
-      "masked_card_number": "masked_card_number2"
+    SubscriptionGroup = new SubscriptionGroup
+    {
+        Uid = "uid8",
+        CustomerId = 220,
+        PaymentProfile = new SubscriptionGroupPaymentProfile
+        {
+            Id = 44,
+            FirstName = "first_name4",
+            LastName = "last_name2",
+            MaskedCardNumber = "masked_card_number2",
+        },
+        PaymentCollectionMethod = CollectionMethod.Prepaid,
+        SubscriptionIds = new List<int>
+        {
+            74,
+            75,
+        },
     },
-    "payment_collection_method": "prepaid",
-    "subscription_ids": [
-      74,
-      75
-    ]
-  }
-}
+};
 ```
 

@@ -11,17 +11,26 @@
 |  --- | --- | --- | --- |
 | `Note` | [`SubscriptionNote`](../../doc/models/subscription-note.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+SubscriptionNoteResponse subscriptionNoteResponse = new SubscriptionNoteResponse
 {
-  "note": {
-    "id": 28,
-    "body": "body0",
-    "subscription_id": 138,
-    "created_at": "2016-03-13T12:52:32.123Z",
-    "updated_at": "2016-03-13T12:52:32.123Z"
-  }
-}
+    Note = new SubscriptionNote
+    {
+        Id = 28,
+        Body = "body0",
+        SubscriptionId = 138,
+        CreatedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
+        UpdatedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
+    },
+};
 ```
 

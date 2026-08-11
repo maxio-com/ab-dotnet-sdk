@@ -11,33 +11,25 @@
 |  --- | --- | --- | --- |
 | `Offers` | [`List<Offer>`](../../doc/models/offer.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+ListOffersResponse listOffersResponse = new ListOffersResponse
 {
-  "offers": [
+    Offers = new List<Offer>
     {
-      "id": 12,
-      "site_id": 194,
-      "product_family_id": 16,
-      "product_id": 210,
-      "product_price_point_id": 134
+        new Offer
+        {
+            Id = 12,
+            SiteId = 194,
+            ProductFamilyId = 16,
+            ProductId = 210,
+            ProductPricePointId = 134,
+        },
     },
-    {
-      "id": 12,
-      "site_id": 194,
-      "product_family_id": 16,
-      "product_id": 210,
-      "product_price_point_id": 134
-    },
-    {
-      "id": 12,
-      "site_id": 194,
-      "product_family_id": 16,
-      "product_id": 210,
-      "product_price_point_id": 134
-    }
-  ]
-}
+};
 ```
 

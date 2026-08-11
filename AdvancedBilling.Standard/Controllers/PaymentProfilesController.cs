@@ -101,7 +101,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Returns all active payment profiles for a site, or for one customer within a site. If no payment profiles are found, this endpoint will return an empty array, not a 404.
+        /// Lists all active payment profiles for a site, or for one customer within a site. If no payment profiles are found, this endpoint will return an empty array, not a 404.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the List of Models.PaymentProfileResponse response from the API call.</returns>
@@ -110,7 +110,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListPaymentProfilesAsync(input));
 
         /// <summary>
-        /// Returns all active payment profiles for a site, or for one customer within a site. If no payment profiles are found, this endpoint will return an empty array, not a 404.
+        /// Lists all active payment profiles for a site, or for one customer within a site. If no payment profiles are found, this endpoint will return an empty array, not a 404.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -471,7 +471,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This will change the default payment profile on the subscription group to the existing payment profile with the id specified.
+        /// Changes the default payment profile on the subscription group to the existing payment profile with the specified ID.
         /// You must elect to change the existing payment profile to a new payment profile ID in order to receive a satisfactory response from this endpoint.
         /// The new payment profile must belong to the subscription group's customer, otherwise you will receive an error.
         /// </summary>
@@ -484,7 +484,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ChangeSubscriptionGroupDefaultPaymentProfileAsync(uid, paymentProfileId));
 
         /// <summary>
-        /// This will change the default payment profile on the subscription group to the existing payment profile with the id specified.
+        /// Changes the default payment profile on the subscription group to the existing payment profile with the specified ID.
         /// You must elect to change the existing payment profile to a new payment profile ID in order to receive a satisfactory response from this endpoint.
         /// The new payment profile must belong to the subscription group's customer, otherwise you will receive an error.
         /// </summary>
@@ -508,7 +508,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// One Time Tokens aka Advanced Billing Tokens house the credit card or ACH (Authorize.Net or Stripe only) data for a customer.
+        /// Returns the one-time token data, including credit card or ACH details, associated with the provided token ID. One Time Tokens aka Advanced Billing Tokens house the credit card or ACH (Authorize.Net or Stripe only) data for a customer.
         /// You can use One Time Tokens while creating a subscription or payment profile instead of passing all bank account or credit card data directly to a given API endpoint.
         /// To obtain a One Time Token you have to use [Chargify.js](https://docs.maxio.com/hc/en-us/articles/38163190843789-Chargify-js-Overview#chargify-js-overview-0-0).
         /// </summary>
@@ -519,7 +519,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ReadOneTimeTokenAsync(chargifyToken));
 
         /// <summary>
-        /// One Time Tokens aka Advanced Billing Tokens house the credit card or ACH (Authorize.Net or Stripe only) data for a customer.
+        /// Returns the one-time token data, including credit card or ACH details, associated with the provided token ID. One Time Tokens aka Advanced Billing Tokens house the credit card or ACH (Authorize.Net or Stripe only) data for a customer.
         /// You can use One Time Tokens while creating a subscription or payment profile instead of passing all bank account or credit card data directly to a given API endpoint.
         /// To obtain a One Time Token you have to use [Chargify.js](https://docs.maxio.com/hc/en-us/articles/38163190843789-Chargify-js-Overview#chargify-js-overview-0-0).
         /// </summary>
@@ -540,7 +540,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// You can send a "request payment update" email to the customer associated with the subscription.
+        /// Sends a "request payment update" email to the customer associated with the subscription.
         /// If you attempt to send a "request payment update" email more than five times within a 30-minute period, you will receive a `422` response with an error message in the body. This error message will indicate that the request has been rejected due to excessive attempts, and will provide instructions on how to resubmit the request.
         /// Additionally, if you attempt to send a "request payment update" email for a subscription that does not exist, you will receive a `404` error response. This error message will indicate that the subscription could not be found, and will provide instructions on how to correct the error and resubmit the request.
         /// These error responses are designed to prevent excessive or invalid requests, and to provide clear and helpful information to users who encounter errors during the request process.
@@ -551,7 +551,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunVoidTask(SendRequestUpdatePaymentEmailAsync(subscriptionId));
 
         /// <summary>
-        /// You can send a "request payment update" email to the customer associated with the subscription.
+        /// Sends a "request payment update" email to the customer associated with the subscription.
         /// If you attempt to send a "request payment update" email more than five times within a 30-minute period, you will receive a `422` response with an error message in the body. This error message will indicate that the request has been rejected due to excessive attempts, and will provide instructions on how to resubmit the request.
         /// Additionally, if you attempt to send a "request payment update" email for a subscription that does not exist, you will receive a `404` error response. This error message will indicate that the subscription could not be found, and will provide instructions on how to correct the error and resubmit the request.
         /// These error responses are designed to prevent excessive or invalid requests, and to provide clear and helpful information to users who encounter errors during the request process.

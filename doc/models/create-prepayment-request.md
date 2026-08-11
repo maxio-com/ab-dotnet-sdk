@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- |
 | `Prepayment` | [`CreatePrepayment`](../../doc/models/create-prepayment.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreatePrepaymentRequest createPrepaymentRequest = new CreatePrepaymentRequest
 {
-  "prepayment": {
-    "amount": 11.6,
-    "details": "details8",
-    "memo": "memo2",
-    "method": "money_order",
-    "payment_profile_id": 240
-  }
-}
+    Prepayment = new CreatePrepayment
+    {
+        Amount = 11.6,
+        Details = "details8",
+        Memo = "memo2",
+        Method = CreatePrepaymentMethod.MoneyOrder,
+        PaymentProfileId = 240,
+    },
+};
 ```
 

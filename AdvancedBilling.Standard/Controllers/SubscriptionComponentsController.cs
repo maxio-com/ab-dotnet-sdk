@@ -237,7 +237,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Returns the 50 most recent Allocations, ordered by most recent first.
+        /// Lists the 50 most recent Allocations, ordered by most recent first.
         /// ## On/Off Components.
         /// When a subscription's on/off component has been toggled to on (`1`) or off (`0`), usage will be logged in this response.
         /// </summary>
@@ -252,7 +252,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListAllocationsAsync(subscriptionId, componentId, page));
 
         /// <summary>
-        /// Returns the 50 most recent Allocations, ordered by most recent first.
+        /// Lists the 50 most recent Allocations, ordered by most recent first.
         /// ## On/Off Components.
         /// When a subscription's on/off component has been toggled to on (`1`) or off (`0`), usage will be logged in this response.
         /// </summary>
@@ -595,7 +595,7 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// <![CDATA[
-        /// Returns a list of usages associated with a subscription for a particular metered component. This will display the previously recorded components for a subscription.
+        /// Lists usages associated with a subscription for a particular metered component. This will display the previously recorded components for a subscription.
         /// This endpoint is not compatible with quantity-based components.
         /// ## Since Date and Until Date Usage.
         /// Note: The `since_date` and `until_date` attributes each default to midnight on the date specified. For example, in order to list usages for January 20th, you would need to append the following to the URL.
@@ -614,7 +614,7 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// <![CDATA[
-        /// Returns a list of usages associated with a subscription for a particular metered component. This will display the previously recorded components for a subscription.
+        /// Lists usages associated with a subscription for a particular metered component. This will display the previously recorded components for a subscription.
         /// This endpoint is not compatible with quantity-based components.
         /// ## Since Date and Until Date Usage.
         /// Note: The `since_date` and `until_date` attributes each default to midnight on the date specified. For example, in order to list usages for January 20th, you would need to append the following to the URL.
@@ -735,7 +735,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ```.
         /// </summary>
         /// <param name="apiHandle">Required parameter: Identifies the Stream for which the event should be published..</param>
-        /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store..</param>
+        /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store. This applies to Legacy Metering sites only — it has no effect on Maxio Metering sites..</param>
         /// <param name="body">Optional parameter: .</param>
         public void RecordEvent(
                 string apiHandle,
@@ -758,7 +758,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// ```.
         /// </summary>
         /// <param name="apiHandle">Required parameter: Identifies the Stream for which the event should be published..</param>
-        /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store..</param>
+        /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store. This applies to Legacy Metering sites only — it has no effect on Maxio Metering sites..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the void response from the API call.</returns>
@@ -785,7 +785,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// A maximum of 1000 events can be published in a single request. A 422 will be returned if this limit is exceeded.
         /// </summary>
         /// <param name="apiHandle">Required parameter: Identifies the Stream for which the events should be published..</param>
-        /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store..</param>
+        /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store. This applies to Legacy Metering sites only — it has no effect on Maxio Metering sites..</param>
         /// <param name="body">Optional parameter: .</param>
         public void BulkRecordEvents(
                 string apiHandle,
@@ -799,7 +799,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// A maximum of 1000 events can be published in a single request. A 422 will be returned if this limit is exceeded.
         /// </summary>
         /// <param name="apiHandle">Required parameter: Identifies the Stream for which the events should be published..</param>
-        /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store..</param>
+        /// <param name="storeUid">Optional parameter: If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store. This applies to Legacy Metering sites only — it has no effect on Maxio Metering sites..</param>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the void response from the API call.</returns>

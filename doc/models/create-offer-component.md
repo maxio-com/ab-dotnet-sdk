@@ -13,13 +13,16 @@
 | `PricePointId` | `int?` | Optional | - |
 | `StartingQuantity` | `int?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreateOfferComponent createOfferComponent = new CreateOfferComponent
 {
-  "component_id": 242,
-  "price_point_id": 10,
-  "starting_quantity": 50
-}
+    ComponentId = 252,
+    PricePointId = 20,
+    StartingQuantity = 196,
+};
 ```
 

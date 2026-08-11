@@ -13,38 +13,49 @@
 | `CurrentStep` | [`DunningStepData`](../../doc/models/dunning-step-data.md) | Required | - |
 | `NextStep` | [`DunningStepData`](../../doc/models/dunning-step-data.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+DunningStepReached dunningStepReached = new DunningStepReached
 {
-  "dunner": {
-    "state": "state8",
-    "subscription_id": 194,
-    "revenue_at_risk_in_cents": 98,
-    "created_at": "2016-03-13T12:52:32.123Z",
-    "attempts": 42,
-    "last_attempted_at": "2016-03-13T12:52:32.123Z"
-  },
-  "current_step": {
-    "day_threshold": 198,
-    "action": "action4",
-    "email_body": "email_body4",
-    "email_subject": "email_subject6",
-    "send_email": false,
-    "send_bcc_email": false,
-    "send_sms": false,
-    "sms_body": "sms_body0"
-  },
-  "next_step": {
-    "day_threshold": 30,
-    "action": "action4",
-    "email_body": "email_body4",
-    "email_subject": "email_subject4",
-    "send_email": false,
-    "send_bcc_email": false,
-    "send_sms": false,
-    "sms_body": "sms_body0"
-  }
-}
+    Dunner = new DunnerData
+    {
+        State = "state8",
+        SubscriptionId = 194,
+        RevenueAtRiskInCents = 98L,
+        CreatedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
+        Attempts = 42,
+        LastAttemptedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
+    },
+    CurrentStep = new DunningStepData
+    {
+        DayThreshold = 198,
+        Action = "action4",
+        SendEmail = false,
+        SendBccEmail = false,
+        SendSms = false,
+        EmailBody = "email_body4",
+        EmailSubject = "email_subject6",
+        SmsBody = "sms_body0",
+    },
+    NextStep = new DunningStepData
+    {
+        DayThreshold = 30,
+        Action = "action4",
+        SendEmail = false,
+        SendBccEmail = false,
+        SendSms = false,
+        EmailBody = "email_body4",
+        EmailSubject = "email_subject4",
+        SmsBody = "sms_body0",
+    },
+};
 ```
 

@@ -11,24 +11,20 @@
 |  --- | --- | --- | --- |
 | `Base` | `object` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Utilities;
+using System.Collections.Generic;
+
+BaseRefundError baseRefundError = new BaseRefundError
 {
-  "base": [
+    MBase = new List<object>
     {
-      "key1": "val1",
-      "key2": "val2"
+        ApiHelper.JsonDeserialize<object>("{\"key1\":\"val1\",\"key2\":\"val2\"}"),
+        ApiHelper.JsonDeserialize<object>("{\"key1\":\"val1\",\"key2\":\"val2\"}"),
     },
-    {
-      "key1": "val1",
-      "key2": "val2"
-    },
-    {
-      "key1": "val1",
-      "key2": "val2"
-    }
-  ]
-}
+};
 ```
 

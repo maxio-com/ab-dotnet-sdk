@@ -16,15 +16,21 @@
 | `DeletedAt` | `DateTimeOffset?` | Optional | - |
 | `MetafieldId` | `int?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+Metadata metadata = new Metadata
 {
-  "id": 12,
-  "value": "value0",
-  "resource_id": 96,
-  "name": "name8",
-  "deleted_at": "2016-03-13T12:52:32.123Z"
-}
+    Id = 50,
+    MValue = "value8",
+    ResourceId = 134,
+    Name = "name6",
+    DeletedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+};
 ```
 

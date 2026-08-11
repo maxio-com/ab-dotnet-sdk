@@ -11,16 +11,22 @@
 |  --- | --- | --- | --- |
 | `Subscription` | [`BaseStringError`](../../doc/models/base-string-error.md) | Optional | The error is base if it is not directly associated with a single attribute. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+ProformaError proformaError = new ProformaError
 {
-  "subscription": {
-    "base": [
-      "base3",
-      "base4"
-    ]
-  }
-}
+    Subscription = new BaseStringError
+    {
+        MBase = new List<string>
+        {
+            "base3",
+            "base4",
+        },
+    },
+};
 ```
 

@@ -11,16 +11,21 @@
 |  --- | --- | --- | --- |
 | `Refund` | [`RefundPrepayment`](../../doc/models/refund-prepayment.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+RefundPrepaymentRequest refundPrepaymentRequest = new RefundPrepaymentRequest
 {
-  "refund": {
-    "amount_in_cents": 132,
-    "amount": "String1",
-    "memo": "memo2",
-    "external": false
-  }
-}
+    Refund = new RefundPrepayment
+    {
+        AmountInCents = 132L,
+        Amount = RefundPrepaymentAmount.FromString("String1"),
+        Memo = "memo2",
+        External = false,
+    },
+};
 ```
 

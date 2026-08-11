@@ -22,21 +22,28 @@
 | `ReceivedOn` | `DateTime?` | Optional | Date reflecting when the payment was received from a customer. Must be in the past. Applicable only to<br>`external` payments. |
 | `Uid` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+InvoicePayment invoicePayment = new InvoicePayment
 {
-  "transaction_time": "2016-03-13T12:52:32.123Z",
-  "memo": "memo6",
-  "original_amount": "original_amount6",
-  "applied_amount": "applied_amount6",
-  "payment_method": {
-    "details": "details0",
-    "kind": "kind8",
-    "memo": "memo4",
-    "type": "type0",
-    "card_brand": "card_brand6"
-  }
-}
+    TransactionTime = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    Memo = "memo6",
+    OriginalAmount = "original_amount6",
+    AppliedAmount = "applied_amount6",
+    PaymentMethod = new InvoicePaymentMethod
+    {
+        Details = "details0",
+        Kind = "kind8",
+        Memo = "memo4",
+        Type = "type0",
+        CardBrand = "card_brand6",
+    },
+};
 ```
 

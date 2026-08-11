@@ -91,13 +91,13 @@ namespace AdvancedBilling.Standard.Models
         public string ProductPricePointHandle { get; set; }
 
         /// <summary>
-        /// Use in place of passing product and component information to set up the subscription with an existing offer. May be either the Chargify ID of the offer or its handle prefixed with `handle:`
+        /// Use in place of passing product and component information to set up the subscription with an existing offer. May be either the Chargify ID of the offer or its handle prefixed with `handle:`.
         /// </summary>
         [JsonProperty("offer_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? OfferId { get; set; }
 
         /// <summary>
-        /// The reference value (provided by your app) for the subscription itelf.
+        /// The reference value (provided by your app) for the subscription itself.
         /// </summary>
         [JsonProperty("reference", NullValueHandling = NullValueHandling.Ignore)]
         public string Reference { get; set; }
@@ -133,7 +133,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.SubscriptionCustomPrice CustomPrice { get; set; }
 
         /// <summary>
-        /// (Optional). Cannot be used when also specifying next_billing_at
+        /// (Optional). Cannot be used when also specifying next_billing_at.
         /// </summary>
         [JsonProperty("calendar_billing", NullValueHandling = NullValueHandling.Ignore)]
         public Models.CalendarBilling CalendarBilling { get; set; }

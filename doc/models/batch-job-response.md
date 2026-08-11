@@ -11,17 +11,26 @@
 |  --- | --- | --- | --- |
 | `Batchjob` | [`BatchJob`](../../doc/models/batch-job.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+BatchJobResponse batchJobResponse = new BatchJobResponse
 {
-  "batchjob": {
-    "id": 54,
-    "finished_at": "2016-03-13T12:52:32.123Z",
-    "row_count": 62,
-    "created_at": "2016-03-13T12:52:32.123Z",
-    "completed": "completed4"
-  }
-}
+    Batchjob = new BatchJob
+    {
+        Id = 54,
+        FinishedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
+        RowCount = 62,
+        CreatedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
+        Completed = "completed4",
+    },
+};
 ```
 

@@ -14,3 +14,11 @@ all: Will clear all products, customers, and related subscriptions from the site
 | `All` |
 | `Customers` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CleanupScope cleanupScope = CleanupScope.All;
+```
+

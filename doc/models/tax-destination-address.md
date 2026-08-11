@@ -14,3 +14,11 @@
 | `ShippingOnly` |
 | `BillingOnly` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+TaxDestinationAddress taxDestinationAddress = TaxDestinationAddress.ShippingOnly;
+```
+

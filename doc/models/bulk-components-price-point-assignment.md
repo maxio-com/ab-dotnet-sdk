@@ -11,16 +11,23 @@
 |  --- | --- | --- | --- |
 | `Components` | [`List<ComponentPricePointAssignment>`](../../doc/models/component-price-point-assignment.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Collections.Generic;
+
+BulkComponentsPricePointAssignment bulkComponentsPricePointAssignment = new BulkComponentsPricePointAssignment
 {
-  "components": [
+    Components = new List<ComponentPricePointAssignment>
     {
-      "component_id": 108,
-      "price_point": "String5"
-    }
-  ]
-}
+        new ComponentPricePointAssignment
+        {
+            ComponentId = 108,
+            PricePoint = ComponentPricePointAssignmentPricePoint.FromString("String5"),
+        },
+    },
+};
 ```
 

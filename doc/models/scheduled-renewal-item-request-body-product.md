@@ -12,27 +12,32 @@
 | `ItemType` | `string` | Required, Constant | Item type to add. Either Product or Component.<br><br>**Value**: `"Product"` |
 | `ItemId` | `int` | Required | Product or component identifier. |
 | `PricePointId` | `int?` | Optional | Price point identifier. |
-| `Quantity` | `int?` | Optional | Optional quantity for the item. |
+| `Quantity` | `int?` | Optional | (Optional) Quantity for the item. |
 | `CustomPrice` | [`ScheduledRenewalProductPricePoint`](../../doc/models/scheduled-renewal-product-price-point.md) | Optional | Custom pricing for a product within a scheduled renewal. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+ScheduledRenewalItemRequestBodyProduct scheduledRenewalItemRequestBodyProduct = new ScheduledRenewalItemRequestBodyProduct
 {
-  "item_type": "Product",
-  "item_id": 32,
-  "price_point_id": 18,
-  "quantity": 96,
-  "custom_price": {
-    "name": "name4",
-    "handle": "handle0",
-    "price_in_cents": "String3",
-    "interval": "String3",
-    "interval_unit": "day",
-    "tax_included": false,
-    "initial_charge_in_cents": 30,
-    "expiration_interval": 52
-  }
-}
+    ItemType = "Product",
+    ItemId = 154,
+    PricePointId = 168,
+    Quantity = 166,
+    CustomPrice = new ScheduledRenewalProductPricePoint
+    {
+        PriceInCents = ScheduledRenewalProductPricePointPriceInCents.FromString("String3"),
+        Interval = ScheduledRenewalProductPricePointInterval.FromString("String3"),
+        IntervalUnit = IntervalUnit.Day,
+        Name = "name4",
+        Handle = "handle0",
+        TaxIncluded = false,
+        InitialChargeInCents = 30L,
+        ExpirationInterval = 52,
+    },
+};
 ```
 

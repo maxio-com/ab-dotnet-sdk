@@ -17,7 +17,9 @@
 
 ## Example
 
-```
-issue_date
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoiceDateField invoiceDateField = InvoiceDateField.UpdatedAt;
 ```
 

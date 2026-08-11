@@ -11,21 +11,27 @@
 |  --- | --- | --- | --- |
 | `Group` | [`GroupSettings`](../../doc/models/group-settings.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+AddSubscriptionToAGroup addSubscriptionToAGroup = new AddSubscriptionToAGroup
 {
-  "group": {
-    "target": {
-      "type": "parent",
-      "id": 236
+    MGroup = new GroupSettings
+    {
+        Target = new GroupTarget
+        {
+            Type = GroupTargetType.Parent,
+            Id = 236,
+        },
+        Billing = new GroupBilling
+        {
+            Accrue = false,
+            AlignDate = false,
+            Prorate = false,
+        },
     },
-    "billing": {
-      "accrue": false,
-      "align_date": false,
-      "prorate": false
-    }
-  }
-}
+};
 ```
 

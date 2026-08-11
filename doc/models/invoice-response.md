@@ -11,21 +11,25 @@
 |  --- | --- | --- | --- |
 | `Invoice` | [`Invoice`](../../doc/models/invoice.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoiceResponse invoiceResponse = new InvoiceResponse
 {
-  "invoice": {
-    "issue_date": "2024-01-01",
-    "due_date": "2024-01-01",
-    "paid_date": "2024-01-01",
-    "public_url_expires_on": "2024-01-21",
-    "id": 166,
-    "uid": "uid6",
-    "site_id": 92,
-    "customer_id": 204,
-    "subscription_id": 20
-  }
-}
+    Invoice = new Invoice
+    {
+        Id = 166L,
+        Uid = "uid6",
+        SiteId = 92,
+        CustomerId = 204,
+        SubscriptionId = 20,
+        IssueDate = DateTime.Parse("2024-01-01"),
+        DueDate = DateTime.Parse("2024-01-01"),
+        PaidDate = DateTime.Parse("2024-01-01"),
+        PublicUrlExpiresOn = DateTime.Parse("2024-01-21"),
+    },
+};
 ```
 

@@ -13,7 +13,9 @@
 
 ## Example
 
-```
-prepaid_product_price_point
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ListProductsInclude listProductsInclude = ListProductsInclude.PrepaidProductPricePoint;
 ```
 

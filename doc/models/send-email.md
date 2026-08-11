@@ -12,12 +12,15 @@
 | `CanExecute` | `bool` | Required | - |
 | `Url` | `string` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SendEmail sendEmail = new SendEmail
 {
-  "can_execute": false,
-  "url": "url2"
-}
+    CanExecute = false,
+    Url = "url2",
+};
 ```
 

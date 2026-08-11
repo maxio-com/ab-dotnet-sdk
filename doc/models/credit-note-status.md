@@ -14,3 +14,11 @@ Current status of the credit note.
 | `Open` |
 | `Applied` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreditNoteStatus creditNoteStatus = CreditNoteStatus.Open;
+```
+

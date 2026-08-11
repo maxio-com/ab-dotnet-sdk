@@ -18,15 +18,18 @@
 | `LastFour` | `string` | Optional | - |
 | `MaskedCardNumber` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoicePaymentMethod invoicePaymentMethod = new InvoicePaymentMethod
 {
-  "details": "details8",
-  "kind": "kind6",
-  "memo": "memo2",
-  "type": "type8",
-  "card_brand": "card_brand8"
-}
+    Details = "details2",
+    Kind = "kind0",
+    Memo = "memo6",
+    Type = "type8",
+    CardBrand = "card_brand4",
+};
 ```
 

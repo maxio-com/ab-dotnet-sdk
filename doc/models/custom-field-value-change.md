@@ -17,17 +17,20 @@
 | `ResourceType` | `string` | Required | - |
 | `ResourceId` | `int` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CustomFieldValueChange customFieldValueChange = new CustomFieldValueChange
 {
-  "event_type": "event_type2",
-  "metafield_name": "metafield_name6",
-  "metafield_id": 78,
-  "old_value": "old_value2",
-  "new_value": "new_value8",
-  "resource_type": "resource_type2",
-  "resource_id": 74
-}
+    EventType = "event_type8",
+    MetafieldName = "metafield_name2",
+    MetafieldId = 138,
+    OldValue = "old_value6",
+    NewValue = "new_value2",
+    ResourceType = "resource_type6",
+    ResourceId = 14,
+};
 ```
 

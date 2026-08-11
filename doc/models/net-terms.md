@@ -15,15 +15,18 @@
 | `NetTermsOnRemittanceSignupsEnabled` | `bool?` | Optional | **Default**: `false` |
 | `CustomNetTermsEnabled` | `bool?` | Optional | **Default**: `false` |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+NetTerms netTerms = new NetTerms
 {
-  "default_net_terms": 0,
-  "automatic_net_terms": 0,
-  "remittance_net_terms": 0,
-  "net_terms_on_remittance_signups_enabled": false,
-  "custom_net_terms_enabled": false
-}
+    DefaultNetTerms = 0,
+    AutomaticNetTerms = 0,
+    RemittanceNetTerms = 0,
+    NetTermsOnRemittanceSignupsEnabled = false,
+    CustomNetTermsEnabled = false,
+};
 ```
 

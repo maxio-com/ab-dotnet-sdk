@@ -12,12 +12,15 @@
 | `PreviousSubscriptionState` | `string` | Required | **Constraints**: *Minimum Length*: `1` |
 | `NewSubscriptionState` | `string` | Required | **Constraints**: *Minimum Length*: `1` |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionStateChange subscriptionStateChange = new SubscriptionStateChange
 {
-  "previous_subscription_state": "previous_subscription_state2",
-  "new_subscription_state": "new_subscription_state6"
-}
+    PreviousSubscriptionState = "previous_subscription_state8",
+    NewSubscriptionState = "new_subscription_state2",
+};
 ```
 

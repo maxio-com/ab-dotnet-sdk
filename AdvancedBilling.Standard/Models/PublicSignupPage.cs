@@ -62,7 +62,7 @@ namespace AdvancedBilling.Standard.Models
         public int? Id { get; set; }
 
         /// <summary>
-        /// The url to which a customer will be returned after a successful signup (public_signup_pages only)
+        /// The url to which a customer will be returned after a successful signup (public_signup_pages only).
         /// </summary>
         [JsonProperty("return_url")]
         public string ReturnUrl
@@ -98,7 +98,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The url where the signup page can be viewed (public_signup_pages only)
+        /// The url where the signup page can be viewed (public_signup_pages only).
         /// </summary>
         [JsonProperty("url", NullValueHandling = NullValueHandling.Ignore)]
         public string Url { get; set; }

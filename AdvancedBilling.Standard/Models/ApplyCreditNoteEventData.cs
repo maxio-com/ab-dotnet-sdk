@@ -131,7 +131,7 @@ namespace AdvancedBilling.Standard.Models
         public string Role { get; set; }
 
         /// <summary>
-        /// Shows whether it was applied to consolidated invoice or not
+        /// Shows whether it was applied to consolidated invoice or not.
         /// </summary>
         [JsonProperty("consolidated_invoice", NullValueHandling = NullValueHandling.Ignore)]
         public bool? ConsolidatedInvoice { get; set; }

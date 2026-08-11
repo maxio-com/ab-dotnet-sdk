@@ -11,99 +11,121 @@
 |  --- | --- | --- | --- |
 | `Changes` | [`CustomerChange`](../../doc/models/customer-change.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+CustomerChangesPreviewResponse customerChangesPreviewResponse = new CustomerChangesPreviewResponse
 {
-  "changes": {
-    "payer": {
-      "before": {
-        "first_name": "first_name0",
-        "last_name": "last_name8",
-        "organization": "organization4",
-        "email": "email6"
-      },
-      "after": {
-        "first_name": "first_name2",
-        "last_name": "last_name0",
-        "organization": "organization4",
-        "email": "email4"
-      }
-    },
-    "shipping_address": {
-      "before": {
-        "street": "street0",
-        "line2": "line24",
-        "city": "city0",
-        "state": "state6",
-        "zip": "zip4"
-      },
-      "after": {
-        "street": "street2",
-        "line2": "line26",
-        "city": "city8",
-        "state": "state2",
-        "zip": "zip4"
-      }
-    },
-    "billing_address": {
-      "before": {
-        "street": "street0",
-        "line2": "line24",
-        "city": "city0",
-        "state": "state6",
-        "zip": "zip4"
-      },
-      "after": {
-        "street": "street2",
-        "line2": "line26",
-        "city": "city8",
-        "state": "state2",
-        "zip": "zip4"
-      }
-    },
-    "custom_fields": {
-      "before": [
+    Changes = new CustomerChange
+    {
+        Payer = new CustomerPayerChange
         {
-          "owner_id": 26,
-          "owner_type": "Customer",
-          "name": "name0",
-          "value": "value2",
-          "metadatum_id": 26
+            Before = new InvoicePayerChange
+            {
+                FirstName = "first_name0",
+                LastName = "last_name8",
+                Organization = "organization4",
+                Email = "email6",
+            },
+            After = new InvoicePayerChange
+            {
+                FirstName = "first_name2",
+                LastName = "last_name0",
+                Organization = "organization4",
+                Email = "email4",
+            },
         },
+        ShippingAddress = new AddressChange
         {
-          "owner_id": 26,
-          "owner_type": "Customer",
-          "name": "name0",
-          "value": "value2",
-          "metadatum_id": 26
-        }
-      ],
-      "after": [
-        {
-          "owner_id": 130,
-          "owner_type": "Customer",
-          "name": "name2",
-          "value": "value4",
-          "metadatum_id": 130
+            Before = new InvoiceAddress
+            {
+                Street = "street0",
+                Line2 = "line24",
+                City = "city0",
+                State = "state6",
+                Zip = "zip4",
+            },
+            After = new InvoiceAddress
+            {
+                Street = "street2",
+                Line2 = "line26",
+                City = "city8",
+                State = "state2",
+                Zip = "zip4",
+            },
         },
+        BillingAddress = new AddressChange
         {
-          "owner_id": 130,
-          "owner_type": "Customer",
-          "name": "name2",
-          "value": "value4",
-          "metadatum_id": 130
+            Before = new InvoiceAddress
+            {
+                Street = "street0",
+                Line2 = "line24",
+                City = "city0",
+                State = "state6",
+                Zip = "zip4",
+            },
+            After = new InvoiceAddress
+            {
+                Street = "street2",
+                Line2 = "line26",
+                City = "city8",
+                State = "state2",
+                Zip = "zip4",
+            },
         },
+        CustomFields = new CustomerCustomFieldsChange
         {
-          "owner_id": 130,
-          "owner_type": "Customer",
-          "name": "name2",
-          "value": "value4",
-          "metadatum_id": 130
-        }
-      ]
-    }
-  }
-}
+            Before = new List<InvoiceCustomField>
+            {
+                new InvoiceCustomField
+                {
+                    OwnerId = 26,
+                    OwnerType = CustomFieldOwner.Customer,
+                    Name = "name0",
+                    MValue = "value2",
+                    MetadatumId = 26,
+                },
+                new InvoiceCustomField
+                {
+                    OwnerId = 26,
+                    OwnerType = CustomFieldOwner.Customer,
+                    Name = "name0",
+                    MValue = "value2",
+                    MetadatumId = 26,
+                },
+            },
+            After = new List<InvoiceCustomField>
+            {
+                new InvoiceCustomField
+                {
+                    OwnerId = 130,
+                    OwnerType = CustomFieldOwner.Customer,
+                    Name = "name2",
+                    MValue = "value4",
+                    MetadatumId = 130,
+                },
+                new InvoiceCustomField
+                {
+                    OwnerId = 130,
+                    OwnerType = CustomFieldOwner.Customer,
+                    Name = "name2",
+                    MValue = "value4",
+                    MetadatumId = 130,
+                },
+                new InvoiceCustomField
+                {
+                    OwnerId = 130,
+                    OwnerType = CustomFieldOwner.Customer,
+                    Name = "name2",
+                    MValue = "value4",
+                    MetadatumId = 130,
+                },
+            },
+        },
+    },
+};
 ```
 

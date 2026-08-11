@@ -15,31 +15,39 @@
 | `EventType` | [`InvoiceEventType`](../../doc/models/invoice-event-type.md) | Required | **Default**: `InvoiceEventType.failed_payment` |
 | `EventData` | [`FailedPaymentEventData`](../../doc/models/failed-payment-event-data.md) | Required | Example schema for an `failed_payment` event |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+FailedPaymentEvent failedPaymentEvent = new FailedPaymentEvent
 {
-  "id": 120,
-  "timestamp": "2016-03-13T12:52:32.123Z",
-  "invoice": {
-    "issue_date": "2024-01-01",
-    "due_date": "2024-01-01",
-    "paid_date": "2024-01-01",
-    "public_url_expires_on": "2024-01-21",
-    "id": 166,
-    "uid": "uid6",
-    "site_id": 92,
-    "customer_id": 204,
-    "subscription_id": 20
-  },
-  "event_type": "failed_payment",
-  "event_data": {
-    "amount_in_cents": 220,
-    "applied_amount": 194,
-    "memo": "memo0",
-    "payment_method": "cash",
-    "transaction_id": 78
-  }
-}
+    Id = 186L,
+    Timestamp = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    Invoice = new Invoice
+    {
+        Id = 166L,
+        Uid = "uid6",
+        SiteId = 92,
+        CustomerId = 204,
+        SubscriptionId = 20,
+        IssueDate = DateTime.Parse("2024-01-01"),
+        DueDate = DateTime.Parse("2024-01-01"),
+        PaidDate = DateTime.Parse("2024-01-01"),
+        PublicUrlExpiresOn = DateTime.Parse("2024-01-21"),
+    },
+    EventType = InvoiceEventType.FailedPayment,
+    EventData = new FailedPaymentEventData
+    {
+        AmountInCents = 220,
+        AppliedAmount = 194,
+        PaymentMethod = InvoicePaymentMethodType.Cash,
+        TransactionId = 78,
+        Memo = "memo0",
+    },
+};
 ```
 

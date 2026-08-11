@@ -12,12 +12,15 @@
 | `Label` | `string` | Optional | - |
 | `Amount` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoiceLineItemPricingDetail invoiceLineItemPricingDetail = new InvoiceLineItemPricingDetail
 {
-  "label": "label0",
-  "amount": "amount2"
-}
+    Label = "label4",
+    Amount = "amount6",
+};
 ```
 

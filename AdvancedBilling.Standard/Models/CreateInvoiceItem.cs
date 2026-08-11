@@ -71,13 +71,13 @@ namespace AdvancedBilling.Standard.Models
         public string Title { get; set; }
 
         /// <summary>
-        /// The quantity can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065. If you submit a value with more than 8 decimal places, we will round it down to the 8th decimal place.
+        /// The quantity can contain up to 8 decimal places. e.g., 1.00 or 0.0012 or 0.00000065. If you submit a value with more than 8 decimal places, we will round it down to the 8th decimal place.
         /// </summary>
         [JsonProperty("quantity", NullValueHandling = NullValueHandling.Ignore)]
         public CreateInvoiceItemQuantity Quantity { get; set; }
 
         /// <summary>
-        /// The unit_price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065. If you submit a value with more than 8 decimal places, we will round it down to the 8th decimal place.
+        /// The unit_price can contain up to 8 decimal places. e.g., 1.00 or 0.0012 or 0.00000065. If you submit a value with more than 8 decimal places, we will round it down to the 8th decimal place.
         /// </summary>
         [JsonProperty("unit_price", NullValueHandling = NullValueHandling.Ignore)]
         public CreateInvoiceItemUnitPrice UnitPrice { get; set; }

@@ -11,15 +11,20 @@
 |  --- | --- | --- | --- |
 | `ProductFamily` | [`CreateProductFamily`](../../doc/models/create-product-family.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreateProductFamilyRequest createProductFamilyRequest = new CreateProductFamilyRequest
 {
-  "product_family": {
-    "name": "name0",
-    "handle": "handle6",
-    "description": "description0"
-  }
-}
+    ProductFamily = new CreateProductFamily
+    {
+        Name = "name0",
+        Handle = "handle6",
+        Description = "description0",
+        Surcharging = false,
+    },
+};
 ```
 

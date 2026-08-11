@@ -12,12 +12,15 @@
 | `PreviousProductId` | `int` | Required | - |
 | `NewProductId` | `int` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionProductChange subscriptionProductChange = new SubscriptionProductChange
 {
-  "previous_product_id": 126,
-  "new_product_id": 12
-}
+    PreviousProductId = 104,
+    NewProductId = 10,
+};
 ```
 

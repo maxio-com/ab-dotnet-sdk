@@ -12,12 +12,15 @@
 | `PlanAmountInCents` | `long` | Required | - |
 | `UsageAmountInCents` | `long` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionMRRBreakout subscriptionMRRBreakout = new SubscriptionMRRBreakout
 {
-  "plan_amount_in_cents": 208,
-  "usage_amount_in_cents": 60
-}
+    PlanAmountInCents = 248L,
+    UsageAmountInCents = 100L,
+};
 ```
 

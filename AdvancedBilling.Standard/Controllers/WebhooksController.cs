@@ -141,14 +141,14 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Returns created endpoints for a site.
+        /// Lists endpoints configured for a site.
         /// </summary>
         /// <returns>Returns the List of Models.Endpoint response from the API call.</returns>
         public List<Models.Endpoint> ListEndpoints()
             => CoreHelper.RunTask(ListEndpointsAsync());
 
         /// <summary>
-        /// Returns created endpoints for a site.
+        /// Lists endpoints configured for a site.
         /// </summary>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the List of Models.Endpoint response from the API call.</returns>

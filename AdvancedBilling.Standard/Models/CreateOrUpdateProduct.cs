@@ -16,11 +16,13 @@ namespace AdvancedBilling.Standard.Models
         private Models.IntervalUnit? trialIntervalUnit;
         private Models.TrialType? trialType;
         private Models.ExpirationIntervalUnit? expirationIntervalUnit;
+        private string unspscCode;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "trial_interval_unit", false },
             { "trial_type", false },
             { "expiration_interval_unit", false },
+            { "unspsc_code", false },
         };
 
         /// <summary>
@@ -49,6 +51,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="expirationIntervalUnit">expiration_interval_unit.</param>
         /// <param name="autoCreateSignupPage">auto_create_signup_page.</param>
         /// <param name="taxCode">tax_code.</param>
+        /// <param name="unspscCode">unspsc_code.</param>
         public CreateOrUpdateProduct(
             string name,
             string description,
@@ -65,7 +68,8 @@ namespace AdvancedBilling.Standard.Models
             int? expirationInterval = null,
             Models.ExpirationIntervalUnit? expirationIntervalUnit = null,
             bool? autoCreateSignupPage = null,
-            string taxCode = null)
+            string taxCode = null,
+            string unspscCode = null)
         {
             this.Name = name;
             this.Handle = handle;
@@ -95,6 +99,11 @@ namespace AdvancedBilling.Standard.Models
             }
             this.AutoCreateSignupPage = autoCreateSignupPage;
             this.TaxCode = taxCode;
+
+            if (unspscCode != null)
+            {
+                this.UnspscCode = unspscCode;
+            }
         }
 
         /// <summary>
@@ -134,7 +143,7 @@ namespace AdvancedBilling.Standard.Models
         public long PriceInCents { get; set; }
 
         /// <summary>
-        /// The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this product would renew every 30 days
+        /// The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean this product would renew every 30 days.
         /// </summary>
         [JsonProperty("interval")]
         public int Interval { get; set; }
@@ -152,7 +161,7 @@ namespace AdvancedBilling.Standard.Models
         public long? TrialPriceInCents { get; set; }
 
         /// <summary>
-        /// The numerical trial interval. i.e. an interval of ‘30’ coupled with a trial_interval_unit of day would mean this product trial would last 30 days.
+        /// The numerical trial interval. e.g., an interval of ‘30’ coupled with a trial_interval_unit of day would mean this product trial would last 30 days.
         /// </summary>
         [JsonProperty("trial_interval", NullValueHandling = NullValueHandling.Ignore)]
         public int? TrialInterval { get; set; }
@@ -176,7 +185,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Indicates how a trial is handled when the trail period ends and there is no credit card on file. For `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will send normal dunning emails and statements according to your other settings.
+        /// Indicates how a trial is handled when the trial period ends and there is no credit card on file. For `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will send normal dunning emails and statements according to your other settings.
         /// </summary>
         [JsonProperty("trial_type")]
         public Models.TrialType? TrialType
@@ -194,7 +203,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The numerical expiration interval. i.e. an expiration_interval of ‘30’ coupled with an expiration_interval_unit of day would mean this product would expire after 30 days.
+        /// The numerical expiration interval. e.g., an expiration_interval of ‘30’ coupled with an expiration_interval_unit of day would mean this product would expire after 30 days.
         /// </summary>
         [JsonProperty("expiration_interval", NullValueHandling = NullValueHandling.Ignore)]
         public int? ExpirationInterval { get; set; }
@@ -229,6 +238,24 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("tax_code", NullValueHandling = NullValueHandling.Ignore)]
         public string TaxCode { get; set; }
 
+        /// <summary>
+        /// (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent as the commodity code on invoice line items for this product instead of the default derived from item_category.
+        /// </summary>
+        [JsonProperty("unspsc_code")]
+        public string UnspscCode
+        {
+            get
+            {
+                return this.unspscCode;
+            }
+
+            set
+            {
+                this.shouldSerialize["unspsc_code"] = true;
+                this.unspscCode = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -258,6 +285,13 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["expiration_interval_unit"] = false;
         }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetUnspscCode()
+        {
+            this.shouldSerialize["unspsc_code"] = false;
+        }
 
         /// <summary>
         /// Checks if the field should be serialized or not.
@@ -284,6 +318,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeExpirationIntervalUnit()
         {
             return this.shouldSerialize["expiration_interval_unit"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeUnspscCode()
+        {
+            return this.shouldSerialize["unspsc_code"];
         }
 
         /// <inheritdoc/>
@@ -322,6 +365,8 @@ namespace AdvancedBilling.Standard.Models
                  this.AutoCreateSignupPage?.Equals(other.AutoCreateSignupPage) == true) &&
                 (this.TaxCode == null && other.TaxCode == null ||
                  this.TaxCode?.Equals(other.TaxCode) == true) &&
+                (this.UnspscCode == null && other.UnspscCode == null ||
+                 this.UnspscCode?.Equals(other.UnspscCode) == true) &&
                 base.Equals(obj);
         }
 
@@ -347,6 +392,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"ExpirationIntervalUnit = {(this.ExpirationIntervalUnit == null ? "null" : this.ExpirationIntervalUnit.ToString())}");
             toStringOutput.Add($"AutoCreateSignupPage = {(this.AutoCreateSignupPage == null ? "null" : this.AutoCreateSignupPage.ToString())}");
             toStringOutput.Add($"TaxCode = {this.TaxCode ?? "null"}");
+            toStringOutput.Add($"UnspscCode = {this.UnspscCode ?? "null"}");
 
             base.ToString(toStringOutput);
         }

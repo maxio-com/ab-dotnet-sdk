@@ -13,11 +13,14 @@ Example schema for an `change_chargeback_status` event
 |  --- | --- | --- | --- |
 | `ChargebackStatus` | [`ChargebackStatus`](../../doc/models/chargeback-status.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ChangeChargebackStatusEventData changeChargebackStatusEventData = new ChangeChargebackStatusEventData
 {
-  "chargeback_status": "open"
-}
+    ChargebackStatus = ChargebackStatus.Won,
+};
 ```
 

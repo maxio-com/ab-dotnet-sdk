@@ -11,15 +11,20 @@
 |  --- | --- | --- | --- |
 | `Errors` | [`AttributeError`](../../doc/models/attribute-error.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+try
 {
-  "errors": {
-    "attribute": [
-      "supplied value is invalid, expected ISO 8601 format"
-    ]
-  }
+    // make the API call
+}
+catch (ApiException e)
+{
+    if (e is SubscriptionsMrrErrorResponseException)
+    {
+        // TODO: Handle SubscriptionsMrrErrorResponseException
+        Console.WriteLine(e.Message);
+    }
 }
 ```
 

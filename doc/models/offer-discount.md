@@ -13,13 +13,16 @@
 | `CouponId` | `int?` | Optional | - |
 | `CouponName` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+OfferDiscount offerDiscount = new OfferDiscount
 {
-  "coupon_code": "coupon_code8",
-  "coupon_id": 86,
-  "coupon_name": "coupon_name4"
-}
+    CouponCode = "coupon_code6",
+    CouponId = 202,
+    CouponName = "coupon_name6",
+};
 ```
 

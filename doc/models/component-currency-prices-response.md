@@ -11,19 +11,25 @@
 |  --- | --- | --- | --- |
 | `CurrencyPrices` | [`List<ComponentCurrencyPrice>`](../../doc/models/component-currency-price.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+ComponentCurrencyPricesResponse componentCurrencyPricesResponse = new ComponentCurrencyPricesResponse
 {
-  "currency_prices": [
+    CurrencyPrices = new List<ComponentCurrencyPrice>
     {
-      "id": 50,
-      "currency": "currency8",
-      "price": "price4",
-      "formatted_price": "formatted_price6",
-      "price_id": 116
-    }
-  ]
-}
+        new ComponentCurrencyPrice
+        {
+            Id = 50,
+            Currency = "currency8",
+            Price = "price4",
+            FormattedPrice = "formatted_price6",
+            PriceId = 116,
+        },
+    },
+};
 ```
 

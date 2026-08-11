@@ -11,19 +11,25 @@
 |  --- | --- | --- | --- |
 | `CreditNotes` | [`List<CreditNote>`](../../doc/models/credit-note.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+ListCreditNotesResponse listCreditNotesResponse = new ListCreditNotesResponse
 {
-  "credit_notes": [
+    CreditNotes = new List<CreditNote>
     {
-      "uid": "uid2",
-      "site_id": 112,
-      "customer_id": 224,
-      "subscription_id": 40,
-      "number": "number0"
-    }
-  ]
-}
+        new CreditNote
+        {
+            Uid = "uid2",
+            SiteId = 112,
+            CustomerId = 224,
+            SubscriptionId = 40,
+            Number = "number0",
+        },
+    },
+};
 ```
 

@@ -11,14 +11,20 @@
 |  --- | --- | --- | --- |
 | `Errors` | [`TooManyManagementLinkRequests`](../../doc/models/too-many-management-link-requests.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+try
 {
-  "errors": {
-    "error": "error4",
-    "new_link_available_at": "2016-03-13T12:52:32.123Z"
-  }
+    // make the API call
+}
+catch (ApiException e)
+{
+    if (e is TooManyManagementLinkRequestsErrorException)
+    {
+        // TODO: Handle TooManyManagementLinkRequestsErrorException
+        Console.WriteLine(e.Message);
+    }
 }
 ```
 

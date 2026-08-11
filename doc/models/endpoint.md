@@ -15,18 +15,22 @@
 | `Status` | `string` | Optional | - |
 | `WebhookSubscriptions` | `List<string>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+Endpoint endpoint = new Endpoint
 {
-  "id": 196,
-  "url": "url2",
-  "site_id": 122,
-  "status": "status0",
-  "webhook_subscriptions": [
-    "webhook_subscriptions4",
-    "webhook_subscriptions3"
-  ]
-}
+    Id = 202,
+    Url = "url2",
+    SiteId = 128,
+    Status = "status0",
+    WebhookSubscriptions = new List<string>
+    {
+        "webhook_subscriptions4",
+    },
+};
 ```
 

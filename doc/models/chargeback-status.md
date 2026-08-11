@@ -16,3 +16,11 @@ The current chargeback status.
 | `Won` |
 | `Closed` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ChargebackStatus chargebackStatus = ChargebackStatus.Open;
+```
+

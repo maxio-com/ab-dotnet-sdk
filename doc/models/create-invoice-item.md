@@ -22,15 +22,19 @@
 | `ProductPricePointId` | [`CreateInvoiceItemProductPricePointId`](../../doc/models/containers/create-invoice-item-product-price-point-id.md) | Optional | This is a container for one-of cases. |
 | `Description` | `string` | Optional | **Constraints**: *Maximum Length*: `255` |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+CreateInvoiceItem createInvoiceItem = new CreateInvoiceItem
 {
-  "title": "title2",
-  "quantity": 154.86,
-  "unit_price": 138.08,
-  "taxable": false,
-  "tax_code": "tax_code4"
-}
+    Title = "title8",
+    Quantity = CreateInvoiceItemQuantity.FromPrecision(107.22),
+    UnitPrice = CreateInvoiceItemUnitPrice.FromPrecision(90.44),
+    Taxable = false,
+    TaxCode = "tax_code0",
+};
 ```
 

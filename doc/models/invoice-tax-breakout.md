@@ -14,14 +14,17 @@
 | `TaxAmount` | `string` | Optional | - |
 | `TaxExemptAmount` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoiceTaxBreakout invoiceTaxBreakout = new InvoiceTaxBreakout
 {
-  "uid": "uid2",
-  "taxable_amount": "taxable_amount6",
-  "tax_amount": "tax_amount6",
-  "tax_exempt_amount": "tax_exempt_amount2"
-}
+    Uid = "uid4",
+    TaxableAmount = "taxable_amount8",
+    TaxAmount = "tax_amount2",
+    TaxExemptAmount = "tax_exempt_amount4",
+};
 ```
 

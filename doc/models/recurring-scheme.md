@@ -13,3 +13,11 @@
 | `RecurIndefinitely` |
 | `RecurWithDuration` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+RecurringScheme recurringScheme = RecurringScheme.RecurIndefinitely;
+```
+

@@ -13,3 +13,11 @@ The vault that stores the payment profile with the provided vault_token.
 |  --- |
 | `BraintreeBlue` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ApplePayVault applePayVault = ApplePayVault.BraintreeBlue;
+```
+

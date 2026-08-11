@@ -11,17 +11,24 @@
 |  --- | --- | --- | --- |
 | `RenewalPreview` | [`RenewalPreview`](../../doc/models/renewal-preview.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+RenewalPreviewResponse renewalPreviewResponse = new RenewalPreviewResponse
 {
-  "renewal_preview": {
-    "next_assessment_at": "2016-03-13T12:52:32.123Z",
-    "subtotal_in_cents": 132,
-    "total_tax_in_cents": 0,
-    "total_discount_in_cents": 250,
-    "total_in_cents": 20
-  }
-}
+    RenewalPreview = new RenewalPreview
+    {
+        NextAssessmentAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
+        SubtotalInCents = 132L,
+        TotalTaxInCents = 0L,
+        TotalDiscountInCents = 250L,
+        TotalInCents = 20L,
+    },
+};
 ```
 

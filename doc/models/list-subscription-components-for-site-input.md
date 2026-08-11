@@ -51,9 +51,9 @@ ListSubscriptionComponentsForSiteInput listSubscriptionComponentsForSiteInput = 
         {
             States = new List<SubscriptionStateFilter>
             {
+                SubscriptionStateFilter.Trialing,
+                SubscriptionStateFilter.Unpaid,
                 SubscriptionStateFilter.Active,
-                SubscriptionStateFilter.Canceled,
-                SubscriptionStateFilter.Expired,
             },
             DateField = SubscriptionListDateField.UpdatedAt,
             StartDate = DateTime.Parse("2016-03-13"),

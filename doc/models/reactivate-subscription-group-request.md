@@ -12,12 +12,15 @@
 | `Resume` | `bool?` | Optional | - |
 | `ResumeMembers` | `bool?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ReactivateSubscriptionGroupRequest reactivateSubscriptionGroupRequest = new ReactivateSubscriptionGroupRequest
 {
-  "resume": false,
-  "resume_members": false
-}
+    Resume = false,
+    ResumeMembers = false,
+};
 ```
 

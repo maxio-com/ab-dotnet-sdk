@@ -18,22 +18,29 @@ Example schema for an `void_invoice` event
 | `IsAdvanceInvoice` | `bool` | Required | If true, the invoice is an advance invoice. |
 | `Reason` | `string` | Required | The reason for the void. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+VoidInvoiceEventData voidInvoiceEventData = new VoidInvoiceEventData
 {
-  "credit_note_attributes": {
-    "uid": "uid2",
-    "site_id": 72,
-    "customer_id": 184,
-    "subscription_id": 0,
-    "number": "number0"
-  },
-  "memo": "memo6",
-  "applied_amount": "applied_amount6",
-  "transaction_time": "2016-03-13T12:52:32.123Z",
-  "is_advance_invoice": false,
-  "reason": "reason8"
-}
+    CreditNoteAttributes = new CreditNote
+    {
+        Uid = "uid2",
+        SiteId = 72,
+        CustomerId = 184,
+        SubscriptionId = 0,
+        Number = "number0",
+    },
+    Memo = "memo6",
+    AppliedAmount = "applied_amount6",
+    TransactionTime = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    IsAdvanceInvoice = false,
+    Reason = "reason8",
+};
 ```
 

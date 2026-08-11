@@ -17,15 +17,21 @@
 | `StartingBalanceInCents` | `long?` | Optional | **Constraints**: `>= 0` |
 | `EndingBalanceInCents` | `long?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+CreatedPrepayment createdPrepayment = new CreatedPrepayment
 {
-  "id": 110,
-  "subscription_id": 220,
-  "amount_in_cents": 196,
-  "memo": "memo6",
-  "created_at": "2016-03-13T12:52:32.123Z"
-}
+    Id = 186L,
+    SubscriptionId = 40,
+    AmountInCents = 240L,
+    Memo = "memo6",
+    CreatedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+};
 ```
 

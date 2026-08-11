@@ -12,18 +12,26 @@
 | `PerPage` | `List<string>` | Optional | - |
 | `PricePoint` | `List<string>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+Errors errors = new Errors
 {
-  "per_page": [
-    "per_page7",
-    "per_page8"
-  ],
-  "price_point": [
-    "price_point6",
-    "price_point7"
-  ]
-}
+    PerPage = new List<string>
+    {
+        "per_page1",
+        "per_page2",
+        "per_page3",
+    },
+    PricePoint = new List<string>
+    {
+        "price_point0",
+        "price_point9",
+        "price_point8",
+    },
+};
 ```
 

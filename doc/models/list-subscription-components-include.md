@@ -14,7 +14,9 @@
 
 ## Example
 
-```
-subscription
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ListSubscriptionComponentsInclude listSubscriptionComponentsInclude = ListSubscriptionComponentsInclude.Subscription;
 ```
 

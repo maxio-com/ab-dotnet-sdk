@@ -11,16 +11,20 @@
 |  --- | --- | --- | --- |
 | `Migration` | [`SubscriptionMigrationPreview`](../../doc/models/subscription-migration-preview.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionMigrationPreviewResponse subscriptionMigrationPreviewResponse = new SubscriptionMigrationPreviewResponse
 {
-  "migration": {
-    "prorated_adjustment_in_cents": 196,
-    "charge_in_cents": 78,
-    "payment_due_in_cents": 250,
-    "credit_applied_in_cents": 210
-  }
-}
+    Migration = new SubscriptionMigrationPreview
+    {
+        ProratedAdjustmentInCents = 196L,
+        ChargeInCents = 78L,
+        PaymentDueInCents = 250L,
+        CreditAppliedInCents = 210L,
+    },
+};
 ```
 

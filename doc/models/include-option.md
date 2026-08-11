@@ -12,3 +12,11 @@
 | `Exclude` |
 | `Include` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+IncludeOption includeOption = IncludeOption.Exclude;
+```
+

@@ -14,20 +14,32 @@
 | `CurrencyCode` | `string` | Optional | The ISO 4217 currency code (3 character string) representing the currency of invoice transaction. |
 | `Applications` | [`List<InvoicePaymentApplication>`](../../doc/models/invoice-payment-application.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+MultiInvoicePayment multiInvoicePayment = new MultiInvoicePayment
 {
-  "transaction_id": 144,
-  "total_amount": "total_amount2",
-  "currency_code": "currency_code2",
-  "applications": [
+    TransactionId = 246,
+    TotalAmount = "total_amount0",
+    CurrencyCode = "currency_code0",
+    Applications = new List<InvoicePaymentApplication>
     {
-      "invoice_uid": "invoice_uid8",
-      "application_uid": "application_uid8",
-      "applied_amount": "applied_amount0"
-    }
-  ]
-}
+        new InvoicePaymentApplication
+        {
+            InvoiceUid = "invoice_uid8",
+            ApplicationUid = "application_uid8",
+            AppliedAmount = "applied_amount0",
+        },
+        new InvoicePaymentApplication
+        {
+            InvoiceUid = "invoice_uid8",
+            ApplicationUid = "application_uid8",
+            AppliedAmount = "applied_amount0",
+        },
+    },
+};
 ```
 

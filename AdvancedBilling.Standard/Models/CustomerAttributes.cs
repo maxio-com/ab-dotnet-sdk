@@ -50,6 +50,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="phone">phone.</param>
         /// <param name="verified">verified.</param>
         /// <param name="taxExempt">tax_exempt.</param>
+        /// <param name="surcharging">surcharging.</param>
         /// <param name="vatNumber">vat_number.</param>
         /// <param name="metafields">metafields.</param>
         /// <param name="parentId">parent_id.</param>
@@ -71,6 +72,7 @@ namespace AdvancedBilling.Standard.Models
             string phone = null,
             bool? verified = null,
             bool? taxExempt = null,
+            bool? surcharging = null,
             string vatNumber = null,
             Dictionary<string, string> metafields = null,
             int? parentId = null,
@@ -96,6 +98,7 @@ namespace AdvancedBilling.Standard.Models
             this.Phone = phone;
             this.Verified = verified;
             this.TaxExempt = taxExempt;
+            this.Surcharging = surcharging;
             this.VatNumber = vatNumber;
             this.Metafields = metafields;
 
@@ -134,31 +137,31 @@ namespace AdvancedBilling.Standard.Models
         public string Email { get; set; }
 
         /// <summary>
-        /// A list of emails that should be cc’d on all customer communications. Optional.
+        /// (Optional) A list of emails that should be cc’d on all customer communications.
         /// </summary>
         [JsonProperty("cc_emails", NullValueHandling = NullValueHandling.Ignore)]
         public string CcEmails { get; set; }
 
         /// <summary>
-        /// The organization/company of the customer. Optional.
+        /// (Optional) The organization/company of the customer.
         /// </summary>
         [JsonProperty("organization", NullValueHandling = NullValueHandling.Ignore)]
         public string Organization { get; set; }
 
         /// <summary>
-        /// A customer “reference”, or unique identifier from your app, stored in Chargify. Can be used so that you may reference your customer’s within Chargify using the same unique value you use in your application. Optional.
+        /// (Optional) A customer “reference”, or unique identifier from your app, stored in Chargify. Can be used so that you may reference your customer’s within Chargify using the same unique value you use in your application.
         /// </summary>
         [JsonProperty("reference", NullValueHandling = NullValueHandling.Ignore)]
         public string Reference { get; set; }
 
         /// <summary>
-        /// (Optional) The customer’s shipping street address (i.e. “123 Main St.”).
+        /// (Optional) The customer’s shipping street address (e.g., “123 Main St.”).
         /// </summary>
         [JsonProperty("address", NullValueHandling = NullValueHandling.Ignore)]
         public string Address { get; set; }
 
         /// <summary>
-        /// (Optional) Second line of the customer’s shipping address i.e. “Apt. 100”
+        /// (Optional) Second line of the customer’s shipping address e.g., “Apt. 100”
         /// </summary>
         [JsonProperty("address_2")]
         public string Address2
@@ -176,25 +179,25 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// (Optional) The customer’s shipping address city (i.e. “Boston”).
+        /// (Optional) The customer’s shipping address city (e.g., “Boston”).
         /// </summary>
         [JsonProperty("city", NullValueHandling = NullValueHandling.Ignore)]
         public string City { get; set; }
 
         /// <summary>
-        /// (Optional) The customer’s shipping address state (i.e. “MA”). This must conform to the [ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes) in order to be valid for tax locale purposes.
+        /// “(Optional) The customer’s shipping address state (e.g., “MA”). This must conform to the [ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes) in order to be valid for tax locale purposes.”
         /// </summary>
         [JsonProperty("state", NullValueHandling = NullValueHandling.Ignore)]
         public string State { get; set; }
 
         /// <summary>
-        /// (Optional) The customer’s shipping address zip code (i.e. “12345”).
+        /// (Optional) The customer’s shipping address zip code (e.g., “12345”).
         /// </summary>
         [JsonProperty("zip", NullValueHandling = NullValueHandling.Ignore)]
         public string Zip { get; set; }
 
         /// <summary>
-        /// (Optional) The customer shipping address country, required in [ISO_3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format (i.e. “US”).
+        /// “(Optional) The customer shipping address country, required in [ISO_3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format (e.g., “US”).”
         /// </summary>
         [JsonProperty("country", NullValueHandling = NullValueHandling.Ignore)]
         public string Country { get; set; }
@@ -218,7 +221,13 @@ namespace AdvancedBilling.Standard.Models
         public bool? TaxExempt { get; set; }
 
         /// <summary>
-        /// (Optional) Supplying the VAT number allows EU customer’s to opt-out of the Value Added Tax assuming the merchant address and customer billing address are not within the same EU country. It’s important to omit the country code from the VAT number upon entry. Otherwise, taxes will be assessed upon the purchase.
+        /// (Optional) Whether surcharging is enabled for the customer. Defaults to `true` when omitted. Only applied on sites where surcharging control is enabled.
+        /// </summary>
+        [JsonProperty("surcharging", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? Surcharging { get; set; }
+
+        /// <summary>
+        /// (Optional) Supplying the VAT number allows EU customers to opt-out of the Value Added Tax assuming the merchant address and customer billing address are not within the same EU country. It’s important to omit the country code from the VAT number upon entry. Otherwise, taxes will be assessed upon the purchase.
         /// </summary>
         [JsonProperty("vat_number", NullValueHandling = NullValueHandling.Ignore)]
         public string VatNumber { get; set; }
@@ -393,6 +402,8 @@ namespace AdvancedBilling.Standard.Models
                  this.Verified?.Equals(other.Verified) == true) &&
                 (this.TaxExempt == null && other.TaxExempt == null ||
                  this.TaxExempt?.Equals(other.TaxExempt) == true) &&
+                (this.Surcharging == null && other.Surcharging == null ||
+                 this.Surcharging?.Equals(other.Surcharging) == true) &&
                 (this.VatNumber == null && other.VatNumber == null ||
                  this.VatNumber?.Equals(other.VatNumber) == true) &&
                 (this.Metafields == null && other.Metafields == null ||
@@ -427,6 +438,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Phone = {this.Phone ?? "null"}");
             toStringOutput.Add($"Verified = {(this.Verified == null ? "null" : this.Verified.ToString())}");
             toStringOutput.Add($"TaxExempt = {(this.TaxExempt == null ? "null" : this.TaxExempt.ToString())}");
+            toStringOutput.Add($"Surcharging = {(this.Surcharging == null ? "null" : this.Surcharging.ToString())}");
             toStringOutput.Add($"VatNumber = {this.VatNumber ?? "null"}");
             toStringOutput.Add($"Metafields = {(this.Metafields == null ? "null" : this.Metafields.ToString())}");
             toStringOutput.Add($"ParentId = {(this.ParentId == null ? "null" : this.ParentId.ToString())}");

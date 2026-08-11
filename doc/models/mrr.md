@@ -16,20 +16,24 @@
 | `Breakouts` | [`Breakouts`](../../doc/models/breakouts.md) | Optional | - |
 | `AtTime` | `DateTimeOffset?` | Optional | ISO8601 timestamp |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+MRR mRR = new MRR
 {
-  "amount_in_cents": 208,
-  "amount_formatted": "amount_formatted2",
-  "currency": "currency0",
-  "currency_symbol": "currency_symbol8",
-  "breakouts": {
-    "plan_amount_in_cents": 254,
-    "plan_amount_formatted": "plan_amount_formatted0",
-    "usage_amount_in_cents": 106,
-    "usage_amount_formatted": "usage_amount_formatted8"
-  }
-}
+    AmountInCents = 122L,
+    AmountFormatted = "amount_formatted4",
+    Currency = "currency2",
+    CurrencySymbol = "currency_symbol0",
+    Breakouts = new Breakouts
+    {
+        PlanAmountInCents = 254L,
+        PlanAmountFormatted = "plan_amount_formatted0",
+        UsageAmountInCents = 106L,
+        UsageAmountFormatted = "usage_amount_formatted8",
+    },
+};
 ```
 

@@ -16,15 +16,18 @@
 | `ReturnParams` | `string` | Optional | - |
 | `Url` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+OfferSignupPage offerSignupPage = new OfferSignupPage
 {
-  "id": 50,
-  "nickname": "nickname8",
-  "enabled": false,
-  "return_url": "return_url2",
-  "return_params": "return_params0"
-}
+    Id = 102,
+    Nickname = "nickname6",
+    Enabled = false,
+    ReturnUrl = "return_url6",
+    ReturnParams = "return_params8",
+};
 ```
 

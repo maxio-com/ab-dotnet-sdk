@@ -16,3 +16,11 @@ The type of payment collection to be used in the subscription. For legacy Statem
 | `Prepaid` |
 | `Invoice` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CollectionMethod collectionMethod = CollectionMethod.Automatic;
+```
+

@@ -214,6 +214,7 @@ CreateProductFamilyRequest body = new CreateProductFamilyRequest
     {
         Name = "Acme Projects",
         Description = "Amazing project management tool",
+        Surcharging = false,
     },
 };
 
@@ -240,7 +241,8 @@ catch (ApiException e)
     "name": "Acme Projects",
     "description": "Amazing project management tool",
     "handle": "acme-projects",
-    "accounting_code": null
+    "accounting_code": null,
+    "surcharging": false
   }
 }
 ```
@@ -254,7 +256,7 @@ catch (ApiException e)
 
 # List Product Families
 
-Returns a list of Product Families for a site.
+Lists Product Families for a site.
 
 ```csharp
 ListProductFamiliesAsync(
@@ -306,6 +308,7 @@ catch (ApiException e)
       "description": null,
       "handle": "acme-projects",
       "accounting_code": null,
+      "surcharging": false,
       "created_at": "2013-02-20T15:05:51-07:00",
       "updated_at": "2013-02-20T15:05:51-07:00",
       "archived_at": null
@@ -318,6 +321,7 @@ catch (ApiException e)
       "description": "Another family.",
       "handle": "bat-family",
       "accounting_code": null,
+      "surcharging": true,
       "created_at": "2014-04-16T12:41:13-06:00",
       "updated_at": "2014-04-16T12:41:13-06:00",
       "archived_at": "2024-11-05T09:30:00-07:00"
@@ -378,6 +382,7 @@ catch (ApiException e)
     "description": "",
     "handle": "billing-plans",
     "accounting_code": null,
+    "surcharging": false,
     "archived_at": null
   }
 }

@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- |
 | `Mrr` | [`ListMRRResponseResult`](../../doc/models/list-mrr-response-result.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ListMRRResponse listMRRResponse = new ListMRRResponse
 {
-  "mrr": {
-    "page": 30,
-    "per_page": 198,
-    "total_pages": 92,
-    "total_entries": 188,
-    "currency": "currency4"
-  }
-}
+    Mrr = new ListMRRResponseResult
+    {
+        Page = 30,
+        PerPage = 198,
+        TotalPages = 92,
+        TotalEntries = 188,
+        Currency = "currency4",
+    },
+};
 ```
 

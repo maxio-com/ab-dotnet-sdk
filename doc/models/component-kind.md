@@ -17,3 +17,11 @@ A handle for the component type
 | `PrepaidUsageComponent` |
 | `EventBasedComponent` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ComponentKind componentKind = ComponentKind.PrepaidUsageComponent;
+```
+

@@ -14,14 +14,17 @@
 | `Memo` | `string` | Required | - |
 | `Type` | [`InvoiceEventPaymentMethod`](../../doc/models/invoice-event-payment-method.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PaymentMethodExternal paymentMethodExternal = new PaymentMethodExternal
 {
-  "details": "details4",
-  "kind": "kind2",
-  "memo": "memo8",
-  "type": "external"
-}
+    Details = "details0",
+    Kind = "kind8",
+    Memo = "memo4",
+    Type = InvoiceEventPaymentMethod.External,
+};
 ```
 

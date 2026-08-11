@@ -18,15 +18,18 @@
 | `ProductPricePointId` | `int?` | Optional | - |
 | `Role` | [`CurrencyPriceRole?`](../../doc/models/currency-price-role.md) | Optional | Role for the price. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CurrencyPrice currencyPrice = new CurrencyPrice
 {
-  "id": 88,
-  "currency": "currency6",
-  "price": 41.36,
-  "formatted_price": "formatted_price4",
-  "price_id": 178
-}
+    Id = 208,
+    Currency = "currency4",
+    Price = 70.88,
+    FormattedPrice = "formatted_price2",
+    PriceId = 214,
+};
 ```
 

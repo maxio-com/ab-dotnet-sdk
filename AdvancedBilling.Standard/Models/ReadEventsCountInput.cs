@@ -60,13 +60,13 @@ namespace AdvancedBilling.Standard.Models
         public int? PerPage { get; set; }
 
         /// <summary>
-        /// Returns events with an id greater than or equal to the one specified
+        /// Returns events with an id greater than or equal to the one specified.
         /// </summary>
         [JsonProperty("since_id", NullValueHandling = NullValueHandling.Ignore)]
         public long? SinceId { get; set; }
 
         /// <summary>
-        /// Returns events with an id less than or equal to the one specified
+        /// Returns events with an id less than or equal to the one specified.
         /// </summary>
         [JsonProperty("max_id", NullValueHandling = NullValueHandling.Ignore)]
         public long? MaxId { get; set; }

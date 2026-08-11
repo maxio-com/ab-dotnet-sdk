@@ -14,3 +14,11 @@ The type of entry
 | `Credit` |
 | `Debit` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ServiceCreditType serviceCreditType = ServiceCreditType.Credit;
+```
+

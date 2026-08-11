@@ -11,14 +11,19 @@
 |  --- | --- | --- | --- |
 | `ServiceCredit` | [`IssueServiceCredit`](../../doc/models/issue-service-credit.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+IssueServiceCreditRequest issueServiceCreditRequest = new IssueServiceCreditRequest
 {
-  "service_credit": {
-    "amount": 31.42,
-    "memo": "memo0"
-  }
-}
+    ServiceCredit = new IssueServiceCredit
+    {
+        Amount = IssueServiceCreditAmount.FromPrecision(31.42),
+        Memo = "memo0",
+    },
+};
 ```
 

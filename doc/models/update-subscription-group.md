@@ -11,15 +11,20 @@
 |  --- | --- | --- | --- |
 | `MemberIds` | `List<int>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+UpdateSubscriptionGroup updateSubscriptionGroup = new UpdateSubscriptionGroup
 {
-  "member_ids": [
-    52,
-    53,
-    54
-  ]
-}
+    MemberIds = new List<int>
+    {
+        248,
+        249,
+        250,
+    },
+};
 ```
 

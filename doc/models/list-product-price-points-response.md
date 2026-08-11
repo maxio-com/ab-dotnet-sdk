@@ -11,19 +11,25 @@
 |  --- | --- | --- | --- |
 | `PricePoints` | [`List<ProductPricePoint>`](../../doc/models/product-price-point.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+ListProductPricePointsResponse listProductPricePointsResponse = new ListProductPricePointsResponse
 {
-  "price_points": [
+    PricePoints = new List<ProductPricePoint>
     {
-      "id": 40,
-      "name": "name2",
-      "handle": "handle8",
-      "price_in_cents": 108,
-      "interval": 92
-    }
-  ]
-}
+        new ProductPricePoint
+        {
+            Id = 40,
+            Name = "name2",
+            Handle = "handle8",
+            PriceInCents = 108L,
+            Interval = 92,
+        },
+    },
+};
 ```
 

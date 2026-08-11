@@ -14,14 +14,17 @@
 | `PrimarySubscriptionId` | `int?` | Optional | The subscription ID of the primary within the group. Applicable to scheme 1. |
 | `Primary` | `bool?` | Optional | A boolean indicating whether the subscription is the primary in the group. Applicable to scheme 1. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+NestedSubscriptionGroup nestedSubscriptionGroup = new NestedSubscriptionGroup
 {
-  "uid": "uid2",
-  "scheme": 62,
-  "primary_subscription_id": 10,
-  "primary": false
-}
+    Uid = "uid6",
+    Scheme = 106,
+    PrimarySubscriptionId = 54,
+    Primary = false,
+};
 ```
 

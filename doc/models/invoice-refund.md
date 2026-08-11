@@ -19,15 +19,18 @@
 | `GatewayHandle` | `string` | Optional | - |
 | `AchLateReject` | `bool?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoiceRefund invoiceRefund = new InvoiceRefund
 {
-  "transaction_id": 172,
-  "payment_id": 42,
-  "memo": "memo6",
-  "original_amount": "original_amount6",
-  "applied_amount": "applied_amount6"
-}
+    TransactionId = 166,
+    PaymentId = 36,
+    Memo = "memo6",
+    OriginalAmount = "original_amount6",
+    AppliedAmount = "applied_amount6",
+};
 ```
 

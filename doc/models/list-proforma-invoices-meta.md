@@ -14,14 +14,17 @@
 | `TotalPages` | `int?` | Optional | - |
 | `StatusCode` | `int?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ListProformaInvoicesMeta listProformaInvoicesMeta = new ListProformaInvoicesMeta
 {
-  "total_count": 226,
-  "current_page": 202,
-  "total_pages": 214,
-  "status_code": 244
-}
+    TotalCount = 50,
+    CurrentPage = 26,
+    TotalPages = 38,
+    StatusCode = 68,
+};
 ```
 

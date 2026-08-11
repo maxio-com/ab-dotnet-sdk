@@ -16,15 +16,23 @@
 | `SubscriptionId` | `int?` | Optional | Id of Maxio Advanced Billing Subscription which is connected to this event.<br>Provide `subscription_id` if you configured `chargify.subscription_id` as Subscription Identifier in your Event Stream. |
 | `SubscriptionReference` | `string` | Optional | Reference of Maxio Advanced Billing Subscription which is connected to this event.<br>Provide `subscription_reference` if you configured `chargify.subscription_reference` as Subscription Identifier in your Event Stream. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+ChargifyEBB chargifyEBB = new ChargifyEBB
 {
-  "timestamp": "2016-03-13T12:52:32.123Z",
-  "id": "id4",
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "uniqueness_token": "uniqueness_token0",
-  "subscription_id": 200
-}
+    Timestamp = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    Id = "id2",
+    CreatedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    UniquenessToken = "uniqueness_token8",
+    SubscriptionId = 224,
+};
 ```
 

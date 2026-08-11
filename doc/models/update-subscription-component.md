@@ -12,30 +12,39 @@
 | `ComponentId` | `int?` | Optional | - |
 | `CustomPrice` | [`ComponentCustomPrice`](../../doc/models/component-custom-price.md) | Optional | Create or update custom pricing unique to the subscription. Used in place of `price_point_id`. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Collections.Generic;
+
+UpdateSubscriptionComponent updateSubscriptionComponent = new UpdateSubscriptionComponent
 {
-  "component_id": 244,
-  "custom_price": {
-    "tax_included": false,
-    "pricing_scheme": "stairstep",
-    "interval": 66,
-    "interval_unit": "day",
-    "list_price_point_id": 174,
-    "prices": [
-      {
-        "starting_quantity": 242,
-        "ending_quantity": 40,
-        "unit_price": 23.26
-      },
-      {
-        "starting_quantity": 242,
-        "ending_quantity": 40,
-        "unit_price": 23.26
-      }
-    ]
-  }
-}
+    ComponentId = 118,
+    CustomPrice = new ComponentCustomPrice
+    {
+        Prices = new List<Price>
+        {
+            new Price
+            {
+                StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                EndingQuantity = PriceEndingQuantity.FromNumber(40),
+            },
+            new Price
+            {
+                StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                EndingQuantity = PriceEndingQuantity.FromNumber(40),
+            },
+        },
+        TaxIncluded = false,
+        PricingScheme = PricingScheme.Stairstep,
+        Interval = 66,
+        IntervalUnit = IntervalUnit.Day,
+        ListPricePointId = 174,
+    },
+};
 ```
 

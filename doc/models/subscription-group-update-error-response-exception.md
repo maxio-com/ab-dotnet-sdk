@@ -11,16 +11,20 @@
 |  --- | --- | --- | --- |
 | `Errors` | [`SubscriptionGroupUpdateError`](../../doc/models/subscription-group-update-error.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+try
 {
-  "errors": {
-    "members": [
-      "members2",
-      "members1"
-    ]
-  }
+    // make the API call
+}
+catch (ApiException e)
+{
+    if (e is SubscriptionGroupUpdateErrorResponseException)
+    {
+        // TODO: Handle SubscriptionGroupUpdateErrorResponseException
+        Console.WriteLine(e.Message);
+    }
 }
 ```
 

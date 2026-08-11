@@ -11,13 +11,17 @@
 |  --- | --- | --- | --- |
 | `Void` | [`VoidInvoice`](../../doc/models/void-invoice.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+VoidInvoiceRequest voidInvoiceRequest = new VoidInvoiceRequest
 {
-  "void": {
-    "reason": "reason6"
-  }
-}
+    MVoid = new VoidInvoice
+    {
+        Reason = "reason6",
+    },
+};
 ```
 

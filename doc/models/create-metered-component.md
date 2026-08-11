@@ -11,58 +11,72 @@
 |  --- | --- | --- | --- |
 | `MeteredComponent` | [`MeteredComponent`](../../doc/models/metered-component.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Collections.Generic;
+
+CreateMeteredComponent createMeteredComponent = new CreateMeteredComponent
 {
-  "metered_component": {
-    "name": "name0",
-    "unit_name": "unit_name2",
-    "description": "description0",
-    "handle": "handle6",
-    "taxable": false,
-    "pricing_scheme": "stairstep",
-    "prices": [
-      {
-        "starting_quantity": 242,
-        "ending_quantity": 40,
-        "unit_price": 23.26
-      },
-      {
-        "starting_quantity": 242,
-        "ending_quantity": 40,
-        "unit_price": 23.26
-      },
-      {
-        "starting_quantity": 242,
-        "ending_quantity": 40,
-        "unit_price": 23.26
-      }
-    ],
-    "price_points": [
-      {
-        "name": "name2",
-        "handle": "handle8",
-        "pricing_scheme": "per_unit",
-        "interval": 92,
-        "interval_unit": "day"
-      },
-      {
-        "name": "name2",
-        "handle": "handle8",
-        "pricing_scheme": "per_unit",
-        "interval": 92,
-        "interval_unit": "day"
-      },
-      {
-        "name": "name2",
-        "handle": "handle8",
-        "pricing_scheme": "per_unit",
-        "interval": 92,
-        "interval_unit": "day"
-      }
-    ]
-  }
-}
+    MeteredComponent = new MeteredComponent
+    {
+        Name = "name0",
+        UnitName = "unit_name2",
+        PricingScheme = PricingScheme.Stairstep,
+        Description = "description0",
+        Handle = "handle6",
+        Taxable = false,
+        Prices = new List<Price>
+        {
+            new Price
+            {
+                StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                EndingQuantity = PriceEndingQuantity.FromNumber(40),
+            },
+            new Price
+            {
+                StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                EndingQuantity = PriceEndingQuantity.FromNumber(40),
+            },
+            new Price
+            {
+                StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                EndingQuantity = PriceEndingQuantity.FromNumber(40),
+            },
+        },
+        PricePoints = new List<ComponentPricePointItem>
+        {
+            new ComponentPricePointItem
+            {
+                Name = "name2",
+                Handle = "handle8",
+                PricingScheme = PricingScheme.PerUnit,
+                Interval = 92,
+                IntervalUnit = IntervalUnit.Day,
+            },
+            new ComponentPricePointItem
+            {
+                Name = "name2",
+                Handle = "handle8",
+                PricingScheme = PricingScheme.PerUnit,
+                Interval = 92,
+                IntervalUnit = IntervalUnit.Day,
+            },
+            new ComponentPricePointItem
+            {
+                Name = "name2",
+                Handle = "handle8",
+                PricingScheme = PricingScheme.PerUnit,
+                Interval = 92,
+                IntervalUnit = IntervalUnit.Day,
+            },
+        },
+    },
+};
 ```
 

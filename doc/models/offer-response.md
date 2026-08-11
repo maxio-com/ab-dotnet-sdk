@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- |
 | `Offer` | [`Offer`](../../doc/models/offer.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+OfferResponse offerResponse = new OfferResponse
 {
-  "offer": {
-    "id": 28,
-    "site_id": 210,
-    "product_family_id": 224,
-    "product_id": 30,
-    "product_price_point_id": 150
-  }
-}
+    Offer = new Offer
+    {
+        Id = 28,
+        SiteId = 210,
+        ProductFamilyId = 224,
+        ProductId = 30,
+        ProductPricePointId = 150,
+    },
+};
 ```
 

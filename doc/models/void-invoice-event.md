@@ -15,38 +15,49 @@
 | `EventType` | [`InvoiceEventType`](../../doc/models/invoice-event-type.md) | Required | **Default**: `InvoiceEventType.void_invoice` |
 | `EventData` | [`VoidInvoiceEventData`](../../doc/models/void-invoice-event-data.md) | Required | Example schema for an `void_invoice` event |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+VoidInvoiceEvent voidInvoiceEvent = new VoidInvoiceEvent
 {
-  "id": 16,
-  "timestamp": "2016-03-13T12:52:32.123Z",
-  "invoice": {
-    "issue_date": "2024-01-01",
-    "due_date": "2024-01-01",
-    "paid_date": "2024-01-01",
-    "public_url_expires_on": "2024-01-21",
-    "id": 166,
-    "uid": "uid6",
-    "site_id": 92,
-    "customer_id": 204,
-    "subscription_id": 20
-  },
-  "event_type": "void_invoice",
-  "event_data": {
-    "credit_note_attributes": {
-      "uid": "uid2",
-      "site_id": 72,
-      "customer_id": 184,
-      "subscription_id": 0,
-      "number": "number0"
+    Id = 236L,
+    Timestamp = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    Invoice = new Invoice
+    {
+        Id = 166L,
+        Uid = "uid6",
+        SiteId = 92,
+        CustomerId = 204,
+        SubscriptionId = 20,
+        IssueDate = DateTime.Parse("2024-01-01"),
+        DueDate = DateTime.Parse("2024-01-01"),
+        PaidDate = DateTime.Parse("2024-01-01"),
+        PublicUrlExpiresOn = DateTime.Parse("2024-01-21"),
     },
-    "memo": "memo0",
-    "applied_amount": "applied_amount2",
-    "transaction_time": "2016-03-13T12:52:32.123Z",
-    "is_advance_invoice": false,
-    "reason": "reason2"
-  }
-}
+    EventType = InvoiceEventType.VoidInvoice,
+    EventData = new VoidInvoiceEventData
+    {
+        CreditNoteAttributes = new CreditNote
+        {
+            Uid = "uid2",
+            SiteId = 72,
+            CustomerId = 184,
+            SubscriptionId = 0,
+            Number = "number0",
+        },
+        Memo = "memo0",
+        AppliedAmount = "applied_amount2",
+        TransactionTime = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
+        IsAdvanceInvoice = false,
+        Reason = "reason2",
+    },
+};
 ```
 

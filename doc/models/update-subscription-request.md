@@ -11,23 +11,28 @@
 |  --- | --- | --- | --- |
 | `Subscription` | [`UpdateSubscription`](../../doc/models/update-subscription.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+UpdateSubscriptionRequest updateSubscriptionRequest = new UpdateSubscriptionRequest
 {
-  "subscription": {
-    "defer_signup": false,
-    "dunning_communication_delay_time_zone": "\"Eastern Time (US & Canada)\"",
-    "credit_card_attributes": {
-      "full_number": "full_number2",
-      "expiration_month": "expiration_month6",
-      "expiration_year": "expiration_year2"
+    Subscription = new UpdateSubscription
+    {
+        CreditCardAttributes = new CreditCardAttributes
+        {
+            FullNumber = "full_number2",
+            ExpirationMonth = "expiration_month6",
+            ExpirationYear = "expiration_year2",
+        },
+        ProductHandle = "product_handle6",
+        ProductId = 206,
+        ProductChangeDelayed = false,
+        NextProductId = "next_product_id6",
+        DeferSignup = false,
+        DunningCommunicationDelayTimeZone = "\"Eastern Time (US & Canada)\"",
     },
-    "product_handle": "product_handle6",
-    "product_id": 206,
-    "product_change_delayed": false,
-    "next_product_id": "next_product_id6"
-  }
-}
+};
 ```
 

@@ -14,14 +14,17 @@
 | `Kind` | `string` | Optional | - |
 | `On` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ComponentAllocationErrorItem componentAllocationErrorItem = new ComponentAllocationErrorItem
 {
-  "component_id": 188,
-  "message": "message0",
-  "kind": "kind8",
-  "on": "on0"
-}
+    ComponentId = 122,
+    Message = "message8",
+    Kind = "kind6",
+    On = "on8",
+};
 ```
 

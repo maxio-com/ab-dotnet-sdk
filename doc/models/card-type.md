@@ -48,3 +48,11 @@ The type of card used.
 | `Solo` |
 | `Laser` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CardType cardType = CardType.Solo;
+```
+

@@ -11,24 +11,20 @@
 |  --- | --- | --- | --- |
 | `Errors` | `object` | Optional | The key of the object would be a number (an index in the request array) where the error occurred. In the value object, the key represents the field and the value is an array with error messages. In most cases, this object would contain just one key. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+try
 {
-  "errors": {
-    "key0": {
-      "key1": "val1",
-      "key2": "val2"
-    },
-    "key1": {
-      "key1": "val1",
-      "key2": "val2"
-    },
-    "key2": {
-      "key1": "val1",
-      "key2": "val2"
+    // make the API call
+}
+catch (ApiException e)
+{
+    if (e is EventBasedBillingSegmentErrorsException)
+    {
+        // TODO: Handle EventBasedBillingSegmentErrorsException
+        Console.WriteLine(e.Message);
     }
-  }
 }
 ```
 

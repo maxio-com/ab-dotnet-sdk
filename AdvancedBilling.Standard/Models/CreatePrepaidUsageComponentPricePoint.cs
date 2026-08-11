@@ -111,25 +111,25 @@ namespace AdvancedBilling.Standard.Models
         public bool? UseSiteExchangeRate { get; set; }
 
         /// <summary>
-        /// (only for prepaid usage components) Boolean which controls whether or not remaining units should be rolled over to the next period
+        /// (only for prepaid usage components) Boolean which controls whether or not remaining units should be rolled over to the next period.
         /// </summary>
         [JsonProperty("rollover_prepaid_remainder", NullValueHandling = NullValueHandling.Ignore)]
         public bool? RolloverPrepaidRemainder { get; set; }
 
         /// <summary>
-        /// (only for prepaid usage components) Boolean which controls whether or not the allocated quantity should be renewed at the beginning of each period
+        /// (only for prepaid usage components) Boolean which controls whether or not the allocated quantity should be renewed at the beginning of each period.
         /// </summary>
         [JsonProperty("renew_prepaid_allocation", NullValueHandling = NullValueHandling.Ignore)]
         public bool? RenewPrepaidAllocation { get; set; }
 
         /// <summary>
-        /// (only for prepaid usage components where rollover_prepaid_remainder is true) The number of `expiration_interval_unit`s after which rollover amounts should expire
+        /// (only for prepaid usage components where rollover_prepaid_remainder is true) The number of `expiration_interval_unit`s after which rollover amounts should expire.
         /// </summary>
         [JsonProperty("expiration_interval", NullValueHandling = NullValueHandling.Ignore)]
         public double? ExpirationInterval { get; set; }
 
         /// <summary>
-        /// (only for prepaid usage components where rollover_prepaid_remainder is true) A string representing the expiration interval unit for this component, either month or day
+        /// (only for prepaid usage components where rollover_prepaid_remainder is true) A string representing the expiration interval unit for this component, either month or day.
         /// </summary>
         [JsonProperty("expiration_interval_unit")]
         public Models.ExpirationIntervalUnit? ExpirationIntervalUnit

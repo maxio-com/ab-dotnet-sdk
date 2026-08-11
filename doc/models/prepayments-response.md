@@ -11,36 +11,33 @@
 |  --- | --- | --- | --- |
 | `Prepayments` | [`List<Prepayment>`](../../doc/models/prepayment.md) | Optional | **Constraints**: *Unique Items Required* |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+using System.Globalization;
+
+PrepaymentsResponse prepaymentsResponse = new PrepaymentsResponse
 {
-  "prepayments": [
+    Prepayments = new List<Prepayment>
     {
-      "id": 76,
-      "subscription_id": 186,
-      "amount_in_cents": 94,
-      "remaining_amount_in_cents": 220,
-      "refunded_amount_in_cents": 170,
-      "details": "details6",
-      "external": false,
-      "memo": "memo0",
-      "payment_type": "cash",
-      "created_at": "2016-03-13T12:52:32.123Z"
+        new Prepayment
+        {
+            Id = 76,
+            SubscriptionId = 186,
+            AmountInCents = 94L,
+            RemainingAmountInCents = 220L,
+            External = false,
+            Memo = "memo0",
+            CreatedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+                provider: CultureInfo.InvariantCulture,
+                DateTimeStyles.RoundtripKind),
+            RefundedAmountInCents = 170L,
+            Details = "details6",
+            PaymentType = PrepaymentMethod.Cash,
+        },
     },
-    {
-      "id": 76,
-      "subscription_id": 186,
-      "amount_in_cents": 94,
-      "remaining_amount_in_cents": 220,
-      "refunded_amount_in_cents": 170,
-      "details": "details6",
-      "external": false,
-      "memo": "memo0",
-      "payment_type": "cash",
-      "created_at": "2016-03-13T12:52:32.123Z"
-    }
-  ]
-}
+};
 ```
 

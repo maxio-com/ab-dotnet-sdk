@@ -25,33 +25,39 @@
 | `ConsolidationLevel` | `string` | Required | - |
 | `LineItems` | [`List<InvoiceLineItemEventData>`](../../doc/models/invoice-line-item-event-data.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+InvoiceIssued invoiceIssued = new InvoiceIssued
 {
-  "uid": "uid4",
-  "number": "number8",
-  "role": "role2",
-  "due_date": "2016-03-13",
-  "issue_date": "issue_date0",
-  "paid_date": "paid_date6",
-  "due_amount": "due_amount6",
-  "paid_amount": "paid_amount4",
-  "tax_amount": "tax_amount2",
-  "refund_amount": "refund_amount0",
-  "total_amount": "total_amount0",
-  "status_amount": "status_amount4",
-  "product_name": "product_name0",
-  "consolidation_level": "consolidation_level4",
-  "line_items": [
+    Uid = "uid8",
+    Number = "number4",
+    Role = "role8",
+    DueDate = DateTime.Parse("2016-03-13"),
+    IssueDate = "issue_date4",
+    PaidDate = "paid_date8",
+    DueAmount = "due_amount0",
+    PaidAmount = "paid_amount0",
+    TaxAmount = "tax_amount8",
+    RefundAmount = "refund_amount6",
+    TotalAmount = "total_amount4",
+    StatusAmount = "status_amount8",
+    ProductName = "product_name4",
+    ConsolidationLevel = "consolidation_level0",
+    LineItems = new List<InvoiceLineItemEventData>
     {
-      "uid": "uid8",
-      "title": "title4",
-      "description": "description8",
-      "quantity": 102,
-      "quantity_delta": 204
-    }
-  ]
-}
+        new InvoiceLineItemEventData
+        {
+            Uid = "uid8",
+            Title = "title4",
+            Description = "description8",
+            Quantity = 102,
+            QuantityDelta = 204,
+        },
+    },
+};
 ```
 

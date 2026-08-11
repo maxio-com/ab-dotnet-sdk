@@ -135,7 +135,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.IntervalUnit? TrialIntervalUnit { get; set; }
 
         /// <summary>
-        /// Indicates how a trial is handled when the trail period ends and there is no credit card on file. For `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will send normal dunning emails and statements according to your other settings.
+        /// Indicates how a trial is handled when the trial period ends and there is no credit card on file. For `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will send normal dunning emails and statements according to your other settings.
         /// </summary>
         [JsonProperty("trial_type")]
         public Models.TrialType? TrialType

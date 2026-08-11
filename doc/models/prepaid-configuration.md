@@ -15,15 +15,18 @@
 | `AutoReplenish` | `bool?` | Optional | - |
 | `ReplenishThresholdAmountInCents` | `long?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PrepaidConfiguration prepaidConfiguration = new PrepaidConfiguration
 {
-  "id": 156,
-  "initial_funding_amount_in_cents": 88,
-  "replenish_to_amount_in_cents": 166,
-  "auto_replenish": false,
-  "replenish_threshold_amount_in_cents": 222
-}
+    Id = 146,
+    InitialFundingAmountInCents = 78L,
+    ReplenishToAmountInCents = 80L,
+    AutoReplenish = false,
+    ReplenishThresholdAmountInCents = 232L,
+};
 ```
 

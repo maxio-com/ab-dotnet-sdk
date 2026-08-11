@@ -14,3 +14,11 @@ Defaults to personal
 | `Personal` |
 | `Business` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+BankAccountHolderType bankAccountHolderType = BankAccountHolderType.Personal;
+```
+

@@ -125,7 +125,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Total revenue of the all subscriptions that have received a discount from this coupon.
+        /// Total revenue of all subscriptions that have received a discount from this coupon.
         /// </summary>
         [JsonProperty("revenue")]
         public int? Revenue
@@ -143,7 +143,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Total revenue of the all subscriptions that have received a discount from this coupon.
+        /// Total revenue of all subscriptions that have received a discount from this coupon.
         /// </summary>
         [JsonProperty("revenue_in_cents", NullValueHandling = NullValueHandling.Ignore)]
         public long? RevenueInCents { get; set; }

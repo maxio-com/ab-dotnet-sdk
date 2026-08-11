@@ -41,10 +41,34 @@ namespace AdvancedBilling.Standard.Models
         ExpiredCards,
 
         /// <summary>
+        /// EnumExpiredCardsLiveSubscriptions.
+        /// </summary>
+        [EnumMember(Value = "expired_cards_(live_subscriptions)")]
+        EnumExpiredCardsLiveSubscriptions,
+
+        /// <summary>
+        /// EnumExpiredCardsAllSubscriptions.
+        /// </summary>
+        [EnumMember(Value = "expired_cards_(all_subscriptions)")]
+        EnumExpiredCardsAllSubscriptions,
+
+        /// <summary>
         /// OnHold.
         /// </summary>
         [EnumMember(Value = "on_hold")]
         OnHold,
+
+        /// <summary>
+        /// AwaitingSignup.
+        /// </summary>
+        [EnumMember(Value = "awaiting_signup")]
+        AwaitingSignup,
+
+        /// <summary>
+        /// AwaitingSignupDate.
+        /// </summary>
+        [EnumMember(Value = "awaiting_signup_date")]
+        AwaitingSignupDate,
 
         /// <summary>
         /// PastDue.
@@ -63,6 +87,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [EnumMember(Value = "pending_renewal")]
         PendingRenewal,
+
+        /// <summary>
+        /// PrepaidDunning.
+        /// </summary>
+        [EnumMember(Value = "prepaid_dunning")]
+        PrepaidDunning,
 
         /// <summary>
         /// Suspended.

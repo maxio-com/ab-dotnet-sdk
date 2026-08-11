@@ -16,67 +16,114 @@
 | `PaymentProfileId` | `string` | Optional | - |
 | `PayerId` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+SubscriptionGroupSignupError subscriptionGroupSignupError = new SubscriptionGroupSignupError
 {
-  "subscriptions": {
-    "key0": {
-      "product": [
-        "product9"
-      ],
-      "product_price_point_id": [
-        "product_price_point_id7"
-      ],
-      "payment_profile": [
-        "payment_profile2"
-      ],
-      "payment_profile.chargify_token": [
-        "payment_profile.chargify_token6"
-      ],
-      "base": [
-        "base5",
-        "base6"
-      ]
+    Subscriptions = new Dictionary<string, SubscriptionGroupSubscriptionError>
+    {
+        ["key0"] = new SubscriptionGroupSubscriptionError
+        {
+            Product = new List<string>
+            {
+                "product9",
+            },
+            ProductPricePointId = new List<string>
+            {
+                "product_price_point_id7",
+            },
+            PaymentProfile = new List<string>
+            {
+                "payment_profile2",
+            },
+            PaymentProfileChargifyToken = new List<string>
+            {
+                "payment_profile.chargify_token6",
+            },
+            MBase = new List<string>
+            {
+                "base5",
+                "base6",
+            },
+        },
+        ["key1"] = new SubscriptionGroupSubscriptionError
+        {
+            Product = new List<string>
+            {
+                "product9",
+            },
+            ProductPricePointId = new List<string>
+            {
+                "product_price_point_id7",
+            },
+            PaymentProfile = new List<string>
+            {
+                "payment_profile2",
+            },
+            PaymentProfileChargifyToken = new List<string>
+            {
+                "payment_profile.chargify_token6",
+            },
+            MBase = new List<string>
+            {
+                "base5",
+                "base6",
+            },
+        },
+        ["key2"] = new SubscriptionGroupSubscriptionError
+        {
+            Product = new List<string>
+            {
+                "product9",
+            },
+            ProductPricePointId = new List<string>
+            {
+                "product_price_point_id7",
+            },
+            PaymentProfile = new List<string>
+            {
+                "payment_profile2",
+            },
+            PaymentProfileChargifyToken = new List<string>
+            {
+                "payment_profile.chargify_token6",
+            },
+            MBase = new List<string>
+            {
+                "base5",
+                "base6",
+            },
+        },
     },
-    "key1": {
-      "product": [
-        "product9"
-      ],
-      "product_price_point_id": [
-        "product_price_point_id7"
-      ],
-      "payment_profile": [
-        "payment_profile2"
-      ],
-      "payment_profile.chargify_token": [
-        "payment_profile.chargify_token6"
-      ],
-      "base": [
-        "base5",
-        "base6"
-      ]
-    }
-  },
-  "payer_reference": "payer_reference0",
-  "payer": {
-    "last_name": [
-      "last_name5",
-      "last_name6"
-    ],
-    "first_name": [
-      "first_name8"
-    ],
-    "email": [
-      "email0",
-      "email9"
-    ]
-  },
-  "subscription_group": [
-    "subscription_group1",
-    "subscription_group2"
-  ],
-  "payment_profile_id": "payment_profile_id2"
-}
+    PayerReference = "payer_reference8",
+    Payer = new PayerError
+    {
+        LastName = new List<string>
+        {
+            "last_name5",
+            "last_name6",
+        },
+        FirstName = new List<string>
+        {
+            "first_name8",
+        },
+        Email = new List<string>
+        {
+            "email0",
+            "email9",
+        },
+    },
+    SubscriptionGroup = new List<string>
+    {
+        "subscription_group3",
+        "subscription_group4",
+        "subscription_group5",
+    },
+    PaymentProfileId = "payment_profile_id4",
+};
 ```
 

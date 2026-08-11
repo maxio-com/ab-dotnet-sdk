@@ -15,35 +15,49 @@
 | `EventType` | [`InvoiceEventType`](../../doc/models/invoice-event-type.md) | Required | **Default**: `InvoiceEventType.remove_payment` |
 | `EventData` | [`RemovePaymentEventData`](../../doc/models/remove-payment-event-data.md) | Required | Example schema for an `remove_payment` event |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Globalization;
+
+RemovePaymentEvent removePaymentEvent = new RemovePaymentEvent
 {
-  "id": 236,
-  "timestamp": "2016-03-13T12:52:32.123Z",
-  "invoice": {
-    "issue_date": "2024-01-01",
-    "due_date": "2024-01-01",
-    "paid_date": "2024-01-01",
-    "public_url_expires_on": "2024-01-21",
-    "id": 166,
-    "uid": "uid6",
-    "site_id": 92,
-    "customer_id": 204,
-    "subscription_id": 20
-  },
-  "event_type": "remove_payment",
-  "event_data": {
-    "transaction_id": 78,
-    "memo": "memo0",
-    "applied_amount": "applied_amount2",
-    "transaction_time": "2016-03-13T12:52:32.123Z",
-    "payment_method": {
-      "type": "apple_pay"
+    Id = 132L,
+    Timestamp = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    Invoice = new Invoice
+    {
+        Id = 166L,
+        Uid = "uid6",
+        SiteId = 92,
+        CustomerId = 204,
+        SubscriptionId = 20,
+        IssueDate = DateTime.Parse("2024-01-01"),
+        DueDate = DateTime.Parse("2024-01-01"),
+        PaidDate = DateTime.Parse("2024-01-01"),
+        PublicUrlExpiresOn = DateTime.Parse("2024-01-21"),
     },
-    "prepayment": false,
-    "original_amount": "original_amount0"
-  }
-}
+    EventType = InvoiceEventType.RemovePayment,
+    EventData = new RemovePaymentEventData
+    {
+        TransactionId = 78,
+        Memo = "memo0",
+        AppliedAmount = "applied_amount2",
+        TransactionTime = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
+        PaymentMethod = InvoiceEventPayment.FromPaymentMethodApplePay(
+            new PaymentMethodApplePay
+            {
+                Type = InvoiceEventPaymentMethod.ApplePay,
+            }
+        ),
+        Prepayment = false,
+        OriginalAmount = "original_amount0",
+    },
+};
 ```
 

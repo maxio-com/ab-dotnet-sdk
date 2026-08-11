@@ -14,3 +14,11 @@ The role of the debit note.
 | `Chargeback` |
 | `Refund` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+DebitNoteRole debitNoteRole = DebitNoteRole.Chargeback;
+```
+

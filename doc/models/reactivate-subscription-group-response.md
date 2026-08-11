@@ -19,18 +19,24 @@
 | `State` | `string` | Optional | - |
 | `CancelAtEndOfPeriod` | `bool?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+ReactivateSubscriptionGroupResponse reactivateSubscriptionGroupResponse = new ReactivateSubscriptionGroupResponse
 {
-  "uid": "uid4",
-  "scheme": 66,
-  "customer_id": 86,
-  "payment_profile_id": 250,
-  "subscription_ids": [
-    196,
-    197
-  ]
-}
+    Uid = "uid0",
+    Scheme = 10,
+    CustomerId = 30,
+    PaymentProfileId = 62,
+    SubscriptionIds = new List<int>
+    {
+        140,
+        141,
+        142,
+    },
+};
 ```
 

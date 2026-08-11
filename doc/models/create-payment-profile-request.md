@@ -11,18 +11,22 @@
 |  --- | --- | --- | --- |
 | `PaymentProfile` | [`CreatePaymentProfile`](../../doc/models/create-payment-profile.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreatePaymentProfileRequest createPaymentProfileRequest = new CreatePaymentProfileRequest
 {
-  "payment_profile": {
-    "chargify_token": "tok_9g6hw85pnpt6knmskpwp4ttt",
-    "full_number": "5424000000000015",
-    "id": 44,
-    "payment_type": "credit_card",
-    "first_name": "first_name4",
-    "last_name": "last_name2"
-  }
-}
+    PaymentProfile = new CreatePaymentProfile
+    {
+        ChargifyToken = "tok_9g6hw85pnpt6knmskpwp4ttt",
+        Id = 44,
+        PaymentType = PaymentType.CreditCard,
+        FirstName = "first_name4",
+        LastName = "last_name2",
+        FullNumber = "5424000000000015",
+    },
+};
 ```
 

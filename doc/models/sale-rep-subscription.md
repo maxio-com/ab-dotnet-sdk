@@ -20,15 +20,18 @@
 | `LastPayment` | `string` | Optional | - |
 | `ChurnDate` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SaleRepSubscription saleRepSubscription = new SaleRepSubscription
 {
-  "id": 18,
-  "site_name": "site_name2",
-  "subscription_url": "subscription_url6",
-  "customer_name": "customer_name2",
-  "created_at": "created_at8"
-}
+    Id = 68,
+    SiteName = "site_name8",
+    SubscriptionUrl = "subscription_url2",
+    CustomerName = "customer_name8",
+    CreatedAt = "created_at4",
+};
 ```
 

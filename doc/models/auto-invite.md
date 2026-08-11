@@ -12,3 +12,11 @@
 | `No` | Do not send the invitation email. |
 | `Yes` | Automatically send the invitation email. |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+AutoInvite autoInvite = AutoInvite.No;
+```
+

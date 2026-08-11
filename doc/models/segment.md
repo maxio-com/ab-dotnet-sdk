@@ -22,15 +22,18 @@
 | `UpdatedAt` | `DateTimeOffset?` | Optional | - |
 | `Prices` | [`List<SegmentPrice>`](../../doc/models/segment-price.md) | Optional | **Constraints**: *Minimum Items*: `1` |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+Segment segment = new Segment
 {
-  "id": 6,
-  "component_id": 116,
-  "price_point_id": 140,
-  "event_based_billing_metric_id": 200,
-  "pricing_scheme": "stairstep"
-}
+    Id = 118,
+    ComponentId = 228,
+    PricePointId = 4,
+    EventBasedBillingMetricId = 56,
+    PricingScheme = PricingScheme.Stairstep,
+};
 ```
 

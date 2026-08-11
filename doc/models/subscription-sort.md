@@ -20,3 +20,11 @@
 | `OpenBalance` |
 | `ExpiresAt` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionSort subscriptionSort = SubscriptionSort.TotalPayments;
+```
+

@@ -17,18 +17,21 @@
 | `ComponentName` | `string` | Optional | - |
 | `PricePointName` | `string` | Optional | - |
 | `CurrencyPrices` | [`List<CurrencyPrice>`](../../doc/models/currency-price.md) | Optional | - |
-| `Interval` | `int?` | Optional | The numerical interval. i.e. an interval of '30' coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. |
+| `Interval` | `int?` | Optional | The numerical interval. e.g., an interval of '30' coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. |
 | `IntervalUnit` | [`IntervalUnit?`](../../doc/models/interval-unit.md) | Optional | A string representing the interval unit for this component price point, either month or day. This property is only available for sites with Multifrequency enabled. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+OfferItem offerItem = new OfferItem
 {
-  "component_id": 216,
-  "price_point_id": 16,
-  "starting_quantity": "starting_quantity0",
-  "editable": false,
-  "component_unit_price": "component_unit_price8"
-}
+    ComponentId = 234,
+    PricePointId = 254,
+    StartingQuantity = "starting_quantity6",
+    Editable = false,
+    ComponentUnitPrice = "component_unit_price2",
+};
 ```
 

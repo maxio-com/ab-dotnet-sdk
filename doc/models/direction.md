@@ -12,3 +12,11 @@
 | `Asc` |
 | `Desc` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+Direction direction = Direction.Asc;
+```
+

@@ -16,3 +16,11 @@ Current status of the debit note.
 | `Banished` |
 | `Paid` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+DebitNoteStatus debitNoteStatus = DebitNoteStatus.Open;
+```
+

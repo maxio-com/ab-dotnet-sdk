@@ -1,4 +1,4 @@
-// <copyright file="ListSubcriptionGroupPrepaymentItem.cs" company="APIMatic">
+// <copyright file="ListSubscriptionGroupPrepaymentItem.cs" company="APIMatic">
 // AdvancedBilling.Standard
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace AdvancedBilling.Standard.Models
 {
     /// <summary>
-    /// ListSubcriptionGroupPrepaymentItem.
+    /// ListSubscriptionGroupPrepaymentItem.
     /// </summary>
-    public class ListSubcriptionGroupPrepaymentItem : BaseModel
+    public class ListSubscriptionGroupPrepaymentItem : BaseModel
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ListSubcriptionGroupPrepaymentItem"/> class.
+        /// Initializes a new instance of the <see cref="ListSubscriptionGroupPrepaymentItem"/> class.
         /// </summary>
-        public ListSubcriptionGroupPrepaymentItem()
+        public ListSubscriptionGroupPrepaymentItem()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ListSubcriptionGroupPrepaymentItem"/> class.
+        /// Initializes a new instance of the <see cref="ListSubscriptionGroupPrepaymentItem"/> class.
         /// </summary>
         /// <param name="id">id.</param>
         /// <param name="subscriptionGroupUid">subscription_group_uid.</param>
@@ -34,7 +34,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="memo">memo.</param>
         /// <param name="paymentType">payment_type.</param>
         /// <param name="createdAt">created_at.</param>
-        public ListSubcriptionGroupPrepaymentItem(
+        public ListSubscriptionGroupPrepaymentItem(
             int? id = null,
             string subscriptionGroupUid = null,
             long? amountInCents = null,
@@ -116,7 +116,7 @@ namespace AdvancedBilling.Standard.Models
         {
             var toStringOutput = new List<string>();
             this.ToString(toStringOutput);
-            return $"ListSubcriptionGroupPrepaymentItem : ({string.Join(", ", toStringOutput)})";
+            return $"ListSubscriptionGroupPrepaymentItem : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
@@ -125,7 +125,7 @@ namespace AdvancedBilling.Standard.Models
             if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is ListSubcriptionGroupPrepaymentItem other &&
+            return obj is ListSubscriptionGroupPrepaymentItem other &&
                 (this.Id == null && other.Id == null ||
                  this.Id?.Equals(other.Id) == true) &&
                 (this.SubscriptionGroupUid == null && other.SubscriptionGroupUid == null ||

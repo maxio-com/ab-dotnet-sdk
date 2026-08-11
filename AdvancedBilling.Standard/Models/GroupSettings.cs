@@ -40,7 +40,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.GroupTarget Target { get; set; }
 
         /// <summary>
-        /// Optional attributes related to billing date and accrual. Note: Only applicable for new subscriptions.
+        /// (Optional) Attributes related to billing date and accrual. Note: Only applicable for new subscriptions.
         /// </summary>
         [JsonProperty("billing", NullValueHandling = NullValueHandling.Ignore)]
         public Models.GroupBilling Billing { get; set; }

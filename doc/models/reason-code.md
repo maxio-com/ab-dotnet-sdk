@@ -17,15 +17,18 @@
 | `CreatedAt` | `DateTimeOffset?` | Optional | - |
 | `UpdatedAt` | `DateTimeOffset?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ReasonCode reasonCode = new ReasonCode
 {
-  "id": 164,
-  "site_id": 90,
-  "code": "code0",
-  "description": "description2",
-  "position": 194
-}
+    Id = 174,
+    SiteId = 100,
+    Code = "code4",
+    Description = "description6",
+    Position = 204,
+};
 ```
 

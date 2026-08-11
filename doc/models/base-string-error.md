@@ -13,13 +13,19 @@ The error is base if it is not directly associated with a single attribute.
 |  --- | --- | --- | --- |
 | `Base` | `List<string>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+BaseStringError baseStringError = new BaseStringError
 {
-  "base": [
-    "base3"
-  ]
-}
+    MBase = new List<string>
+    {
+        "base5",
+        "base6",
+    },
+};
 ```
 

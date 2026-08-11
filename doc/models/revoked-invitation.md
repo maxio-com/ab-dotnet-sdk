@@ -13,13 +13,16 @@
 | `LastAcceptedAt` | `string` | Optional | - |
 | `UninvitedCount` | `int?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+RevokedInvitation revokedInvitation = new RevokedInvitation
 {
-  "last_sent_at": "last_sent_at2",
-  "last_accepted_at": "last_accepted_at2",
-  "uninvited_count": 226
-}
+    LastSentAt = "last_sent_at8",
+    LastAcceptedAt = "last_accepted_at8",
+    UninvitedCount = 130,
+};
 ```
 

@@ -243,7 +243,7 @@ namespace AdvancedBilling.Standard.Models
         public int? PricePointId { get; set; }
 
         /// <summary>
-        /// The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
+        /// The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
         /// </summary>
         [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
         public int? Interval { get; set; }

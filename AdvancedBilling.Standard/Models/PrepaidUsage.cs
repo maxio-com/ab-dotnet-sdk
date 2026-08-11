@@ -4,6 +4,7 @@
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
 using APIMatic.Core.Utilities.Converters;
+using AdvancedBilling.Standard.Models.Containers;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
@@ -37,8 +38,8 @@ namespace AdvancedBilling.Standard.Models
         public PrepaidUsage(
             string previousUnitBalance,
             string previousOverageUnitBalance,
-            int newUnitBalance,
-            int newOverageUnitBalance,
+            PrepaidUsageNewUnitBalance newUnitBalance,
+            PrepaidUsageNewOverageUnitBalance newOverageUnitBalance,
             int usageQuantity,
             int overageUsageQuantity,
             int componentId,
@@ -79,14 +80,14 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("new_unit_balance")]
         [JsonRequired]
-        public int NewUnitBalance { get; set; }
+        public PrepaidUsageNewUnitBalance NewUnitBalance { get; set; }
 
         /// <summary>
         /// Gets or sets NewOverageUnitBalance.
         /// </summary>
         [JsonProperty("new_overage_unit_balance")]
         [JsonRequired]
-        public int NewOverageUnitBalance { get; set; }
+        public PrepaidUsageNewOverageUnitBalance NewOverageUnitBalance { get; set; }
 
         /// <summary>
         /// Gets or sets UsageQuantity.
@@ -151,8 +152,10 @@ namespace AdvancedBilling.Standard.Models
                  this.PreviousUnitBalance?.Equals(other.PreviousUnitBalance) == true) &&
                 (this.PreviousOverageUnitBalance == null && other.PreviousOverageUnitBalance == null ||
                  this.PreviousOverageUnitBalance?.Equals(other.PreviousOverageUnitBalance) == true) &&
-                (this.NewUnitBalance.Equals(other.NewUnitBalance)) &&
-                (this.NewOverageUnitBalance.Equals(other.NewOverageUnitBalance)) &&
+                (this.NewUnitBalance == null && other.NewUnitBalance == null ||
+                 this.NewUnitBalance?.Equals(other.NewUnitBalance) == true) &&
+                (this.NewOverageUnitBalance == null && other.NewOverageUnitBalance == null ||
+                 this.NewOverageUnitBalance?.Equals(other.NewOverageUnitBalance) == true) &&
                 (this.UsageQuantity.Equals(other.UsageQuantity)) &&
                 (this.OverageUsageQuantity.Equals(other.OverageUsageQuantity)) &&
                 (this.ComponentId.Equals(other.ComponentId)) &&
@@ -173,8 +176,8 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"PreviousUnitBalance = {this.PreviousUnitBalance ?? "null"}");
             toStringOutput.Add($"PreviousOverageUnitBalance = {this.PreviousOverageUnitBalance ?? "null"}");
-            toStringOutput.Add($"NewUnitBalance = {this.NewUnitBalance}");
-            toStringOutput.Add($"NewOverageUnitBalance = {this.NewOverageUnitBalance}");
+            toStringOutput.Add($"NewUnitBalance = {(this.NewUnitBalance == null ? "null" : this.NewUnitBalance.ToString())}");
+            toStringOutput.Add($"NewOverageUnitBalance = {(this.NewOverageUnitBalance == null ? "null" : this.NewOverageUnitBalance.ToString())}");
             toStringOutput.Add($"UsageQuantity = {this.UsageQuantity}");
             toStringOutput.Add($"OverageUsageQuantity = {this.OverageUsageQuantity}");
             toStringOutput.Add($"ComponentId = {this.ComponentId}");

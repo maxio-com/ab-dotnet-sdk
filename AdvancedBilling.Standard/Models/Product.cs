@@ -33,6 +33,7 @@ namespace AdvancedBilling.Standard.Models
         private bool? useSiteExchangeRate;
         private string itemCategory;
         private string productPricePointHandle;
+        private string unspscCode;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "handle", false },
@@ -53,6 +54,7 @@ namespace AdvancedBilling.Standard.Models
             { "use_site_exchange_rate", false },
             { "item_category", false },
             { "product_price_point_handle", false },
+            { "unspsc_code", false },
         };
 
         /// <summary>
@@ -102,6 +104,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="itemCategory">item_category.</param>
         /// <param name="productPricePointId">product_price_point_id.</param>
         /// <param name="productPricePointHandle">product_price_point_handle.</param>
+        /// <param name="unspscCode">unspsc_code.</param>
         public Product(
             int? id = null,
             string name = null,
@@ -139,7 +142,8 @@ namespace AdvancedBilling.Standard.Models
             bool? useSiteExchangeRate = null,
             string itemCategory = null,
             int? productPricePointId = null,
-            string productPricePointHandle = null)
+            string productPricePointHandle = null,
+            string unspscCode = null)
         {
             this.Id = id;
             this.Name = name;
@@ -250,6 +254,11 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.ProductPricePointHandle = productPricePointHandle;
             }
+
+            if (unspscCode != null)
+            {
+                this.UnspscCode = unspscCode;
+            }
         }
 
         /// <summary>
@@ -301,7 +310,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// E.g. Internal ID or SKU Number
+        /// E.g., Internal ID or SKU Number
         /// </summary>
         [JsonProperty("accounting_code")]
         public string AccountingCode
@@ -325,7 +334,7 @@ namespace AdvancedBilling.Standard.Models
         public bool? RequestCreditCard { get; set; }
 
         /// <summary>
-        /// A numerical interval for the length a subscription to this product will run before it expires. See the description of interval for a description of how this value is coupled with an interval unit to calculate the full interval
+        /// A numerical interval for the length a subscription to this product will run before it expires. See the description of interval for a description of how this value is coupled with an interval unit to calculate the full interval.
         /// </summary>
         [JsonProperty("expiration_interval")]
         public int? ExpirationInterval
@@ -381,7 +390,7 @@ namespace AdvancedBilling.Standard.Models
         public long? PriceInCents { get; set; }
 
         /// <summary>
-        /// The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this product would renew every 30 days
+        /// The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean this product would renew every 30 days.
         /// </summary>
         [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
         public int? Interval { get; set; }
@@ -429,7 +438,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// A numerical interval for the length of the trial period of a subscription to this product. See the description of interval for a description of how this value is coupled with an interval unit to calculate the full interval
+        /// A numerical interval for the length of the trial period of a subscription to this product. See the description of interval for a description of how this value is coupled with an interval unit to calculate the full interval.
         /// </summary>
         [JsonProperty("trial_interval")]
         public int? TrialInterval
@@ -556,7 +565,7 @@ namespace AdvancedBilling.Standard.Models
         public int? VersionNumber { get; set; }
 
         /// <summary>
-        /// The parameters will append to the url after a successful account update. See [help documentation](https://help.chargify.com/products/product-editing.html#return-parameters-after-account-update)
+        /// The parameters will append to the url after a successful account update. See [help documentation](https://help.chargify.com/products/product-editing.html#return-parameters-after-account-update).
         /// </summary>
         [JsonProperty("update_return_params")]
         public string UpdateReturnParams
@@ -693,6 +702,24 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent as the commodity code on invoice line items for this product instead of the default derived from item_category.
+        /// </summary>
+        [JsonProperty("unspsc_code")]
+        public string UnspscCode
+        {
+            get
+            {
+                return this.unspscCode;
+            }
+
+            set
+            {
+                this.shouldSerialize["unspsc_code"] = true;
+                this.unspscCode = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -826,6 +853,13 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetProductPricePointHandle()
         {
             this.shouldSerialize["product_price_point_handle"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetUnspscCode()
+        {
+            this.shouldSerialize["unspsc_code"] = false;
         }
 
         /// <summary>
@@ -990,6 +1024,15 @@ namespace AdvancedBilling.Standard.Models
             return this.shouldSerialize["product_price_point_handle"];
         }
 
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeUnspscCode()
+        {
+            return this.shouldSerialize["unspsc_code"];
+        }
+
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
@@ -1071,6 +1114,8 @@ namespace AdvancedBilling.Standard.Models
                  this.ProductPricePointId?.Equals(other.ProductPricePointId) == true) &&
                 (this.ProductPricePointHandle == null && other.ProductPricePointHandle == null ||
                  this.ProductPricePointHandle?.Equals(other.ProductPricePointHandle) == true) &&
+                (this.UnspscCode == null && other.UnspscCode == null ||
+                 this.UnspscCode?.Equals(other.UnspscCode) == true) &&
                 base.Equals(obj);
         }
 
@@ -1117,6 +1162,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"ItemCategory = {this.ItemCategory ?? "null"}");
             toStringOutput.Add($"ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
             toStringOutput.Add($"ProductPricePointHandle = {this.ProductPricePointHandle ?? "null"}");
+            toStringOutput.Add($"UnspscCode = {this.UnspscCode ?? "null"}");
 
             base.ToString(toStringOutput);
         }

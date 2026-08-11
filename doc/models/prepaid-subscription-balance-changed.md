@@ -14,14 +14,17 @@
 | `PrepaymentAccountBalanceInCents` | `long` | Required | - |
 | `CurrentUsageAmountInCents` | `long` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PrepaidSubscriptionBalanceChanged prepaidSubscriptionBalanceChanged = new PrepaidSubscriptionBalanceChanged
 {
-  "reason": "reason8",
-  "current_account_balance_in_cents": 250,
-  "prepayment_account_balance_in_cents": 44,
-  "current_usage_amount_in_cents": 242
-}
+    Reason = "reason6",
+    CurrentAccountBalanceInCents = 194L,
+    PrepaymentAccountBalanceInCents = 100L,
+    CurrentUsageAmountInCents = 186L,
+};
 ```
 

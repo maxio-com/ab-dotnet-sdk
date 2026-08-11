@@ -11,17 +11,23 @@
 |  --- | --- | --- | --- |
 | `CurrencyPrices` | [`List<CreateCurrencyPrice>`](../../doc/models/create-currency-price.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+CreateCurrencyPricesRequest createCurrencyPricesRequest = new CreateCurrencyPricesRequest
 {
-  "currency_prices": [
+    CurrencyPrices = new List<CreateCurrencyPrice>
     {
-      "currency": "currency8",
-      "price": 233.74,
-      "price_id": 116
-    }
-  ]
-}
+        new CreateCurrencyPrice
+        {
+            Currency = "currency8",
+            Price = 233.74,
+            PriceId = 116,
+        },
+    },
+};
 ```
 

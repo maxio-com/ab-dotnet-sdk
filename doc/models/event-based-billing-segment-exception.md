@@ -11,18 +11,20 @@
 |  --- | --- | --- | --- |
 | `Errors` | [`EventBasedBillingSegmentError`](../../doc/models/event-based-billing-segment-error.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+try
 {
-  "errors": {
-    "segments": {
-      "key0": {
-        "key1": "val1",
-        "key2": "val2"
-      }
+    // make the API call
+}
+catch (ApiException e)
+{
+    if (e is EventBasedBillingSegmentException)
+    {
+        // TODO: Handle EventBasedBillingSegmentException
+        Console.WriteLine(e.Message);
     }
-  }
 }
 ```
 

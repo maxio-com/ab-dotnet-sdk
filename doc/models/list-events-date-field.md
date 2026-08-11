@@ -13,7 +13,9 @@
 
 ## Example
 
-```
-created_at
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ListEventsDateField listEventsDateField = ListEventsDateField.CreatedAt;
 ```
 

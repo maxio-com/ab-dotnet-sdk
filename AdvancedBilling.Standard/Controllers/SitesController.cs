@@ -91,7 +91,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Returns public keys used for Maxio.js (formerly Chargify.js).
+        /// Lists public keys used for Maxio.js (formerly Chargify.js).
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the Models.ListPublicKeysResponse response from the API call.</returns>
@@ -100,7 +100,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListChargifyJsPublicKeysAsync(input));
 
         /// <summary>
-        /// Returns public keys used for Maxio.js (formerly Chargify.js).
+        /// Lists public keys used for Maxio.js (formerly Chargify.js).
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>

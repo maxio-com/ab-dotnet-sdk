@@ -22,3 +22,11 @@ A handle for the line item kind
 | `Coupon` |
 | `Tax` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+LineItemKind lineItemKind = LineItemKind.PrepaidUsageComponent;
+```
+

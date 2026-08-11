@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- |
 | `SubscriptionGroup` | `string` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionGroupSingleError subscriptionGroupSingleError = new SubscriptionGroupSingleError
 {
-  "subscription_group": "subscription_group2"
-}
+    SubscriptionGroup = "subscription_group0",
+};
 ```
 

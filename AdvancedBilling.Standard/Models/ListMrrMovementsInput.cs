@@ -40,7 +40,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// optionally filter results by subscription
+        /// (Optional) Filter results by subscription.
         /// </summary>
         [JsonProperty("subscription_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? SubscriptionId { get; set; }

@@ -15,10 +15,12 @@ namespace AdvancedBilling.Standard.Models
     {
         private int? parentId;
         private string salesforceId;
+        private int? brandingThemeId;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "parent_id", false },
             { "salesforce_id", false },
+            { "branding_theme_id", false },
         };
 
         /// <summary>
@@ -47,9 +49,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="locale">locale.</param>
         /// <param name="vatNumber">vat_number.</param>
         /// <param name="taxExempt">tax_exempt.</param>
+        /// <param name="surcharging">surcharging.</param>
         /// <param name="taxExemptReason">tax_exempt_reason.</param>
         /// <param name="parentId">parent_id.</param>
         /// <param name="salesforceId">salesforce_id.</param>
+        /// <param name="brandingThemeId">branding_theme_id.</param>
         public CreateCustomer(
             string firstName,
             string lastName,
@@ -67,9 +71,11 @@ namespace AdvancedBilling.Standard.Models
             string locale = null,
             string vatNumber = null,
             bool? taxExempt = null,
+            bool? surcharging = null,
             string taxExemptReason = null,
             int? parentId = null,
-            string salesforceId = null)
+            string salesforceId = null,
+            int? brandingThemeId = null)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
@@ -87,6 +93,7 @@ namespace AdvancedBilling.Standard.Models
             this.Locale = locale;
             this.VatNumber = vatNumber;
             this.TaxExempt = taxExempt;
+            this.Surcharging = surcharging;
             this.TaxExemptReason = taxExemptReason;
 
             if (parentId != null)
@@ -97,6 +104,11 @@ namespace AdvancedBilling.Standard.Models
             if (salesforceId != null)
             {
                 this.SalesforceId = salesforceId;
+            }
+
+            if (brandingThemeId != null)
+            {
+                this.BrandingThemeId = brandingThemeId;
             }
         }
 
@@ -197,6 +209,12 @@ namespace AdvancedBilling.Standard.Models
         public bool? TaxExempt { get; set; }
 
         /// <summary>
+        /// Whether surcharging is enabled for the customer. Defaults to `true` when omitted. Only applied on sites where surcharging control is enabled.
+        /// </summary>
+        [JsonProperty("surcharging", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? Surcharging { get; set; }
+
+        /// <summary>
         /// Gets or sets TaxExemptReason.
         /// </summary>
         [JsonProperty("tax_exempt_reason", NullValueHandling = NullValueHandling.Ignore)]
@@ -238,6 +256,24 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// The ID of the Branding Theme assigned to this customer as the customer's default Branding Theme. This customer-level Branding Theme is used when a subscription does not have its own subscription-level Branding Theme. Available only when Branding Themes are enabled for the site.
+        /// </summary>
+        [JsonProperty("branding_theme_id")]
+        public int? BrandingThemeId
+        {
+            get
+            {
+                return this.brandingThemeId;
+            }
+
+            set
+            {
+                this.shouldSerialize["branding_theme_id"] = true;
+                this.brandingThemeId = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -260,6 +296,13 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["salesforce_id"] = false;
         }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetBrandingThemeId()
+        {
+            this.shouldSerialize["branding_theme_id"] = false;
+        }
 
         /// <summary>
         /// Checks if the field should be serialized or not.
@@ -277,6 +320,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeSalesforceId()
         {
             return this.shouldSerialize["salesforce_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeBrandingThemeId()
+        {
+            return this.shouldSerialize["branding_theme_id"];
         }
 
         /// <inheritdoc/>
@@ -318,12 +370,16 @@ namespace AdvancedBilling.Standard.Models
                  this.VatNumber?.Equals(other.VatNumber) == true) &&
                 (this.TaxExempt == null && other.TaxExempt == null ||
                  this.TaxExempt?.Equals(other.TaxExempt) == true) &&
+                (this.Surcharging == null && other.Surcharging == null ||
+                 this.Surcharging?.Equals(other.Surcharging) == true) &&
                 (this.TaxExemptReason == null && other.TaxExemptReason == null ||
                  this.TaxExemptReason?.Equals(other.TaxExemptReason) == true) &&
                 (this.ParentId == null && other.ParentId == null ||
                  this.ParentId?.Equals(other.ParentId) == true) &&
                 (this.SalesforceId == null && other.SalesforceId == null ||
                  this.SalesforceId?.Equals(other.SalesforceId) == true) &&
+                (this.BrandingThemeId == null && other.BrandingThemeId == null ||
+                 this.BrandingThemeId?.Equals(other.BrandingThemeId) == true) &&
                 base.Equals(obj);
         }
 
@@ -349,9 +405,11 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Locale = {this.Locale ?? "null"}");
             toStringOutput.Add($"VatNumber = {this.VatNumber ?? "null"}");
             toStringOutput.Add($"TaxExempt = {(this.TaxExempt == null ? "null" : this.TaxExempt.ToString())}");
+            toStringOutput.Add($"Surcharging = {(this.Surcharging == null ? "null" : this.Surcharging.ToString())}");
             toStringOutput.Add($"TaxExemptReason = {this.TaxExemptReason ?? "null"}");
             toStringOutput.Add($"ParentId = {(this.ParentId == null ? "null" : this.ParentId.ToString())}");
             toStringOutput.Add($"SalesforceId = {this.SalesforceId ?? "null"}");
+            toStringOutput.Add($"BrandingThemeId = {(this.BrandingThemeId == null ? "null" : this.BrandingThemeId.ToString())}");
 
             base.ToString(toStringOutput);
         }

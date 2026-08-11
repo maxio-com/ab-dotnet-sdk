@@ -17,15 +17,18 @@
 | `PricingScheme` | [`PricingScheme?`](../../doc/models/pricing-scheme.md) | Optional | The identifier for the pricing scheme. See [Product Components](https://help.chargify.com/products/product-components.html) for an overview of pricing schemes. |
 | `Tiers` | [`List<ComponentCostDataRateTier>`](../../doc/models/component-cost-data-rate-tier.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ComponentCostData componentCostData = new ComponentCostData
 {
-  "component_code_id": 16,
-  "price_point_id": 186,
-  "product_id": 250,
-  "quantity": "quantity8",
-  "amount": "amount4"
-}
+    ComponentCodeId = 40,
+    PricePointId = 210,
+    ProductId = 18,
+    Quantity = "quantity4",
+    Amount = "amount0",
+};
 ```
 

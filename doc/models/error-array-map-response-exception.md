@@ -11,16 +11,20 @@
 |  --- | --- | --- | --- |
 | `Errors` | `object` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+try
 {
-  "errors": {
-    "key0": {
-      "key1": "val1",
-      "key2": "val2"
+    // make the API call
+}
+catch (ApiException e)
+{
+    if (e is ErrorArrayMapResponseException)
+    {
+        // TODO: Handle ErrorArrayMapResponseException
+        Console.WriteLine(e.Message);
     }
-  }
 }
 ```
 

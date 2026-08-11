@@ -15,29 +15,66 @@
 | `PerPage` | `int?` | Optional | - |
 | `Metafields` | [`List<Metafield>`](../../doc/models/metafield.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+ListMetafieldsResponse listMetafieldsResponse = new ListMetafieldsResponse
 {
-  "total_count": 210,
-  "current_page": 186,
-  "total_pages": 198,
-  "per_page": 92,
-  "metafields": [
+    TotalCount = 228,
+    CurrentPage = 204,
+    TotalPages = 216,
+    PerPage = 74,
+    Metafields = new List<Metafield>
     {
-      "id": 22,
-      "name": "name2",
-      "scope": {
-        "csv": "0",
-        "invoices": "0",
-        "statements": "0",
-        "portal": "0",
-        "public_show": "0"
-      },
-      "data_count": 10,
-      "input_type": "balance_tracker"
-    }
-  ]
-}
+        new Metafield
+        {
+            Id = 22,
+            Name = "name2",
+            Scope = new MetafieldScope
+            {
+                Csv = IncludeOption.Exclude,
+                Invoices = IncludeOption.Exclude,
+                Statements = IncludeOption.Exclude,
+                Portal = IncludeOption.Exclude,
+                PublicShow = IncludeOption.Exclude,
+            },
+            DataCount = 10,
+            InputType = MetafieldInput.BalanceTracker,
+        },
+        new Metafield
+        {
+            Id = 22,
+            Name = "name2",
+            Scope = new MetafieldScope
+            {
+                Csv = IncludeOption.Exclude,
+                Invoices = IncludeOption.Exclude,
+                Statements = IncludeOption.Exclude,
+                Portal = IncludeOption.Exclude,
+                PublicShow = IncludeOption.Exclude,
+            },
+            DataCount = 10,
+            InputType = MetafieldInput.BalanceTracker,
+        },
+        new Metafield
+        {
+            Id = 22,
+            Name = "name2",
+            Scope = new MetafieldScope
+            {
+                Csv = IncludeOption.Exclude,
+                Invoices = IncludeOption.Exclude,
+                Statements = IncludeOption.Exclude,
+                Portal = IncludeOption.Exclude,
+                PublicShow = IncludeOption.Exclude,
+            },
+            DataCount = 10,
+            InputType = MetafieldInput.BalanceTracker,
+        },
+    },
+};
 ```
 

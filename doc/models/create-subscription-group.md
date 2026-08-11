@@ -12,14 +12,19 @@
 | `SubscriptionId` | `int` | Required | - |
 | `MemberIds` | `List<int>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+CreateSubscriptionGroup createSubscriptionGroup = new CreateSubscriptionGroup
 {
-  "subscription_id": 38,
-  "member_ids": [
-    162
-  ]
-}
+    SubscriptionId = 204,
+    MemberIds = new List<int>
+    {
+        48,
+    },
+};
 ```
 

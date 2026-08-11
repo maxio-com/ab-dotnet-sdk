@@ -15,3 +15,11 @@
 | `External` |
 | `PaypalAccount` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoiceEventPaymentMethod invoiceEventPaymentMethod = InvoiceEventPaymentMethod.CreditCard;
+```
+

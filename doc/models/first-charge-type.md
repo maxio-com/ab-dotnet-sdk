@@ -13,3 +13,11 @@
 | `Immediate` |
 | `Delayed` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+FirstChargeType firstChargeType = FirstChargeType.Delayed;
+```
+

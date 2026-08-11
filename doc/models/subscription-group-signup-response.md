@@ -21,19 +21,22 @@
 | `Subscriptions` | [`List<SubscriptionGroupItem>`](../../doc/models/subscription-group-item.md) | Optional | - |
 | `PaymentCollectionMethod` | [`CollectionMethod?`](../../doc/models/collection-method.md) | Optional | The type of payment collection to be used in the subscription. For legacy Statements Architecture valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid options are - `remittance`, `automatic`, `prepaid`. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+SubscriptionGroupSignupResponse subscriptionGroupSignupResponse = new SubscriptionGroupSignupResponse
 {
-  "uid": "uid8",
-  "scheme": 28,
-  "customer_id": 48,
-  "payment_profile_id": 44,
-  "subscription_ids": [
-    158,
-    159,
-    160
-  ]
-}
+    Uid = "uid4",
+    Scheme = 60,
+    CustomerId = 80,
+    PaymentProfileId = 244,
+    SubscriptionIds = new List<int>
+    {
+        190,
+    },
+};
 ```
 

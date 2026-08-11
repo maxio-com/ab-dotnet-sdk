@@ -55,37 +55,37 @@ namespace AdvancedBilling.Standard.Models
         public string Uid { get; set; }
 
         /// <summary>
-        /// Include line items data
+        /// Include line items data.
         /// </summary>
         [JsonProperty("line_items", NullValueHandling = NullValueHandling.Ignore)]
         public bool? LineItems { get; set; }
 
         /// <summary>
-        /// Include discounts data
+        /// Include discounts data.
         /// </summary>
         [JsonProperty("discounts", NullValueHandling = NullValueHandling.Ignore)]
         public bool? Discounts { get; set; }
 
         /// <summary>
-        /// Include taxes data
+        /// Include taxes data.
         /// </summary>
         [JsonProperty("taxes", NullValueHandling = NullValueHandling.Ignore)]
         public bool? Taxes { get; set; }
 
         /// <summary>
-        /// Include credits data
+        /// Include credits data.
         /// </summary>
         [JsonProperty("credits", NullValueHandling = NullValueHandling.Ignore)]
         public bool? Credits { get; set; }
 
         /// <summary>
-        /// Include payments data
+        /// Include payments data.
         /// </summary>
         [JsonProperty("payments", NullValueHandling = NullValueHandling.Ignore)]
         public bool? Payments { get; set; }
 
         /// <summary>
-        /// Include custom fields data
+        /// Include custom fields data.
         /// </summary>
         [JsonProperty("custom_fields", NullValueHandling = NullValueHandling.Ignore)]
         public bool? CustomFields { get; set; }

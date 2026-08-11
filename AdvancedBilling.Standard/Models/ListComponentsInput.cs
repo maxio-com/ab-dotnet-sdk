@@ -79,13 +79,13 @@ namespace AdvancedBilling.Standard.Models
         public string StartDatetime { get; set; }
 
         /// <summary>
-        /// The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date.  optional
+        /// The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date.
         /// </summary>
         [JsonProperty("end_datetime", NullValueHandling = NullValueHandling.Ignore)]
         public string EndDatetime { get; set; }
 
         /// <summary>
-        /// Include archived items
+        /// Include archived items.
         /// </summary>
         [JsonProperty("include_archived", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IncludeArchived { get; set; }

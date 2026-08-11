@@ -14,14 +14,17 @@
 | `TotalPages` | `int?` | Optional | - |
 | `PerPage` | `int?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ListPublicKeysMeta listPublicKeysMeta = new ListPublicKeysMeta
 {
-  "total_count": 22,
-  "current_page": 254,
-  "total_pages": 10,
-  "per_page": 24
-}
+    TotalCount = 232,
+    CurrentPage = 208,
+    TotalPages = 220,
+    PerPage = 70,
+};
 ```
 

@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- |
 | `ScheduledRenewalConfigurationItem` | [`ScheduledRenewalConfigurationItem`](../../doc/models/scheduled-renewal-configuration-item.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ScheduledRenewalConfigurationItemResponse scheduledRenewalConfigurationItemResponse = new ScheduledRenewalConfigurationItemResponse
 {
-  "scheduled_renewal_configuration_item": {
-    "id": 98,
-    "subscription_id": 208,
-    "subscription_renewal_configuration_id": 108,
-    "item_id": 246,
-    "item_type": "item_type2"
-  }
-}
+    ScheduledRenewalConfigurationItem = new ScheduledRenewalConfigurationItem
+    {
+        Id = 98,
+        SubscriptionId = 208,
+        SubscriptionRenewalConfigurationId = 108,
+        ItemId = 246,
+        ItemType = "item_type2",
+    },
+};
 ```
 

@@ -11,19 +11,33 @@
 |  --- | --- | --- | --- |
 | `Segments` | [`List<Segment>`](../../doc/models/segment.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+ListSegmentsResponse listSegmentsResponse = new ListSegmentsResponse
 {
-  "segments": [
+    Segments = new List<Segment>
     {
-      "id": 50,
-      "component_id": 160,
-      "price_point_id": 184,
-      "event_based_billing_metric_id": 244,
-      "pricing_scheme": "stairstep"
-    }
-  ]
-}
+        new Segment
+        {
+            Id = 50,
+            ComponentId = 160,
+            PricePointId = 184,
+            EventBasedBillingMetricId = 244,
+            PricingScheme = PricingScheme.Stairstep,
+        },
+        new Segment
+        {
+            Id = 50,
+            ComponentId = 160,
+            PricePointId = 184,
+            EventBasedBillingMetricId = 244,
+            PricingScheme = PricingScheme.Stairstep,
+        },
+    },
+};
 ```
 

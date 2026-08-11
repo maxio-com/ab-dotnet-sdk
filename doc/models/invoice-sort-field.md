@@ -20,7 +20,9 @@
 
 ## Example
 
-```
-total_amount
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoiceSortField invoiceSortField = InvoiceSortField.UpdatedAt;
 ```
 

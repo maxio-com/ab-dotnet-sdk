@@ -12,18 +12,37 @@
 | `PricingScheme` | [`PricingScheme`](../../doc/models/pricing-scheme.md) | Required | The identifier for the pricing scheme. See [Product Components](https://help.chargify.com/products/product-components.html) for an overview of pricing schemes. |
 | `Prices` | [`List<CreateOrUpdateSegmentPrice>`](../../doc/models/create-or-update-segment-price.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Collections.Generic;
+
+UpdateSegment updateSegment = new UpdateSegment
 {
-  "pricing_scheme": "stairstep",
-  "prices": [
+    PricingScheme = PricingScheme.Stairstep,
+    Prices = new List<CreateOrUpdateSegmentPrice>
     {
-      "starting_quantity": 64,
-      "ending_quantity": 38,
-      "unit_price": "String3"
-    }
-  ]
-}
+        new CreateOrUpdateSegmentPrice
+        {
+            UnitPrice = CreateOrUpdateSegmentPriceUnitPrice.FromString("String3"),
+            StartingQuantity = 64,
+            EndingQuantity = 38,
+        },
+        new CreateOrUpdateSegmentPrice
+        {
+            UnitPrice = CreateOrUpdateSegmentPriceUnitPrice.FromString("String3"),
+            StartingQuantity = 64,
+            EndingQuantity = 38,
+        },
+        new CreateOrUpdateSegmentPrice
+        {
+            UnitPrice = CreateOrUpdateSegmentPriceUnitPrice.FromString("String3"),
+            StartingQuantity = 64,
+            EndingQuantity = 38,
+        },
+    },
+};
 ```
 

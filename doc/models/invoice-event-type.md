@@ -27,3 +27,11 @@ Invoice Event Type
 | `FailedPayment` |
 | `ChangeChargebackStatus` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoiceEventType invoiceEventType = InvoiceEventType.CreateCreditNote;
+```
+

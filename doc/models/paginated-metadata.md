@@ -15,30 +15,32 @@
 | `PerPage` | `int?` | Optional | - |
 | `Metadata` | [`List<Metadata>`](../../doc/models/metadata.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+using System.Globalization;
+
+PaginatedMetadata paginatedMetadata = new PaginatedMetadata
 {
-  "total_count": 26,
-  "current_page": 2,
-  "total_pages": 14,
-  "per_page": 20,
-  "metadata": [
+    TotalCount = 166,
+    CurrentPage = 142,
+    TotalPages = 154,
+    PerPage = 136,
+    Metadata = new List<Metadata>
     {
-      "id": 50,
-      "value": "value8",
-      "resource_id": 134,
-      "name": "name6",
-      "deleted_at": "2016-03-13T12:52:32.123Z"
+        new Metadata
+        {
+            Id = 50,
+            MValue = "value8",
+            ResourceId = 134,
+            Name = "name6",
+            DeletedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+                provider: CultureInfo.InvariantCulture,
+                DateTimeStyles.RoundtripKind),
+        },
     },
-    {
-      "id": 50,
-      "value": "value8",
-      "resource_id": 134,
-      "name": "name6",
-      "deleted_at": "2016-03-13T12:52:32.123Z"
-    }
-  ]
-}
+};
 ```
 

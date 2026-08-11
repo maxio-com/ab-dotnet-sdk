@@ -12,30 +12,36 @@
 | `SubscriptionGroup` | [`SubscriptionGroupSignupFailureData`](../../doc/models/subscription-group-signup-failure-data.md) | Required | - |
 | `Customer` | [`Customer`](../../doc/models/customer.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionGroupSignupEventData subscriptionGroupSignupEventData = new SubscriptionGroupSignupEventData
 {
-  "subscription_group": {
-    "payer_id": 150,
-    "payer_reference": "payer_reference6",
-    "payment_profile_id": 128,
-    "payment_collection_method": "payment_collection_method8",
-    "payer_attributes": {
-      "first_name": "first_name2",
-      "last_name": "last_name0",
-      "email": "email4",
-      "cc_emails": "cc_emails2",
-      "organization": "organization6"
-    }
-  },
-  "customer": {
-    "first_name": "first_name0",
-    "last_name": "last_name8",
-    "email": "email6",
-    "cc_emails": "cc_emails0",
-    "organization": "organization6"
-  }
-}
+    SubscriptionGroup = new SubscriptionGroupSignupFailureData
+    {
+        PayerId = 150,
+        PayerReference = "payer_reference6",
+        PaymentProfileId = 128,
+        PaymentCollectionMethod = "payment_collection_method8",
+        PayerAttributes = new PayerAttributes
+        {
+            FirstName = "first_name2",
+            LastName = "last_name0",
+            Email = "email4",
+            CcEmails = "cc_emails2",
+            Organization = "organization6",
+        },
+    },
+    Customer = new Customer
+    {
+        FirstName = "first_name0",
+        LastName = "last_name8",
+        Email = "email6",
+        CcEmails = "cc_emails0",
+        Organization = "organization6",
+    },
+};
 ```
 

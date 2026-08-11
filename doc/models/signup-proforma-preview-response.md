@@ -11,26 +11,32 @@
 |  --- | --- | --- | --- |
 | `ProformaInvoicePreview` | [`SignupProformaPreview`](../../doc/models/signup-proforma-preview.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SignupProformaPreviewResponse signupProformaPreviewResponse = new SignupProformaPreviewResponse
 {
-  "proforma_invoice_preview": {
-    "current_proforma_invoice": {
-      "uid": "uid6",
-      "site_id": 72,
-      "customer_id": 184,
-      "subscription_id": 0,
-      "number": 132
+    ProformaInvoicePreview = new SignupProformaPreview
+    {
+        CurrentProformaInvoice = new ProformaInvoice
+        {
+            Uid = "uid6",
+            SiteId = 72,
+            CustomerId = 184,
+            SubscriptionId = 0,
+            Number = 132,
+        },
+        NextProformaInvoice = new ProformaInvoice
+        {
+            Uid = "uid8",
+            SiteId = 212,
+            CustomerId = 68,
+            SubscriptionId = 140,
+            Number = 16,
+        },
     },
-    "next_proforma_invoice": {
-      "uid": "uid8",
-      "site_id": 212,
-      "customer_id": 68,
-      "subscription_id": 140,
-      "number": 16
-    }
-  }
-}
+};
 ```
 

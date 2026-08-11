@@ -89,6 +89,12 @@ namespace AdvancedBilling.Standard.Models
         SubscriptionProductChange,
 
         /// <summary>
+        /// SubscriptionProductChangeScheduled.
+        /// </summary>
+        [EnumMember(Value = "subscription_product_change_scheduled")]
+        SubscriptionProductChangeScheduled,
+
+        /// <summary>
         /// PendingCancellationChange.
         /// </summary>
         [EnumMember(Value = "pending_cancellation_change")]

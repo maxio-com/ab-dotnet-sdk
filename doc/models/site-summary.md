@@ -15,21 +15,25 @@
 | `SiteCurrency` | `string` | Optional | - |
 | `Stats` | [`SiteStatistics`](../../doc/models/site-statistics.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SiteSummary siteSummary = new SiteSummary
 {
-  "seller_name": "seller_name0",
-  "site_name": "site_name4",
-  "site_id": 218,
-  "site_currency": "site_currency6",
-  "stats": {
-    "total_subscriptions": 110,
-    "subscriptions_today": 228,
-    "total_revenue": "total_revenue6",
-    "revenue_today": "revenue_today4",
-    "revenue_this_month": "revenue_this_month4"
-  }
-}
+    SellerName = "seller_name4",
+    SiteName = "site_name8",
+    SiteId = 252,
+    SiteCurrency = "site_currency0",
+    Stats = new SiteStatistics
+    {
+        TotalSubscriptions = 110,
+        SubscriptionsToday = 228,
+        TotalRevenue = "total_revenue6",
+        RevenueToday = "revenue_today4",
+        RevenueThisMonth = "revenue_this_month4",
+    },
+};
 ```
 

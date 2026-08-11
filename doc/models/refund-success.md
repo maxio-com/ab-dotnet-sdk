@@ -13,13 +13,16 @@
 | `GatewayTransactionId` | `int` | Required | - |
 | `ProductId` | `int` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+RefundSuccess refundSuccess = new RefundSuccess
 {
-  "refund_id": 12,
-  "gateway_transaction_id": 182,
-  "product_id": 168
-}
+    RefundId = 34,
+    GatewayTransactionId = 160,
+    ProductId = 190,
+};
 ```
 

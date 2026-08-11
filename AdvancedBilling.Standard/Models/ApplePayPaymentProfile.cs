@@ -163,7 +163,7 @@ namespace AdvancedBilling.Standard.Models
         public string LastName { get; set; }
 
         /// <summary>
-        /// The Chargify-assigned id for the customer record to which the Apple Pay account belongs
+        /// The Chargify-assigned ID for the customer record to which the Apple Pay account belongs
         /// </summary>
         [JsonProperty("customer_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? CustomerId { get; set; }

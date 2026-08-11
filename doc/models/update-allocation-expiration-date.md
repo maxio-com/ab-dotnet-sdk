@@ -11,13 +11,20 @@
 |  --- | --- | --- | --- |
 | `Allocation` | [`AllocationExpirationDate`](../../doc/models/allocation-expiration-date.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+UpdateAllocationExpirationDate updateAllocationExpirationDate = new UpdateAllocationExpirationDate
 {
-  "allocation": {
-    "expires_at": "2016-03-13T12:52:32.123Z"
-  }
-}
+    Allocation = new AllocationExpirationDate
+    {
+        ExpiresAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
+    },
+};
 ```
 

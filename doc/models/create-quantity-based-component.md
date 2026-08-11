@@ -11,31 +11,40 @@
 |  --- | --- | --- | --- |
 | `QuantityBasedComponent` | [`QuantityBasedComponent`](../../doc/models/quantity-based-component.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Collections.Generic;
+
+CreateQuantityBasedComponent createQuantityBasedComponent = new CreateQuantityBasedComponent
 {
-  "quantity_based_component": {
-    "name": "name0",
-    "unit_name": "unit_name2",
-    "description": "description0",
-    "handle": "handle6",
-    "taxable": false,
-    "pricing_scheme": "stairstep",
-    "prices": [
-      {
-        "starting_quantity": 242,
-        "ending_quantity": 40,
-        "unit_price": 23.26
-      },
-      {
-        "starting_quantity": 242,
-        "ending_quantity": 40,
-        "unit_price": 23.26
-      }
-    ],
-    "upgrade_charge": "prorated"
-  }
-}
+    QuantityBasedComponent = new QuantityBasedComponent
+    {
+        Name = "name0",
+        UnitName = "unit_name2",
+        PricingScheme = PricingScheme.Stairstep,
+        Description = "description0",
+        Handle = "handle6",
+        Taxable = false,
+        Prices = new List<Price>
+        {
+            new Price
+            {
+                StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                EndingQuantity = PriceEndingQuantity.FromNumber(40),
+            },
+            new Price
+            {
+                StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                EndingQuantity = PriceEndingQuantity.FromNumber(40),
+            },
+        },
+        UpgradeCharge = CreditType.Prorated,
+    },
+};
 ```
 

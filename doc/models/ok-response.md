@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- |
 | `Ok` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+OkResponse okResponse = new OkResponse
 {
-  "ok": "ok4"
-}
+    Ok = "ok8",
+};
 ```
 

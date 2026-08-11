@@ -67,13 +67,13 @@ namespace AdvancedBilling.Standard.Models
         public ListUsagesInputComponentId ComponentId { get; set; }
 
         /// <summary>
-        /// Returns usages with an id greater than or equal to the one specified
+        /// Returns usages with an id greater than or equal to the one specified.
         /// </summary>
         [JsonProperty("since_id", NullValueHandling = NullValueHandling.Ignore)]
         public long? SinceId { get; set; }
 
         /// <summary>
-        /// Returns usages with an id less than or equal to the one specified
+        /// Returns usages with an id less than or equal to the one specified.
         /// </summary>
         [JsonProperty("max_id", NullValueHandling = NullValueHandling.Ignore)]
         public long? MaxId { get; set; }

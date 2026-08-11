@@ -11,13 +11,20 @@
 |  --- | --- | --- | --- |
 | `Ids` | `List<long>` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+ReplayWebhooksRequest replayWebhooksRequest = new ReplayWebhooksRequest
 {
-  "ids": [
-    15
-  ]
-}
+    Ids = new List<long>
+    {
+        209L,
+        210L,
+        211L,
+    },
+};
 ```
 

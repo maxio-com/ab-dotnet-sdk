@@ -12,12 +12,16 @@
 | `Amount` | [`IssueServiceCreditAmount`](../../doc/models/containers/issue-service-credit-amount.md) | Required | This is a container for one-of cases. |
 | `Memo` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+IssueServiceCredit issueServiceCredit = new IssueServiceCredit
 {
-  "amount": 5.82,
-  "memo": "memo4"
-}
+    Amount = IssueServiceCreditAmount.FromPrecision(44.88),
+    Memo = "memo6",
+};
 ```
 

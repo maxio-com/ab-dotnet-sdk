@@ -19,24 +19,35 @@
 | `UseSiteExchangeRate` | `bool?` | Optional | If true, restricts the list to coupons whose pricing is recalculated from the site’s current exchange rates, so their currency_prices array contains on-the-fly conversions rather than stored price records. If false, restricts the list to coupons that have manually defined amounts for each currency, ensuring the response includes the saved currency_prices entries instead of exchange-rate-derived values. Use in query `filter[use_site_exchange_rate]=true`. |
 | `IncludeArchived` | `bool?` | Optional | Controls returning archived coupons. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+using System.Globalization;
+
+ListCouponsFilter listCouponsFilter = new ListCouponsFilter
 {
-  "start_date": "2011-12-17",
-  "end_date": "2011-12-15",
-  "start_datetime": "12/19/2011 09:15:30",
-  "end_datetime": "06/07/2019 17:20:06",
-  "ids": [
-    1,
-    2,
-    3
-  ],
-  "codes": [
-    "free",
-    "free_trial"
-  ],
-  "date_field": "updated_at"
-}
+    DateField = BasicDateField.UpdatedAt,
+    StartDate = DateTime.Parse("2011-12-17"),
+    EndDate = DateTime.Parse("2011-12-15"),
+    StartDatetime = DateTime.ParseExact("2011-12-19T09:15:30+00:00", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    EndDatetime = DateTime.ParseExact("2019-06-07T17:20:06Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    Ids = new List<int>
+    {
+        1,
+        2,
+        3,
+    },
+    Codes = new List<string>
+    {
+        "free",
+        "free_trial",
+    },
+};
 ```
 

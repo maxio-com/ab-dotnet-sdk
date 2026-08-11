@@ -11,20 +11,20 @@
 |  --- | --- | --- | --- |
 | `Segments` | `object` | Required | The key of the object would be a number (an index in the request array) where the error occurred. In the value object, the key represents the field and the value is an array with error messages. In most cases, this object would contain just one key. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Utilities;
+using System.Collections.Generic;
+
+EventBasedBillingSegmentError eventBasedBillingSegmentError = new EventBasedBillingSegmentError
 {
-  "segments": {
-    "key0": {
-      "key1": "val1",
-      "key2": "val2"
+    Segments = new Dictionary<string, object>
+    {
+        ["key0"] = ApiHelper.JsonDeserialize<object>("{\"key1\":\"val1\",\"key2\":\"val2\"}"),
+        ["key1"] = ApiHelper.JsonDeserialize<object>("{\"key1\":\"val1\",\"key2\":\"val2\"}"),
     },
-    "key1": {
-      "key1": "val1",
-      "key2": "val2"
-    }
-  }
-}
+};
 ```
 

@@ -15,15 +15,18 @@
 | `EntryType` | [`ServiceCreditType?`](../../doc/models/service-credit-type.md) | Optional | The type of entry |
 | `Memo` | `string` | Optional | The memo attached to the entry |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ServiceCredit serviceCredit = new ServiceCredit
 {
-  "id": 216,
-  "amount_in_cents": 210,
-  "ending_balance_in_cents": 86,
-  "entry_type": "Credit",
-  "memo": "memo2"
-}
+    Id = 132,
+    AmountInCents = 218L,
+    EndingBalanceInCents = 2L,
+    EntryType = ServiceCreditType.Credit,
+    Memo = "memo8",
+};
 ```
 

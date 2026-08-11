@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- |
 | `ServiceCredit` | [`ServiceCredit`](../../doc/models/service-credit.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ServiceCreditResponse serviceCreditResponse = new ServiceCreditResponse
 {
-  "service_credit": {
-    "id": 38,
-    "amount_in_cents": 124,
-    "ending_balance_in_cents": 164,
-    "entry_type": "Credit",
-    "memo": "memo0"
-  }
-}
+    ServiceCredit = new ServiceCredit
+    {
+        Id = 38,
+        AmountInCents = 124L,
+        EndingBalanceInCents = 164L,
+        EntryType = ServiceCreditType.Credit,
+        Memo = "memo0",
+    },
+};
 ```
 

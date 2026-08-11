@@ -11,3 +11,11 @@
 |  --- |
 | `AccountBalances` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionGroupsListInclude subscriptionGroupsListInclude = SubscriptionGroupsListInclude.AccountBalances;
+```
+

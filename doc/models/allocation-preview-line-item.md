@@ -17,17 +17,20 @@
 | `TaxableAmountInCents` | `long?` | Optional | - |
 | `ComponentId` | `int?` | Optional | - |
 | `ComponentHandle` | `string` | Optional | - |
-| `Direction` | [`AllocationPreviewDirection?`](../../doc/models/allocation-preview-direction.md) | Optional | Visible when using Fine-grained Component Control |
+| `Direction` | [`AllocationPreviewDirection?`](../../doc/models/allocation-preview-direction.md) | Optional | Visible when using Fine-grained Component Control. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+AllocationPreviewLineItem allocationPreviewLineItem = new AllocationPreviewLineItem
 {
-  "transaction_type": "credit",
-  "kind": "quantity_based_component",
-  "amount_in_cents": 24,
-  "memo": "memo6",
-  "discount_amount_in_cents": 172
-}
+    TransactionType = LineItemTransactionType.Credit,
+    Kind = AllocationPreviewLineItemKind.QuantityBasedComponent,
+    AmountInCents = 236L,
+    Memo = "memo6",
+    DiscountAmountInCents = 40L,
+};
 ```
 

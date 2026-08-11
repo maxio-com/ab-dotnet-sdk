@@ -14,14 +14,17 @@
 | `Organization` | `string` | Optional | - |
 | `Email` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoicePayerChange invoicePayerChange = new InvoicePayerChange
 {
-  "first_name": "first_name2",
-  "last_name": "last_name0",
-  "organization": "organization4",
-  "email": "email4"
-}
+    FirstName = "first_name4",
+    LastName = "last_name2",
+    Organization = "organization2",
+    Email = "email2",
+};
 ```
 

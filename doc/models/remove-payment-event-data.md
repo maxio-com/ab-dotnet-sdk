@@ -19,19 +19,29 @@ Example schema for an `remove_payment` event
 | `PaymentMethod` | [`InvoiceEventPayment`](../../doc/models/containers/invoice-event-payment.md) | Required | A nested data structure detailing the method of payment |
 | `Prepayment` | `bool` | Required | The flag that shows whether the original payment was a prepayment or not |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Globalization;
+
+RemovePaymentEventData removePaymentEventData = new RemovePaymentEventData
 {
-  "transaction_id": 180,
-  "memo": "memo0",
-  "applied_amount": "applied_amount2",
-  "transaction_time": "2016-03-13T12:52:32.123Z",
-  "payment_method": {
-    "type": "apple_pay"
-  },
-  "prepayment": false,
-  "original_amount": "original_amount0"
-}
+    TransactionId = 20,
+    Memo = "memo4",
+    AppliedAmount = "applied_amount8",
+    TransactionTime = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    PaymentMethod = InvoiceEventPayment.FromPaymentMethodApplePay(
+        new PaymentMethodApplePay
+        {
+            Type = InvoiceEventPaymentMethod.ApplePay,
+        }
+    ),
+    Prepayment = false,
+    OriginalAmount = "original_amount4",
+};
 ```
 

@@ -13,15 +13,20 @@ Error which contains list of messages.
 |  --- | --- | --- | --- |
 | `Errors` | `List<string>` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+try
 {
-  "errors": [
-    "errors5",
-    "errors6",
-    "errors7"
-  ]
+    // make the API call
+}
+catch (ApiException e)
+{
+    if (e is ErrorListResponseException)
+    {
+        // TODO: Handle ErrorListResponseException
+        Console.WriteLine(e.Message);
+    }
 }
 ```
 

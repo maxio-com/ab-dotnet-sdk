@@ -15,7 +15,9 @@ Passed as a parameter to list methods to return only non null values.
 
 ## Example
 
-```
-not_null
+```csharp
+using AdvancedBilling.Standard.Models;
+
+IncludeNotNull includeNotNull = IncludeNotNull.NotNull;
 ```
 

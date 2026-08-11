@@ -16,15 +16,19 @@
 | `PaymentProfileId` | `int?` | Optional | The ID of the payment profile to be used for the payment. |
 | `ReceivedOn` | `DateTime?` | Optional | Date reflecting when the payment was received from a customer. Must be in the past. Applicable only to<br>`external` payments. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+CreateInvoicePayment createInvoicePayment = new CreateInvoicePayment
 {
-  "amount": "String9",
-  "memo": "memo0",
-  "method": "cash",
-  "details": "details6",
-  "payment_profile_id": 122
-}
+    Amount = CreateInvoicePaymentAmount.FromString("String7"),
+    Memo = "memo8",
+    Method = InvoicePaymentMethodType.Ach,
+    Details = "details4",
+    PaymentProfileId = 30,
+};
 ```
 

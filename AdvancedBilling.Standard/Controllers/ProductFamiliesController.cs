@@ -93,7 +93,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Returns a list of Product Families for a site.
+        /// Lists Product Families for a site.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the List of Models.ProductFamilyResponse response from the API call.</returns>
@@ -102,7 +102,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListProductFamiliesAsync(input));
 
         /// <summary>
-        /// Returns a list of Product Families for a site.
+        /// Lists Product Families for a site.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>

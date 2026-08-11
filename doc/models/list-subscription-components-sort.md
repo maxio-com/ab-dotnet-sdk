@@ -14,7 +14,9 @@
 
 ## Example
 
-```
-updated_at
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ListSubscriptionComponentsSort listSubscriptionComponentsSort = ListSubscriptionComponentsSort.Id;
 ```
 

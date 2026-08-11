@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- |
 | `Reason` | `string` | Required | **Constraints**: *Minimum Length*: `1` |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+VoidInvoice voidInvoice = new VoidInvoice
 {
-  "reason": "reason2"
-}
+    Reason = "reason8",
+};
 ```
 

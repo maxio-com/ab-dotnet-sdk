@@ -11,22 +11,20 @@
 |  --- | --- | --- | --- |
 | `Errors` | [`List<ComponentPricePointErrorItem>`](../../doc/models/component-price-point-error-item.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+try
 {
-  "errors": [
+    // make the API call
+}
+catch (ApiException e)
+{
+    if (e is ComponentPricePointErrorException)
     {
-      "component_id": 236,
-      "message": "message0",
-      "price_point": 122
-    },
-    {
-      "component_id": 236,
-      "message": "message0",
-      "price_point": 122
+        // TODO: Handle ComponentPricePointErrorException
+        Console.WriteLine(e.Message);
     }
-  ]
 }
 ```
 

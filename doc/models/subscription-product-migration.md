@@ -19,16 +19,19 @@
 | `ProductPricePointHandle` | `string` | Optional | The ID or handle of the specified product's price point. This can be passed to migrate to a non-default price point. |
 | `Proration` | [`Proration`](../../doc/models/proration.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionProductMigration subscriptionProductMigration = new SubscriptionProductMigration
 {
-  "include_trial": false,
-  "include_initial_charge": false,
-  "include_coupons": true,
-  "preserve_period": false,
-  "product_id": 8,
-  "product_price_point_id": 172
-}
+    ProductId = 44,
+    ProductPricePointId = 224,
+    IncludeTrial = false,
+    IncludeInitialCharge = false,
+    IncludeCoupons = true,
+    PreservePeriod = false,
+};
 ```
 

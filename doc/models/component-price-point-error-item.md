@@ -13,13 +13,16 @@
 | `Message` | `string` | Optional | - |
 | `PricePoint` | `int?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ComponentPricePointErrorItem componentPricePointErrorItem = new ComponentPricePointErrorItem
 {
-  "component_id": 206,
-  "message": "message4",
-  "price_point": 152
-}
+    ComponentId = 174,
+    Message = "message2",
+    PricePoint = 72,
+};
 ```
 

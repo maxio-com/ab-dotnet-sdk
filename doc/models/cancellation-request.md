@@ -11,17 +11,24 @@
 |  --- | --- | --- | --- |
 | `Subscription` | [`CancellationOptions`](../../doc/models/cancellation-options.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+CancellationRequest cancellationRequest = new CancellationRequest
 {
-  "subscription": {
-    "cancellation_message": "cancellation_message2",
-    "reason_code": "reason_code8",
-    "cancel_at_end_of_period": false,
-    "scheduled_cancellation_at": "2016-03-13T12:52:32.123Z",
-    "refund_prepayment_account_balance": false
-  }
-}
+    Subscription = new CancellationOptions
+    {
+        CancellationMessage = "cancellation_message2",
+        ReasonCode = "reason_code8",
+        CancelAtEndOfPeriod = false,
+        ScheduledCancellationAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
+        RefundPrepaymentAccountBalance = false,
+    },
+};
 ```
 

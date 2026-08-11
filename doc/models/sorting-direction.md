@@ -14,3 +14,11 @@ Used for sorting results.
 | `Asc` |
 | `Desc` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SortingDirection sortingDirection = SortingDirection.Asc;
+```
+

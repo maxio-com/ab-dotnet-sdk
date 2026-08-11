@@ -72,31 +72,31 @@ namespace AdvancedBilling.Standard.Models
         public int? PerPage { get; set; }
 
         /// <summary>
-        /// Include line items data
+        /// Include line items data.
         /// </summary>
         [JsonProperty("line_items", NullValueHandling = NullValueHandling.Ignore)]
         public bool? LineItems { get; set; }
 
         /// <summary>
-        /// Include discounts data
+        /// Include discounts data.
         /// </summary>
         [JsonProperty("discounts", NullValueHandling = NullValueHandling.Ignore)]
         public bool? Discounts { get; set; }
 
         /// <summary>
-        /// Include taxes data
+        /// Include taxes data.
         /// </summary>
         [JsonProperty("taxes", NullValueHandling = NullValueHandling.Ignore)]
         public bool? Taxes { get; set; }
 
         /// <summary>
-        /// Include refunds data
+        /// Include refunds data.
         /// </summary>
         [JsonProperty("refunds", NullValueHandling = NullValueHandling.Ignore)]
         public bool? Refunds { get; set; }
 
         /// <summary>
-        /// Include applications data
+        /// Include applications data.
         /// </summary>
         [JsonProperty("applications", NullValueHandling = NullValueHandling.Ignore)]
         public bool? Applications { get; set; }

@@ -11,16 +11,20 @@
 |  --- | --- | --- | --- |
 | `ReferralCode` | [`ReferralCode`](../../doc/models/referral-code.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ReferralValidationResponse referralValidationResponse = new ReferralValidationResponse
 {
-  "referral_code": {
-    "id": 46,
-    "site_id": 228,
-    "subscription_id": 156,
-    "code": "code0"
-  }
-}
+    ReferralCode = new ReferralCode
+    {
+        Id = 46,
+        SiteId = 228,
+        SubscriptionId = 156,
+        Code = "code0",
+    },
+};
 ```
 

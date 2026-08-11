@@ -20,20 +20,26 @@
 | `PaymentType` | [`PrepaymentMethod?`](../../doc/models/prepayment-method.md) | Optional | The payment type of the prepayment. |
 | `CreatedAt` | `DateTimeOffset` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+Prepayment prepayment = new Prepayment
 {
-  "id": 50,
-  "subscription_id": 160,
-  "amount_in_cents": 120,
-  "remaining_amount_in_cents": 194,
-  "refunded_amount_in_cents": 144,
-  "details": "details4",
-  "external": false,
-  "memo": "memo8",
-  "payment_type": "cash",
-  "created_at": "2016-03-13T12:52:32.123Z"
-}
+    Id = 38,
+    SubscriptionId = 148,
+    AmountInCents = 124L,
+    RemainingAmountInCents = 182L,
+    External = false,
+    Memo = "memo2",
+    CreatedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    RefundedAmountInCents = 132L,
+    Details = "details8",
+    PaymentType = PrepaymentMethod.CreditCard,
+};
 ```
 

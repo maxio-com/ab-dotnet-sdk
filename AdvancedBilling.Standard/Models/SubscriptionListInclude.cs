@@ -20,6 +20,30 @@ namespace AdvancedBilling.Standard.Models
         /// SelfServicePageToken.
         /// </summary>
         [EnumMember(Value = "self_service_page_token")]
-        SelfServicePageToken
+        SelfServicePageToken,
+
+        /// <summary>
+        /// CurrentAccountBalanceInCents.
+        /// </summary>
+        [EnumMember(Value = "current_account_balance_in_cents")]
+        CurrentAccountBalanceInCents,
+
+        /// <summary>
+        /// CurrentBillingAmount.
+        /// </summary>
+        [EnumMember(Value = "current_billing_amount")]
+        CurrentBillingAmount,
+
+        /// <summary>
+        /// ThreeDsActionLink.
+        /// </summary>
+        [EnumMember(Value = "three_ds_action_link")]
+        ThreeDsActionLink,
+
+        /// <summary>
+        /// Coupons.
+        /// </summary>
+        [EnumMember(Value = "coupons")]
+        Coupons
     }
 }

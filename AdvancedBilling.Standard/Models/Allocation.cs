@@ -146,19 +146,19 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The allocation unique id
+        /// The allocation unique ID
         /// </summary>
         [JsonProperty("allocation_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? AllocationId { get; set; }
 
         /// <summary>
-        /// The integer component ID for the allocation. This references a component that you have created in your Product setup
+        /// The integer component ID for the allocation. This references a component that you have created in your Product setup.
         /// </summary>
         [JsonProperty("component_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? ComponentId { get; set; }
 
         /// <summary>
-        /// The handle of the component. This references a component that you have created in your Product setup
+        /// The handle of the component. This references a component that you have created in your Product setup.
         /// </summary>
         [JsonProperty("component_handle")]
         public string ComponentHandle
@@ -176,13 +176,13 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The integer subscription ID for the allocation. This references a unique subscription in your Site
+        /// The integer subscription ID for the allocation. This references a unique subscription in your Site.
         /// </summary>
         [JsonProperty("subscription_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? SubscriptionId { get; set; }
 
         /// <summary>
-        /// The allocated quantity set in to effect by the allocation. String for components supporting fractional quantities
+        /// The allocated quantity set into effect by the allocation. String for components supporting fractional quantities
         /// </summary>
         [JsonProperty("quantity", NullValueHandling = NullValueHandling.Ignore)]
         public AllocationQuantity Quantity { get; set; }
@@ -212,7 +212,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The time that the allocation was recorded, in format and UTC timezone, i.e. 2012-11-20T22:00:37Z
+        /// The time that the allocation was recorded, in ISO 8601 format and UTC timezone, e.g., 2012-11-20T22:00:37Z
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("timestamp", NullValueHandling = NullValueHandling.Ignore)]
@@ -256,7 +256,7 @@ namespace AdvancedBilling.Standard.Models
         public string PricePointHandle { get; set; }
 
         /// <summary>
-        /// The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
+        /// The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
         /// </summary>
         [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
         public int? Interval { get; set; }

@@ -15,9 +15,11 @@ namespace AdvancedBilling.Standard.Models
     public class EBBComponent : BaseModel
     {
         private Models.IntervalUnit? intervalUnit;
+        private string unspscCode;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "interval_unit", false },
+            { "unspsc_code", false },
         };
 
         /// <summary>
@@ -44,6 +46,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="hideDateRangeOnInvoice">hide_date_range_on_invoice.</param>
         /// <param name="interval">interval.</param>
         /// <param name="intervalUnit">interval_unit.</param>
+        /// <param name="unspscCode">unspsc_code.</param>
         public EBBComponent(
             string name,
             string unitName,
@@ -58,7 +61,8 @@ namespace AdvancedBilling.Standard.Models
             string taxCode = null,
             bool? hideDateRangeOnInvoice = null,
             int? interval = null,
-            Models.IntervalUnit? intervalUnit = null)
+            Models.IntervalUnit? intervalUnit = null,
+            string unspscCode = null)
         {
             this.Name = name;
             this.UnitName = unitName;
@@ -78,16 +82,21 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.IntervalUnit = intervalUnit;
             }
+
+            if (unspscCode != null)
+            {
+                this.UnspscCode = unspscCode;
+            }
         }
 
         /// <summary>
-        /// A name for this component that is suitable for showing customers and displaying on billing statements, ie. "Minutes".
+        /// A name for this component that is suitable for showing customers and displaying on billing statements, i.e., "Minutes".
         /// </summary>
         [JsonProperty("name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// The name of the unit of measurement for the component. It should be singular since it will be automatically pluralized when necessary. i.e. “message”, which may then be shown as “5 messages” on a subscription’s component line-item
+        /// “The name of the unit of measurement for the component. It should be singular since it will be automatically pluralized when necessary. i.e., “message”, which may then be shown as “5 messages” on a subscription’s component line-item”
         /// </summary>
         [JsonProperty("unit_name")]
         public string UnitName { get; set; }
@@ -99,7 +108,7 @@ namespace AdvancedBilling.Standard.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// A unique identifier for your use that can be used to retrieve this component is subsequent requests.  Must start with a letter or number and may only contain lowercase letters, numbers, or the characters '.', ':', '-', or '_'.
+        /// A unique identifier for your use that can be used to retrieve this component in subsequent requests. Must start with a letter or number and may only contain lowercase letters, numbers, or the characters '.', ':', '-', or '_'.
         /// </summary>
         [JsonProperty("handle", NullValueHandling = NullValueHandling.Ignore)]
         public string Handle { get; set; }
@@ -129,7 +138,7 @@ namespace AdvancedBilling.Standard.Models
         public List<Models.ComponentPricePointItem> PricePoints { get; set; }
 
         /// <summary>
-        /// The amount the customer will be charged per unit when the pricing scheme is “per_unit”. The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
+        /// The amount the customer will be charged per unit when the pricing scheme is “per_unit”. The price can contain up to 8 decimal places. i.e., 1.00 or 0.0012 or 0.00000065
         /// </summary>
         [JsonProperty("unit_price", NullValueHandling = NullValueHandling.Ignore)]
         public EBBComponentUnitPrice UnitPrice { get; set; }
@@ -153,7 +162,7 @@ namespace AdvancedBilling.Standard.Models
         public int EventBasedBillingMetricId { get; set; }
 
         /// <summary>
-        /// The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this component's default price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
+        /// The numerical interval. i.e., an interval of ‘30’ coupled with an interval_unit of day would mean this component's default price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
         /// </summary>
         [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
         public int? Interval { get; set; }
@@ -176,6 +185,24 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent as the commodity code on invoice line items for this component instead of the default derived from item_category.
+        /// </summary>
+        [JsonProperty("unspsc_code")]
+        public string UnspscCode
+        {
+            get
+            {
+                return this.unspscCode;
+            }
+
+            set
+            {
+                this.shouldSerialize["unspsc_code"] = true;
+                this.unspscCode = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -191,6 +218,13 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["interval_unit"] = false;
         }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetUnspscCode()
+        {
+            this.shouldSerialize["unspsc_code"] = false;
+        }
 
         /// <summary>
         /// Checks if the field should be serialized or not.
@@ -199,6 +233,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeIntervalUnit()
         {
             return this.shouldSerialize["interval_unit"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeUnspscCode()
+        {
+            return this.shouldSerialize["unspsc_code"];
         }
 
         /// <inheritdoc/>
@@ -234,6 +277,8 @@ namespace AdvancedBilling.Standard.Models
                  this.Interval?.Equals(other.Interval) == true) &&
                 (this.IntervalUnit == null && other.IntervalUnit == null ||
                  this.IntervalUnit?.Equals(other.IntervalUnit) == true) &&
+                (this.UnspscCode == null && other.UnspscCode == null ||
+                 this.UnspscCode?.Equals(other.UnspscCode) == true) &&
                 base.Equals(obj);
         }
 
@@ -257,6 +302,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"EventBasedBillingMetricId = {this.EventBasedBillingMetricId}");
             toStringOutput.Add($"Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
+            toStringOutput.Add($"UnspscCode = {this.UnspscCode ?? "null"}");
 
             base.ToString(toStringOutput);
         }

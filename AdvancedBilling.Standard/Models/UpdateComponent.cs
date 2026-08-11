@@ -18,6 +18,7 @@ namespace AdvancedBilling.Standard.Models
         private string taxCode;
         private Models.ItemCategory? itemCategory;
         private Models.CreditType? upgradeCharge;
+        private string unspscCode;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "description", false },
@@ -25,6 +26,7 @@ namespace AdvancedBilling.Standard.Models
             { "tax_code", false },
             { "item_category", false },
             { "upgrade_charge", false },
+            { "unspsc_code", false },
         };
 
         /// <summary>
@@ -46,6 +48,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="itemCategory">item_category.</param>
         /// <param name="displayOnHostedPage">display_on_hosted_page.</param>
         /// <param name="upgradeCharge">upgrade_charge.</param>
+        /// <param name="unspscCode">unspsc_code.</param>
         public UpdateComponent(
             string handle = null,
             string name = null,
@@ -55,7 +58,8 @@ namespace AdvancedBilling.Standard.Models
             string taxCode = null,
             Models.ItemCategory? itemCategory = null,
             bool? displayOnHostedPage = null,
-            Models.CreditType? upgradeCharge = null)
+            Models.CreditType? upgradeCharge = null,
+            string unspscCode = null)
         {
             this.Handle = handle;
             this.Name = name;
@@ -86,6 +90,11 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.UpgradeCharge = upgradeCharge;
             }
+
+            if (unspscCode != null)
+            {
+                this.UnspscCode = unspscCode;
+            }
         }
 
         /// <summary>
@@ -95,7 +104,7 @@ namespace AdvancedBilling.Standard.Models
         public string Handle { get; set; }
 
         /// <summary>
-        /// The name of the Component, suitable for display on statements. i.e. Text Messages.
+        /// The name of the Component, suitable for display on statements. e.g., Text Messages.
         /// </summary>
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
@@ -202,6 +211,24 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent as the commodity code on invoice line items for this component instead of the default derived from item_category.
+        /// </summary>
+        [JsonProperty("unspsc_code")]
+        public string UnspscCode
+        {
+            get
+            {
+                return this.unspscCode;
+            }
+
+            set
+            {
+                this.shouldSerialize["unspsc_code"] = true;
+                this.unspscCode = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -244,6 +271,13 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetUpgradeCharge()
         {
             this.shouldSerialize["upgrade_charge"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetUnspscCode()
+        {
+            this.shouldSerialize["unspsc_code"] = false;
         }
 
         /// <summary>
@@ -291,6 +325,15 @@ namespace AdvancedBilling.Standard.Models
             return this.shouldSerialize["upgrade_charge"];
         }
 
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeUnspscCode()
+        {
+            return this.shouldSerialize["unspsc_code"];
+        }
+
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
@@ -316,6 +359,8 @@ namespace AdvancedBilling.Standard.Models
                  this.DisplayOnHostedPage?.Equals(other.DisplayOnHostedPage) == true) &&
                 (this.UpgradeCharge == null && other.UpgradeCharge == null ||
                  this.UpgradeCharge?.Equals(other.UpgradeCharge) == true) &&
+                (this.UnspscCode == null && other.UnspscCode == null ||
+                 this.UnspscCode?.Equals(other.UnspscCode) == true) &&
                 base.Equals(obj);
         }
 
@@ -334,6 +379,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"ItemCategory = {(this.ItemCategory == null ? "null" : this.ItemCategory.ToString())}");
             toStringOutput.Add($"DisplayOnHostedPage = {(this.DisplayOnHostedPage == null ? "null" : this.DisplayOnHostedPage.ToString())}");
             toStringOutput.Add($"UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
+            toStringOutput.Add($"UnspscCode = {this.UnspscCode ?? "null"}");
 
             base.ToString(toStringOutput);
         }

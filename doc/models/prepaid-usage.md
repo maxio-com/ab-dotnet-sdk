@@ -11,8 +11,8 @@
 |  --- | --- | --- | --- |
 | `PreviousUnitBalance` | `string` | Required | **Constraints**: *Minimum Length*: `1` |
 | `PreviousOverageUnitBalance` | `string` | Required | **Constraints**: *Minimum Length*: `1` |
-| `NewUnitBalance` | `int` | Required | - |
-| `NewOverageUnitBalance` | `int` | Required | - |
+| `NewUnitBalance` | [`PrepaidUsageNewUnitBalance`](../../doc/models/containers/prepaid-usage-new-unit-balance.md) | Required | This is a container for one-of cases. |
+| `NewOverageUnitBalance` | [`PrepaidUsageNewOverageUnitBalance`](../../doc/models/containers/prepaid-usage-new-overage-unit-balance.md) | Required | This is a container for one-of cases. |
 | `UsageQuantity` | `int` | Required | - |
 | `OverageUsageQuantity` | `int` | Required | - |
 | `ComponentId` | `int` | Required | - |
@@ -20,26 +20,33 @@
 | `Memo` | `string` | Required | - |
 | `AllocationDetails` | [`List<PrepaidUsageAllocationDetail>`](../../doc/models/prepaid-usage-allocation-detail.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Collections.Generic;
+
+PrepaidUsage prepaidUsage = new PrepaidUsage
 {
-  "previous_unit_balance": "previous_unit_balance0",
-  "previous_overage_unit_balance": "previous_overage_unit_balance4",
-  "new_unit_balance": 252,
-  "new_overage_unit_balance": 224,
-  "usage_quantity": 214,
-  "overage_usage_quantity": 106,
-  "component_id": 176,
-  "component_handle": "component_handle4",
-  "memo": "memo8",
-  "allocation_details": [
+    PreviousUnitBalance = "previous_unit_balance4",
+    PreviousOverageUnitBalance = "previous_overage_unit_balance0",
+    NewUnitBalance = PrepaidUsageNewUnitBalance.FromNumber(206),
+    NewOverageUnitBalance = PrepaidUsageNewOverageUnitBalance.FromNumber(78),
+    UsageQuantity = 246,
+    OverageUsageQuantity = 138,
+    ComponentId = 208,
+    ComponentHandle = "component_handle0",
+    Memo = "memo4",
+    AllocationDetails = new List<PrepaidUsageAllocationDetail>
     {
-      "allocation_id": 18,
-      "charge_id": 84,
-      "usage_quantity": 10
-    }
-  ]
-}
+        new PrepaidUsageAllocationDetail
+        {
+            AllocationId = 18,
+            ChargeId = 84,
+            UsageQuantity = 10,
+        },
+    },
+};
 ```
 

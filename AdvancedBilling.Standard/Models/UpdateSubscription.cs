@@ -16,9 +16,11 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class UpdateSubscription : BaseModel
     {
+        private int? brandingThemeId;
         private string dunningCommunicationDelayTimeZone;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
+            { "branding_theme_id", false },
             { "dunning_communication_delay_time_zone", false },
         };
 
@@ -42,6 +44,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="initialBillingAt">initial_billing_at.</param>
         /// <param name="deferSignup">defer_signup.</param>
         /// <param name="nextBillingAt">next_billing_at.</param>
+        /// <param name="brandingThemeId">branding_theme_id.</param>
         /// <param name="expiresAt">expires_at.</param>
         /// <param name="paymentCollectionMethod">payment_collection_method.</param>
         /// <param name="receivesInvoiceEmails">receives_invoice_emails.</param>
@@ -65,6 +68,7 @@ namespace AdvancedBilling.Standard.Models
             DateTimeOffset? initialBillingAt = null,
             bool? deferSignup = false,
             DateTimeOffset? nextBillingAt = null,
+            int? brandingThemeId = null,
             DateTimeOffset? expiresAt = null,
             string paymentCollectionMethod = null,
             bool? receivesInvoiceEmails = null,
@@ -88,6 +92,11 @@ namespace AdvancedBilling.Standard.Models
             this.InitialBillingAt = initialBillingAt;
             this.DeferSignup = deferSignup;
             this.NextBillingAt = nextBillingAt;
+
+            if (brandingThemeId != null)
+            {
+                this.BrandingThemeId = brandingThemeId;
+            }
             this.ExpiresAt = expiresAt;
             this.PaymentCollectionMethod = paymentCollectionMethod;
             this.ReceivesInvoiceEmails = receivesInvoiceEmails;
@@ -113,13 +122,13 @@ namespace AdvancedBilling.Standard.Models
         public Models.CreditCardAttributes CreditCardAttributes { get; set; }
 
         /// <summary>
-        /// Set to the handle of a different product to change the subscription's product
+        /// Set to the handle of a different product to change the subscription's product.
         /// </summary>
         [JsonProperty("product_handle", NullValueHandling = NullValueHandling.Ignore)]
         public string ProductHandle { get; set; }
 
         /// <summary>
-        /// Set to the id of a different product to change the subscription's product
+        /// Set to the id of a different product to change the subscription's product.
         /// </summary>
         [JsonProperty("product_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? ProductId { get; set; }
@@ -149,7 +158,7 @@ namespace AdvancedBilling.Standard.Models
         public UpdateSubscriptionSnapDay SnapDay { get; set; }
 
         /// <summary>
-        /// (Optional) Set this attribute to a future date/time to update a subscription in the Awaiting Signup Date state, to Awaiting Signup. In the Awaiting Signup state, a subscription behaves like any other. It can be canceled, allocated to, or have its billing date changed. etc. When the `initial_billing_at` date hits, the subscription will transition to the expected state. If the product has a trial, the subscription will enter a trial, otherwise it will go active. Setup fees will be respected either before or after the trial, as configured on the price point. If the payment is due at the initial_billing_at and it fails the subscription will be immediately canceled. You can omit the initial_billing_at date to activate the subscription immediately. See the [subscription import](https://maxio.zendesk.com/hc/en-us/articles/24251489107213-Advanced-Billing-Subscription-Imports#date-format) documentation for more information about Date/Time formats.
+        /// (Optional) Set this attribute to a future date/time to update a subscription in the Awaiting Signup Date state, to Awaiting Signup. In the Awaiting Signup state, a subscription behaves like any other. It can be canceled, allocated to, or have its billing date changed, etc. When the `initial_billing_at` date hits, the subscription will transition to the expected state. If the product has a trial, the subscription will enter a trial, otherwise it will go active. Setup fees will be respected either before or after the trial, as configured on the price point. If the payment is due at the initial_billing_at and it fails the subscription will be immediately canceled. You can omit the initial_billing_at date to activate the subscription immediately. See the [subscription import](https://maxio.zendesk.com/hc/en-us/articles/24251489107213-Advanced-Billing-Subscription-Imports#date-format) documentation for more information about Date/Time formats.
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("initial_billing_at", NullValueHandling = NullValueHandling.Ignore)]
@@ -167,6 +176,24 @@ namespace AdvancedBilling.Standard.Models
         [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("next_billing_at", NullValueHandling = NullValueHandling.Ignore)]
         public DateTimeOffset? NextBillingAt { get; set; }
+
+        /// <summary>
+        /// The ID of the Branding Theme to assign to this subscription. When set, this subscription-level Branding Theme is used instead of the customer's default Branding Theme for subscription-related documents and communications that use subscription theming. Pass null or an empty value to clear the subscription-level Branding Theme. Available only when Branding Themes are enabled for the site. Not returned in the response.
+        /// </summary>
+        [JsonProperty("branding_theme_id")]
+        public int? BrandingThemeId
+        {
+            get
+            {
+                return this.brandingThemeId;
+            }
+
+            set
+            {
+                this.shouldSerialize["branding_theme_id"] = true;
+                this.brandingThemeId = value;
+            }
+        }
 
         /// <summary>
         /// Timestamp giving the expiration date of this subscription (if any). You may manually change the expiration date at any point during a subscription period.
@@ -264,9 +291,25 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
+        public void UnsetBrandingThemeId()
+        {
+            this.shouldSerialize["branding_theme_id"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
         public void UnsetDunningCommunicationDelayTimeZone()
         {
             this.shouldSerialize["dunning_communication_delay_time_zone"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeBrandingThemeId()
+        {
+            return this.shouldSerialize["branding_theme_id"];
         }
 
         /// <summary>
@@ -305,6 +348,8 @@ namespace AdvancedBilling.Standard.Models
                  this.DeferSignup?.Equals(other.DeferSignup) == true) &&
                 (this.NextBillingAt == null && other.NextBillingAt == null ||
                  this.NextBillingAt?.Equals(other.NextBillingAt) == true) &&
+                (this.BrandingThemeId == null && other.BrandingThemeId == null ||
+                 this.BrandingThemeId?.Equals(other.BrandingThemeId) == true) &&
                 (this.ExpiresAt == null && other.ExpiresAt == null ||
                  this.ExpiresAt?.Equals(other.ExpiresAt) == true) &&
                 (this.PaymentCollectionMethod == null && other.PaymentCollectionMethod == null ||
@@ -348,6 +393,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"InitialBillingAt = {(this.InitialBillingAt == null ? "null" : this.InitialBillingAt.ToString())}");
             toStringOutput.Add($"DeferSignup = {(this.DeferSignup == null ? "null" : this.DeferSignup.ToString())}");
             toStringOutput.Add($"NextBillingAt = {(this.NextBillingAt == null ? "null" : this.NextBillingAt.ToString())}");
+            toStringOutput.Add($"BrandingThemeId = {(this.BrandingThemeId == null ? "null" : this.BrandingThemeId.ToString())}");
             toStringOutput.Add($"ExpiresAt = {(this.ExpiresAt == null ? "null" : this.ExpiresAt.ToString())}");
             toStringOutput.Add($"PaymentCollectionMethod = {this.PaymentCollectionMethod ?? "null"}");
             toStringOutput.Add($"ReceivesInvoiceEmails = {(this.ReceivesInvoiceEmails == null ? "null" : this.ReceivesInvoiceEmails.ToString())}");

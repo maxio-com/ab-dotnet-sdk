@@ -17,30 +17,46 @@
 | `Components` | [`List<CreateOfferComponent>`](../../doc/models/create-offer-component.md) | Optional | - |
 | `Coupons` | `List<string>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+CreateOffer createOffer = new CreateOffer
 {
-  "name": "name4",
-  "handle": "handle0",
-  "description": "description4",
-  "product_id": 208,
-  "product_price_point_id": 132,
-  "components": [
+    Name = "name6",
+    Handle = "handle2",
+    ProductId = 66,
+    Description = "description6",
+    ProductPricePointId = 246,
+    Components = new List<CreateOfferComponent>
     {
-      "component_id": 108,
-      "price_point_id": 124,
-      "starting_quantity": 84
+        new CreateOfferComponent
+        {
+            ComponentId = 108,
+            PricePointId = 124,
+            StartingQuantity = 84,
+        },
+        new CreateOfferComponent
+        {
+            ComponentId = 108,
+            PricePointId = 124,
+            StartingQuantity = 84,
+        },
+        new CreateOfferComponent
+        {
+            ComponentId = 108,
+            PricePointId = 124,
+            StartingQuantity = 84,
+        },
     },
+    Coupons = new List<string>
     {
-      "component_id": 108,
-      "price_point_id": 124,
-      "starting_quantity": 84
-    }
-  ],
-  "coupons": [
-    "coupons4"
-  ]
-}
+        "coupons6",
+        "coupons5",
+        "coupons4",
+    },
+};
 ```
 

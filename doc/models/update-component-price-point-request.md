@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- |
 | `PricePoint` | [`UpdateComponentPricePoint`](../../doc/models/update-component-price-point.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+UpdateComponentPricePointRequest updateComponentPricePointRequest = new UpdateComponentPricePointRequest
 {
-  "price_point": {
-    "name": "name0",
-    "handle": "handle6",
-    "pricing_scheme": "per_unit",
-    "use_site_exchange_rate": false,
-    "tax_included": false
-  }
-}
+    PricePoint = new UpdateComponentPricePoint
+    {
+        Name = "name0",
+        Handle = "handle6",
+        PricingScheme = PricingScheme.PerUnit,
+        UseSiteExchangeRate = false,
+        TaxIncluded = false,
+    },
+};
 ```
 

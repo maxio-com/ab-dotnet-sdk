@@ -18,25 +18,36 @@
 | `Ids` | `List<int>` | Optional | Allows fetching price points with matching id based on provided values. Use in query: `filter[ids]=1,2,3`. |
 | `ArchivedAt` | [`IncludeNullOrNotNull?`](../../doc/models/include-null-or-not-null.md) | Optional | Allows fetching price points only if archived_at is present or not. Use in query: `filter[archived_at]=not_null`. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+using System.Globalization;
+
+ListPricePointsFilter listPricePointsFilter = new ListPricePointsFilter
 {
-  "start_date": "2011-12-17",
-  "end_date": "2011-12-15",
-  "start_datetime": "12/19/2011 09:15:30",
-  "end_datetime": "06/07/2019 17:20:06",
-  "type": [
-    "catalog",
-    "default",
-    "custom"
-  ],
-  "ids": [
-    1,
-    2,
-    3
-  ],
-  "date_field": "updated_at"
-}
+    DateField = BasicDateField.UpdatedAt,
+    StartDate = DateTime.Parse("2011-12-17"),
+    EndDate = DateTime.Parse("2011-12-15"),
+    StartDatetime = DateTime.ParseExact("2011-12-19T09:15:30+00:00", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    EndDatetime = DateTime.ParseExact("2019-06-07T17:20:06Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    Type = new List<PricePointType>
+    {
+        PricePointType.Catalog,
+        PricePointType.Default,
+        PricePointType.Custom,
+    },
+    Ids = new List<int>
+    {
+        1,
+        2,
+        3,
+    },
+};
 ```
 

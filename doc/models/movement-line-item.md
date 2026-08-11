@@ -19,15 +19,18 @@
 | `PrevQuantity` | `int?` | Optional | - |
 | `Recurring` | `bool?` | Optional | When `true`, the line item's MRR value will contribute to the `plan` breakout. When `false`, the line item contributes to the `usage` breakout. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+MovementLineItem movementLineItem = new MovementLineItem
 {
-  "product_id": 156,
-  "component_id": 68,
-  "price_point_id": 164,
-  "name": "name6",
-  "mrr": 154
-}
+    ProductId = 146,
+    ComponentId = 58,
+    PricePointId = 82,
+    Name = "name8",
+    Mrr = 92,
+};
 ```
 

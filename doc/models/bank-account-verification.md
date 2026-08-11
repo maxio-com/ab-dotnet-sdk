@@ -12,12 +12,15 @@
 | `Deposit1InCents` | `long?` | Optional | - |
 | `Deposit2InCents` | `long?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+BankAccountVerification bankAccountVerification = new BankAccountVerification
 {
-  "deposit_1_in_cents": 142,
-  "deposit_2_in_cents": 132
-}
+    Deposit1InCents = 248L,
+    Deposit2InCents = 10L,
+};
 ```
 

@@ -12,3 +12,11 @@
 | `Customer` |
 | `PaymentProfile` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionPurgeType subscriptionPurgeType = SubscriptionPurgeType.Customer;
+```
+

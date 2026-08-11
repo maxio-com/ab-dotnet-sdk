@@ -13,13 +13,16 @@
 | `ChargeId` | `int?` | Optional | - |
 | `UsageQuantity` | `int?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PrepaidUsageAllocationDetail prepaidUsageAllocationDetail = new PrepaidUsageAllocationDetail
 {
-  "allocation_id": 72,
-  "charge_id": 30,
-  "usage_quantity": 212
-}
+    AllocationId = 144,
+    ChargeId = 214,
+    UsageQuantity = 140,
+};
 ```
 

@@ -11,14 +11,20 @@
 |  --- | --- | --- | --- |
 | `Errors` | `Dictionary<string, string>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+try
 {
-  "errors": {
-    "key0": "errors3",
-    "key1": "errors4"
-  }
+    // make the API call
+}
+catch (ApiException e)
+{
+    if (e is ErrorStringMapResponseException)
+    {
+        // TODO: Handle ErrorStringMapResponseException
+        Console.WriteLine(e.Message);
+    }
 }
 ```
 

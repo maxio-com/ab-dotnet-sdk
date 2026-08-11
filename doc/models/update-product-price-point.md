@@ -12,12 +12,15 @@
 | `Handle` | `string` | Optional | - |
 | `PriceInCents` | `long?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+UpdateProductPricePoint updateProductPricePoint = new UpdateProductPricePoint
 {
-  "handle": "handle6",
-  "price_in_cents": 220
-}
+    Handle = "handle2",
+    PriceInCents = 154L,
+};
 ```
 

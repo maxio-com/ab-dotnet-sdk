@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- |
 | `Subscription` | [`Subscription`](../../doc/models/subscription.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionResponse subscriptionResponse = new SubscriptionResponse
 {
-  "subscription": {
-    "id": 8,
-    "state": "paused",
-    "balance_in_cents": 124,
-    "total_revenue_in_cents": 48,
-    "product_price_in_cents": 238
-  }
-}
+    Subscription = new Subscription
+    {
+        Id = 8,
+        State = SubscriptionState.Paused,
+        BalanceInCents = 124L,
+        TotalRevenueInCents = 48L,
+        ProductPriceInCents = 238L,
+    },
+};
 ```
 

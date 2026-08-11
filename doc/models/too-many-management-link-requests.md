@@ -12,12 +12,18 @@
 | `Error` | `string` | Required | - |
 | `NewLinkAvailableAt` | `DateTimeOffset` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+TooManyManagementLinkRequests tooManyManagementLinkRequests = new TooManyManagementLinkRequests
 {
-  "error": "error2",
-  "new_link_available_at": "2016-03-13T12:52:32.123Z"
-}
+    Error = "error8",
+    NewLinkAvailableAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+};
 ```
 

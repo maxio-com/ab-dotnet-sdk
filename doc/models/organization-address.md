@@ -18,15 +18,18 @@
 | `Name` | `string` | Optional | - |
 | `Phone` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+OrganizationAddress organizationAddress = new OrganizationAddress
 {
-  "street": "street4",
-  "line2": "line28",
-  "city": "city4",
-  "state": "state0",
-  "zip": "zip2"
-}
+    Street = "street2",
+    Line2 = "line26",
+    City = "city2",
+    State = "state8",
+    Zip = "zip6",
+};
 ```
 

@@ -17,15 +17,19 @@
 | `ProductFamilyId` | [`CreateInvoiceCouponProductFamilyId`](../../doc/models/containers/create-invoice-coupon-product-family-id.md) | Optional | This is a container for one-of cases. |
 | `CompoundingStrategy` | [`CompoundingStrategy?`](../../doc/models/compounding-strategy.md) | Optional | Applicable only to stackable coupons. For `compound`, Percentage-based discounts will be calculated against the remaining price, after prior discounts have been calculated. For `full-price`, Percentage-based discounts will always be calculated against the original item price, before other discounts are applied. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+CreateInvoiceCoupon createInvoiceCoupon = new CreateInvoiceCoupon
 {
-  "percentage": 50.0,
-  "code": "code4",
-  "subcode": "subcode8",
-  "amount": "String9",
-  "description": "description4"
-}
+    Code = "code8",
+    Subcode = "subcode4",
+    Percentage = CreateInvoiceCouponPercentage.FromPrecision(50),
+    Amount = CreateInvoiceCouponAmount.FromString("String9"),
+    Description = "description0",
+};
 ```
 

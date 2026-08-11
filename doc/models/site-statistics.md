@@ -21,15 +21,18 @@
 | `TotalUnpaidSubscriptions` | `int?` | Optional | - |
 | `TotalDunningSubscriptions` | `int?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SiteStatistics siteStatistics = new SiteStatistics
 {
-  "total_subscriptions": 204,
-  "subscriptions_today": 134,
-  "total_revenue": "total_revenue6",
-  "revenue_today": "revenue_today4",
-  "revenue_this_month": "revenue_this_month4"
-}
+    TotalSubscriptions = 168,
+    SubscriptionsToday = 170,
+    TotalRevenue = "total_revenue2",
+    RevenueToday = "revenue_today0",
+    RevenueThisMonth = "revenue_this_month0",
+};
 ```
 

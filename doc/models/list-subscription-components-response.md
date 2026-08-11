@@ -11,19 +11,25 @@
 |  --- | --- | --- | --- |
 | `SubscriptionsComponents` | [`List<SubscriptionComponent>`](../../doc/models/subscription-component.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+ListSubscriptionComponentsResponse listSubscriptionComponentsResponse = new ListSubscriptionComponentsResponse
 {
-  "subscriptions_components": [
+    SubscriptionsComponents = new List<SubscriptionComponent>
     {
-      "id": 138,
-      "name": "name2",
-      "kind": "metered_component",
-      "unit_name": "unit_name4",
-      "enabled": false
-    }
-  ]
-}
+        new SubscriptionComponent
+        {
+            Id = 138,
+            Name = "name2",
+            Kind = ComponentKind.MeteredComponent,
+            UnitName = "unit_name4",
+            Enabled = false,
+        },
+    },
+};
 ```
 

@@ -49,7 +49,7 @@ namespace AdvancedBilling.Standard.Models
         public int ComponentId { get; set; }
 
         /// <summary>
-        /// Include an array of currency price data
+        /// Include an array of currency price data.
         /// </summary>
         [JsonProperty("currency_prices", NullValueHandling = NullValueHandling.Ignore)]
         public bool? CurrencyPrices { get; set; }

@@ -11,15 +11,20 @@
 |  --- | --- | --- | --- |
 | `Errors` | [`SubscriptionGroupCreateErrorResponseErrors`](../../doc/models/containers/subscription-group-create-error-response-errors.md) | Required | This is a container for one-of cases. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+try
 {
-  "errors": {
-    "members": [
-      "members6"
-    ]
-  }
+    // make the API call
+}
+catch (ApiException e)
+{
+    if (e is SubscriptionGroupCreateErrorResponseException)
+    {
+        // TODO: Handle SubscriptionGroupCreateErrorResponseException
+        Console.WriteLine(e.Message);
+    }
 }
 ```
 

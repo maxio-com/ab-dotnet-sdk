@@ -17,15 +17,18 @@
 | `CurrencySymbol` | `string` | Optional | - |
 | `Movements` | [`List<Movement>`](../../doc/models/movement.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ListMRRResponseResult listMRRResponseResult = new ListMRRResponseResult
 {
-  "page": 150,
-  "per_page": 238,
-  "total_pages": 16,
-  "total_entries": 112,
-  "currency": "currency8"
-}
+    Page = 40,
+    PerPage = 208,
+    TotalPages = 82,
+    TotalEntries = 78,
+    Currency = "currency6",
+};
 ```
 

@@ -12,12 +12,15 @@
 | `Uid` | `string` | Optional | The UID of the invoice serving as an origin invoice. |
 | `Number` | `string` | Optional | The number of the invoice serving as an origin invoice. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+OriginInvoice originInvoice = new OriginInvoice
 {
-  "uid": "uid0",
-  "number": "number8"
-}
+    Uid = "uid8",
+    Number = "number4",
+};
 ```
 

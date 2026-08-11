@@ -103,7 +103,7 @@ namespace AdvancedBilling.Standard.Models
         public string ComponentHandle { get; set; }
 
         /// <summary>
-        /// Visible when using Fine-grained Component Control
+        /// Visible when using Fine-grained Component Control.
         /// </summary>
         [JsonProperty("direction", NullValueHandling = NullValueHandling.Ignore)]
         public Models.AllocationPreviewDirection? Direction { get; set; }

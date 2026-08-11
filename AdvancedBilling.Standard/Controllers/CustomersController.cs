@@ -243,6 +243,7 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// Lists all subscriptions that belong to a customer.
+        ///  If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-experience-and-terminology) enabled, subscriptions no longer require an associated product. For subscriptions without an associated product, 'product', 'product_price_point_id', and 'product_price_point_type' are returned as 'null'.
         /// </summary>
         /// <param name="customerId">Required parameter: The Chargify id of the customer.</param>
         /// <returns>Returns the List of Models.SubscriptionResponse response from the API call.</returns>
@@ -252,6 +253,7 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// Lists all subscriptions that belong to a customer.
+        ///  If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-experience-and-terminology) enabled, subscriptions no longer require an associated product. For subscriptions without an associated product, 'product', 'product_price_point_id', and 'product_price_point_type' are returned as 'null'.
         /// </summary>
         /// <param name="customerId">Required parameter: The Chargify id of the customer.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>

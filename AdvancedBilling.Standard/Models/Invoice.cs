@@ -22,6 +22,7 @@ namespace AdvancedBilling.Standard.Models
         private int? subscriptionGroupId;
         private int? parentInvoiceNumber;
         private int? groupPrimarySubscriptionId;
+        private int? brandingThemeId;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "paid_date", false },
@@ -30,6 +31,7 @@ namespace AdvancedBilling.Standard.Models
             { "subscription_group_id", false },
             { "parent_invoice_number", false },
             { "group_primary_subscription_id", false },
+            { "branding_theme_id", false },
         };
 
         /// <summary>
@@ -98,6 +100,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="publicUrl">public_url.</param>
         /// <param name="previousBalanceData">previous_balance_data.</param>
         /// <param name="publicUrlExpiresOn">public_url_expires_on.</param>
+        /// <param name="brandingThemeId">branding_theme_id.</param>
         public Invoice(
             long? id = null,
             string uid = null,
@@ -154,7 +157,8 @@ namespace AdvancedBilling.Standard.Models
             Models.InvoiceAvataxDetails avataxDetails = null,
             string publicUrl = null,
             Models.InvoicePreviousBalance previousBalanceData = null,
-            DateTime? publicUrlExpiresOn = null)
+            DateTime? publicUrlExpiresOn = null,
+            int? brandingThemeId = null)
         {
             this.Id = id;
             this.Uid = uid;
@@ -236,6 +240,11 @@ namespace AdvancedBilling.Standard.Models
             this.PublicUrl = publicUrl;
             this.PreviousBalanceData = previousBalanceData;
             this.PublicUrlExpiresOn = publicUrlExpiresOn;
+
+            if (brandingThemeId != null)
+            {
+                this.BrandingThemeId = brandingThemeId;
+            }
         }
 
         /// <summary>
@@ -276,7 +285,7 @@ namespace AdvancedBilling.Standard.Models
         public string Number { get; set; }
 
         /// <summary>
-        /// A monotonically increasing number assigned to invoices as they are created.  This number is unique within a site and can be used to sort and order invoices.
+        /// A monotonically increasing number assigned to invoices as they are created. This number is unique within a site and can be used to sort and order invoices.
         /// </summary>
         [JsonProperty("sequence_number", NullValueHandling = NullValueHandling.Ignore)]
         public int? SequenceNumber { get; set; }
@@ -303,7 +312,7 @@ namespace AdvancedBilling.Standard.Models
         public DateTimeOffset? UpdatedAt { get; set; }
 
         /// <summary>
-        /// Date the invoice was issued to the customer.  This is the date that the invoice was made available for payment.
+        /// Date the invoice was issued to the customer. This is the date that the invoice was made available for payment.
         /// The format is `"YYYY-MM-DD"`.
         /// </summary>
         [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
@@ -388,7 +397,7 @@ namespace AdvancedBilling.Standard.Models
         public string Currency { get; set; }
 
         /// <summary>
-        /// Consolidation level of the invoice, which is applicable to invoice consolidation.  It will hold one of the following values:
+        /// Consolidation level of the invoice, which is applicable to invoice consolidation. It will hold one of the following values:
         /// * "none": A normal invoice with no consolidation.
         /// * "child": An invoice segment which has been combined into a consolidated invoice.
         /// * "parent": A consolidated invoice, whose contents are composed of invoice segments.
@@ -489,7 +498,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.InvoiceSeller Seller { get; set; }
 
         /// <summary>
-        /// Information about the customer who is owner or recipient the invoiced subscription.
+        /// Information about the customer who is owner or recipient of the invoiced subscription.
         /// </summary>
         [JsonProperty("customer", NullValueHandling = NullValueHandling.Ignore)]
         public Models.InvoiceCustomer Customer { get; set; }
@@ -513,7 +522,7 @@ namespace AdvancedBilling.Standard.Models
         public int? NetTerms { get; set; }
 
         /// <summary>
-        /// The memo printed on invoices of any collection type.  This message is in control of the merchant.
+        /// The memo printed on invoices of any collection type. This message is in control of the merchant.
         /// </summary>
         [JsonProperty("memo", NullValueHandling = NullValueHandling.Ignore)]
         public string Memo { get; set; }
@@ -549,7 +558,7 @@ namespace AdvancedBilling.Standard.Models
         public string TaxAmount { get; set; }
 
         /// <summary>
-        /// The invoice total, which is `subtotal_amount - discount_amount + tax_amount`.'
+        /// The invoice total, which is `subtotal_amount - discount_amount + tax_amount`.
         /// </summary>
         [JsonProperty("total_amount", NullValueHandling = NullValueHandling.Ignore)]
         public string TotalAmount { get; set; }
@@ -664,6 +673,24 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("public_url_expires_on", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? PublicUrlExpiresOn { get; set; }
 
+        /// <summary>
+        /// The ID of the Branding Theme associated with this invoice. This value represents the Branding Theme used for invoice theming, such as themed invoice rendering. Available only when Branding Themes are enabled for the site.
+        /// </summary>
+        [JsonProperty("branding_theme_id")]
+        public int? BrandingThemeId
+        {
+            get
+            {
+                return this.brandingThemeId;
+            }
+
+            set
+            {
+                this.shouldSerialize["branding_theme_id"] = true;
+                this.brandingThemeId = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -713,6 +740,13 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetGroupPrimarySubscriptionId()
         {
             this.shouldSerialize["group_primary_subscription_id"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetBrandingThemeId()
+        {
+            this.shouldSerialize["branding_theme_id"] = false;
         }
 
         /// <summary>
@@ -767,6 +801,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeGroupPrimarySubscriptionId()
         {
             return this.shouldSerialize["group_primary_subscription_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeBrandingThemeId()
+        {
+            return this.shouldSerialize["branding_theme_id"];
         }
 
         /// <inheritdoc/>
@@ -888,6 +931,8 @@ namespace AdvancedBilling.Standard.Models
                  this.PreviousBalanceData?.Equals(other.PreviousBalanceData) == true) &&
                 (this.PublicUrlExpiresOn == null && other.PublicUrlExpiresOn == null ||
                  this.PublicUrlExpiresOn?.Equals(other.PublicUrlExpiresOn) == true) &&
+                (this.BrandingThemeId == null && other.BrandingThemeId == null ||
+                 this.BrandingThemeId?.Equals(other.BrandingThemeId) == true) &&
                 base.Equals(obj);
         }
 
@@ -953,6 +998,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"PublicUrl = {this.PublicUrl ?? "null"}");
             toStringOutput.Add($"PreviousBalanceData = {(this.PreviousBalanceData == null ? "null" : this.PreviousBalanceData.ToString())}");
             toStringOutput.Add($"PublicUrlExpiresOn = {(this.PublicUrlExpiresOn == null ? "null" : this.PublicUrlExpiresOn.ToString())}");
+            toStringOutput.Add($"BrandingThemeId = {(this.BrandingThemeId == null ? "null" : this.BrandingThemeId.ToString())}");
 
             base.ToString(toStringOutput);
         }

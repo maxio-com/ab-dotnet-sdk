@@ -157,7 +157,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Unique identifier for the line item.  Useful when cross-referencing the line against individual discounts in the `discounts` or `taxes` lists.
+        /// Unique identifier for the line item. Useful when cross-referencing the line against individual discounts in the `discounts` or `taxes` lists.
         /// </summary>
         [JsonProperty("uid", NullValueHandling = NullValueHandling.Ignore)]
         public string Uid { get; set; }
@@ -169,7 +169,7 @@ namespace AdvancedBilling.Standard.Models
         public string Title { get; set; }
 
         /// <summary>
-        /// Detailed description for the charge or item represented by this line.  May include proration details in plain text.
+        /// Detailed description for the charge or item represented by this line. May include proration details in plain text.
         /// Note: this string may contain line breaks that are hints for the best display format on the invoice.
         /// </summary>
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
@@ -184,7 +184,7 @@ namespace AdvancedBilling.Standard.Models
 
         /// <summary>
         /// The price per unit for the line item.
-        /// When tiered pricing was used (i.e. not every unit was actually priced at the same price) this will be the blended average cost per unit and the `tiered_unit_price` field will be set to `true`.
+        /// When tiered pricing was used (i.e., not every unit was actually priced at the same price) this will be the blended average cost per unit and the `tiered_unit_price` field will be set to `true`.
         /// </summary>
         [JsonProperty("unit_price", NullValueHandling = NullValueHandling.Ignore)]
         public string UnitPrice { get; set; }
@@ -219,7 +219,7 @@ namespace AdvancedBilling.Standard.Models
 
         /// <summary>
         /// The non-canonical total amount for the line.
-        /// `subtotal_amount` is the canonical amount for a line. The invoice `total_amount` is derived from the sum of the line `subtotal_amount`s and discounts or taxes applied thereafter.  Therefore, due to rounding or precision errors, the sum of line `total_amount`s may not equal the invoice `total_amount`.
+        /// `subtotal_amount` is the canonical amount for a line. The invoice `total_amount` is derived from the sum of the line `subtotal_amount`s and discounts or taxes applied thereafter. Therefore, due to rounding or precision errors, the sum of line `total_amount`s may not equal the invoice `total_amount`.
         /// </summary>
         [JsonProperty("total_amount", NullValueHandling = NullValueHandling.Ignore)]
         public string TotalAmount { get; set; }
@@ -233,7 +233,7 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Start date for the period covered by this line. The format is `"YYYY-MM-DD"`.
         /// * For periodic charges paid in advance, this date will match the billing date, and the end date will be in the future.
-        /// * For periodic charges paid in arrears (e.g. metered charges), this date will be the date of the previous billing, and the end date will be the current billing date.
+        /// * For periodic charges paid in arrears (e.g., metered charges), this date will be the date of the previous billing, and the end date will be the current billing date.
         /// * For non-periodic charges, this date and the end date will match.
         /// </summary>
         [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]
@@ -243,7 +243,7 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// End date for the period covered by this line. The format is `"YYYY-MM-DD"`.
         /// * For periodic charges paid in advance, this date will match the next (future) billing date.
-        /// * For periodic charges paid in arrears (e.g. metered charges), this date will be the date of the current billing date.
+        /// * For periodic charges paid in arrears (e.g., metered charges), this date will be the date of the current billing date.
         /// * For non-periodic charges, this date and the start date will match.
         /// </summary>
         [JsonConverter(typeof(CustomDateTimeConverter), "yyyy'-'MM'-'dd")]

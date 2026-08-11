@@ -17,15 +17,18 @@ Example schema for an `failed_payment` event
 | `PaymentMethod` | [`InvoicePaymentMethodType`](../../doc/models/invoice-payment-method-type.md) | Required | - |
 | `TransactionId` | `int` | Required | The transaction ID of the failed payment. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+FailedPaymentEventData failedPaymentEventData = new FailedPaymentEventData
 {
-  "amount_in_cents": 128,
-  "applied_amount": 154,
-  "memo": "memo2",
-  "payment_method": "credit_card",
-  "transaction_id": 170
-}
+    AmountInCents = 34,
+    AppliedAmount = 196,
+    PaymentMethod = InvoicePaymentMethodType.Ach,
+    TransactionId = 76,
+    Memo = "memo0",
+};
 ```
 

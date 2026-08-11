@@ -11,18 +11,22 @@
 |  --- | --- | --- | --- |
 | `Migration` | [`SubscriptionMigrationPreviewOptions`](../../doc/models/subscription-migration-preview-options.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionMigrationPreviewRequest subscriptionMigrationPreviewRequest = new SubscriptionMigrationPreviewRequest
 {
-  "migration": {
-    "include_trial": false,
-    "include_initial_charge": false,
-    "include_coupons": true,
-    "preserve_period": false,
-    "product_id": 158,
-    "product_price_point_id": 82
-  }
-}
+    Migration = new SubscriptionMigrationPreviewOptions
+    {
+        ProductId = 158,
+        ProductPricePointId = 82,
+        IncludeTrial = false,
+        IncludeInitialCharge = false,
+        IncludeCoupons = true,
+        PreservePeriod = false,
+    },
+};
 ```
 

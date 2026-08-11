@@ -91,19 +91,19 @@ namespace AdvancedBilling.Standard.Models
         public string Memo { get; set; }
 
         /// <summary>
-        /// Overrides the defaults for the site
+        /// Overrides the defaults for the site.
         /// </summary>
         [JsonProperty("seller_address", NullValueHandling = NullValueHandling.Ignore)]
         public Models.CreateInvoiceAddress SellerAddress { get; set; }
 
         /// <summary>
-        /// Overrides the default for the customer
+        /// Overrides the default for the customer.
         /// </summary>
         [JsonProperty("billing_address", NullValueHandling = NullValueHandling.Ignore)]
         public Models.CreateInvoiceAddress BillingAddress { get; set; }
 
         /// <summary>
-        /// Overrides the default for the customer
+        /// Overrides the default for the customer.
         /// </summary>
         [JsonProperty("shipping_address", NullValueHandling = NullValueHandling.Ignore)]
         public Models.CreateInvoiceAddress ShippingAddress { get; set; }

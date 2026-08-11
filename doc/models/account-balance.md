@@ -13,13 +13,16 @@
 | `AutomaticBalanceInCents` | `long?` | Optional | The automatic balance in cents. |
 | `RemittanceBalanceInCents` | `long?` | Optional | The remittance balance in cents. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+AccountBalance accountBalance = new AccountBalance
 {
-  "balance_in_cents": 16,
-  "automatic_balance_in_cents": 226,
-  "remittance_balance_in_cents": 62
-}
+    BalanceInCents = 242L,
+    AutomaticBalanceInCents = 0L,
+    RemittanceBalanceInCents = 32L,
+};
 ```
 

@@ -11,18 +11,25 @@
 |  --- | --- | --- | --- |
 | `PaymentProfile` | [`PaymentProfile`](../../doc/models/containers/payment-profile.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+PaymentProfileResponse paymentProfileResponse = new PaymentProfileResponse
 {
-  "payment_profile": {
-    "payment_type": "apple_pay",
-    "id": 60,
-    "first_name": "first_name2",
-    "last_name": "last_name0",
-    "customer_id": 98,
-    "current_vault": "braintree_blue"
-  }
-}
+    PaymentProfile = PaymentProfile.FromApplePayPaymentProfile(
+        new ApplePayPaymentProfile
+        {
+            PaymentType = PaymentType.ApplePay,
+            Id = 60,
+            FirstName = "first_name2",
+            LastName = "last_name0",
+            CustomerId = 98,
+            CurrentVault = ApplePayVault.BraintreeBlue,
+        }
+    ),
+};
 ```
 

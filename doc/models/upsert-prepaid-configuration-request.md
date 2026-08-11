@@ -11,16 +11,20 @@
 |  --- | --- | --- | --- |
 | `PrepaidConfiguration` | [`UpsertPrepaidConfiguration`](../../doc/models/upsert-prepaid-configuration.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+UpsertPrepaidConfigurationRequest upsertPrepaidConfigurationRequest = new UpsertPrepaidConfigurationRequest
 {
-  "prepaid_configuration": {
-    "initial_funding_amount_in_cents": 74,
-    "replenish_to_amount_in_cents": 76,
-    "auto_replenish": false,
-    "replenish_threshold_amount_in_cents": 20
-  }
-}
+    PrepaidConfiguration = new UpsertPrepaidConfiguration
+    {
+        InitialFundingAmountInCents = 74L,
+        ReplenishToAmountInCents = 76L,
+        AutoReplenish = false,
+        ReplenishThresholdAmountInCents = 20L,
+    },
+};
 ```
 

@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- |
 | `Customer` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CustomerError customerError = new CustomerError
 {
-  "customer": "customer8"
-}
+    Customer = "customer8",
+};
 ```
 

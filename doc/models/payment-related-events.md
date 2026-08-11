@@ -12,12 +12,15 @@
 | `ProductId` | `int` | Required | - |
 | `AccountTransactionId` | `int` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PaymentRelatedEvents paymentRelatedEvents = new PaymentRelatedEvents
 {
-  "product_id": 42,
-  "account_transaction_id": 58
-}
+    ProductId = 186,
+    AccountTransactionId = 170,
+};
 ```
 

@@ -52,7 +52,7 @@ namespace AdvancedBilling.Standard.Models
         public string IpAddress { get; set; }
 
         /// <summary>
-        /// Required when creating a subscription with Maxio Payments. Either terms_url or provacy_policy_url required when providing agreement_acceptance params.
+        /// Required when creating a subscription with Maxio Payments. Either terms_url or privacy_policy_url is required when providing agreement_acceptance params.
         /// </summary>
         [JsonProperty("terms_url", NullValueHandling = NullValueHandling.Ignore)]
         public string TermsUrl { get; set; }

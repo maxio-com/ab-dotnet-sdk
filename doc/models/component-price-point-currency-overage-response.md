@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- |
 | `PricePoint` | [`CurrencyOveragePrices`](../../doc/models/currency-overage-prices.md) | Required | Extends a component price point with currency overage prices. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ComponentPricePointCurrencyOverageResponse componentPricePointCurrencyOverageResponse = new ComponentPricePointCurrencyOverageResponse
 {
-  "price_point": {
-    "id": 248,
-    "type": "default",
-    "default": false,
-    "name": "name0",
-    "pricing_scheme": "per_unit"
-  }
-}
+    PricePoint = new CurrencyOveragePrices
+    {
+        Id = 248,
+        Type = PricePointType.Default,
+        MDefault = false,
+        Name = "name0",
+        PricingScheme = PricingScheme.PerUnit,
+    },
+};
 ```
 

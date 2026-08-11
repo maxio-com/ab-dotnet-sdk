@@ -19,15 +19,22 @@
 | `ComponentHandle` | `string` | Optional | - |
 | `SubscriptionId` | `int?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Globalization;
+
+Usage usage = new Usage
 {
-  "id": 252,
-  "memo": "memo8",
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "price_point_id": 126,
-  "quantity": 130
-}
+    Id = 150L,
+    Memo = "memo2",
+    CreatedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    PricePointId = 28,
+    Quantity = UsageQuantity.FromNumber(28),
+};
 ```
 

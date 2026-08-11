@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- |
 | `PrepaidConfiguration` | [`PrepaidConfiguration`](../../doc/models/prepaid-configuration.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PrepaidConfigurationResponse prepaidConfigurationResponse = new PrepaidConfigurationResponse
 {
-  "prepaid_configuration": {
-    "id": 142,
-    "initial_funding_amount_in_cents": 74,
-    "replenish_to_amount_in_cents": 76,
-    "auto_replenish": false,
-    "replenish_threshold_amount_in_cents": 20
-  }
-}
+    PrepaidConfiguration = new PrepaidConfiguration
+    {
+        Id = 142,
+        InitialFundingAmountInCents = 74L,
+        ReplenishToAmountInCents = 76L,
+        AutoReplenish = false,
+        ReplenishThresholdAmountInCents = 20L,
+    },
+};
 ```
 

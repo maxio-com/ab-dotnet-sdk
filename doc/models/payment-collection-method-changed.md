@@ -12,12 +12,15 @@
 | `PreviousValue` | `string` | Required | - |
 | `CurrentValue` | `string` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PaymentCollectionMethodChanged paymentCollectionMethodChanged = new PaymentCollectionMethodChanged
 {
-  "previous_value": "previous_value4",
-  "current_value": "current_value2"
-}
+    PreviousValue = "previous_value4",
+    CurrentValue = "current_value2",
+};
 ```
 

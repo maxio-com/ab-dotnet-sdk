@@ -13,13 +13,16 @@
 | `Price` | `int` | Required | Price for the given role. |
 | `Role` | [`CurrencyPriceRole`](../../doc/models/currency-price-role.md) | Required | Role for the price. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreateProductCurrencyPrice createProductCurrencyPrice = new CreateProductCurrencyPrice
 {
-  "currency": "currency0",
-  "price": 222,
-  "role": "baseline"
-}
+    Currency = "currency2",
+    Price = 78,
+    Role = CurrencyPriceRole.Baseline,
+};
 ```
 

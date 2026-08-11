@@ -14,14 +14,17 @@
 | `OriginalAmount` | `string` | Optional | **Constraints**: *Minimum Length*: `1` |
 | `AppliedAmount` | `string` | Optional | **Constraints**: *Minimum Length*: `1` |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ProformaInvoiceCredit proformaInvoiceCredit = new ProformaInvoiceCredit
 {
-  "uid": "uid8",
-  "memo": "memo2",
-  "original_amount": "original_amount2",
-  "applied_amount": "applied_amount0"
-}
+    Uid = "uid4",
+    Memo = "memo8",
+    OriginalAmount = "original_amount8",
+    AppliedAmount = "applied_amount4",
+};
 ```
 

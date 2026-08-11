@@ -11,14 +11,18 @@
 |  --- | --- | --- | --- |
 | `PricePoint` | [`UpdateProductPricePoint`](../../doc/models/update-product-price-point.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+UpdateProductPricePointRequest updateProductPricePointRequest = new UpdateProductPricePointRequest
 {
-  "price_point": {
-    "handle": "handle6",
-    "price_in_cents": 196
-  }
-}
+    PricePoint = new UpdateProductPricePoint
+    {
+        Handle = "handle6",
+        PriceInCents = 196L,
+    },
+};
 ```
 

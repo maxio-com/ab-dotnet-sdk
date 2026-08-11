@@ -15,15 +15,18 @@
 | `MaskedCardNumber` | `string` | Required | - |
 | `Type` | [`InvoiceEventPaymentMethod`](../../doc/models/invoice-event-payment-method.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PaymentMethodCreditCard paymentMethodCreditCard = new PaymentMethodCreditCard
 {
-  "card_brand": "card_brand4",
-  "masked_card_number": "masked_card_number0",
-  "type": "credit_card",
-  "card_expiration": "card_expiration2",
-  "last_four": "last_four4"
-}
+    CardBrand = "card_brand4",
+    MaskedCardNumber = "masked_card_number0",
+    Type = InvoiceEventPaymentMethod.CreditCard,
+    CardExpiration = "card_expiration2",
+    LastFour = "last_four6",
+};
 ```
 

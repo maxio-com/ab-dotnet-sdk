@@ -21,22 +21,26 @@
 | `UpgradeCharge` | [`CreditType?`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided. |
 | `DowngradeCredit` | [`CreditType?`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided. |
 | `PricePointId` | `int?` | Optional | - |
-| `Interval` | `int?` | Optional | The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. |
+| `Interval` | `int?` | Optional | The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. |
 | `IntervalUnit` | [`IntervalUnit?`](../../doc/models/interval-unit.md) | Optional | A string representing the interval unit for this component price point, either month or day. This property is only available for sites with Multifrequency enabled. |
 | `PreviousPricePointId` | `int?` | Optional | - |
 | `PricePointHandle` | `string` | Optional | - |
 | `PricePointName` | `string` | Optional | - |
 | `ComponentHandle` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+AllocationPreviewItem allocationPreviewItem = new AllocationPreviewItem
 {
-  "component_id": 54,
-  "subscription_id": 54,
-  "quantity": 78,
-  "previous_quantity": 192,
-  "memo": "memo6"
-}
+    ComponentId = 176,
+    SubscriptionId = 176,
+    Quantity = AllocationPreviewItemQuantity.FromNumber(200),
+    PreviousQuantity = AllocationPreviewItemPreviousQuantity.FromNumber(30),
+    Memo = "memo8",
+};
 ```
 

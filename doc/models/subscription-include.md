@@ -12,3 +12,11 @@
 | `Coupons` |
 | `SelfServicePageToken` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionInclude subscriptionInclude = SubscriptionInclude.Coupons;
+```
+

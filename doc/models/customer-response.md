@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- |
 | `Customer` | [`Customer`](../../doc/models/customer.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CustomerResponse customerResponse = new CustomerResponse
 {
-  "customer": {
-    "first_name": "first_name0",
-    "last_name": "last_name8",
-    "email": "email6",
-    "cc_emails": "cc_emails0",
-    "organization": "organization6"
-  }
-}
+    Customer = new Customer
+    {
+        FirstName = "first_name0",
+        LastName = "last_name8",
+        Email = "email6",
+        CcEmails = "cc_emails0",
+        Organization = "organization6",
+    },
+};
 ```
 

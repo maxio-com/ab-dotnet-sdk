@@ -19,15 +19,21 @@
 | `SubscriptionId` | `int?` | Optional | - |
 | `SubscriberName` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+Movement movement = new Movement
 {
-  "timestamp": "2016-03-13T12:52:32.123Z",
-  "amount_in_cents": 174,
-  "amount_formatted": "amount_formatted4",
-  "description": "description2",
-  "category": "category0"
-}
+    Timestamp = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    AmountInCents = 34L,
+    AmountFormatted = "amount_formatted6",
+    Description = "description4",
+    Category = "category2",
+};
 ```
 

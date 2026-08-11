@@ -16,15 +16,25 @@
 | `ExpiresAt` | `DateTimeOffset?` | Optional | - |
 | `LastInviteSentAt` | `DateTimeOffset?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+PortalManagementLink portalManagementLink = new PortalManagementLink
 {
-  "url": "url0",
-  "fetch_count": 222,
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "new_link_available_at": "2016-03-13T12:52:32.123Z",
-  "expires_at": "2016-03-13T12:52:32.123Z"
-}
+    Url = "url8",
+    FetchCount = 88,
+    CreatedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    NewLinkAvailableAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    ExpiresAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+};
 ```
 

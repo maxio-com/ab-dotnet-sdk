@@ -16,24 +16,29 @@
 | `PreviousPricePoint` | [`ItemPricePointData`](../../doc/models/item-price-point-data.md) | Required | - |
 | `CurrentPricePoint` | [`ItemPricePointData`](../../doc/models/item-price-point-data.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ItemPricePointChanged itemPricePointChanged = new ItemPricePointChanged
 {
-  "item_id": 66,
-  "item_type": "item_type6",
-  "item_handle": "item_handle4",
-  "item_name": "item_name8",
-  "previous_price_point": {
-    "id": 216,
-    "handle": "handle6",
-    "name": "name0"
-  },
-  "current_price_point": {
-    "id": 218,
-    "handle": "handle6",
-    "name": "name0"
-  }
-}
+    ItemId = 30,
+    ItemType = "item_type6",
+    ItemHandle = "item_handle4",
+    ItemName = "item_name8",
+    PreviousPricePoint = new ItemPricePointData
+    {
+        Id = 216,
+        Handle = "handle6",
+        Name = "name0",
+    },
+    CurrentPricePoint = new ItemPricePointData
+    {
+        Id = 218,
+        Handle = "handle6",
+        Name = "name0",
+    },
+};
 ```
 

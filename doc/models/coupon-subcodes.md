@@ -11,13 +11,19 @@
 |  --- | --- | --- | --- |
 | `Codes` | `List<string>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+CouponSubcodes couponSubcodes = new CouponSubcodes
 {
-  "codes": [
-    "codes8"
-  ]
-}
+    Codes = new List<string>
+    {
+        "codes8",
+        "codes9",
+    },
+};
 ```
 

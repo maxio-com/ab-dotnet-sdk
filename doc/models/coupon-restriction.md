@@ -15,15 +15,18 @@
 | `Name` | `string` | Optional | - |
 | `Handle` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CouponRestriction couponRestriction = new CouponRestriction
 {
-  "id": 180,
-  "item_type": "Component",
-  "item_id": 184,
-  "name": "name4",
-  "handle": "handle0"
-}
+    Id = 66,
+    ItemType = RestrictionType.Component,
+    ItemId = 214,
+    Name = "name0",
+    Handle = "handle6",
+};
 ```
 

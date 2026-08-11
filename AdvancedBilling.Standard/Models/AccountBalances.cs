@@ -43,13 +43,13 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The balance, in cents, of the sum of the subscription's  open, payable invoices.
+        /// The balance, in cents, of the sum of the subscription's open, payable invoices.
         /// </summary>
         [JsonProperty("open_invoices", NullValueHandling = NullValueHandling.Ignore)]
         public Models.AccountBalance OpenInvoices { get; set; }
 
         /// <summary>
-        /// The balance, in cents, of the sum of the subscription's  pending, payable invoices.
+        /// The balance, in cents, of the sum of the subscription's pending, payable invoices.
         /// </summary>
         [JsonProperty("pending_invoices", NullValueHandling = NullValueHandling.Ignore)]
         public Models.AccountBalance PendingInvoices { get; set; }

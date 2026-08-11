@@ -17,17 +17,21 @@
 | `AllocationId` | `int` | Required | - |
 | `AllocatedQuantity` | [`ComponentAllocationChangeAllocatedQuantity`](../../doc/models/containers/component-allocation-change-allocated-quantity.md) | Optional | This is a container for one-of cases. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+ComponentAllocationChange componentAllocationChange = new ComponentAllocationChange
 {
-  "previous_allocation": 94,
-  "new_allocation": 102,
-  "component_id": 88,
-  "component_handle": "component_handle8",
-  "memo": "memo2",
-  "allocation_id": 158,
-  "allocated_quantity": 104
-}
+    PreviousAllocation = 78,
+    NewAllocation = 118,
+    ComponentId = 72,
+    ComponentHandle = "component_handle8",
+    Memo = "memo2",
+    AllocationId = 174,
+    AllocatedQuantity = ComponentAllocationChangeAllocatedQuantity.FromNumber(88),
+};
 ```
 

@@ -18,16 +18,22 @@ Example schema for an `apply_debit_note` event
 | `Memo` | `string` | Optional | The debit note memo. |
 | `TransactionTime` | `DateTimeOffset?` | Optional | The time the debit note was applied, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z" |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+ApplyDebitNoteEventData applyDebitNoteEventData = new ApplyDebitNoteEventData
 {
-  "debit_note_number": "debit_note_number0",
-  "debit_note_uid": "debit_note_uid6",
-  "original_amount": "original_amount4",
-  "applied_amount": "applied_amount8",
-  "memo": "memo4",
-  "transaction_time": "2016-03-13T12:52:32.123Z"
-}
+    DebitNoteNumber = "debit_note_number8",
+    DebitNoteUid = "debit_note_uid4",
+    OriginalAmount = "original_amount2",
+    AppliedAmount = "applied_amount0",
+    Memo = "memo2",
+    TransactionTime = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+};
 ```
 

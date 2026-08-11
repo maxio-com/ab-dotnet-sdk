@@ -12,28 +12,33 @@
 | `ChargifyJsKeys` | [`List<PublicKey>`](../../doc/models/public-key.md) | Optional | - |
 | `Meta` | [`ListPublicKeysMeta`](../../doc/models/list-public-keys-meta.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+using System.Globalization;
+
+ListPublicKeysResponse listPublicKeysResponse = new ListPublicKeysResponse
 {
-  "chargify_js_keys": [
+    ChargifyJsKeys = new List<PublicKey>
     {
-      "public_key": "public_key8",
-      "requires_security_token": false,
-      "created_at": "2016-03-13T12:52:32.123Z"
+        new PublicKey
+        {
+            PublicKeyProp = "public_key8",
+            RequiresSecurityToken = false,
+            CreatedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+                provider: CultureInfo.InvariantCulture,
+                DateTimeStyles.RoundtripKind),
+        },
     },
+    Meta = new ListPublicKeysMeta
     {
-      "public_key": "public_key8",
-      "requires_security_token": false,
-      "created_at": "2016-03-13T12:52:32.123Z"
-    }
-  ],
-  "meta": {
-    "total_count": 150,
-    "current_page": 126,
-    "total_pages": 138,
-    "per_page": 152
-  }
-}
+        TotalCount = 150,
+        CurrentPage = 126,
+        TotalPages = 138,
+        PerPage = 152,
+    },
+};
 ```
 

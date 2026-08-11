@@ -12,3 +12,11 @@
 | `Coupon` |
 | `Referral` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ProformaInvoiceDiscountSourceType proformaInvoiceDiscountSourceType = ProformaInvoiceDiscountSourceType.Coupon;
+```
+

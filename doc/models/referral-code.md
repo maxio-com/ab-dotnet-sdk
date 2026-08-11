@@ -14,14 +14,17 @@
 | `SubscriptionId` | `int?` | Optional | - |
 | `Code` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ReferralCode referralCode = new ReferralCode
 {
-  "id": 42,
-  "site_id": 224,
-  "subscription_id": 152,
-  "code": "code6"
-}
+    Id = 186,
+    SiteId = 112,
+    SubscriptionId = 40,
+    Code = "code6",
+};
 ```
 

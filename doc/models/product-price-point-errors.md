@@ -16,29 +16,38 @@
 | `Price` | `List<string>` | Optional | - |
 | `PriceInCents` | `List<string>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+ProductPricePointErrors productPricePointErrors = new ProductPricePointErrors
 {
-  "price_point": "can't be blank",
-  "interval": [
-    "Recurring Interval: cannot be blank.",
-    "Recurring Interval: must be greater than or equal to 1."
-  ],
-  "interval_unit": [
-    "Interval unit: cannot be blank.",
-    "Interval unit: must be 'month' or 'day'."
-  ],
-  "name": [
-    "Name: cannot be blank."
-  ],
-  "price": [
-    "Price: is not a number.",
-    "Price: must be greater than or equal to 0."
-  ],
-  "price_in_cents": [
-    "Price in cents: cannot be blank."
-  ]
-}
+    PricePoint = "can't be blank",
+    Interval = new List<string>
+    {
+        "Recurring Interval: cannot be blank.",
+        "Recurring Interval: must be greater than or equal to 1.",
+    },
+    IntervalUnit = new List<string>
+    {
+        "Interval unit: cannot be blank.",
+        "Interval unit: must be 'month' or 'day'.",
+    },
+    Name = new List<string>
+    {
+        "Name: cannot be blank.",
+    },
+    Price = new List<string>
+    {
+        "Price: is not a number.",
+        "Price: must be greater than or equal to 0.",
+    },
+    PriceInCents = new List<string>
+    {
+        "Price in cents: cannot be blank.",
+    },
+};
 ```
 

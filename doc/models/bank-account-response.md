@@ -11,19 +11,23 @@
 |  --- | --- | --- | --- |
 | `PaymentProfile` | [`BankAccountPaymentProfile`](../../doc/models/bank-account-payment-profile.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+BankAccountResponse bankAccountResponse = new BankAccountResponse
 {
-  "payment_profile": {
-    "payment_type": "bank_account",
-    "verified": false,
-    "id": 44,
-    "first_name": "first_name4",
-    "last_name": "last_name2",
-    "customer_id": 82,
-    "current_vault": "authorizenet"
-  }
-}
+    PaymentProfile = new BankAccountPaymentProfile
+    {
+        PaymentType = PaymentType.BankAccount,
+        Id = 44,
+        FirstName = "first_name4",
+        LastName = "last_name2",
+        CustomerId = 82,
+        CurrentVault = BankAccountVault.Authorizenet,
+        Verified = false,
+    },
+};
 ```
 

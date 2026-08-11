@@ -12,12 +12,18 @@
 | `CancellationState` | `string` | Required | - |
 | `CancelsAt` | `DateTimeOffset` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+PendingCancellationChange pendingCancellationChange = new PendingCancellationChange
 {
-  "cancellation_state": "cancellation_state8",
-  "cancels_at": "2016-03-13T12:52:32.123Z"
-}
+    CancellationState = "cancellation_state0",
+    CancelsAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+};
 ```
 

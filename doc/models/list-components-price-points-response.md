@@ -11,19 +11,25 @@
 |  --- | --- | --- | --- |
 | `PricePoints` | [`List<ComponentPricePoint>`](../../doc/models/component-price-point.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+ListComponentsPricePointsResponse listComponentsPricePointsResponse = new ListComponentsPricePointsResponse
 {
-  "price_points": [
+    PricePoints = new List<ComponentPricePoint>
     {
-      "id": 40,
-      "type": "default",
-      "default": false,
-      "name": "name2",
-      "pricing_scheme": "per_unit"
-    }
-  ]
-}
+        new ComponentPricePoint
+        {
+            Id = 40,
+            Type = PricePointType.Default,
+            MDefault = false,
+            Name = "name2",
+            PricingScheme = PricingScheme.PerUnit,
+        },
+    },
+};
 ```
 

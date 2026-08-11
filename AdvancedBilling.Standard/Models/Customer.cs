@@ -39,6 +39,7 @@ namespace AdvancedBilling.Standard.Models
         private string taxExemptReason;
         private int? defaultAutoRenewalProfileId;
         private string maxioid;
+        private int? brandingThemeId;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "cc_emails", false },
@@ -65,6 +66,7 @@ namespace AdvancedBilling.Standard.Models
             { "tax_exempt_reason", false },
             { "default_auto_renewal_profile_id", false },
             { "maxioid", false },
+            { "branding_theme_id", false },
         };
 
         /// <summary>
@@ -100,6 +102,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="portalInviteLastSentAt">portal_invite_last_sent_at.</param>
         /// <param name="portalInviteLastAcceptedAt">portal_invite_last_accepted_at.</param>
         /// <param name="taxExempt">tax_exempt.</param>
+        /// <param name="surcharging">surcharging.</param>
         /// <param name="vatNumber">vat_number.</param>
         /// <param name="parentId">parent_id.</param>
         /// <param name="locale">locale.</param>
@@ -108,6 +111,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="taxExemptReason">tax_exempt_reason.</param>
         /// <param name="defaultAutoRenewalProfileId">default_auto_renewal_profile_id.</param>
         /// <param name="maxioid">maxioid.</param>
+        /// <param name="brandingThemeId">branding_theme_id.</param>
         public Customer(
             string firstName = null,
             string lastName = null,
@@ -132,6 +136,7 @@ namespace AdvancedBilling.Standard.Models
             DateTimeOffset? portalInviteLastSentAt = null,
             DateTimeOffset? portalInviteLastAcceptedAt = null,
             bool? taxExempt = null,
+            bool? surcharging = null,
             string vatNumber = null,
             int? parentId = null,
             string locale = null,
@@ -139,7 +144,8 @@ namespace AdvancedBilling.Standard.Models
             string salesforceId = null,
             string taxExemptReason = null,
             int? defaultAutoRenewalProfileId = null,
-            string maxioid = null)
+            string maxioid = null,
+            int? brandingThemeId = null)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
@@ -228,6 +234,7 @@ namespace AdvancedBilling.Standard.Models
                 this.PortalInviteLastAcceptedAt = portalInviteLastAcceptedAt;
             }
             this.TaxExempt = taxExempt;
+            this.Surcharging = surcharging;
 
             if (vatNumber != null)
             {
@@ -268,6 +275,11 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.Maxioid = maxioid;
             }
+
+            if (brandingThemeId != null)
+            {
+                this.BrandingThemeId = brandingThemeId;
+            }
         }
 
         /// <summary>
@@ -289,7 +301,7 @@ namespace AdvancedBilling.Standard.Models
         public string Email { get; set; }
 
         /// <summary>
-        /// A comma-separated list of emails that should be cc’d on all customer communications (i.e. “joe@example.com, sue@example.com”)
+        /// “A comma-separated list of emails that should be cc’d on all customer communications (e.g., “joe@example.com, sue@example.com”)”
         /// </summary>
         [JsonProperty("cc_emails")]
         public string CcEmails
@@ -363,7 +375,7 @@ namespace AdvancedBilling.Standard.Models
         public DateTimeOffset? UpdatedAt { get; set; }
 
         /// <summary>
-        /// The customer’s shipping street address (i.e. “123 Main St.”)
+        /// The customer’s shipping street address (e.g., “123 Main St.”)
         /// </summary>
         [JsonProperty("address")]
         public string Address
@@ -381,7 +393,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Second line of the customer’s shipping address i.e. “Apt. 100”
+        /// Second line of the customer’s shipping address e.g., “Apt. 100”
         /// </summary>
         [JsonProperty("address_2")]
         public string Address2
@@ -399,7 +411,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The customer’s shipping address city (i.e. “Boston”)
+        /// The customer’s shipping address city (e.g., “Boston”)
         /// </summary>
         [JsonProperty("city")]
         public string City
@@ -417,7 +429,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The customer’s shipping address state (i.e. “MA”)
+        /// The customer’s shipping address state (e.g., “MA”)
         /// </summary>
         [JsonProperty("state")]
         public string State
@@ -453,7 +465,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The customer’s shipping address zip code (i.e. “12345”)
+        /// The customer’s shipping address zip code (e.g., “12345”)
         /// </summary>
         [JsonProperty("zip")]
         public string Zip
@@ -606,6 +618,12 @@ namespace AdvancedBilling.Standard.Models
         public bool? TaxExempt { get; set; }
 
         /// <summary>
+        /// Whether surcharging is enabled for the customer. Only included on sites where surcharging control is enabled.
+        /// </summary>
+        [JsonProperty("surcharging", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? Surcharging { get; set; }
+
+        /// <summary>
         /// The VAT business identification number for the customer. This number is used to determine VAT tax opt out rules. It is not validated when added or updated on a customer record. Instead, it is validated via VIES before calculating taxes. Only valid business identification numbers will allow for VAT opt out.
         /// </summary>
         [JsonProperty("vat_number")]
@@ -746,6 +764,24 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.shouldSerialize["maxioid"] = true;
                 this.maxioid = value;
+            }
+        }
+
+        /// <summary>
+        /// The ID of the Branding Theme assigned to this customer as the customer's default Branding Theme. This customer-level Branding Theme is used when a subscription does not have its own subscription-level Branding Theme.  Available only when Branding Themes are enabled for the site.
+        /// </summary>
+        [JsonProperty("branding_theme_id")]
+        public int? BrandingThemeId
+        {
+            get
+            {
+                return this.brandingThemeId;
+            }
+
+            set
+            {
+                this.shouldSerialize["branding_theme_id"] = true;
+                this.brandingThemeId = value;
             }
         }
 
@@ -924,6 +960,13 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetMaxioid()
         {
             this.shouldSerialize["maxioid"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetBrandingThemeId()
+        {
+            this.shouldSerialize["branding_theme_id"] = false;
         }
 
         /// <summary>
@@ -1142,6 +1185,15 @@ namespace AdvancedBilling.Standard.Models
             return this.shouldSerialize["maxioid"];
         }
 
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeBrandingThemeId()
+        {
+            return this.shouldSerialize["branding_theme_id"];
+        }
+
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
@@ -1195,6 +1247,8 @@ namespace AdvancedBilling.Standard.Models
                  this.PortalInviteLastAcceptedAt?.Equals(other.PortalInviteLastAcceptedAt) == true) &&
                 (this.TaxExempt == null && other.TaxExempt == null ||
                  this.TaxExempt?.Equals(other.TaxExempt) == true) &&
+                (this.Surcharging == null && other.Surcharging == null ||
+                 this.Surcharging?.Equals(other.Surcharging) == true) &&
                 (this.VatNumber == null && other.VatNumber == null ||
                  this.VatNumber?.Equals(other.VatNumber) == true) &&
                 (this.ParentId == null && other.ParentId == null ||
@@ -1211,6 +1265,8 @@ namespace AdvancedBilling.Standard.Models
                  this.DefaultAutoRenewalProfileId?.Equals(other.DefaultAutoRenewalProfileId) == true) &&
                 (this.Maxioid == null && other.Maxioid == null ||
                  this.Maxioid?.Equals(other.Maxioid) == true) &&
+                (this.BrandingThemeId == null && other.BrandingThemeId == null ||
+                 this.BrandingThemeId?.Equals(other.BrandingThemeId) == true) &&
                 base.Equals(obj);
         }
 
@@ -1243,6 +1299,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"PortalInviteLastSentAt = {(this.PortalInviteLastSentAt == null ? "null" : this.PortalInviteLastSentAt.ToString())}");
             toStringOutput.Add($"PortalInviteLastAcceptedAt = {(this.PortalInviteLastAcceptedAt == null ? "null" : this.PortalInviteLastAcceptedAt.ToString())}");
             toStringOutput.Add($"TaxExempt = {(this.TaxExempt == null ? "null" : this.TaxExempt.ToString())}");
+            toStringOutput.Add($"Surcharging = {(this.Surcharging == null ? "null" : this.Surcharging.ToString())}");
             toStringOutput.Add($"VatNumber = {this.VatNumber ?? "null"}");
             toStringOutput.Add($"ParentId = {(this.ParentId == null ? "null" : this.ParentId.ToString())}");
             toStringOutput.Add($"Locale = {this.Locale ?? "null"}");
@@ -1251,6 +1308,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"TaxExemptReason = {this.TaxExemptReason ?? "null"}");
             toStringOutput.Add($"DefaultAutoRenewalProfileId = {(this.DefaultAutoRenewalProfileId == null ? "null" : this.DefaultAutoRenewalProfileId.ToString())}");
             toStringOutput.Add($"Maxioid = {this.Maxioid ?? "null"}");
+            toStringOutput.Add($"BrandingThemeId = {(this.BrandingThemeId == null ? "null" : this.BrandingThemeId.ToString())}");
 
             base.ToString(toStringOutput);
         }

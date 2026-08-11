@@ -12,16 +12,20 @@
 | `Errors` | `string` | Required | - |
 | `PaymentProfileParams` | [`PaymentProfileParams`](../../doc/models/payment-profile-params.md) | Optional | PCI-safe cardholder fields only. Full card numbers, CVV, and billing address are never included. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ChjsTokenizationFailure chjsTokenizationFailure = new ChjsTokenizationFailure
 {
-  "errors": "errors2",
-  "payment_profile_params": {
-    "first_name": "first_name2",
-    "last_name": "last_name0",
-    "card_type": "card_type2"
-  }
-}
+    Errors = "errors2",
+    PaymentProfileParams = new PaymentProfileParams
+    {
+        FirstName = "first_name2",
+        LastName = "last_name0",
+        CardType = "card_type2",
+    },
+};
 ```
 

@@ -14,14 +14,17 @@
 | `SubscriberDelta` | `int?` | Optional | - |
 | `LeadDelta` | `int?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+MRRMovement mRRMovement = new MRRMovement
 {
-  "amount": 210,
-  "category": "category0",
-  "subscriber_delta": 170,
-  "lead_delta": 198
-}
+    Amount = 116,
+    Category = "category4",
+    SubscriberDelta = 100,
+    LeadDelta = 128,
+};
 ```
 

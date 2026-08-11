@@ -15,3 +15,11 @@ Role for the price.
 | `Trial` |
 | `Initial` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CurrencyPriceRole currencyPriceRole = CurrencyPriceRole.Initial;
+```
+

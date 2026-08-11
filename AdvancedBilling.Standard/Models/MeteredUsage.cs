@@ -4,6 +4,7 @@
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
 using APIMatic.Core.Utilities.Converters;
+using AdvancedBilling.Standard.Models.Containers;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
@@ -32,7 +33,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="memo">memo.</param>
         public MeteredUsage(
             string previousUnitBalance,
-            int newUnitBalance,
+            MeteredUsageNewUnitBalance newUnitBalance,
             int usageQuantity,
             int componentId,
             string componentHandle,
@@ -59,7 +60,7 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("new_unit_balance")]
         [JsonRequired]
-        public int NewUnitBalance { get; set; }
+        public MeteredUsageNewUnitBalance NewUnitBalance { get; set; }
 
         /// <summary>
         /// Gets or sets UsageQuantity.
@@ -108,7 +109,8 @@ namespace AdvancedBilling.Standard.Models
             return obj is MeteredUsage other &&
                 (this.PreviousUnitBalance == null && other.PreviousUnitBalance == null ||
                  this.PreviousUnitBalance?.Equals(other.PreviousUnitBalance) == true) &&
-                (this.NewUnitBalance.Equals(other.NewUnitBalance)) &&
+                (this.NewUnitBalance == null && other.NewUnitBalance == null ||
+                 this.NewUnitBalance?.Equals(other.NewUnitBalance) == true) &&
                 (this.UsageQuantity.Equals(other.UsageQuantity)) &&
                 (this.ComponentId.Equals(other.ComponentId)) &&
                 (this.ComponentHandle == null && other.ComponentHandle == null ||
@@ -125,7 +127,7 @@ namespace AdvancedBilling.Standard.Models
         protected new void ToString(List<string> toStringOutput)
         {
             toStringOutput.Add($"PreviousUnitBalance = {this.PreviousUnitBalance ?? "null"}");
-            toStringOutput.Add($"NewUnitBalance = {this.NewUnitBalance}");
+            toStringOutput.Add($"NewUnitBalance = {(this.NewUnitBalance == null ? "null" : this.NewUnitBalance.ToString())}");
             toStringOutput.Add($"UsageQuantity = {this.UsageQuantity}");
             toStringOutput.Add($"ComponentId = {this.ComponentId}");
             toStringOutput.Add($"ComponentHandle = {this.ComponentHandle ?? "null"}");

@@ -11,11 +11,20 @@
 |  --- | --- | --- | --- |
 | `Errors` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+try
 {
-  "errors": "errors4"
+    // make the API call
+}
+catch (ApiException e)
+{
+    if (e is SingleStringErrorResponseException)
+    {
+        // TODO: Handle SingleStringErrorResponseException
+        Console.WriteLine(e.Message);
+    }
 }
 ```
 

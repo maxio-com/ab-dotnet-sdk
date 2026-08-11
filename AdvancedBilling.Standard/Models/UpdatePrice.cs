@@ -56,7 +56,7 @@ namespace AdvancedBilling.Standard.Models
         public UpdatePriceEndingQuantity EndingQuantity { get; set; }
 
         /// <summary>
-        /// The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
+        /// The price can contain up to 8 decimal places. e.g., 1.00 or 0.0012 or 0.00000065
         /// </summary>
         [JsonProperty("unit_price", NullValueHandling = NullValueHandling.Ignore)]
         public UpdatePriceUnitPrice UnitPrice { get; set; }

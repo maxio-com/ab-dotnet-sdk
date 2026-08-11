@@ -11,18 +11,22 @@
 |  --- | --- | --- | --- |
 | `Component` | [`UpdateComponent`](../../doc/models/update-component.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+UpdateComponentRequest updateComponentRequest = new UpdateComponentRequest
 {
-  "component": {
-    "item_category": "Business Software",
-    "handle": "handle4",
-    "name": "name8",
-    "description": "description2",
-    "accounting_code": "accounting_code4",
-    "taxable": false
-  }
-}
+    Component = new UpdateComponent
+    {
+        Handle = "handle4",
+        Name = "name8",
+        Description = "description2",
+        AccountingCode = "accounting_code4",
+        Taxable = false,
+        ItemCategory = ItemCategory.EnumBusinessSoftware,
+    },
+};
 ```
 
