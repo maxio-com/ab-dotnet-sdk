@@ -24,6 +24,7 @@ namespace AdvancedBilling.Standard.Models
         private string customerVaultToken;
         private string billingAddress2;
         private string maskedBankRoutingNumber;
+        private string maskedBankAccountNumber;
         private int? siteGatewaySettingId;
         private string gatewayHandle;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
@@ -36,6 +37,7 @@ namespace AdvancedBilling.Standard.Models
             { "customer_vault_token", false },
             { "billing_address_2", false },
             { "masked_bank_routing_number", false },
+            { "masked_bank_account_number", false },
             { "site_gateway_setting_id", false },
             { "gateway_handle", false },
         };
@@ -66,6 +68,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="billingAddress2">billing_address_2.</param>
         /// <param name="bankName">bank_name.</param>
         /// <param name="maskedBankRoutingNumber">masked_bank_routing_number.</param>
+        /// <param name="maskedBankAccountNumber">masked_bank_account_number.</param>
         /// <param name="bankAccountType">bank_account_type.</param>
         /// <param name="bankAccountHolderType">bank_account_holder_type.</param>
         /// <param name="verified">verified.</param>
@@ -90,6 +93,7 @@ namespace AdvancedBilling.Standard.Models
             string billingAddress2 = null,
             string bankName = null,
             string maskedBankRoutingNumber = null,
+            string maskedBankAccountNumber = null,
             Models.BankAccountType? bankAccountType = null,
             Models.BankAccountHolderType? bankAccountHolderType = null,
             bool? verified = false,
@@ -144,6 +148,11 @@ namespace AdvancedBilling.Standard.Models
             if (maskedBankRoutingNumber != null)
             {
                 this.MaskedBankRoutingNumber = maskedBankRoutingNumber;
+            }
+
+            if (maskedBankAccountNumber != null)
+            {
+                this.MaskedBankAccountNumber = maskedBankAccountNumber;
             }
             this.BankAccountType = bankAccountType;
             this.BankAccountHolderType = bankAccountHolderType;
@@ -362,6 +371,25 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// A string representation of the stored bank account number with all but the last 4 digits marked with X's (i.e. 'XXXXXXX1111').
+        /// </summary>
+        [JsonConverter(typeof(JsonStringConverter))]
+        [JsonProperty("masked_bank_account_number")]
+        public string MaskedBankAccountNumber
+        {
+            get
+            {
+                return this.maskedBankAccountNumber;
+            }
+
+            set
+            {
+                this.shouldSerialize["masked_bank_account_number"] = true;
+                this.maskedBankAccountNumber = value;
+            }
+        }
+
+        /// <summary>
         /// Defaults to checking
         /// </summary>
         [JsonProperty("bank_account_type", NullValueHandling = NullValueHandling.Ignore)]
@@ -504,6 +532,13 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
+        public void UnsetMaskedBankAccountNumber()
+        {
+            this.shouldSerialize["masked_bank_account_number"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
         public void UnsetSiteGatewaySettingId()
         {
             this.shouldSerialize["site_gateway_setting_id"] = false;
@@ -592,6 +627,15 @@ namespace AdvancedBilling.Standard.Models
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeMaskedBankAccountNumber()
+        {
+            return this.shouldSerialize["masked_bank_account_number"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
         public bool ShouldSerializeSiteGatewaySettingId()
         {
             return this.shouldSerialize["site_gateway_setting_id"];
@@ -643,6 +687,8 @@ namespace AdvancedBilling.Standard.Models
                  this.BankName?.Equals(other.BankName) == true) &&
                 (this.MaskedBankRoutingNumber == null && other.MaskedBankRoutingNumber == null ||
                  this.MaskedBankRoutingNumber?.Equals(other.MaskedBankRoutingNumber) == true) &&
+                (this.MaskedBankAccountNumber == null && other.MaskedBankAccountNumber == null ||
+                 this.MaskedBankAccountNumber?.Equals(other.MaskedBankAccountNumber) == true) &&
                 (this.BankAccountType == null && other.BankAccountType == null ||
                  this.BankAccountType?.Equals(other.BankAccountType) == true) &&
                 (this.BankAccountHolderType == null && other.BankAccountHolderType == null ||
@@ -682,6 +728,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"BillingAddress2 = {this.BillingAddress2 ?? "null"}");
             toStringOutput.Add($"BankName = {this.BankName ?? "null"}");
             toStringOutput.Add($"MaskedBankRoutingNumber = {this.MaskedBankRoutingNumber ?? "null"}");
+            toStringOutput.Add($"MaskedBankAccountNumber = {this.MaskedBankAccountNumber ?? "null"}");
             toStringOutput.Add($"BankAccountType = {(this.BankAccountType == null ? "null" : this.BankAccountType.ToString())}");
             toStringOutput.Add($"BankAccountHolderType = {(this.BankAccountHolderType == null ? "null" : this.BankAccountHolderType.ToString())}");
             toStringOutput.Add($"PaymentType = {this.PaymentType}");
