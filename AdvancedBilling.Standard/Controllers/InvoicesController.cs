@@ -231,7 +231,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Applies a payment of a given type against a specific invoice. If you would like to apply a payment across multiple invoices, you can use the Bulk Payment endpoint.
+        /// Applies a payment of a given type against a specific invoice. If you would like to apply a payment across multiple invoices, you can use the [Record Payment for Multiple Invoices]($e/Invoices/recordPaymentForMultipleInvoices) endpoint.
         /// </summary>
         /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
         /// <param name="body">Optional parameter: .</param>
@@ -242,7 +242,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(RecordPaymentForInvoiceAsync(uid, body));
 
         /// <summary>
-        /// Applies a payment of a given type against a specific invoice. If you would like to apply a payment across multiple invoices, you can use the Bulk Payment endpoint.
+        /// Applies a payment of a given type against a specific invoice. If you would like to apply a payment across multiple invoices, you can use the [Record Payment for Multiple Invoices]($e/Invoices/recordPaymentForMultipleInvoices) endpoint.
         /// </summary>
         /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
         /// <param name="body">Optional parameter: .</param>
@@ -266,27 +266,7 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// Records an external payment against multiple invoices.
-        ///  To apply a payment to multiple invoices, at minimum, specify the `amount` and `applications` (i.e., `invoice_uid` and `amount`) details.
-        /// ```.
-        /// {.
-        ///   "payment": {.
-        ///     "memo": "to pay the bills",.
-        ///     "details": "check number 8675309",.
-        ///     "method": "check",.
-        ///     "amount": "250.00",.
-        ///     "applications": [.
-        ///       {.
-        ///         "invoice_uid": "inv_8gk5bwkct3gqt",.
-        ///         "amount": "100.00".
-        ///       },.
-        ///       {.
-        ///         "invoice_uid": "inv_7bc6bwkct3lyt",.
-        ///         "amount": "150.00".
-        ///       }.
-        ///     ].
-        ///   }.
-        /// }.
-        /// ```.
+        /// To apply a payment to multiple invoices, at minimum, specify the `amount` and `applications` (i.e., `invoice_uid` and `amount`) details.
         /// Note that the invoice payment amounts must be greater than 0. Total amount must be greater or equal to invoices payment amount sum.
         /// </summary>
         /// <param name="body">Optional parameter: .</param>
@@ -297,27 +277,7 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// Records an external payment against multiple invoices.
-        ///  To apply a payment to multiple invoices, at minimum, specify the `amount` and `applications` (i.e., `invoice_uid` and `amount`) details.
-        /// ```.
-        /// {.
-        ///   "payment": {.
-        ///     "memo": "to pay the bills",.
-        ///     "details": "check number 8675309",.
-        ///     "method": "check",.
-        ///     "amount": "250.00",.
-        ///     "applications": [.
-        ///       {.
-        ///         "invoice_uid": "inv_8gk5bwkct3gqt",.
-        ///         "amount": "100.00".
-        ///       },.
-        ///       {.
-        ///         "invoice_uid": "inv_7bc6bwkct3lyt",.
-        ///         "amount": "150.00".
-        ///       }.
-        ///     ].
-        ///   }.
-        /// }.
-        /// ```.
+        /// To apply a payment to multiple invoices, at minimum, specify the `amount` and `applications` (i.e., `invoice_uid` and `amount`) details.
         /// Note that the invoice payment amounts must be greater than 0. Total amount must be greater or equal to invoices payment amount sum.
         /// </summary>
         /// <param name="body">Optional parameter: .</param>

@@ -10,7 +10,6 @@
 | Type | Factory Method |
 |  --- | --- |
 | [`SubscriptionProductChange`](../../../doc/models/subscription-product-change.md) | EventEventSpecificData.FromSubscriptionProductChange(SubscriptionProductChange subscriptionProductChange) |
-| [`SubscriptionProductChangeScheduled`](../../../doc/models/subscription-product-change-scheduled.md) | EventEventSpecificData.FromSubscriptionProductChangeScheduled(SubscriptionProductChangeScheduled subscriptionProductChangeScheduled) |
 | [`SubscriptionStateChange`](../../../doc/models/subscription-state-change.md) | EventEventSpecificData.FromSubscriptionStateChange(SubscriptionStateChange subscriptionStateChange) |
 | [`PaymentRelatedEvents`](../../../doc/models/payment-related-events.md) | EventEventSpecificData.FromPaymentRelatedEvents(PaymentRelatedEvents paymentRelatedEvents) |
 | [`RefundSuccess`](../../../doc/models/refund-success.md) | EventEventSpecificData.FromRefundSuccess(RefundSuccess refundSuccess) |
@@ -43,22 +42,6 @@ EventEventSpecificData value = EventEventSpecificData.FromSubscriptionProductCha
     {
         PreviousProductId = 126,
         NewProductId = 12,
-    }
-);
-```
-
-## SubscriptionProductChangeScheduled
-
-### Initialization Code
-
-#### Example
-
-```csharp
-EventEventSpecificData value = EventEventSpecificData.FromSubscriptionProductChangeScheduled(
-    new SubscriptionProductChangeScheduled
-    {
-        PreviousProductId = 62,
-        NewProductId = 52,
     }
 );
 ```

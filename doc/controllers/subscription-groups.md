@@ -355,9 +355,9 @@ catch (ApiException e)
   "current_billing_amount_in_cents": 11500,
   "customer": {
     "first_name": "Mark",
-    "last_name": "Wannabewahlberg",
-    "organization": "The Funky Bunch",
-    "email": "markymark@example.com",
+    "last_name": "Smith",
+    "organization": "Acme Inc.",
+    "email": "smith@example.com",
     "reference": "4c92223b-bc16-4d0d-87ff-b177a89a2655"
   },
   "account_balances": {
@@ -528,7 +528,7 @@ catch (ApiException e)
 
 Finds the subscription group associated with a subscription.
 
-If the subscription is not in a group, the endpoint will return a 404 code.
+If the subscription is not in a group, this endpoint returns an error.
 
 ```csharp
 FindSubscriptionGroupAsync(
@@ -584,9 +584,9 @@ catch (ApiException e)
   "cancel_at_end_of_period": false,
   "customer": {
     "first_name": "Mark",
-    "last_name": "Wannabewahlberg",
-    "organization": "The Funky Bunch",
-    "email": "markymark@example.com",
+    "last_name": "Smith",
+    "organization": "Acme Inc.",
+    "email": "smith@example.com",
     "reference": "4c92223b-bc16-4d0d-87ff-b177a89a2655"
   },
   "account_balances": {

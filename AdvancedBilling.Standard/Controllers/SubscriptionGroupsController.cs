@@ -231,7 +231,7 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// Finds the subscription group associated with a subscription.
-        /// If the subscription is not in a group, the endpoint will return a 404 code.
+        /// If the subscription is not in a group, this endpoint returns an error.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Advanced Billing id of the subscription associated with the subscription group.</param>
         /// <returns>Returns the Models.FullSubscriptionGroupResponse response from the API call.</returns>
@@ -241,7 +241,7 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// Finds the subscription group associated with a subscription.
-        /// If the subscription is not in a group, the endpoint will return a 404 code.
+        /// If the subscription is not in a group, this endpoint returns an error.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Advanced Billing id of the subscription associated with the subscription group.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>

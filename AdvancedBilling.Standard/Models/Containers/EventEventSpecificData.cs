@@ -16,7 +16,6 @@ namespace AdvancedBilling.Standard.Models.Containers
         typeof(UnionTypeConverter<EventEventSpecificData>),
         new[] {
             typeof(SubscriptionProductChangeCase),
-            typeof(SubscriptionProductChangeScheduledCase),
             typeof(SubscriptionStateChangeCase),
             typeof(PaymentRelatedEventsCase),
             typeof(RefundSuccessCase),
@@ -50,17 +49,6 @@ namespace AdvancedBilling.Standard.Models.Containers
         public static EventEventSpecificData FromSubscriptionProductChange(SubscriptionProductChange subscriptionProductChange)
         {
             return new SubscriptionProductChangeCase().Set(subscriptionProductChange);
-        }
-
-        /// <summary>
-        /// This is Subscription Product Change Scheduled case.
-        /// </summary>
-        /// <returns>
-        /// The EventEventSpecificData instance, wrapping the provided SubscriptionProductChangeScheduled value.
-        /// </returns>
-        public static EventEventSpecificData FromSubscriptionProductChangeScheduled(SubscriptionProductChangeScheduled subscriptionProductChangeScheduled)
-        {
-            return new SubscriptionProductChangeScheduledCase().Set(subscriptionProductChangeScheduled);
         }
 
         /// <summary>
@@ -282,7 +270,6 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// <typeparam name="T"></typeparam>
         public abstract T Match<T>(
             Func<SubscriptionProductChange, T> subscriptionProductChange,
-            Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
             Func<SubscriptionStateChange, T> subscriptionStateChange,
             Func<PaymentRelatedEvents, T> paymentRelatedEvents,
             Func<RefundSuccess, T> refundSuccess,
@@ -314,7 +301,6 @@ namespace AdvancedBilling.Standard.Models.Containers
         /// <typeparam name="T"></typeparam>
         public T MatchSome<T>(
             Func<SubscriptionProductChange, T> subscriptionProductChange = null,
-            Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled = null,
             Func<SubscriptionStateChange, T> subscriptionStateChange = null,
             Func<PaymentRelatedEvents, T> paymentRelatedEvents = null,
             Func<RefundSuccess, T> refundSuccess = null,
@@ -334,7 +320,7 @@ namespace AdvancedBilling.Standard.Models.Containers
             Func<CustomFieldValueChange, T> customFieldValueChange = null,
             Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess = null,
             Func<ChjsTokenizationFailure, T> chjsTokenizationFailure = null) =>
-                Match(subscriptionProductChange, subscriptionProductChangeScheduled, subscriptionStateChange, paymentRelatedEvents, refundSuccess, componentAllocationChange, meteredUsage, prepaidUsage, dunningStepReached, invoiceIssued, pendingCancellationChange, prepaidSubscriptionBalanceChanged, proformaInvoiceIssued, subscriptionGroupSignupEventData, creditAccountBalanceChanged, prepaymentAccountBalanceChanged, paymentCollectionMethodChanged, itemPricePointChanged, customFieldValueChange, chjsTokenizationSuccess, chjsTokenizationFailure);
+                Match(subscriptionProductChange, subscriptionStateChange, paymentRelatedEvents, refundSuccess, componentAllocationChange, meteredUsage, prepaidUsage, dunningStepReached, invoiceIssued, pendingCancellationChange, prepaidSubscriptionBalanceChanged, proformaInvoiceIssued, subscriptionGroupSignupEventData, creditAccountBalanceChanged, prepaymentAccountBalanceChanged, paymentCollectionMethodChanged, itemPricePointChanged, customFieldValueChange, chjsTokenizationSuccess, chjsTokenizationFailure);
 
         [JsonConverter(typeof(UnionTypeCaseConverter<SubscriptionProductChangeCase, SubscriptionProductChange>))]
         private sealed class SubscriptionProductChangeCase : EventEventSpecificData, ICaseValue<SubscriptionProductChangeCase, SubscriptionProductChange>
@@ -343,7 +329,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,
@@ -389,59 +374,6 @@ namespace AdvancedBilling.Standard.Models.Containers
             }
         }
 
-        [JsonConverter(typeof(UnionTypeCaseConverter<SubscriptionProductChangeScheduledCase, SubscriptionProductChangeScheduled>))]
-        private sealed class SubscriptionProductChangeScheduledCase : EventEventSpecificData, ICaseValue<SubscriptionProductChangeScheduledCase, SubscriptionProductChangeScheduled>
-        {
-            public SubscriptionProductChangeScheduled Value;
-
-            public override T Match<T>(
-                Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
-                Func<SubscriptionStateChange, T> subscriptionStateChange,
-                Func<PaymentRelatedEvents, T> paymentRelatedEvents,
-                Func<RefundSuccess, T> refundSuccess,
-                Func<ComponentAllocationChange, T> componentAllocationChange,
-                Func<MeteredUsage, T> meteredUsage,
-                Func<PrepaidUsage, T> prepaidUsage,
-                Func<DunningStepReached, T> dunningStepReached,
-                Func<InvoiceIssued, T> invoiceIssued,
-                Func<PendingCancellationChange, T> pendingCancellationChange,
-                Func<PrepaidSubscriptionBalanceChanged, T> prepaidSubscriptionBalanceChanged,
-                Func<ProformaInvoiceIssued, T> proformaInvoiceIssued,
-                Func<SubscriptionGroupSignupEventData, T> subscriptionGroupSignupEventData,
-                Func<CreditAccountBalanceChanged, T> creditAccountBalanceChanged,
-                Func<PrepaymentAccountBalanceChanged, T> prepaymentAccountBalanceChanged,
-                Func<PaymentCollectionMethodChanged, T> paymentCollectionMethodChanged,
-                Func<ItemPricePointChanged, T> itemPricePointChanged,
-                Func<CustomFieldValueChange, T> customFieldValueChange,
-                Func<ChjsTokenizationSuccess, T> chjsTokenizationSuccess,
-                Func<ChjsTokenizationFailure, T> chjsTokenizationFailure) =>
-                   subscriptionProductChangeScheduled != null ? subscriptionProductChangeScheduled(Value) : default;
-
-            public SubscriptionProductChangeScheduledCase Set(SubscriptionProductChangeScheduled value)
-            {
-                Value = value;
-                return this;
-            }
-
-            public SubscriptionProductChangeScheduled Get()
-            {
-                return Value;
-            }
-
-            public override string ToString()
-            {
-                return Value?.ToString();
-            }
-
-            public override bool Equals(object obj)
-            {
-                if (!(obj is SubscriptionProductChangeScheduledCase other)) return false;
-                if (ReferenceEquals(this, other)) return true;
-                return Value == null ? other.Value == null : Value?.Equals(other.Value) == true; 
-            }
-        }
-
         [JsonConverter(typeof(UnionTypeCaseConverter<SubscriptionStateChangeCase, SubscriptionStateChange>))]
         private sealed class SubscriptionStateChangeCase : EventEventSpecificData, ICaseValue<SubscriptionStateChangeCase, SubscriptionStateChange>
         {
@@ -449,7 +381,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,
@@ -502,7 +433,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,
@@ -555,7 +485,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,
@@ -608,7 +537,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,
@@ -661,7 +589,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,
@@ -714,7 +641,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,
@@ -767,7 +693,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,
@@ -820,7 +745,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,
@@ -873,7 +797,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,
@@ -926,7 +849,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,
@@ -979,7 +901,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,
@@ -1032,7 +953,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,
@@ -1085,7 +1005,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,
@@ -1138,7 +1057,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,
@@ -1191,7 +1109,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,
@@ -1244,7 +1161,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,
@@ -1297,7 +1213,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,
@@ -1350,7 +1265,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,
@@ -1403,7 +1317,6 @@ namespace AdvancedBilling.Standard.Models.Containers
 
             public override T Match<T>(
                 Func<SubscriptionProductChange, T> subscriptionProductChange,
-                Func<SubscriptionProductChangeScheduled, T> subscriptionProductChangeScheduled,
                 Func<SubscriptionStateChange, T> subscriptionStateChange,
                 Func<PaymentRelatedEvents, T> paymentRelatedEvents,
                 Func<RefundSuccess, T> refundSuccess,

@@ -132,16 +132,14 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Creates a proforma invoices export and returns a batch job object.
-        /// It is only available for Relationship Invoicing architecture.
+        /// Creates a proforma invoices export and returns a batch job object. Proforma invoices are only available on Relationship Invoicing sites.
         /// </summary>
         /// <returns>Returns the Models.BatchJobResponse response from the API call.</returns>
         public Models.BatchJobResponse ExportProformaInvoices()
             => CoreHelper.RunTask(ExportProformaInvoicesAsync());
 
         /// <summary>
-        /// Creates a proforma invoices export and returns a batch job object.
-        /// It is only available for Relationship Invoicing architecture.
+        /// Creates a proforma invoices export and returns a batch job object. Proforma invoices are only available on Relationship Invoicing sites.
         /// </summary>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.BatchJobResponse response from the API call.</returns>
@@ -199,7 +197,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Returns a batch job object for a proforma invoices export.
+        /// Returns a batch job object for a proforma invoices export. Proforma invoices are only available on Relationship Invoicing sites.
         /// </summary>
         /// <param name="batchId">Required parameter: Id of a Batch Job..</param>
         /// <returns>Returns the Models.BatchJobResponse response from the API call.</returns>
@@ -208,7 +206,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ReadProformaInvoicesExportAsync(batchId));
 
         /// <summary>
-        /// Returns a batch job object for a proforma invoices export.
+        /// Returns a batch job object for a proforma invoices export. Proforma invoices are only available on Relationship Invoicing sites.
         /// </summary>
         /// <param name="batchId">Required parameter: Id of a Batch Job..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>

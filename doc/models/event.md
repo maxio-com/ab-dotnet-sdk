@@ -39,6 +39,11 @@ Event mEvent = new Event
         {
             PreviousProductId = 126,
             NewProductId = 12,
+            PreviousProductPricePointId = 250,
+            NewProductPricePointId = 244,
+            EffectiveAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+                provider: CultureInfo.InvariantCulture,
+                DateTimeStyles.RoundtripKind),
         }
     ),
 };
