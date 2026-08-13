@@ -35,12 +35,6 @@ namespace AdvancedBilling.Standard.Models
         CurrentBillingAmount,
 
         /// <summary>
-        /// ThreeDsActionLink.
-        /// </summary>
-        [EnumMember(Value = "three_ds_action_link")]
-        ThreeDsActionLink,
-
-        /// <summary>
         /// Coupons.
         /// </summary>
         [EnumMember(Value = "coupons")]
