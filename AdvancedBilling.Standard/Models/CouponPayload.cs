@@ -79,7 +79,7 @@ namespace AdvancedBilling.Standard.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Required when creating a new coupon. The code is limited to 255 characters. May contain uppercase alphanumeric characters and these special characters (which allow for email addresses to be used): “%”, “@”, “+”, “-”, “_”, and “.”
+        /// Required when creating a new coupon. The code is limited to 255 characters. May contain uppercase alphanumeric characters and these special characters (which allow for email addresses to be used): “%”, “@”, “+”, “-”, “_”, and “.”.
         /// </summary>
         [JsonProperty("code", NullValueHandling = NullValueHandling.Ignore)]
         public string Code { get; set; }
@@ -91,13 +91,13 @@ namespace AdvancedBilling.Standard.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Required when creating a new percentage coupon. Can't be used together with amount_in_cents. Percentage discount
+        /// Required when creating a new percentage coupon. Can't be used together with amount_in_cents. Percentage discount.
         /// </summary>
         [JsonProperty("percentage", NullValueHandling = NullValueHandling.Ignore)]
         public CouponPayloadPercentage Percentage { get; set; }
 
         /// <summary>
-        /// Required when creating a new flat amount coupon. Can't be used together with percentage. Flat USD discount
+        /// Required when creating a new flat amount coupon. Can't be used together with percentage. Flat USD discount.
         /// </summary>
         [JsonProperty("amount_in_cents", NullValueHandling = NullValueHandling.Ignore)]
         public long? AmountInCents { get; set; }

@@ -11,17 +11,23 @@
 |  --- | --- | --- | --- |
 | `SubscriptionGroup` | [`CreateSubscriptionGroup`](../../doc/models/create-subscription-group.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+CreateSubscriptionGroupRequest createSubscriptionGroupRequest = new CreateSubscriptionGroupRequest
 {
-  "subscription_group": {
-    "subscription_id": 36,
-    "member_ids": [
-      164,
-      165
-    ]
-  }
-}
+    SubscriptionGroup = new CreateSubscriptionGroup
+    {
+        SubscriptionId = 36,
+        MemberIds = new List<int>
+        {
+            164,
+            165,
+        },
+    },
+};
 ```
 

@@ -14,25 +14,20 @@
 | `CouponCodes` | `List<string>` | Optional | - |
 | `Subscription` | `List<string>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+try
 {
-  "codes": [
-    "codes6",
-    "codes7",
-    "codes8"
-  ],
-  "coupon_code": [
-    "coupon_code8",
-    "coupon_code7"
-  ],
-  "coupon_codes": [
-    "coupon_codes2"
-  ],
-  "subscription": [
-    "subscription8"
-  ]
+    // make the API call
+}
+catch (ApiException e)
+{
+    if (e is SubscriptionAddCouponErrorException)
+    {
+        // TODO: Handle SubscriptionAddCouponErrorException
+        Console.WriteLine(e.Message);
+    }
 }
 ```
 

@@ -13,21 +13,29 @@
 | `CcRecipientEmails` | `List<string>` | Optional | - |
 | `BccRecipientEmails` | `List<string>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+DeliverProformaInvoiceRequest deliverProformaInvoiceRequest = new DeliverProformaInvoiceRequest
 {
-  "recipient_emails": [
-    "recipient_emails9"
-  ],
-  "cc_recipient_emails": [
-    "cc_recipient_emails8"
-  ],
-  "bcc_recipient_emails": [
-    "bcc_recipient_emails2",
-    "bcc_recipient_emails3",
-    "bcc_recipient_emails4"
-  ]
-}
+    RecipientEmails = new List<string>
+    {
+        "recipient_emails3",
+        "recipient_emails4",
+    },
+    CcRecipientEmails = new List<string>
+    {
+        "cc_recipient_emails2",
+        "cc_recipient_emails1",
+        "cc_recipient_emails0",
+    },
+    BccRecipientEmails = new List<string>
+    {
+        "bcc_recipient_emails6",
+    },
+};
 ```
 

@@ -13,3 +13,11 @@
 | `Credit` |
 | `Refund` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreditScheme creditScheme = CreditScheme.None;
+```
+

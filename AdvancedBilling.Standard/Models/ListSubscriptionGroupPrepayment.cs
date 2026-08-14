@@ -25,7 +25,7 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         /// <param name="prepayment">prepayment.</param>
         public ListSubscriptionGroupPrepayment(
-            Models.ListSubcriptionGroupPrepaymentItem prepayment)
+            Models.ListSubscriptionGroupPrepaymentItem prepayment)
         {
             this.Prepayment = prepayment;
         }
@@ -34,7 +34,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets Prepayment.
         /// </summary>
         [JsonProperty("prepayment")]
-        public Models.ListSubcriptionGroupPrepaymentItem Prepayment { get; set; }
+        public Models.ListSubscriptionGroupPrepaymentItem Prepayment { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

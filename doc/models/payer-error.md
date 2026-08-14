@@ -13,22 +13,30 @@
 | `FirstName` | `List<string>` | Optional | - |
 | `Email` | `List<string>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+PayerError payerError = new PayerError
 {
-  "last_name": [
-    "last_name1",
-    "last_name2",
-    "last_name3"
-  ],
-  "first_name": [
-    "first_name4",
-    "first_name5"
-  ],
-  "email": [
-    "email4"
-  ]
-}
+    LastName = new List<string>
+    {
+        "last_name9",
+    },
+    FirstName = new List<string>
+    {
+        "first_name2",
+        "first_name3",
+        "first_name4",
+    },
+    Email = new List<string>
+    {
+        "email6",
+        "email7",
+        "email8",
+    },
+};
 ```
 

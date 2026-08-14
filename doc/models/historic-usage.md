@@ -1,7 +1,7 @@
 
 # Historic Usage
 
-Optional for Event Based Components. If the `include=historic_usages` query param is provided, the last ten billing periods will be returned.
+(Optional) For Event Based Components. If the `include=historic_usages` query param is provided, the last ten billing periods will be returned.
 
 ## Structure
 
@@ -15,13 +15,21 @@ Optional for Event Based Components. If the `include=historic_usages` query para
 | `BillingPeriodStartsAt` | `DateTimeOffset?` | Optional | Start date of billing period |
 | `BillingPeriodEndsAt` | `DateTimeOffset?` | Optional | End date of billing period |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+HistoricUsage historicUsage = new HistoricUsage
 {
-  "total_usage_quantity": 26.6,
-  "billing_period_starts_at": "2016-03-13T12:52:32.123Z",
-  "billing_period_ends_at": "2016-03-13T12:52:32.123Z"
-}
+    TotalUsageQuantity = 140.74,
+    BillingPeriodStartsAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    BillingPeriodEndsAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+};
 ```
 

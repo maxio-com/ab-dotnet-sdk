@@ -11,23 +11,31 @@
 |  --- | --- | --- | --- |
 | `Payment` | [`CreateMultiInvoicePayment`](../../doc/models/create-multi-invoice-payment.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Collections.Generic;
+
+CreateMultiInvoicePaymentRequest createMultiInvoicePaymentRequest = new CreateMultiInvoicePaymentRequest
 {
-  "payment": {
-    "amount": "String9",
-    "applications": [
-      {
-        "invoice_uid": "invoice_uid8",
-        "amount": "amount0"
-      }
-    ],
-    "memo": "memo0",
-    "details": "details6",
-    "method": "ach",
-    "received_on": "received_on8"
-  }
-}
+    Payment = new CreateMultiInvoicePayment
+    {
+        Amount = CreateMultiInvoicePaymentAmount.FromString("String9"),
+        Applications = new List<CreateInvoicePaymentApplication>
+        {
+            new CreateInvoicePaymentApplication
+            {
+                InvoiceUid = "invoice_uid8",
+                Amount = "amount0",
+            },
+        },
+        Memo = "memo0",
+        Details = "details6",
+        Method = InvoicePaymentMethodType.Ach,
+        ReceivedOn = "received_on8",
+    },
+};
 ```
 

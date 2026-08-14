@@ -14,14 +14,17 @@
 | `DueAmount` | `string` | Optional | The remaining due amount on the invoice |
 | `PaidAmount` | `string` | Optional | The total amount paid on this invoice (including any prior payments) |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PaidInvoice paidInvoice = new PaidInvoice
 {
-  "invoice_id": "invoice_id6",
-  "status": "open",
-  "due_amount": "due_amount8",
-  "paid_amount": "paid_amount8"
-}
+    InvoiceId = "invoice_id2",
+    Status = InvoiceStatus.Canceled,
+    DueAmount = "due_amount4",
+    PaidAmount = "paid_amount6",
+};
 ```
 

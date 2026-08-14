@@ -20,3 +20,11 @@ The vault that stores the payment profile with the provided vault_token. Use `bo
 | `Maxp` |
 | `StripeConnect` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+BankAccountVault bankAccountVault = BankAccountVault.Maxp;
+```
+

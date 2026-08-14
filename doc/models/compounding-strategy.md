@@ -14,3 +14,11 @@ Applicable only to stackable coupons. For `compound`, Percentage-based discounts
 | `Compound` |
 | `Fullprice` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CompoundingStrategy compoundingStrategy = CompoundingStrategy.Compound;
+```
+

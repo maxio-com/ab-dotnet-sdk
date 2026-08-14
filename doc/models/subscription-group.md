@@ -16,24 +16,30 @@
 | `SubscriptionIds` | `List<int>` | Optional | - |
 | `CreatedAt` | `DateTimeOffset?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+SubscriptionGroup subscriptionGroup = new SubscriptionGroup
 {
-  "uid": "uid4",
-  "customer_id": 36,
-  "payment_profile": {
-    "id": 44,
-    "first_name": "first_name4",
-    "last_name": "last_name2",
-    "masked_card_number": "masked_card_number2"
-  },
-  "payment_collection_method": "prepaid",
-  "subscription_ids": [
-    146,
-    147,
-    148
-  ]
-}
+    Uid = "uid8",
+    CustomerId = 78,
+    PaymentProfile = new SubscriptionGroupPaymentProfile
+    {
+        Id = 44,
+        FirstName = "first_name4",
+        LastName = "last_name2",
+        MaskedCardNumber = "masked_card_number2",
+    },
+    PaymentCollectionMethod = CollectionMethod.Automatic,
+    SubscriptionIds = new List<int>
+    {
+        188,
+        189,
+        190,
+    },
+};
 ```
 

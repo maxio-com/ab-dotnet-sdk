@@ -82,7 +82,7 @@ namespace AdvancedBilling.Standard.Models
         public bool? ApplyCredit { get; set; }
 
         /// <summary>
-        /// If `apply_credit` set to false and refunding full amount, if `void_invoice` set to true, invoice will be voided after refund. Defaults to `false`.
+        /// If `apply_credit` is set to false and refunding full amount, if `void_invoice` is set to true, invoice will be voided after refund. Defaults to `false`.
         /// </summary>
         [JsonProperty("void_invoice", NullValueHandling = NullValueHandling.Ignore)]
         public bool? VoidInvoice { get; set; }

@@ -19,15 +19,18 @@ Warning: When updating a metafield's scope attribute, all scope attributes must 
 | `PublicEdit` | [`IncludeOption?`](../../doc/models/include-option.md) | Optional | Include (1) or exclude (0) metafields used in [Embeddable Components](page:development-tools/embeddable-components/overview) from being editable by your ecosystem. |
 | `Hosted` | `List<string>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+MetafieldScope metafieldScope = new MetafieldScope
 {
-  "csv": "0",
-  "invoices": "0",
-  "statements": "0",
-  "portal": "0",
-  "public_show": "0"
-}
+    Csv = IncludeOption.Exclude,
+    Invoices = IncludeOption.Exclude,
+    Statements = IncludeOption.Exclude,
+    Portal = IncludeOption.Exclude,
+    PublicShow = IncludeOption.Exclude,
+};
 ```
 

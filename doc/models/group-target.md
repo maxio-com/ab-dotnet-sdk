@@ -12,14 +12,17 @@ Attributes of the target customer who will be the responsible payer of the creat
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `Type` | [`GroupTargetType`](../../doc/models/group-target-type.md) | Required | The type of object indicated by the id attribute. |
-| `Id` | `int?` | Optional | The id of the target customer or subscription to group the existing subscription with. Ignored and should not be included if type is "self" , "parent", or "eldest" |
+| `Id` | `int?` | Optional | The id of the target customer or subscription to group the existing subscription with. Ignored and should not be included if type is "self", "parent", or "eldest". |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+GroupTarget groupTarget = new GroupTarget
 {
-  "type": "self",
-  "id": 134
-}
+    Type = GroupTargetType.Parent,
+    Id = 234,
+};
 ```
 

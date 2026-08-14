@@ -20,31 +20,40 @@ Object which contains subscription errors.
 | `PaymentProfileExpirationYear` | `List<string>` | Optional | - |
 | `PaymentProfileFullNumber` | `List<string>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+SubscriptionGroupSubscriptionError subscriptionGroupSubscriptionError = new SubscriptionGroupSubscriptionError
 {
-  "product": [
-    "product7",
-    "product6"
-  ],
-  "product_price_point_id": [
-    "product_price_point_id9",
-    "product_price_point_id0"
-  ],
-  "payment_profile": [
-    "payment_profile4",
-    "payment_profile5"
-  ],
-  "payment_profile.chargify_token": [
-    "payment_profile.chargify_token8",
-    "payment_profile.chargify_token9"
-  ],
-  "base": [
-    "base7",
-    "base8",
-    "base9"
-  ]
-}
+    Product = new List<string>
+    {
+        "product7",
+        "product8",
+    },
+    ProductPricePointId = new List<string>
+    {
+        "product_price_point_id3",
+        "product_price_point_id4",
+    },
+    PaymentProfile = new List<string>
+    {
+        "payment_profile8",
+        "payment_profile9",
+    },
+    PaymentProfileChargifyToken = new List<string>
+    {
+        "payment_profile.chargify_token2",
+        "payment_profile.chargify_token3",
+    },
+    MBase = new List<string>
+    {
+        "base1",
+        "base2",
+        "base3",
+    },
+};
 ```
 

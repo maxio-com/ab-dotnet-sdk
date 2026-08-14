@@ -11,18 +11,22 @@
 |  --- | --- | --- | --- |
 | `Allocation` | [`CreateAllocation`](../../doc/models/create-allocation.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreateAllocationRequest createAllocationRequest = new CreateAllocationRequest
 {
-  "allocation": {
-    "quantity": 228.94,
-    "decimal_quantity": "decimal_quantity6",
-    "previous_quantity": 254.04,
-    "decimal_previous_quantity": "decimal_previous_quantity8",
-    "component_id": 8,
-    "memo": "memo2"
-  }
-}
+    Allocation = new CreateAllocation
+    {
+        Quantity = 228.94,
+        DecimalQuantity = "decimal_quantity6",
+        PreviousQuantity = 254.04,
+        DecimalPreviousQuantity = "decimal_previous_quantity8",
+        ComponentId = 8,
+        Memo = "memo2",
+    },
+};
 ```
 

@@ -34,10 +34,12 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="name">name.</param>
         /// <param name="handle">handle.</param>
         /// <param name="description">description.</param>
+        /// <param name="surcharging">surcharging.</param>
         public CreateProductFamily(
             string name,
             string handle = null,
-            string description = null)
+            string description = null,
+            bool? surcharging = null)
         {
             this.Name = name;
 
@@ -50,6 +52,7 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.Description = description;
             }
+            this.Surcharging = surcharging;
         }
 
         /// <summary>
@@ -93,6 +96,12 @@ namespace AdvancedBilling.Standard.Models
                 this.description = value;
             }
         }
+
+        /// <summary>
+        /// Whether surcharging applies to this product family. Defaults to `true` when omitted. Only applied on sites where surcharging is enabled.
+        /// </summary>
+        [JsonProperty("surcharging", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? Surcharging { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -148,6 +157,8 @@ namespace AdvancedBilling.Standard.Models
                  this.Handle?.Equals(other.Handle) == true) &&
                 (this.Description == null && other.Description == null ||
                  this.Description?.Equals(other.Description) == true) &&
+                (this.Surcharging == null && other.Surcharging == null ||
+                 this.Surcharging?.Equals(other.Surcharging) == true) &&
                 base.Equals(obj);
         }
 
@@ -160,6 +171,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Name = {this.Name ?? "null"}");
             toStringOutput.Add($"Handle = {this.Handle ?? "null"}");
             toStringOutput.Add($"Description = {this.Description ?? "null"}");
+            toStringOutput.Add($"Surcharging = {(this.Surcharging == null ? "null" : this.Surcharging.ToString())}");
 
             base.ToString(toStringOutput);
         }

@@ -15,34 +15,85 @@ Used in place of `price_point_id` to define a custom price point unique to the s
 | `Prices` | [`List<Price>`](../../doc/models/price.md) | Optional | - |
 | `OveragePricing` | [`List<ComponentCustomPrice>`](../../doc/models/component-custom-price.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Collections.Generic;
+
+SubscriptionGroupComponentCustomPrice subscriptionGroupComponentCustomPrice = new SubscriptionGroupComponentCustomPrice
 {
-  "pricing_scheme": "per_unit",
-  "prices": [
+    PricingScheme = PricingScheme.Stairstep,
+    Prices = new List<Price>
     {
-      "starting_quantity": 242,
-      "ending_quantity": 40,
-      "unit_price": 23.26
-    }
-  ],
-  "overage_pricing": [
-    {
-      "tax_included": false,
-      "pricing_scheme": "stairstep",
-      "interval": 230,
-      "interval_unit": "day",
-      "list_price_point_id": 10,
-      "prices": [
+        new Price
         {
-          "starting_quantity": 242,
-          "ending_quantity": 40,
-          "unit_price": 23.26
-        }
-      ]
-    }
-  ]
-}
+            StartingQuantity = PriceStartingQuantity.FromNumber(242),
+            UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+            EndingQuantity = PriceEndingQuantity.FromNumber(40),
+        },
+        new Price
+        {
+            StartingQuantity = PriceStartingQuantity.FromNumber(242),
+            UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+            EndingQuantity = PriceEndingQuantity.FromNumber(40),
+        },
+    },
+    OveragePricing = new List<ComponentCustomPrice>
+    {
+        new ComponentCustomPrice
+        {
+            Prices = new List<Price>
+            {
+                new Price
+                {
+                    StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                    UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                    EndingQuantity = PriceEndingQuantity.FromNumber(40),
+                },
+            },
+            TaxIncluded = false,
+            PricingScheme = PricingScheme.Stairstep,
+            Interval = 230,
+            IntervalUnit = IntervalUnit.Day,
+            ListPricePointId = 10,
+        },
+        new ComponentCustomPrice
+        {
+            Prices = new List<Price>
+            {
+                new Price
+                {
+                    StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                    UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                    EndingQuantity = PriceEndingQuantity.FromNumber(40),
+                },
+            },
+            TaxIncluded = false,
+            PricingScheme = PricingScheme.Stairstep,
+            Interval = 230,
+            IntervalUnit = IntervalUnit.Day,
+            ListPricePointId = 10,
+        },
+        new ComponentCustomPrice
+        {
+            Prices = new List<Price>
+            {
+                new Price
+                {
+                    StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                    UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                    EndingQuantity = PriceEndingQuantity.FromNumber(40),
+                },
+            },
+            TaxIncluded = false,
+            PricingScheme = PricingScheme.Stairstep,
+            Interval = 230,
+            IntervalUnit = IntervalUnit.Day,
+            ListPricePointId = 10,
+        },
+    },
+};
 ```
 

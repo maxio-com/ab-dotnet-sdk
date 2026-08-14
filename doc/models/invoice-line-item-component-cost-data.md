@@ -11,33 +11,33 @@
 |  --- | --- | --- | --- |
 | `Rates` | [`List<ComponentCostData>`](../../doc/models/component-cost-data.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+InvoiceLineItemComponentCostData invoiceLineItemComponentCostData = new InvoiceLineItemComponentCostData
 {
-  "rates": [
+    Rates = new List<ComponentCostData>
     {
-      "component_code_id": 116,
-      "price_point_id": 226,
-      "product_id": 94,
-      "quantity": "quantity0",
-      "amount": "amount6"
+        new ComponentCostData
+        {
+            ComponentCodeId = 116,
+            PricePointId = 226,
+            ProductId = 94,
+            Quantity = "quantity0",
+            Amount = "amount6",
+        },
+        new ComponentCostData
+        {
+            ComponentCodeId = 116,
+            PricePointId = 226,
+            ProductId = 94,
+            Quantity = "quantity0",
+            Amount = "amount6",
+        },
     },
-    {
-      "component_code_id": 116,
-      "price_point_id": 226,
-      "product_id": 94,
-      "quantity": "quantity0",
-      "amount": "amount6"
-    },
-    {
-      "component_code_id": 116,
-      "price_point_id": 226,
-      "product_id": 94,
-      "quantity": "quantity0",
-      "amount": "amount6"
-    }
-  ]
-}
+};
 ```
 

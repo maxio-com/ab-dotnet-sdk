@@ -16,19 +16,23 @@ Contract linked to the scheduled renewal configuration.
 | `Number` | `string` | Optional | - |
 | `Register` | [`Register`](../../doc/models/register.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+Contract contract = new Contract
 {
-  "id": 136,
-  "maxio_id": "maxio_id8",
-  "number": "number6",
-  "register": {
-    "id": 54,
-    "maxio_id": "maxio_id4",
-    "name": "name2",
-    "currency_code": "currency_code2"
-  }
-}
+    Id = 112,
+    MaxioId = "maxio_id6",
+    Number = "number2",
+    Register = new Register
+    {
+        Id = 54,
+        MaxioId = "maxio_id4",
+        Name = "name2",
+        CurrencyCode = "currency_code2",
+    },
+};
 ```
 

@@ -20,16 +20,19 @@
 | `Proration` | [`Proration`](../../doc/models/proration.md) | Optional | - |
 | `ProrationDate` | `DateTimeOffset?` | Optional | The date that the proration is calculated from for the preview |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionMigrationPreviewOptions subscriptionMigrationPreviewOptions = new SubscriptionMigrationPreviewOptions
 {
-  "include_trial": false,
-  "include_initial_charge": false,
-  "include_coupons": true,
-  "preserve_period": false,
-  "product_id": 242,
-  "product_price_point_id": 166
-}
+    ProductId = 70,
+    ProductPricePointId = 250,
+    IncludeTrial = false,
+    IncludeInitialCharge = false,
+    IncludeCoupons = true,
+    PreservePeriod = false,
+};
 ```
 

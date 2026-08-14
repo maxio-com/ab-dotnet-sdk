@@ -15,15 +15,23 @@
 | `CommitDate` | `DateTimeOffset?` | Optional | - |
 | `ModifyDate` | `DateTimeOffset?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+InvoiceAvataxDetails invoiceAvataxDetails = new InvoiceAvataxDetails
 {
-  "id": 112,
-  "status": "status2",
-  "document_code": "document_code0",
-  "commit_date": "2016-03-13T12:52:32.123Z",
-  "modify_date": "2016-03-13T12:52:32.123Z"
-}
+    Id = 184L,
+    Status = "status2",
+    DocumentCode = "document_code4",
+    CommitDate = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    ModifyDate = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+};
 ```
 

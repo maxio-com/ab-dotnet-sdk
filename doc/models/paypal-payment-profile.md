@@ -29,16 +29,19 @@
 | `CreatedAt` | `DateTimeOffset?` | Optional | A timestamp indicating when this payment profile was created |
 | `UpdatedAt` | `DateTimeOffset?` | Optional | A timestamp indicating when this payment profile was last updated |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PaypalPaymentProfile paypalPaymentProfile = new PaypalPaymentProfile
 {
-  "payment_type": "paypal_account",
-  "id": 10,
-  "first_name": "first_name0",
-  "last_name": "last_name8",
-  "customer_id": 48,
-  "current_vault": "moduslink"
-}
+    PaymentType = PaymentType.PaypalAccount,
+    Id = 214,
+    FirstName = "first_name0",
+    LastName = "last_name8",
+    CustomerId = 252,
+    CurrentVault = PayPalVault.Moduslink,
+};
 ```
 

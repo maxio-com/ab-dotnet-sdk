@@ -11,18 +11,25 @@
 |  --- | --- | --- | --- |
 | `Refund` | [`RefundInvoiceRequestRefund`](../../doc/models/containers/refund-invoice-request-refund.md) | Required | This is a container for any-of cases. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+RefundInvoiceRequest refundInvoiceRequest = new RefundInvoiceRequest
 {
-  "refund": {
-    "amount": "amount8",
-    "memo": "memo0",
-    "payment_id": 0,
-    "external": false,
-    "apply_credit": false,
-    "void_invoice": false
-  }
-}
+    Refund = RefundInvoiceRequestRefund.FromRefundInvoice(
+        new RefundInvoice
+        {
+            Amount = "amount8",
+            Memo = "memo0",
+            PaymentId = 0,
+            External = false,
+            ApplyCredit = false,
+            VoidInvoice = false,
+        }
+    ),
+};
 ```
 

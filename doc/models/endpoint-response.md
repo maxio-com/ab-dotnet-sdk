@@ -11,19 +11,25 @@
 |  --- | --- | --- | --- |
 | `Endpoint` | [`Endpoint`](../../doc/models/endpoint.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+EndpointResponse endpointResponse = new EndpointResponse
 {
-  "endpoint": {
-    "id": 202,
-    "url": "url2",
-    "site_id": 128,
-    "status": "status0",
-    "webhook_subscriptions": [
-      "webhook_subscriptions4"
-    ]
-  }
-}
+    Endpoint = new Endpoint
+    {
+        Id = 202,
+        Url = "url2",
+        SiteId = 128,
+        Status = "status0",
+        WebhookSubscriptions = new List<string>
+        {
+            "webhook_subscriptions4",
+        },
+    },
+};
 ```
 

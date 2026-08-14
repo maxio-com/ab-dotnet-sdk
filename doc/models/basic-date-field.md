@@ -16,7 +16,9 @@ Allows to filter by `created_at` or `updated_at`.
 
 ## Example
 
-```
-updated_at
+```csharp
+using AdvancedBilling.Standard.Models;
+
+BasicDateField basicDateField = BasicDateField.UpdatedAt;
 ```
 

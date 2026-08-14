@@ -17,15 +17,18 @@ Example schema for an `change_invoice_status` event
 | `ToStatus` | [`InvoiceStatus`](../../doc/models/invoice-status.md) | Required | The updated status of the invoice after changes have been made. See [Invoice Statuses](https://maxio.zendesk.com/hc/en-us/articles/24252287829645-Advanced-Billing-Invoices-Overview#invoice-statuses) for more. |
 | `ConsolidationLevel` | [`InvoiceConsolidationLevel?`](../../doc/models/invoice-consolidation-level.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ChangeInvoiceStatusEventData changeInvoiceStatusEventData = new ChangeInvoiceStatusEventData
 {
-  "gateway_trans_id": "gateway_trans_id2",
-  "amount": "amount2",
-  "from_status": "draft",
-  "to_status": "pending",
-  "consolidation_level": "none"
-}
+    FromStatus = InvoiceStatus.Canceled,
+    ToStatus = InvoiceStatus.Processing,
+    GatewayTransId = "gateway_trans_id4",
+    Amount = "amount6",
+    ConsolidationLevel = InvoiceConsolidationLevel.Parent,
+};
 ```
 

@@ -17,17 +17,20 @@
 | `AmountInCents` | `long?` | Optional | **Constraints**: `>= 0` |
 | `Percentage` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionIncludedCoupon subscriptionIncludedCoupon = new SubscriptionIncludedCoupon
 {
-  "code": "\"ABCD_10\"",
-  "use_count": 2,
-  "uses_allowed": 10,
-  "expires_at": "\"2023-07-13T05:18:58-04:00\"",
-  "amount_in_cents": 1000,
-  "percentage": "\"15.0\"",
-  "recurring": false
-}
+    Code = "\"ABCD_10\"",
+    UseCount = 2,
+    UsesAllowed = 10,
+    ExpiresAt = "\"2023-07-13T05:18:58-04:00\"",
+    Recurring = false,
+    AmountInCents = 1000L,
+    Percentage = "\"15.0\"",
+};
 ```
 

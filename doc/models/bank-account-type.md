@@ -14,3 +14,11 @@ Defaults to checking
 | `Checking` |
 | `Savings` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+BankAccountType bankAccountType = BankAccountType.Checking;
+```
+

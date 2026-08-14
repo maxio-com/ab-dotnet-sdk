@@ -11,19 +11,24 @@
 |  --- | --- | --- | --- |
 | `OnOffComponent` | [`OnOffComponent`](../../doc/models/on-off-component.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+CreateOnOffComponent createOnOffComponent = new CreateOnOffComponent
 {
-  "on_off_component": {
-    "name": "name6",
-    "description": "description6",
-    "handle": "handle2",
-    "taxable": false,
-    "upgrade_charge": "full",
-    "downgrade_credit": "full",
-    "unit_price": "String5"
-  }
-}
+    OnOffComponent = new OnOffComponent
+    {
+        Name = "name6",
+        UnitPrice = OnOffComponentUnitPrice.FromString("String5"),
+        Description = "description6",
+        Handle = "handle2",
+        Taxable = false,
+        UpgradeCharge = CreditType.Full,
+        DowngradeCredit = CreditType.Full,
+    },
+};
 ```
 

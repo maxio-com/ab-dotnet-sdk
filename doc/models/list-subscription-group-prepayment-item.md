@@ -1,9 +1,9 @@
 
-# List Subcription Group Prepayment Item
+# List Subscription Group Prepayment Item
 
 ## Structure
 
-`ListSubcriptionGroupPrepaymentItem`
+`ListSubscriptionGroupPrepaymentItem`
 
 ## Fields
 
@@ -19,15 +19,18 @@
 | `PaymentType` | [`PrepaymentMethod?`](../../doc/models/prepayment-method.md) | Optional | - |
 | `CreatedAt` | `DateTimeOffset?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ListSubscriptionGroupPrepaymentItem listSubscriptionGroupPrepaymentItem = new ListSubscriptionGroupPrepaymentItem
 {
-  "id": 254,
-  "subscription_group_uid": "subscription_group_uid6",
-  "amount_in_cents": 172,
-  "remaining_amount_in_cents": 142,
-  "details": "details2"
-}
+    Id = 72,
+    SubscriptionGroupUid = "subscription_group_uid6",
+    AmountInCents = 98L,
+    RemainingAmountInCents = 216L,
+    Details = "details2",
+};
 ```
 

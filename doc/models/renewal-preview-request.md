@@ -9,29 +9,26 @@
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `Components` | [`List<RenewalPreviewComponent>`](../../doc/models/renewal-preview-component.md) | Optional | An optional array of component definitions to preview. Providing any component definitions here will override the actual components on the subscription (and their quantities), and the billing preview will contain only these components (in addition to any product base fees). |
+| `Components` | [`List<RenewalPreviewComponent>`](../../doc/models/renewal-preview-component.md) | Optional | (Optional) Array of component definitions to preview. Providing any component definitions here will override the actual components on the subscription (and their quantities), and the billing preview will contain only these components (in addition to any product base fees). |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Collections.Generic;
+
+RenewalPreviewRequest renewalPreviewRequest = new RenewalPreviewRequest
 {
-  "components": [
+    Components = new List<RenewalPreviewComponent>
     {
-      "component_id": "String5",
-      "quantity": 210,
-      "price_point_id": "String3"
+        new RenewalPreviewComponent
+        {
+            ComponentId = RenewalPreviewComponentComponentId.FromString("String5"),
+            Quantity = 210,
+            PricePointId = RenewalPreviewComponentPricePointId.FromString("String3"),
+        },
     },
-    {
-      "component_id": "String5",
-      "quantity": 210,
-      "price_point_id": "String3"
-    },
-    {
-      "component_id": "String5",
-      "quantity": 210,
-      "price_point_id": "String3"
-    }
-  ]
-}
+};
 ```
 

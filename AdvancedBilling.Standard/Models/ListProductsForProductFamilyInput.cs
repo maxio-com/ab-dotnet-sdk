@@ -125,7 +125,7 @@ namespace AdvancedBilling.Standard.Models
         public DateTimeOffset? EndDatetime { get; set; }
 
         /// <summary>
-        /// Include archived products
+        /// Include archived products.
         /// </summary>
         [JsonProperty("include_archived", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IncludeArchived { get; set; }

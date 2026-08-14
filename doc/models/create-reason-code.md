@@ -13,13 +13,16 @@
 | `Description` | `string` | Required | The friendly summary of what the code signifies |
 | `Position` | `int?` | Optional | The order that code appears in lists |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreateReasonCode createReasonCode = new CreateReasonCode
 {
-  "code": "code4",
-  "description": "description6",
-  "position": 86
-}
+    Code = "code4",
+    Description = "description6",
+    Position = 40,
+};
 ```
 

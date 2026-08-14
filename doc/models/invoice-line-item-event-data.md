@@ -30,15 +30,18 @@
 | `BillingScheduleItemId` | `int?` | Optional | - |
 | `CustomItem` | `bool?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoiceLineItemEventData invoiceLineItemEventData = new InvoiceLineItemEventData
 {
-  "uid": "uid4",
-  "title": "title0",
-  "description": "description6",
-  "quantity": 40,
-  "quantity_delta": 114
-}
+    Uid = "uid4",
+    Title = "title0",
+    Description = "description4",
+    Quantity = 190,
+    QuantityDelta = 36,
+};
 ```
 

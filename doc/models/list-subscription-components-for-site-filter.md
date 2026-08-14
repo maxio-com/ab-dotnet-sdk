@@ -13,26 +13,36 @@
 | `UseSiteExchangeRate` | `bool?` | Optional | Allows fetching components allocation with matching use_site_exchange_rate based on provided value. Use in query `filter[use_site_exchange_rate]=true`. |
 | `Subscription` | [`SubscriptionFilter`](../../doc/models/subscription-filter.md) | Optional | Nested filter used for List Subscription Components For Site Filter |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+using System.Globalization;
+
+ListSubscriptionComponentsForSiteFilter listSubscriptionComponentsForSiteFilter = new ListSubscriptionComponentsForSiteFilter
 {
-  "currencies": [
-    "EUR",
-    "USD"
-  ],
-  "use_site_exchange_rate": false,
-  "subscription": {
-    "states": [
-      "active",
-      "canceled",
-      "expired"
-    ],
-    "date_field": "updated_at",
-    "start_date": "2016-03-13",
-    "end_date": "2016-03-13",
-    "start_datetime": "2016-03-13T12:52:32.123Z"
-  }
-}
+    Currencies = new List<string>
+    {
+        "EUR",
+        "USD",
+    },
+    UseSiteExchangeRate = false,
+    Subscription = new SubscriptionFilter
+    {
+        States = new List<SubscriptionStateFilter>
+        {
+            SubscriptionStateFilter.Trialing,
+            SubscriptionStateFilter.Unpaid,
+            SubscriptionStateFilter.Active,
+        },
+        DateField = SubscriptionListDateField.UpdatedAt,
+        StartDate = DateTime.Parse("2016-03-13"),
+        EndDate = DateTime.Parse("2016-03-13"),
+        StartDatetime = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
+    },
+};
 ```
 

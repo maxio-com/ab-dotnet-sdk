@@ -11,30 +11,20 @@
 |  --- | --- | --- | --- |
 | `Errors` | [`List<ComponentAllocationErrorItem>`](../../doc/models/component-allocation-error-item.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+try
 {
-  "errors": [
+    // make the API call
+}
+catch (ApiException e)
+{
+    if (e is ComponentAllocationErrorException)
     {
-      "component_id": 236,
-      "message": "message0",
-      "kind": "kind8",
-      "on": "on0"
-    },
-    {
-      "component_id": 236,
-      "message": "message0",
-      "kind": "kind8",
-      "on": "on0"
-    },
-    {
-      "component_id": 236,
-      "message": "message0",
-      "kind": "kind8",
-      "on": "on0"
+        // TODO: Handle ComponentAllocationErrorException
+        Console.WriteLine(e.Message);
     }
-  ]
 }
 ```
 

@@ -14,19 +14,23 @@
 | `Handle` | `string` | Optional | - |
 | `AccountingCode` | `string` | Optional | - |
 | `Description` | `string` | Optional | - |
+| `Surcharging` | `bool?` | Optional | Whether surcharging applies to this product family. Only included on sites where surcharging is enabled. |
 | `CreatedAt` | `DateTimeOffset?` | Optional | - |
 | `UpdatedAt` | `DateTimeOffset?` | Optional | - |
 | `ArchivedAt` | `DateTimeOffset?` | Optional | Timestamp indicating when this product family was archived. `null` if the product family is not archived. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ProductFamily productFamily = new ProductFamily
 {
-  "id": 194,
-  "name": "name2",
-  "handle": "handle8",
-  "accounting_code": "accounting_code8",
-  "description": "description8"
-}
+    Id = 134,
+    Name = "name4",
+    Handle = "handle0",
+    AccountingCode = "accounting_code0",
+    Description = "description4",
+};
 ```
 

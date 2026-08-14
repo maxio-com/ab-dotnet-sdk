@@ -12,12 +12,15 @@
 | `Uid` | `string` | Optional | - |
 | `Deleted` | `bool?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+DeleteSubscriptionGroupResponse deleteSubscriptionGroupResponse = new DeleteSubscriptionGroupResponse
 {
-  "uid": "uid4",
-  "deleted": false
-}
+    Uid = "uid0",
+    Deleted = false,
+};
 ```
 

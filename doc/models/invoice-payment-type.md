@@ -16,3 +16,11 @@ The type of payment to be applied to an Invoice. Defaults to external.
 | `ServiceCredit` |
 | `Payment` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoicePaymentType invoicePaymentType = InvoicePaymentType.External;
+```
+

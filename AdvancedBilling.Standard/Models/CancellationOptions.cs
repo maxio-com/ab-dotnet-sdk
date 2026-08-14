@@ -73,7 +73,7 @@ namespace AdvancedBilling.Standard.Models
         public bool? CancelAtEndOfPeriod { get; set; }
 
         /// <summary>
-        /// Schedules the cancellation on the provided date. This is option is not applicable for prepaid subscriptions. To use this option, the Schedule Subscription Cancellation feature must be enabled on your site.
+        /// Schedules the cancellation on the provided date. This option is not applicable for prepaid subscriptions. To use this option, the Schedule Subscription Cancellation feature must be enabled on your site.
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("scheduled_cancellation_at")]

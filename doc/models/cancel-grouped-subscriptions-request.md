@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- |
 | `ChargeUnbilledUsage` | `bool?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CancelGroupedSubscriptionsRequest cancelGroupedSubscriptionsRequest = new CancelGroupedSubscriptionsRequest
 {
-  "charge_unbilled_usage": false
-}
+    ChargeUnbilledUsage = false,
+};
 ```
 

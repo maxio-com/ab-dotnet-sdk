@@ -16,16 +16,24 @@
 | `LastInviteSentAt` | `DateTimeOffset?` | Optional | - |
 | `LastInviteAcceptedAt` | `DateTimeOffset?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+ResentInvitation resentInvitation = new ResentInvitation
 {
-  "last_invite_sent_at": "01/01/2024 04:30:00",
-  "last_invite_accepted_at": "01/01/2024 04:35:00",
-  "last_sent_at": "last_sent_at8",
-  "last_accepted_at": "last_accepted_at8",
-  "send_invite_link_text": "send_invite_link_text6",
-  "uninvited_count": 6
-}
+    LastSentAt = "last_sent_at0",
+    LastAcceptedAt = "last_accepted_at0",
+    SendInviteLinkText = "send_invite_link_text8",
+    UninvitedCount = 178,
+    LastInviteSentAt = DateTime.ParseExact("2024-01-01T04:30:00+00:00", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    LastInviteAcceptedAt = DateTime.ParseExact("2024-01-01T04:35:00+00:00", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+};
 ```
 

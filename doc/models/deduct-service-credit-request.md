@@ -11,14 +11,19 @@
 |  --- | --- | --- | --- |
 | `Deduction` | [`DeductServiceCredit`](../../doc/models/deduct-service-credit.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+DeductServiceCreditRequest deductServiceCreditRequest = new DeductServiceCreditRequest
 {
-  "deduction": {
-    "amount": "String9",
-    "memo": "memo0"
-  }
-}
+    Deduction = new DeductServiceCredit
+    {
+        Amount = DeductServiceCreditAmount.FromString("String9"),
+        Memo = "memo0",
+    },
+};
 ```
 

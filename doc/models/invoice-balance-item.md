@@ -13,13 +13,16 @@
 | `Number` | `string` | Optional | - |
 | `OutstandingAmount` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoiceBalanceItem invoiceBalanceItem = new InvoiceBalanceItem
 {
-  "uid": "uid8",
-  "number": "number6",
-  "outstanding_amount": "outstanding_amount6"
-}
+    Uid = "uid8",
+    Number = "number6",
+    OutstandingAmount = "outstanding_amount6",
+};
 ```
 

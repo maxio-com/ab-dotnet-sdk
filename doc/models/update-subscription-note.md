@@ -14,12 +14,15 @@ Updatable fields for Subscription Note
 | `Body` | `string` | Required | - |
 | `Sticky` | `bool` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+UpdateSubscriptionNote updateSubscriptionNote = new UpdateSubscriptionNote
 {
-  "body": "body8",
-  "sticky": false
-}
+    Body = "body2",
+    Sticky = false,
+};
 ```
 

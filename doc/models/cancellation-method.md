@@ -18,3 +18,11 @@ The process used to cancel the subscription, if the subscription has been cancel
 | `Unknown` |
 | `Imported` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CancellationMethod cancellationMethod = CancellationMethod.MerchantUi;
+```
+

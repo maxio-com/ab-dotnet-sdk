@@ -639,7 +639,7 @@ catch (ApiException e)
 
 # Unpublish Scheduled Renewal Configuration
 
-Returns a scheduled renewal configuration to an editable state.
+Restores a scheduled renewal configuration to an editable state.
 
 ```csharp
 UnpublishScheduledRenewalConfigurationAsync(
@@ -821,6 +821,8 @@ catch (ApiException e)
 
 Adds product and component line items to the scheduled renewal.
 
+If your site has list vs sales pricing enabled, accepts renewal_configuration_item.custom_price.list_price_point_id, validates and persists it; omitted value follows existing/default behavior; with list vs sales pricing disabled, parameter is ignored (no validation/behavioral impact). This functionality is supported in the API, but is not currently supported in SDKs.
+
 ```csharp
 CreateScheduledRenewalConfigurationItemAsync(
     int subscriptionId,
@@ -924,6 +926,8 @@ catch (ApiException e)
 # Update Scheduled Renewal Configuration Item
 
 Updates an existing configuration item’s pricing and quantity.
+
+If you site has list vs sales pricing enabled, accepts renewal_configuration_item.custom_price.list_price_point_id, validates and persists it; omitted value follows existing/default behavior; with list vs sales pricing disabled, parameter is ignored (no validation/behavioral impact). This functionality is supported in the API, but is not currently supported in SDKs.
 
 ```csharp
 UpdateScheduledRenewalConfigurationItemAsync(

@@ -13,7 +13,9 @@
 
 ## Example
 
-```
-next_proforma_invoice
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreateSignupProformaPreviewInclude createSignupProformaPreviewInclude = CreateSignupProformaPreviewInclude.NextProformaInvoice;
 ```
 

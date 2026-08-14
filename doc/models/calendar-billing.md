@@ -1,7 +1,7 @@
 
 # Calendar Billing
 
-(Optional). Cannot be used when also specifying next_billing_at
+(Optional). Cannot be used when also specifying next_billing_at.
 
 ## Structure
 
@@ -14,12 +14,16 @@
 | `SnapDay` | [`CalendarBillingSnapDay`](../../doc/models/containers/calendar-billing-snap-day.md) | Optional | This is a container for one-of cases. |
 | `CalendarBillingFirstCharge` | [`FirstChargeType?`](../../doc/models/first-charge-type.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+CalendarBilling calendarBilling = new CalendarBilling
 {
-  "snap_day": 210,
-  "calendar_billing_first_charge": "prorated"
-}
+    SnapDay = CalendarBillingSnapDay.FromNumber(200),
+    CalendarBillingFirstCharge = FirstChargeType.Delayed,
+};
 ```
 

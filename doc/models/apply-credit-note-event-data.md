@@ -19,32 +19,47 @@ Example schema for an `apply_credit_note` event
 | `TransactionTime` | `DateTimeOffset?` | Optional | The time the credit note was applied, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z" |
 | `Memo` | `string` | Optional | The credit note memo. |
 | `Role` | `string` | Optional | The role of the credit note (e.g. 'general') |
-| `ConsolidatedInvoice` | `bool?` | Optional | Shows whether it was applied to consolidated invoice or not |
+| `ConsolidatedInvoice` | `bool?` | Optional | Shows whether it was applied to consolidated invoice or not. |
 | `AppliedCreditNotes` | [`List<AppliedCreditNoteData>`](../../doc/models/applied-credit-note-data.md) | Optional | List of credit notes applied to children invoices (if consolidated invoice) |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+using System.Globalization;
+
+ApplyCreditNoteEventData applyCreditNoteEventData = new ApplyCreditNoteEventData
 {
-  "uid": "uid2",
-  "credit_note_number": "credit_note_number4",
-  "credit_note_uid": "credit_note_uid4",
-  "original_amount": "original_amount6",
-  "applied_amount": "applied_amount6",
-  "transaction_time": "2016-03-13T12:52:32.123Z",
-  "memo": "memo6",
-  "role": "role4",
-  "consolidated_invoice": false,
-  "applied_credit_notes": [
+    Uid = "uid0",
+    CreditNoteNumber = "credit_note_number6",
+    CreditNoteUid = "credit_note_uid4",
+    OriginalAmount = "original_amount4",
+    AppliedAmount = "applied_amount8",
+    TransactionTime = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    Memo = "memo4",
+    Role = "role4",
+    ConsolidatedInvoice = false,
+    AppliedCreditNotes = new List<AppliedCreditNoteData>
     {
-      "uid": "uid4",
-      "number": "number8"
+        new AppliedCreditNoteData
+        {
+            Uid = "uid4",
+            Number = "number8",
+        },
+        new AppliedCreditNoteData
+        {
+            Uid = "uid4",
+            Number = "number8",
+        },
+        new AppliedCreditNoteData
+        {
+            Uid = "uid4",
+            Number = "number8",
+        },
     },
-    {
-      "uid": "uid4",
-      "number": "number8"
-    }
-  ]
-}
+};
 ```
 

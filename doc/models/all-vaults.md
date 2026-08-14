@@ -46,3 +46,11 @@ The vault that stores the payment profile with the provided `vault_token`. Use `
 | `Unipaas` |
 | `Wirecard` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+AllVaults allVaults = AllVaults.EwayRapidStd;
+```
+

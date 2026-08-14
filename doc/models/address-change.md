@@ -12,24 +12,29 @@
 | `Before` | [`InvoiceAddress`](../../doc/models/invoice-address.md) | Required | - |
 | `After` | [`InvoiceAddress`](../../doc/models/invoice-address.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+AddressChange addressChange = new AddressChange
 {
-  "before": {
-    "street": "street0",
-    "line2": "line24",
-    "city": "city0",
-    "state": "state6",
-    "zip": "zip4"
-  },
-  "after": {
-    "street": "street2",
-    "line2": "line26",
-    "city": "city8",
-    "state": "state2",
-    "zip": "zip4"
-  }
-}
+    Before = new InvoiceAddress
+    {
+        Street = "street0",
+        Line2 = "line24",
+        City = "city0",
+        State = "state6",
+        Zip = "zip4",
+    },
+    After = new InvoiceAddress
+    {
+        Street = "street2",
+        Line2 = "line26",
+        City = "city8",
+        State = "state2",
+        Zip = "zip4",
+    },
+};
 ```
 

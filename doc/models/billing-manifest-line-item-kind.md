@@ -18,3 +18,11 @@ A handle for the billing manifest line item kind
 | `Component` |
 | `Tax` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+BillingManifestLineItemKind billingManifestLineItemKind = BillingManifestLineItemKind.Component;
+```
+

@@ -43,7 +43,7 @@ namespace AdvancedBilling.Standard.Models
         public bool? TaxIncluded { get; set; }
 
         /// <summary>
-        /// Omit for On/Off components
+        /// Omit for On/Off components.
         /// </summary>
         [JsonProperty("pricing_scheme")]
         public Models.PricingScheme PricingScheme { get; set; }

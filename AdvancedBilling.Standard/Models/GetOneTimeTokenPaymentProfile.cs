@@ -3,6 +3,7 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
+using APIMatic.Core.Utilities.Converters;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
@@ -121,6 +122,7 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets Id.
         /// </summary>
+        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("id")]
         public string Id
         {
@@ -139,42 +141,52 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets FirstName.
         /// </summary>
+        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("first_name")]
+        [JsonRequired]
         public string FirstName { get; set; }
 
         /// <summary>
         /// Gets or sets LastName.
         /// </summary>
+        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("last_name")]
+        [JsonRequired]
         public string LastName { get; set; }
 
         /// <summary>
         /// Gets or sets MaskedCardNumber.
         /// </summary>
+        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("masked_card_number")]
+        [JsonRequired]
         public string MaskedCardNumber { get; set; }
 
         /// <summary>
         /// The type of card used.
         /// </summary>
         [JsonProperty("card_type")]
+        [JsonRequired]
         public Models.CardType CardType { get; set; }
 
         /// <summary>
         /// Gets or sets ExpirationMonth.
         /// </summary>
         [JsonProperty("expiration_month")]
+        [JsonRequired]
         public double ExpirationMonth { get; set; }
 
         /// <summary>
         /// Gets or sets ExpirationYear.
         /// </summary>
         [JsonProperty("expiration_year")]
+        [JsonRequired]
         public double ExpirationYear { get; set; }
 
         /// <summary>
         /// Gets or sets CustomerId.
         /// </summary>
+        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("customer_id")]
         public string CustomerId
         {
@@ -194,71 +206,90 @@ namespace AdvancedBilling.Standard.Models
         /// The vault that stores the payment profile with the provided `vault_token`. Use `bogus` for testing.
         /// </summary>
         [JsonProperty("current_vault")]
+        [JsonRequired]
         public Models.CreditCardVault CurrentVault { get; set; }
 
         /// <summary>
         /// Gets or sets VaultToken.
         /// </summary>
+        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("vault_token")]
+        [JsonRequired]
         public string VaultToken { get; set; }
 
         /// <summary>
         /// Gets or sets BillingAddress.
         /// </summary>
+        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("billing_address")]
+        [JsonRequired]
         public string BillingAddress { get; set; }
 
         /// <summary>
         /// Gets or sets BillingAddress2.
         /// </summary>
+        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("billing_address_2", NullValueHandling = NullValueHandling.Ignore)]
         public string BillingAddress2 { get; set; }
 
         /// <summary>
         /// Gets or sets BillingCity.
         /// </summary>
+        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("billing_city")]
+        [JsonRequired]
         public string BillingCity { get; set; }
 
         /// <summary>
         /// Gets or sets BillingCountry.
         /// </summary>
+        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("billing_country")]
+        [JsonRequired]
         public string BillingCountry { get; set; }
 
         /// <summary>
         /// Gets or sets BillingState.
         /// </summary>
+        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("billing_state")]
+        [JsonRequired]
         public string BillingState { get; set; }
 
         /// <summary>
         /// Gets or sets BillingZip.
         /// </summary>
+        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("billing_zip")]
+        [JsonRequired]
         public string BillingZip { get; set; }
 
         /// <summary>
         /// Gets or sets PaymentType.
         /// </summary>
+        [JsonConverter(typeof(JsonStringConverter), true)]
         [JsonProperty("payment_type")]
+        [JsonRequired]
         public string PaymentType { get; set; }
 
         /// <summary>
         /// Gets or sets Disabled.
         /// </summary>
         [JsonProperty("disabled")]
+        [JsonRequired]
         public bool Disabled { get; set; }
 
         /// <summary>
         /// Gets or sets SiteGatewaySettingId.
         /// </summary>
         [JsonProperty("site_gateway_setting_id")]
+        [JsonRequired]
         public int SiteGatewaySettingId { get; set; }
 
         /// <summary>
         /// Gets or sets CustomerVaultToken.
         /// </summary>
+        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("customer_vault_token")]
         public string CustomerVaultToken
         {
@@ -277,6 +308,7 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Gets or sets GatewayHandle.
         /// </summary>
+        [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("gateway_handle")]
         public string GatewayHandle
         {

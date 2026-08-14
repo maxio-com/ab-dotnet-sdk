@@ -3,6 +3,7 @@
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
 // </copyright>
+using AdvancedBilling.Standard.Models.Containers;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
@@ -25,7 +26,7 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         /// <param name="paymentProfile">payment_profile.</param>
         public GetOneTimeTokenRequest(
-            Models.GetOneTimeTokenPaymentProfile paymentProfile)
+            GetOneTimeTokenRequestPaymentProfile paymentProfile)
         {
             this.PaymentProfile = paymentProfile;
         }
@@ -34,7 +35,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets PaymentProfile.
         /// </summary>
         [JsonProperty("payment_profile")]
-        public Models.GetOneTimeTokenPaymentProfile PaymentProfile { get; set; }
+        public GetOneTimeTokenRequestPaymentProfile PaymentProfile { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

@@ -24,15 +24,18 @@
 | `PeriodRangeStart` | `string` | Optional | - |
 | `PeriodRangeEnd` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+BillingManifestItem billingManifestItem = new BillingManifestItem
 {
-  "transaction_type": "info_transaction",
-  "kind": "baseline",
-  "amount_in_cents": 216,
-  "memo": "memo4",
-  "discount_amount_in_cents": 236
-}
+    TransactionType = LineItemTransactionType.Payment,
+    Kind = BillingManifestLineItemKind.Trial,
+    AmountInCents = 148L,
+    Memo = "memo0",
+    DiscountAmountInCents = 88L,
+};
 ```
 

@@ -13,14 +13,18 @@ Updatable fields for Subscription Note
 |  --- | --- | --- | --- |
 | `Note` | [`UpdateSubscriptionNote`](../../doc/models/update-subscription-note.md) | Required | Updatable fields for Subscription Note |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+UpdateSubscriptionNoteRequest updateSubscriptionNoteRequest = new UpdateSubscriptionNoteRequest
 {
-  "note": {
-    "body": "body0",
-    "sticky": false
-  }
-}
+    Note = new UpdateSubscriptionNote
+    {
+        Body = "body0",
+        Sticky = false,
+    },
+};
 ```
 

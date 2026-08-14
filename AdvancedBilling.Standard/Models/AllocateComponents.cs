@@ -128,7 +128,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// (Optional) If not passed, the allocation(s) will use the payment collection method on the subscription
+        /// (Optional) If not passed, the allocation(s) will use the payment collection method on the subscription.
         /// </summary>
         [JsonProperty("payment_collection_method", NullValueHandling = NullValueHandling.Ignore)]
         public Models.CollectionMethod? PaymentCollectionMethod { get; set; }

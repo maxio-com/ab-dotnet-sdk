@@ -14,30 +14,37 @@
 | `OpenInvoices` | [`AccountBalance`](../../doc/models/account-balance.md) | Optional | - |
 | `PendingDiscounts` | [`AccountBalance`](../../doc/models/account-balance.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionGroupBalances subscriptionGroupBalances = new SubscriptionGroupBalances
 {
-  "prepayments": {
-    "balance_in_cents": 192,
-    "automatic_balance_in_cents": 178,
-    "remittance_balance_in_cents": 146
-  },
-  "service_credits": {
-    "balance_in_cents": 84,
-    "automatic_balance_in_cents": 70,
-    "remittance_balance_in_cents": 38
-  },
-  "open_invoices": {
-    "balance_in_cents": 40,
-    "automatic_balance_in_cents": 202,
-    "remittance_balance_in_cents": 170
-  },
-  "pending_discounts": {
-    "balance_in_cents": 88,
-    "automatic_balance_in_cents": 154,
-    "remittance_balance_in_cents": 134
-  }
-}
+    Prepayments = new AccountBalance
+    {
+        BalanceInCents = 192L,
+        AutomaticBalanceInCents = 178L,
+        RemittanceBalanceInCents = 146L,
+    },
+    ServiceCredits = new AccountBalance
+    {
+        BalanceInCents = 84L,
+        AutomaticBalanceInCents = 70L,
+        RemittanceBalanceInCents = 38L,
+    },
+    OpenInvoices = new AccountBalance
+    {
+        BalanceInCents = 40L,
+        AutomaticBalanceInCents = 202L,
+        RemittanceBalanceInCents = 170L,
+    },
+    PendingDiscounts = new AccountBalance
+    {
+        BalanceInCents = 88L,
+        AutomaticBalanceInCents = 154L,
+        RemittanceBalanceInCents = 134L,
+    },
+};
 ```
 

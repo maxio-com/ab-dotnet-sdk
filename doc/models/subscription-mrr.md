@@ -13,16 +13,20 @@
 | `MrrAmountInCents` | `long` | Required | - |
 | `Breakouts` | [`SubscriptionMRRBreakout`](../../doc/models/subscription-mrr-breakout.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionMRR subscriptionMRR = new SubscriptionMRR
 {
-  "subscription_id": 4,
-  "mrr_amount_in_cents": 22,
-  "breakouts": {
-    "plan_amount_in_cents": 254,
-    "usage_amount_in_cents": 106
-  }
-}
+    SubscriptionId = 192,
+    MrrAmountInCents = 210L,
+    Breakouts = new SubscriptionMRRBreakout
+    {
+        PlanAmountInCents = 254L,
+        UsageAmountInCents = 106L,
+    },
+};
 ```
 

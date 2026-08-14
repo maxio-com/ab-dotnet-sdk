@@ -12,12 +12,15 @@
 | `Name` | `string` | Required | - |
 | `Handle` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CloneComponentPricePoint cloneComponentPricePoint = new CloneComponentPricePoint
 {
-  "name": "name2",
-  "handle": "handle8"
-}
+    Name = "name4",
+    Handle = "handle0",
+};
 ```
 

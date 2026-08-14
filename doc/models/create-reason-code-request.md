@@ -11,15 +11,19 @@
 |  --- | --- | --- | --- |
 | `ReasonCode` | [`CreateReasonCode`](../../doc/models/create-reason-code.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreateReasonCodeRequest createReasonCodeRequest = new CreateReasonCodeRequest
 {
-  "reason_code": {
-    "code": "code4",
-    "description": "description6",
-    "position": 14
-  }
-}
+    ReasonCode = new CreateReasonCode
+    {
+        Code = "code4",
+        Description = "description6",
+        Position = 14,
+    },
+};
 ```
 

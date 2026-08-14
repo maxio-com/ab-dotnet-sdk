@@ -18,15 +18,21 @@
 | `OriginalAmount` | `string` | Optional | - |
 | `AppliedAmount` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+InvoiceDebit invoiceDebit = new InvoiceDebit
 {
-  "uid": "uid2",
-  "debit_note_number": "debit_note_number2",
-  "debit_note_uid": "debit_note_uid8",
-  "role": "chargeback",
-  "transaction_time": "2016-03-13T12:52:32.123Z"
-}
+    Uid = "uid8",
+    DebitNoteNumber = "debit_note_number8",
+    DebitNoteUid = "debit_note_uid4",
+    Role = DebitNoteRole.Chargeback,
+    TransactionTime = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+};
 ```
 

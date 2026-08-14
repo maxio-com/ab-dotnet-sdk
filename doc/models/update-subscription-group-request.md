@@ -11,16 +11,22 @@
 |  --- | --- | --- | --- |
 | `SubscriptionGroup` | [`UpdateSubscriptionGroup`](../../doc/models/update-subscription-group.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+UpdateSubscriptionGroupRequest updateSubscriptionGroupRequest = new UpdateSubscriptionGroupRequest
 {
-  "subscription_group": {
-    "member_ids": [
-      164,
-      165
-    ]
-  }
-}
+    SubscriptionGroup = new UpdateSubscriptionGroup
+    {
+        MemberIds = new List<int>
+        {
+            164,
+            165,
+        },
+    },
+};
 ```
 

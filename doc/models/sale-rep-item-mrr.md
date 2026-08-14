@@ -13,13 +13,16 @@
 | `Usage` | `string` | Optional | - |
 | `Recurring` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SaleRepItemMrr saleRepItemMrr = new SaleRepItemMrr
 {
-  "mrr": "mrr2",
-  "usage": "usage0",
-  "recurring": "recurring4"
-}
+    Mrr = "mrr8",
+    Usage = "usage0",
+    Recurring = "recurring6",
+};
 ```
 

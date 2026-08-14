@@ -11,30 +11,24 @@
 |  --- | --- | --- | --- |
 | `CurrencyPrices` | [`List<CouponCurrency>`](../../doc/models/coupon-currency.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+CouponCurrencyResponse couponCurrencyResponse = new CouponCurrencyResponse
 {
-  "currency_prices": [
+    CurrencyPrices = new List<CouponCurrency>
     {
-      "id": 50,
-      "currency": "currency8",
-      "price": 233.74,
-      "coupon_id": 224
+        new CouponCurrency
+        {
+            Id = 50,
+            Currency = "currency8",
+            Price = 233.74,
+            CouponId = 224,
+        },
     },
-    {
-      "id": 50,
-      "currency": "currency8",
-      "price": 233.74,
-      "coupon_id": 224
-    },
-    {
-      "id": 50,
-      "currency": "currency8",
-      "price": 233.74,
-      "coupon_id": 224
-    }
-  ]
-}
+};
 ```
 

@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- |
 | `PaymentProfile` | [`UpdatePaymentProfile`](../../doc/models/update-payment-profile.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+UpdatePaymentProfileRequest updatePaymentProfileRequest = new UpdatePaymentProfileRequest
 {
-  "payment_profile": {
-    "full_number": "5424000000000015",
-    "first_name": "first_name4",
-    "last_name": "last_name2",
-    "card_type": "bogus",
-    "expiration_month": "expiration_month0"
-  }
-}
+    PaymentProfile = new UpdatePaymentProfile
+    {
+        FirstName = "first_name4",
+        LastName = "last_name2",
+        FullNumber = "5424000000000015",
+        CardType = CardType.Bogus,
+        ExpirationMonth = "expiration_month0",
+    },
+};
 ```
 

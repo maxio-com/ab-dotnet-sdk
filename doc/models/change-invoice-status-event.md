@@ -15,31 +15,39 @@
 | `EventType` | [`InvoiceEventType`](../../doc/models/invoice-event-type.md) | Required | **Default**: `InvoiceEventType.change_invoice_status` |
 | `EventData` | [`ChangeInvoiceStatusEventData`](../../doc/models/change-invoice-status-event-data.md) | Required | Example schema for an `change_invoice_status` event |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+ChangeInvoiceStatusEvent changeInvoiceStatusEvent = new ChangeInvoiceStatusEvent
 {
-  "id": 92,
-  "timestamp": "2016-03-13T12:52:32.123Z",
-  "invoice": {
-    "issue_date": "2024-01-01",
-    "due_date": "2024-01-01",
-    "paid_date": "2024-01-01",
-    "public_url_expires_on": "2024-01-21",
-    "id": 166,
-    "uid": "uid6",
-    "site_id": 92,
-    "customer_id": 204,
-    "subscription_id": 20
-  },
-  "event_type": "change_invoice_status",
-  "event_data": {
-    "gateway_trans_id": "gateway_trans_id2",
-    "amount": "amount8",
-    "from_status": "open",
-    "to_status": "pending",
-    "consolidation_level": "child"
-  }
-}
+    Id = 148L,
+    Timestamp = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    Invoice = new Invoice
+    {
+        Id = 166L,
+        Uid = "uid6",
+        SiteId = 92,
+        CustomerId = 204,
+        SubscriptionId = 20,
+        IssueDate = DateTime.Parse("2024-01-01"),
+        DueDate = DateTime.Parse("2024-01-01"),
+        PaidDate = DateTime.Parse("2024-01-01"),
+        PublicUrlExpiresOn = DateTime.Parse("2024-01-21"),
+    },
+    EventType = InvoiceEventType.ChangeInvoiceStatus,
+    EventData = new ChangeInvoiceStatusEventData
+    {
+        FromStatus = InvoiceStatus.Open,
+        ToStatus = InvoiceStatus.Pending,
+        GatewayTransId = "gateway_trans_id2",
+        Amount = "amount8",
+        ConsolidationLevel = InvoiceConsolidationLevel.Child,
+    },
+};
 ```
 

@@ -12,35 +12,30 @@
 | `PaidInvoices` | [`List<PaidInvoice>`](../../doc/models/paid-invoice.md) | Optional | - |
 | `Prepayment` | [`InvoicePrePayment`](../../doc/models/invoice-pre-payment.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+RecordPaymentResponse recordPaymentResponse = new RecordPaymentResponse
 {
-  "paid_invoices": [
+    PaidInvoices = new List<PaidInvoice>
     {
-      "invoice_id": "invoice_id8",
-      "status": "draft",
-      "due_amount": "due_amount0",
-      "paid_amount": "paid_amount0"
+        new PaidInvoice
+        {
+            InvoiceId = "invoice_id8",
+            Status = InvoiceStatus.Draft,
+            DueAmount = "due_amount0",
+            PaidAmount = "paid_amount0",
+        },
     },
+    Prepayment = new InvoicePrePayment
     {
-      "invoice_id": "invoice_id8",
-      "status": "draft",
-      "due_amount": "due_amount0",
-      "paid_amount": "paid_amount0"
+        SubscriptionId = 148,
+        AmountInCents = 124L,
+        EndingBalanceInCents = 164L,
     },
-    {
-      "invoice_id": "invoice_id8",
-      "status": "draft",
-      "due_amount": "due_amount0",
-      "paid_amount": "paid_amount0"
-    }
-  ],
-  "prepayment": {
-    "subscription_id": 148,
-    "amount_in_cents": 124,
-    "ending_balance_in_cents": 164
-  }
-}
+};
 ```
 

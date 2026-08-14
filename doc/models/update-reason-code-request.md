@@ -11,15 +11,19 @@
 |  --- | --- | --- | --- |
 | `ReasonCode` | [`UpdateReasonCode`](../../doc/models/update-reason-code.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+UpdateReasonCodeRequest updateReasonCodeRequest = new UpdateReasonCodeRequest
 {
-  "reason_code": {
-    "code": "code4",
-    "description": "description6",
-    "position": 14
-  }
-}
+    ReasonCode = new UpdateReasonCode
+    {
+        Code = "code4",
+        Description = "description6",
+        Position = 14,
+    },
+};
 ```
 

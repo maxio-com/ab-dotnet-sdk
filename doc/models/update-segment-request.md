@@ -11,30 +11,40 @@
 |  --- | --- | --- | --- |
 | `Segment` | [`UpdateSegment`](../../doc/models/update-segment.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Collections.Generic;
+
+UpdateSegmentRequest updateSegmentRequest = new UpdateSegmentRequest
 {
-  "segment": {
-    "pricing_scheme": "stairstep",
-    "prices": [
-      {
-        "starting_quantity": 64,
-        "ending_quantity": 38,
-        "unit_price": "String3"
-      },
-      {
-        "starting_quantity": 64,
-        "ending_quantity": 38,
-        "unit_price": "String3"
-      },
-      {
-        "starting_quantity": 64,
-        "ending_quantity": 38,
-        "unit_price": "String3"
-      }
-    ]
-  }
-}
+    Segment = new UpdateSegment
+    {
+        PricingScheme = PricingScheme.Stairstep,
+        Prices = new List<CreateOrUpdateSegmentPrice>
+        {
+            new CreateOrUpdateSegmentPrice
+            {
+                UnitPrice = CreateOrUpdateSegmentPriceUnitPrice.FromString("String3"),
+                StartingQuantity = 64,
+                EndingQuantity = 38,
+            },
+            new CreateOrUpdateSegmentPrice
+            {
+                UnitPrice = CreateOrUpdateSegmentPriceUnitPrice.FromString("String3"),
+                StartingQuantity = 64,
+                EndingQuantity = 38,
+            },
+            new CreateOrUpdateSegmentPrice
+            {
+                UnitPrice = CreateOrUpdateSegmentPriceUnitPrice.FromString("String3"),
+                StartingQuantity = 64,
+                EndingQuantity = 38,
+            },
+        },
+    },
+};
 ```
 

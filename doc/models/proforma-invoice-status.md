@@ -13,3 +13,11 @@
 | `Voided` |
 | `Archived` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ProformaInvoiceStatus proformaInvoiceStatus = ProformaInvoiceStatus.Draft;
+```
+

@@ -16,6 +16,7 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class CreditCardPaymentProfile : BaseModel
     {
+        private Models.CardType? cardType;
         private string vaultToken;
         private string billingAddress;
         private string billingCity;
@@ -28,6 +29,7 @@ namespace AdvancedBilling.Standard.Models
         private string gatewayHandle;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
+            { "card_type", false },
             { "vault_token", false },
             { "billing_address", false },
             { "billing_city", false },
@@ -104,7 +106,11 @@ namespace AdvancedBilling.Standard.Models
             this.FirstName = firstName;
             this.LastName = lastName;
             this.MaskedCardNumber = maskedCardNumber;
-            this.CardType = cardType;
+
+            if (cardType != null)
+            {
+                this.CardType = cardType;
+            }
             this.ExpirationMonth = expirationMonth;
             this.ExpirationYear = expirationYear;
             this.CustomerId = customerId;
@@ -187,7 +193,7 @@ namespace AdvancedBilling.Standard.Models
         public string LastName { get; set; }
 
         /// <summary>
-        /// A string representation of the credit card number with all but the last 4 digits masked with X’s (i.e. ‘XXXX-XXXX-XXXX-1234’).
+        /// A string representation of the credit card number with all but the last 4 digits masked with X’s (e.g., ‘XXXX-XXXX-XXXX-1234’).
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("masked_card_number", NullValueHandling = NullValueHandling.Ignore)]
@@ -196,8 +202,20 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// The type of card used.
         /// </summary>
-        [JsonProperty("card_type", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.CardType? CardType { get; set; }
+        [JsonProperty("card_type")]
+        public Models.CardType? CardType
+        {
+            get
+            {
+                return this.cardType;
+            }
+
+            set
+            {
+                this.shouldSerialize["card_type"] = true;
+                this.cardType = value;
+            }
+        }
 
         /// <summary>
         /// An integer representing the expiration month of the card(1 – 12).
@@ -206,7 +224,7 @@ namespace AdvancedBilling.Standard.Models
         public int? ExpirationMonth { get; set; }
 
         /// <summary>
-        /// An integer representing the 4-digit expiration year of the card(i.e. ‘2012’).
+        /// An integer representing the 4-digit expiration year of the card(e.g., ‘2012’).
         /// </summary>
         [JsonProperty("expiration_year", NullValueHandling = NullValueHandling.Ignore)]
         public int? ExpirationYear { get; set; }
@@ -389,7 +407,7 @@ namespace AdvancedBilling.Standard.Models
         public bool? Disabled { get; set; }
 
         /// <summary>
-        /// Token received after sending billing information using Maxio.js (formerly Chargify.js). This token will only be received if passed as a sole attribute of credit_card_attributes (i.e. tok_9g6hw85pnpt6knmskpwp4ttt)
+        /// Token received after sending billing information using Maxio.js (formerly Chargify.js). This token will only be received if passed as a sole attribute of credit_card_attributes (e.g., tok_9g6hw85pnpt6knmskpwp4ttt).
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("chargify_token", NullValueHandling = NullValueHandling.Ignore)]
@@ -454,6 +472,13 @@ namespace AdvancedBilling.Standard.Models
             return $"CreditCardPaymentProfile : ({string.Join(", ", toStringOutput)})";
         }
 
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetCardType()
+        {
+            this.shouldSerialize["card_type"] = false;
+        }
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
@@ -523,6 +548,15 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetGatewayHandle()
         {
             this.shouldSerialize["gateway_handle"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeCardType()
+        {
+            return this.shouldSerialize["card_type"];
         }
 
         /// <summary>

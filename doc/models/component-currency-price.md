@@ -16,15 +16,18 @@
 | `PriceId` | `int?` | Optional | - |
 | `PricePointId` | `int?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ComponentCurrencyPrice componentCurrencyPrice = new ComponentCurrencyPrice
 {
-  "id": 4,
-  "currency": "currency8",
-  "price": "price4",
-  "formatted_price": "formatted_price6",
-  "price_id": 162
-}
+    Id = 128,
+    Currency = "currency2",
+    Price = "price4",
+    FormattedPrice = "formatted_price6",
+    PriceId = 38,
+};
 ```
 

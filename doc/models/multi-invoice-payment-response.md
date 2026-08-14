@@ -11,32 +11,41 @@
 |  --- | --- | --- | --- |
 | `Payment` | [`MultiInvoicePayment`](../../doc/models/multi-invoice-payment.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+MultiInvoicePaymentResponse multiInvoicePaymentResponse = new MultiInvoicePaymentResponse
 {
-  "payment": {
-    "transaction_id": 224,
-    "total_amount": "total_amount2",
-    "currency_code": "currency_code2",
-    "applications": [
-      {
-        "invoice_uid": "invoice_uid8",
-        "application_uid": "application_uid8",
-        "applied_amount": "applied_amount0"
-      },
-      {
-        "invoice_uid": "invoice_uid8",
-        "application_uid": "application_uid8",
-        "applied_amount": "applied_amount0"
-      },
-      {
-        "invoice_uid": "invoice_uid8",
-        "application_uid": "application_uid8",
-        "applied_amount": "applied_amount0"
-      }
-    ]
-  }
-}
+    Payment = new MultiInvoicePayment
+    {
+        TransactionId = 224,
+        TotalAmount = "total_amount2",
+        CurrencyCode = "currency_code2",
+        Applications = new List<InvoicePaymentApplication>
+        {
+            new InvoicePaymentApplication
+            {
+                InvoiceUid = "invoice_uid8",
+                ApplicationUid = "application_uid8",
+                AppliedAmount = "applied_amount0",
+            },
+            new InvoicePaymentApplication
+            {
+                InvoiceUid = "invoice_uid8",
+                ApplicationUid = "application_uid8",
+                AppliedAmount = "applied_amount0",
+            },
+            new InvoicePaymentApplication
+            {
+                InvoiceUid = "invoice_uid8",
+                ApplicationUid = "application_uid8",
+                AppliedAmount = "applied_amount0",
+            },
+        },
+    },
+};
 ```
 

@@ -65,7 +65,7 @@ namespace AdvancedBilling.Standard.Models
         public int? PricePointId { get; set; }
 
         /// <summary>
-        /// Optional quantity for the item.
+        /// (Optional) Quantity for the item.
         /// </summary>
         [JsonProperty("quantity", NullValueHandling = NullValueHandling.Ignore)]
         public int? Quantity { get; set; }

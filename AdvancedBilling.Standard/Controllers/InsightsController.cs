@@ -55,8 +55,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Returns your site's current MRR, including plan and usage breakouts.
         /// </summary>
-        /// <param name="atTime">Optional parameter: submit a timestamp in ISO8601 format to request MRR for a historic time.</param>
-        /// <param name="subscriptionId">Optional parameter: submit the id of a subscription in order to limit results.</param>
+        /// <param name="atTime">Optional parameter: submit a timestamp in ISO8601 format to request MRR for a historic time..</param>
+        /// <param name="subscriptionId">Optional parameter: submit the id of a subscription in order to limit results..</param>
         /// <returns>Returns the Models.MRRResponse response from the API call.</returns>
         [Obsolete]
         public Models.MRRResponse ReadMrr(
@@ -67,8 +67,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Returns your site's current MRR, including plan and usage breakouts.
         /// </summary>
-        /// <param name="atTime">Optional parameter: submit a timestamp in ISO8601 format to request MRR for a historic time.</param>
-        /// <param name="subscriptionId">Optional parameter: submit the id of a subscription in order to limit results.</param>
+        /// <param name="atTime">Optional parameter: submit a timestamp in ISO8601 format to request MRR for a historic time..</param>
+        /// <param name="subscriptionId">Optional parameter: submit the id of a subscription in order to limit results..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.MRRResponse response from the API call.</returns>
         [Obsolete]
@@ -147,7 +147,7 @@ namespace AdvancedBilling.Standard.Controllers
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// This endpoint returns your site's current MRR, including plan and usage breakouts split per subscription.
+        /// Lists your site's current MRR, including plan and usage breakouts split per subscription.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the Models.SubscriptionMRRResponse response from the API call.</returns>
@@ -157,7 +157,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(ListMrrPerSubscriptionAsync(input));
 
         /// <summary>
-        /// This endpoint returns your site's current MRR, including plan and usage breakouts split per subscription.
+        /// Lists your site's current MRR, including plan and usage breakouts split per subscription.
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>

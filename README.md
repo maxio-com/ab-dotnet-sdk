@@ -29,25 +29,25 @@ curl -u <api_key>:x -H Accept:application/json -H Content-Type:application/json 
 If you are building with .NET CLI tools then you can also use the following command:
 
 ```bash
-dotnet add package Maxio.AdvancedBillingSdk --version 9.1.0
+dotnet add package Maxio.AdvancedBillingSdk --version 10.0.0
 ```
 
 You can also view the package at:
-https://www.nuget.org/packages/Maxio.AdvancedBillingSdk/9.1.0
+https://www.nuget.org/packages/Maxio.AdvancedBillingSdk/10.0.0
 
 ## Initialize the API Client
 
-**_Note:_** Documentation for the client can be found [here.](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/client.md)
+**_Note:_** Documentation for the client can be found [here.](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/client.md)
 
 The following parameters are configurable for the API Client:
 
 | Parameter | Type | Description |
 |  --- | --- | --- |
 | Site | `string` | The subdomain for your Advanced Billing site.<br>*Default*: `"subdomain"` |
-| Environment | [`Environment`](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/README.md#environments) | The API environment. <br> **Default: `Environment.US`** |
+| Environment | [`Environment`](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/README.md#environments) | The API environment. <br> **Default: `Environment.US`** |
 | Timeout | `TimeSpan` | Http client timeout.<br>*Default*: `TimeSpan.FromSeconds(120)` |
-| HttpClientConfiguration | [`Action<HttpClientConfiguration.Builder>`](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/http-client-configuration-builder.md) | Action delegate that configures the HTTP client by using the HttpClientConfiguration.Builder for customizing API call settings.<br>*Default*: `new HttpClient()` |
-| BasicAuthCredentials | [`BasicAuthCredentials`](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/auth/basic-authentication.md) | The Credentials Setter for Basic Authentication |
+| HttpClientConfiguration | [`Action<HttpClientConfiguration.Builder>`](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/http-client-configuration-builder.md) | Action delegate that configures the HTTP client by using the HttpClientConfiguration.Builder for customizing API call settings.<br>*Default*: `new HttpClient()` |
+| BasicAuthCredentials | [`BasicAuthCredentials`](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/auth/basic-authentication.md) | The Credentials Setter for Basic Authentication |
 
 The API client can be initialized as follows:
 
@@ -92,7 +92,7 @@ var client = AdvancedBillingClient
     .FromConfiguration(configuration.GetSection("AdvancedBilling"));
 ```
 
-See the [Configuration-Based Initialization](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/configuration-based-initialization.md) section for details.
+See the [Configuration-Based Initialization](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/configuration-based-initialization.md) section for details.
 
 ## Environments
 
@@ -109,65 +109,65 @@ The SDK can be configured to use a different environment for making API calls. A
 
 This API uses the following authentication schemes.
 
-* [`BasicAuth (Basic Authentication)`](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/auth/basic-authentication.md)
+* [`BasicAuth (Basic Authentication)`](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/auth/basic-authentication.md)
 
 ## List of APIs
 
-* [API Exports](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/api-exports.md)
-* [Advance Invoice](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/advance-invoice.md)
-* [Billing Portal](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/billing-portal.md)
-* [Component Price Points](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/component-price-points.md)
-* [Custom Fields](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/custom-fields.md)
-* [Events-Based Billing Segments](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/events-based-billing-segments.md)
-* [Payment Profiles](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/payment-profiles.md)
-* [Product Families](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/product-families.md)
-* [Product Price Points](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/product-price-points.md)
-* [Proforma Invoices](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/proforma-invoices.md)
-* [Reason Codes](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/reason-codes.md)
-* [Referral Codes](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/referral-codes.md)
-* [Sales Commissions](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/sales-commissions.md)
-* [Subscription Components](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/subscription-components.md)
-* [Subscription Groups](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/subscription-groups.md)
-* [Subscription Group Invoice Account](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/subscription-group-invoice-account.md)
-* [Subscription Group Status](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/subscription-group-status.md)
-* [Subscription Invoice Account](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/subscription-invoice-account.md)
-* [Subscription Notes](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/subscription-notes.md)
-* [Subscription Products](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/subscription-products.md)
-* [Subscription Renewals](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/subscription-renewals.md)
-* [Subscription Status](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/subscription-status.md)
-* [Coupons](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/coupons.md)
-* [Components](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/components.md)
-* [Customers](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/customers.md)
-* [Events](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/events.md)
-* [Insights](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/insights.md)
-* [Invoices](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/invoices.md)
-* [Offers](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/offers.md)
-* [Products](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/products.md)
-* [Sites](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/sites.md)
-* [Subscriptions](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/subscriptions.md)
-* [Webhooks](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/controllers/webhooks.md)
+* [API Exports](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/api-exports.md)
+* [Advance Invoice](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/advance-invoice.md)
+* [Billing Portal](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/billing-portal.md)
+* [Component Price Points](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/component-price-points.md)
+* [Custom Fields](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/custom-fields.md)
+* [Events-Based Billing Segments](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/events-based-billing-segments.md)
+* [Payment Profiles](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/payment-profiles.md)
+* [Product Families](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/product-families.md)
+* [Product Price Points](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/product-price-points.md)
+* [Proforma Invoices](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/proforma-invoices.md)
+* [Reason Codes](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/reason-codes.md)
+* [Referral Codes](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/referral-codes.md)
+* [Sales Commissions](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/sales-commissions.md)
+* [Subscription Components](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/subscription-components.md)
+* [Subscription Groups](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/subscription-groups.md)
+* [Subscription Group Invoice Account](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/subscription-group-invoice-account.md)
+* [Subscription Group Status](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/subscription-group-status.md)
+* [Subscription Invoice Account](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/subscription-invoice-account.md)
+* [Subscription Notes](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/subscription-notes.md)
+* [Subscription Products](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/subscription-products.md)
+* [Subscription Renewals](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/subscription-renewals.md)
+* [Subscription Status](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/subscription-status.md)
+* [Coupons](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/coupons.md)
+* [Components](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/components.md)
+* [Customers](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/customers.md)
+* [Events](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/events.md)
+* [Insights](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/insights.md)
+* [Invoices](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/invoices.md)
+* [Offers](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/offers.md)
+* [Products](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/products.md)
+* [Sites](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/sites.md)
+* [Subscriptions](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/subscriptions.md)
+* [Webhooks](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/controllers/webhooks.md)
 
 ## SDK Infrastructure
 
 ### Configuration
 
-* [Configuration-Based Initialization](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/configuration-based-initialization.md)
-* [HttpClientConfiguration](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/http-client-configuration.md)
-* [HttpClientConfigurationBuilder](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/http-client-configuration-builder.md)
-* [ProxyConfigurationBuilder](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/proxy-configuration-builder.md)
+* [Configuration-Based Initialization](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/configuration-based-initialization.md)
+* [HttpClientConfiguration](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/http-client-configuration.md)
+* [HttpClientConfigurationBuilder](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/http-client-configuration-builder.md)
+* [ProxyConfigurationBuilder](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/proxy-configuration-builder.md)
 
 ### HTTP
 
-* [HttpCallback](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/http-callback.md)
-* [HttpContext](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/http-context.md)
-* [HttpRequest](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/http-request.md)
-* [HttpResponse](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/http-response.md)
-* [HttpStringResponse](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/http-string-response.md)
+* [HttpCallback](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/http-callback.md)
+* [HttpContext](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/http-context.md)
+* [HttpRequest](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/http-request.md)
+* [HttpResponse](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/http-response.md)
+* [HttpStringResponse](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/http-string-response.md)
 
 ### Utilities
 
-* [ApiException](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/api-exception.md)
-* [ApiHelper](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/api-helper.md)
-* [CustomDateTimeConverter](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/custom-date-time-converter.md)
-* [UnixDateTimeConverter](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/9.1.0/doc/unix-date-time-converter.md)
+* [ApiException](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/api-exception.md)
+* [ApiHelper](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/api-helper.md)
+* [CustomDateTimeConverter](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/custom-date-time-converter.md)
+* [UnixDateTimeConverter](https://www.github.com/maxio-com/ab-dotnet-sdk/tree/10.0.0/doc/unix-date-time-converter.md)
 

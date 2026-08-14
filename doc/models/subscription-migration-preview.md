@@ -14,14 +14,17 @@
 | `PaymentDueInCents` | `long?` | Optional | The amount of the payment due in the case of an upgrade. |
 | `CreditAppliedInCents` | `long?` | Optional | Represents a credit in cents that is applied to your subscription as part of a migration process for a specific product, which reduces the amount owed for the subscription. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionMigrationPreview subscriptionMigrationPreview = new SubscriptionMigrationPreview
 {
-  "prorated_adjustment_in_cents": 134,
-  "charge_in_cents": 16,
-  "payment_due_in_cents": 188,
-  "credit_applied_in_cents": 148
-}
+    ProratedAdjustmentInCents = 6L,
+    ChargeInCents = 144L,
+    PaymentDueInCents = 60L,
+    CreditAppliedInCents = 20L,
+};
 ```
 

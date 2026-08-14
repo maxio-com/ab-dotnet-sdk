@@ -17,3 +17,11 @@
 | `CreditCard` |
 | `Other` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PrepaymentMethod prepaymentMethod = PrepaymentMethod.Other;
+```
+

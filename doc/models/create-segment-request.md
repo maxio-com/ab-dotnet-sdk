@@ -11,34 +11,44 @@
 |  --- | --- | --- | --- |
 | `Segment` | [`CreateSegment`](../../doc/models/create-segment.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Collections.Generic;
+
+CreateSegmentRequest createSegmentRequest = new CreateSegmentRequest
 {
-  "segment": {
-    "segment_property_1_value": "String1",
-    "segment_property_2_value": "String3",
-    "segment_property_3_value": "String1",
-    "segment_property_4_value": "String5",
-    "pricing_scheme": "stairstep",
-    "prices": [
-      {
-        "starting_quantity": 64,
-        "ending_quantity": 38,
-        "unit_price": "String3"
-      },
-      {
-        "starting_quantity": 64,
-        "ending_quantity": 38,
-        "unit_price": "String3"
-      },
-      {
-        "starting_quantity": 64,
-        "ending_quantity": 38,
-        "unit_price": "String3"
-      }
-    ]
-  }
-}
+    Segment = new CreateSegment
+    {
+        PricingScheme = PricingScheme.Stairstep,
+        SegmentProperty1Value = CreateSegmentSegmentProperty1Value.FromString("String1"),
+        SegmentProperty2Value = CreateSegmentSegmentProperty2Value.FromString("String3"),
+        SegmentProperty3Value = CreateSegmentSegmentProperty3Value.FromString("String1"),
+        SegmentProperty4Value = CreateSegmentSegmentProperty4Value.FromString("String5"),
+        Prices = new List<CreateOrUpdateSegmentPrice>
+        {
+            new CreateOrUpdateSegmentPrice
+            {
+                UnitPrice = CreateOrUpdateSegmentPriceUnitPrice.FromString("String3"),
+                StartingQuantity = 64,
+                EndingQuantity = 38,
+            },
+            new CreateOrUpdateSegmentPrice
+            {
+                UnitPrice = CreateOrUpdateSegmentPriceUnitPrice.FromString("String3"),
+                StartingQuantity = 64,
+                EndingQuantity = 38,
+            },
+            new CreateOrUpdateSegmentPrice
+            {
+                UnitPrice = CreateOrUpdateSegmentPriceUnitPrice.FromString("String3"),
+                StartingQuantity = 64,
+                EndingQuantity = 38,
+            },
+        },
+    },
+};
 ```
 

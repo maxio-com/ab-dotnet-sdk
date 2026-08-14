@@ -11,11 +11,17 @@
 |  --- | --- | --- | --- |
 | `AutomaticallyResumeAt` | `DateTimeOffset?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+AutoResume autoResume = new AutoResume
 {
-  "automatically_resume_at": "2016-03-13T12:52:32.123Z"
-}
+    AutomaticallyResumeAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+};
 ```
 

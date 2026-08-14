@@ -11,26 +11,41 @@
 |  --- | --- | --- | --- |
 | `Invoices` | [`List<Invoice>`](../../doc/models/invoice.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+ConsolidatedInvoice consolidatedInvoice = new ConsolidatedInvoice
 {
-  "invoices": [
+    Invoices = new List<Invoice>
     {
-      "id": 196,
-      "uid": "uid6",
-      "site_id": 122,
-      "customer_id": 234,
-      "subscription_id": 50
+        new Invoice
+        {
+            Id = 196L,
+            Uid = "uid6",
+            SiteId = 122,
+            CustomerId = 234,
+            SubscriptionId = 50,
+        },
+        new Invoice
+        {
+            Id = 196L,
+            Uid = "uid6",
+            SiteId = 122,
+            CustomerId = 234,
+            SubscriptionId = 50,
+        },
+        new Invoice
+        {
+            Id = 196L,
+            Uid = "uid6",
+            SiteId = 122,
+            CustomerId = 234,
+            SubscriptionId = 50,
+        },
     },
-    {
-      "id": 196,
-      "uid": "uid6",
-      "site_id": 122,
-      "customer_id": 234,
-      "subscription_id": 50
-    }
-  ]
-}
+};
 ```
 

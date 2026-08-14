@@ -16,20 +16,24 @@ Information about the seller (merchant) listed on the masthead of the invoice.
 | `Phone` | `string` | Optional | - |
 | `LogoUrl` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoiceSeller invoiceSeller = new InvoiceSeller
 {
-  "name": "name0",
-  "address": {
-    "street": "street6",
-    "line2": "line20",
-    "city": "city6",
-    "state": "state2",
-    "zip": "zip0"
-  },
-  "phone": "phone0",
-  "logo_url": "logo_url0"
-}
+    Name = "name4",
+    Address = new InvoiceAddress
+    {
+        Street = "street6",
+        Line2 = "line20",
+        City = "city6",
+        State = "state2",
+        Zip = "zip0",
+    },
+    Phone = "phone6",
+    LogoUrl = "logo_url6",
+};
 ```
 

@@ -94,7 +94,7 @@ namespace AdvancedBilling.Standard.Models
         public string Memo { get; set; }
 
         /// <summary>
-        /// The invoice uid associated with the entry. Only present for debit entries
+        /// The invoice uid associated with the entry. Only present for debit entries.
         /// </summary>
         [JsonProperty("invoice_uid")]
         public string InvoiceUid

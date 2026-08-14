@@ -11,17 +11,26 @@
 |  --- | --- | --- | --- |
 | `Webhook` | [`Webhook`](../../doc/models/webhook.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+WebhookResponse webhookResponse = new WebhookResponse
 {
-  "webhook": {
-    "event": "event2",
-    "id": 18,
-    "created_at": "2016-03-13T12:52:32.123Z",
-    "last_error": "last_error4",
-    "last_error_at": "2016-03-13T12:52:32.123Z"
-  }
-}
+    Webhook = new Webhook
+    {
+        MEvent = "event2",
+        Id = 18L,
+        CreatedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
+        LastError = "last_error4",
+        LastErrorAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
+    },
+};
 ```
 

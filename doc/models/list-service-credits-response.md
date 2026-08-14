@@ -11,26 +11,41 @@
 |  --- | --- | --- | --- |
 | `ServiceCredits` | [`List<ServiceCredit1>`](../../doc/models/service-credit-1.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+ListServiceCreditsResponse listServiceCreditsResponse = new ListServiceCreditsResponse
 {
-  "service_credits": [
+    ServiceCredits = new List<ServiceCredit1>
     {
-      "id": 224,
-      "amount_in_cents": 54,
-      "ending_balance_in_cents": 94,
-      "entry_type": "Credit",
-      "memo": "memo2"
+        new ServiceCredit1
+        {
+            Id = 224,
+            AmountInCents = 54L,
+            EndingBalanceInCents = 94L,
+            EntryType = ServiceCreditType.Credit,
+            Memo = "memo2",
+        },
+        new ServiceCredit1
+        {
+            Id = 224,
+            AmountInCents = 54L,
+            EndingBalanceInCents = 94L,
+            EntryType = ServiceCreditType.Credit,
+            Memo = "memo2",
+        },
+        new ServiceCredit1
+        {
+            Id = 224,
+            AmountInCents = 54L,
+            EndingBalanceInCents = 94L,
+            EntryType = ServiceCreditType.Credit,
+            Memo = "memo2",
+        },
     },
-    {
-      "id": 224,
-      "amount_in_cents": 54,
-      "ending_balance_in_cents": 94,
-      "entry_type": "Credit",
-      "memo": "memo2"
-    }
-  ]
-}
+};
 ```
 

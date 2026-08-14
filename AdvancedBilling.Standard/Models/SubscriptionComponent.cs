@@ -92,7 +92,7 @@ namespace AdvancedBilling.Standard.Models
             Models.ComponentKind? kind = null,
             string unitName = null,
             bool? enabled = null,
-            int? unitBalance = null,
+            SubscriptionComponentUnitBalance unitBalance = null,
             string currency = null,
             SubscriptionComponentAllocatedQuantity allocatedQuantity = null,
             Models.PricingScheme? pricingScheme = null,
@@ -227,7 +227,7 @@ namespace AdvancedBilling.Standard.Models
         public string UnitName { get; set; }
 
         /// <summary>
-        /// (for on/off components) indicates if the component is enabled for the subscription
+        /// (for on/off components) indicates if the component is enabled for the subscription.
         /// </summary>
         [JsonProperty("enabled", NullValueHandling = NullValueHandling.Ignore)]
         public bool? Enabled { get; set; }
@@ -236,7 +236,7 @@ namespace AdvancedBilling.Standard.Models
         /// Gets or sets UnitBalance.
         /// </summary>
         [JsonProperty("unit_balance", NullValueHandling = NullValueHandling.Ignore)]
-        public int? UnitBalance { get; set; }
+        public SubscriptionComponentUnitBalance UnitBalance { get; set; }
 
         /// <summary>
         /// Gets or sets Currency.
@@ -500,7 +500,7 @@ namespace AdvancedBilling.Standard.Models
         public bool? AllowFractionalQuantities { get; set; }
 
         /// <summary>
-        /// An optional object, will be returned if provided `include=subscription` query param.
+        /// (Optional) Object that will be returned if the `include=subscription` query param is provided.
         /// </summary>
         [JsonProperty("subscription", NullValueHandling = NullValueHandling.Ignore)]
         public Models.SubscriptionComponentSubscription Subscription { get; set; }
@@ -518,7 +518,7 @@ namespace AdvancedBilling.Standard.Models
         public bool? DisplayOnHostedPage { get; set; }
 
         /// <summary>
-        /// The numerical interval. i.e. an interval of '30' coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
+        /// The numerical interval. e.g., an interval of '30' coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
         /// </summary>
         [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
         public int? Interval { get; set; }

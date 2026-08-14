@@ -14,14 +14,17 @@
 | `Price` | `double?` | Optional | - |
 | `CouponId` | `int?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CouponCurrency couponCurrency = new CouponCurrency
 {
-  "id": 228,
-  "currency": "currency8",
-  "price": 169.96,
-  "coupon_id": 210
-}
+    Id = 202,
+    Currency = "currency0",
+    Price = 14.62,
+    CouponId = 184,
+};
 ```
 

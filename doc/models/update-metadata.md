@@ -13,13 +13,16 @@
 | `Name` | `string` | Optional | - |
 | `MValue` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+UpdateMetadata updateMetadata = new UpdateMetadata
 {
-  "current_name": "current_name4",
-  "name": "name0",
-  "value": "value2"
-}
+    CurrentName = "current_name8",
+    Name = "name4",
+    MValue = "value6",
+};
 ```
 

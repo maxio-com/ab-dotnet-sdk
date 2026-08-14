@@ -123,7 +123,7 @@ namespace AdvancedBilling.Standard.Models
         public int? SubscriptionId { get; set; }
 
         /// <summary>
-        /// A unique, identifier that appears on the debit note and in places it is referenced.
+        /// A unique identifier that appears on the debit note and in places it is referenced.
         /// </summary>
         [JsonProperty("number", NullValueHandling = NullValueHandling.Ignore)]
         public int? Number { get; set; }
@@ -142,7 +142,7 @@ namespace AdvancedBilling.Standard.Models
         public string OriginCreditNoteUid { get; set; }
 
         /// <summary>
-        /// A unique, identifying string of the connected credit note.
+        /// A unique identifying string of the connected credit note.
         /// </summary>
         [JsonProperty("origin_credit_note_number", NullValueHandling = NullValueHandling.Ignore)]
         public string OriginCreditNoteNumber { get; set; }
@@ -201,7 +201,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.InvoiceSeller Seller { get; set; }
 
         /// <summary>
-        /// Information about the customer who is owner or recipient the debited subscription.
+        /// Information about the customer who is the owner or recipient of the debited subscription.
         /// </summary>
         [JsonProperty("customer", NullValueHandling = NullValueHandling.Ignore)]
         public Models.InvoiceCustomer Customer { get; set; }

@@ -13,7 +13,9 @@
 
 ## Example
 
-```
-updated_at
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionListDateField subscriptionListDateField = SubscriptionListDateField.UpdatedAt;
 ```
 

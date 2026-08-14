@@ -11,36 +11,45 @@
 |  --- | --- | --- | --- |
 | `SubscriptionGroup` | [`SubscriptionGroupSignup`](../../doc/models/subscription-group-signup.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+SubscriptionGroupSignupRequest subscriptionGroupSignupRequest = new SubscriptionGroupSignupRequest
 {
-  "subscription_group": {
-    "subscriptions": [
-      {
-        "metafields": {
-          "custom_field_name_1": "custom_field_value_1",
-          "custom_field_name_2": "custom_field_value_2"
+    SubscriptionGroup = new SubscriptionGroupSignup
+    {
+        Subscriptions = new List<SubscriptionGroupSignupItem>
+        {
+            new SubscriptionGroupSignupItem
+            {
+                ProductHandle = "product_handle8",
+                ProductId = 144,
+                ProductPricePointId = 68,
+                ProductPricePointHandle = "product_price_point_handle4",
+                OfferId = 40,
+                Metafields = new Dictionary<string, string>
+                {
+                    ["custom_field_name_1"] = "custom_field_value_1",
+                    ["custom_field_name_2"] = "custom_field_value_2",
+                },
+            },
         },
-        "product_handle": "product_handle8",
-        "product_id": 144,
-        "product_price_point_id": 68,
-        "product_price_point_handle": "product_price_point_handle4",
-        "offer_id": 40
-      }
-    ],
-    "payment_profile_id": 128,
-    "payer_id": 150,
-    "payer_reference": "payer_reference6",
-    "payment_collection_method": "prepaid",
-    "payer_attributes": {
-      "first_name": "first_name2",
-      "last_name": "last_name0",
-      "email": "email4",
-      "cc_emails": "cc_emails2",
-      "organization": "organization6"
-    }
-  }
-}
+        PaymentProfileId = 128,
+        PayerId = 150,
+        PayerReference = "payer_reference6",
+        PaymentCollectionMethod = CollectionMethod.Prepaid,
+        PayerAttributes = new PayerAttributes
+        {
+            FirstName = "first_name2",
+            LastName = "last_name0",
+            Email = "email4",
+            CcEmails = "cc_emails2",
+            Organization = "organization6",
+        },
+    },
+};
 ```
 

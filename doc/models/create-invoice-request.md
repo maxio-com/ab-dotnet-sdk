@@ -11,40 +11,50 @@
 |  --- | --- | --- | --- |
 | `Invoice` | [`CreateInvoice`](../../doc/models/create-invoice.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Collections.Generic;
+
+CreateInvoiceRequest createInvoiceRequest = new CreateInvoiceRequest
 {
-  "invoice": {
-    "issue_date": "2024-01-01",
-    "status": "draft",
-    "line_items": [
-      {
-        "title": "title4",
-        "quantity": 56.68,
-        "unit_price": 39.9,
-        "taxable": false,
-        "tax_code": "tax_code6"
-      },
-      {
-        "title": "title4",
-        "quantity": 56.68,
-        "unit_price": 39.9,
-        "taxable": false,
-        "tax_code": "tax_code6"
-      },
-      {
-        "title": "title4",
-        "quantity": 56.68,
-        "unit_price": 39.9,
-        "taxable": false,
-        "tax_code": "tax_code6"
-      }
-    ],
-    "net_terms": 144,
-    "payment_instructions": "payment_instructions6",
-    "memo": "memo0"
-  }
-}
+    Invoice = new CreateInvoice
+    {
+        LineItems = new List<CreateInvoiceItem>
+        {
+            new CreateInvoiceItem
+            {
+                Title = "title4",
+                Quantity = CreateInvoiceItemQuantity.FromPrecision(56.68),
+                UnitPrice = CreateInvoiceItemUnitPrice.FromPrecision(39.9),
+                Taxable = false,
+                TaxCode = "tax_code6",
+            },
+            new CreateInvoiceItem
+            {
+                Title = "title4",
+                Quantity = CreateInvoiceItemQuantity.FromPrecision(56.68),
+                UnitPrice = CreateInvoiceItemUnitPrice.FromPrecision(39.9),
+                Taxable = false,
+                TaxCode = "tax_code6",
+            },
+            new CreateInvoiceItem
+            {
+                Title = "title4",
+                Quantity = CreateInvoiceItemQuantity.FromPrecision(56.68),
+                UnitPrice = CreateInvoiceItemUnitPrice.FromPrecision(39.9),
+                Taxable = false,
+                TaxCode = "tax_code6",
+            },
+        },
+        IssueDate = DateTime.Parse("2024-01-01"),
+        NetTerms = 144,
+        PaymentInstructions = "payment_instructions6",
+        Memo = "memo0",
+        Status = CreateInvoiceStatus.Draft,
+    },
+};
 ```
 

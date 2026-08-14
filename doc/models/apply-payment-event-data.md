@@ -23,23 +23,33 @@ Example schema for an `apply_payment` event
 | `Prepayment` | `bool?` | Optional | - |
 | `External` | `bool?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Globalization;
+
+ApplyPaymentEventData applyPaymentEventData = new ApplyPaymentEventData
 {
-  "consolidation_level": "child",
-  "memo": "memo8",
-  "original_amount": "original_amount8",
-  "applied_amount": "applied_amount4",
-  "transaction_time": "2016-03-13T12:52:32.123Z",
-  "payment_method": {
-    "type": "apple_pay"
-  },
-  "transaction_id": 196,
-  "parent_invoice_number": 174,
-  "remaining_prepayment_amount": "remaining_prepayment_amount6",
-  "prepayment": false,
-  "external": false
-}
+    ConsolidationLevel = InvoiceConsolidationLevel.Child,
+    Memo = "memo0",
+    OriginalAmount = "original_amount0",
+    AppliedAmount = "applied_amount2",
+    TransactionTime = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    PaymentMethod = InvoiceEventPayment.FromPaymentMethodApplePay(
+        new PaymentMethodApplePay
+        {
+            Type = InvoiceEventPaymentMethod.ApplePay,
+        }
+    ),
+    TransactionId = 142,
+    ParentInvoiceNumber = 228,
+    RemainingPrepaymentAmount = "remaining_prepayment_amount4",
+    Prepayment = false,
+    External = false,
+};
 ```
 

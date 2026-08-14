@@ -23,15 +23,23 @@
 | `PeriodType` | `string` | Optional | - |
 | `ExistingBalanceInCents` | `long?` | Optional | An integer representing the amount of the subscription's current balance |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+AllocationPreview allocationPreview = new AllocationPreview
 {
-  "start_date": "2016-03-13T12:52:32.123Z",
-  "end_date": "2016-03-13T12:52:32.123Z",
-  "subtotal_in_cents": 4,
-  "total_tax_in_cents": 128,
-  "total_discount_in_cents": 122
-}
+    StartDate = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    EndDate = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    SubtotalInCents = 140L,
+    TotalTaxInCents = 8L,
+    TotalDiscountInCents = 242L,
+};
 ```
 

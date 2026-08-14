@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- |
 | `CreditScheme` | [`CreditScheme`](../../doc/models/credit-scheme.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreditSchemeRequest creditSchemeRequest = new CreditSchemeRequest
 {
-  "credit_scheme": "credit"
-}
+    CreditScheme = CreditScheme.Credit,
+};
 ```
 

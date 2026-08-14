@@ -95,13 +95,13 @@ namespace AdvancedBilling.Standard.Models
         public bool? TaxIncluded { get; set; }
 
         /// <summary>
-        /// Omit for On/Off components
+        /// Omit for On/Off components.
         /// </summary>
         [JsonProperty("pricing_scheme", NullValueHandling = NullValueHandling.Ignore)]
         public Models.PricingScheme? PricingScheme { get; set; }
 
         /// <summary>
-        /// The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
+        /// The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
         /// </summary>
         [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
         public int? Interval { get; set; }
@@ -125,7 +125,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Optional id of the price point to use for list price calculations when
+        /// (Optional) Id of the price point to use for list price calculations when
         /// overriding the customer price.
         /// </summary>
         [JsonProperty("list_price_point_id")]

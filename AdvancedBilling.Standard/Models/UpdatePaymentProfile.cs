@@ -101,13 +101,13 @@ namespace AdvancedBilling.Standard.Models
         public Models.CardType? CardType { get; set; }
 
         /// <summary>
-        /// (Optional when performing an Import via vault_token, required otherwise) The 1- or 2-digit credit card expiration month, as an integer or string, i.e. 5
+        /// (Optional when performing an Import via vault_token, required otherwise) The 1- or 2-digit credit card expiration month, as an integer or string, e.g., 5
         /// </summary>
         [JsonProperty("expiration_month", NullValueHandling = NullValueHandling.Ignore)]
         public string ExpirationMonth { get; set; }
 
         /// <summary>
-        /// (Optional when performing a Import via vault_token, required otherwise) The 4-digit credit card expiration year, as an integer or string, i.e. 2012
+        /// (Optional when performing an Import via vault_token, required otherwise) The 4-digit credit card expiration year, as an integer or string, e.g., 2012
         /// </summary>
         [JsonProperty("expiration_year", NullValueHandling = NullValueHandling.Ignore)]
         public string ExpirationYear { get; set; }
@@ -119,37 +119,37 @@ namespace AdvancedBilling.Standard.Models
         public Models.AllVaults? CurrentVault { get; set; }
 
         /// <summary>
-        /// The credit card or bank account billing street address (i.e. 123 Main St.). This value is merely passed through to the payment gateway.
+        /// The credit card or bank account billing street address (e.g., 123 Main St.). This value is merely passed through to the payment gateway.
         /// </summary>
         [JsonProperty("billing_address", NullValueHandling = NullValueHandling.Ignore)]
         public string BillingAddress { get; set; }
 
         /// <summary>
-        /// The credit card or bank account billing address city (i.e. “Boston”). This value is merely passed through to the payment gateway.
+        /// The credit card or bank account billing address city (e.g., “Boston”). This value is merely passed through to the payment gateway.
         /// </summary>
         [JsonProperty("billing_city", NullValueHandling = NullValueHandling.Ignore)]
         public string BillingCity { get; set; }
 
         /// <summary>
-        /// The credit card or bank account billing address state (i.e. MA). This value is merely passed through to the payment gateway. This must conform to the [ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes) in order to be valid for tax locale purposes.
+        /// The credit card or bank account billing address state (e.g., MA). This value is merely passed through to the payment gateway. This must conform to the [ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes) in order to be valid for tax locale purposes.
         /// </summary>
         [JsonProperty("billing_state", NullValueHandling = NullValueHandling.Ignore)]
         public string BillingState { get; set; }
 
         /// <summary>
-        /// The credit card or bank account billing address zip code (i.e. 12345). This value is merely passed through to the payment gateway.
+        /// The credit card or bank account billing address zip code (e.g., 12345). This value is merely passed through to the payment gateway.
         /// </summary>
         [JsonProperty("billing_zip", NullValueHandling = NullValueHandling.Ignore)]
         public string BillingZip { get; set; }
 
         /// <summary>
-        /// The credit card or bank account billing address country, required in [ISO_3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format (i.e. “US”). This value is merely passed through to the payment gateway. Some gateways require country codes in a specific format. Check your gateway’s documentation. If creating an ACH subscription, only US is supported at this time.
+        /// The credit card or bank account billing address country, required in [ISO_3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format (e.g., “US”). This value is merely passed through to the payment gateway. Some gateways require country codes in a specific format. Check your gateway’s documentation. If creating an ACH subscription, only US is supported at this time.
         /// </summary>
         [JsonProperty("billing_country", NullValueHandling = NullValueHandling.Ignore)]
         public string BillingCountry { get; set; }
 
         /// <summary>
-        /// Second line of the customer’s billing address i.e. Apt. 100
+        /// Second line of the customer’s billing address, e.g., Apt. 100
         /// </summary>
         [JsonProperty("billing_address_2")]
         public string BillingAddress2

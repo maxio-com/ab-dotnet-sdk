@@ -15,12 +15,25 @@ Allowed values for filtering by the current state of the subscription.
 | `Canceled` |
 | `Expired` |
 | `ExpiredCards` |
+| `EnumExpiredCardsLiveSubscriptions` |
+| `EnumExpiredCardsAllSubscriptions` |
 | `OnHold` |
+| `AwaitingSignup` |
+| `AwaitingSignupDate` |
 | `PastDue` |
 | `PendingCancellation` |
 | `PendingRenewal` |
+| `PrepaidDunning` |
 | `Suspended` |
 | `TrialEnded` |
 | `Trialing` |
 | `Unpaid` |
+
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionStateFilter subscriptionStateFilter = SubscriptionStateFilter.AwaitingSignup;
+```
 

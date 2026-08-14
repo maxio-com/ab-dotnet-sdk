@@ -12,18 +12,21 @@
 | `Amount` | `double` | Required | - |
 | `Details` | `string` | Required | - |
 | `Memo` | `string` | Required | - |
-| `Method` | [`CreatePrepaymentMethod`](../../doc/models/create-prepayment-method.md) | Required | :- When the `method` specified is `"credit_card_on_file"`, the prepayment amount will be collected using the default credit card payment profile and applied to the prepayment account balance. This is especially useful for manual replenishment of prepaid subscriptions. |
+| `Method` | [`CreatePrepaymentMethod`](../../doc/models/create-prepayment-method.md) | Required | When the `method` specified is `"credit_card_on_file"`, the prepayment amount will be collected using the default credit card payment profile and applied to the prepayment account balance. This is especially useful for manual replenishment of prepaid subscriptions. |
 | `PaymentProfileId` | `int?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreatePrepayment createPrepayment = new CreatePrepayment
 {
-  "amount": 23.92,
-  "details": "details6",
-  "memo": "memo0",
-  "method": "credit_card_on_file",
-  "payment_profile_id": 240
-}
+    Amount = 73.78,
+    Details = "details6",
+    Memo = "memo0",
+    Method = CreatePrepaymentMethod.PaypalAccount,
+    PaymentProfileId = 58,
+};
 ```
 

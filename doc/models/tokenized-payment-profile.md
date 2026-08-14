@@ -14,14 +14,17 @@
 | `GatewayHandle` | `string` | Optional | - |
 | `CustomerVaultToken` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+TokenizedPaymentProfile tokenizedPaymentProfile = new TokenizedPaymentProfile
 {
-  "id": 72,
-  "vault_token": "vault_token2",
-  "gateway_handle": "gateway_handle8",
-  "customer_vault_token": "customer_vault_token8"
-}
+    Id = 116,
+    VaultToken = "vault_token0",
+    GatewayHandle = "gateway_handle0",
+    CustomerVaultToken = "customer_vault_token6",
+};
 ```
 

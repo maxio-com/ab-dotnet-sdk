@@ -14,14 +14,17 @@
 | `UsageAmountInCents` | `long?` | Optional | - |
 | `UsageAmountFormatted` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+Breakouts breakouts = new Breakouts
 {
-  "plan_amount_in_cents": 68,
-  "plan_amount_formatted": "plan_amount_formatted2",
-  "usage_amount_in_cents": 176,
-  "usage_amount_formatted": "usage_amount_formatted0"
-}
+    PlanAmountInCents = 254L,
+    PlanAmountFormatted = "plan_amount_formatted0",
+    UsageAmountInCents = 106L,
+    UsageAmountFormatted = "usage_amount_formatted8",
+};
 ```
 

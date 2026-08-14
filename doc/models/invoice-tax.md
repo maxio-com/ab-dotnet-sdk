@@ -24,15 +24,18 @@
 | `Type` | `string` | Optional | - |
 | `TaxExemptAmount` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoiceTax invoiceTax = new InvoiceTax
 {
-  "uid": "uid8",
-  "title": "title6",
-  "description": "description2",
-  "source_type": "Tax",
-  "source_id": 164
-}
+    Uid = "uid2",
+    Title = "title8",
+    Description = "description2",
+    SourceType = ProformaInvoiceTaxSourceType.Tax,
+    SourceId = 86,
+};
 ```
 

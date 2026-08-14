@@ -19,3 +19,11 @@
 | `TrialEndedAt` |
 | `UpdatedAt` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionDateField subscriptionDateField = SubscriptionDateField.UpdatedAt;
+```
+

@@ -14,14 +14,17 @@
 | `Memo` | `string` | Required | - |
 | `Method` | [`SubscriptionGroupPrepaymentMethod`](../../doc/models/subscription-group-prepayment-method.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionGroupPrepayment subscriptionGroupPrepayment = new SubscriptionGroupPrepayment
 {
-  "amount": 96,
-  "details": "details2",
-  "memo": "memo6",
-  "method": "money_order"
-}
+    Amount = 12,
+    Details = "details4",
+    Memo = "memo8",
+    Method = SubscriptionGroupPrepaymentMethod.MoneyOrder,
+};
 ```
 

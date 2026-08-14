@@ -11,17 +11,22 @@
 |  --- | --- | --- | --- |
 | `Allocation` | [`Allocation`](../../doc/models/allocation.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+AllocationResponse allocationResponse = new AllocationResponse
 {
-  "allocation": {
-    "allocation_id": 238,
-    "component_id": 8,
-    "component_handle": "component_handle8",
-    "subscription_id": 8,
-    "quantity": 32
-  }
-}
+    Allocation = new Allocation
+    {
+        AllocationId = 238,
+        ComponentId = 8,
+        ComponentHandle = "component_handle8",
+        SubscriptionId = 8,
+        Quantity = AllocationQuantity.FromNumber(32),
+    },
+};
 ```
 

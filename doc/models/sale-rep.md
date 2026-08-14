@@ -15,30 +15,45 @@
 | `TestMode` | `bool?` | Optional | - |
 | `Subscriptions` | [`List<SaleRepSubscription>`](../../doc/models/sale-rep-subscription.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+SaleRep saleRep = new SaleRep
 {
-  "id": 18,
-  "full_name": "full_name0",
-  "subscriptions_count": 162,
-  "test_mode": false,
-  "subscriptions": [
+    Id = 78,
+    FullName = "full_name0",
+    SubscriptionsCount = 102,
+    TestMode = false,
+    Subscriptions = new List<SaleRepSubscription>
     {
-      "id": 202,
-      "site_name": "site_name8",
-      "subscription_url": "subscription_url2",
-      "customer_name": "customer_name8",
-      "created_at": "created_at4"
+        new SaleRepSubscription
+        {
+            Id = 202,
+            SiteName = "site_name8",
+            SubscriptionUrl = "subscription_url2",
+            CustomerName = "customer_name8",
+            CreatedAt = "created_at4",
+        },
+        new SaleRepSubscription
+        {
+            Id = 202,
+            SiteName = "site_name8",
+            SubscriptionUrl = "subscription_url2",
+            CustomerName = "customer_name8",
+            CreatedAt = "created_at4",
+        },
+        new SaleRepSubscription
+        {
+            Id = 202,
+            SiteName = "site_name8",
+            SubscriptionUrl = "subscription_url2",
+            CustomerName = "customer_name8",
+            CreatedAt = "created_at4",
+        },
     },
-    {
-      "id": 202,
-      "site_name": "site_name8",
-      "subscription_url": "subscription_url2",
-      "customer_name": "customer_name8",
-      "created_at": "created_at4"
-    }
-  ]
-}
+};
 ```
 

@@ -11,14 +11,19 @@
 |  --- | --- | --- | --- |
 | `Codes` | `List<string>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+AddCouponsRequest addCouponsRequest = new AddCouponsRequest
 {
-  "codes": [
-    "codes0",
-    "codes1"
-  ]
-}
+    Codes = new List<string>
+    {
+        "codes6",
+        "codes7",
+    },
+};
 ```
 

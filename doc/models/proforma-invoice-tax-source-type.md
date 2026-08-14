@@ -12,3 +12,11 @@
 | `Tax` |
 | `Avalara` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ProformaInvoiceTaxSourceType proformaInvoiceTaxSourceType = ProformaInvoiceTaxSourceType.Tax;
+```
+

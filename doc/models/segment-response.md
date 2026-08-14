@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- |
 | `Segment` | [`Segment`](../../doc/models/segment.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SegmentResponse segmentResponse = new SegmentResponse
 {
-  "segment": {
-    "id": 118,
-    "component_id": 228,
-    "price_point_id": 4,
-    "event_based_billing_metric_id": 56,
-    "pricing_scheme": "stairstep"
-  }
-}
+    Segment = new Segment
+    {
+        Id = 118,
+        ComponentId = 228,
+        PricePointId = 4,
+        EventBasedBillingMetricId = 56,
+        PricingScheme = PricingScheme.Stairstep,
+    },
+};
 ```
 

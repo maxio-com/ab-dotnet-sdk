@@ -13,7 +13,9 @@
 
 ## Example
 
-```
-currency_prices
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ListProductsPricePointsInclude listProductsPricePointsInclude = ListProductsPricePointsInclude.CurrencyPrices;
 ```
 

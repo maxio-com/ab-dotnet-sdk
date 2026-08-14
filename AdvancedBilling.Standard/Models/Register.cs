@@ -58,7 +58,7 @@ namespace AdvancedBilling.Standard.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// The ISO 4217 currency code (3 character string) representing the currency of invoice transaction.
+        /// The ISO 4217 currency code (3 character string) representing the currency of an invoice transaction.
         /// </summary>
         [JsonProperty("currency_code", NullValueHandling = NullValueHandling.Ignore)]
         public string CurrencyCode { get; set; }

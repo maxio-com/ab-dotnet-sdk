@@ -30,15 +30,18 @@
 | `PortalEnabled` | `bool?` | Optional | Whether the Billing Portal is enabled for this site. |
 | `Test` | `bool?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+Site site = new Site
 {
-  "id": 34,
-  "name": "name0",
-  "subdomain": "subdomain4",
-  "currency": "currency0",
-  "seller_id": 198
-}
+    Id = 64,
+    Name = "name4",
+    Subdomain = "subdomain0",
+    Currency = "currency4",
+    SellerId = 228,
+};
 ```
 

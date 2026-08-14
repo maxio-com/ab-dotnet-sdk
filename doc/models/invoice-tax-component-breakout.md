@@ -24,15 +24,18 @@
 | `StateAssignedNo` | `string` | Optional | - |
 | `TaxSubType` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoiceTaxComponentBreakout invoiceTaxComponentBreakout = new InvoiceTaxComponentBreakout
 {
-  "tax_rule_id": 226,
-  "percentage": "percentage0",
-  "country_code": "country_code8",
-  "subdivision_code": "subdivision_code6",
-  "tax_amount": "tax_amount4"
-}
+    TaxRuleId = 66,
+    Percentage = "percentage0",
+    CountryCode = "country_code2",
+    SubdivisionCode = "subdivision_code6",
+    TaxAmount = "tax_amount4",
+};
 ```
 

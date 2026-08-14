@@ -11,16 +11,22 @@
 |  --- | --- | --- | --- |
 | `Metadata` | [`List<CreateMetadata>`](../../doc/models/create-metadata.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+CreateMetadataRequest createMetadataRequest = new CreateMetadataRequest
 {
-  "metadata": [
+    Metadata = new List<CreateMetadata>
     {
-      "name": "name6",
-      "value": "value8"
-    }
-  ]
-}
+        new CreateMetadata
+        {
+            Name = "name6",
+            MValue = "value8",
+        },
+    },
+};
 ```
 

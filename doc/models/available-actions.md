@@ -11,14 +11,18 @@
 |  --- | --- | --- | --- |
 | `SendEmail` | [`SendEmail`](../../doc/models/send-email.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+AvailableActions availableActions = new AvailableActions
 {
-  "send_email": {
-    "can_execute": false,
-    "url": "url0"
-  }
-}
+    SendEmail = new SendEmail
+    {
+        CanExecute = false,
+        Url = "url0",
+    },
+};
 ```
 

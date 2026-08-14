@@ -12,12 +12,15 @@
 | `Kind` | `string` | Optional | - |
 | `Message` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionComponentAllocationErrorItem subscriptionComponentAllocationErrorItem = new SubscriptionComponentAllocationErrorItem
 {
-  "kind": "kind0",
-  "message": "message8"
-}
+    Kind = "kind6",
+    Message = "message8",
+};
 ```
 

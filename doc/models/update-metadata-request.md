@@ -11,15 +11,19 @@
 |  --- | --- | --- | --- |
 | `Metadata` | [`UpdateMetadata`](../../doc/models/update-metadata.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+UpdateMetadataRequest updateMetadataRequest = new UpdateMetadataRequest
 {
-  "metadata": {
-    "current_name": "current_name0",
-    "name": "name6",
-    "value": "value8"
-  }
-}
+    Metadata = new UpdateMetadata
+    {
+        CurrentName = "current_name0",
+        Name = "name6",
+        MValue = "value8",
+    },
+};
 ```
 

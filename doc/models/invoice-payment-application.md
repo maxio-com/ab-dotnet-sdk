@@ -13,13 +13,16 @@
 | `ApplicationUid` | `string` | Optional | Unique identifier for the payment. It has the prefix "pmt_" followed by alphanumeric characters. |
 | `AppliedAmount` | `string` | Optional | Dollar amount of the paid invoice. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoicePaymentApplication invoicePaymentApplication = new InvoicePaymentApplication
 {
-  "invoice_uid": "invoice_uid2",
-  "application_uid": "application_uid4",
-  "applied_amount": "applied_amount6"
-}
+    InvoiceUid = "invoice_uid8",
+    ApplicationUid = "application_uid8",
+    AppliedAmount = "applied_amount0",
+};
 ```
 

@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- |
 | `LockInAt` | `DateTime` | Required | Date to lock in the renewal. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ScheduledRenewalLockInRequest scheduledRenewalLockInRequest = new ScheduledRenewalLockInRequest
 {
-  "lock_in_at": "2016-03-13"
-}
+    LockInAt = DateTime.Parse("2016-03-13"),
+};
 ```
 

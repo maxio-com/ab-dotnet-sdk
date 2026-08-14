@@ -15,15 +15,18 @@
 | `MValue` | `string` | Optional | **Constraints**: *Minimum Length*: `1` |
 | `MetadatumId` | `int?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoiceCustomField invoiceCustomField = new InvoiceCustomField
 {
-  "owner_id": 142,
-  "owner_type": "Customer",
-  "name": "name0",
-  "value": "value2",
-  "metadatum_id": 142
-}
+    OwnerId = 14,
+    OwnerType = CustomFieldOwner.Customer,
+    Name = "name0",
+    MValue = "value2",
+    MetadatumId = 14,
+};
 ```
 

@@ -14,18 +14,21 @@
 | `Signups` | `int?` | Optional | Number of times the coupon has been applied |
 | `Savings` | `int?` | Optional | Dollar amount of customer savings as a result of the coupon. |
 | `SavingsInCents` | `long?` | Optional | Dollar amount of customer savings as a result of the coupon. |
-| `Revenue` | `int?` | Optional | Total revenue of the all subscriptions that have received a discount from this coupon. |
-| `RevenueInCents` | `long?` | Optional | Total revenue of the all subscriptions that have received a discount from this coupon. |
+| `Revenue` | `int?` | Optional | Total revenue of all subscriptions that have received a discount from this coupon. |
+| `RevenueInCents` | `long?` | Optional | Total revenue of all subscriptions that have received a discount from this coupon. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CouponUsage couponUsage = new CouponUsage
 {
-  "id": 14,
-  "name": "name0",
-  "signups": 34,
-  "savings": 52,
-  "savings_in_cents": 138
-}
+    Id = 240,
+    Name = "name8",
+    Signups = 4,
+    Savings = 22,
+    SavingsInCents = 108L,
+};
 ```
 

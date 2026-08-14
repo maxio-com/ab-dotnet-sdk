@@ -13,23 +13,27 @@
 | `DuplicateCodes` | `List<string>` | Optional | - |
 | `InvalidCodes` | `List<string>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+CouponSubcodesResponse couponSubcodesResponse = new CouponSubcodesResponse
 {
-  "created_codes": [
-    "created_codes1",
-    "created_codes2"
-  ],
-  "duplicate_codes": [
-    "duplicate_codes8",
-    "duplicate_codes7"
-  ],
-  "invalid_codes": [
-    "invalid_codes0",
-    "invalid_codes9",
-    "invalid_codes8"
-  ]
-}
+    CreatedCodes = new List<string>
+    {
+        "created_codes7",
+    },
+    DuplicateCodes = new List<string>
+    {
+        "duplicate_codes8",
+    },
+    InvalidCodes = new List<string>
+    {
+        "invalid_codes4",
+        "invalid_codes3",
+    },
+};
 ```
 

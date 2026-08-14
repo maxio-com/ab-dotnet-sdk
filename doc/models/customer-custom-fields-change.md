@@ -12,28 +12,36 @@
 | `Before` | [`List<InvoiceCustomField>`](../../doc/models/invoice-custom-field.md) | Required | - |
 | `After` | [`List<InvoiceCustomField>`](../../doc/models/invoice-custom-field.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+CustomerCustomFieldsChange customerCustomFieldsChange = new CustomerCustomFieldsChange
 {
-  "before": [
+    Before = new List<InvoiceCustomField>
     {
-      "owner_id": 26,
-      "owner_type": "Customer",
-      "name": "name0",
-      "value": "value2",
-      "metadatum_id": 26
-    }
-  ],
-  "after": [
+        new InvoiceCustomField
+        {
+            OwnerId = 26,
+            OwnerType = CustomFieldOwner.Customer,
+            Name = "name0",
+            MValue = "value2",
+            MetadatumId = 26,
+        },
+    },
+    After = new List<InvoiceCustomField>
     {
-      "owner_id": 130,
-      "owner_type": "Customer",
-      "name": "name2",
-      "value": "value4",
-      "metadatum_id": 130
-    }
-  ]
-}
+        new InvoiceCustomField
+        {
+            OwnerId = 130,
+            OwnerType = CustomFieldOwner.Customer,
+            Name = "name2",
+            MValue = "value4",
+            MetadatumId = 130,
+        },
+    },
+};
 ```
 

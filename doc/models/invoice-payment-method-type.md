@@ -18,3 +18,11 @@ The type of payment method used. Defaults to other.
 | `Ach` |
 | `Other` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoicePaymentMethodType invoicePaymentMethodType = InvoicePaymentMethodType.Cash;
+```
+

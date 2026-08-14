@@ -16,3 +16,11 @@ A handle for the line item kind for allocation preview
 | `Coupon` |
 | `Tax` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+AllocationPreviewLineItemKind allocationPreviewLineItemKind = AllocationPreviewLineItemKind.Coupon;
+```
+

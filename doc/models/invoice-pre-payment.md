@@ -13,13 +13,16 @@
 | `AmountInCents` | `long?` | Optional | The amount in cents of the prepayment that was created as a result of this payment. |
 | `EndingBalanceInCents` | `long?` | Optional | The total balance of the prepayment account for this subscription including any prior prepayments |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoicePrePayment invoicePrePayment = new InvoicePrePayment
 {
-  "subscription_id": 180,
-  "amount_in_cents": 100,
-  "ending_balance_in_cents": 60
-}
+    SubscriptionId = 252,
+    AmountInCents = 28L,
+    EndingBalanceInCents = 244L,
+};
 ```
 

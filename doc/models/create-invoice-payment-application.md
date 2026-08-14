@@ -12,12 +12,15 @@
 | `InvoiceUid` | `string` | Required | Unique identifier for the invoice. It has the prefix "inv_" followed by alphanumeric characters. |
 | `Amount` | `string` | Required | Dollar amount of the invoice payment (eg. "10.50" => $10.50). |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreateInvoicePaymentApplication createInvoicePaymentApplication = new CreateInvoicePaymentApplication
 {
-  "invoice_uid": "invoice_uid4",
-  "amount": "amount6"
-}
+    InvoiceUid = "invoice_uid6",
+    Amount = "amount8",
+};
 ```
 

@@ -11,14 +11,18 @@
 |  --- | --- | --- | --- |
 | `PricePoint` | [`CloneComponentPricePoint`](../../doc/models/clone-component-price-point.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CloneComponentPricePointRequest cloneComponentPricePointRequest = new CloneComponentPricePointRequest
 {
-  "price_point": {
-    "name": "name0",
-    "handle": "handle6"
-  }
-}
+    PricePoint = new CloneComponentPricePoint
+    {
+        Name = "name0",
+        Handle = "handle6",
+    },
+};
 ```
 

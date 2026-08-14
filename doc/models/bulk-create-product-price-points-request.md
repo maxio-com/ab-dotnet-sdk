@@ -11,24 +11,30 @@
 |  --- | --- | --- | --- |
 | `PricePoints` | [`List<CreateProductPricePoint>`](../../doc/models/create-product-price-point.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+BulkCreateProductPricePointsRequest bulkCreateProductPricePointsRequest = new BulkCreateProductPricePointsRequest
 {
-  "price_points": [
+    PricePoints = new List<CreateProductPricePoint>
     {
-      "name": "name2",
-      "price_in_cents": 108,
-      "interval": 92,
-      "interval_unit": "day",
-      "use_site_exchange_rate": true,
-      "handle": "handle8",
-      "trial_price_in_cents": 196,
-      "trial_interval": 250,
-      "trial_interval_unit": "day",
-      "trial_type": "no_obligation"
-    }
-  ]
-}
+        new CreateProductPricePoint
+        {
+            Name = "name2",
+            PriceInCents = 108L,
+            Interval = 92,
+            IntervalUnit = IntervalUnit.Day,
+            Handle = "handle8",
+            TrialPriceInCents = 196L,
+            TrialInterval = 250,
+            TrialIntervalUnit = IntervalUnit.Day,
+            TrialType = TrialType.NoObligation,
+            UseSiteExchangeRate = true,
+        },
+    },
+};
 ```
 

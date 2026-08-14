@@ -16,3 +16,11 @@
 | `PaypalAccount` |
 | `Other` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionGroupPrepaymentMethod subscriptionGroupPrepaymentMethod = SubscriptionGroupPrepaymentMethod.Check;
+```
+

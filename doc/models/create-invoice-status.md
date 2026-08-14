@@ -14,7 +14,9 @@
 
 ## Example
 
-```
-draft
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreateInvoiceStatus createInvoiceStatus = CreateInvoiceStatus.Draft;
 ```
 

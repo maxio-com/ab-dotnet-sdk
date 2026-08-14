@@ -12,12 +12,15 @@
 | `Email` | `string` | Required | - |
 | `Type` | [`InvoiceEventPaymentMethod`](../../doc/models/invoice-event-payment-method.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PaymentMethodPaypal paymentMethodPaypal = new PaymentMethodPaypal
 {
-  "email": "email2",
-  "type": "paypal_account"
-}
+    Email = "email8",
+    Type = InvoiceEventPaymentMethod.PaypalAccount,
+};
 ```
 

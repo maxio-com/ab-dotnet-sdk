@@ -11,21 +11,28 @@
 |  --- | --- | --- | --- |
 | `Prepayments` | [`List<ListSubscriptionGroupPrepayment>`](../../doc/models/list-subscription-group-prepayment.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+ListSubscriptionGroupPrepaymentResponse listSubscriptionGroupPrepaymentResponse = new ListSubscriptionGroupPrepaymentResponse
 {
-  "prepayments": [
+    Prepayments = new List<ListSubscriptionGroupPrepayment>
     {
-      "prepayment": {
-        "id": 38,
-        "subscription_group_uid": "subscription_group_uid2",
-        "amount_in_cents": 124,
-        "remaining_amount_in_cents": 182,
-        "details": "details8"
-      }
-    }
-  ]
-}
+        new ListSubscriptionGroupPrepayment
+        {
+            Prepayment = new ListSubscriptionGroupPrepaymentItem
+            {
+                Id = 38,
+                SubscriptionGroupUid = "subscription_group_uid2",
+                AmountInCents = 124L,
+                RemainingAmountInCents = 182L,
+                Details = "details8",
+            },
+        },
+    },
+};
 ```
 

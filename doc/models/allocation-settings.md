@@ -13,13 +13,16 @@
 | `DowngradeCredit` | [`CreditType?`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided. |
 | `AccrueCharge` | `string` | Optional | Either "true" or "false". |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+AllocationSettings allocationSettings = new AllocationSettings
 {
-  "upgrade_charge": "none",
-  "downgrade_credit": "prorated",
-  "accrue_charge": "accrue_charge0"
-}
+    UpgradeCharge = CreditType.Prorated,
+    DowngradeCredit = CreditType.Prorated,
+    AccrueCharge = "accrue_charge2",
+};
 ```
 

@@ -15,13 +15,16 @@ PCI-safe cardholder fields only. Full card numbers, CVV, and billing address are
 | `LastName` | `string` | Optional | - |
 | `CardType` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PaymentProfileParams paymentProfileParams = new PaymentProfileParams
 {
-  "first_name": "first_name2",
-  "last_name": "last_name0",
-  "card_type": "card_type8"
-}
+    FirstName = "first_name2",
+    LastName = "last_name0",
+    CardType = "card_type2",
+};
 ```
 

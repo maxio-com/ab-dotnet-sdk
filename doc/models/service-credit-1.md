@@ -14,19 +14,22 @@
 | `EndingBalanceInCents` | `long?` | Optional | The new balance for the credit account |
 | `EntryType` | [`ServiceCreditType?`](../../doc/models/service-credit-type.md) | Optional | The type of entry |
 | `Memo` | `string` | Optional | The memo attached to the entry |
-| `InvoiceUid` | `string` | Optional | The invoice uid associated with the entry. Only present for debit entries |
+| `InvoiceUid` | `string` | Optional | The invoice uid associated with the entry. Only present for debit entries. |
 | `RemainingBalanceInCents` | `long?` | Optional | The remaining balance for the entry |
 | `CreatedAt` | `DateTimeOffset?` | Optional | The date and time the entry was created |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ServiceCredit1 serviceCredit1 = new ServiceCredit1
 {
-  "id": 174,
-  "amount_in_cents": 4,
-  "ending_balance_in_cents": 44,
-  "entry_type": "Credit",
-  "memo": "memo8"
-}
+    Id = 12,
+    AmountInCents = 158L,
+    EndingBalanceInCents = 138L,
+    EntryType = ServiceCreditType.Credit,
+    Memo = "memo4",
+};
 ```
 

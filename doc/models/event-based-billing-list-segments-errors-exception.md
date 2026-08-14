@@ -11,22 +11,20 @@
 |  --- | --- | --- | --- |
 | `Errors` | [`Errors`](../../doc/models/errors.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+try
 {
-  "errors": {
-    "per_page": [
-      "per_page1",
-      "per_page2",
-      "per_page3"
-    ],
-    "price_point": [
-      "price_point0",
-      "price_point9",
-      "price_point8"
-    ]
-  }
+    // make the API call
+}
+catch (ApiException e)
+{
+    if (e is EventBasedBillingListSegmentsErrorsException)
+    {
+        // TODO: Handle EventBasedBillingListSegmentsErrorsException
+        Console.WriteLine(e.Message);
+    }
 }
 ```
 

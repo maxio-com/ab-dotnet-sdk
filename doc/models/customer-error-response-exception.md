@@ -11,13 +11,20 @@
 |  --- | --- | --- | --- |
 | `Errors` | [`CustomerErrorResponseErrors`](../../doc/models/containers/customer-error-response-errors.md) | Optional | This is a container for one-of cases. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+try
 {
-  "errors": {
-    "customer": "customer8"
-  }
+    // make the API call
+}
+catch (ApiException e)
+{
+    if (e is CustomerErrorResponseException)
+    {
+        // TODO: Handle CustomerErrorResponseException
+        Console.WriteLine(e.Message);
+    }
 }
 ```
 

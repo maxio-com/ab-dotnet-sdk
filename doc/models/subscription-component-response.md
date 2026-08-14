@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- |
 | `Component` | [`SubscriptionComponent`](../../doc/models/subscription-component.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionComponentResponse subscriptionComponentResponse = new SubscriptionComponentResponse
 {
-  "component": {
-    "id": 80,
-    "name": "name8",
-    "kind": "quantity_based_component",
-    "unit_name": "unit_name0",
-    "enabled": false
-  }
-}
+    Component = new SubscriptionComponent
+    {
+        Id = 80,
+        Name = "name8",
+        Kind = ComponentKind.QuantityBasedComponent,
+        UnitName = "unit_name0",
+        Enabled = false,
+    },
+};
 ```
 

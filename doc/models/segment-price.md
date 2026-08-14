@@ -18,15 +18,18 @@
 | `FormattedUnitPrice` | `string` | Optional | - |
 | `SegmentId` | `int?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SegmentPrice segmentPrice = new SegmentPrice
 {
-  "id": 220,
-  "component_id": 74,
-  "starting_quantity": 118,
-  "ending_quantity": 92,
-  "unit_price": "unit_price0"
-}
+    Id = 194,
+    ComponentId = 48,
+    StartingQuantity = 144,
+    EndingQuantity = 118,
+    UnitPrice = "unit_price0",
+};
 ```
 

@@ -29,15 +29,18 @@
 | `ProductPriceInCents` | `long?` | Optional | - |
 | `OfferSignupPages` | [`List<OfferSignupPage>`](../../doc/models/offer-signup-page.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+Offer offer = new Offer
 {
-  "id": 154,
-  "site_id": 80,
-  "product_family_id": 158,
-  "product_id": 96,
-  "product_price_point_id": 20
-}
+    Id = 28,
+    SiteId = 210,
+    ProductFamilyId = 224,
+    ProductId = 30,
+    ProductPricePointId = 150,
+};
 ```
 

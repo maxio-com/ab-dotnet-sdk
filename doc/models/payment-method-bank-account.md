@@ -13,13 +13,16 @@
 | `MaskedRoutingNumber` | `string` | Required | - |
 | `Type` | [`InvoiceEventPaymentMethod`](../../doc/models/invoice-event-payment-method.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PaymentMethodBankAccount paymentMethodBankAccount = new PaymentMethodBankAccount
 {
-  "masked_account_number": "masked_account_number2",
-  "masked_routing_number": "masked_routing_number2",
-  "type": "bank_account"
-}
+    MaskedAccountNumber = "masked_account_number4",
+    MaskedRoutingNumber = "masked_routing_number4",
+    Type = InvoiceEventPaymentMethod.BankAccount,
+};
 ```
 

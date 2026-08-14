@@ -11,25 +11,35 @@
 |  --- | --- | --- | --- |
 | `Metafields` | [`CreateMetafieldsRequestMetafields`](../../doc/models/containers/create-metafields-request-metafields.md) | Required | This is a container for one-of cases. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Collections.Generic;
+
+CreateMetafieldsRequest createMetafieldsRequest = new CreateMetafieldsRequest
 {
-  "metafields": {
-    "name": "my_field",
-    "scope": {
-      "csv": "0",
-      "invoices": "0",
-      "statements": "0",
-      "portal": "0",
-      "public_show": "0",
-      "public_edit": "0"
-    },
-    "input_type": "text",
-    "enum": [
-      "string"
-    ]
-  }
-}
+    Metafields = CreateMetafieldsRequestMetafields.FromCreateMetafield(
+        new CreateMetafield
+        {
+            Name = "my_field",
+            Scope = new MetafieldScope
+            {
+                Csv = IncludeOption.Exclude,
+                Invoices = IncludeOption.Exclude,
+                Statements = IncludeOption.Exclude,
+                Portal = IncludeOption.Exclude,
+                PublicShow = IncludeOption.Exclude,
+                PublicEdit = IncludeOption.Exclude,
+            },
+            InputType = MetafieldInput.Text,
+            MEnum = new List<string>
+            {
+                "string",
+            },
+        }
+    ),
+};
 ```
 

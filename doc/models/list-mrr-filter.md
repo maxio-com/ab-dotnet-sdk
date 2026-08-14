@@ -11,15 +11,20 @@
 |  --- | --- | --- | --- |
 | `SubscriptionIds` | `List<int>` | Optional | Submit ids in order to limit results. Use in query: `filter[subscription_ids]=1,2,3`.<br><br>**Constraints**: *Minimum Items*: `1` |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+ListMrrFilter listMrrFilter = new ListMrrFilter
 {
-  "subscription_ids": [
-    1,
-    2,
-    3
-  ]
-}
+    SubscriptionIds = new List<int>
+    {
+        1,
+        2,
+        3,
+    },
+};
 ```
 

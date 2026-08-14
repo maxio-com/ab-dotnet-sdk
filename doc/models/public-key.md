@@ -13,13 +13,19 @@
 | `RequiresSecurityToken` | `bool?` | Optional | - |
 | `CreatedAt` | `DateTimeOffset?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+PublicKey publicKey = new PublicKey
 {
-  "public_key": "public_key8",
-  "requires_security_token": false,
-  "created_at": "2016-03-13T12:52:32.123Z"
-}
+    PublicKeyProp = "public_key2",
+    RequiresSecurityToken = false,
+    CreatedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+};
 ```
 

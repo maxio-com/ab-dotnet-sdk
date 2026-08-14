@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- |
 | `Force` | `bool?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+IssueAdvanceInvoiceRequest issueAdvanceInvoiceRequest = new IssueAdvanceInvoiceRequest
 {
-  "force": false
-}
+    Force = false,
+};
 ```
 

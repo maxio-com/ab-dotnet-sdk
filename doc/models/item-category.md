@@ -19,7 +19,9 @@ One of the following: Business Software, Consumer Software, Digital Services, Ph
 
 ## Example
 
-```
-Business Software
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ItemCategory itemCategory = ItemCategory.Other;
 ```
 

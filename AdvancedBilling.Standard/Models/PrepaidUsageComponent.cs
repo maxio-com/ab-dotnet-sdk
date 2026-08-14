@@ -17,11 +17,13 @@ namespace AdvancedBilling.Standard.Models
         private Models.CreditType? upgradeCharge;
         private Models.CreditType? downgradeCredit;
         private Models.ExpirationIntervalUnit? expirationIntervalUnit;
+        private string unspscCode;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "upgrade_charge", false },
             { "downgrade_credit", false },
             { "expiration_interval_unit", false },
+            { "unspsc_code", false },
         };
 
         /// <summary>
@@ -55,6 +57,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="displayOnHostedPage">display_on_hosted_page.</param>
         /// <param name="allowFractionalQuantities">allow_fractional_quantities.</param>
         /// <param name="publicSignupPageIds">public_signup_page_ids.</param>
+        /// <param name="unspscCode">unspsc_code.</param>
         public PrepaidUsageComponent(
             string name,
             string unitName,
@@ -76,7 +79,8 @@ namespace AdvancedBilling.Standard.Models
             Models.ExpirationIntervalUnit? expirationIntervalUnit = null,
             bool? displayOnHostedPage = null,
             bool? allowFractionalQuantities = null,
-            List<int> publicSignupPageIds = null)
+            List<int> publicSignupPageIds = null,
+            string unspscCode = null)
         {
             this.Name = name;
             this.UnitName = unitName;
@@ -111,16 +115,21 @@ namespace AdvancedBilling.Standard.Models
             this.DisplayOnHostedPage = displayOnHostedPage;
             this.AllowFractionalQuantities = allowFractionalQuantities;
             this.PublicSignupPageIds = publicSignupPageIds;
+
+            if (unspscCode != null)
+            {
+                this.UnspscCode = unspscCode;
+            }
         }
 
         /// <summary>
-        /// A name for this component that is suitable for showing customers and displaying on billing statements, ie. "Minutes".
+        /// A name for this component that is suitable for showing customers and displaying on billing statements, e.g., "Minutes".
         /// </summary>
         [JsonProperty("name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// The name of the unit of measurement for the component. It should be singular since it will be automatically pluralized when necessary. i.e. “message”, which may then be shown as “5 messages” on a subscription’s component line-item
+        /// The name of the unit of measurement for the component. It should be singular since it will be automatically pluralized when necessary. e.g., “message”, which may then be shown as “5 messages” on a subscription’s component line-item
         /// </summary>
         [JsonProperty("unit_name")]
         public string UnitName { get; set; }
@@ -132,7 +141,7 @@ namespace AdvancedBilling.Standard.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// A unique identifier for your use that can be used to retrieve this component is subsequent requests.  Must start with a letter or number and may only contain lowercase letters, numbers, or the characters '.', ':', '-', or '_'.
+        /// A unique identifier for your use that can be used to retrieve this component in subsequent requests. Must start with a letter or number and may only contain lowercase letters, numbers, or the characters '.', ':', '-', or '_'.
         /// </summary>
         [JsonProperty("handle", NullValueHandling = NullValueHandling.Ignore)]
         public string Handle { get; set; }
@@ -198,7 +207,7 @@ namespace AdvancedBilling.Standard.Models
         public List<Models.CreatePrepaidUsageComponentPricePoint> PricePoints { get; set; }
 
         /// <summary>
-        /// The amount the customer will be charged per unit when the pricing scheme is “per_unit”. For On/Off Components, this is the amount that the customer will be charged when they turn the component on for the subscription. The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
+        /// The amount the customer will be charged per unit when the pricing scheme is “per_unit”. For On/Off Components, this is the amount that the customer will be charged when they turn the component on for the subscription. The price can contain up to 8 decimal places. e.g., 1.00 or 0.0012 or 0.00000065
         /// </summary>
         [JsonProperty("unit_price", NullValueHandling = NullValueHandling.Ignore)]
         public PrepaidUsageComponentUnitPrice UnitPrice { get; set; }
@@ -222,13 +231,13 @@ namespace AdvancedBilling.Standard.Models
         public Models.OveragePricing OveragePricing { get; set; }
 
         /// <summary>
-        /// Boolean which controls whether or not remaining units should be rolled over to the next period
+        /// Boolean which controls whether or not remaining units should be rolled over to the next period.
         /// </summary>
         [JsonProperty("rollover_prepaid_remainder", NullValueHandling = NullValueHandling.Ignore)]
         public bool? RolloverPrepaidRemainder { get; set; }
 
         /// <summary>
-        /// Boolean which controls whether or not the allocated quantity should be renewed at the beginning of each period
+        /// Boolean which controls whether or not the allocated quantity should be renewed at the beginning of each period.
         /// </summary>
         [JsonProperty("renew_prepaid_allocation", NullValueHandling = NullValueHandling.Ignore)]
         public bool? RenewPrepaidAllocation { get; set; }
@@ -275,6 +284,24 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("public_signup_page_ids", NullValueHandling = NullValueHandling.Ignore)]
         public List<int> PublicSignupPageIds { get; set; }
 
+        /// <summary>
+        /// (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent as the commodity code on invoice line items for this component instead of the default derived from item_category.
+        /// </summary>
+        [JsonProperty("unspsc_code")]
+        public string UnspscCode
+        {
+            get
+            {
+                return this.unspscCode;
+            }
+
+            set
+            {
+                this.shouldSerialize["unspsc_code"] = true;
+                this.unspscCode = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -304,6 +331,13 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["expiration_interval_unit"] = false;
         }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetUnspscCode()
+        {
+            this.shouldSerialize["unspsc_code"] = false;
+        }
 
         /// <summary>
         /// Checks if the field should be serialized or not.
@@ -330,6 +364,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeExpirationIntervalUnit()
         {
             return this.shouldSerialize["expiration_interval_unit"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeUnspscCode()
+        {
+            return this.shouldSerialize["unspsc_code"];
         }
 
         /// <inheritdoc/>
@@ -380,6 +423,8 @@ namespace AdvancedBilling.Standard.Models
                  this.AllowFractionalQuantities?.Equals(other.AllowFractionalQuantities) == true) &&
                 (this.PublicSignupPageIds == null && other.PublicSignupPageIds == null ||
                  this.PublicSignupPageIds?.Equals(other.PublicSignupPageIds) == true) &&
+                (this.UnspscCode == null && other.UnspscCode == null ||
+                 this.UnspscCode?.Equals(other.UnspscCode) == true) &&
                 base.Equals(obj);
         }
 
@@ -410,6 +455,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"DisplayOnHostedPage = {(this.DisplayOnHostedPage == null ? "null" : this.DisplayOnHostedPage.ToString())}");
             toStringOutput.Add($"AllowFractionalQuantities = {(this.AllowFractionalQuantities == null ? "null" : this.AllowFractionalQuantities.ToString())}");
             toStringOutput.Add($"PublicSignupPageIds = {(this.PublicSignupPageIds == null ? "null" : $"[{string.Join(", ", this.PublicSignupPageIds)} ]")}");
+            toStringOutput.Add($"UnspscCode = {this.UnspscCode ?? "null"}");
 
             base.ToString(toStringOutput);
         }

@@ -17,15 +17,18 @@
 | `TaxAmount` | `string` | Optional | **Constraints**: *Minimum Length*: `1` |
 | `LineItemBreakouts` | [`List<InvoiceTaxBreakout>`](../../doc/models/invoice-tax-breakout.md) | Optional | **Constraints**: *Minimum Items*: `1`, *Unique Items Required* |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ProformaInvoiceTax proformaInvoiceTax = new ProformaInvoiceTax
 {
-  "uid": "uid8",
-  "title": "title4",
-  "source_type": "Tax",
-  "percentage": "percentage6",
-  "taxable_amount": "taxable_amount2"
-}
+    Uid = "uid4",
+    Title = "title0",
+    SourceType = ProformaInvoiceTaxSourceType.Tax,
+    Percentage = "percentage2",
+    TaxableAmount = "taxable_amount8",
+};
 ```
 

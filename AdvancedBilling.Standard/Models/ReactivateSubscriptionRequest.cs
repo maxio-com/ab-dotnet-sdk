@@ -47,7 +47,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// These values are only applicable to subscriptions using calendar billing
+        /// These values are only applicable to subscriptions using calendar billing.
         /// </summary>
         [JsonProperty("calendar_billing", NullValueHandling = NullValueHandling.Ignore)]
         public Models.ReactivationBilling CalendarBilling { get; set; }

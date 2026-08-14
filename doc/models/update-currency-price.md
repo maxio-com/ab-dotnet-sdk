@@ -12,12 +12,15 @@
 | `Id` | `int` | Required | ID of the currency price record being updated |
 | `Price` | `double` | Required | New price for the given currency |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+UpdateCurrencyPrice updateCurrencyPrice = new UpdateCurrencyPrice
 {
-  "id": 146,
-  "price": 71.86
-}
+    Id = 104,
+    Price = 163.6,
+};
 ```
 

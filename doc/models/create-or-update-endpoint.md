@@ -1,7 +1,7 @@
 
 # Create or Update Endpoint
 
-Used to Create or Update Endpoint
+Used to Create or Update Endpoint.
 
 ## Structure
 
@@ -14,14 +14,21 @@ Used to Create or Update Endpoint
 | `Url` | `string` | Required | - |
 | `WebhookSubscriptions` | [`List<WebhookSubscription>`](../../doc/models/webhook-subscription.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+CreateOrUpdateEndpoint createOrUpdateEndpoint = new CreateOrUpdateEndpoint
 {
-  "url": "url8",
-  "webhook_subscriptions": [
-    "refund_success"
-  ]
-}
+    Url = "url4",
+    WebhookSubscriptions = new List<WebhookSubscription>
+    {
+        WebhookSubscription.TrialEndNotice,
+        WebhookSubscription.SubscriptionStateChange,
+        WebhookSubscription.SubscriptionProductChangeScheduled,
+    },
+};
 ```
 

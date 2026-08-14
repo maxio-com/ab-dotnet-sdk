@@ -15,15 +15,19 @@
 | `Destroy` | `bool?` | Optional | - |
 | `StartingQuantity` | [`UpdatePriceStartingQuantity`](../../doc/models/containers/update-price-starting-quantity.md) | Optional | This is a container for one-of cases. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+UpdatePrice updatePrice = new UpdatePrice
 {
-  "id": 18,
-  "ending_quantity": 216,
-  "unit_price": 166.62,
-  "_destroy": false,
-  "starting_quantity": 242
-}
+    Id = 206,
+    EndingQuantity = UpdatePriceEndingQuantity.FromNumber(28),
+    UnitPrice = UpdatePriceUnitPrice.FromPrecision(181.3),
+    Destroy = false,
+    StartingQuantity = UpdatePriceStartingQuantity.FromNumber(54),
+};
 ```
 

@@ -16,3 +16,11 @@ The vault that stores the payment profile with the provided vault_token.
 | `Moduslink` |
 | `PaypalComplete` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PayPalVault payPalVault = PayPalVault.Moduslink;
+```
+

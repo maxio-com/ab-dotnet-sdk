@@ -40,7 +40,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.GroupTargetType Type { get; set; }
 
         /// <summary>
-        /// The id of the target customer or subscription to group the existing subscription with. Ignored and should not be included if type is "self" , "parent", or "eldest"
+        /// The id of the target customer or subscription to group the existing subscription with. Ignored and should not be included if type is "self", "parent", or "eldest".
         /// </summary>
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }

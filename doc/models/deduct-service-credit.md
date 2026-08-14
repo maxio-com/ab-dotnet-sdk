@@ -12,12 +12,16 @@
 | `Amount` | [`DeductServiceCreditAmount`](../../doc/models/containers/deduct-service-credit-amount.md) | Required | This is a container for one-of cases. |
 | `Memo` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+DeductServiceCredit deductServiceCredit = new DeductServiceCredit
 {
-  "amount": "String1",
-  "memo": "memo2"
-}
+    Amount = DeductServiceCreditAmount.FromString("String5"),
+    Memo = "memo6",
+};
 ```
 

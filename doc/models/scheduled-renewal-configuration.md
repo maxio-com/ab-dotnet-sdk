@@ -20,15 +20,23 @@
 | `ScheduledRenewalConfigurationItems` | [`List<ScheduledRenewalConfigurationItem>`](../../doc/models/scheduled-renewal-configuration-item.md) | Optional | - |
 | `Contract` | [`Contract`](../../doc/models/contract.md) | Optional | Contract linked to the scheduled renewal configuration. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+ScheduledRenewalConfiguration scheduledRenewalConfiguration = new ScheduledRenewalConfiguration
 {
-  "id": 152,
-  "site_id": 78,
-  "subscription_id": 6,
-  "starts_at": "2016-03-13T12:52:32.123Z",
-  "ends_at": "2016-03-13T12:52:32.123Z"
-}
+    Id = 8,
+    SiteId = 190,
+    SubscriptionId = 118,
+    StartsAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    EndsAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+};
 ```
 

@@ -22,19 +22,24 @@
 | `Customer` | [`SubscriptionGroupCustomer`](../../doc/models/subscription-group-customer.md) | Optional | - |
 | `AccountBalances` | [`SubscriptionGroupBalances`](../../doc/models/subscription-group-balances.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+FullSubscriptionGroupResponse fullSubscriptionGroupResponse = new FullSubscriptionGroupResponse
 {
-  "uid": "uid8",
-  "scheme": 90,
-  "customer_id": 110,
-  "payment_profile_id": 18,
-  "subscription_ids": [
-    220,
-    221,
-    222
-  ]
-}
+    Uid = "uid6",
+    Scheme = 80,
+    CustomerId = 100,
+    PaymentProfileId = 8,
+    SubscriptionIds = new List<int>
+    {
+        210,
+        211,
+        212,
+    },
+};
 ```
 

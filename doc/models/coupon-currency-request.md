@@ -11,16 +11,22 @@
 |  --- | --- | --- | --- |
 | `CurrencyPrices` | [`List<UpdateCouponCurrency>`](../../doc/models/update-coupon-currency.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+CouponCurrencyRequest couponCurrencyRequest = new CouponCurrencyRequest
 {
-  "currency_prices": [
+    CurrencyPrices = new List<UpdateCouponCurrency>
     {
-      "currency": "currency8",
-      "price": 78
-    }
-  ]
-}
+        new UpdateCouponCurrency
+        {
+            Currency = "currency8",
+            Price = 78,
+        },
+    },
+};
 ```
 

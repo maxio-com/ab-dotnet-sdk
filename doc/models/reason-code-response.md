@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- |
 | `ReasonCode` | [`ReasonCode`](../../doc/models/reason-code.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ReasonCodeResponse reasonCodeResponse = new ReasonCodeResponse
 {
-  "reason_code": {
-    "id": 240,
-    "site_id": 166,
-    "code": "code4",
-    "description": "description6",
-    "position": 14
-  }
-}
+    ReasonCode = new ReasonCode
+    {
+        Id = 240,
+        SiteId = 166,
+        Code = "code4",
+        Description = "description6",
+        Position = 14,
+    },
+};
 ```
 

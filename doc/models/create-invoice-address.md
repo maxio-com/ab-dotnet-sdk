@@ -21,15 +21,18 @@ Overrides the default address.
 | `Zip` | `string` | Optional | - |
 | `Country` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreateInvoiceAddress createInvoiceAddress = new CreateInvoiceAddress
 {
-  "first_name": "first_name4",
-  "last_name": "last_name2",
-  "phone": "phone6",
-  "address": "address0",
-  "address_2": "address_28"
-}
+    FirstName = "first_name6",
+    LastName = "last_name4",
+    Phone = "phone4",
+    Address = "address2",
+    Address2 = "address_20",
+};
 ```
 

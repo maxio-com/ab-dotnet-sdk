@@ -13,13 +13,17 @@
 | `EndingQuantity` | `int?` | Optional | - |
 | `UnitPrice` | [`CreateOrUpdateSegmentPriceUnitPrice`](../../doc/models/containers/create-or-update-segment-price-unit-price.md) | Required | This is a container for one-of cases. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+CreateOrUpdateSegmentPrice createOrUpdateSegmentPrice = new CreateOrUpdateSegmentPrice
 {
-  "starting_quantity": 78,
-  "ending_quantity": 52,
-  "unit_price": "String7"
-}
+    UnitPrice = CreateOrUpdateSegmentPriceUnitPrice.FromString("String9"),
+    StartingQuantity = 98,
+    EndingQuantity = 184,
+};
 ```
 

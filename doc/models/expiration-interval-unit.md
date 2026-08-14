@@ -13,3 +13,11 @@
 | `Month` |
 | `Never` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ExpirationIntervalUnit expirationIntervalUnit = ExpirationIntervalUnit.Never;
+```
+

@@ -41,15 +41,18 @@
 | `CouponRestrictions` | [`List<CouponRestriction>`](../../doc/models/coupon-restriction.md) | Optional | - |
 | `CurrencyPrices` | [`List<CouponCurrency>`](../../doc/models/coupon-currency.md) | Optional | Returned in read, find, and list endpoints if the query parameter is provided. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+Coupon coupon = new Coupon
 {
-  "id": 22,
-  "name": "name2",
-  "code": "code0",
-  "description": "description2",
-  "amount": 62.64
-}
+    Id = 196,
+    Name = "name4",
+    Code = "code2",
+    Description = "description6",
+    Amount = 97.66,
+};
 ```
 

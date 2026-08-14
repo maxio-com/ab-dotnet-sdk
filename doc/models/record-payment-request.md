@@ -11,16 +11,20 @@
 |  --- | --- | --- | --- |
 | `Payment` | [`CreatePayment`](../../doc/models/create-payment.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+RecordPaymentRequest recordPaymentRequest = new RecordPaymentRequest
 {
-  "payment": {
-    "amount": "amount8",
-    "memo": "memo0",
-    "payment_details": "payment_details6",
-    "payment_method": "cash"
-  }
-}
+    Payment = new CreatePayment
+    {
+        Amount = "amount8",
+        Memo = "memo0",
+        PaymentDetails = "payment_details6",
+        PaymentMethod = InvoicePaymentMethodType.Cash,
+    },
+};
 ```
 

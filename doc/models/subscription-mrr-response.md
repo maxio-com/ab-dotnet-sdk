@@ -11,20 +11,27 @@
 |  --- | --- | --- | --- |
 | `SubscriptionsMrr` | [`List<SubscriptionMRR>`](../../doc/models/subscription-mrr.md) | Required | **Constraints**: *Minimum Items*: `1`, *Unique Items Required* |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+SubscriptionMRRResponse subscriptionMRRResponse = new SubscriptionMRRResponse
 {
-  "subscriptions_mrr": [
+    SubscriptionsMrr = new List<SubscriptionMRR>
     {
-      "subscription_id": 0,
-      "mrr_amount_in_cents": 0,
-      "breakouts": {
-        "plan_amount_in_cents": 0,
-        "usage_amount_in_cents": 0
-      }
-    }
-  ]
-}
+        new SubscriptionMRR
+        {
+            SubscriptionId = 0,
+            MrrAmountInCents = 0L,
+            Breakouts = new SubscriptionMRRBreakout
+            {
+                PlanAmountInCents = 0L,
+                UsageAmountInCents = 0L,
+            },
+        },
+    },
+};
 ```
 

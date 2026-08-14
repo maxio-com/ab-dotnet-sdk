@@ -12,12 +12,15 @@
 | `Currency` | `string` | Required | ISO code for the site defined currency. |
 | `Price` | `int` | Required | Price for the given currency. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+UpdateCouponCurrency updateCouponCurrency = new UpdateCouponCurrency
 {
-  "currency": "currency4",
-  "price": 146
-}
+    Currency = "currency4",
+    Price = 100,
+};
 ```
 

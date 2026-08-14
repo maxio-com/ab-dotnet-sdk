@@ -12,17 +12,21 @@
 | `PaymentProfile` | [`TokenizedPaymentProfile`](../../doc/models/tokenized-payment-profile.md) | Required | - |
 | `GatewayCustomerId` | `int?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ChjsTokenizationSuccess chjsTokenizationSuccess = new ChjsTokenizationSuccess
 {
-  "payment_profile": {
-    "id": 44,
-    "vault_token": "vault_token6",
-    "gateway_handle": "gateway_handle4",
-    "customer_vault_token": "customer_vault_token2"
-  },
-  "gateway_customer_id": 44
-}
+    PaymentProfile = new TokenizedPaymentProfile
+    {
+        Id = 44,
+        VaultToken = "vault_token6",
+        GatewayHandle = "gateway_handle4",
+        CustomerVaultToken = "customer_vault_token2",
+    },
+    GatewayCustomerId = 228,
+};
 ```
 

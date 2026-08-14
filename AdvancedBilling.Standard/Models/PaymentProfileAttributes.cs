@@ -114,7 +114,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// (Optional) Token received after sending billing information using Maxio.js (formerly Chargify.js). This token must be passed as a sole attribute of `payment_profile_attributes` (i.e. tok_9g6hw85pnpt6knmskpwp4ttt)
+        /// (Optional) Token received after sending billing information using Maxio.js (formerly Chargify.js). This token must be passed as a sole attribute of `payment_profile_attributes` (e.g., tok_9g6hw85pnpt6knmskpwp4ttt).
         /// </summary>
         [JsonProperty("chargify_token", NullValueHandling = NullValueHandling.Ignore)]
         public string ChargifyToken { get; set; }
@@ -150,37 +150,37 @@ namespace AdvancedBilling.Standard.Models
         public string MaskedCardNumber { get; set; }
 
         /// <summary>
-        /// The full credit card number (string representation, i.e. 5424000000000015)
+        /// The full credit card number (string representation, e.g., 5424000000000015)
         /// </summary>
         [JsonProperty("full_number", NullValueHandling = NullValueHandling.Ignore)]
         public string FullNumber { get; set; }
 
         /// <summary>
-        /// (Optional, used only for Subscription Import) If you know the card type (i.e. Visa, MC, etc) you may supply it here so that we may display the card type in the UI.
+        /// (Optional, used only for Subscription Import) If you know the card type (e.g., Visa, MC, etc.) you may supply it here so that we may display the card type in the UI.
         /// </summary>
         [JsonProperty("card_type", NullValueHandling = NullValueHandling.Ignore)]
         public Models.CardType? CardType { get; set; }
 
         /// <summary>
-        /// (Optional when performing a Subscription Import via vault_token, required otherwise) The 1- or 2-digit credit card expiration month, as an integer or string, i.e. 5
+        /// (Optional when performing a Subscription Import via vault_token, required otherwise) The 1- or 2-digit credit card expiration month, as an integer or string, e.g., 5
         /// </summary>
         [JsonProperty("expiration_month", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentProfileAttributesExpirationMonth ExpirationMonth { get; set; }
 
         /// <summary>
-        /// (Optional when performing a Subscription Import via vault_token, required otherwise) The 4-digit credit card expiration year, as an integer or string, i.e. 2012
+        /// (Optional when performing a Subscription Import via vault_token, required otherwise) The 4-digit credit card expiration year, as an integer or string, e.g., 2012
         /// </summary>
         [JsonProperty("expiration_year", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentProfileAttributesExpirationYear ExpirationYear { get; set; }
 
         /// <summary>
-        /// (Optional, may be required by your product configuration or gateway settings) The credit card or bank account billing street address (i.e. 123 Main St.). This value is merely passed through to the payment gateway.
+        /// (Optional, may be required by your product configuration or gateway settings) The credit card or bank account billing street address (e.g., 123 Main St.). This value is merely passed through to the payment gateway.
         /// </summary>
         [JsonProperty("billing_address", NullValueHandling = NullValueHandling.Ignore)]
         public string BillingAddress { get; set; }
 
         /// <summary>
-        /// (Optional) Second line of the customer’s billing address i.e. Apt. 100
+        /// (Optional) Second line of the customer’s billing address, e.g., Apt. 100
         /// </summary>
         [JsonProperty("billing_address_2")]
         public string BillingAddress2
@@ -198,25 +198,25 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// (Optional, may be required by your product configuration or gateway settings) The credit card or bank account billing address city (i.e. “Boston”). This value is merely passed through to the payment gateway.
+        /// (Optional, may be required by your product configuration or gateway settings) The credit card or bank account billing address city (e.g., “Boston”). This value is merely passed through to the payment gateway.
         /// </summary>
         [JsonProperty("billing_city", NullValueHandling = NullValueHandling.Ignore)]
         public string BillingCity { get; set; }
 
         /// <summary>
-        /// (Optional, may be required by your product configuration or gateway settings) The credit card or bank account billing address state (i.e. MA). This value is merely passed through to the payment gateway. This must conform to the [ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes) in order to be valid for tax locale purposes.
+        /// (Optional, may be required by your product configuration or gateway settings) The credit card or bank account billing address state (e.g., MA). This value is merely passed through to the payment gateway. This must conform to the [ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes) in order to be valid for tax locale purposes.
         /// </summary>
         [JsonProperty("billing_state", NullValueHandling = NullValueHandling.Ignore)]
         public string BillingState { get; set; }
 
         /// <summary>
-        /// (Optional, may be required by your product configuration or gateway settings) The credit card or bank account billing address country, required in [ISO_3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format (i.e. “US”). This value is merely passed through to the payment gateway. Some gateways require country codes in a specific format. Check your gateway’s documentation. If creating an ACH subscription, only US is supported at this time.
+        /// (Optional, may be required by your product configuration or gateway settings) The credit card or bank account billing address country, required in [ISO_3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format (e.g., “US”). This value is merely passed through to the payment gateway. Some gateways require country codes in a specific format. Check your gateway’s documentation. If creating an ACH subscription, only US is supported at this time.
         /// </summary>
         [JsonProperty("billing_country", NullValueHandling = NullValueHandling.Ignore)]
         public string BillingCountry { get; set; }
 
         /// <summary>
-        /// (Optional, may be required by your product configuration or gateway settings) The credit card or bank account billing address zip code (i.e. 12345). This value is merely passed through to the payment gateway.
+        /// (Optional, may be required by your product configuration or gateway settings) The credit card or bank account billing address zip code (e.g., 12345). This value is merely passed through to the payment gateway.
         /// </summary>
         [JsonProperty("billing_zip", NullValueHandling = NullValueHandling.Ignore)]
         public string BillingZip { get; set; }
@@ -270,7 +270,7 @@ namespace AdvancedBilling.Standard.Models
         public string Cvv { get; set; }
 
         /// <summary>
-        /// (Optional, used only for Subscription Import) If you have the last 4 digits of the credit card number, you may supply them here so that we may create a masked card number (i.e. XXXX-XXXX-XXXX-1234) for display in the UI. Last 4 digits are required for refunds in Auth.Net.
+        /// (Optional, used only for Subscription Import) If you have the last 4 digits of the credit card number, you may supply them here so that we may create a masked card number (e.g., XXXX-XXXX-XXXX-1234) for display in the UI. Last 4 digits are required for refunds in Auth.Net.
         /// </summary>
         [JsonProperty("last_four", NullValueHandling = NullValueHandling.Ignore)]
         public string LastFour { get; set; }

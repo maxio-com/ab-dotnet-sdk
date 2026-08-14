@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- |
 | `PreservePeriod` | `bool?` | Optional | The alternative to sending preserve_period as a direct attribute to migration |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+Proration proration = new Proration
 {
-  "preserve_period": false
-}
+    PreservePeriod = false,
+};
 ```
 

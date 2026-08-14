@@ -16,15 +16,18 @@
 | `Zip` | `string` | Optional | - |
 | `Country` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoiceAddress invoiceAddress = new InvoiceAddress
 {
-  "street": "street0",
-  "line2": "line24",
-  "city": "city0",
-  "state": "state6",
-  "zip": "zip4"
-}
+    Street = "street2",
+    Line2 = "line26",
+    City = "city2",
+    State = "state8",
+    Zip = "zip6",
+};
 ```
 

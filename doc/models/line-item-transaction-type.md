@@ -19,3 +19,11 @@ A handle for the line item transaction type
 | `InfoTransaction` |
 | `PaymentAuthorization` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+LineItemTransactionType lineItemTransactionType = LineItemTransactionType.Payment;
+```
+

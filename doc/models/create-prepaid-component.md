@@ -11,36 +11,47 @@
 |  --- | --- | --- | --- |
 | `PrepaidUsageComponent` | [`PrepaidUsageComponent`](../../doc/models/prepaid-usage-component.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Collections.Generic;
+
+CreatePrepaidComponent createPrepaidComponent = new CreatePrepaidComponent
 {
-  "prepaid_usage_component": {
-    "name": "name2",
-    "unit_name": "unit_name4",
-    "description": "description2",
-    "handle": "handle8",
-    "taxable": false,
-    "pricing_scheme": "per_unit",
-    "prices": [
-      {
-        "starting_quantity": 242,
-        "ending_quantity": 40,
-        "unit_price": 23.26
-      }
-    ],
-    "upgrade_charge": "full",
-    "overage_pricing": {
-      "pricing_scheme": "stairstep",
-      "prices": [
+    PrepaidUsageComponent = new PrepaidUsageComponent
+    {
+        Name = "name2",
+        UnitName = "unit_name4",
+        PricingScheme = PricingScheme.PerUnit,
+        OveragePricing = new OveragePricing
         {
-          "starting_quantity": 242,
-          "ending_quantity": 40,
-          "unit_price": 23.26
-        }
-      ]
-    }
-  }
-}
+            PricingScheme = PricingScheme.Stairstep,
+            Prices = new List<Price>
+            {
+                new Price
+                {
+                    StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                    UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                    EndingQuantity = PriceEndingQuantity.FromNumber(40),
+                },
+            },
+        },
+        Description = "description2",
+        Handle = "handle8",
+        Taxable = false,
+        Prices = new List<Price>
+        {
+            new Price
+            {
+                StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                EndingQuantity = PriceEndingQuantity.FromNumber(40),
+            },
+        },
+        UpgradeCharge = CreditType.Full,
+    },
+};
 ```
 

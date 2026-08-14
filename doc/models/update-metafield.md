@@ -12,26 +12,34 @@
 | `CurrentName` | `string` | Optional | - |
 | `Name` | `string` | Optional | - |
 | `Scope` | [`MetafieldScope`](../../doc/models/metafield-scope.md) | Optional | Warning: When updating a metafield's scope attribute, all scope attributes must be passed. Partially complete scope attributes will override the existing settings. |
-| `InputType` | [`MetafieldInput?`](../../doc/models/metafield-input.md) | Optional | Indicates the type of metafield. A text metafield allows any string value. Dropdown and radio metafields have a set of values that can be selected.  Defaults to 'text'. |
+| `InputType` | [`MetafieldInput?`](../../doc/models/metafield-input.md) | Optional | Indicates the type of metafield. A text metafield allows any string value. Dropdown and radio metafields have a set of values that can be selected. Defaults to 'text'. |
 | `Enum` | `List<string>` | Optional | Only applicable when input_type is radio or dropdown. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+UpdateMetafield updateMetafield = new UpdateMetafield
 {
-  "current_name": "current_name0",
-  "name": "name6",
-  "scope": {
-    "csv": "0",
-    "invoices": "0",
-    "statements": "0",
-    "portal": "0",
-    "public_show": "0"
-  },
-  "input_type": "balance_tracker",
-  "enum": [
-    "enum2"
-  ]
-}
+    CurrentName = "current_name6",
+    Name = "name2",
+    Scope = new MetafieldScope
+    {
+        Csv = IncludeOption.Exclude,
+        Invoices = IncludeOption.Exclude,
+        Statements = IncludeOption.Exclude,
+        Portal = IncludeOption.Exclude,
+        PublicShow = IncludeOption.Exclude,
+    },
+    InputType = MetafieldInput.Radio,
+    MEnum = new List<string>
+    {
+        "enum8",
+        "enum9",
+        "enum0",
+    },
+};
 ```
 

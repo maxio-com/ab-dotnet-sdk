@@ -21,6 +21,7 @@
 | `RenewalFailure` |
 | `SubscriptionStateChange` |
 | `SubscriptionProductChange` |
+| `SubscriptionProductChangeScheduled` |
 | `PendingCancellationChange` |
 | `ExpiringCard` |
 | `CustomerUpdate` |
@@ -92,4 +93,12 @@
 | `SubscriptionTermRenewalPending` |
 | `SubscriptionTermRenewalActivated` |
 | `SubscriptionTermRenewalRemoved` |
+
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+EventKey eventKey = EventKey.SubscriptionGroupSignupSuccess;
+```
 

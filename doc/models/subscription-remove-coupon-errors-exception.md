@@ -11,13 +11,20 @@
 |  --- | --- | --- | --- |
 | `Subscription` | `List<string>` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+try
 {
-  "subscription": [
-    "subscription0"
-  ]
+    // make the API call
+}
+catch (ApiException e)
+{
+    if (e is SubscriptionRemoveCouponErrorsException)
+    {
+        // TODO: Handle SubscriptionRemoveCouponErrorsException
+        Console.WriteLine(e.Message);
+    }
 }
 ```
 

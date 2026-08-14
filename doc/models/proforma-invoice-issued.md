@@ -21,29 +21,38 @@
 | `ProductName` | `string` | Required | - |
 | `LineItems` | [`List<InvoiceLineItemEventData>`](../../doc/models/invoice-line-item-event-data.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+using System.Globalization;
+
+ProformaInvoiceIssued proformaInvoiceIssued = new ProformaInvoiceIssued
 {
-  "uid": "uid0",
-  "number": "number2",
-  "role": "role6",
-  "delivery_date": "2016-03-13",
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "due_amount": "due_amount2",
-  "paid_amount": "paid_amount8",
-  "tax_amount": "tax_amount6",
-  "total_amount": "total_amount6",
-  "product_name": "product_name6",
-  "line_items": [
+    Uid = "uid6",
+    Number = "number4",
+    Role = "role0",
+    DeliveryDate = DateTime.Parse("2016-03-13"),
+    CreatedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    DueAmount = "due_amount8",
+    PaidAmount = "paid_amount8",
+    TaxAmount = "tax_amount0",
+    TotalAmount = "total_amount2",
+    ProductName = "product_name2",
+    LineItems = new List<InvoiceLineItemEventData>
     {
-      "uid": "uid8",
-      "title": "title4",
-      "description": "description8",
-      "quantity": 102,
-      "quantity_delta": 204
-    }
-  ]
-}
+        new InvoiceLineItemEventData
+        {
+            Uid = "uid8",
+            Title = "title4",
+            Description = "description8",
+            Quantity = 102,
+            QuantityDelta = 204,
+        },
+    },
+};
 ```
 

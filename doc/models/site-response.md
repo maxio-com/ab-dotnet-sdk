@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- |
 | `Site` | [`Site`](../../doc/models/site.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SiteResponse siteResponse = new SiteResponse
 {
-  "site": {
-    "id": 64,
-    "name": "name4",
-    "subdomain": "subdomain0",
-    "currency": "currency4",
-    "seller_id": 228
-  }
-}
+    Site = new Site
+    {
+        Id = 64,
+        Name = "name4",
+        Subdomain = "subdomain0",
+        Currency = "currency4",
+        SellerId = 228,
+    },
+};
 ```
 

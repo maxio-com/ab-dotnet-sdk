@@ -11,17 +11,26 @@
 |  --- | --- | --- | --- |
 | `AllocationPreview` | [`AllocationPreview`](../../doc/models/allocation-preview.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+AllocationPreviewResponse allocationPreviewResponse = new AllocationPreviewResponse
 {
-  "allocation_preview": {
-    "start_date": "2016-03-13T12:52:32.123Z",
-    "end_date": "2016-03-13T12:52:32.123Z",
-    "subtotal_in_cents": 240,
-    "total_tax_in_cents": 108,
-    "total_discount_in_cents": 142
-  }
-}
+    AllocationPreview = new AllocationPreview
+    {
+        StartDate = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
+        EndDate = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
+        SubtotalInCents = 240L,
+        TotalTaxInCents = 108L,
+        TotalDiscountInCents = 142L,
+    },
+};
 ```
 

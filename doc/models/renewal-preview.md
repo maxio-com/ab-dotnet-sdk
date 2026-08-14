@@ -19,15 +19,21 @@
 | `UncalculatedTaxes` | `bool?` | Optional | A boolean indicating whether or not additional taxes will be calculated at the time of renewal. This will be true if you are using Avalara and the address of the subscription is in one of your defined taxable regions. |
 | `LineItems` | [`List<RenewalPreviewLineItem>`](../../doc/models/renewal-preview-line-item.md) | Optional | An array of objects representing the individual transactions that will be created at the next renewal |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+RenewalPreview renewalPreview = new RenewalPreview
 {
-  "next_assessment_at": "2016-03-13T12:52:32.123Z",
-  "subtotal_in_cents": 160,
-  "total_tax_in_cents": 28,
-  "total_discount_in_cents": 34,
-  "total_in_cents": 48
-}
+    NextAssessmentAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    SubtotalInCents = 102L,
+    TotalTaxInCents = 226L,
+    TotalDiscountInCents = 232L,
+    TotalInCents = 246L,
+};
 ```
 

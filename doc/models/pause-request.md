@@ -1,7 +1,7 @@
 
 # Pause Request
 
-Allows to pause a Subscription
+Allows you to pause a Subscription.
 
 ## Structure
 
@@ -13,13 +13,20 @@ Allows to pause a Subscription
 |  --- | --- | --- | --- |
 | `Hold` | [`AutoResume`](../../doc/models/auto-resume.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+PauseRequest pauseRequest = new PauseRequest
 {
-  "hold": {
-    "automatically_resume_at": "2016-03-13T12:52:32.123Z"
-  }
-}
+    Hold = new AutoResume
+    {
+        AutomaticallyResumeAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
+    },
+};
 ```
 

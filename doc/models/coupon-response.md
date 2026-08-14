@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- |
 | `Coupon` | [`Coupon`](../../doc/models/coupon.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CouponResponse couponResponse = new CouponResponse
 {
-  "coupon": {
-    "id": 196,
-    "name": "name4",
-    "code": "code2",
-    "description": "description6",
-    "amount": 97.66
-  }
-}
+    Coupon = new Coupon
+    {
+        Id = 196,
+        Name = "name4",
+        Code = "code2",
+        Description = "description6",
+        Amount = 97.66,
+    },
+};
 ```
 

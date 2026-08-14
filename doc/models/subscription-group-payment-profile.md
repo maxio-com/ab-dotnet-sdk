@@ -14,14 +14,17 @@
 | `LastName` | `string` | Optional | - |
 | `MaskedCardNumber` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionGroupPaymentProfile subscriptionGroupPaymentProfile = new SubscriptionGroupPaymentProfile
 {
-  "id": 22,
-  "first_name": "first_name4",
-  "last_name": "last_name2",
-  "masked_card_number": "masked_card_number2"
-}
+    Id = 246,
+    FirstName = "first_name6",
+    LastName = "last_name4",
+    MaskedCardNumber = "masked_card_number4",
+};
 ```
 

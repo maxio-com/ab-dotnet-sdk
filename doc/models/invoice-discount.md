@@ -22,15 +22,18 @@
 | `TransactionId` | `int?` | Optional | - |
 | `LineItemBreakouts` | [`List<InvoiceDiscountBreakout>`](../../doc/models/invoice-discount-breakout.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoiceDiscount invoiceDiscount = new InvoiceDiscount
 {
-  "uid": "uid0",
-  "title": "title4",
-  "description": "description0",
-  "code": "code8",
-  "source_type": "Coupon"
-}
+    Uid = "uid4",
+    Title = "title0",
+    Description = "description6",
+    Code = "code2",
+    SourceType = InvoiceDiscountSourceType.Coupon,
+};
 ```
 

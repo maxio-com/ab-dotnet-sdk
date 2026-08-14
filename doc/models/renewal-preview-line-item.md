@@ -24,15 +24,18 @@
 | `PeriodRangeStart` | `string` | Optional | - |
 | `PeriodRangeEnd` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+RenewalPreviewLineItem renewalPreviewLineItem = new RenewalPreviewLineItem
 {
-  "transaction_type": "charge",
-  "kind": "prepaid_usage_component",
-  "amount_in_cents": 154,
-  "memo": "memo0",
-  "discount_amount_in_cents": 214
-}
+    TransactionType = LineItemTransactionType.Adjustment,
+    Kind = LineItemKind.PrepaidUsageComponent,
+    AmountInCents = 32L,
+    Memo = "memo0",
+    DiscountAmountInCents = 228L,
+};
 ```
 

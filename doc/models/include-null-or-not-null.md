@@ -16,7 +16,9 @@ Allows to filter by `not_null` or `null`.
 
 ## Example
 
-```
-not_null
+```csharp
+using AdvancedBilling.Standard.Models;
+
+IncludeNullOrNotNull includeNullOrNotNull = IncludeNullOrNotNull.NotNull;
 ```
 

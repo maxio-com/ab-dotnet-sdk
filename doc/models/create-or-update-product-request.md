@@ -11,22 +11,26 @@
 |  --- | --- | --- | --- |
 | `Product` | [`CreateOrUpdateProduct`](../../doc/models/create-or-update-product.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreateOrUpdateProductRequest createOrUpdateProductRequest = new CreateOrUpdateProductRequest
 {
-  "product": {
-    "name": "name0",
-    "handle": "handle6",
-    "description": "description0",
-    "accounting_code": "accounting_code6",
-    "require_credit_card": false,
-    "price_in_cents": 54,
-    "interval": 186,
-    "interval_unit": "day",
-    "trial_price_in_cents": 34,
-    "trial_interval": 88
-  }
-}
+    Product = new CreateOrUpdateProduct
+    {
+        Name = "name0",
+        Description = "description0",
+        PriceInCents = 54L,
+        Interval = 186,
+        IntervalUnit = IntervalUnit.Day,
+        Handle = "handle6",
+        AccountingCode = "accounting_code6",
+        RequireCreditCard = false,
+        TrialPriceInCents = 34L,
+        TrialInterval = 88,
+    },
+};
 ```
 

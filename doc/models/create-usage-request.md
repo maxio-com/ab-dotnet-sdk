@@ -11,37 +11,48 @@
 |  --- | --- | --- | --- |
 | `Usage` | [`CreateUsage`](../../doc/models/create-usage.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Collections.Generic;
+
+CreateUsageRequest createUsageRequest = new CreateUsageRequest
 {
-  "usage": {
-    "quantity": 162.34,
-    "price_point_id": "price_point_id0",
-    "memo": "memo2",
-    "billing_schedule": {
-      "initial_billing_at": "2016-03-13"
-    },
-    "custom_price": {
-      "tax_included": false,
-      "pricing_scheme": "stairstep",
-      "interval": 66,
-      "interval_unit": "day",
-      "list_price_point_id": 174,
-      "prices": [
+    Usage = new CreateUsage
+    {
+        Quantity = 162.34,
+        PricePointId = "price_point_id0",
+        Memo = "memo2",
+        BillingSchedule = new BillingSchedule
         {
-          "starting_quantity": 242,
-          "ending_quantity": 40,
-          "unit_price": 23.26
+            InitialBillingAt = DateTime.Parse("2016-03-13"),
         },
+        CustomPrice = new ComponentCustomPrice
         {
-          "starting_quantity": 242,
-          "ending_quantity": 40,
-          "unit_price": 23.26
-        }
-      ]
-    }
-  }
-}
+            Prices = new List<Price>
+            {
+                new Price
+                {
+                    StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                    UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                    EndingQuantity = PriceEndingQuantity.FromNumber(40),
+                },
+                new Price
+                {
+                    StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                    UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                    EndingQuantity = PriceEndingQuantity.FromNumber(40),
+                },
+            },
+            TaxIncluded = false,
+            PricingScheme = PricingScheme.Stairstep,
+            Interval = 66,
+            IntervalUnit = IntervalUnit.Day,
+            ListPricePointId = 174,
+        },
+    },
+};
 ```
 

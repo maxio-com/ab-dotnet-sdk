@@ -16,9 +16,11 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class CreateSubscription : BaseModel
     {
+        private int? brandingThemeId;
         private string dunningCommunicationDelayTimeZone;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
+            { "branding_theme_id", false },
             { "dunning_communication_delay_time_zone", false },
         };
 
@@ -43,6 +45,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="receivesInvoiceEmails">receives_invoice_emails.</param>
         /// <param name="netTerms">net_terms.</param>
         /// <param name="customerId">customer_id.</param>
+        /// <param name="brandingThemeId">branding_theme_id.</param>
         /// <param name="nextBillingAt">next_billing_at.</param>
         /// <param name="initialBillingAt">initial_billing_at.</param>
         /// <param name="deferSignup">defer_signup.</param>
@@ -94,6 +97,7 @@ namespace AdvancedBilling.Standard.Models
             string receivesInvoiceEmails = null,
             string netTerms = null,
             int? customerId = null,
+            int? brandingThemeId = null,
             DateTimeOffset? nextBillingAt = null,
             DateTimeOffset? initialBillingAt = null,
             bool? deferSignup = false,
@@ -145,6 +149,11 @@ namespace AdvancedBilling.Standard.Models
             this.ReceivesInvoiceEmails = receivesInvoiceEmails;
             this.NetTerms = netTerms;
             this.CustomerId = customerId;
+
+            if (brandingThemeId != null)
+            {
+                this.BrandingThemeId = brandingThemeId;
+            }
             this.NextBillingAt = nextBillingAt;
             this.InitialBillingAt = initialBillingAt;
             this.DeferSignup = deferSignup;
@@ -257,6 +266,24 @@ namespace AdvancedBilling.Standard.Models
         public int? CustomerId { get; set; }
 
         /// <summary>
+        /// The ID of the Branding Theme to assign to this subscription. When set, this subscription-level Branding Theme is used instead of the customer's default Branding Theme for subscription-related documents and communications that use subscription theming. Pass null or an empty value to clear the subscription-level Branding Theme. Available only when Branding Themes are enabled for the site. Not returned in the response.
+        /// </summary>
+        [JsonProperty("branding_theme_id")]
+        public int? BrandingThemeId
+        {
+            get
+            {
+                return this.brandingThemeId;
+            }
+
+            set
+            {
+                this.shouldSerialize["branding_theme_id"] = true;
+                this.brandingThemeId = value;
+            }
+        }
+
+        /// <summary>
         /// (Optional) Set this attribute to a future date/time to sync imported subscriptions to your existing renewal schedule. See the notes on “Date/Time Format” in our [subscription import documentation](https://maxio.zendesk.com/hc/en-us/articles/24251489107213-Advanced-Billing-Subscription-Imports#date-format). If you provide a next_billing_at timestamp that is in the future, no trial or initial charges will be applied when you create the subscription. In fact, no payment will be captured at all. The first payment will be captured, according to the prices defined by the product, near the time specified by next_billing_at. If you do not provide a value for next_billing_at, any trial and/or initial charges will be assessed and charged at the time of subscription creation. If the card cannot be successfully charged, the subscription will not be created. See further notes in the section on Importing Subscriptions.
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
@@ -271,7 +298,7 @@ namespace AdvancedBilling.Standard.Models
         public DateTimeOffset? InitialBillingAt { get; set; }
 
         /// <summary>
-        /// (Optional) Set this attribute to true to create the subscription in the Awaiting Signup Date state. Use this when you want to create a subscription that has an unknown first  billing date. When the first billing date is known, update a subscription and set the `initial_billing_at` date. The subscription moves to the Awaiting Signup state with a scheduled initial billing date. You can omit the initial_billing_at date to activate the subscription immediately. See [Subscription States](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404222005773-Subscription-States) for more information.
+        /// (Optional) Set this attribute to true to create the subscription in the Awaiting Signup Date state. Use this when you want to create a subscription that has an unknown first billing date. When the first billing date is known, update a subscription and set the `initial_billing_at` date. The subscription moves to the Awaiting Signup state with a scheduled initial billing date. You can omit the initial_billing_at date to activate the subscription immediately. See [Subscription States](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404222005773-Subscription-States) for more information.
         /// </summary>
         [JsonProperty("defer_signup", NullValueHandling = NullValueHandling.Ignore)]
         public bool? DeferSignup { get; set; }
@@ -289,7 +316,7 @@ namespace AdvancedBilling.Standard.Models
         public int? SalesRepId { get; set; }
 
         /// <summary>
-        /// The Payment Profile ID of an existing card or bank account, which belongs to an existing customer to use for payment for this subscription. If the card, bank account, or customer does not exist already, or if you want to use a new (unstored) card or bank account for the subscription, use `payment_profile_attributes` instead to create a new payment profile along with the subscription. (This value is available on an existing subscription via the API as `credit_card` > id or `bank_account` > id)
+        /// The Payment Profile ID of an existing card or bank account, which belongs to an existing customer to use for payment for this subscription. If the card, bank account, or customer does not exist already, or if you want to use a new (unstored) card or bank account for the subscription, use `payment_profile_attributes` instead to create a new payment profile along with the subscription. (This value is available on an existing subscription via the API as `credit_card` > id or `bank_account` > id.)
         /// </summary>
         [JsonProperty("payment_profile_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? PaymentProfileId { get; set; }
@@ -331,7 +358,7 @@ namespace AdvancedBilling.Standard.Models
         public List<Models.CreateSubscriptionComponent> Components { get; set; }
 
         /// <summary>
-        /// (Optional). Cannot be used when also specifying next_billing_at
+        /// (Optional). Cannot be used when also specifying next_billing_at.
         /// </summary>
         [JsonProperty("calendar_billing", NullValueHandling = NullValueHandling.Ignore)]
         public Models.CalendarBilling CalendarBilling { get; set; }
@@ -428,7 +455,7 @@ namespace AdvancedBilling.Standard.Models
         public bool? ProductChangeDelayed { get; set; }
 
         /// <summary>
-        /// Use in place of passing product and component information to set up the subscription with an existing offer. May be either the Chargify id of the offer or its handle prefixed with `handle:`.er
+        /// Use in place of passing product and component information to set up the subscription with an existing offer. May be either the Chargify id of the offer or its handle prefixed with `handle:`.
         /// </summary>
         [JsonProperty("offer_id", NullValueHandling = NullValueHandling.Ignore)]
         public CreateSubscriptionOfferId OfferId { get; set; }
@@ -519,9 +546,25 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
+        public void UnsetBrandingThemeId()
+        {
+            this.shouldSerialize["branding_theme_id"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
         public void UnsetDunningCommunicationDelayTimeZone()
         {
             this.shouldSerialize["dunning_communication_delay_time_zone"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeBrandingThemeId()
+        {
+            return this.shouldSerialize["branding_theme_id"];
         }
 
         /// <summary>
@@ -562,6 +605,8 @@ namespace AdvancedBilling.Standard.Models
                  this.NetTerms?.Equals(other.NetTerms) == true) &&
                 (this.CustomerId == null && other.CustomerId == null ||
                  this.CustomerId?.Equals(other.CustomerId) == true) &&
+                (this.BrandingThemeId == null && other.BrandingThemeId == null ||
+                 this.BrandingThemeId?.Equals(other.BrandingThemeId) == true) &&
                 (this.NextBillingAt == null && other.NextBillingAt == null ||
                  this.NextBillingAt?.Equals(other.NextBillingAt) == true) &&
                 (this.InitialBillingAt == null && other.InitialBillingAt == null ||
@@ -660,6 +705,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"ReceivesInvoiceEmails = {this.ReceivesInvoiceEmails ?? "null"}");
             toStringOutput.Add($"NetTerms = {this.NetTerms ?? "null"}");
             toStringOutput.Add($"CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
+            toStringOutput.Add($"BrandingThemeId = {(this.BrandingThemeId == null ? "null" : this.BrandingThemeId.ToString())}");
             toStringOutput.Add($"NextBillingAt = {(this.NextBillingAt == null ? "null" : this.NextBillingAt.ToString())}");
             toStringOutput.Add($"InitialBillingAt = {(this.InitialBillingAt == null ? "null" : this.InitialBillingAt.ToString())}");
             toStringOutput.Add($"DeferSignup = {(this.DeferSignup == null ? "null" : this.DeferSignup.ToString())}");

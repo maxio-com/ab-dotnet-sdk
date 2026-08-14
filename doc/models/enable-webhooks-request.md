@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- |
 | `WebhooksEnabled` | `bool` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+EnableWebhooksRequest enableWebhooksRequest = new EnableWebhooksRequest
 {
-  "webhooks_enabled": false
-}
+    WebhooksEnabled = false,
+};
 ```
 

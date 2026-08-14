@@ -12,12 +12,15 @@
 | `CurrentPage` | `int?` | Optional | - |
 | `TotalCount` | `int?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ListSubscriptionGroupsMeta listSubscriptionGroupsMeta = new ListSubscriptionGroupsMeta
 {
-  "current_page": 14,
-  "total_count": 38
-}
+    CurrentPage = 104,
+    TotalCount = 128,
+};
 ```
 

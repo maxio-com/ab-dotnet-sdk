@@ -15,15 +15,18 @@
 | `EntryType` | [`ServiceCreditType?`](../../doc/models/service-credit-type.md) | Optional | The type of entry |
 | `Memo` | `string` | Optional | A memo attached to the entry. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionGroupPrepaymentResponse subscriptionGroupPrepaymentResponse = new SubscriptionGroupPrepaymentResponse
 {
-  "id": 110,
-  "amount_in_cents": 196,
-  "ending_balance_in_cents": 236,
-  "entry_type": "Credit",
-  "memo": "memo2"
-}
+    Id = 32,
+    AmountInCents = 138L,
+    EndingBalanceInCents = 158L,
+    EntryType = ServiceCreditType.Credit,
+    Memo = "memo2",
+};
 ```
 

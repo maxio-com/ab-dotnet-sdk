@@ -12,14 +12,19 @@
 | `Name` | `string` | Required | - |
 | `Handle` | `string` | Optional | - |
 | `Description` | `string` | Optional | - |
+| `Surcharging` | `bool?` | Optional | Whether surcharging applies to this product family. Defaults to `true` when omitted. Only applied on sites where surcharging is enabled. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreateProductFamily createProductFamily = new CreateProductFamily
 {
-  "name": "name6",
-  "handle": "handle2",
-  "description": "description6"
-}
+    Name = "name0",
+    Handle = "handle6",
+    Description = "description0",
+    Surcharging = false,
+};
 ```
 

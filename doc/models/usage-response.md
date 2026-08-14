@@ -11,17 +11,25 @@
 |  --- | --- | --- | --- |
 | `Usage` | [`Usage`](../../doc/models/usage.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Globalization;
+
+UsageResponse usageResponse = new UsageResponse
 {
-  "usage": {
-    "id": 150,
-    "memo": "memo2",
-    "created_at": "2016-03-13T12:52:32.123Z",
-    "price_point_id": 28,
-    "quantity": 28
-  }
-}
+    Usage = new Usage
+    {
+        Id = 150L,
+        Memo = "memo2",
+        CreatedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+            provider: CultureInfo.InvariantCulture,
+            DateTimeStyles.RoundtripKind),
+        PricePointId = 28,
+        Quantity = UsageQuantity.FromNumber(28),
+    },
+};
 ```
 

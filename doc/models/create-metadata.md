@@ -12,12 +12,15 @@
 | `Name` | `string` | Optional | - |
 | `MValue` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreateMetadata createMetadata = new CreateMetadata
 {
-  "name": "name4",
-  "value": "value6"
-}
+    Name = "name0",
+    MValue = "value2",
+};
 ```
 

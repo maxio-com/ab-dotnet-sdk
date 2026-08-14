@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- |
 | `ProductFamily` | [`ProductFamily`](../../doc/models/product-family.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ProductFamilyResponse productFamilyResponse = new ProductFamilyResponse
 {
-  "product_family": {
-    "id": 14,
-    "name": "name0",
-    "handle": "handle6",
-    "accounting_code": "accounting_code6",
-    "description": "description0"
-  }
-}
+    ProductFamily = new ProductFamily
+    {
+        Id = 14,
+        Name = "name0",
+        Handle = "handle6",
+        AccountingCode = "accounting_code6",
+        Description = "description0",
+    },
+};
 ```
 

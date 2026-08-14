@@ -76,7 +76,7 @@ namespace AdvancedBilling.Standard.Models
         public string BankName { get; set; }
 
         /// <summary>
-        /// (Required when creating a subscription with ACH. Optional when creating a subscription with GoCardless). The routing number of the bank. It becomes bank_code while passing via GoCardless API
+        /// (Required when creating a subscription with ACH; optional when creating a subscription with GoCardless). The routing number of the bank. It becomes bank_code while passing via GoCardless API.
         /// </summary>
         [JsonProperty("bank_routing_number", NullValueHandling = NullValueHandling.Ignore)]
         public string BankRoutingNumber { get; set; }
@@ -94,13 +94,13 @@ namespace AdvancedBilling.Standard.Models
         public Models.BankAccountType? BankAccountType { get; set; }
 
         /// <summary>
-        /// (Optional when creating a subscription with GoCardless) Branch code. Alternatively, an IBAN can be provided
+        /// (Optional when creating a subscription with GoCardless) Branch code. Alternatively, an IBAN can be provided.
         /// </summary>
         [JsonProperty("bank_branch_code", NullValueHandling = NullValueHandling.Ignore)]
         public string BankBranchCode { get; set; }
 
         /// <summary>
-        /// (Optional when creating a subscription with GoCardless). International Bank Account Number. Alternatively, local bank details can be provided
+        /// (Optional when creating a subscription with GoCardless). International Bank Account Number. Alternatively, local bank details can be provided.
         /// </summary>
         [JsonProperty("bank_iban", NullValueHandling = NullValueHandling.Ignore)]
         public string BankIban { get; set; }

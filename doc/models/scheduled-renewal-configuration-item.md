@@ -21,15 +21,18 @@
 | `DecimalQuantity` | `string` | Optional | - |
 | `CreatedAt` | `DateTimeOffset?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ScheduledRenewalConfigurationItem scheduledRenewalConfigurationItem = new ScheduledRenewalConfigurationItem
 {
-  "id": 146,
-  "subscription_id": 0,
-  "subscription_renewal_configuration_id": 156,
-  "item_id": 38,
-  "item_type": "item_type4"
-}
+    Id = 54,
+    SubscriptionId = 164,
+    SubscriptionRenewalConfigurationId = 64,
+    ItemId = 202,
+    ItemType = "item_type0",
+};
 ```
 

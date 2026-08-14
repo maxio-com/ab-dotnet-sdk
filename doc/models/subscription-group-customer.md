@@ -15,15 +15,18 @@
 | `Email` | `string` | Optional | - |
 | `Reference` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionGroupCustomer subscriptionGroupCustomer = new SubscriptionGroupCustomer
 {
-  "first_name": "first_name4",
-  "last_name": "last_name2",
-  "organization": "organization2",
-  "email": "email2",
-  "reference": "reference0"
-}
+    FirstName = "first_name6",
+    LastName = "last_name4",
+    Organization = "organization0",
+    Email = "email0",
+    Reference = "reference8",
+};
 ```
 

@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- |
 | `Message` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+DelayedCancellationResponse delayedCancellationResponse = new DelayedCancellationResponse
 {
-  "message": "message8"
-}
+    Message = "message4",
+};
 ```
 

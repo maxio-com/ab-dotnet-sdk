@@ -16,3 +16,11 @@
 | `Active` |
 | `Fulfilled` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+Status status = Status.Pending;
+```
+

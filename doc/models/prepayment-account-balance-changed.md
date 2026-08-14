@@ -14,14 +14,17 @@
 | `PrepaymentBalanceChangeInCents` | `long` | Required | - |
 | `CurrencyCode` | `string` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PrepaymentAccountBalanceChanged prepaymentAccountBalanceChanged = new PrepaymentAccountBalanceChanged
 {
-  "reason": "reason4",
-  "prepayment_account_balance_in_cents": 182,
-  "prepayment_balance_change_in_cents": 206,
-  "currency_code": "currency_code4"
-}
+    Reason = "reason8",
+    PrepaymentAccountBalanceInCents = 134L,
+    PrepaymentBalanceChangeInCents = 158L,
+    CurrencyCode = "currency_code8",
+};
 ```
 

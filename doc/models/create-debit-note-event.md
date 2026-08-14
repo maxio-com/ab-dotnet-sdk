@@ -15,31 +15,39 @@
 | `EventType` | [`InvoiceEventType`](../../doc/models/invoice-event-type.md) | Required | **Default**: `InvoiceEventType.create_debit_note` |
 | `EventData` | [`DebitNote`](../../doc/models/debit-note.md) | Required | Example schema for an `create_debit_note` event |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+CreateDebitNoteEvent createDebitNoteEvent = new CreateDebitNoteEvent
 {
-  "id": 98,
-  "timestamp": "2016-03-13T12:52:32.123Z",
-  "invoice": {
-    "issue_date": "2024-01-01",
-    "due_date": "2024-01-01",
-    "paid_date": "2024-01-01",
-    "public_url_expires_on": "2024-01-21",
-    "id": 166,
-    "uid": "uid6",
-    "site_id": 92,
-    "customer_id": 204,
-    "subscription_id": 20
-  },
-  "event_type": "create_debit_note",
-  "event_data": {
-    "uid": "uid6",
-    "site_id": 132,
-    "customer_id": 244,
-    "subscription_id": 60,
-    "number": 64
-  }
-}
+    Id = 176L,
+    Timestamp = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    Invoice = new Invoice
+    {
+        Id = 166L,
+        Uid = "uid6",
+        SiteId = 92,
+        CustomerId = 204,
+        SubscriptionId = 20,
+        IssueDate = DateTime.Parse("2024-01-01"),
+        DueDate = DateTime.Parse("2024-01-01"),
+        PaidDate = DateTime.Parse("2024-01-01"),
+        PublicUrlExpiresOn = DateTime.Parse("2024-01-21"),
+    },
+    EventType = InvoiceEventType.CreateDebitNote,
+    EventData = new DebitNote
+    {
+        Uid = "uid6",
+        SiteId = 132,
+        CustomerId = 244,
+        SubscriptionId = 60,
+        Number = 64,
+    },
+};
 ```
 

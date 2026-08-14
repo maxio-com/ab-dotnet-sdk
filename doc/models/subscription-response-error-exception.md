@@ -11,17 +11,20 @@
 |  --- | --- | --- | --- |
 | `Subscription` | [`Subscription`](../../doc/models/subscription.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+try
 {
-  "subscription": {
-    "id": 8,
-    "state": "paused",
-    "balance_in_cents": 124,
-    "total_revenue_in_cents": 48,
-    "product_price_in_cents": 238
-  }
+    // make the API call
+}
+catch (ApiException e)
+{
+    if (e is SubscriptionResponseErrorException)
+    {
+        // TODO: Handle SubscriptionResponseErrorException
+        Console.WriteLine(e.Message);
+    }
 }
 ```
 

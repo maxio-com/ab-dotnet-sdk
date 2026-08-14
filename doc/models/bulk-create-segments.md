@@ -11,36 +11,47 @@
 |  --- | --- | --- | --- |
 | `Segments` | [`List<CreateSegment>`](../../doc/models/create-segment.md) | Optional | **Constraints**: *Maximum Items*: `2000` |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Collections.Generic;
+
+BulkCreateSegments bulkCreateSegments = new BulkCreateSegments
 {
-  "segments": [
+    Segments = new List<CreateSegment>
     {
-      "segment_property_1_value": "String3",
-      "segment_property_2_value": "String5",
-      "segment_property_3_value": "String3",
-      "segment_property_4_value": "String7",
-      "pricing_scheme": "stairstep",
-      "prices": [
+        new CreateSegment
         {
-          "starting_quantity": 64,
-          "ending_quantity": 38,
-          "unit_price": "String3"
+            PricingScheme = PricingScheme.Stairstep,
+            SegmentProperty1Value = CreateSegmentSegmentProperty1Value.FromString("String3"),
+            SegmentProperty2Value = CreateSegmentSegmentProperty2Value.FromString("String5"),
+            SegmentProperty3Value = CreateSegmentSegmentProperty3Value.FromString("String3"),
+            SegmentProperty4Value = CreateSegmentSegmentProperty4Value.FromString("String7"),
+            Prices = new List<CreateOrUpdateSegmentPrice>
+            {
+                new CreateOrUpdateSegmentPrice
+                {
+                    UnitPrice = CreateOrUpdateSegmentPriceUnitPrice.FromString("String3"),
+                    StartingQuantity = 64,
+                    EndingQuantity = 38,
+                },
+                new CreateOrUpdateSegmentPrice
+                {
+                    UnitPrice = CreateOrUpdateSegmentPriceUnitPrice.FromString("String3"),
+                    StartingQuantity = 64,
+                    EndingQuantity = 38,
+                },
+                new CreateOrUpdateSegmentPrice
+                {
+                    UnitPrice = CreateOrUpdateSegmentPriceUnitPrice.FromString("String3"),
+                    StartingQuantity = 64,
+                    EndingQuantity = 38,
+                },
+            },
         },
-        {
-          "starting_quantity": 64,
-          "ending_quantity": 38,
-          "unit_price": "String3"
-        },
-        {
-          "starting_quantity": 64,
-          "ending_quantity": 38,
-          "unit_price": "String3"
-        }
-      ]
-    }
-  ]
-}
+    },
+};
 ```
 

@@ -13,13 +13,16 @@
 | `Price` | `double?` | Optional | Price for the price level in this currency |
 | `PriceId` | `int?` | Optional | ID of the price that this corresponds with |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreateCurrencyPrice createCurrencyPrice = new CreateCurrencyPrice
 {
-  "currency": "currency2",
-  "price": 10.4,
-  "price_id": 54
-}
+    Currency = "currency2",
+    Price = 54.8,
+    PriceId = 142,
+};
 ```
 

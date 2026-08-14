@@ -15,15 +15,18 @@
 | `UnitPrice` | `string` | Optional | - |
 | `Amount` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ComponentCostDataRateTier componentCostDataRateTier = new ComponentCostDataRateTier
 {
-  "starting_quantity": 132,
-  "ending_quantity": 106,
-  "quantity": "quantity0",
-  "unit_price": "unit_price2",
-  "amount": "amount6"
-}
+    StartingQuantity = 204,
+    EndingQuantity = 178,
+    Quantity = "quantity4",
+    UnitPrice = "unit_price6",
+    Amount = "amount0",
+};
 ```
 

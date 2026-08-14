@@ -40,6 +40,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="handle">handle.</param>
         /// <param name="accountingCode">accounting_code.</param>
         /// <param name="description">description.</param>
+        /// <param name="surcharging">surcharging.</param>
         /// <param name="createdAt">created_at.</param>
         /// <param name="updatedAt">updated_at.</param>
         /// <param name="archivedAt">archived_at.</param>
@@ -49,6 +50,7 @@ namespace AdvancedBilling.Standard.Models
             string handle = null,
             string accountingCode = null,
             string description = null,
+            bool? surcharging = null,
             DateTimeOffset? createdAt = null,
             DateTimeOffset? updatedAt = null,
             DateTimeOffset? archivedAt = null)
@@ -66,6 +68,7 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.Description = description;
             }
+            this.Surcharging = surcharging;
             this.CreatedAt = createdAt;
             this.UpdatedAt = updatedAt;
 
@@ -128,6 +131,12 @@ namespace AdvancedBilling.Standard.Models
                 this.description = value;
             }
         }
+
+        /// <summary>
+        /// Whether surcharging applies to this product family. Only included on sites where surcharging is enabled.
+        /// </summary>
+        [JsonProperty("surcharging", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? Surcharging { get; set; }
 
         /// <summary>
         /// Gets or sets CreatedAt.
@@ -236,6 +245,8 @@ namespace AdvancedBilling.Standard.Models
                  this.AccountingCode?.Equals(other.AccountingCode) == true) &&
                 (this.Description == null && other.Description == null ||
                  this.Description?.Equals(other.Description) == true) &&
+                (this.Surcharging == null && other.Surcharging == null ||
+                 this.Surcharging?.Equals(other.Surcharging) == true) &&
                 (this.CreatedAt == null && other.CreatedAt == null ||
                  this.CreatedAt?.Equals(other.CreatedAt) == true) &&
                 (this.UpdatedAt == null && other.UpdatedAt == null ||
@@ -256,6 +267,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Handle = {this.Handle ?? "null"}");
             toStringOutput.Add($"AccountingCode = {this.AccountingCode ?? "null"}");
             toStringOutput.Add($"Description = {this.Description ?? "null"}");
+            toStringOutput.Add($"Surcharging = {(this.Surcharging == null ? "null" : this.Surcharging.ToString())}");
             toStringOutput.Add($"CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
             toStringOutput.Add($"UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
             toStringOutput.Add($"ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt.ToString())}");

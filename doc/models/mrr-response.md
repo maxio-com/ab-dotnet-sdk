@@ -11,22 +11,27 @@
 |  --- | --- | --- | --- |
 | `Mrr` | [`MRR`](../../doc/models/mrr.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+MRRResponse mRRResponse = new MRRResponse
 {
-  "mrr": {
-    "amount_in_cents": 198,
-    "amount_formatted": "amount_formatted6",
-    "currency": "currency4",
-    "currency_symbol": "currency_symbol2",
-    "breakouts": {
-      "plan_amount_in_cents": 254,
-      "plan_amount_formatted": "plan_amount_formatted0",
-      "usage_amount_in_cents": 106,
-      "usage_amount_formatted": "usage_amount_formatted8"
-    }
-  }
-}
+    Mrr = new MRR
+    {
+        AmountInCents = 198L,
+        AmountFormatted = "amount_formatted6",
+        Currency = "currency4",
+        CurrencySymbol = "currency_symbol2",
+        Breakouts = new Breakouts
+        {
+            PlanAmountInCents = 254L,
+            PlanAmountFormatted = "plan_amount_formatted0",
+            UsageAmountInCents = 106L,
+            UsageAmountFormatted = "usage_amount_formatted8",
+        },
+    },
+};
 ```
 

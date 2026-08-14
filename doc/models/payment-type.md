@@ -14,3 +14,11 @@
 | `PaypalAccount` |
 | `ApplePay` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PaymentType paymentType = PaymentType.CreditCard;
+```
+

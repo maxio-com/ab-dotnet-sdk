@@ -11,16 +11,20 @@
 |  --- | --- | --- | --- |
 | `Prepayment` | [`SubscriptionGroupPrepayment`](../../doc/models/subscription-group-prepayment.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionGroupPrepaymentRequest subscriptionGroupPrepaymentRequest = new SubscriptionGroupPrepaymentRequest
 {
-  "prepayment": {
-    "amount": 136,
-    "details": "details8",
-    "memo": "memo2",
-    "method": "paypal_account"
-  }
-}
+    Prepayment = new SubscriptionGroupPrepayment
+    {
+        Amount = 136,
+        Details = "details8",
+        Memo = "memo2",
+        Method = SubscriptionGroupPrepaymentMethod.PaypalAccount,
+    },
+};
 ```
 

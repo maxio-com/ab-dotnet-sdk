@@ -13,13 +13,16 @@
 | `EligibleAmount` | `string` | Optional | - |
 | `DiscountAmount` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoiceDiscountBreakout invoiceDiscountBreakout = new InvoiceDiscountBreakout
 {
-  "uid": "uid8",
-  "eligible_amount": "eligible_amount0",
-  "discount_amount": "discount_amount8"
-}
+    Uid = "uid0",
+    EligibleAmount = "eligible_amount2",
+    DiscountAmount = "discount_amount4",
+};
 ```
 

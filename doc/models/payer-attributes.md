@@ -28,19 +28,24 @@
 | `TaxExemptReason` | `string` | Optional | - |
 | `Metafields` | `Dictionary<string, string>` | Optional | (Optional) A set of key/value pairs representing custom fields and their values. Metafields will be created “on-the-fly” in your site for a given key, if they have not been created yet. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+PayerAttributes payerAttributes = new PayerAttributes
 {
-  "metafields": {
-    "custom_field_name_1": "custom_field_value_1",
-    "custom_field_name_2": "custom_field_value_2"
-  },
-  "first_name": "first_name4",
-  "last_name": "last_name2",
-  "email": "email2",
-  "cc_emails": "cc_emails4",
-  "organization": "organization8"
-}
+    FirstName = "first_name2",
+    LastName = "last_name0",
+    Email = "email4",
+    CcEmails = "cc_emails8",
+    Organization = "organization4",
+    Metafields = new Dictionary<string, string>
+    {
+        ["custom_field_name_1"] = "custom_field_value_1",
+        ["custom_field_name_2"] = "custom_field_value_2",
+    },
+};
 ```
 

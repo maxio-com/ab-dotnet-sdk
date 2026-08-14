@@ -18,15 +18,18 @@
 | `DiscountAmount` | `string` | Optional | **Constraints**: *Minimum Length*: `1` |
 | `LineItemBreakouts` | [`List<InvoiceDiscountBreakout>`](../../doc/models/invoice-discount-breakout.md) | Optional | **Constraints**: *Minimum Items*: `1`, *Unique Items Required* |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ProformaInvoiceDiscount proformaInvoiceDiscount = new ProformaInvoiceDiscount
 {
-  "uid": "uid2",
-  "title": "title8",
-  "code": "code0",
-  "source_type": "Coupon",
-  "discount_type": "percentage"
-}
+    Uid = "uid2",
+    Title = "title8",
+    Code = "code0",
+    SourceType = ProformaInvoiceDiscountSourceType.Coupon,
+    DiscountType = InvoiceDiscountType.Percentage,
+};
 ```
 

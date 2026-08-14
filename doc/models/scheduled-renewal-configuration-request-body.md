@@ -15,15 +15,25 @@
 | `ContractId` | `int?` | Optional | (Optional) Existing contract to associate with the scheduled renewal. Contracts must be enabled for your site. |
 | `CreateNewContract` | `bool?` | Optional | (Optional) Set to true to create a new contract when contracts are enabled. Contracts must be enabled for your site. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+ScheduledRenewalConfigurationRequestBody scheduledRenewalConfigurationRequestBody = new ScheduledRenewalConfigurationRequestBody
 {
-  "starts_at": "2016-03-13T12:52:32.123Z",
-  "ends_at": "2016-03-13T12:52:32.123Z",
-  "lock_in_at": "2016-03-13T12:52:32.123Z",
-  "contract_id": 110,
-  "create_new_contract": false
-}
+    StartsAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    EndsAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    LockInAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    ContractId = 162,
+    CreateNewContract = false,
+};
 ```
 

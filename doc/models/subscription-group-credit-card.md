@@ -30,16 +30,20 @@
 | `Cvv` | `string` | Optional | - |
 | `PaymentType` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+SubscriptionGroupCreditCard subscriptionGroupCreditCard = new SubscriptionGroupCreditCard
 {
-  "chargify_token": "tok_592nf92ng0sjd4300p",
-  "full_number": 4111111111111111,
-  "vault_token": "vault_token6",
-  "current_vault": "braintree_blue",
-  "gateway_handle": "gateway_handle6",
-  "first_name": "first_name4"
-}
+    ChargifyToken = "tok_592nf92ng0sjd4300p",
+    VaultToken = "vault_token0",
+    CurrentVault = CreditCardVault.BlueSnap,
+    GatewayHandle = "gateway_handle0",
+    FirstName = "first_name8",
+    FullNumber = SubscriptionGroupCreditCardFullNumber.FromNumber(4111111111111111),
+};
 ```
 

@@ -13,13 +13,17 @@
 | `EndingQuantity` | [`PriceEndingQuantity`](../../doc/models/containers/price-ending-quantity.md) | Optional | This is a container for one-of cases. |
 | `UnitPrice` | [`PriceUnitPrice`](../../doc/models/containers/price-unit-price.md) | Required | This is a container for one-of cases. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+
+Price price = new Price
 {
-  "starting_quantity": 40,
-  "ending_quantity": 14,
-  "unit_price": 125.12
-}
+    StartingQuantity = PriceStartingQuantity.FromNumber(132),
+    UnitPrice = PriceUnitPrice.FromPrecision(70.44),
+    EndingQuantity = PriceEndingQuantity.FromNumber(6),
+};
 ```
 

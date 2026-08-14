@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- |
 | `ProductPricePointId` | `string` | Required, Constant | Passed as a parameter to list methods to return only non null values.<br><br>**Value**: `"not_null"` |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PrepaidProductPricePointFilter prepaidProductPricePointFilter = new PrepaidProductPricePointFilter
 {
-  "product_price_point_id": "not_null"
-}
+    ProductPricePointId = "not_null",
+};
 ```
 

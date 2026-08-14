@@ -14,14 +14,17 @@
 | `AppliedAmount` | `string` | Optional | **Constraints**: *Minimum Length*: `1` |
 | `Prepayment` | `bool?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ProformaInvoicePayment proformaInvoicePayment = new ProformaInvoicePayment
 {
-  "memo": "memo4",
-  "original_amount": "original_amount4",
-  "applied_amount": "applied_amount8",
-  "prepayment": false
-}
+    Memo = "memo2",
+    OriginalAmount = "original_amount2",
+    AppliedAmount = "applied_amount0",
+    Prepayment = false,
+};
 ```
 

@@ -26,10 +26,9 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// Creates a note for a subscription.
-        /// ## How to Use Subscription Notes.
         /// Notes allow you to record information about a particular Subscription in a free text format.
-        /// If you have structured data such as birth date, color, etc., consider using Metadata instead.
-        /// Full documentation on how to use Notes in the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24251712214413-Subscription-Summary-Overview).
+        /// If you have structured data such as birth date, color, etc., consider using [Metadata]($e/Custom%20Fields/createMetadata) instead.
+        /// For more information, see [Adding Notes](https://docs.maxio.com/hc/en-us/articles/24251654953997-Understanding-the-Subscription-Summary-Page#billing-portal-status:~:text=documentation%20for%20more.-,Adding%20Notes,-Notes%20are%20optional) in the product documentation.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>
@@ -41,10 +40,9 @@ namespace AdvancedBilling.Standard.Controllers
 
         /// <summary>
         /// Creates a note for a subscription.
-        /// ## How to Use Subscription Notes.
         /// Notes allow you to record information about a particular Subscription in a free text format.
-        /// If you have structured data such as birth date, color, etc., consider using Metadata instead.
-        /// Full documentation on how to use Notes in the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24251712214413-Subscription-Summary-Overview).
+        /// If you have structured data such as birth date, color, etc., consider using [Metadata]($e/Custom%20Fields/createMetadata) instead.
+        /// For more information, see [Adding Notes](https://docs.maxio.com/hc/en-us/articles/24251654953997-Understanding-the-Subscription-Summary-Page#billing-portal-status:~:text=documentation%20for%20more.-,Adding%20Notes,-Notes%20are%20optional) in the product documentation.
         /// </summary>
         /// <param name="subscriptionId">Required parameter: The Chargify id of the subscription..</param>
         /// <param name="body">Optional parameter: .</param>

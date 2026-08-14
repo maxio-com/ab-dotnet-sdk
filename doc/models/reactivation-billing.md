@@ -1,7 +1,7 @@
 
 # Reactivation Billing
 
-These values are only applicable to subscriptions using calendar billing
+These values are only applicable to subscriptions using calendar billing.
 
 ## Structure
 
@@ -11,13 +11,16 @@ These values are only applicable to subscriptions using calendar billing
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `ReactivationCharge` | [`ReactivationCharge?`](../../doc/models/reactivation-charge.md) | Optional | You may choose how to handle the reactivation charge for that subscription: 1) `prorated` A prorated charge for the product price will be attempted for to complete the period 2) `immediate` A full-price charge for the product price will be attempted immediately 3) `delayed` A full-price charge for the product price will be attempted at the next renewal<br><br>**Default**: `ReactivationCharge.prorated` |
+| `ReactivationCharge` | [`ReactivationCharge?`](../../doc/models/reactivation-charge.md) | Optional | You may choose how to handle the reactivation charge for that subscription: 1) `prorated` A prorated charge for the product price will be attempted to complete the period 2) `immediate` A full-price charge for the product price will be attempted immediately 3) `delayed` A full-price charge for the product price will be attempted at the next renewal.<br><br>**Default**: `ReactivationCharge.prorated` |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ReactivationBilling reactivationBilling = new ReactivationBilling
 {
-  "reactivation_charge": "prorated"
-}
+    ReactivationCharge = ReactivationCharge.Prorated,
+};
 ```
 

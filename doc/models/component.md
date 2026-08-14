@@ -10,15 +10,15 @@
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `Id` | `int?` | Optional | The unique ID assigned to the component by Chargify. This ID can be used to fetch the component from the API. |
-| `Name` | `string` | Optional | The name of the Component, suitable for display on statements. i.e. Text Messages. |
+| `Name` | `string` | Optional | The name of the Component, suitable for display on statements. e.g., Text Messages. |
 | `Handle` | `string` | Optional | The component API handle |
 | `PricingScheme` | [`PricingScheme?`](../../doc/models/pricing-scheme.md) | Optional | - |
-| `UnitName` | `string` | Optional | The name of the unit that the component’s usage is measured in. i.e. message |
+| `UnitName` | `string` | Optional | The name of the unit that the component’s usage is measured in. e.g., message |
 | `UnitPrice` | `string` | Optional | The amount the customer will be charged per unit. This field is only populated for ‘per_unit’ pricing schemes, otherwise it may be null. |
 | `ProductFamilyId` | `int?` | Optional | The id of the Product Family to which the Component belongs |
 | `ProductFamilyName` | `string` | Optional | The name of the Product Family to which the Component belongs |
 | `ProductFamilyHandle` | `string` | Optional | The handle of the Product Family to which the Component belongs |
-| `PricePerUnitInCents` | `long?` | Optional | deprecated - use unit_price instead |
+| `PricePerUnitInCents` | `long?` | Optional | deprecated - use unit_price instead. |
 | `Kind` | [`ComponentKind?`](../../doc/models/component-kind.md) | Optional | A handle for the component type |
 | `Archived` | `bool?` | Optional | Boolean flag describing whether a component is archived or not. |
 | `Description` | `string` | Optional | The description of the component. |
@@ -42,19 +42,23 @@
 | `UseSiteExchangeRate` | `bool?` | Optional | - |
 | `AccountingCode` | `string` | Optional | E.g. Internal ID or SKU Number |
 | `EventBasedBillingMetricId` | `int?` | Optional | (Only for Event Based Components) This is an ID of a metric attached to the component. This metric is used to bill upon collected events. |
-| `Interval` | `int?` | Optional | The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this component's default price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. |
+| `Interval` | `int?` | Optional | The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean this component’s default price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. |
 | `IntervalUnit` | [`IntervalUnit?`](../../doc/models/interval-unit.md) | Optional | A string representing the interval unit for this component's default price point, either month or day. This property is only available for sites with Multifrequency enabled. |
+| `UnspscCode` | `string` | Optional | (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent as the commodity code on invoice line items for this component instead of the default derived from item_category. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+Component component = new Component
 {
-  "item_category": "Business Software",
-  "id": 24,
-  "name": "name2",
-  "handle": "handle8",
-  "pricing_scheme": "per_unit",
-  "unit_name": "unit_name4"
-}
+    Id = 80,
+    Name = "name8",
+    Handle = "handle4",
+    PricingScheme = PricingScheme.PerUnit,
+    UnitName = "unit_name0",
+    ItemCategory = ItemCategory.EnumBusinessSoftware,
+};
 ```
 

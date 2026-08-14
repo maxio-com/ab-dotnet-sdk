@@ -11,16 +11,20 @@
 |  --- | --- | --- | --- |
 | `Errors` | [`List<SubscriptionComponentAllocationErrorItem>`](../../doc/models/subscription-component-allocation-error-item.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+try
 {
-  "errors": [
+    // make the API call
+}
+catch (ApiException e)
+{
+    if (e is SubscriptionComponentAllocationErrorException)
     {
-      "kind": "kind8",
-      "message": "message0"
+        // TODO: Handle SubscriptionComponentAllocationErrorException
+        Console.WriteLine(e.Message);
     }
-  ]
 }
 ```
 

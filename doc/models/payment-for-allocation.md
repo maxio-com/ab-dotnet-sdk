@@ -16,14 +16,17 @@ Information for captured payment, if applicable
 | `Success` | `bool?` | Optional | - |
 | `Memo` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PaymentForAllocation paymentForAllocation = new PaymentForAllocation
 {
-  "id": 72,
-  "amount_in_cents": 158,
-  "success": false,
-  "memo": "memo6"
-}
+    Id = 68,
+    AmountInCents = 102L,
+    Success = false,
+    Memo = "memo6",
+};
 ```
 

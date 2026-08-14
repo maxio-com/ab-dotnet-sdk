@@ -11,14 +11,19 @@
 |  --- | --- | --- | --- |
 | `Attribute` | `List<string>` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+AttributeError attributeError = new AttributeError
 {
-  "attribute": [
-    "attribute6",
-    "attribute7"
-  ]
-}
+    Attribute = new List<string>
+    {
+        "attribute8",
+        "attribute7",
+    },
+};
 ```
 

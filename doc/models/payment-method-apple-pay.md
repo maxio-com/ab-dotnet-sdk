@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- |
 | `Type` | [`InvoiceEventPaymentMethod`](../../doc/models/invoice-event-payment-method.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PaymentMethodApplePay paymentMethodApplePay = new PaymentMethodApplePay
 {
-  "type": "apple_pay"
-}
+    Type = InvoiceEventPaymentMethod.ApplePay,
+};
 ```
 

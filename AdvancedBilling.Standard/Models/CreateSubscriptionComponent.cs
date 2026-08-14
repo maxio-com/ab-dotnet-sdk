@@ -34,7 +34,7 @@ namespace AdvancedBilling.Standard.Models
         public CreateSubscriptionComponent(
             CreateSubscriptionComponentComponentId componentId = null,
             bool? enabled = null,
-            int? unitBalance = null,
+            CreateSubscriptionComponentUnitBalance unitBalance = null,
             CreateSubscriptionComponentAllocatedQuantity allocatedQuantity = null,
             int? quantity = null,
             CreateSubscriptionComponentPricePointId pricePointId = null,
@@ -65,7 +65,7 @@ namespace AdvancedBilling.Standard.Models
         /// Used for metered and events based components.
         /// </summary>
         [JsonProperty("unit_balance", NullValueHandling = NullValueHandling.Ignore)]
-        public int? UnitBalance { get; set; }
+        public CreateSubscriptionComponentUnitBalance UnitBalance { get; set; }
 
         /// <summary>
         /// Used for quantity based components.

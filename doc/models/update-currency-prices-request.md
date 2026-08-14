@@ -11,16 +11,22 @@
 |  --- | --- | --- | --- |
 | `CurrencyPrices` | [`List<UpdateCurrencyPrice>`](../../doc/models/update-currency-price.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+UpdateCurrencyPricesRequest updateCurrencyPricesRequest = new UpdateCurrencyPricesRequest
 {
-  "currency_prices": [
+    CurrencyPrices = new List<UpdateCurrencyPrice>
     {
-      "id": 50,
-      "price": 233.74
-    }
-  ]
-}
+        new UpdateCurrencyPrice
+        {
+            Id = 50,
+            Price = 233.74,
+        },
+    },
+};
 ```
 

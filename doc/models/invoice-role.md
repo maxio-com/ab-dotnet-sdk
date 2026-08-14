@@ -20,3 +20,11 @@
 | `Backport` |
 | `Backportbalancereconciliation` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoiceRole invoiceRole = InvoiceRole.Renewal;
+```
+

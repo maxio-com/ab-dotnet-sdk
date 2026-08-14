@@ -11,14 +11,18 @@
 |  --- | --- | --- | --- |
 | `BankAccountVerification` | [`BankAccountVerification`](../../doc/models/bank-account-verification.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+BankAccountVerificationRequest bankAccountVerificationRequest = new BankAccountVerificationRequest
 {
-  "bank_account_verification": {
-    "deposit_1_in_cents": 244,
-    "deposit_2_in_cents": 6
-  }
-}
+    BankAccountVerification = new BankAccountVerification
+    {
+        Deposit1InCents = 244L,
+        Deposit2InCents = 6L,
+    },
+};
 ```
 

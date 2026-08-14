@@ -20,15 +20,18 @@
 | `TotalRevenueInCents` | `long?` | Optional | - |
 | `BalanceInCents` | `long?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SubscriptionGroupItem subscriptionGroupItem = new SubscriptionGroupItem
 {
-  "id": 16,
-  "reference": "reference8",
-  "product_id": 214,
-  "product_handle": "product_handle4",
-  "product_price_point_id": 138
-}
+    Id = 26,
+    Reference = "reference4",
+    ProductId = 32,
+    ProductHandle = "product_handle8",
+    ProductPricePointId = 148,
+};
 ```
 

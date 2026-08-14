@@ -31,7 +31,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Used to Create or Update Endpoint
+        /// Used to Create or Update Endpoint.
         /// </summary>
         [JsonProperty("endpoint")]
         public Models.CreateOrUpdateEndpoint Endpoint { get; set; }

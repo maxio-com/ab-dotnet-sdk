@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- |
 | `Status` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ReplayWebhooksResponse replayWebhooksResponse = new ReplayWebhooksResponse
 {
-  "status": "status4"
-}
+    Status = "status6",
+};
 ```
 

@@ -16,15 +16,18 @@
 | `Email` | `string` | Optional | - |
 | `VatNumber` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoicePayer invoicePayer = new InvoicePayer
 {
-  "chargify_id": 46,
-  "first_name": "first_name4",
-  "last_name": "last_name2",
-  "organization": "organization8",
-  "email": "email2"
-}
+    ChargifyId = 198,
+    FirstName = "first_name2",
+    LastName = "last_name0",
+    Organization = "organization4",
+    Email = "email4",
+};
 ```
 

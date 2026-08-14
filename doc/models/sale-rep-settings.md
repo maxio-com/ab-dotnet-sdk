@@ -17,15 +17,18 @@
 | `SalesRepId` | `int?` | Optional | - |
 | `SalesRepName` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+SaleRepSettings saleRepSettings = new SaleRepSettings
 {
-  "customer_name": "customer_name8",
-  "subscription_id": 200,
-  "site_link": "site_link4",
-  "site_name": "site_name8",
-  "subscription_mrr": "subscription_mrr6"
-}
+    CustomerName = "customer_name6",
+    SubscriptionId = 202,
+    SiteLink = "site_link2",
+    SiteName = "site_name6",
+    SubscriptionMrr = "subscription_mrr4",
+};
 ```
 

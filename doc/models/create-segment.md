@@ -16,32 +16,35 @@
 | `PricingScheme` | [`PricingScheme`](../../doc/models/pricing-scheme.md) | Required | The identifier for the pricing scheme. See [Product Components](https://help.chargify.com/products/product-components.html) for an overview of pricing schemes. |
 | `Prices` | [`List<CreateOrUpdateSegmentPrice>`](../../doc/models/create-or-update-segment-price.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Collections.Generic;
+
+CreateSegment createSegment = new CreateSegment
 {
-  "segment_property_1_value": "String9",
-  "segment_property_2_value": "String1",
-  "segment_property_3_value": "String3",
-  "segment_property_4_value": "String3",
-  "pricing_scheme": "per_unit",
-  "prices": [
+    PricingScheme = PricingScheme.Stairstep,
+    SegmentProperty1Value = CreateSegmentSegmentProperty1Value.FromString("String7"),
+    SegmentProperty2Value = CreateSegmentSegmentProperty2Value.FromString("String9"),
+    SegmentProperty3Value = CreateSegmentSegmentProperty3Value.FromString("String5"),
+    SegmentProperty4Value = CreateSegmentSegmentProperty4Value.FromString("String1"),
+    Prices = new List<CreateOrUpdateSegmentPrice>
     {
-      "starting_quantity": 64,
-      "ending_quantity": 38,
-      "unit_price": "String3"
+        new CreateOrUpdateSegmentPrice
+        {
+            UnitPrice = CreateOrUpdateSegmentPriceUnitPrice.FromString("String3"),
+            StartingQuantity = 64,
+            EndingQuantity = 38,
+        },
+        new CreateOrUpdateSegmentPrice
+        {
+            UnitPrice = CreateOrUpdateSegmentPriceUnitPrice.FromString("String3"),
+            StartingQuantity = 64,
+            EndingQuantity = 38,
+        },
     },
-    {
-      "starting_quantity": 64,
-      "ending_quantity": 38,
-      "unit_price": "String3"
-    },
-    {
-      "starting_quantity": 64,
-      "ending_quantity": 38,
-      "unit_price": "String3"
-    }
-  ]
-}
+};
 ```
 

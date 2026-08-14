@@ -15,3 +15,11 @@
 | `Immediate` |
 | `Delayed` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ResumptionCharge resumptionCharge = ResumptionCharge.Immediate;
+```
+

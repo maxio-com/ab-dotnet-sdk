@@ -16,16 +16,24 @@
 | `Attempts` | `int` | Required | - |
 | `LastAttemptedAt` | `DateTimeOffset` | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+DunnerData dunnerData = new DunnerData
 {
-  "state": "state4",
-  "subscription_id": 126,
-  "revenue_at_risk_in_cents": 30,
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "attempts": 110,
-  "last_attempted_at": "2016-03-13T12:52:32.123Z"
-}
+    State = "state4",
+    SubscriptionId = 230,
+    RevenueAtRiskInCents = 134L,
+    CreatedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+    Attempts = 6,
+    LastAttemptedAt = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+};
 ```
 

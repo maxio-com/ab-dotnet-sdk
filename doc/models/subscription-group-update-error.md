@@ -11,15 +11,19 @@
 |  --- | --- | --- | --- |
 | `Members` | `List<string>` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+SubscriptionGroupUpdateError subscriptionGroupUpdateError = new SubscriptionGroupUpdateError
 {
-  "members": [
-    "members4",
-    "members5",
-    "members6"
-  ]
-}
+    Members = new List<string>
+    {
+        "members6",
+        "members7",
+    },
+};
 ```
 

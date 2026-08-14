@@ -13,13 +13,16 @@
 | `Handle` | `string` | Optional | - |
 | `Name` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ItemPricePointData itemPricePointData = new ItemPricePointData
 {
-  "id": 192,
-  "handle": "handle6",
-  "name": "name0"
-}
+    Id = 80,
+    Handle = "handle8",
+    Name = "name2",
+};
 ```
 

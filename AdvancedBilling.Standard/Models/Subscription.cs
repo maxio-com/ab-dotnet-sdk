@@ -473,7 +473,7 @@ namespace AdvancedBilling.Standard.Models
         public long? TotalRevenueInCents { get; set; }
 
         /// <summary>
-        /// (Added Nov 5 2013) The recurring amount of the product (and version),currently subscribed. NOTE: this may differ from the current price of,the product, if you’ve changed the price of the product but haven’t,moved this subscription to a newer version.
+        /// (Added Nov 5 2013) The recurring amount of the product (and version), currently subscribed. NOTE: this may differ from the current price of the product, if you’ve changed the price of the product but haven’t moved this subscription to a newer version.
         /// </summary>
         [JsonProperty("product_price_in_cents", NullValueHandling = NullValueHandling.Ignore)]
         public long? ProductPriceInCents { get; set; }
@@ -485,7 +485,7 @@ namespace AdvancedBilling.Standard.Models
         public int? ProductVersionNumber { get; set; }
 
         /// <summary>
-        /// Timestamp relating to the end of the current (recurring) period (i.e.,when the next regularly scheduled attempted charge will occur)
+        /// Timestamp relating to the end of the current (recurring) period (i.e., when the next regularly scheduled attempted charge will occur)
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("current_period_ends_at")]
@@ -504,7 +504,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Timestamp that indicates when capture of payment will be tried or,retried. This value will usually track the current_period_ends_at, but,will diverge if a renewal payment fails and must be retried. In that,case, the current_period_ends_at will advance to the end of the next,period (time doesn’t stop because a payment was missed) but the,next_assessment_at will be scheduled for the auto-retry time (i.e. 24,hours in the future, in some cases)
+        /// Timestamp that indicates when capture of payment will be tried or retried. This value will usually track the current_period_ends_at, but will diverge if a renewal payment fails and must be retried. In that case, the current_period_ends_at will advance to the end of the next period (time doesn’t stop because a payment was missed) but the next_assessment_at will be scheduled for the auto-retry time (e.g., 24 hours in the future, in some cases).
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("next_assessment_at")]
@@ -561,7 +561,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Timestamp for when the subscription began (i.e. when it came out of trial, or when it began in the case of no trial)
+        /// Timestamp for when the subscription began (i.e., when it came out of trial, or when it began in the case of no trial)
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("activated_at")]
@@ -705,7 +705,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Only valid for webhook payloads The previous state for webhooks that have indicated a change in state. For normal API calls, this will always be the same as the state (current state)
+        /// Only valid for webhook payloads The previous state for webhooks that have indicated a change in state. For normal API calls, this will always be the same as the state (current state).
         /// </summary>
         [JsonProperty("previous_state", NullValueHandling = NullValueHandling.Ignore)]
         public Models.SubscriptionState? PreviousState { get; set; }
@@ -717,7 +717,7 @@ namespace AdvancedBilling.Standard.Models
         public int? SignupPaymentId { get; set; }
 
         /// <summary>
-        /// The revenue, formatted as a string of decimal separated dollars and,cents, from the subscription signup ($50.00 would be formatted as,50.00)
+        /// The revenue, formatted as a string of decimal separated dollars and cents, from the subscription signup ($50.00 would be formatted as 50.00)
         /// </summary>
         [JsonProperty("signup_revenue", NullValueHandling = NullValueHandling.Ignore)]
         public string SignupRevenue { get; set; }
@@ -934,7 +934,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The churn reason code associated to a cancelled subscription.
+        /// The churn reason code associated to a canceled subscription.
         /// </summary>
         [JsonProperty("reason_code")]
         public string ReasonCode
@@ -1090,7 +1090,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The reference value (provided by your app) for the subscription istelf.
+        /// The reference value (provided by your app) for the subscription itself.
         /// </summary>
         [JsonProperty("reference")]
         public string Reference
@@ -1127,13 +1127,13 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Boolean representing whether the subscription is prepaid and currently in dunning. Only returned for Relationship Invoicing sites with the feature enabled
+        /// Boolean representing whether the subscription is prepaid and currently in dunning. Only returned for Relationship Invoicing sites with the feature enabled.
         /// </summary>
         [JsonProperty("prepaid_dunning", NullValueHandling = NullValueHandling.Ignore)]
         public bool? PrepaidDunning { get; set; }
 
         /// <summary>
-        /// Additional coupon data. To use this data you also have to include the following param in the request`include[]=coupons`.
+        /// Additional coupon data. To use this data you also have to include the following param in the request: `include[]=coupons`.
         /// Only in Read Subscription Endpoint.
         /// </summary>
         [JsonProperty("coupons", NullValueHandling = NullValueHandling.Ignore)]

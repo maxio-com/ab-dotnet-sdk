@@ -32,10 +32,10 @@ ListAllProductPricePointsInput listAllProductPricePointsInput = new ListAllProdu
         DateField = BasicDateField.UpdatedAt,
         StartDate = DateTime.Parse("2011-12-17"),
         EndDate = DateTime.Parse("2011-12-15"),
-        StartDatetime = DateTime.ParseExact("12/19/2011 09:15:30", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        StartDatetime = DateTime.ParseExact("2011-12-19T09:15:30+00:00", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
             provider: CultureInfo.InvariantCulture,
             DateTimeStyles.RoundtripKind),
-        EndDatetime = DateTime.ParseExact("06/07/2019 17:20:06", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        EndDatetime = DateTime.ParseExact("2019-06-07T17:20:06Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
             provider: CultureInfo.InvariantCulture,
             DateTimeStyles.RoundtripKind),
         Type = new List<PricePointType>

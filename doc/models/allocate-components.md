@@ -15,35 +15,51 @@
 | `AccrueCharge` | `bool?` | Optional | - |
 | `UpgradeCharge` | [`CreditType?`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided. |
 | `DowngradeCredit` | [`CreditType?`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided. |
-| `PaymentCollectionMethod` | [`CollectionMethod?`](../../doc/models/collection-method.md) | Optional | (Optional) If not passed, the allocation(s) will use the payment collection method on the subscription |
+| `PaymentCollectionMethod` | [`CollectionMethod?`](../../doc/models/collection-method.md) | Optional | (Optional) If not passed, the allocation(s) will use the payment collection method on the subscription. |
 | `InitiateDunning` | `bool?` | Optional | If true, if the immediate component payment fails, initiate dunning for the subscription.<br>Otherwise, leave the charges on the subscription to pay for at renewal. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+AllocateComponents allocateComponents = new AllocateComponents
 {
-  "proration_upgrade_scheme": "proration_upgrade_scheme2",
-  "proration_downgrade_scheme": "proration_downgrade_scheme0",
-  "allocations": [
+    ProrationUpgradeScheme = "proration_upgrade_scheme8",
+    ProrationDowngradeScheme = "proration_downgrade_scheme6",
+    Allocations = new List<CreateAllocation>
     {
-      "quantity": 26.48,
-      "decimal_quantity": "decimal_quantity8",
-      "previous_quantity": 55.5,
-      "decimal_previous_quantity": "decimal_previous_quantity2",
-      "component_id": 242,
-      "memo": "memo6"
+        new CreateAllocation
+        {
+            Quantity = 26.48,
+            DecimalQuantity = "decimal_quantity8",
+            PreviousQuantity = 55.5,
+            DecimalPreviousQuantity = "decimal_previous_quantity2",
+            ComponentId = 242,
+            Memo = "memo6",
+        },
+        new CreateAllocation
+        {
+            Quantity = 26.48,
+            DecimalQuantity = "decimal_quantity8",
+            PreviousQuantity = 55.5,
+            DecimalPreviousQuantity = "decimal_previous_quantity2",
+            ComponentId = 242,
+            Memo = "memo6",
+        },
+        new CreateAllocation
+        {
+            Quantity = 26.48,
+            DecimalQuantity = "decimal_quantity8",
+            PreviousQuantity = 55.5,
+            DecimalPreviousQuantity = "decimal_previous_quantity2",
+            ComponentId = 242,
+            Memo = "memo6",
+        },
     },
-    {
-      "quantity": 26.48,
-      "decimal_quantity": "decimal_quantity8",
-      "previous_quantity": 55.5,
-      "decimal_previous_quantity": "decimal_previous_quantity2",
-      "component_id": 242,
-      "memo": "memo6"
-    }
-  ],
-  "accrue_charge": false,
-  "upgrade_charge": "full"
-}
+    AccrueCharge = false,
+    UpgradeCharge = CreditType.Prorated,
+};
 ```
 

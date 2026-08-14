@@ -21,17 +21,23 @@
 | `AccountBalances` | [`SubscriptionGroupBalances`](../../doc/models/subscription-group-balances.md) | Optional | - |
 | `GroupType` | [`GroupType?`](../../doc/models/group-type.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Collections.Generic;
+
+ListSubscriptionGroupsItem listSubscriptionGroupsItem = new ListSubscriptionGroupsItem
 {
-  "uid": "uid0",
-  "scheme": 124,
-  "customer_id": 144,
-  "payment_profile_id": 52,
-  "subscription_ids": [
-    254
-  ]
-}
+    Uid = "uid0",
+    Scheme = 228,
+    CustomerId = 248,
+    PaymentProfileId = 100,
+    SubscriptionIds = new List<int>
+    {
+        102,
+        103,
+    },
+};
 ```
 

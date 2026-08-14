@@ -145,7 +145,7 @@ namespace AdvancedBilling.Standard.Models
 
         /// <summary>
         /// The price per unit for the line item.
-        /// When tiered pricing was used (i.e. not every unit was actually priced at the same price) this will be the blended average cost per unit and the `tiered_unit_price` field will be set to `true`.
+        /// When tiered pricing was used (i.e., not every unit was actually priced at the same price) this will be the blended average cost per unit and the `tiered_unit_price` field will be set to `true`.
         /// </summary>
         [JsonProperty("unit_price", NullValueHandling = NullValueHandling.Ignore)]
         public string UnitPrice { get; set; }

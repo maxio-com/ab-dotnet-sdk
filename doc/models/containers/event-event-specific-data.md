@@ -126,7 +126,7 @@ EventEventSpecificData value = EventEventSpecificData.FromMeteredUsage(
     new MeteredUsage
     {
         PreviousUnitBalance = "previous_unit_balance6",
-        NewUnitBalance = 80,
+        NewUnitBalance = MeteredUsageNewUnitBalance.FromNumber(2),
         UsageQuantity = 42,
         ComponentId = 4,
         ComponentHandle = "component_handle8",
@@ -147,8 +147,8 @@ EventEventSpecificData value = EventEventSpecificData.FromPrepaidUsage(
     {
         PreviousUnitBalance = "previous_unit_balance0",
         PreviousOverageUnitBalance = "previous_overage_unit_balance4",
-        NewUnitBalance = 252,
-        NewOverageUnitBalance = 224,
+        NewUnitBalance = PrepaidUsageNewUnitBalance.FromNumber(174),
+        NewOverageUnitBalance = PrepaidUsageNewOverageUnitBalance.FromNumber(146),
         UsageQuantity = 214,
         OverageUsageQuantity = 106,
         ComponentId = 176,

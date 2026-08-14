@@ -32,6 +32,7 @@ namespace AdvancedBilling.Standard.Models
         private bool? useSiteExchangeRate;
         private string accountingCode;
         private Models.IntervalUnit? intervalUnit;
+        private string unspscCode;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "handle", false },
@@ -51,6 +52,7 @@ namespace AdvancedBilling.Standard.Models
             { "use_site_exchange_rate", false },
             { "accounting_code", false },
             { "interval_unit", false },
+            { "unspsc_code", false },
         };
 
         /// <summary>
@@ -98,6 +100,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="eventBasedBillingMetricId">event_based_billing_metric_id.</param>
         /// <param name="interval">interval.</param>
         /// <param name="intervalUnit">interval_unit.</param>
+        /// <param name="unspscCode">unspsc_code.</param>
         public Component(
             int? id = null,
             string name = null,
@@ -133,7 +136,8 @@ namespace AdvancedBilling.Standard.Models
             string accountingCode = null,
             int? eventBasedBillingMetricId = null,
             int? interval = null,
-            Models.IntervalUnit? intervalUnit = null)
+            Models.IntervalUnit? intervalUnit = null,
+            string unspscCode = null)
         {
             this.Id = id;
             this.Name = name;
@@ -238,6 +242,11 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.IntervalUnit = intervalUnit;
             }
+
+            if (unspscCode != null)
+            {
+                this.UnspscCode = unspscCode;
+            }
         }
 
         /// <summary>
@@ -247,7 +256,7 @@ namespace AdvancedBilling.Standard.Models
         public int? Id { get; set; }
 
         /// <summary>
-        /// The name of the Component, suitable for display on statements. i.e. Text Messages.
+        /// The name of the Component, suitable for display on statements. e.g., Text Messages.
         /// </summary>
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
@@ -289,7 +298,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The name of the unit that the component’s usage is measured in. i.e. message
+        /// The name of the unit that the component’s usage is measured in. e.g., message
         /// </summary>
         [JsonProperty("unit_name", NullValueHandling = NullValueHandling.Ignore)]
         public string UnitName { get; set; }
@@ -331,7 +340,7 @@ namespace AdvancedBilling.Standard.Models
         public string ProductFamilyHandle { get; set; }
 
         /// <summary>
-        /// deprecated - use unit_price instead
+        /// deprecated - use unit_price instead.
         /// </summary>
         [JsonProperty("price_per_unit_in_cents")]
         public long? PricePerUnitInCents
@@ -634,7 +643,7 @@ namespace AdvancedBilling.Standard.Models
         public int? EventBasedBillingMetricId { get; set; }
 
         /// <summary>
-        /// The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this component's default price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
+        /// The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean this component’s default price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
         /// </summary>
         [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
         public int? Interval { get; set; }
@@ -654,6 +663,24 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.shouldSerialize["interval_unit"] = true;
                 this.intervalUnit = value;
+            }
+        }
+
+        /// <summary>
+        /// (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent as the commodity code on invoice line items for this component instead of the default derived from item_category.
+        /// </summary>
+        [JsonProperty("unspsc_code")]
+        public string UnspscCode
+        {
+            get
+            {
+                return this.unspscCode;
+            }
+
+            set
+            {
+                this.shouldSerialize["unspsc_code"] = true;
+                this.unspscCode = value;
             }
         }
 
@@ -783,6 +810,13 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetIntervalUnit()
         {
             this.shouldSerialize["interval_unit"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetUnspscCode()
+        {
+            this.shouldSerialize["unspsc_code"] = false;
         }
 
         /// <summary>
@@ -938,6 +972,15 @@ namespace AdvancedBilling.Standard.Models
             return this.shouldSerialize["interval_unit"];
         }
 
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeUnspscCode()
+        {
+            return this.shouldSerialize["unspsc_code"];
+        }
+
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
@@ -1015,6 +1058,8 @@ namespace AdvancedBilling.Standard.Models
                  this.Interval?.Equals(other.Interval) == true) &&
                 (this.IntervalUnit == null && other.IntervalUnit == null ||
                  this.IntervalUnit?.Equals(other.IntervalUnit) == true) &&
+                (this.UnspscCode == null && other.UnspscCode == null ||
+                 this.UnspscCode?.Equals(other.UnspscCode) == true) &&
                 base.Equals(obj);
         }
 
@@ -1059,6 +1104,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"EventBasedBillingMetricId = {(this.EventBasedBillingMetricId == null ? "null" : this.EventBasedBillingMetricId.ToString())}");
             toStringOutput.Add($"Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
+            toStringOutput.Add($"UnspscCode = {this.UnspscCode ?? "null"}");
 
             base.ToString(toStringOutput);
         }

@@ -11,18 +11,20 @@
 |  --- | --- | --- | --- |
 | `Errors` | [`ProformaError`](../../doc/models/proforma-error.md) | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+try
 {
-  "errors": {
-    "subscription": {
-      "base": [
-        "base3",
-        "base4"
-      ]
+    // make the API call
+}
+catch (ApiException e)
+{
+    if (e is ProformaBadRequestErrorResponseException)
+    {
+        // TODO: Handle ProformaBadRequestErrorResponseException
+        Console.WriteLine(e.Message);
     }
-  }
 }
 ```
 

@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- |
 | `PricePoint` | [`ProductPricePoint`](../../doc/models/product-price-point.md) | Required | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ProductPricePointResponse productPricePointResponse = new ProductPricePointResponse
 {
-  "price_point": {
-    "id": 248,
-    "name": "name0",
-    "handle": "handle6",
-    "price_in_cents": 196,
-    "interval": 44
-  }
-}
+    PricePoint = new ProductPricePoint
+    {
+        Id = 248,
+        Name = "name0",
+        Handle = "handle6",
+        PriceInCents = 196L,
+        Interval = 44,
+    },
+};
 ```
 

@@ -12,12 +12,15 @@
 | `HideZeroSubtotalLines` | `bool?` | Optional | - |
 | `IncludeDiscountsOnLines` | `bool?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+InvoiceDisplaySettings invoiceDisplaySettings = new InvoiceDisplaySettings
 {
-  "hide_zero_subtotal_lines": false,
-  "include_discounts_on_lines": false
-}
+    HideZeroSubtotalLines = false,
+    IncludeDiscountsOnLines = false,
+};
 ```
 

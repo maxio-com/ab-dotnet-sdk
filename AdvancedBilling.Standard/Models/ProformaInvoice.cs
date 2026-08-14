@@ -298,7 +298,7 @@ namespace AdvancedBilling.Standard.Models
         public string Currency { get; set; }
 
         /// <summary>
-        /// Consolidation level of the invoice, which is applicable to invoice consolidation.  It will hold one of the following values:
+        /// Consolidation level of the invoice, which is applicable to invoice consolidation. It will hold one of the following values:
         /// * "none": A normal invoice with no consolidation.
         /// * "child": An invoice segment which has been combined into a consolidated invoice.
         /// * "parent": A consolidated invoice, whose contents are composed of invoice segments.
@@ -321,7 +321,7 @@ namespace AdvancedBilling.Standard.Models
         public string ProductFamilyName { get; set; }
 
         /// <summary>
-        /// 'proforma' value is deprecated in favor of proforma_adhoc and proforma_automatic
+        /// 'proforma' value is deprecated in favor of proforma_adhoc and proforma_automatic.
         /// </summary>
         [JsonProperty("role", NullValueHandling = NullValueHandling.Ignore)]
         public Models.ProformaInvoiceRole? Role { get; set; }
@@ -333,7 +333,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.InvoiceSeller Seller { get; set; }
 
         /// <summary>
-        /// Information about the customer who is owner or recipient the invoiced subscription.
+        /// Information about the customer who is owner or recipient of the invoiced subscription.
         /// </summary>
         [JsonProperty("customer", NullValueHandling = NullValueHandling.Ignore)]
         public Models.InvoiceCustomer Customer { get; set; }

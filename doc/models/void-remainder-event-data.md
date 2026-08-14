@@ -16,20 +16,27 @@ Example schema for an `void_remainder` event
 | `AppliedAmount` | `string` | Required | The amount of the void. |
 | `TransactionTime` | `DateTimeOffset` | Required | The time the refund was applied, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z" |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using System.Globalization;
+
+VoidRemainderEventData voidRemainderEventData = new VoidRemainderEventData
 {
-  "credit_note_attributes": {
-    "uid": "uid2",
-    "site_id": 72,
-    "customer_id": 184,
-    "subscription_id": 0,
-    "number": "number0"
-  },
-  "memo": "memo6",
-  "applied_amount": "applied_amount4",
-  "transaction_time": "2016-03-13T12:52:32.123Z"
-}
+    CreditNoteAttributes = new CreditNote
+    {
+        Uid = "uid2",
+        SiteId = 72,
+        CustomerId = 184,
+        SubscriptionId = 0,
+        Number = "number0",
+    },
+    Memo = "memo6",
+    AppliedAmount = "applied_amount6",
+    TransactionTime = DateTime.ParseExact("2016-03-13T12:52:32.123Z", "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK",
+        provider: CultureInfo.InvariantCulture,
+        DateTimeStyles.RoundtripKind),
+};
 ```
 

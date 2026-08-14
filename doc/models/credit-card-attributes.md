@@ -13,13 +13,16 @@
 | `ExpirationMonth` | `string` | Optional | - |
 | `ExpirationYear` | `string` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CreditCardAttributes creditCardAttributes = new CreditCardAttributes
 {
-  "full_number": "full_number0",
-  "expiration_month": "expiration_month6",
-  "expiration_year": "expiration_year0"
-}
+    FullNumber = "full_number8",
+    ExpirationMonth = "expiration_month8",
+    ExpirationYear = "expiration_year2",
+};
 ```
 

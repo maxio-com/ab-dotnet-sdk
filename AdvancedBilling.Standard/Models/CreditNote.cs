@@ -189,7 +189,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.InvoiceSeller Seller { get; set; }
 
         /// <summary>
-        /// Information about the customer who is owner or recipient the credited subscription.
+        /// Information about the customer who is owner or recipient of the credited subscription.
         /// </summary>
         [JsonProperty("customer", NullValueHandling = NullValueHandling.Ignore)]
         public Models.InvoiceCustomer Customer { get; set; }
@@ -213,19 +213,19 @@ namespace AdvancedBilling.Standard.Models
         public string SubtotalAmount { get; set; }
 
         /// <summary>
-        /// Total discount applied to the credit note. Note that this is a positive amount representing the discount amount being credited back to the customer (i.e. a credit on an earlier discount). For example, if the original purchase was $1.00 and the original discount was $0.10, a credit of $0.50 of the original purchase (half) would have a discount credit of $0.05 (also half).
+        /// Total discount applied to the credit note. Note that this is a positive amount representing the discount amount being credited back to the customer (i.e., a credit on an earlier discount). For example, if the original purchase was $1.00 and the original discount was $0.10, a credit of $0.50 of the original purchase (half) would have a discount credit of $0.05 (also half).
         /// </summary>
         [JsonProperty("discount_amount", NullValueHandling = NullValueHandling.Ignore)]
         public string DiscountAmount { get; set; }
 
         /// <summary>
-        /// Total tax of the credit note. Note that this is a positive amount representing a previously taxex amount being credited back to the customer (i.e. a credit of an earlier tax). For example, if the original purchase was $1.00 and the original tax was $0.10, a credit of $0.50 of the original purchase (half) would also have a tax credit of $0.05 (also half).
+        /// Total tax of the credit note. Note that this is a positive amount representing a previously taxed amount being credited back to the customer (i.e., a credit of an earlier tax). For example, if the original purchase was $1.00 and the original tax was $0.10, a credit of $0.50 of the original purchase (half) would also have a tax credit of $0.05 (also half).
         /// </summary>
         [JsonProperty("tax_amount", NullValueHandling = NullValueHandling.Ignore)]
         public string TaxAmount { get; set; }
 
         /// <summary>
-        /// The credit note total, which is `subtotal_amount - discount_amount + tax_amount`.'
+        /// The credit note total, which is `subtotal_amount - discount_amount + tax_amount`.
         /// </summary>
         [JsonProperty("total_amount", NullValueHandling = NullValueHandling.Ignore)]
         public string TotalAmount { get; set; }
@@ -273,7 +273,7 @@ namespace AdvancedBilling.Standard.Models
         public List<Models.InvoiceRefund> Refunds { get; set; }
 
         /// <summary>
-        /// An array of origin invoices for the credit note. Learn more about [Origin Invoice from our docs](https://maxio.zendesk.com/hc/en-us/articles/24252261284749-Credit-Notes-Proration#origin-invoices)
+        /// An array of origin invoices for the credit note. Learn more about [Origin Invoice from our docs](https://maxio.zendesk.com/hc/en-us/articles/24252261284749-Credit-Notes-Proration#origin-invoices).
         /// </summary>
         [JsonProperty("origin_invoices", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.OriginInvoice> OriginInvoices { get; set; }

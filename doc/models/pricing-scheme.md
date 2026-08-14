@@ -16,3 +16,11 @@ The identifier for the pricing scheme. See [Product Components](https://help.cha
 | `PerUnit` |
 | `Tiered` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+PricingScheme pricingScheme = PricingScheme.Stairstep;
+```
+

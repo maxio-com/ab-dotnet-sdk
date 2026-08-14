@@ -17,3 +17,11 @@ The type of object indicated by the id attribute.
 | `Parent` |
 | `Eldest` |
 
+## Example
+
+```csharp
+using AdvancedBilling.Standard.Models;
+
+GroupTargetType groupTargetType = GroupTargetType.Self;
+```
+

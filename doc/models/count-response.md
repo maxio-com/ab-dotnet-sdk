@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- |
 | `Count` | `int?` | Optional | - |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+
+CountResponse countResponse = new CountResponse
 {
-  "count": 60
-}
+    Count = 56,
+};
 ```
 

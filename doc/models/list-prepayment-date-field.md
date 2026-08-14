@@ -14,7 +14,9 @@
 
 ## Example
 
-```
-created_at
+```csharp
+using AdvancedBilling.Standard.Models;
+
+ListPrepaymentDateField listPrepaymentDateField = ListPrepaymentDateField.CreatedAt;
 ```
 

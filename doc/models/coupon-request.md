@@ -10,26 +10,36 @@
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `Coupon` | [`CouponPayload`](../../doc/models/coupon-payload.md) | Optional | - |
-| `RestrictedProducts` | `Dictionary<string, bool>` | Optional | An object where the keys are product IDs or handles (prefixed with 'handle:'), and the values are booleans indicating if the coupon should be applicable to the product |
-| `RestrictedComponents` | `Dictionary<string, bool>` | Optional | An object where the keys are component IDs or handles (prefixed with 'handle:'), and the values are booleans indicating if the coupon should be applicable to the component |
+| `RestrictedProducts` | `Dictionary<string, bool>` | Optional | An object where the keys are product IDs or handles (prefixed with 'handle:'), and the values are booleans indicating if the coupon should be applicable to the product. |
+| `RestrictedComponents` | `Dictionary<string, bool>` | Optional | An object where the keys are component IDs or handles (prefixed with 'handle:'), and the values are booleans indicating if the coupon should be applicable to the component. |
 
-## Example (as JSON)
+## Example
 
-```json
+```csharp
+using AdvancedBilling.Standard.Models;
+using AdvancedBilling.Standard.Models.Containers;
+using System.Collections.Generic;
+
+CouponRequest couponRequest = new CouponRequest
 {
-  "coupon": {
-    "name": "name4",
-    "code": "code2",
-    "description": "description6",
-    "percentage": "String3",
-    "amount_in_cents": 230
-  },
-  "restricted_products": {
-    "key0": true
-  },
-  "restricted_components": {
-    "key0": true
-  }
-}
+    Coupon = new CouponPayload
+    {
+        Name = "name4",
+        Code = "code2",
+        Description = "description6",
+        Percentage = CouponPayloadPercentage.FromString("String3"),
+        AmountInCents = 230L,
+    },
+    RestrictedProducts = new Dictionary<string, bool>
+    {
+        ["key0"] = true,
+        ["key1"] = false,
+    },
+    RestrictedComponents = new Dictionary<string, bool>
+    {
+        ["key0"] = true,
+        ["key1"] = false,
+    },
+};
 ```
 

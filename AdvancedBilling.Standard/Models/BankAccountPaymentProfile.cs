@@ -173,7 +173,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The Chargify-assigned ID of the stored bank account. This value can be used as an input to payment_profile_id when creating a subscription, in order to re-use a stored payment profile for the same customer
+        /// The Chargify-assigned ID of the stored bank account. This value can be used as an input to payment_profile_id when creating a subscription, in order to re-use a stored payment profile for the same customer.
         /// </summary>
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }
@@ -193,7 +193,7 @@ namespace AdvancedBilling.Standard.Models
         public string LastName { get; set; }
 
         /// <summary>
-        /// The Chargify-assigned id for the customer record to which the bank account belongs
+        /// The Chargify-assigned ID for the customer record to which the bank account belongs
         /// </summary>
         [JsonProperty("customer_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? CustomerId { get; set; }
@@ -352,7 +352,7 @@ namespace AdvancedBilling.Standard.Models
         public string BankName { get; set; }
 
         /// <summary>
-        /// A string representation of the stored bank routing number with all but the last 4 digits marked with X's (i.e. 'XXXXXXX1111'). payment_type will be bank_account
+        /// A string representation of the stored bank routing number with all but the last 4 digits marked with X's (i.e. 'XXXXXXX1111'). payment_type will be bank_account.
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("masked_bank_routing_number")]
@@ -371,7 +371,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// A string representation of the stored bank account number with all but the last 4 digits marked with X's (i.e. 'XXXXXXX1111')
+        /// A string representation of the stored bank account number with all but the last 4 digits marked with X's (i.e. 'XXXXXXX1111').
         /// </summary>
         [JsonConverter(typeof(JsonStringConverter))]
         [JsonProperty("masked_bank_account_number")]
@@ -409,7 +409,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.PaymentType PaymentType { get; set; }
 
         /// <summary>
-        /// denotes whether a bank account has been verified by providing the amounts of two small deposits made into the account
+        /// Denotes whether a bank account has been verified by providing the amounts of two small deposits made into the account.
         /// </summary>
         [JsonProperty("verified", NullValueHandling = NullValueHandling.Ignore)]
         public bool? Verified { get; set; }
