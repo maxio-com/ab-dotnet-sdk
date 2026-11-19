@@ -106,6 +106,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="useSiteExchangeRate">use_site_exchange_rate.</param>
         /// <param name="accountingCode">accounting_code.</param>
         /// <param name="eventBasedBillingMetricId">event_based_billing_metric_id.</param>
+        /// <param name="meteringMeterId">metering_meter_id.</param>
         /// <param name="interval">interval.</param>
         /// <param name="intervalUnit">interval_unit.</param>
         /// <param name="unspscCode">unspsc_code.</param>
@@ -144,6 +145,7 @@ namespace AdvancedBilling.Standard.Models
             bool? useSiteExchangeRate = null,
             string accountingCode = null,
             int? eventBasedBillingMetricId = null,
+            int? meteringMeterId = null,
             int? interval = null,
             Models.IntervalUnit? intervalUnit = null,
             string unspscCode = null,
@@ -258,6 +260,7 @@ namespace AdvancedBilling.Standard.Models
                 this.AccountingCode = accountingCode;
             }
             this.EventBasedBillingMetricId = eventBasedBillingMetricId;
+            this.MeteringMeterId = meteringMeterId;
             this.Interval = interval;
 
             if (intervalUnit != null)
@@ -700,10 +703,16 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// (Only for Event Based Components) This is an ID of a metric attached to the component. This metric is used to bill upon collected events.
+        /// The ID of an attached metric from legacy Events Based Billing. Omitted if no metric is attached. If the metric is linked to a Maxio Metering meter, the response can include both event_based_billing_metric_id and metering_meter_id.
         /// </summary>
         [JsonProperty("event_based_billing_metric_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? EventBasedBillingMetricId { get; set; }
+
+        /// <summary>
+        /// The ID of an attached single Maxio Metering meter. Omitted if no single meter is attached, including when the component uses only an Advanced Formula. If a legacy Events Based Billing metric is linked to the meter, the response can include both metering_meter_id and event_based_billing_metric_id.
+        /// </summary>
+        [JsonProperty("metering_meter_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? MeteringMeterId { get; set; }
 
         /// <summary>
         /// The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean this component’s default price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
@@ -1199,6 +1208,8 @@ namespace AdvancedBilling.Standard.Models
                  this.AccountingCode?.Equals(other.AccountingCode) == true) &&
                 (this.EventBasedBillingMetricId == null && other.EventBasedBillingMetricId == null ||
                  this.EventBasedBillingMetricId?.Equals(other.EventBasedBillingMetricId) == true) &&
+                (this.MeteringMeterId == null && other.MeteringMeterId == null ||
+                 this.MeteringMeterId?.Equals(other.MeteringMeterId) == true) &&
                 (this.Interval == null && other.Interval == null ||
                  this.Interval?.Equals(other.Interval) == true) &&
                 (this.IntervalUnit == null && other.IntervalUnit == null ||
@@ -1249,6 +1260,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
             toStringOutput.Add($"AccountingCode = {this.AccountingCode ?? "null"}");
             toStringOutput.Add($"EventBasedBillingMetricId = {(this.EventBasedBillingMetricId == null ? "null" : this.EventBasedBillingMetricId.ToString())}");
+            toStringOutput.Add($"MeteringMeterId = {(this.MeteringMeterId == null ? "null" : this.MeteringMeterId.ToString())}");
             toStringOutput.Add($"Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
             toStringOutput.Add($"UnspscCode = {this.UnspscCode ?? "null"}");
