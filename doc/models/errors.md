@@ -9,8 +9,7 @@
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `PerPage` | `List<string>` | Optional | - |
-| `PricePoint` | `List<string>` | Optional | - |
+| `PricePoint` | `List<string>` | Required | - |
 
 ## Example
 
@@ -20,12 +19,6 @@ using System.Collections.Generic;
 
 Errors errors = new Errors
 {
-    PerPage = new List<string>
-    {
-        "per_page1",
-        "per_page2",
-        "per_page3",
-    },
     PricePoint = new List<string>
     {
         "price_point0",

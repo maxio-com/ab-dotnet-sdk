@@ -323,8 +323,14 @@ namespace AdvancedBilling.Standard.Controllers
                   .WithAuth("BasicAuth")
                   .Parameters(parameters => parameters
                       .Query(query => query.Setup("subscription_id", input.SubscriptionId))
+                      .Query(query => query.Setup("date_field", (input.DateField.HasValue) ? CoreHelper.JsonSerialize(input.DateField.Value).Trim('\"') : "issue_date"))
+                      .Query(query => query.Setup("start_date", input.StartDate))
+                      .Query(query => query.Setup("end_date", input.EndDate))
+                      .Query(query => query.Setup("start_datetime", input.StartDatetime))
+                      .Query(query => query.Setup("end_datetime", input.EndDatetime))
                       .Query(query => query.Setup("page", input.Page))
                       .Query(query => query.Setup("per_page", input.PerPage))
+                      .Query(query => query.Setup("direction", (input.Direction.HasValue) ? CoreHelper.JsonSerialize(input.Direction.Value).Trim('\"') : "desc"))
                       .Query(query => query.Setup("line_items", input.LineItems))
                       .Query(query => query.Setup("discounts", input.Discounts))
                       .Query(query => query.Setup("taxes", input.Taxes))
@@ -543,6 +549,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Product handle (with handle: prefix) or id from the scope of current subscription's site can be provided with `product_id`. By default `unit_price` is taken from product's default price point, but can be overwritten by passing `unit_price` or `product_price_point_id`. If `product_id` is used, following fields cannot be used: `title`, `component_id`.
         /// #### Component id.
         /// Component handle (with handle: prefix) or id from the scope of current subscription's site can be provided with `component_id`. If `component_id` is used, following fields cannot be used: `title`, `product_id`. By default `unit_price` is taken from product's default price point, but can be overwritten by passing `unit_price` or `price_point_id`. At this moment price points are supported only for quantity based, on/off and metered components. For prepaid and event based billing components `unit_price` is required.
+        /// A Wallet Product can't be invoiced this way: a line item for one returns `422` ("Wallet Products can only be invoiced through a wallet purchase"). Use [Create Wallet Purchase]($e/Wallet%20Purchases/createWalletPurchase) instead.
         /// ### Coupons.
         /// When creating ad hoc invoice, new discounts can be applied in following way:.
         /// ```json.
@@ -695,6 +702,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Product handle (with handle: prefix) or id from the scope of current subscription's site can be provided with `product_id`. By default `unit_price` is taken from product's default price point, but can be overwritten by passing `unit_price` or `product_price_point_id`. If `product_id` is used, following fields cannot be used: `title`, `component_id`.
         /// #### Component id.
         /// Component handle (with handle: prefix) or id from the scope of current subscription's site can be provided with `component_id`. If `component_id` is used, following fields cannot be used: `title`, `product_id`. By default `unit_price` is taken from product's default price point, but can be overwritten by passing `unit_price` or `price_point_id`. At this moment price points are supported only for quantity based, on/off and metered components. For prepaid and event based billing components `unit_price` is required.
+        /// A Wallet Product can't be invoiced this way: a line item for one returns `422` ("Wallet Products can only be invoiced through a wallet purchase"). Use [Create Wallet Purchase]($e/Wallet%20Purchases/createWalletPurchase) instead.
         /// ### Coupons.
         /// When creating ad hoc invoice, new discounts can be applied in following way:.
         /// ```json.
@@ -940,7 +948,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Sends an invoice to the customer via email. This endpoint supports the delivery of both ad-hoc and automatically generated invoices. Additionally, this endpoint supports email delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
         /// **File Attachments**: You can attach files to invoice emails using `attachment_urls[]` parameter by providing URLs to the files you want to attach. When using attachments, the request must use `multipart/form-data` content type. Max 10 files, 10MB per file.
         /// If no recipient email addresses are specified in the request, then the subscription's default email configuration will be used. For example, if `recipient_emails` is left blank, then the invoice will be delivered to the subscription's customer email address.
-        /// On success, a 204 no-content response will be returned. The response does not indicate that email(s) have been delivered, but instead indicates that emails have been successfully queued for delivery. If _any_ invalid or malformed email address is found in the request body, the entire request will be rejected and a 422 response will be returned.
+        /// On success, a 204 no-content response will be returned. The response does not indicate that email(s) have been delivered, but instead indicates that emails have been successfully queued for delivery. If _any_ invalid or malformed email address is found in the request body, the entire request will be rejected and a 422 response will be returned. A 422 response will also be returned if the invoice is in `draft`, `pending`, or `processing` status, or if the invoice cannot be found within the site instance.
         /// </summary>
         /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
         /// <param name="body">Optional parameter: .</param>
@@ -953,7 +961,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Sends an invoice to the customer via email. This endpoint supports the delivery of both ad-hoc and automatically generated invoices. Additionally, this endpoint supports email delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
         /// **File Attachments**: You can attach files to invoice emails using `attachment_urls[]` parameter by providing URLs to the files you want to attach. When using attachments, the request must use `multipart/form-data` content type. Max 10 files, 10MB per file.
         /// If no recipient email addresses are specified in the request, then the subscription's default email configuration will be used. For example, if `recipient_emails` is left blank, then the invoice will be delivered to the subscription's customer email address.
-        /// On success, a 204 no-content response will be returned. The response does not indicate that email(s) have been delivered, but instead indicates that emails have been successfully queued for delivery. If _any_ invalid or malformed email address is found in the request body, the entire request will be rejected and a 422 response will be returned.
+        /// On success, a 204 no-content response will be returned. The response does not indicate that email(s) have been delivered, but instead indicates that emails have been successfully queued for delivery. If _any_ invalid or malformed email address is found in the request body, the entire request will be rejected and a 422 response will be returned. A 422 response will also be returned if the invoice is in `draft`, `pending`, or `processing` status, or if the invoice cannot be found within the site instance.
         /// </summary>
         /// <param name="uid">Required parameter: The unique identifier for the invoice, this does not refer to the public facing invoice number..</param>
         /// <param name="body">Optional parameter: .</param>

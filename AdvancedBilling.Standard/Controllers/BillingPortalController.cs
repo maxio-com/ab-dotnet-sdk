@@ -28,7 +28,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// If your customer has been invited to the Billing Portal, they receive a link to manage their subscription (the “Management URL”) automatically at the bottom of their statements, invoices, and receipts. **This link changes periodically for security and is only valid for 65 days.**.
         /// If you need to provide your customer their Management URL through other means, you can retrieve it [via the API]($e/Billing%20Portal/readBillingPortalLink). Because the URL is cryptographically signed with a timestamp, merchants cannot generate the URL without requesting it through the API.
         /// To prevent abuse and overuse, request a new URL only when absolutely necessary. Management URLs are good for 65 days, so you should re-use a previously generated one as much as possible. If you use the URL frequently (such as to display on your website), **do not** make an API request every time.
-        /// For more information configuring the Billing Portal, see [Billing Portal Overview](https://maxio.zendesk.com/hc/en-us/articles/24252412965133-Billing-Portal-Overview).
+        /// For more information configuring the Billing Portal, see [Billing Portal Overview](https://docs.maxio.com/billing/billing-portal/overview/understand-the-billing-portal).
         /// </summary>
         /// <param name="customerId">Required parameter: The Chargify id of the customer.</param>
         /// <param name="autoInvite">Optional parameter: When set to 1, an Invitation email will be sent to the Customer. When set to 0, or not sent, an email will not be sent. Use in query: `auto_invite=1`..</param>
@@ -44,7 +44,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// If your customer has been invited to the Billing Portal, they receive a link to manage their subscription (the “Management URL”) automatically at the bottom of their statements, invoices, and receipts. **This link changes periodically for security and is only valid for 65 days.**.
         /// If you need to provide your customer their Management URL through other means, you can retrieve it [via the API]($e/Billing%20Portal/readBillingPortalLink). Because the URL is cryptographically signed with a timestamp, merchants cannot generate the URL without requesting it through the API.
         /// To prevent abuse and overuse, request a new URL only when absolutely necessary. Management URLs are good for 65 days, so you should re-use a previously generated one as much as possible. If you use the URL frequently (such as to display on your website), **do not** make an API request every time.
-        /// For more information configuring the Billing Portal, see [Billing Portal Overview](https://maxio.zendesk.com/hc/en-us/articles/24252412965133-Billing-Portal-Overview).
+        /// For more information configuring the Billing Portal, see [Billing Portal Overview](https://docs.maxio.com/billing/billing-portal/overview/understand-the-billing-portal).
         /// </summary>
         /// <param name="customerId">Required parameter: The Chargify id of the customer.</param>
         /// <param name="autoInvite">Optional parameter: When set to 1, an Invitation email will be sent to the Customer. When set to 0, or not sent, an email will not be sent. Use in query: `auto_invite=1`..</param>

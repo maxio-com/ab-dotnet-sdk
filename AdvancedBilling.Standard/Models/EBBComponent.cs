@@ -35,7 +35,6 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="name">name.</param>
         /// <param name="unitName">unit_name.</param>
         /// <param name="pricingScheme">pricing_scheme.</param>
-        /// <param name="eventBasedBillingMetricId">event_based_billing_metric_id.</param>
         /// <param name="description">description.</param>
         /// <param name="handle">handle.</param>
         /// <param name="taxable">taxable.</param>
@@ -44,6 +43,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="unitPrice">unit_price.</param>
         /// <param name="taxCode">tax_code.</param>
         /// <param name="hideDateRangeOnInvoice">hide_date_range_on_invoice.</param>
+        /// <param name="eventBasedBillingMetricId">event_based_billing_metric_id.</param>
+        /// <param name="meteringMeterId">metering_meter_id.</param>
+        /// <param name="meteringFormula">metering_formula.</param>
         /// <param name="interval">interval.</param>
         /// <param name="intervalUnit">interval_unit.</param>
         /// <param name="unspscCode">unspsc_code.</param>
@@ -51,7 +53,6 @@ namespace AdvancedBilling.Standard.Models
             string name,
             string unitName,
             Models.PricingScheme pricingScheme,
-            int eventBasedBillingMetricId,
             string description = null,
             string handle = null,
             bool? taxable = null,
@@ -60,6 +61,9 @@ namespace AdvancedBilling.Standard.Models
             EBBComponentUnitPrice unitPrice = null,
             string taxCode = null,
             bool? hideDateRangeOnInvoice = null,
+            int? eventBasedBillingMetricId = null,
+            int? meteringMeterId = null,
+            string meteringFormula = null,
             int? interval = null,
             Models.IntervalUnit? intervalUnit = null,
             string unspscCode = null)
@@ -76,6 +80,8 @@ namespace AdvancedBilling.Standard.Models
             this.TaxCode = taxCode;
             this.HideDateRangeOnInvoice = hideDateRangeOnInvoice;
             this.EventBasedBillingMetricId = eventBasedBillingMetricId;
+            this.MeteringMeterId = meteringMeterId;
+            this.MeteringFormula = meteringFormula;
             this.Interval = interval;
 
             if (intervalUnit != null)
@@ -126,7 +132,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.PricingScheme PricingScheme { get; set; }
 
         /// <summary>
-        /// (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket Rules](https://maxio.zendesk.com/hc/en-us/articles/24261149166733-Component-Pricing-Schemes#price-bracket-rules) for an overview of how price brackets work for different pricing schemes.
+        /// (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket Rules](https://docs.maxio.com/billing/catalog/products/use-product-pricing-schemes#price-bracket-rules) for an overview of how price brackets work for different pricing schemes.
         /// </summary>
         [JsonProperty("prices", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.Price> Prices { get; set; }
@@ -156,10 +162,22 @@ namespace AdvancedBilling.Standard.Models
         public bool? HideDateRangeOnInvoice { get; set; }
 
         /// <summary>
-        /// The ID of an event based billing metric that will be attached to this component.
+        /// ID of a site-owned metric. Required to create a component with legacy Events Based Billing. During migration, a meter linked to the metric is attached automatically when present. Sites using Maxio Metering ignore this input; provide metering_meter_id or metering_formula instead.
         /// </summary>
-        [JsonProperty("event_based_billing_metric_id")]
-        public int EventBasedBillingMetricId { get; set; }
+        [JsonProperty("event_based_billing_metric_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? EventBasedBillingMetricId { get; set; }
+
+        /// <summary>
+        /// ID of a merchant-owned Maxio Metering meter. To create a component with Maxio Metering, provide this ID or metering_formula, but not both. Meter IDs and legacy metric IDs identify different resources. Sites using Events Based Billing ignore this input and require event_based_billing_metric_id instead.
+        /// </summary>
+        [JsonProperty("metering_meter_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? MeteringMeterId { get; set; }
+
+        /// <summary>
+        /// An Advanced Formula using Maxio Metering meters available to the site. To create a component with Maxio Metering, provide a non-blank formula or metering_meter_id, but not both. Sites using Events Based Billing ignore this input and require event_based_billing_metric_id instead.
+        /// </summary>
+        [JsonProperty("metering_formula", NullValueHandling = NullValueHandling.Ignore)]
+        public string MeteringFormula { get; set; }
 
         /// <summary>
         /// The numerical interval. i.e., an interval of ‘30’ coupled with an interval_unit of day would mean this component's default price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
@@ -272,7 +290,12 @@ namespace AdvancedBilling.Standard.Models
                  this.TaxCode?.Equals(other.TaxCode) == true) &&
                 (this.HideDateRangeOnInvoice == null && other.HideDateRangeOnInvoice == null ||
                  this.HideDateRangeOnInvoice?.Equals(other.HideDateRangeOnInvoice) == true) &&
-                (this.EventBasedBillingMetricId.Equals(other.EventBasedBillingMetricId)) &&
+                (this.EventBasedBillingMetricId == null && other.EventBasedBillingMetricId == null ||
+                 this.EventBasedBillingMetricId?.Equals(other.EventBasedBillingMetricId) == true) &&
+                (this.MeteringMeterId == null && other.MeteringMeterId == null ||
+                 this.MeteringMeterId?.Equals(other.MeteringMeterId) == true) &&
+                (this.MeteringFormula == null && other.MeteringFormula == null ||
+                 this.MeteringFormula?.Equals(other.MeteringFormula) == true) &&
                 (this.Interval == null && other.Interval == null ||
                  this.Interval?.Equals(other.Interval) == true) &&
                 (this.IntervalUnit == null && other.IntervalUnit == null ||
@@ -299,7 +322,9 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"UnitPrice = {(this.UnitPrice == null ? "null" : this.UnitPrice.ToString())}");
             toStringOutput.Add($"TaxCode = {this.TaxCode ?? "null"}");
             toStringOutput.Add($"HideDateRangeOnInvoice = {(this.HideDateRangeOnInvoice == null ? "null" : this.HideDateRangeOnInvoice.ToString())}");
-            toStringOutput.Add($"EventBasedBillingMetricId = {this.EventBasedBillingMetricId}");
+            toStringOutput.Add($"EventBasedBillingMetricId = {(this.EventBasedBillingMetricId == null ? "null" : this.EventBasedBillingMetricId.ToString())}");
+            toStringOutput.Add($"MeteringMeterId = {(this.MeteringMeterId == null ? "null" : this.MeteringMeterId.ToString())}");
+            toStringOutput.Add($"MeteringFormula = {this.MeteringFormula ?? "null"}");
             toStringOutput.Add($"Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
             toStringOutput.Add($"UnspscCode = {this.UnspscCode ?? "null"}");

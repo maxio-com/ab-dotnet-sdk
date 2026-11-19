@@ -11,6 +11,7 @@ Object which contains subscription errors.
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
+| `Customer` | `List<string>` | Optional | - |
 | `Product` | `List<string>` | Optional | - |
 | `ProductPricePointId` | `List<string>` | Optional | - |
 | `PaymentProfile` | `List<string>` | Optional | - |
@@ -28,6 +29,12 @@ using System.Collections.Generic;
 
 SubscriptionGroupSubscriptionError subscriptionGroupSubscriptionError = new SubscriptionGroupSubscriptionError
 {
+    Customer = new List<string>
+    {
+        "customer7",
+        "customer8",
+        "customer9",
+    },
     Product = new List<string>
     {
         "product7",
@@ -47,12 +54,6 @@ SubscriptionGroupSubscriptionError subscriptionGroupSubscriptionError = new Subs
     {
         "payment_profile.chargify_token2",
         "payment_profile.chargify_token3",
-    },
-    MBase = new List<string>
-    {
-        "base1",
-        "base2",
-        "base3",
     },
 };
 ```

@@ -25,7 +25,7 @@ ListSubscriptionComponentsResponse listSubscriptionComponentsResponse = new List
         {
             Id = 138,
             Name = "name2",
-            Kind = ComponentKind.MeteredComponent,
+            Kind = ComponentKind.EventBasedComponent,
             UnitName = "unit_name4",
             Enabled = false,
         },

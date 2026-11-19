@@ -35,6 +35,7 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         /// <param name="id">id.</param>
         /// <param name="reference">reference.</param>
+        /// <param name="customerId">customer_id.</param>
         /// <param name="productId">product_id.</param>
         /// <param name="productHandle">product_handle.</param>
         /// <param name="productPricePointId">product_price_point_id.</param>
@@ -46,6 +47,7 @@ namespace AdvancedBilling.Standard.Models
         public SubscriptionGroupItem(
             int? id = null,
             string reference = null,
+            int? customerId = null,
             int? productId = null,
             string productHandle = null,
             int? productPricePointId = null,
@@ -61,6 +63,7 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.Reference = reference;
             }
+            this.CustomerId = customerId;
             this.ProductId = productId;
 
             if (productHandle != null)
@@ -102,6 +105,12 @@ namespace AdvancedBilling.Standard.Models
                 this.reference = value;
             }
         }
+
+        /// <summary>
+        /// The ID of the customer the subscription belongs to. This is the payer unless the signup request named another customer for the subscription.
+        /// </summary>
+        [JsonProperty("customer_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? CustomerId { get; set; }
 
         /// <summary>
         /// Gets or sets ProductId.
@@ -243,6 +252,8 @@ namespace AdvancedBilling.Standard.Models
                  this.Id?.Equals(other.Id) == true) &&
                 (this.Reference == null && other.Reference == null ||
                  this.Reference?.Equals(other.Reference) == true) &&
+                (this.CustomerId == null && other.CustomerId == null ||
+                 this.CustomerId?.Equals(other.CustomerId) == true) &&
                 (this.ProductId == null && other.ProductId == null ||
                  this.ProductId?.Equals(other.ProductId) == true) &&
                 (this.ProductHandle == null && other.ProductHandle == null ||
@@ -270,6 +281,7 @@ namespace AdvancedBilling.Standard.Models
         {
             toStringOutput.Add($"Id = {(this.Id == null ? "null" : this.Id.ToString())}");
             toStringOutput.Add($"Reference = {this.Reference ?? "null"}");
+            toStringOutput.Add($"CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
             toStringOutput.Add($"ProductId = {(this.ProductId == null ? "null" : this.ProductId.ToString())}");
             toStringOutput.Add($"ProductHandle = {this.ProductHandle ?? "null"}");
             toStringOutput.Add($"ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");

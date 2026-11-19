@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `Subscriptions` | [`Dictionary<string, SubscriptionGroupSubscriptionError>`](../../doc/models/subscription-group-subscription-error.md) | Optional | Object that as key have subscription position in request subscriptions array and as value subscription errors object. |
+| `Subscriptions` | [`Dictionary<string, SubscriptionGroupSubscriptionError>`](../../doc/models/subscription-group-subscription-error.md) | Optional | Subscription errors keyed by the subscription's `reference` from the request, or by its zero-based position in the `subscriptions` array when it has no reference. |
 | `PayerReference` | `string` | Optional | - |
 | `Payer` | [`PayerError`](../../doc/models/payer-error.md) | Optional | - |
 | `SubscriptionGroup` | `List<string>` | Optional | - |
@@ -28,6 +28,11 @@ SubscriptionGroupSignupError subscriptionGroupSignupError = new SubscriptionGrou
     {
         ["key0"] = new SubscriptionGroupSubscriptionError
         {
+            Customer = new List<string>
+            {
+                "customer1",
+                "customer2",
+            },
             Product = new List<string>
             {
                 "product9",
@@ -43,15 +48,15 @@ SubscriptionGroupSignupError subscriptionGroupSignupError = new SubscriptionGrou
             PaymentProfileChargifyToken = new List<string>
             {
                 "payment_profile.chargify_token6",
-            },
-            MBase = new List<string>
-            {
-                "base5",
-                "base6",
             },
         },
         ["key1"] = new SubscriptionGroupSubscriptionError
         {
+            Customer = new List<string>
+            {
+                "customer1",
+                "customer2",
+            },
             Product = new List<string>
             {
                 "product9",
@@ -67,15 +72,15 @@ SubscriptionGroupSignupError subscriptionGroupSignupError = new SubscriptionGrou
             PaymentProfileChargifyToken = new List<string>
             {
                 "payment_profile.chargify_token6",
-            },
-            MBase = new List<string>
-            {
-                "base5",
-                "base6",
             },
         },
         ["key2"] = new SubscriptionGroupSubscriptionError
         {
+            Customer = new List<string>
+            {
+                "customer1",
+                "customer2",
+            },
             Product = new List<string>
             {
                 "product9",
@@ -91,11 +96,6 @@ SubscriptionGroupSignupError subscriptionGroupSignupError = new SubscriptionGrou
             PaymentProfileChargifyToken = new List<string>
             {
                 "payment_profile.chargify_token6",
-            },
-            MBase = new List<string>
-            {
-                "base5",
-                "base6",
             },
         },
     },

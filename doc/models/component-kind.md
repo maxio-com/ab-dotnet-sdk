@@ -16,12 +16,13 @@ A handle for the component type
 | `OnOffComponent` |
 | `PrepaidUsageComponent` |
 | `EventBasedComponent` |
+| `WalletProduct` |
 
 ## Example
 
 ```csharp
 using AdvancedBilling.Standard.Models;
 
-ComponentKind componentKind = ComponentKind.PrepaidUsageComponent;
+ComponentKind componentKind = ComponentKind.EventBasedComponent;
 ```
 

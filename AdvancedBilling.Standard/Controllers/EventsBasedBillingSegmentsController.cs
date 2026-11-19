@@ -26,6 +26,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Creates a new segment for a component with a segmented metric. It allows you to specify properties to bill upon and prices for each Segment. You can only pass as many "property_values" as the related Metric has segmenting properties defined.
         /// You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
+        /// ## Custom Price Points.
+        /// This endpoint changes segments on catalog price points only. If the price point is a subscription's custom price point, the request returns `422 Unprocessable Entity` with a `price_point` error such as "Segments on a subscription's custom price point can't be changed here. Set them with custom_price on the subscription or component endpoints.", and nothing is saved. To change a subscription's segment rates, send `custom_price.segments` to [Update Subscription]($e/Subscriptions/updateSubscription).
         /// </summary>
         /// <param name="componentId">Required parameter: ID or Handle for the Component.</param>
         /// <param name="pricePointId">Required parameter: ID or Handle for the Price Point belonging to the Component.</param>
@@ -40,6 +42,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Creates a new segment for a component with a segmented metric. It allows you to specify properties to bill upon and prices for each Segment. You can only pass as many "property_values" as the related Metric has segmenting properties defined.
         /// You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
+        /// ## Custom Price Points.
+        /// This endpoint changes segments on catalog price points only. If the price point is a subscription's custom price point, the request returns `422 Unprocessable Entity` with a `price_point` error such as "Segments on a subscription's custom price point can't be changed here. Set them with custom_price on the subscription or component endpoints.", and nothing is saved. To change a subscription's segment rates, send `custom_price.segments` to [Update Subscription]($e/Subscriptions/updateSubscription).
         /// </summary>
         /// <param name="componentId">Required parameter: ID or Handle for the Component.</param>
         /// <param name="pricePointId">Required parameter: ID or Handle for the Price Point belonging to the Component.</param>
@@ -62,13 +66,15 @@ namespace AdvancedBilling.Standard.Controllers
                       .Header(header => header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(responseHandler => responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new EventBasedBillingSegmentErrorsException(errorReason, context), true)))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new EventBasedBillingSegmentWriteErrorResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Lists segments created for a given price point, in order of creation.
         /// You can pass `page` and `per_page` parameters in order to access all of the segments. By default it will return `30` records. You can set `per_page` to `200` at most.
         /// You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
+        /// ## Subscription Segment Rates.
+        /// This endpoint also returns the segments of a subscription's custom price point, including segment rates set through `custom_price.segments` on [Create Subscription]($e/Subscriptions/createSubscription) or [Update Subscription]($e/Subscriptions/updateSubscription). Use the subscription component's `price_point_id`, available from [Read Subscription Component]($e/Subscription%20Components/readSubscriptionComponent).
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <returns>Returns the Models.ListSegmentsResponse response from the API call.</returns>
@@ -80,6 +86,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// Lists segments created for a given price point, in order of creation.
         /// You can pass `page` and `per_page` parameters in order to access all of the segments. By default it will return `30` records. You can set `per_page` to `200` at most.
         /// You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
+        /// ## Subscription Segment Rates.
+        /// This endpoint also returns the segments of a subscription's custom price point, including segment rates set through `custom_price.segments` on [Create Subscription]($e/Subscriptions/createSubscription) or [Update Subscription]($e/Subscriptions/updateSubscription). Use the subscription component's `price_point_id`, available from [Read Subscription Component]($e/Subscription%20Components/readSubscriptionComponent).
         /// </summary>
         /// <param name="input">Object containing request parameters.</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
@@ -96,7 +104,8 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(template => template.Setup("price_point_id", input.PricePointId).Required())
                       .Query(query => query.Setup("page", input.Page))
                       .Query(query => query.Setup("per_page", input.PerPage))
-                      .Query(query => query.Setup("filter", input.Filter))))
+                      .Query(query => query.Setup("filter", input.Filter))
+                      .Query(query => query.Setup("currency_prices", input.CurrencyPrices))))
               .ResponseHandler(responseHandler => responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
                   .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new EventBasedBillingListSegmentsErrorsException(errorReason, context), true)))
@@ -105,6 +114,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Updates a single segment for a component with a segmented metric. You can also update the pricing for the segment.
         /// You can specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
+        /// ## Custom Price Points.
+        /// This endpoint changes segments on catalog price points only. If the segment belongs to a subscription's custom price point, or the `price_point_id` in the URL names one, the request returns `422 Unprocessable Entity` with a `price_point` error such as "Segments on a subscription's custom price point can't be changed here. Set them with custom_price on the subscription or component endpoints.", and nothing is saved. To change a subscription's segment rates, send `custom_price.segments` to [Update Subscription]($e/Subscriptions/updateSubscription).
         /// </summary>
         /// <param name="componentId">Required parameter: ID or Handle of the Component.</param>
         /// <param name="pricePointId">Required parameter: ID or Handle of the Price Point belonging to the Component.</param>
@@ -121,6 +132,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Updates a single segment for a component with a segmented metric. You can also update the pricing for the segment.
         /// You can specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
+        /// ## Custom Price Points.
+        /// This endpoint changes segments on catalog price points only. If the segment belongs to a subscription's custom price point, or the `price_point_id` in the URL names one, the request returns `422 Unprocessable Entity` with a `price_point` error such as "Segments on a subscription's custom price point can't be changed here. Set them with custom_price on the subscription or component endpoints.", and nothing is saved. To change a subscription's segment rates, send `custom_price.segments` to [Update Subscription]($e/Subscriptions/updateSubscription).
         /// </summary>
         /// <param name="componentId">Required parameter: ID or Handle of the Component.</param>
         /// <param name="pricePointId">Required parameter: ID or Handle of the Price Point belonging to the Component.</param>
@@ -146,12 +159,14 @@ namespace AdvancedBilling.Standard.Controllers
                       .Header(header => header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(responseHandler => responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new EventBasedBillingSegmentErrorsException(errorReason, context), true)))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ApiException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Deletes a segment with the specified ID.
         /// You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
+        /// ## Custom Price Points.
+        /// This endpoint changes segments on catalog price points only. If the segment belongs to a subscription's custom price point, the request returns `422 Unprocessable Entity` with a `price_point` error such as "Segments on a subscription's custom price point can't be changed here. Set them with custom_price on the subscription or component endpoints.", and nothing is saved. The check uses the segment's own price point, whichever `price_point_id` the URL names. To change a subscription's segment rates, send `custom_price.segments` to [Update Subscription]($e/Subscriptions/updateSubscription).
         /// </summary>
         /// <param name="componentId">Required parameter: ID or Handle of the Component.</param>
         /// <param name="pricePointId">Required parameter: ID or Handle of the Price Point belonging to the Component.</param>
@@ -165,6 +180,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// <summary>
         /// Deletes a segment with the specified ID.
         /// You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
+        /// ## Custom Price Points.
+        /// This endpoint changes segments on catalog price points only. If the segment belongs to a subscription's custom price point, the request returns `422 Unprocessable Entity` with a `price_point` error such as "Segments on a subscription's custom price point can't be changed here. Set them with custom_price on the subscription or component endpoints.", and nothing is saved. The check uses the segment's own price point, whichever `price_point_id` the URL names. To change a subscription's segment rates, send `custom_price.segments` to [Update Subscription]($e/Subscriptions/updateSubscription).
         /// </summary>
         /// <param name="componentId">Required parameter: ID or Handle of the Component.</param>
         /// <param name="pricePointId">Required parameter: ID or Handle of the Price Point belonging to the Component.</param>
@@ -186,13 +203,15 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(template => template.Setup("id", id))))
               .ResponseHandler(responseHandler => responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ApiException(errorReason, context), true)))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new SegmentPricePointErrorsErrorException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Creates multiple segments in one request. The array of segments can contain up to `2000` records.
         /// If any of the records contain an error the whole request would fail and none of the requested segments get created. The error response contains a message for only the one segment that failed validation, with the corresponding index in the array.
         /// You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
+        /// ## Custom Price Points.
+        /// This endpoint changes segments on catalog price points only. If the price point is a subscription's custom price point, the request returns `422 Unprocessable Entity` with a `price_point` error such as "Segments on a subscription's custom price point can't be changed here. Set them with custom_price on the subscription or component endpoints.", and nothing is saved. To change a subscription's segment rates, send `custom_price.segments` to [Update Subscription]($e/Subscriptions/updateSubscription).
         /// </summary>
         /// <param name="componentId">Required parameter: ID or Handle for the Component.</param>
         /// <param name="pricePointId">Required parameter: ID or Handle for the Price Point belonging to the Component.</param>
@@ -208,6 +227,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// Creates multiple segments in one request. The array of segments can contain up to `2000` records.
         /// If any of the records contain an error the whole request would fail and none of the requested segments get created. The error response contains a message for only the one segment that failed validation, with the corresponding index in the array.
         /// You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
+        /// ## Custom Price Points.
+        /// This endpoint changes segments on catalog price points only. If the price point is a subscription's custom price point, the request returns `422 Unprocessable Entity` with a `price_point` error such as "Segments on a subscription's custom price point can't be changed here. Set them with custom_price on the subscription or component endpoints.", and nothing is saved. To change a subscription's segment rates, send `custom_price.segments` to [Update Subscription]($e/Subscriptions/updateSubscription).
         /// </summary>
         /// <param name="componentId">Required parameter: ID or Handle for the Component.</param>
         /// <param name="pricePointId">Required parameter: ID or Handle for the Price Point belonging to the Component.</param>
@@ -230,13 +251,15 @@ namespace AdvancedBilling.Standard.Controllers
                       .Header(header => header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(responseHandler => responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new EventBasedBillingSegmentException(errorReason, context), true)))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ApiException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Updates multiple segments in one request. The array of segments can contain up to `1000` records.
         /// If any of the records contain an error the whole request would fail and none of the requested segments get updated. The error response contains a message for only the one segment that failed validation, with the corresponding index in the array.
         /// You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
+        /// ## Custom Price Points.
+        /// This endpoint changes segments on catalog price points only. If the price point is a subscription's custom price point, the request returns `422 Unprocessable Entity` with a `price_point` error such as "Segments on a subscription's custom price point can't be changed here. Set them with custom_price on the subscription or component endpoints.", and nothing is saved. To change a subscription's segment rates, send `custom_price.segments` to [Update Subscription]($e/Subscriptions/updateSubscription).
         /// </summary>
         /// <param name="componentId">Required parameter: ID or Handle for the Component.</param>
         /// <param name="pricePointId">Required parameter: ID or Handle for the Price Point belonging to the Component.</param>
@@ -252,6 +275,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// Updates multiple segments in one request. The array of segments can contain up to `1000` records.
         /// If any of the records contain an error the whole request would fail and none of the requested segments get updated. The error response contains a message for only the one segment that failed validation, with the corresponding index in the array.
         /// You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
+        /// ## Custom Price Points.
+        /// This endpoint changes segments on catalog price points only. If the price point is a subscription's custom price point, the request returns `422 Unprocessable Entity` with a `price_point` error such as "Segments on a subscription's custom price point can't be changed here. Set them with custom_price on the subscription or component endpoints.", and nothing is saved. To change a subscription's segment rates, send `custom_price.segments` to [Update Subscription]($e/Subscriptions/updateSubscription).
         /// </summary>
         /// <param name="componentId">Required parameter: ID or Handle for the Component.</param>
         /// <param name="pricePointId">Required parameter: ID or Handle for the Price Point belonging to the Component.</param>
@@ -274,7 +299,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Header(header => header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(responseHandler => responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new EventBasedBillingSegmentException(errorReason, context), true)))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ApiException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

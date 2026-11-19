@@ -22,7 +22,7 @@ SubscriptionComponentResponse subscriptionComponentResponse = new SubscriptionCo
     {
         Id = 80,
         Name = "name8",
-        Kind = ComponentKind.QuantityBasedComponent,
+        Kind = ComponentKind.EventBasedComponent,
         UnitName = "unit_name0",
         Enabled = false,
     },

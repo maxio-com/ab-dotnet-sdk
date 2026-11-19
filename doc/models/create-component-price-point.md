@@ -13,6 +13,8 @@
 | `Handle` | `string` | Optional | - |
 | `PricingScheme` | [`PricingScheme`](../../doc/models/pricing-scheme.md) | Required | The identifier for the pricing scheme. See [Product Components](https://help.chargify.com/products/product-components.html) for an overview of pricing schemes. |
 | `Prices` | [`List<Price>`](../../doc/models/price.md) | Required | - |
+| `SecondaryPricing` | [`SecondaryPricing`](../../doc/models/secondary-pricing.md) | Optional | Hybrid Pricing only. The secondary pricing model that takes over once usage passes the primary model's included threshold. Applies to Quantity-Based and Metered Components on Sites with Hybrid Pricing enabled; ignored otherwise. Its `prices` brackets start at `1`, not at the primary model's highest `ending_quantity`. See [Hybrid Pricing](page:introduction/basic-concepts/hybrid-pricing). |
+| `SecondaryPricingScheme` | [`PricingScheme?`](../../doc/models/pricing-scheme.md) | Optional | Hybrid Pricing only. Alternative to `secondary_pricing.pricing_scheme`; when both are sent, `secondary_pricing.pricing_scheme` is used. Setting not supported when creating price points in bulk. |
 | `UseSiteExchangeRate` | `bool?` | Optional | Whether to use the site level exchange rate or define your own prices for each currency if you have multiple currencies defined on the site. Setting not supported when creating price points in bulk.<br><br>**Default**: `true` |
 | `TaxIncluded` | `bool?` | Optional | Whether or not the price point includes tax. Setting not supported when creating price points in bulk. |
 | `Interval` | `int?` | Optional | The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean this price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. |
@@ -39,10 +41,28 @@ CreateComponentPricePoint createComponentPricePoint = new CreateComponentPricePo
         },
     },
     Handle = "handle0",
+    SecondaryPricing = new SecondaryPricing
+    {
+        PricingScheme = PricingScheme.Stairstep,
+        Prices = new List<Price>
+        {
+            new Price
+            {
+                StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                EndingQuantity = PriceEndingQuantity.FromNumber(40),
+            },
+            new Price
+            {
+                StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                EndingQuantity = PriceEndingQuantity.FromNumber(40),
+            },
+        },
+    },
+    SecondaryPricingScheme = PricingScheme.Stairstep,
     UseSiteExchangeRate = true,
     TaxIncluded = false,
-    Interval = 140,
-    IntervalUnit = IntervalUnit.Day,
 };
 ```
 

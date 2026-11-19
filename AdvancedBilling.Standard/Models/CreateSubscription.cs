@@ -284,21 +284,21 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// (Optional) Set this attribute to a future date/time to sync imported subscriptions to your existing renewal schedule. See the notes on “Date/Time Format” in our [subscription import documentation](https://maxio.zendesk.com/hc/en-us/articles/24251489107213-Advanced-Billing-Subscription-Imports#date-format). If you provide a next_billing_at timestamp that is in the future, no trial or initial charges will be applied when you create the subscription. In fact, no payment will be captured at all. The first payment will be captured, according to the prices defined by the product, near the time specified by next_billing_at. If you do not provide a value for next_billing_at, any trial and/or initial charges will be assessed and charged at the time of subscription creation. If the card cannot be successfully charged, the subscription will not be created. See further notes in the section on Importing Subscriptions.
+        /// (Optional) Set this attribute to a future date/time to sync imported subscriptions to your existing renewal schedule. See the notes on “Date/Time Format” in our [subscription import documentation](https://docs.maxio.com/configuration/importing/import-subscriptions-from-a-csv#date-format). If you provide a next_billing_at timestamp that is in the future, no trial or initial charges will be applied when you create the subscription. In fact, no payment will be captured at all. The first payment will be captured, according to the prices defined by the product, near the time specified by next_billing_at. If you do not provide a value for next_billing_at, any trial and/or initial charges will be assessed and charged at the time of subscription creation. If the card cannot be successfully charged, the subscription will not be created. See further notes in the section on Importing Subscriptions.
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("next_billing_at", NullValueHandling = NullValueHandling.Ignore)]
         public DateTimeOffset? NextBillingAt { get; set; }
 
         /// <summary>
-        /// (Optional) Set this attribute to a future date/time to create a subscription in the Awaiting Signup state, rather than Active or Trialing. You can omit the initial_billing_at date to activate the subscription immediately. In the Awaiting Signup state, a subscription behaves like any other. It can be canceled, allocated to, or have its billing date changed. etc. When the initial_billing_at date hits, the subscription will transition to the expected state. If the product has a trial, the subscription will enter a trial, otherwise it will go active. Setup fees will be respected either before or after the trial, as configured on the price point. If the payment is due at the initial_billing_at and it fails the subscription will be immediately canceled. See the [subscription import](https://maxio.zendesk.com/hc/en-us/articles/24251489107213-Advanced-Billing-Subscription-Imports#date-format) documentation for more information about Date/Time Formats.
+        /// (Optional) Set this attribute to a future date/time to create a subscription in the Awaiting Signup state, rather than Active or Trialing. You can omit the initial_billing_at date to activate the subscription immediately. In the Awaiting Signup state, a subscription behaves like any other. It can be canceled, allocated to, or have its billing date changed. etc. When the initial_billing_at date hits, the subscription will transition to the expected state. If the product has a trial, the subscription will enter a trial, otherwise it will go active. Setup fees will be respected either before or after the trial, as configured on the price point. If the payment is due at the initial_billing_at and it fails the subscription will be immediately canceled. See the [subscription import](https://docs.maxio.com/configuration/importing/import-subscriptions-from-a-csv#date-format) documentation for more information about Date/Time Formats.
         /// </summary>
         [JsonConverter(typeof(IsoDateTimeConverter))]
         [JsonProperty("initial_billing_at", NullValueHandling = NullValueHandling.Ignore)]
         public DateTimeOffset? InitialBillingAt { get; set; }
 
         /// <summary>
-        /// (Optional) Set this attribute to true to create the subscription in the Awaiting Signup Date state. Use this when you want to create a subscription that has an unknown first billing date. When the first billing date is known, update a subscription and set the `initial_billing_at` date. The subscription moves to the Awaiting Signup state with a scheduled initial billing date. You can omit the initial_billing_at date to activate the subscription immediately. See [Subscription States](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404222005773-Subscription-States) for more information.
+        /// (Optional) Set this attribute to true to create the subscription in the Awaiting Signup Date state. Use this when you want to create a subscription that has an unknown first billing date. When the first billing date is known, update a subscription and set the `initial_billing_at` date. The subscription moves to the Awaiting Signup state with a scheduled initial billing date. You can omit the initial_billing_at date to activate the subscription immediately. See [Subscription States](https://docs.maxio.com/billing/subscriptions/management/subscription-states/understand-subscription-states#setup-and-transient-states) for more information.
         /// </summary>
         [JsonProperty("defer_signup", NullValueHandling = NullValueHandling.Ignore)]
         public bool? DeferSignup { get; set; }
@@ -352,7 +352,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.BankAccountAttributes BankAccountAttributes { get; set; }
 
         /// <summary>
-        /// (Optional) An array of component ids and quantities to be added to the subscription. See [Components](https://maxio.zendesk.com/hc/en-us/articles/24261141522189-Components-Overview) for more information.
+        /// (Optional) An array of component ids and quantities to be added to the subscription. See [Components](https://docs.maxio.com/billing/catalog/products/understand-products) for more information.
         /// </summary>
         [JsonProperty("components", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.CreateSubscriptionComponent> Components { get; set; }
@@ -382,7 +382,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.GroupSettings MGroup { get; set; }
 
         /// <summary>
-        /// A valid referral code. (optional, see [Referrals](https://maxio.zendesk.com/hc/en-us/articles/24286981223693-Referrals-Reference#how-to-obtain-referral-codes) for more details). If supplied, must be valid, or else subscription creation will fail.
+        /// A valid referral code. (optional, see [Referrals](https://docs.maxio.com/configuration/advanced-billing/understand-referrals#find-a-referral-code) for more details). If supplied, must be valid, or else subscription creation will fail.
         /// </summary>
         [JsonProperty("ref", NullValueHandling = NullValueHandling.Ignore)]
         public string MRef { get; set; }

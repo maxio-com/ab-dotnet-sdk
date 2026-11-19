@@ -46,7 +46,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Object that as key have subscription position in request subscriptions array and as value subscription errors object.
+        /// Subscription errors keyed by the subscription's `reference` from the request, or by its zero-based position in the `subscriptions` array when it has no reference.
         /// </summary>
         [JsonProperty("subscriptions", NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<string, Models.SubscriptionGroupSubscriptionError> Subscriptions { get; set; }

@@ -1,6 +1,8 @@
 
 # Proforma Invoice Tax Source Type
 
+The source of the tax. `Tax` is a tax configured in Advanced Billing. The other values identify the tax service that calculated the tax.
+
 ## Enumeration
 
 `ProformaInvoiceTaxSourceType`
@@ -11,12 +13,17 @@
 |  --- |
 | `Tax` |
 | `Avalara` |
+| `Anrok` |
+| `TaxJar` |
+| `Numeral` |
+| `Sphere` |
+| `Taxwire` |
 
 ## Example
 
 ```csharp
 using AdvancedBilling.Standard.Models;
 
-ProformaInvoiceTaxSourceType proformaInvoiceTaxSourceType = ProformaInvoiceTaxSourceType.Tax;
+ProformaInvoiceTaxSourceType proformaInvoiceTaxSourceType = ProformaInvoiceTaxSourceType.TaxJar;
 ```
 

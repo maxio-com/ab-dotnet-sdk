@@ -26,6 +26,36 @@ namespace AdvancedBilling.Standard.Models
         /// Avalara.
         /// </summary>
         [EnumMember(Value = "Avalara")]
-        Avalara
+        Avalara,
+
+        /// <summary>
+        /// Anrok.
+        /// </summary>
+        [EnumMember(Value = "Anrok")]
+        Anrok,
+
+        /// <summary>
+        /// TaxJar.
+        /// </summary>
+        [EnumMember(Value = "TaxJar")]
+        TaxJar,
+
+        /// <summary>
+        /// Numeral.
+        /// </summary>
+        [EnumMember(Value = "Numeral")]
+        Numeral,
+
+        /// <summary>
+        /// Sphere.
+        /// </summary>
+        [EnumMember(Value = "Sphere")]
+        Sphere,
+
+        /// <summary>
+        /// Taxwire.
+        /// </summary>
+        [EnumMember(Value = "Taxwire")]
+        Taxwire
     }
 }

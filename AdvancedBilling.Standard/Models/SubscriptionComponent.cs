@@ -27,6 +27,7 @@ namespace AdvancedBilling.Standard.Models
         private string pricePointName;
         private bool? useSiteExchangeRate;
         private string description;
+        private int? listPricePointId;
         private Models.IntervalUnit? intervalUnit;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
@@ -41,6 +42,7 @@ namespace AdvancedBilling.Standard.Models
             { "price_point_name", false },
             { "use_site_exchange_rate", false },
             { "description", false },
+            { "list_price_point_id", false },
             { "interval_unit", false },
         };
 
@@ -84,6 +86,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="subscription">subscription.</param>
         /// <param name="historicUsages">historic_usages.</param>
         /// <param name="displayOnHostedPage">display_on_hosted_page.</param>
+        /// <param name="listPricePointId">list_price_point_id.</param>
         /// <param name="interval">interval.</param>
         /// <param name="intervalUnit">interval_unit.</param>
         public SubscriptionComponent(
@@ -117,6 +120,7 @@ namespace AdvancedBilling.Standard.Models
             Models.SubscriptionComponentSubscription subscription = null,
             List<Models.HistoricUsage> historicUsages = null,
             bool? displayOnHostedPage = null,
+            int? listPricePointId = null,
             int? interval = null,
             Models.IntervalUnit? intervalUnit = null)
         {
@@ -194,6 +198,11 @@ namespace AdvancedBilling.Standard.Models
             this.Subscription = subscription;
             this.HistoricUsages = historicUsages;
             this.DisplayOnHostedPage = displayOnHostedPage;
+
+            if (listPricePointId != null)
+            {
+                this.ListPricePointId = listPricePointId;
+            }
             this.Interval = interval;
 
             if (intervalUnit != null)
@@ -518,6 +527,24 @@ namespace AdvancedBilling.Standard.Models
         public bool? DisplayOnHostedPage { get; set; }
 
         /// <summary>
+        /// The ID of the catalog price point used as the list price for this component's custom price. Returned only when list vs sales pricing is enabled for the site.
+        /// </summary>
+        [JsonProperty("list_price_point_id")]
+        public int? ListPricePointId
+        {
+            get
+            {
+                return this.listPricePointId;
+            }
+
+            set
+            {
+                this.shouldSerialize["list_price_point_id"] = true;
+                this.listPricePointId = value;
+            }
+        }
+
+        /// <summary>
         /// The numerical interval. e.g., an interval of '30' coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
         /// </summary>
         [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
@@ -625,6 +652,13 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetDescription()
         {
             this.shouldSerialize["description"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetListPricePointId()
+        {
+            this.shouldSerialize["list_price_point_id"] = false;
         }
         /// <summary>
         /// Marks the field to not be serialized.
@@ -737,6 +771,15 @@ namespace AdvancedBilling.Standard.Models
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeListPricePointId()
+        {
+            return this.shouldSerialize["list_price_point_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
         public bool ShouldSerializeIntervalUnit()
         {
             return this.shouldSerialize["interval_unit"];
@@ -809,6 +852,8 @@ namespace AdvancedBilling.Standard.Models
                  this.HistoricUsages?.Equals(other.HistoricUsages) == true) &&
                 (this.DisplayOnHostedPage == null && other.DisplayOnHostedPage == null ||
                  this.DisplayOnHostedPage?.Equals(other.DisplayOnHostedPage) == true) &&
+                (this.ListPricePointId == null && other.ListPricePointId == null ||
+                 this.ListPricePointId?.Equals(other.ListPricePointId) == true) &&
                 (this.Interval == null && other.Interval == null ||
                  this.Interval?.Equals(other.Interval) == true) &&
                 (this.IntervalUnit == null && other.IntervalUnit == null ||
@@ -852,6 +897,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Subscription = {(this.Subscription == null ? "null" : this.Subscription.ToString())}");
             toStringOutput.Add($"HistoricUsages = {(this.HistoricUsages == null ? "null" : $"[{string.Join(", ", this.HistoricUsages)} ]")}");
             toStringOutput.Add($"DisplayOnHostedPage = {(this.DisplayOnHostedPage == null ? "null" : this.DisplayOnHostedPage.ToString())}");
+            toStringOutput.Add($"ListPricePointId = {(this.ListPricePointId == null ? "null" : this.ListPricePointId.ToString())}");
             toStringOutput.Add($"Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
 

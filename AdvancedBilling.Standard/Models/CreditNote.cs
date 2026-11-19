@@ -15,6 +15,14 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class CreditNote : BaseModel
     {
+        private string number;
+        private int? sequenceNumber;
+        private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
+        {
+            { "number", false },
+            { "sequence_number", false },
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CreditNote"/> class.
         /// </summary>
@@ -85,8 +93,16 @@ namespace AdvancedBilling.Standard.Models
             this.SiteId = siteId;
             this.CustomerId = customerId;
             this.SubscriptionId = subscriptionId;
-            this.Number = number;
-            this.SequenceNumber = sequenceNumber;
+
+            if (number != null)
+            {
+                this.Number = number;
+            }
+
+            if (sequenceNumber != null)
+            {
+                this.SequenceNumber = sequenceNumber;
+            }
             this.IssueDate = issueDate;
             this.AppliedDate = appliedDate;
             this.Status = status;
@@ -137,15 +153,41 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// A unique, identifying string that appears on the credit note and in places it is referenced.
         /// While the UID is long and not appropriate to show to customers, the number is usually shorter and consumable by the customer and the merchant alike.
+        /// A saved credit note always has a number. The value is `null` only in `refund_invoice` event data when the refund did not create a credit note (`apply_credit` is `false`).
         /// </summary>
-        [JsonProperty("number", NullValueHandling = NullValueHandling.Ignore)]
-        public string Number { get; set; }
+        [JsonProperty("number")]
+        public string Number
+        {
+            get
+            {
+                return this.number;
+            }
+
+            set
+            {
+                this.shouldSerialize["number"] = true;
+                this.number = value;
+            }
+        }
 
         /// <summary>
         /// A monotonically increasing number assigned to credit notes as they are created.  This number is unique within a site and can be used to sort and order credit notes.
+        /// A saved credit note always has a sequence number. The value is `null` only in `refund_invoice` event data when the refund did not create a credit note (`apply_credit` is `false`).
         /// </summary>
-        [JsonProperty("sequence_number", NullValueHandling = NullValueHandling.Ignore)]
-        public int? SequenceNumber { get; set; }
+        [JsonProperty("sequence_number")]
+        public int? SequenceNumber
+        {
+            get
+            {
+                return this.sequenceNumber;
+            }
+
+            set
+            {
+                this.shouldSerialize["sequence_number"] = true;
+                this.sequenceNumber = value;
+            }
+        }
 
         /// <summary>
         /// Date the credit note was issued to the customer.  This is the date that the credit was made available for application, and may come before it is fully applied.
@@ -273,7 +315,7 @@ namespace AdvancedBilling.Standard.Models
         public List<Models.InvoiceRefund> Refunds { get; set; }
 
         /// <summary>
-        /// An array of origin invoices for the credit note. Learn more about [Origin Invoice from our docs](https://maxio.zendesk.com/hc/en-us/articles/24252261284749-Credit-Notes-Proration#origin-invoices).
+        /// An array of origin invoices for the credit note. Learn more about [Origin Invoice from our docs](https://docs.maxio.com/billing/invoicing/working-with-invoices/how-credit-notes-work#how-origin-invoices-work).
         /// </summary>
         [JsonProperty("origin_invoices", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.OriginInvoice> OriginInvoices { get; set; }
@@ -284,6 +326,39 @@ namespace AdvancedBilling.Standard.Models
             var toStringOutput = new List<string>();
             this.ToString(toStringOutput);
             return $"CreditNote : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetNumber()
+        {
+            this.shouldSerialize["number"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetSequenceNumber()
+        {
+            this.shouldSerialize["sequence_number"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeNumber()
+        {
+            return this.shouldSerialize["number"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeSequenceNumber()
+        {
+            return this.shouldSerialize["sequence_number"];
         }
 
         /// <inheritdoc/>

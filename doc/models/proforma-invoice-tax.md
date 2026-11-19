@@ -11,7 +11,7 @@
 |  --- | --- | --- | --- |
 | `Uid` | `string` | Optional | **Constraints**: *Minimum Length*: `1` |
 | `Title` | `string` | Optional | **Constraints**: *Minimum Length*: `1` |
-| `SourceType` | [`ProformaInvoiceTaxSourceType?`](../../doc/models/proforma-invoice-tax-source-type.md) | Optional | - |
+| `SourceType` | [`ProformaInvoiceTaxSourceType?`](../../doc/models/proforma-invoice-tax-source-type.md) | Optional | The source of the tax. `Tax` is a tax configured in Advanced Billing. The other values identify the tax service that calculated the tax. |
 | `Percentage` | `string` | Optional | **Constraints**: *Minimum Length*: `1` |
 | `TaxableAmount` | `string` | Optional | **Constraints**: *Minimum Length*: `1` |
 | `TaxAmount` | `string` | Optional | **Constraints**: *Minimum Length*: `1` |
@@ -26,7 +26,7 @@ ProformaInvoiceTax proformaInvoiceTax = new ProformaInvoiceTax
 {
     Uid = "uid4",
     Title = "title0",
-    SourceType = ProformaInvoiceTaxSourceType.Tax,
+    SourceType = ProformaInvoiceTaxSourceType.Numeral,
     Percentage = "percentage2",
     TaxableAmount = "taxable_amount8",
 };

@@ -68,17 +68,21 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 | AdvanceInvoiceController | Gets AdvanceInvoiceController controller. |
 | BillingPortalController | Gets BillingPortalController controller. |
 | CouponsController | Gets CouponsController controller. |
+| ComponentFeaturesController | Gets ComponentFeaturesController controller. |
 | ComponentsController | Gets ComponentsController controller. |
 | ComponentPricePointsController | Gets ComponentPricePointsController controller. |
 | CustomersController | Gets CustomersController controller. |
 | CustomFieldsController | Gets CustomFieldsController controller. |
+| EntitlementsController | Gets EntitlementsController controller. |
 | EventsController | Gets EventsController controller. |
 | EventsBasedBillingSegmentsController | Gets EventsBasedBillingSegmentsController controller. |
+| FeatureTemplatesController | Gets FeatureTemplatesController controller. |
 | InsightsController | Gets InsightsController controller. |
 | InvoicesController | Gets InvoicesController controller. |
 | OffersController | Gets OffersController controller. |
 | PaymentProfilesController | Gets PaymentProfilesController controller. |
 | ProductFamiliesController | Gets ProductFamiliesController controller. |
+| ProductFeaturesController | Gets ProductFeaturesController controller. |
 | ProductsController | Gets ProductsController controller. |
 | ProductPricePointsController | Gets ProductPricePointsController controller. |
 | ProformaInvoicesController | Gets ProformaInvoicesController controller. |
@@ -96,6 +100,11 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 | SubscriptionProductsController | Gets SubscriptionProductsController controller. |
 | SubscriptionRenewalsController | Gets SubscriptionRenewalsController controller. |
 | SubscriptionStatusController | Gets SubscriptionStatusController controller. |
+| WalletsController | Gets WalletsController controller. |
+| WalletTransactionsController | Gets WalletTransactionsController controller. |
+| WalletAdjustmentsController | Gets WalletAdjustmentsController controller. |
+| WalletPurchasesController | Gets WalletPurchasesController controller. |
+| WalletProductsController | Gets WalletProductsController controller. |
 | WebhooksController | Gets WebhooksController controller. |
 
 ### Properties
