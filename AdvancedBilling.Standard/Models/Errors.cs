@@ -23,26 +23,17 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="Errors"/> class.
         /// </summary>
-        /// <param name="perPage">per_page.</param>
         /// <param name="pricePoint">price_point.</param>
         public Errors(
-            List<string> perPage = null,
-            List<string> pricePoint = null)
+            List<string> pricePoint)
         {
-            this.PerPage = perPage;
             this.PricePoint = pricePoint;
         }
 
         /// <summary>
-        /// Gets or sets PerPage.
-        /// </summary>
-        [JsonProperty("per_page", NullValueHandling = NullValueHandling.Ignore)]
-        public List<string> PerPage { get; set; }
-
-        /// <summary>
         /// Gets or sets PricePoint.
         /// </summary>
-        [JsonProperty("price_point", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("price_point")]
         public List<string> PricePoint { get; set; }
 
         /// <inheritdoc/>
@@ -60,8 +51,6 @@ namespace AdvancedBilling.Standard.Models
             if (ReferenceEquals(this, obj)) return true;
 
             return obj is Errors other &&
-                (this.PerPage == null && other.PerPage == null ||
-                 this.PerPage?.Equals(other.PerPage) == true) &&
                 (this.PricePoint == null && other.PricePoint == null ||
                  this.PricePoint?.Equals(other.PricePoint) == true) &&
                 base.Equals(obj);
@@ -73,7 +62,6 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
-            toStringOutput.Add($"PerPage = {(this.PerPage == null ? "null" : $"[{string.Join(", ", this.PerPage)} ]")}");
             toStringOutput.Add($"PricePoint = {(this.PricePoint == null ? "null" : $"[{string.Join(", ", this.PricePoint)} ]")}");
 
             base.ToString(toStringOutput);

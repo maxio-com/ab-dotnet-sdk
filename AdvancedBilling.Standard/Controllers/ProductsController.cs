@@ -27,8 +27,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// Creates a product in your site.
         /// If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-experience-and-terminology) enabled, the `auto_create_signup_page` parameter is not supported. If `auto_create_signup_page` is included (with any value) an error is returned.
         /// For more information, see:.
-        /// + [Products Overview](https://maxio.zendesk.com/hc/en-us/articles/24261090117645-Products-Overview).
-        /// + [Changing a Subscription's Product](https://maxio.zendesk.com/hc/en-us/articles/24252069837581-Product-Changes-and-Migrations).
+        /// + [Products Overview](https://docs.maxio.com/billing/catalog/plans/understand-plans).
+        /// + [Changing a Subscription's Product](https://docs.maxio.com/billing/subscriptions/management/subscription-actions/understand-upgrade-and-downgrade-scenarios).
         /// </summary>
         /// <param name="productFamilyId">Required parameter: Either the product family's id or its handle prefixed with `handle:`.</param>
         /// <param name="body">Optional parameter: .</param>
@@ -42,8 +42,8 @@ namespace AdvancedBilling.Standard.Controllers
         /// Creates a product in your site.
         /// If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-experience-and-terminology) enabled, the `auto_create_signup_page` parameter is not supported. If `auto_create_signup_page` is included (with any value) an error is returned.
         /// For more information, see:.
-        /// + [Products Overview](https://maxio.zendesk.com/hc/en-us/articles/24261090117645-Products-Overview).
-        /// + [Changing a Subscription's Product](https://maxio.zendesk.com/hc/en-us/articles/24252069837581-Product-Changes-and-Migrations).
+        /// + [Products Overview](https://docs.maxio.com/billing/catalog/plans/understand-plans).
+        /// + [Changing a Subscription's Product](https://docs.maxio.com/billing/subscriptions/management/subscription-actions/understand-upgrade-and-downgrade-scenarios).
         /// </summary>
         /// <param name="productFamilyId">Required parameter: Either the product family's id or its handle prefixed with `handle:`.</param>
         /// <param name="body">Optional parameter: .</param>
@@ -69,26 +69,31 @@ namespace AdvancedBilling.Standard.Controllers
         /// Reads the current details of a product.
         /// </summary>
         /// <param name="productId">Required parameter: The Advanced Billing id of the product.</param>
+        /// <param name="includeFeatures">Optional parameter: When `true`, embeds the active feature catalog items for each result in a `features` array. Default value is `false`. Ignored on sites without Entitlements enabled: no `features` key is returned and no error is raised..</param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
         public Models.ProductResponse ReadProduct(
-                int productId)
-            => CoreHelper.RunTask(ReadProductAsync(productId));
+                int productId,
+                bool? includeFeatures = false)
+            => CoreHelper.RunTask(ReadProductAsync(productId, includeFeatures));
 
         /// <summary>
         /// Reads the current details of a product.
         /// </summary>
         /// <param name="productId">Required parameter: The Advanced Billing id of the product.</param>
+        /// <param name="includeFeatures">Optional parameter: When `true`, embeds the active feature catalog items for each result in a `features` array. Default value is `false`. Ignored on sites without Entitlements enabled: no `features` key is returned and no error is raised..</param>
         /// <param name="cancellationToken"> cancellationToken. </param>
         /// <returns>Returns the Models.ProductResponse response from the API call.</returns>
         public async Task<Models.ProductResponse> ReadProductAsync(
                 int productId,
+                bool? includeFeatures = false,
                 CancellationToken cancellationToken = default)
             => await CreateApiCall<Models.ProductResponse>()
               .RequestBuilder(requestBuilder => requestBuilder
                   .Setup(HttpMethod.Get, "/products/{product_id}.json")
                   .WithAuth("BasicAuth")
                   .Parameters(parameters => parameters
-                      .Template(template => template.Setup("product_id", productId))))
+                      .Template(template => template.Setup("product_id", productId))
+                      .Query(query => query.Setup("include_features", includeFeatures ?? false))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -221,7 +226,8 @@ namespace AdvancedBilling.Standard.Controllers
                       .Query(query => query.Setup("page", input.Page))
                       .Query(query => query.Setup("per_page", input.PerPage))
                       .Query(query => query.Setup("include_archived", input.IncludeArchived))
-                      .Query(query => query.Setup("include", (input.Include.HasValue) ? CoreHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))))
+                      .Query(query => query.Setup("include", (input.Include.HasValue) ? CoreHelper.JsonSerialize(input.Include.Value).Trim('\"') : null))
+                      .Query(query => query.Setup("include_features", input.IncludeFeatures))))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
     }
 }

@@ -15,12 +15,13 @@
 | `Organization` |
 | `CustomerReference` |
 | `SubscriptionReference` |
+| `LastFour` |
 
 ## Example
 
 ```csharp
 using AdvancedBilling.Standard.Models;
 
-QScope qScope = QScope.LastName;
+QScope qScope = QScope.CustomerReference;
 ```
 

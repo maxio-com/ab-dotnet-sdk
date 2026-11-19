@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `Errors` | [`Errors`](../../doc/models/errors.md) | Optional | - |
+| `Errors` | [`Errors1`](../../doc/models/errors-1.md) | Optional | - |
 
 ## Example
 

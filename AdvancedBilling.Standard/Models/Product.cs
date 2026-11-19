@@ -33,7 +33,10 @@ namespace AdvancedBilling.Standard.Models
         private bool? useSiteExchangeRate;
         private string itemCategory;
         private string productPricePointHandle;
+        private int? productPricePointListPricePointId;
+        private string productPricePointListPricePointHandle;
         private string unspscCode;
+        private List<Models.FeatureCatalogItem> features;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "handle", false },
@@ -54,7 +57,10 @@ namespace AdvancedBilling.Standard.Models
             { "use_site_exchange_rate", false },
             { "item_category", false },
             { "product_price_point_handle", false },
+            { "product_price_point_list_price_point_id", false },
+            { "product_price_point_list_price_point_handle", false },
             { "unspsc_code", false },
+            { "features", false },
         };
 
         /// <summary>
@@ -104,7 +110,10 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="itemCategory">item_category.</param>
         /// <param name="productPricePointId">product_price_point_id.</param>
         /// <param name="productPricePointHandle">product_price_point_handle.</param>
+        /// <param name="productPricePointListPricePointId">product_price_point_list_price_point_id.</param>
+        /// <param name="productPricePointListPricePointHandle">product_price_point_list_price_point_handle.</param>
         /// <param name="unspscCode">unspsc_code.</param>
+        /// <param name="features">features.</param>
         public Product(
             int? id = null,
             string name = null,
@@ -143,7 +152,10 @@ namespace AdvancedBilling.Standard.Models
             string itemCategory = null,
             int? productPricePointId = null,
             string productPricePointHandle = null,
-            string unspscCode = null)
+            int? productPricePointListPricePointId = null,
+            string productPricePointListPricePointHandle = null,
+            string unspscCode = null,
+            List<Models.FeatureCatalogItem> features = null)
         {
             this.Id = id;
             this.Name = name;
@@ -255,9 +267,24 @@ namespace AdvancedBilling.Standard.Models
                 this.ProductPricePointHandle = productPricePointHandle;
             }
 
+            if (productPricePointListPricePointId != null)
+            {
+                this.ProductPricePointListPricePointId = productPricePointListPricePointId;
+            }
+
+            if (productPricePointListPricePointHandle != null)
+            {
+                this.ProductPricePointListPricePointHandle = productPricePointListPricePointHandle;
+            }
+
             if (unspscCode != null)
             {
                 this.UnspscCode = unspscCode;
+            }
+
+            if (features != null)
+            {
+                this.Features = features;
             }
         }
 
@@ -703,6 +730,42 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// The ID of the catalog price point used as the list price for the subscription's custom product price. Returned only when list vs sales pricing is enabled for the site.
+        /// </summary>
+        [JsonProperty("product_price_point_list_price_point_id")]
+        public int? ProductPricePointListPricePointId
+        {
+            get
+            {
+                return this.productPricePointListPricePointId;
+            }
+
+            set
+            {
+                this.shouldSerialize["product_price_point_list_price_point_id"] = true;
+                this.productPricePointListPricePointId = value;
+            }
+        }
+
+        /// <summary>
+        /// The handle of the catalog price point used as the list price for the subscription's custom product price. Returned only when list vs sales pricing is enabled for the site.
+        /// </summary>
+        [JsonProperty("product_price_point_list_price_point_handle")]
+        public string ProductPricePointListPricePointHandle
+        {
+            get
+            {
+                return this.productPricePointListPricePointHandle;
+            }
+
+            set
+            {
+                this.shouldSerialize["product_price_point_list_price_point_handle"] = true;
+                this.productPricePointListPricePointHandle = value;
+            }
+        }
+
+        /// <summary>
         /// (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent as the commodity code on invoice line items for this product instead of the default derived from item_category.
         /// </summary>
         [JsonProperty("unspsc_code")]
@@ -717,6 +780,24 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.shouldSerialize["unspsc_code"] = true;
                 this.unspscCode = value;
+            }
+        }
+
+        /// <summary>
+        /// The active feature catalog items attached to this product. Present only when the request includes `include_features=true`.
+        /// </summary>
+        [JsonProperty("features")]
+        public List<Models.FeatureCatalogItem> Features
+        {
+            get
+            {
+                return this.features;
+            }
+
+            set
+            {
+                this.shouldSerialize["features"] = true;
+                this.features = value;
             }
         }
 
@@ -857,9 +938,30 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
+        public void UnsetProductPricePointListPricePointId()
+        {
+            this.shouldSerialize["product_price_point_list_price_point_id"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetProductPricePointListPricePointHandle()
+        {
+            this.shouldSerialize["product_price_point_list_price_point_handle"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
         public void UnsetUnspscCode()
         {
             this.shouldSerialize["unspsc_code"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetFeatures()
+        {
+            this.shouldSerialize["features"] = false;
         }
 
         /// <summary>
@@ -1028,9 +1130,36 @@ namespace AdvancedBilling.Standard.Models
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeProductPricePointListPricePointId()
+        {
+            return this.shouldSerialize["product_price_point_list_price_point_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeProductPricePointListPricePointHandle()
+        {
+            return this.shouldSerialize["product_price_point_list_price_point_handle"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
         public bool ShouldSerializeUnspscCode()
         {
             return this.shouldSerialize["unspsc_code"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeFeatures()
+        {
+            return this.shouldSerialize["features"];
         }
 
         /// <inheritdoc/>
@@ -1114,8 +1243,14 @@ namespace AdvancedBilling.Standard.Models
                  this.ProductPricePointId?.Equals(other.ProductPricePointId) == true) &&
                 (this.ProductPricePointHandle == null && other.ProductPricePointHandle == null ||
                  this.ProductPricePointHandle?.Equals(other.ProductPricePointHandle) == true) &&
+                (this.ProductPricePointListPricePointId == null && other.ProductPricePointListPricePointId == null ||
+                 this.ProductPricePointListPricePointId?.Equals(other.ProductPricePointListPricePointId) == true) &&
+                (this.ProductPricePointListPricePointHandle == null && other.ProductPricePointListPricePointHandle == null ||
+                 this.ProductPricePointListPricePointHandle?.Equals(other.ProductPricePointListPricePointHandle) == true) &&
                 (this.UnspscCode == null && other.UnspscCode == null ||
                  this.UnspscCode?.Equals(other.UnspscCode) == true) &&
+                (this.Features == null && other.Features == null ||
+                 this.Features?.Equals(other.Features) == true) &&
                 base.Equals(obj);
         }
 
@@ -1162,7 +1297,10 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"ItemCategory = {this.ItemCategory ?? "null"}");
             toStringOutput.Add($"ProductPricePointId = {(this.ProductPricePointId == null ? "null" : this.ProductPricePointId.ToString())}");
             toStringOutput.Add($"ProductPricePointHandle = {this.ProductPricePointHandle ?? "null"}");
+            toStringOutput.Add($"ProductPricePointListPricePointId = {(this.ProductPricePointListPricePointId == null ? "null" : this.ProductPricePointListPricePointId.ToString())}");
+            toStringOutput.Add($"ProductPricePointListPricePointHandle = {this.ProductPricePointListPricePointHandle ?? "null"}");
             toStringOutput.Add($"UnspscCode = {this.UnspscCode ?? "null"}");
+            toStringOutput.Add($"Features = {(this.Features == null ? "null" : $"[{string.Join(", ", this.Features)} ]")}");
 
             base.ToString(toStringOutput);
         }

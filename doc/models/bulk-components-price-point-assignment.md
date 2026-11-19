@@ -24,7 +24,7 @@ BulkComponentsPricePointAssignment bulkComponentsPricePointAssignment = new Bulk
     {
         new ComponentPricePointAssignment
         {
-            ComponentId = 108,
+            ComponentId = ComponentPricePointAssignmentComponentId.FromNumber(30),
             PricePoint = ComponentPricePointAssignmentPricePoint.FromString("String5"),
         },
     },

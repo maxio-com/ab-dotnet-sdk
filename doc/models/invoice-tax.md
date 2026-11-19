@@ -12,7 +12,7 @@
 | `Uid` | `string` | Optional | - |
 | `Title` | `string` | Optional | - |
 | `Description` | `string` | Optional | - |
-| `SourceType` | [`ProformaInvoiceTaxSourceType?`](../../doc/models/proforma-invoice-tax-source-type.md) | Optional | - |
+| `SourceType` | [`ProformaInvoiceTaxSourceType?`](../../doc/models/proforma-invoice-tax-source-type.md) | Optional | The source of the tax. `Tax` is a tax configured in Advanced Billing. The other values identify the tax service that calculated the tax. |
 | `SourceId` | `int?` | Optional | - |
 | `Percentage` | `string` | Optional | - |
 | `TaxableAmount` | `string` | Optional | - |
@@ -34,7 +34,7 @@ InvoiceTax invoiceTax = new InvoiceTax
     Uid = "uid2",
     Title = "title8",
     Description = "description2",
-    SourceType = ProformaInvoiceTaxSourceType.Tax,
+    SourceType = ProformaInvoiceTaxSourceType.TaxJar,
     SourceId = 86,
 };
 ```

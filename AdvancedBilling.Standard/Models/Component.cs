@@ -18,6 +18,9 @@ namespace AdvancedBilling.Standard.Models
         private string handle;
         private Models.PricingScheme? pricingScheme;
         private string unitPrice;
+        private int? productFamilyId;
+        private string productFamilyName;
+        private string productFamilyHandle;
         private long? pricePerUnitInCents;
         private string description;
         private int? defaultPricePointId;
@@ -33,11 +36,15 @@ namespace AdvancedBilling.Standard.Models
         private string accountingCode;
         private Models.IntervalUnit? intervalUnit;
         private string unspscCode;
+        private List<Models.FeatureCatalogItem> features;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "handle", false },
             { "pricing_scheme", false },
             { "unit_price", false },
+            { "product_family_id", false },
+            { "product_family_name", false },
+            { "product_family_handle", false },
             { "price_per_unit_in_cents", false },
             { "description", false },
             { "default_price_point_id", false },
@@ -53,6 +60,7 @@ namespace AdvancedBilling.Standard.Models
             { "accounting_code", false },
             { "interval_unit", false },
             { "unspsc_code", false },
+            { "features", false },
         };
 
         /// <summary>
@@ -101,6 +109,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="interval">interval.</param>
         /// <param name="intervalUnit">interval_unit.</param>
         /// <param name="unspscCode">unspsc_code.</param>
+        /// <param name="features">features.</param>
         public Component(
             int? id = null,
             string name = null,
@@ -137,7 +146,8 @@ namespace AdvancedBilling.Standard.Models
             int? eventBasedBillingMetricId = null,
             int? interval = null,
             Models.IntervalUnit? intervalUnit = null,
-            string unspscCode = null)
+            string unspscCode = null,
+            List<Models.FeatureCatalogItem> features = null)
         {
             this.Id = id;
             this.Name = name;
@@ -157,9 +167,21 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.UnitPrice = unitPrice;
             }
-            this.ProductFamilyId = productFamilyId;
-            this.ProductFamilyName = productFamilyName;
-            this.ProductFamilyHandle = productFamilyHandle;
+
+            if (productFamilyId != null)
+            {
+                this.ProductFamilyId = productFamilyId;
+            }
+
+            if (productFamilyName != null)
+            {
+                this.ProductFamilyName = productFamilyName;
+            }
+
+            if (productFamilyHandle != null)
+            {
+                this.ProductFamilyHandle = productFamilyHandle;
+            }
 
             if (pricePerUnitInCents != null)
             {
@@ -247,6 +269,11 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.UnspscCode = unspscCode;
             }
+
+            if (features != null)
+            {
+                this.Features = features;
+            }
         }
 
         /// <summary>
@@ -322,22 +349,58 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The id of the Product Family to which the Component belongs
+        /// The id of the Product Family to which the Component belongs. `null` for a Wallet Product, which has no Product Family.
         /// </summary>
-        [JsonProperty("product_family_id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? ProductFamilyId { get; set; }
+        [JsonProperty("product_family_id")]
+        public int? ProductFamilyId
+        {
+            get
+            {
+                return this.productFamilyId;
+            }
+
+            set
+            {
+                this.shouldSerialize["product_family_id"] = true;
+                this.productFamilyId = value;
+            }
+        }
 
         /// <summary>
-        /// The name of the Product Family to which the Component belongs
+        /// The name of the Product Family to which the Component belongs. `null` for a Wallet Product, which has no Product Family.
         /// </summary>
-        [JsonProperty("product_family_name", NullValueHandling = NullValueHandling.Ignore)]
-        public string ProductFamilyName { get; set; }
+        [JsonProperty("product_family_name")]
+        public string ProductFamilyName
+        {
+            get
+            {
+                return this.productFamilyName;
+            }
+
+            set
+            {
+                this.shouldSerialize["product_family_name"] = true;
+                this.productFamilyName = value;
+            }
+        }
 
         /// <summary>
-        /// The handle of the Product Family to which the Component belongs
+        /// The handle of the Product Family to which the Component belongs. `null` for a Wallet Product, which has no Product Family.
         /// </summary>
-        [JsonProperty("product_family_handle", NullValueHandling = NullValueHandling.Ignore)]
-        public string ProductFamilyHandle { get; set; }
+        [JsonProperty("product_family_handle")]
+        public string ProductFamilyHandle
+        {
+            get
+            {
+                return this.productFamilyHandle;
+            }
+
+            set
+            {
+                this.shouldSerialize["product_family_handle"] = true;
+                this.productFamilyHandle = value;
+            }
+        }
 
         /// <summary>
         /// deprecated - use unit_price instead.
@@ -684,6 +747,24 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// The active feature catalog items attached to this component. Present only when the request includes `include_features=true`.
+        /// </summary>
+        [JsonProperty("features")]
+        public List<Models.FeatureCatalogItem> Features
+        {
+            get
+            {
+                return this.features;
+            }
+
+            set
+            {
+                this.shouldSerialize["features"] = true;
+                this.features = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -712,6 +793,27 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetUnitPrice()
         {
             this.shouldSerialize["unit_price"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetProductFamilyId()
+        {
+            this.shouldSerialize["product_family_id"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetProductFamilyName()
+        {
+            this.shouldSerialize["product_family_name"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetProductFamilyHandle()
+        {
+            this.shouldSerialize["product_family_handle"] = false;
         }
         /// <summary>
         /// Marks the field to not be serialized.
@@ -818,6 +920,13 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["unspsc_code"] = false;
         }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetFeatures()
+        {
+            this.shouldSerialize["features"] = false;
+        }
 
         /// <summary>
         /// Checks if the field should be serialized or not.
@@ -844,6 +953,33 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeUnitPrice()
         {
             return this.shouldSerialize["unit_price"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeProductFamilyId()
+        {
+            return this.shouldSerialize["product_family_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeProductFamilyName()
+        {
+            return this.shouldSerialize["product_family_name"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeProductFamilyHandle()
+        {
+            return this.shouldSerialize["product_family_handle"];
         }
 
         /// <summary>
@@ -981,6 +1117,15 @@ namespace AdvancedBilling.Standard.Models
             return this.shouldSerialize["unspsc_code"];
         }
 
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeFeatures()
+        {
+            return this.shouldSerialize["features"];
+        }
+
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
@@ -1060,6 +1205,8 @@ namespace AdvancedBilling.Standard.Models
                  this.IntervalUnit?.Equals(other.IntervalUnit) == true) &&
                 (this.UnspscCode == null && other.UnspscCode == null ||
                  this.UnspscCode?.Equals(other.UnspscCode) == true) &&
+                (this.Features == null && other.Features == null ||
+                 this.Features?.Equals(other.Features) == true) &&
                 base.Equals(obj);
         }
 
@@ -1105,6 +1252,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
             toStringOutput.Add($"UnspscCode = {this.UnspscCode ?? "null"}");
+            toStringOutput.Add($"Features = {(this.Features == null ? "null" : $"[{string.Join(", ", this.Features)} ]")}");
 
             base.ToString(toStringOutput);
         }

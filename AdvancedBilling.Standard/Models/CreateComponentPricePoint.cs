@@ -34,6 +34,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="pricingScheme">pricing_scheme.</param>
         /// <param name="prices">prices.</param>
         /// <param name="handle">handle.</param>
+        /// <param name="secondaryPricing">secondary_pricing.</param>
+        /// <param name="secondaryPricingScheme">secondary_pricing_scheme.</param>
         /// <param name="useSiteExchangeRate">use_site_exchange_rate.</param>
         /// <param name="taxIncluded">tax_included.</param>
         /// <param name="interval">interval.</param>
@@ -43,6 +45,8 @@ namespace AdvancedBilling.Standard.Models
             Models.PricingScheme pricingScheme,
             List<Models.Price> prices,
             string handle = null,
+            Models.SecondaryPricing secondaryPricing = null,
+            Models.PricingScheme? secondaryPricingScheme = null,
             bool? useSiteExchangeRate = true,
             bool? taxIncluded = null,
             int? interval = null,
@@ -52,6 +56,8 @@ namespace AdvancedBilling.Standard.Models
             this.Handle = handle;
             this.PricingScheme = pricingScheme;
             this.Prices = prices;
+            this.SecondaryPricing = secondaryPricing;
+            this.SecondaryPricingScheme = secondaryPricingScheme;
             this.UseSiteExchangeRate = useSiteExchangeRate;
             this.TaxIncluded = taxIncluded;
             this.Interval = interval;
@@ -90,6 +96,18 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("prices")]
         [JsonRequired]
         public List<Models.Price> Prices { get; set; }
+
+        /// <summary>
+        /// Hybrid Pricing only. The secondary pricing model that takes over once usage passes the primary model's included threshold. Applies to Quantity-Based and Metered Components on Sites with Hybrid Pricing enabled; ignored otherwise. Its `prices` brackets start at `1`, not at the primary model's highest `ending_quantity`. See [Hybrid Pricing](page:introduction/basic-concepts/hybrid-pricing).
+        /// </summary>
+        [JsonProperty("secondary_pricing", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.SecondaryPricing SecondaryPricing { get; set; }
+
+        /// <summary>
+        /// Hybrid Pricing only. Alternative to `secondary_pricing.pricing_scheme`; when both are sent, `secondary_pricing.pricing_scheme` is used. Setting not supported when creating price points in bulk.
+        /// </summary>
+        [JsonProperty("secondary_pricing_scheme", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.PricingScheme? SecondaryPricingScheme { get; set; }
 
         /// <summary>
         /// Whether to use the site level exchange rate or define your own prices for each currency if you have multiple currencies defined on the site. Setting not supported when creating price points in bulk.
@@ -166,6 +184,10 @@ namespace AdvancedBilling.Standard.Models
                 (this.PricingScheme.Equals(other.PricingScheme)) &&
                 (this.Prices == null && other.Prices == null ||
                  this.Prices?.Equals(other.Prices) == true) &&
+                (this.SecondaryPricing == null && other.SecondaryPricing == null ||
+                 this.SecondaryPricing?.Equals(other.SecondaryPricing) == true) &&
+                (this.SecondaryPricingScheme == null && other.SecondaryPricingScheme == null ||
+                 this.SecondaryPricingScheme?.Equals(other.SecondaryPricingScheme) == true) &&
                 (this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null ||
                  this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true) &&
                 (this.TaxIncluded == null && other.TaxIncluded == null ||
@@ -187,6 +209,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Handle = {this.Handle ?? "null"}");
             toStringOutput.Add($"PricingScheme = {this.PricingScheme}");
             toStringOutput.Add($"Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
+            toStringOutput.Add($"SecondaryPricing = {(this.SecondaryPricing == null ? "null" : this.SecondaryPricing.ToString())}");
+            toStringOutput.Add($"SecondaryPricingScheme = {(this.SecondaryPricingScheme == null ? "null" : this.SecondaryPricingScheme.ToString())}");
             toStringOutput.Add($"UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
             toStringOutput.Add($"TaxIncluded = {(this.TaxIncluded == null ? "null" : this.TaxIncluded.ToString())}");
             toStringOutput.Add($"Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");

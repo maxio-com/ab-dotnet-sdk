@@ -27,7 +27,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Creates an offer within your site.
         /// Offers allow you to package complicated combinations of products, components and coupons into a convenient package which can then be subscribed to just like products.
         /// Once an offer is defined it can be used as an alternative to the product when creating subscriptions.
-        /// For more information, see [Offers](https://maxio.zendesk.com/hc/en-us/articles/24261295098637-Offers-Overview) in the product documentation.
+        /// For more information, see [Offers](https://docs.maxio.com/billing/catalog/offers/understand-offers) in the product documentation.
         /// ## Using a Product Price Point.
         /// You can optionally pass in a `product_price_point_id` that corresponds with the `product_id` and the offer will use that price point. If a `product_price_point_id` is not passed in, the product's default price point will be used.
         /// </summary>
@@ -41,7 +41,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Creates an offer within your site.
         /// Offers allow you to package complicated combinations of products, components and coupons into a convenient package which can then be subscribed to just like products.
         /// Once an offer is defined it can be used as an alternative to the product when creating subscriptions.
-        /// For more information, see [Offers](https://maxio.zendesk.com/hc/en-us/articles/24261295098637-Offers-Overview) in the product documentation.
+        /// For more information, see [Offers](https://docs.maxio.com/billing/catalog/offers/understand-offers) in the product documentation.
         /// ## Using a Product Price Point.
         /// You can optionally pass in a `product_price_point_id` that corresponds with the `product_id` and the offer will use that price point. If a `product_price_point_id` is not passed in, the product's default price point will be used.
         /// </summary>

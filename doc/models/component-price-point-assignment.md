@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `ComponentId` | `int?` | Optional | - |
+| `ComponentId` | [`ComponentPricePointAssignmentComponentId`](../../doc/models/containers/component-price-point-assignment-component-id.md) | Optional | This is a container for one-of cases. |
 | `PricePoint` | [`ComponentPricePointAssignmentPricePoint`](../../doc/models/containers/component-price-point-assignment-price-point.md) | Optional | This is a container for one-of cases. |
 
 ## Example
@@ -20,7 +20,7 @@ using AdvancedBilling.Standard.Models.Containers;
 
 ComponentPricePointAssignment componentPricePointAssignment = new ComponentPricePointAssignment
 {
-    ComponentId = 190,
+    ComponentId = ComponentPricePointAssignmentComponentId.FromNumber(112),
     PricePoint = ComponentPricePointAssignmentPricePoint.FromString("String7"),
 };
 ```

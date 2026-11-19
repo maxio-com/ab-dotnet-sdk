@@ -17,12 +17,18 @@ namespace AdvancedBilling.Standard.Models
     {
         private int? componentId;
         private int? pricePointId;
+        private string listUnitPrice;
+        private string listTotalAmount;
+        private int? listPricePointId;
         private int? billingScheduleItemId;
         private DateTime? prepaidAllocationExpiresAt;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "component_id", false },
             { "price_point_id", false },
+            { "list_unit_price", false },
+            { "list_total_amount", false },
+            { "list_price_point_id", false },
             { "billing_schedule_item_id", false },
             { "prepaid_allocation_expires_at", false },
         };
@@ -54,6 +60,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="productVersion">product_version.</param>
         /// <param name="componentId">component_id.</param>
         /// <param name="pricePointId">price_point_id.</param>
+        /// <param name="listUnitPrice">list_unit_price.</param>
+        /// <param name="listTotalAmount">list_total_amount.</param>
+        /// <param name="listPricePointId">list_price_point_id.</param>
         /// <param name="billingScheduleItemId">billing_schedule_item_id.</param>
         /// <param name="customItem">custom_item.</param>
         /// <param name="prepaidAllocationExpiresAt">prepaid_allocation_expires_at.</param>
@@ -75,6 +84,9 @@ namespace AdvancedBilling.Standard.Models
             int? productVersion = null,
             int? componentId = null,
             int? pricePointId = null,
+            string listUnitPrice = null,
+            string listTotalAmount = null,
+            int? listPricePointId = null,
             int? billingScheduleItemId = null,
             bool? customItem = null,
             DateTime? prepaidAllocationExpiresAt = null)
@@ -103,6 +115,21 @@ namespace AdvancedBilling.Standard.Models
             if (pricePointId != null)
             {
                 this.PricePointId = pricePointId;
+            }
+
+            if (listUnitPrice != null)
+            {
+                this.ListUnitPrice = listUnitPrice;
+            }
+
+            if (listTotalAmount != null)
+            {
+                this.ListTotalAmount = listTotalAmount;
+            }
+
+            if (listPricePointId != null)
+            {
+                this.ListPricePointId = listPricePointId;
             }
 
             if (billingScheduleItemId != null)
@@ -255,6 +282,60 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
+        /// The unit price from the list price point, in decimal format
+        /// </summary>
+        [JsonProperty("list_unit_price")]
+        public string ListUnitPrice
+        {
+            get
+            {
+                return this.listUnitPrice;
+            }
+
+            set
+            {
+                this.shouldSerialize["list_unit_price"] = true;
+                this.listUnitPrice = value;
+            }
+        }
+
+        /// <summary>
+        /// The total amount for the line item at the list price, in decimal format
+        /// </summary>
+        [JsonProperty("list_total_amount")]
+        public string ListTotalAmount
+        {
+            get
+            {
+                return this.listTotalAmount;
+            }
+
+            set
+            {
+                this.shouldSerialize["list_total_amount"] = true;
+                this.listTotalAmount = value;
+            }
+        }
+
+        /// <summary>
+        /// The ID of the list price point this line item's sales price is compared against
+        /// </summary>
+        [JsonProperty("list_price_point_id")]
+        public int? ListPricePointId
+        {
+            get
+            {
+                return this.listPricePointId;
+            }
+
+            set
+            {
+                this.shouldSerialize["list_price_point_id"] = true;
+                this.listPricePointId = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets BillingScheduleItemId.
         /// </summary>
         [JsonProperty("billing_schedule_item_id")]
@@ -322,6 +403,27 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
+        public void UnsetListUnitPrice()
+        {
+            this.shouldSerialize["list_unit_price"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetListTotalAmount()
+        {
+            this.shouldSerialize["list_total_amount"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetListPricePointId()
+        {
+            this.shouldSerialize["list_price_point_id"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
         public void UnsetBillingScheduleItemId()
         {
             this.shouldSerialize["billing_schedule_item_id"] = false;
@@ -350,6 +452,33 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializePricePointId()
         {
             return this.shouldSerialize["price_point_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeListUnitPrice()
+        {
+            return this.shouldSerialize["list_unit_price"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeListTotalAmount()
+        {
+            return this.shouldSerialize["list_total_amount"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeListPricePointId()
+        {
+            return this.shouldSerialize["list_price_point_id"];
         }
 
         /// <summary>
@@ -411,6 +540,12 @@ namespace AdvancedBilling.Standard.Models
                  this.ComponentId?.Equals(other.ComponentId) == true) &&
                 (this.PricePointId == null && other.PricePointId == null ||
                  this.PricePointId?.Equals(other.PricePointId) == true) &&
+                (this.ListUnitPrice == null && other.ListUnitPrice == null ||
+                 this.ListUnitPrice?.Equals(other.ListUnitPrice) == true) &&
+                (this.ListTotalAmount == null && other.ListTotalAmount == null ||
+                 this.ListTotalAmount?.Equals(other.ListTotalAmount) == true) &&
+                (this.ListPricePointId == null && other.ListPricePointId == null ||
+                 this.ListPricePointId?.Equals(other.ListPricePointId) == true) &&
                 (this.BillingScheduleItemId == null && other.BillingScheduleItemId == null ||
                  this.BillingScheduleItemId?.Equals(other.BillingScheduleItemId) == true) &&
                 (this.CustomItem == null && other.CustomItem == null ||
@@ -443,6 +578,9 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"ProductVersion = {(this.ProductVersion == null ? "null" : this.ProductVersion.ToString())}");
             toStringOutput.Add($"ComponentId = {(this.ComponentId == null ? "null" : this.ComponentId.ToString())}");
             toStringOutput.Add($"PricePointId = {(this.PricePointId == null ? "null" : this.PricePointId.ToString())}");
+            toStringOutput.Add($"ListUnitPrice = {this.ListUnitPrice ?? "null"}");
+            toStringOutput.Add($"ListTotalAmount = {this.ListTotalAmount ?? "null"}");
+            toStringOutput.Add($"ListPricePointId = {(this.ListPricePointId == null ? "null" : this.ListPricePointId.ToString())}");
             toStringOutput.Add($"BillingScheduleItemId = {(this.BillingScheduleItemId == null ? "null" : this.BillingScheduleItemId.ToString())}");
             toStringOutput.Add($"CustomItem = {(this.CustomItem == null ? "null" : this.CustomItem.ToString())}");
             toStringOutput.Add($"PrepaidAllocationExpiresAt = {(this.PrepaidAllocationExpiresAt == null ? "null" : this.PrepaidAllocationExpiresAt.ToString())}");

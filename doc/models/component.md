@@ -15,9 +15,9 @@
 | `PricingScheme` | [`PricingScheme?`](../../doc/models/pricing-scheme.md) | Optional | - |
 | `UnitName` | `string` | Optional | The name of the unit that the component’s usage is measured in. e.g., message |
 | `UnitPrice` | `string` | Optional | The amount the customer will be charged per unit. This field is only populated for ‘per_unit’ pricing schemes, otherwise it may be null. |
-| `ProductFamilyId` | `int?` | Optional | The id of the Product Family to which the Component belongs |
-| `ProductFamilyName` | `string` | Optional | The name of the Product Family to which the Component belongs |
-| `ProductFamilyHandle` | `string` | Optional | The handle of the Product Family to which the Component belongs |
+| `ProductFamilyId` | `int?` | Optional | The id of the Product Family to which the Component belongs. `null` for a Wallet Product, which has no Product Family. |
+| `ProductFamilyName` | `string` | Optional | The name of the Product Family to which the Component belongs. `null` for a Wallet Product, which has no Product Family. |
+| `ProductFamilyHandle` | `string` | Optional | The handle of the Product Family to which the Component belongs. `null` for a Wallet Product, which has no Product Family. |
 | `PricePerUnitInCents` | `long?` | Optional | deprecated - use unit_price instead. |
 | `Kind` | [`ComponentKind?`](../../doc/models/component-kind.md) | Optional | A handle for the component type |
 | `Archived` | `bool?` | Optional | Boolean flag describing whether a component is archived or not. |
@@ -45,6 +45,7 @@
 | `Interval` | `int?` | Optional | The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean this component’s default price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. |
 | `IntervalUnit` | [`IntervalUnit?`](../../doc/models/interval-unit.md) | Optional | A string representing the interval unit for this component's default price point, either month or day. This property is only available for sites with Multifrequency enabled. |
 | `UnspscCode` | `string` | Optional | (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent as the commodity code on invoice line items for this component instead of the default derived from item_category. |
+| `Features` | [`List<FeatureCatalogItem>`](../../doc/models/feature-catalog-item.md) | Optional | The active feature catalog items attached to this component. Present only when the request includes `include_features=true`. |
 
 ## Example
 

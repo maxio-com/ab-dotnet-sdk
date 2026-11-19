@@ -28,7 +28,7 @@ namespace AdvancedBilling.Standard.Exceptions
         /// Gets or sets Errors.
         /// </summary>
         [JsonProperty("errors", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.Errors Errors { get; set; }
+        public Models.Errors1 Errors { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

@@ -129,7 +129,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// For calendar billing subscriptions, the new billing period created will be a partial one, spanning from the date of reactivation to the next corresponding calendar renewal date.
         /// ## 3D Secure (3DS) Authentication post-authentication flow.
         /// When a payment requires 3DS Authentication to adhere to Strong Customer Authentication (SCA), the request enters a post-authentication flow where a 422 Unprocessable Entity status is returned with an action_link that will direct the customer through 3DS Authentication. .
-        /// See the [3D Secure Post-Authentication Flow](https://docs.maxio.com/hc/en-us/articles/44277749524365-3D-Secure-Post-Authentication-Flow) article in the product documentation to learn how to manage the redirect flow.
+        /// See the [3D Secure Post-Authentication Flow](https://docs.maxio.com/configuration/advanced-billing/maxiojs-formerly-chargifyjs/handle-3d-secure-post-authentication) article in the product documentation to learn how to manage the redirect flow.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
         /// <param name="body">Optional parameter: .</param>
@@ -152,7 +152,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// For calendar billing subscriptions, the new billing period created will be a partial one, spanning from the date of reactivation to the next corresponding calendar renewal date.
         /// ## 3D Secure (3DS) Authentication post-authentication flow.
         /// When a payment requires 3DS Authentication to adhere to Strong Customer Authentication (SCA), the request enters a post-authentication flow where a 422 Unprocessable Entity status is returned with an action_link that will direct the customer through 3DS Authentication. .
-        /// See the [3D Secure Post-Authentication Flow](https://docs.maxio.com/hc/en-us/articles/44277749524365-3D-Secure-Post-Authentication-Flow) article in the product documentation to learn how to manage the redirect flow.
+        /// See the [3D Secure Post-Authentication Flow](https://docs.maxio.com/configuration/advanced-billing/maxiojs-formerly-chargifyjs/handle-3d-secure-post-authentication) article in the product documentation to learn how to manage the redirect flow.
         /// </summary>
         /// <param name="uid">Required parameter: The uid of the subscription group.</param>
         /// <param name="body">Optional parameter: .</param>

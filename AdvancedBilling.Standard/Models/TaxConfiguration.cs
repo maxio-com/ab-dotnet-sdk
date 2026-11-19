@@ -49,7 +49,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.TaxDestinationAddress? DestinationAddress { get; set; }
 
         /// <summary>
-        /// Returns `true` when Chargify has been properly configured to charge tax using the specified tax system. More details about taxes: https://maxio.zendesk.com/hc/en-us/articles/24287012608909-Taxes-Overview
+        /// Returns `true` when Chargify has been properly configured to charge tax using the specified tax system. More details about taxes: https://docs.maxio.com/billing/taxes/overview/understand-tax-options
         /// </summary>
         [JsonProperty("fully_configured", NullValueHandling = NullValueHandling.Ignore)]
         public bool? FullyConfigured { get; set; }

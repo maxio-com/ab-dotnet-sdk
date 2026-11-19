@@ -27,7 +27,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Creates a reason code for a given site.
         /// Reason Codes are a way to gain a high-level view of why your customers are cancelling the subscription to your product or service.
         /// Add a set of churn reason codes to be displayed in-app and/or the Maxio Billing Portal. As your subscribers decide to cancel their subscription, learn why they decided to cancel.
-        /// For more information, see [Churn Reason Codes](https://maxio.zendesk.com/hc/en-us/articles/24286647554701-Churn-Reason-Codes).
+        /// For more information, see [Churn Reason Codes](https://docs.maxio.com/configuration/advanced-billing/settings/churn-reason-codes).
         /// </summary>
         /// <param name="body">Optional parameter: .</param>
         /// <returns>Returns the Models.ReasonCodeResponse response from the API call.</returns>
@@ -39,7 +39,7 @@ namespace AdvancedBilling.Standard.Controllers
         /// Creates a reason code for a given site.
         /// Reason Codes are a way to gain a high-level view of why your customers are cancelling the subscription to your product or service.
         /// Add a set of churn reason codes to be displayed in-app and/or the Maxio Billing Portal. As your subscribers decide to cancel their subscription, learn why they decided to cancel.
-        /// For more information, see [Churn Reason Codes](https://maxio.zendesk.com/hc/en-us/articles/24286647554701-Churn-Reason-Codes).
+        /// For more information, see [Churn Reason Codes](https://docs.maxio.com/configuration/advanced-billing/settings/churn-reason-codes).
         /// </summary>
         /// <param name="body">Optional parameter: .</param>
         /// <param name="cancellationToken"> cancellationToken. </param>

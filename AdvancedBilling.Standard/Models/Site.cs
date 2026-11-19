@@ -41,6 +41,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="netTerms">net_terms.</param>
         /// <param name="multiFrequencyEnabled">multi_frequency_enabled.</param>
         /// <param name="autoRenewalsEnabled">auto_renewals_enabled.</param>
+        /// <param name="listPricingEnabled">list_pricing_enabled.</param>
+        /// <param name="planlessSubscriptionsEnabled">planless_subscriptions_enabled.</param>
         /// <param name="portalEnabled">portal_enabled.</param>
         /// <param name="test">test.</param>
         public Site(
@@ -62,6 +64,8 @@ namespace AdvancedBilling.Standard.Models
             Models.NetTerms netTerms = null,
             bool? multiFrequencyEnabled = null,
             bool? autoRenewalsEnabled = null,
+            bool? listPricingEnabled = null,
+            bool? planlessSubscriptionsEnabled = null,
             bool? portalEnabled = null,
             bool? test = null)
         {
@@ -83,6 +87,8 @@ namespace AdvancedBilling.Standard.Models
             this.NetTerms = netTerms;
             this.MultiFrequencyEnabled = multiFrequencyEnabled;
             this.AutoRenewalsEnabled = autoRenewalsEnabled;
+            this.ListPricingEnabled = listPricingEnabled;
+            this.PlanlessSubscriptionsEnabled = planlessSubscriptionsEnabled;
             this.PortalEnabled = portalEnabled;
             this.Test = test;
         }
@@ -196,6 +202,18 @@ namespace AdvancedBilling.Standard.Models
         public bool? AutoRenewalsEnabled { get; set; }
 
         /// <summary>
+        /// Indicates whether the site has list vs sales pricing enabled.
+        /// </summary>
+        [JsonProperty("list_pricing_enabled", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? ListPricingEnabled { get; set; }
+
+        /// <summary>
+        /// Indicates whether the site allows subscriptions without a plan.
+        /// </summary>
+        [JsonProperty("planless_subscriptions_enabled", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? PlanlessSubscriptionsEnabled { get; set; }
+
+        /// <summary>
         /// Whether the Billing Portal is enabled for this site.
         /// </summary>
         [JsonProperty("portal_enabled", NullValueHandling = NullValueHandling.Ignore)]
@@ -258,6 +276,10 @@ namespace AdvancedBilling.Standard.Models
                  this.MultiFrequencyEnabled?.Equals(other.MultiFrequencyEnabled) == true) &&
                 (this.AutoRenewalsEnabled == null && other.AutoRenewalsEnabled == null ||
                  this.AutoRenewalsEnabled?.Equals(other.AutoRenewalsEnabled) == true) &&
+                (this.ListPricingEnabled == null && other.ListPricingEnabled == null ||
+                 this.ListPricingEnabled?.Equals(other.ListPricingEnabled) == true) &&
+                (this.PlanlessSubscriptionsEnabled == null && other.PlanlessSubscriptionsEnabled == null ||
+                 this.PlanlessSubscriptionsEnabled?.Equals(other.PlanlessSubscriptionsEnabled) == true) &&
                 (this.PortalEnabled == null && other.PortalEnabled == null ||
                  this.PortalEnabled?.Equals(other.PortalEnabled) == true) &&
                 (this.Test == null && other.Test == null ||
@@ -289,6 +311,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"NetTerms = {(this.NetTerms == null ? "null" : this.NetTerms.ToString())}");
             toStringOutput.Add($"MultiFrequencyEnabled = {(this.MultiFrequencyEnabled == null ? "null" : this.MultiFrequencyEnabled.ToString())}");
             toStringOutput.Add($"AutoRenewalsEnabled = {(this.AutoRenewalsEnabled == null ? "null" : this.AutoRenewalsEnabled.ToString())}");
+            toStringOutput.Add($"ListPricingEnabled = {(this.ListPricingEnabled == null ? "null" : this.ListPricingEnabled.ToString())}");
+            toStringOutput.Add($"PlanlessSubscriptionsEnabled = {(this.PlanlessSubscriptionsEnabled == null ? "null" : this.PlanlessSubscriptionsEnabled.ToString())}");
             toStringOutput.Add($"PortalEnabled = {(this.PortalEnabled == null ? "null" : this.PortalEnabled.ToString())}");
             toStringOutput.Add($"Test = {(this.Test == null ? "null" : this.Test.ToString())}");
 

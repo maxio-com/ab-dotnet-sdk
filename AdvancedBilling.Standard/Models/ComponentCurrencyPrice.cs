@@ -13,6 +13,12 @@ namespace AdvancedBilling.Standard.Models
     /// </summary>
     public class ComponentCurrencyPrice : BaseModel
     {
+        private int? id;
+        private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
+        {
+            { "id", false },
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ComponentCurrencyPrice"/> class.
         /// </summary>
@@ -37,7 +43,11 @@ namespace AdvancedBilling.Standard.Models
             int? priceId = null,
             int? pricePointId = null)
         {
-            this.Id = id;
+
+            if (id != null)
+            {
+                this.Id = id;
+            }
             this.Currency = currency;
             this.Price = price;
             this.FormattedPrice = formattedPrice;
@@ -46,10 +56,22 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Gets or sets Id.
+        /// The ID of the stored currency price. This is `null` when the price point uses the site exchange rate (`use_site_exchange_rate: true`), because the price is calculated from the rate and is not stored.
         /// </summary>
-        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? Id { get; set; }
+        [JsonProperty("id")]
+        public int? Id
+        {
+            get
+            {
+                return this.id;
+            }
+
+            set
+            {
+                this.shouldSerialize["id"] = true;
+                this.id = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets Currency.
@@ -87,6 +109,23 @@ namespace AdvancedBilling.Standard.Models
             var toStringOutput = new List<string>();
             this.ToString(toStringOutput);
             return $"ComponentCurrencyPrice : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetId()
+        {
+            this.shouldSerialize["id"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeId()
+        {
+            return this.shouldSerialize["id"];
         }
 
         /// <inheritdoc/>

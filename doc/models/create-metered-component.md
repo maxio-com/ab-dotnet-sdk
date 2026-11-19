@@ -49,31 +49,23 @@ CreateMeteredComponent createMeteredComponent = new CreateMeteredComponent
                 EndingQuantity = PriceEndingQuantity.FromNumber(40),
             },
         },
-        PricePoints = new List<ComponentPricePointItem>
+        SecondaryPricing = new SecondaryPricing
         {
-            new ComponentPricePointItem
+            PricingScheme = PricingScheme.Stairstep,
+            Prices = new List<Price>
             {
-                Name = "name2",
-                Handle = "handle8",
-                PricingScheme = PricingScheme.PerUnit,
-                Interval = 92,
-                IntervalUnit = IntervalUnit.Day,
-            },
-            new ComponentPricePointItem
-            {
-                Name = "name2",
-                Handle = "handle8",
-                PricingScheme = PricingScheme.PerUnit,
-                Interval = 92,
-                IntervalUnit = IntervalUnit.Day,
-            },
-            new ComponentPricePointItem
-            {
-                Name = "name2",
-                Handle = "handle8",
-                PricingScheme = PricingScheme.PerUnit,
-                Interval = 92,
-                IntervalUnit = IntervalUnit.Day,
+                new Price
+                {
+                    StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                    UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                    EndingQuantity = PriceEndingQuantity.FromNumber(40),
+                },
+                new Price
+                {
+                    StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                    UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                    EndingQuantity = PriceEndingQuantity.FromNumber(40),
+                },
             },
         },
     },

@@ -35,10 +35,28 @@ CreateComponentPricePointRequest createComponentPricePointRequest = new CreateCo
                 },
             },
             Handle = "handle6",
+            SecondaryPricing = new SecondaryPricing
+            {
+                PricingScheme = PricingScheme.Stairstep,
+                Prices = new List<Price>
+                {
+                    new Price
+                    {
+                        StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                        UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                        EndingQuantity = PriceEndingQuantity.FromNumber(40),
+                    },
+                    new Price
+                    {
+                        StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                        UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                        EndingQuantity = PriceEndingQuantity.FromNumber(40),
+                    },
+                },
+            },
+            SecondaryPricingScheme = PricingScheme.Stairstep,
             UseSiteExchangeRate = true,
             TaxIncluded = false,
-            Interval = 24,
-            IntervalUnit = IntervalUnit.Day,
         }
     ),
 };

@@ -110,7 +110,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Gets or sets SourceType.
+        /// The source of the tax. `Tax` is a tax configured in Advanced Billing. The other values identify the tax service that calculated the tax.
         /// </summary>
         [JsonProperty("source_type", NullValueHandling = NullValueHandling.Ignore)]
         public Models.ProformaInvoiceTaxSourceType? SourceType { get; set; }

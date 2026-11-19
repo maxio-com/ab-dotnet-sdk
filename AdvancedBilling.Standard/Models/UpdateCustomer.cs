@@ -50,6 +50,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="phone">phone.</param>
         /// <param name="locale">locale.</param>
         /// <param name="vatNumber">vat_number.</param>
+        /// <param name="vatCountry">vat_country.</param>
+        /// <param name="entityIdentifierKind">entity_identifier_kind.</param>
+        /// <param name="entityIdentifierValue">entity_identifier_value.</param>
         /// <param name="taxExempt">tax_exempt.</param>
         /// <param name="surcharging">surcharging.</param>
         /// <param name="taxExemptReason">tax_exempt_reason.</param>
@@ -73,6 +76,9 @@ namespace AdvancedBilling.Standard.Models
             string phone = null,
             string locale = null,
             string vatNumber = null,
+            string vatCountry = null,
+            Models.EntityIdentifierKind? entityIdentifierKind = null,
+            string entityIdentifierValue = null,
             bool? taxExempt = null,
             bool? surcharging = null,
             string taxExemptReason = null,
@@ -96,6 +102,9 @@ namespace AdvancedBilling.Standard.Models
             this.Phone = phone;
             this.Locale = locale;
             this.VatNumber = vatNumber;
+            this.VatCountry = vatCountry;
+            this.EntityIdentifierKind = entityIdentifierKind;
+            this.EntityIdentifierValue = entityIdentifierValue;
             this.TaxExempt = taxExempt;
             this.Surcharging = surcharging;
             this.TaxExemptReason = taxExemptReason;
@@ -210,6 +219,31 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("vat_number", NullValueHandling = NullValueHandling.Ignore)]
         public string VatNumber { get; set; }
+
+        /// <summary>
+        /// The two-letter ISO 3166-1 country code that qualifies the customer's tax ID. Required when `entity_identifier_kind` is `vat_eu` or `national_tax`, and used to derive the kind when only the legacy `vat_number` is sent.
+        /// </summary>
+        [JsonProperty("vat_country", NullValueHandling = NullValueHandling.Ignore)]
+        public string VatCountry { get; set; }
+
+        /// <summary>
+        /// The kind of tax or business identifier held by the customer:
+        /// - `vat_eu`: an EU VAT number. Requires `vat_country` to be an EU member state code or `GB`.
+        /// - `national_tax`: a national tax ID registered outside the EU. Requires `vat_country` to be one of `AL`, `AM`, `AR`, `AU`, `BR`, `CA`, `CH`, `DZ`, `IN`, `MX`, `NO`, `NZ`, or `ZA`.
+        /// - `company_reg`: a company registration number, such as a French SIREN. No `vat_country` is required.
+        /// - `gln`: a Global Location Number. The value must be 13 digits.
+        /// - `duns`: a D-U-N-S Number. The value must be 9 digits.
+        /// - `lei`: a Legal Entity Identifier. The value must be 20 characters: 18 letters or digits followed by 2 digits.
+        /// A customer holds one identifier at a time. Saving an identifier of a different kind replaces the existing one.
+        /// </summary>
+        [JsonProperty("entity_identifier_kind", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.EntityIdentifierKind? EntityIdentifierKind { get; set; }
+
+        /// <summary>
+        /// The customer's tax or business identifier, sent together with `entity_identifier_kind`. Advanced Billing trims surrounding whitespace and stores the value in uppercase.
+        /// </summary>
+        [JsonProperty("entity_identifier_value", NullValueHandling = NullValueHandling.Ignore)]
+        public string EntityIdentifierValue { get; set; }
 
         /// <summary>
         /// Gets or sets TaxExempt.
@@ -411,6 +445,12 @@ namespace AdvancedBilling.Standard.Models
                  this.Locale?.Equals(other.Locale) == true) &&
                 (this.VatNumber == null && other.VatNumber == null ||
                  this.VatNumber?.Equals(other.VatNumber) == true) &&
+                (this.VatCountry == null && other.VatCountry == null ||
+                 this.VatCountry?.Equals(other.VatCountry) == true) &&
+                (this.EntityIdentifierKind == null && other.EntityIdentifierKind == null ||
+                 this.EntityIdentifierKind?.Equals(other.EntityIdentifierKind) == true) &&
+                (this.EntityIdentifierValue == null && other.EntityIdentifierValue == null ||
+                 this.EntityIdentifierValue?.Equals(other.EntityIdentifierValue) == true) &&
                 (this.TaxExempt == null && other.TaxExempt == null ||
                  this.TaxExempt?.Equals(other.TaxExempt) == true) &&
                 (this.Surcharging == null && other.Surcharging == null ||
@@ -449,6 +489,9 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Phone = {this.Phone ?? "null"}");
             toStringOutput.Add($"Locale = {this.Locale ?? "null"}");
             toStringOutput.Add($"VatNumber = {this.VatNumber ?? "null"}");
+            toStringOutput.Add($"VatCountry = {this.VatCountry ?? "null"}");
+            toStringOutput.Add($"EntityIdentifierKind = {(this.EntityIdentifierKind == null ? "null" : this.EntityIdentifierKind.ToString())}");
+            toStringOutput.Add($"EntityIdentifierValue = {this.EntityIdentifierValue ?? "null"}");
             toStringOutput.Add($"TaxExempt = {(this.TaxExempt == null ? "null" : this.TaxExempt.ToString())}");
             toStringOutput.Add($"Surcharging = {(this.Surcharging == null ? "null" : this.Surcharging.ToString())}");
             toStringOutput.Add($"TaxExemptReason = {this.TaxExemptReason ?? "null"}");

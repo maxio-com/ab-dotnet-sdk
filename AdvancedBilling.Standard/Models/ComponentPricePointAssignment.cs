@@ -27,7 +27,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="componentId">component_id.</param>
         /// <param name="pricePoint">price_point.</param>
         public ComponentPricePointAssignment(
-            int? componentId = null,
+            ComponentPricePointAssignmentComponentId componentId = null,
             ComponentPricePointAssignmentPricePoint pricePoint = null)
         {
             this.ComponentId = componentId;
@@ -35,10 +35,10 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// Gets or sets ComponentId.
+        /// The component to update. Pass the component ID as an integer, or the component handle as a string with the `handle:` prefix, for example `handle:my-component`. The response returns the value in the same form that you sent.
         /// </summary>
         [JsonProperty("component_id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? ComponentId { get; set; }
+        public ComponentPricePointAssignmentComponentId ComponentId { get; set; }
 
         /// <summary>
         /// Gets or sets PricePoint.

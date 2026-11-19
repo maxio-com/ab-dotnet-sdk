@@ -17,8 +17,8 @@ The `Builder.FromConfiguration` method reads values from the provided configurat
 
 ```csharp
 using AdvancedBilling.Standard;
+using AdvancedBilling.Standard.Authentication;
 using Microsoft.Extensions.Configuration;
-using Environment = AdvancedBilling.Standard.Environment;
 
 namespace ConsoleApp;
 
@@ -28,13 +28,19 @@ var configuration = new ConfigurationBuilder()
     .AddEnvironmentVariables() // [optional] read environment variables
     .Build();
 
-// Instantiate your SDK builder and configure it from IConfiguration with overrides
+// Instantiate your SDK builder, configure it from IConfiguration and provide credentials in code
 var client = AdvancedBillingClient.Builder
     .FromConfiguration(configuration.GetSection("AdvancedBilling"))
-    .Environment(Environment.US)
-    .HttpClientConfig(c => c.Timeout(TimeSpan.FromSeconds(60)))
+    .BasicAuthCredentials(
+        new BasicAuthModel.Builder(
+            "BasicAuthUserName",
+            "BasicAuthPassword"
+        )
+        .Build())
     .Build();
 ```
+
+Authentication credentials are left out of the example configuration file below. Keep credentials out of `.env` and configuration files that are committed to source control or shipped with your application, and load them at runtime from a secret manager or your hosting platform's environment instead. Pass them to the builder returned by `FromConfiguration`, as shown above.
 
 ## Example Configuration File
 
@@ -43,10 +49,6 @@ var client = AdvancedBillingClient.Builder
   "AdvancedBilling": {
     "Environment": "us",
     "Site": "site",
-    "BasicAuthCredentials": {
-      "Username": "username",
-      "Password": "password",
-    },
     "HttpClientConfig": {
       "Timeout": "00:01:00",
       "NumberOfRetries": 3,
@@ -59,8 +61,6 @@ var client = AdvancedBillingClient.Builder
         "Address": "http://localhost:3000",
         "Port": 8080,
         "Tunnel": false,
-        "User": "username",
-        "Pass": "password",
       }
     }
   }

@@ -42,23 +42,27 @@ namespace AdvancedBilling.Standard
         };
 
         private readonly GlobalConfiguration globalConfiguration;
-        private const string userAgent = "AB SDK DotNet:10.0.0 on OS {os-info}";
+        private const string userAgent = "AB SDK DotNet:11.0.0 on OS {os-info}";
         private readonly HttpCallback httpCallback;
         private readonly Lazy<APIExportsController> aPIExports;
         private readonly Lazy<AdvanceInvoiceController> advanceInvoice;
         private readonly Lazy<BillingPortalController> billingPortal;
         private readonly Lazy<CouponsController> coupons;
+        private readonly Lazy<ComponentFeaturesController> componentFeatures;
         private readonly Lazy<ComponentsController> components;
         private readonly Lazy<ComponentPricePointsController> componentPricePoints;
         private readonly Lazy<CustomersController> customers;
         private readonly Lazy<CustomFieldsController> customFields;
+        private readonly Lazy<EntitlementsController> entitlements;
         private readonly Lazy<EventsController> events;
         private readonly Lazy<EventsBasedBillingSegmentsController> eventsBasedBillingSegments;
+        private readonly Lazy<FeatureTemplatesController> featureTemplates;
         private readonly Lazy<InsightsController> insights;
         private readonly Lazy<InvoicesController> invoices;
         private readonly Lazy<OffersController> offers;
         private readonly Lazy<PaymentProfilesController> paymentProfiles;
         private readonly Lazy<ProductFamiliesController> productFamilies;
+        private readonly Lazy<ProductFeaturesController> productFeatures;
         private readonly Lazy<ProductsController> products;
         private readonly Lazy<ProductPricePointsController> productPricePoints;
         private readonly Lazy<ProformaInvoicesController> proformaInvoices;
@@ -76,6 +80,11 @@ namespace AdvancedBilling.Standard
         private readonly Lazy<SubscriptionProductsController> subscriptionProducts;
         private readonly Lazy<SubscriptionRenewalsController> subscriptionRenewals;
         private readonly Lazy<SubscriptionStatusController> subscriptionStatus;
+        private readonly Lazy<WalletsController> wallets;
+        private readonly Lazy<WalletTransactionsController> walletTransactions;
+        private readonly Lazy<WalletAdjustmentsController> walletAdjustments;
+        private readonly Lazy<WalletPurchasesController> walletPurchases;
+        private readonly Lazy<WalletProductsController> walletProducts;
         private readonly Lazy<WebhooksController> webhooks;
 
         private AdvancedBillingClient(
@@ -113,6 +122,8 @@ namespace AdvancedBilling.Standard
                 () => new BillingPortalController(globalConfiguration));
             this.coupons = new Lazy<CouponsController>(
                 () => new CouponsController(globalConfiguration));
+            this.componentFeatures = new Lazy<ComponentFeaturesController>(
+                () => new ComponentFeaturesController(globalConfiguration));
             this.components = new Lazy<ComponentsController>(
                 () => new ComponentsController(globalConfiguration));
             this.componentPricePoints = new Lazy<ComponentPricePointsController>(
@@ -121,10 +132,14 @@ namespace AdvancedBilling.Standard
                 () => new CustomersController(globalConfiguration));
             this.customFields = new Lazy<CustomFieldsController>(
                 () => new CustomFieldsController(globalConfiguration));
+            this.entitlements = new Lazy<EntitlementsController>(
+                () => new EntitlementsController(globalConfiguration));
             this.events = new Lazy<EventsController>(
                 () => new EventsController(globalConfiguration));
             this.eventsBasedBillingSegments = new Lazy<EventsBasedBillingSegmentsController>(
                 () => new EventsBasedBillingSegmentsController(globalConfiguration));
+            this.featureTemplates = new Lazy<FeatureTemplatesController>(
+                () => new FeatureTemplatesController(globalConfiguration));
             this.insights = new Lazy<InsightsController>(
                 () => new InsightsController(globalConfiguration));
             this.invoices = new Lazy<InvoicesController>(
@@ -135,6 +150,8 @@ namespace AdvancedBilling.Standard
                 () => new PaymentProfilesController(globalConfiguration));
             this.productFamilies = new Lazy<ProductFamiliesController>(
                 () => new ProductFamiliesController(globalConfiguration));
+            this.productFeatures = new Lazy<ProductFeaturesController>(
+                () => new ProductFeaturesController(globalConfiguration));
             this.products = new Lazy<ProductsController>(
                 () => new ProductsController(globalConfiguration));
             this.productPricePoints = new Lazy<ProductPricePointsController>(
@@ -169,6 +186,16 @@ namespace AdvancedBilling.Standard
                 () => new SubscriptionRenewalsController(globalConfiguration));
             this.subscriptionStatus = new Lazy<SubscriptionStatusController>(
                 () => new SubscriptionStatusController(globalConfiguration));
+            this.wallets = new Lazy<WalletsController>(
+                () => new WalletsController(globalConfiguration));
+            this.walletTransactions = new Lazy<WalletTransactionsController>(
+                () => new WalletTransactionsController(globalConfiguration));
+            this.walletAdjustments = new Lazy<WalletAdjustmentsController>(
+                () => new WalletAdjustmentsController(globalConfiguration));
+            this.walletPurchases = new Lazy<WalletPurchasesController>(
+                () => new WalletPurchasesController(globalConfiguration));
+            this.walletProducts = new Lazy<WalletProductsController>(
+                () => new WalletProductsController(globalConfiguration));
             this.webhooks = new Lazy<WebhooksController>(
                 () => new WebhooksController(globalConfiguration));
         }
@@ -194,6 +221,11 @@ namespace AdvancedBilling.Standard
         public CouponsController CouponsController => this.coupons.Value;
 
         /// <summary>
+        /// Gets ComponentFeaturesController controller.
+        /// </summary>
+        public ComponentFeaturesController ComponentFeaturesController => this.componentFeatures.Value;
+
+        /// <summary>
         /// Gets ComponentsController controller.
         /// </summary>
         public ComponentsController ComponentsController => this.components.Value;
@@ -214,6 +246,11 @@ namespace AdvancedBilling.Standard
         public CustomFieldsController CustomFieldsController => this.customFields.Value;
 
         /// <summary>
+        /// Gets EntitlementsController controller.
+        /// </summary>
+        public EntitlementsController EntitlementsController => this.entitlements.Value;
+
+        /// <summary>
         /// Gets EventsController controller.
         /// </summary>
         public EventsController EventsController => this.events.Value;
@@ -222,6 +259,11 @@ namespace AdvancedBilling.Standard
         /// Gets EventsBasedBillingSegmentsController controller.
         /// </summary>
         public EventsBasedBillingSegmentsController EventsBasedBillingSegmentsController => this.eventsBasedBillingSegments.Value;
+
+        /// <summary>
+        /// Gets FeatureTemplatesController controller.
+        /// </summary>
+        public FeatureTemplatesController FeatureTemplatesController => this.featureTemplates.Value;
 
         /// <summary>
         /// Gets InsightsController controller.
@@ -247,6 +289,11 @@ namespace AdvancedBilling.Standard
         /// Gets ProductFamiliesController controller.
         /// </summary>
         public ProductFamiliesController ProductFamiliesController => this.productFamilies.Value;
+
+        /// <summary>
+        /// Gets ProductFeaturesController controller.
+        /// </summary>
+        public ProductFeaturesController ProductFeaturesController => this.productFeatures.Value;
 
         /// <summary>
         /// Gets ProductsController controller.
@@ -332,6 +379,31 @@ namespace AdvancedBilling.Standard
         /// Gets SubscriptionStatusController controller.
         /// </summary>
         public SubscriptionStatusController SubscriptionStatusController => this.subscriptionStatus.Value;
+
+        /// <summary>
+        /// Gets WalletsController controller.
+        /// </summary>
+        public WalletsController WalletsController => this.wallets.Value;
+
+        /// <summary>
+        /// Gets WalletTransactionsController controller.
+        /// </summary>
+        public WalletTransactionsController WalletTransactionsController => this.walletTransactions.Value;
+
+        /// <summary>
+        /// Gets WalletAdjustmentsController controller.
+        /// </summary>
+        public WalletAdjustmentsController WalletAdjustmentsController => this.walletAdjustments.Value;
+
+        /// <summary>
+        /// Gets WalletPurchasesController controller.
+        /// </summary>
+        public WalletPurchasesController WalletPurchasesController => this.walletPurchases.Value;
+
+        /// <summary>
+        /// Gets WalletProductsController controller.
+        /// </summary>
+        public WalletProductsController WalletProductsController => this.walletProducts.Value;
 
         /// <summary>
         /// Gets WebhooksController controller.

@@ -23,6 +23,7 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionGroupSubscriptionError"/> class.
         /// </summary>
+        /// <param name="customer">customer.</param>
         /// <param name="product">product.</param>
         /// <param name="productPricePointId">product_price_point_id.</param>
         /// <param name="paymentProfile">payment_profile.</param>
@@ -32,6 +33,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="paymentProfileExpirationYear">payment_profile.expiration_year.</param>
         /// <param name="paymentProfileFullNumber">payment_profile.full_number.</param>
         public SubscriptionGroupSubscriptionError(
+            List<string> customer = null,
             List<string> product = null,
             List<string> productPricePointId = null,
             List<string> paymentProfile = null,
@@ -41,6 +43,7 @@ namespace AdvancedBilling.Standard.Models
             List<string> paymentProfileExpirationYear = null,
             List<string> paymentProfileFullNumber = null)
         {
+            this.Customer = customer;
             this.Product = product;
             this.ProductPricePointId = productPricePointId;
             this.PaymentProfile = paymentProfile;
@@ -50,6 +53,12 @@ namespace AdvancedBilling.Standard.Models
             this.PaymentProfileExpirationYear = paymentProfileExpirationYear;
             this.PaymentProfileFullNumber = paymentProfileFullNumber;
         }
+
+        /// <summary>
+        /// Gets or sets Customer.
+        /// </summary>
+        [JsonProperty("customer", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> Customer { get; set; }
 
         /// <summary>
         /// Gets or sets Product.
@@ -114,6 +123,8 @@ namespace AdvancedBilling.Standard.Models
             if (ReferenceEquals(this, obj)) return true;
 
             return obj is SubscriptionGroupSubscriptionError other &&
+                (this.Customer == null && other.Customer == null ||
+                 this.Customer?.Equals(other.Customer) == true) &&
                 (this.Product == null && other.Product == null ||
                  this.Product?.Equals(other.Product) == true) &&
                 (this.ProductPricePointId == null && other.ProductPricePointId == null ||
@@ -139,6 +150,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="toStringOutput">List of strings.</param>
         protected new void ToString(List<string> toStringOutput)
         {
+            toStringOutput.Add($"Customer = {(this.Customer == null ? "null" : $"[{string.Join(", ", this.Customer)} ]")}");
             toStringOutput.Add($"Product = {(this.Product == null ? "null" : $"[{string.Join(", ", this.Product)} ]")}");
             toStringOutput.Add($"ProductPricePointId = {(this.ProductPricePointId == null ? "null" : $"[{string.Join(", ", this.ProductPricePointId)} ]")}");
             toStringOutput.Add($"PaymentProfile = {(this.PaymentProfile == null ? "null" : $"[{string.Join(", ", this.PaymentProfile)} ]")}");

@@ -60,11 +60,14 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="currencyPrices">currency_prices.</param>
         /// <param name="overagePrices">overage_prices.</param>
         /// <param name="overagePricingScheme">overage_pricing_scheme.</param>
+        /// <param name="secondaryPrices">secondary_prices.</param>
+        /// <param name="secondaryPricingScheme">secondary_pricing_scheme.</param>
         /// <param name="renewPrepaidAllocation">renew_prepaid_allocation.</param>
         /// <param name="rolloverPrepaidRemainder">rollover_prepaid_remainder.</param>
         /// <param name="expirationInterval">expiration_interval.</param>
         /// <param name="expirationIntervalUnit">expiration_interval_unit.</param>
         /// <param name="currencyOveragePricesProp">currency_overage_prices.</param>
+        /// <param name="currencySecondaryPrices">currency_secondary_prices.</param>
         public CurrencyOveragePrices(
             int? id = null,
             Models.PricePointType? type = null,
@@ -85,11 +88,14 @@ namespace AdvancedBilling.Standard.Models
             List<Models.ComponentCurrencyPrice> currencyPrices = null,
             List<Models.ComponentPrice> overagePrices = null,
             Models.PricingScheme? overagePricingScheme = null,
+            List<Models.ComponentPrice> secondaryPrices = null,
+            Models.PricingScheme? secondaryPricingScheme = null,
             bool? renewPrepaidAllocation = null,
             bool? rolloverPrepaidRemainder = null,
             int? expirationInterval = null,
             Models.ExpirationIntervalUnit? expirationIntervalUnit = null,
-            List<Models.ComponentCurrencyPrice> currencyOveragePricesProp = null)
+            List<Models.ComponentCurrencyPrice> currencyOveragePricesProp = null,
+            List<Models.ComponentCurrencyPrice> currencySecondaryPrices = null)
         {
             this.Id = id;
             this.Type = type;
@@ -126,6 +132,8 @@ namespace AdvancedBilling.Standard.Models
             this.CurrencyPrices = currencyPrices;
             this.OveragePrices = overagePrices;
             this.OveragePricingScheme = overagePricingScheme;
+            this.SecondaryPrices = secondaryPrices;
+            this.SecondaryPricingScheme = secondaryPricingScheme;
             this.RenewPrepaidAllocation = renewPrepaidAllocation;
             this.RolloverPrepaidRemainder = rolloverPrepaidRemainder;
 
@@ -139,6 +147,7 @@ namespace AdvancedBilling.Standard.Models
                 this.ExpirationIntervalUnit = expirationIntervalUnit;
             }
             this.CurrencyOveragePricesProp = currencyOveragePricesProp;
+            this.CurrencySecondaryPrices = currencySecondaryPrices;
         }
 
         /// <summary>
@@ -310,6 +319,18 @@ namespace AdvancedBilling.Standard.Models
         public Models.PricingScheme? OveragePricingScheme { get; set; }
 
         /// <summary>
+        /// Returned only for hybrid price points. An array of secondary price brackets. Hybrid price points never return `overage_prices` or `overage_pricing_scheme`.
+        /// </summary>
+        [JsonProperty("secondary_prices", NullValueHandling = NullValueHandling.Ignore)]
+        public List<Models.ComponentPrice> SecondaryPrices { get; set; }
+
+        /// <summary>
+        /// Returned only for hybrid price points. Pricing scheme for the secondary pricing model.
+        /// </summary>
+        [JsonProperty("secondary_pricing_scheme", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.PricingScheme? SecondaryPricingScheme { get; set; }
+
+        /// <summary>
         /// Applicable only to prepaid usage components. Boolean which controls whether or not the allocated quantity should be renewed at the beginning of each period.
         /// </summary>
         [JsonProperty("renew_prepaid_allocation", NullValueHandling = NullValueHandling.Ignore)]
@@ -362,6 +383,12 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("currency_overage_prices", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.ComponentCurrencyPrice> CurrencyOveragePricesProp { get; set; }
+
+        /// <summary>
+        /// Returned only for hybrid price points, by List All Component Price Points with `include=currency_secondary_prices` or `include=currency_overage_prices`. An array of currency pricing data for secondary prices.
+        /// </summary>
+        [JsonProperty("currency_secondary_prices", NullValueHandling = NullValueHandling.Ignore)]
+        public List<Models.ComponentCurrencyPrice> CurrencySecondaryPrices { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -513,6 +540,10 @@ namespace AdvancedBilling.Standard.Models
                  this.OveragePrices?.Equals(other.OveragePrices) == true) &&
                 (this.OveragePricingScheme == null && other.OveragePricingScheme == null ||
                  this.OveragePricingScheme?.Equals(other.OveragePricingScheme) == true) &&
+                (this.SecondaryPrices == null && other.SecondaryPrices == null ||
+                 this.SecondaryPrices?.Equals(other.SecondaryPrices) == true) &&
+                (this.SecondaryPricingScheme == null && other.SecondaryPricingScheme == null ||
+                 this.SecondaryPricingScheme?.Equals(other.SecondaryPricingScheme) == true) &&
                 (this.RenewPrepaidAllocation == null && other.RenewPrepaidAllocation == null ||
                  this.RenewPrepaidAllocation?.Equals(other.RenewPrepaidAllocation) == true) &&
                 (this.RolloverPrepaidRemainder == null && other.RolloverPrepaidRemainder == null ||
@@ -523,6 +554,8 @@ namespace AdvancedBilling.Standard.Models
                  this.ExpirationIntervalUnit?.Equals(other.ExpirationIntervalUnit) == true) &&
                 (this.CurrencyOveragePricesProp == null && other.CurrencyOveragePricesProp == null ||
                  this.CurrencyOveragePricesProp?.Equals(other.CurrencyOveragePricesProp) == true) &&
+                (this.CurrencySecondaryPrices == null && other.CurrencySecondaryPrices == null ||
+                 this.CurrencySecondaryPrices?.Equals(other.CurrencySecondaryPrices) == true) &&
                 base.Equals(obj);
         }
 
@@ -551,11 +584,14 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"CurrencyPrices = {(this.CurrencyPrices == null ? "null" : $"[{string.Join(", ", this.CurrencyPrices)} ]")}");
             toStringOutput.Add($"OveragePrices = {(this.OveragePrices == null ? "null" : $"[{string.Join(", ", this.OveragePrices)} ]")}");
             toStringOutput.Add($"OveragePricingScheme = {(this.OveragePricingScheme == null ? "null" : this.OveragePricingScheme.ToString())}");
+            toStringOutput.Add($"SecondaryPrices = {(this.SecondaryPrices == null ? "null" : $"[{string.Join(", ", this.SecondaryPrices)} ]")}");
+            toStringOutput.Add($"SecondaryPricingScheme = {(this.SecondaryPricingScheme == null ? "null" : this.SecondaryPricingScheme.ToString())}");
             toStringOutput.Add($"RenewPrepaidAllocation = {(this.RenewPrepaidAllocation == null ? "null" : this.RenewPrepaidAllocation.ToString())}");
             toStringOutput.Add($"RolloverPrepaidRemainder = {(this.RolloverPrepaidRemainder == null ? "null" : this.RolloverPrepaidRemainder.ToString())}");
             toStringOutput.Add($"ExpirationInterval = {(this.ExpirationInterval == null ? "null" : this.ExpirationInterval.ToString())}");
             toStringOutput.Add($"ExpirationIntervalUnit = {(this.ExpirationIntervalUnit == null ? "null" : this.ExpirationIntervalUnit.ToString())}");
             toStringOutput.Add($"CurrencyOveragePricesProp = {(this.CurrencyOveragePricesProp == null ? "null" : $"[{string.Join(", ", this.CurrencyOveragePricesProp)} ]")}");
+            toStringOutput.Add($"CurrencySecondaryPrices = {(this.CurrencySecondaryPrices == null ? "null" : $"[{string.Join(", ", this.CurrencySecondaryPrices)} ]")}");
 
             base.ToString(toStringOutput);
         }

@@ -18,13 +18,13 @@ Input structure for the method ListSubscriptions
 | `State` | [`SubscriptionStateFilter?`](../../doc/models/subscription-state-filter.md) | Optional | The current state of the subscription |
 | `Product` | [`ListSubscriptionsInputProduct`](../../doc/models/containers/list-subscriptions-input-product.md) | Optional | This is a container for one-of cases. |
 | `Q` | `string` | Optional | Search string. |
-| `QScope` | [`QScope?`](../../doc/models/q-scope.md) | Optional | Scope of fields used by the q search. |
+| `QScope` | [`QScope?`](../../doc/models/q-scope.md) | Optional | Scope of fields used by the q search. Use `last_four` to search by the last four digits of the subscription's active credit card. |
 | `CustomerId` | `int?` | Optional | The Advanced Billing id of the customer. |
 | `ProductPricePointId` | `int?` | Optional | The ID of the product price point. If supplied, product is required. |
 | `Coupon` | `int?` | Optional | The numeric id of the coupon currently applied to the subscription. (This can be found in the URL when editing a coupon. Note that the coupon code cannot be used.) |
 | `CouponCode` | `string` | Optional | The coupon code currently applied to the subscription |
 | `CollectionMethod` | [`CollectionMethod1?`](../../doc/models/collection-method-1.md) | Optional | The collection method for the subscription. |
-| `BrandingThemeId` | `int?` | Optional | Filter subscriptions by the ID of an assigned Branding Theme. Branding Themes is a beta feature. See [Understand Branding Themes](https://docs.maxio.com/hc/en-us/articles/43796895662093-Understand-Branding-Themes#understand-branding-themes-0-0) for more information. |
+| `BrandingThemeId` | `int?` | Optional | Filter subscriptions by the ID of an assigned Branding Theme. Branding Themes is a beta feature. See [Understand Branding Themes](https://docs.maxio.com/billing/invoicing/branding-themes/understand-branding-themes) for more information. |
 | `DateField` | [`SubscriptionDateField?`](../../doc/models/subscription-date-field.md) | Optional | The type of filter you'd like to apply to your search.  Allowed Values: , current_period_ends_at, current_period_starts_at, created_at, activated_at, canceled_at, expires_at, trial_started_at, trial_ended_at, updated_at |
 | `StartDate` | `DateTime?` | Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns subscriptions with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. Use in query `start_date=2022-07-01`. |
 | `EndDate` | `DateTime?` | Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns subscriptions with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. Use in query `end_date=2022-08-01`. |
@@ -54,7 +54,7 @@ ListSubscriptionsInput listSubscriptionsInput = new ListSubscriptionsInput
     State = SubscriptionStateFilter.PrepaidDunning,
     Product = ListSubscriptionsInputProduct.FromNumber(200),
     Q = "q0",
-    QScope = QScope.LastName,
+    QScope = QScope.SubscriptionReference,
     CustomerId = 150,
     ProductPricePointId = 234,
     Coupon = 84,

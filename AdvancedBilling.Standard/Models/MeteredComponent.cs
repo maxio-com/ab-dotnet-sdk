@@ -39,6 +39,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="handle">handle.</param>
         /// <param name="taxable">taxable.</param>
         /// <param name="prices">prices.</param>
+        /// <param name="secondaryPricing">secondary_pricing.</param>
         /// <param name="pricePoints">price_points.</param>
         /// <param name="unitPrice">unit_price.</param>
         /// <param name="taxCode">tax_code.</param>
@@ -57,6 +58,7 @@ namespace AdvancedBilling.Standard.Models
             string handle = null,
             bool? taxable = null,
             List<Models.Price> prices = null,
+            Models.SecondaryPricing secondaryPricing = null,
             List<Models.ComponentPricePointItem> pricePoints = null,
             MeteredComponentUnitPrice unitPrice = null,
             string taxCode = null,
@@ -75,6 +77,7 @@ namespace AdvancedBilling.Standard.Models
             this.Taxable = taxable;
             this.PricingScheme = pricingScheme;
             this.Prices = prices;
+            this.SecondaryPricing = secondaryPricing;
             this.PricePoints = pricePoints;
             this.UnitPrice = unitPrice;
             this.TaxCode = taxCode;
@@ -132,10 +135,16 @@ namespace AdvancedBilling.Standard.Models
         public Models.PricingScheme PricingScheme { get; set; }
 
         /// <summary>
-        /// (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket Rules](https://maxio.zendesk.com/hc/en-us/articles/24261149166733-Component-Pricing-Schemes#price-bracket-rules) for an overview of how price brackets work for different pricing schemes.
+        /// (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket Rules](https://docs.maxio.com/billing/catalog/products/use-product-pricing-schemes#price-bracket-rules) for an overview of how price brackets work for different pricing schemes.
         /// </summary>
         [JsonProperty("prices", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.Price> Prices { get; set; }
+
+        /// <summary>
+        /// Hybrid Pricing only. The secondary pricing model that takes over once usage passes the primary model's included threshold. Applies to Quantity-Based and Metered Components on Sites with Hybrid Pricing enabled; ignored otherwise. Its `prices` brackets start at `1`, not at the primary model's highest `ending_quantity`. See [Hybrid Pricing](page:introduction/basic-concepts/hybrid-pricing).
+        /// </summary>
+        [JsonProperty("secondary_pricing", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.SecondaryPricing SecondaryPricing { get; set; }
 
         /// <summary>
         /// Gets or sets PricePoints.
@@ -282,6 +291,8 @@ namespace AdvancedBilling.Standard.Models
                 (this.PricingScheme.Equals(other.PricingScheme)) &&
                 (this.Prices == null && other.Prices == null ||
                  this.Prices?.Equals(other.Prices) == true) &&
+                (this.SecondaryPricing == null && other.SecondaryPricing == null ||
+                 this.SecondaryPricing?.Equals(other.SecondaryPricing) == true) &&
                 (this.PricePoints == null && other.PricePoints == null ||
                  this.PricePoints?.Equals(other.PricePoints) == true) &&
                 (this.UnitPrice == null && other.UnitPrice == null ||
@@ -318,6 +329,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Taxable = {(this.Taxable == null ? "null" : this.Taxable.ToString())}");
             toStringOutput.Add($"PricingScheme = {this.PricingScheme}");
             toStringOutput.Add($"Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
+            toStringOutput.Add($"SecondaryPricing = {(this.SecondaryPricing == null ? "null" : this.SecondaryPricing.ToString())}");
             toStringOutput.Add($"PricePoints = {(this.PricePoints == null ? "null" : $"[{string.Join(", ", this.PricePoints)} ]")}");
             toStringOutput.Add($"UnitPrice = {(this.UnitPrice == null ? "null" : this.UnitPrice.ToString())}");
             toStringOutput.Add($"TaxCode = {this.TaxCode ?? "null"}");
