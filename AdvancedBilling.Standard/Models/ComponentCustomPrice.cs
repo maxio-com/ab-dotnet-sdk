@@ -46,6 +46,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="rolloverPrepaidRemainder">rollover_prepaid_remainder.</param>
         /// <param name="expirationInterval">expiration_interval.</param>
         /// <param name="expirationIntervalUnit">expiration_interval_unit.</param>
+        /// <param name="segments">segments.</param>
         public ComponentCustomPrice(
             List<Models.Price> prices,
             bool? taxIncluded = null,
@@ -57,7 +58,8 @@ namespace AdvancedBilling.Standard.Models
             bool? renewPrepaidAllocation = null,
             bool? rolloverPrepaidRemainder = null,
             int? expirationInterval = null,
-            Models.ExpirationIntervalUnit? expirationIntervalUnit = null)
+            Models.ExpirationIntervalUnit? expirationIntervalUnit = null,
+            List<Models.SubscriptionComponentCustomPriceSegment> segments = null)
         {
             this.TaxIncluded = taxIncluded;
             this.PricingScheme = pricingScheme;
@@ -86,6 +88,7 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.ExpirationIntervalUnit = expirationIntervalUnit;
             }
+            this.Segments = segments;
         }
 
         /// <summary>
@@ -144,7 +147,7 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// When true, list price calculations will continue to use the default price point even when a `custom_price` is supplied.
+        /// (Optional) When list vs sales pricing is enabled and `list_price_point_id` is omitted, the component's default price point is used as the list price unless this is `false`. Defaults to `true`.
         /// </summary>
         [JsonProperty("use_default_list_price", NullValueHandling = NullValueHandling.Ignore)]
         public bool? UseDefaultListPrice { get; set; }
@@ -202,6 +205,14 @@ namespace AdvancedBilling.Standard.Models
                 this.expirationIntervalUnit = value;
             }
         }
+
+        /// <summary>
+        /// Applicable only to segmented event-based components on sites using Maxio Metering. Per-segment rates for the component: each entry sets the pricing scheme and prices for one segment of the component's meter, identified by its property values.
+        /// Accepted only by Create Subscription and Update Subscription, which save the segment rates. Preview Subscription and the signup proforma invoice endpoints validate segments the same way but do not save them. Every other endpoint that accepts a component `custom_price` returns `422 Unprocessable Entity` when the `segments` key is present, even when its value is `null` or an empty array. Omit this property unless you are setting segment rates.
+        /// Saved segment rates take effect as soon as the request succeeds and price all of the current billing period's usage at the new rates, including usage recorded before the request. To read them back, take the `price_point_id` of the subscription's component (for example, from [Read Subscription Component]($e/Subscription%20Components/readSubscriptionComponent)) and call `GET /components/{component_id}/price_points/{price_point_id}/segments.json`.
+        /// </summary>
+        [JsonProperty("segments", NullValueHandling = NullValueHandling.Ignore)]
+        public List<Models.SubscriptionComponentCustomPriceSegment> Segments { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -305,6 +316,8 @@ namespace AdvancedBilling.Standard.Models
                  this.ExpirationInterval?.Equals(other.ExpirationInterval) == true) &&
                 (this.ExpirationIntervalUnit == null && other.ExpirationIntervalUnit == null ||
                  this.ExpirationIntervalUnit?.Equals(other.ExpirationIntervalUnit) == true) &&
+                (this.Segments == null && other.Segments == null ||
+                 this.Segments?.Equals(other.Segments) == true) &&
                 base.Equals(obj);
         }
 
@@ -325,6 +338,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"RolloverPrepaidRemainder = {(this.RolloverPrepaidRemainder == null ? "null" : this.RolloverPrepaidRemainder.ToString())}");
             toStringOutput.Add($"ExpirationInterval = {(this.ExpirationInterval == null ? "null" : this.ExpirationInterval.ToString())}");
             toStringOutput.Add($"ExpirationIntervalUnit = {(this.ExpirationIntervalUnit == null ? "null" : this.ExpirationIntervalUnit.ToString())}");
+            toStringOutput.Add($"Segments = {(this.Segments == null ? "null" : $"[{string.Join(", ", this.Segments)} ]")}");
 
             base.ToString(toStringOutput);
         }

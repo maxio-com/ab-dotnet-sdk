@@ -1,0 +1,1296 @@
+// <copyright file="WalletProductListItem.cs" company="APIMatic">
+// AdvancedBilling.Standard
+//
+// This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
+// </copyright>
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
+using System.Collections.Generic;
+
+namespace AdvancedBilling.Standard.Models
+{
+    /// <summary>
+    /// WalletProductListItem.
+    /// </summary>
+    public class WalletProductListItem : BaseModel
+    {
+        private string handle;
+        private Models.PricingScheme? pricingScheme;
+        private string unitPrice;
+        private int? productFamilyId;
+        private string productFamilyName;
+        private string productFamilyHandle;
+        private long? pricePerUnitInCents;
+        private string description;
+        private int? defaultPricePointId;
+        private List<Models.ComponentPrice> overagePrices;
+        private List<Models.ComponentPrice> prices;
+        private string pricePointsUrl;
+        private string taxCode;
+        private Models.CreditType? upgradeCharge;
+        private Models.CreditType? downgradeCredit;
+        private DateTimeOffset? archivedAt;
+        private Models.ItemCategory? itemCategory;
+        private bool? useSiteExchangeRate;
+        private string accountingCode;
+        private Models.IntervalUnit? intervalUnit;
+        private string unspscCode;
+        private List<Models.FeatureCatalogItem> features;
+        private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
+        {
+            { "handle", false },
+            { "pricing_scheme", false },
+            { "unit_price", false },
+            { "product_family_id", false },
+            { "product_family_name", false },
+            { "product_family_handle", false },
+            { "price_per_unit_in_cents", false },
+            { "description", false },
+            { "default_price_point_id", false },
+            { "overage_prices", false },
+            { "prices", false },
+            { "price_points_url", false },
+            { "tax_code", false },
+            { "upgrade_charge", false },
+            { "downgrade_credit", false },
+            { "archived_at", false },
+            { "item_category", false },
+            { "use_site_exchange_rate", false },
+            { "accounting_code", false },
+            { "interval_unit", false },
+            { "unspsc_code", false },
+            { "features", false },
+        };
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WalletProductListItem"/> class.
+        /// </summary>
+        public WalletProductListItem()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WalletProductListItem"/> class.
+        /// </summary>
+        /// <param name="id">id.</param>
+        /// <param name="name">name.</param>
+        /// <param name="handle">handle.</param>
+        /// <param name="pricingScheme">pricing_scheme.</param>
+        /// <param name="unitName">unit_name.</param>
+        /// <param name="unitPrice">unit_price.</param>
+        /// <param name="productFamilyId">product_family_id.</param>
+        /// <param name="productFamilyName">product_family_name.</param>
+        /// <param name="productFamilyHandle">product_family_handle.</param>
+        /// <param name="pricePerUnitInCents">price_per_unit_in_cents.</param>
+        /// <param name="kind">kind.</param>
+        /// <param name="archived">archived.</param>
+        /// <param name="description">description.</param>
+        /// <param name="defaultPricePointId">default_price_point_id.</param>
+        /// <param name="overagePrices">overage_prices.</param>
+        /// <param name="prices">prices.</param>
+        /// <param name="pricePointCount">price_point_count.</param>
+        /// <param name="pricePointsUrl">price_points_url.</param>
+        /// <param name="defaultPricePointName">default_price_point_name.</param>
+        /// <param name="taxable">taxable.</param>
+        /// <param name="taxCode">tax_code.</param>
+        /// <param name="recurring">recurring.</param>
+        /// <param name="upgradeCharge">upgrade_charge.</param>
+        /// <param name="downgradeCredit">downgrade_credit.</param>
+        /// <param name="createdAt">created_at.</param>
+        /// <param name="updatedAt">updated_at.</param>
+        /// <param name="archivedAt">archived_at.</param>
+        /// <param name="hideDateRangeOnInvoice">hide_date_range_on_invoice.</param>
+        /// <param name="allowFractionalQuantities">allow_fractional_quantities.</param>
+        /// <param name="itemCategory">item_category.</param>
+        /// <param name="useSiteExchangeRate">use_site_exchange_rate.</param>
+        /// <param name="accountingCode">accounting_code.</param>
+        /// <param name="eventBasedBillingMetricId">event_based_billing_metric_id.</param>
+        /// <param name="meteringMeterId">metering_meter_id.</param>
+        /// <param name="interval">interval.</param>
+        /// <param name="intervalUnit">interval_unit.</param>
+        /// <param name="unspscCode">unspsc_code.</param>
+        /// <param name="features">features.</param>
+        /// <param name="usedBy">used_by.</param>
+        /// <param name="pricePointSummary">price_point_summary.</param>
+        public WalletProductListItem(
+            int? id = null,
+            string name = null,
+            string handle = null,
+            Models.PricingScheme? pricingScheme = null,
+            string unitName = null,
+            string unitPrice = null,
+            int? productFamilyId = null,
+            string productFamilyName = null,
+            string productFamilyHandle = null,
+            long? pricePerUnitInCents = null,
+            Models.ComponentKind? kind = null,
+            bool? archived = null,
+            string description = null,
+            int? defaultPricePointId = null,
+            List<Models.ComponentPrice> overagePrices = null,
+            List<Models.ComponentPrice> prices = null,
+            int? pricePointCount = null,
+            string pricePointsUrl = null,
+            string defaultPricePointName = null,
+            bool? taxable = null,
+            string taxCode = null,
+            bool? recurring = null,
+            Models.CreditType? upgradeCharge = null,
+            Models.CreditType? downgradeCredit = null,
+            DateTimeOffset? createdAt = null,
+            DateTimeOffset? updatedAt = null,
+            DateTimeOffset? archivedAt = null,
+            bool? hideDateRangeOnInvoice = null,
+            bool? allowFractionalQuantities = null,
+            Models.ItemCategory? itemCategory = null,
+            bool? useSiteExchangeRate = null,
+            string accountingCode = null,
+            int? eventBasedBillingMetricId = null,
+            int? meteringMeterId = null,
+            int? interval = null,
+            Models.IntervalUnit? intervalUnit = null,
+            string unspscCode = null,
+            List<Models.FeatureCatalogItem> features = null,
+            Models.WalletProductUsageCount usedBy = null,
+            Models.WalletProductPricePointSummary pricePointSummary = null)
+        {
+            this.Id = id;
+            this.Name = name;
+
+            if (handle != null)
+            {
+                this.Handle = handle;
+            }
+
+            if (pricingScheme != null)
+            {
+                this.PricingScheme = pricingScheme;
+            }
+            this.UnitName = unitName;
+
+            if (unitPrice != null)
+            {
+                this.UnitPrice = unitPrice;
+            }
+
+            if (productFamilyId != null)
+            {
+                this.ProductFamilyId = productFamilyId;
+            }
+
+            if (productFamilyName != null)
+            {
+                this.ProductFamilyName = productFamilyName;
+            }
+
+            if (productFamilyHandle != null)
+            {
+                this.ProductFamilyHandle = productFamilyHandle;
+            }
+
+            if (pricePerUnitInCents != null)
+            {
+                this.PricePerUnitInCents = pricePerUnitInCents;
+            }
+            this.Kind = kind;
+            this.Archived = archived;
+
+            if (description != null)
+            {
+                this.Description = description;
+            }
+
+            if (defaultPricePointId != null)
+            {
+                this.DefaultPricePointId = defaultPricePointId;
+            }
+
+            if (overagePrices != null)
+            {
+                this.OveragePrices = overagePrices;
+            }
+
+            if (prices != null)
+            {
+                this.Prices = prices;
+            }
+            this.PricePointCount = pricePointCount;
+
+            if (pricePointsUrl != null)
+            {
+                this.PricePointsUrl = pricePointsUrl;
+            }
+            this.DefaultPricePointName = defaultPricePointName;
+            this.Taxable = taxable;
+
+            if (taxCode != null)
+            {
+                this.TaxCode = taxCode;
+            }
+            this.Recurring = recurring;
+
+            if (upgradeCharge != null)
+            {
+                this.UpgradeCharge = upgradeCharge;
+            }
+
+            if (downgradeCredit != null)
+            {
+                this.DowngradeCredit = downgradeCredit;
+            }
+            this.CreatedAt = createdAt;
+            this.UpdatedAt = updatedAt;
+
+            if (archivedAt != null)
+            {
+                this.ArchivedAt = archivedAt;
+            }
+            this.HideDateRangeOnInvoice = hideDateRangeOnInvoice;
+            this.AllowFractionalQuantities = allowFractionalQuantities;
+
+            if (itemCategory != null)
+            {
+                this.ItemCategory = itemCategory;
+            }
+
+            if (useSiteExchangeRate != null)
+            {
+                this.UseSiteExchangeRate = useSiteExchangeRate;
+            }
+
+            if (accountingCode != null)
+            {
+                this.AccountingCode = accountingCode;
+            }
+            this.EventBasedBillingMetricId = eventBasedBillingMetricId;
+            this.MeteringMeterId = meteringMeterId;
+            this.Interval = interval;
+
+            if (intervalUnit != null)
+            {
+                this.IntervalUnit = intervalUnit;
+            }
+
+            if (unspscCode != null)
+            {
+                this.UnspscCode = unspscCode;
+            }
+
+            if (features != null)
+            {
+                this.Features = features;
+            }
+            this.UsedBy = usedBy;
+            this.PricePointSummary = pricePointSummary;
+        }
+
+        /// <summary>
+        /// The unique ID assigned to the component by Chargify. This ID can be used to fetch the component from the API.
+        /// </summary>
+        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Id { get; set; }
+
+        /// <summary>
+        /// The name of the Component, suitable for display on statements. e.g., Text Messages.
+        /// </summary>
+        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// The component API handle
+        /// </summary>
+        [JsonProperty("handle")]
+        public string Handle
+        {
+            get
+            {
+                return this.handle;
+            }
+
+            set
+            {
+                this.shouldSerialize["handle"] = true;
+                this.handle = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets PricingScheme.
+        /// </summary>
+        [JsonProperty("pricing_scheme")]
+        public Models.PricingScheme? PricingScheme
+        {
+            get
+            {
+                return this.pricingScheme;
+            }
+
+            set
+            {
+                this.shouldSerialize["pricing_scheme"] = true;
+                this.pricingScheme = value;
+            }
+        }
+
+        /// <summary>
+        /// The name of the unit that the component’s usage is measured in. e.g., message
+        /// </summary>
+        [JsonProperty("unit_name", NullValueHandling = NullValueHandling.Ignore)]
+        public string UnitName { get; set; }
+
+        /// <summary>
+        /// The amount the customer will be charged per unit. This field is only populated for ‘per_unit’ pricing schemes, otherwise it may be null.
+        /// </summary>
+        [JsonProperty("unit_price")]
+        public string UnitPrice
+        {
+            get
+            {
+                return this.unitPrice;
+            }
+
+            set
+            {
+                this.shouldSerialize["unit_price"] = true;
+                this.unitPrice = value;
+            }
+        }
+
+        /// <summary>
+        /// The id of the Product Family to which the Component belongs. `null` for a Wallet Product, which has no Product Family.
+        /// </summary>
+        [JsonProperty("product_family_id")]
+        public int? ProductFamilyId
+        {
+            get
+            {
+                return this.productFamilyId;
+            }
+
+            set
+            {
+                this.shouldSerialize["product_family_id"] = true;
+                this.productFamilyId = value;
+            }
+        }
+
+        /// <summary>
+        /// The name of the Product Family to which the Component belongs. `null` for a Wallet Product, which has no Product Family.
+        /// </summary>
+        [JsonProperty("product_family_name")]
+        public string ProductFamilyName
+        {
+            get
+            {
+                return this.productFamilyName;
+            }
+
+            set
+            {
+                this.shouldSerialize["product_family_name"] = true;
+                this.productFamilyName = value;
+            }
+        }
+
+        /// <summary>
+        /// The handle of the Product Family to which the Component belongs. `null` for a Wallet Product, which has no Product Family.
+        /// </summary>
+        [JsonProperty("product_family_handle")]
+        public string ProductFamilyHandle
+        {
+            get
+            {
+                return this.productFamilyHandle;
+            }
+
+            set
+            {
+                this.shouldSerialize["product_family_handle"] = true;
+                this.productFamilyHandle = value;
+            }
+        }
+
+        /// <summary>
+        /// deprecated - use unit_price instead.
+        /// </summary>
+        [JsonProperty("price_per_unit_in_cents")]
+        public long? PricePerUnitInCents
+        {
+            get
+            {
+                return this.pricePerUnitInCents;
+            }
+
+            set
+            {
+                this.shouldSerialize["price_per_unit_in_cents"] = true;
+                this.pricePerUnitInCents = value;
+            }
+        }
+
+        /// <summary>
+        /// A handle for the component type
+        /// </summary>
+        [JsonProperty("kind", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.ComponentKind? Kind { get; set; }
+
+        /// <summary>
+        /// Boolean flag describing whether a component is archived or not.
+        /// </summary>
+        [JsonProperty("archived", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? Archived { get; set; }
+
+        /// <summary>
+        /// The description of the component.
+        /// </summary>
+        [JsonProperty("description")]
+        public string Description
+        {
+            get
+            {
+                return this.description;
+            }
+
+            set
+            {
+                this.shouldSerialize["description"] = true;
+                this.description = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets DefaultPricePointId.
+        /// </summary>
+        [JsonProperty("default_price_point_id")]
+        public int? DefaultPricePointId
+        {
+            get
+            {
+                return this.defaultPricePointId;
+            }
+
+            set
+            {
+                this.shouldSerialize["default_price_point_id"] = true;
+                this.defaultPricePointId = value;
+            }
+        }
+
+        /// <summary>
+        /// Applicable only to prepaid usage components. An array of overage price brackets.
+        /// </summary>
+        [JsonProperty("overage_prices")]
+        public List<Models.ComponentPrice> OveragePrices
+        {
+            get
+            {
+                return this.overagePrices;
+            }
+
+            set
+            {
+                this.shouldSerialize["overage_prices"] = true;
+                this.overagePrices = value;
+            }
+        }
+
+        /// <summary>
+        /// An array of price brackets. If the component uses the ‘per_unit’ pricing scheme, this array will be empty.
+        /// </summary>
+        [JsonProperty("prices")]
+        public List<Models.ComponentPrice> Prices
+        {
+            get
+            {
+                return this.prices;
+            }
+
+            set
+            {
+                this.shouldSerialize["prices"] = true;
+                this.prices = value;
+            }
+        }
+
+        /// <summary>
+        /// Count for the number of price points associated with the component
+        /// </summary>
+        [JsonProperty("price_point_count", NullValueHandling = NullValueHandling.Ignore)]
+        public int? PricePointCount { get; set; }
+
+        /// <summary>
+        /// URL that points to the location to read the existing price points via GET request
+        /// </summary>
+        [JsonProperty("price_points_url")]
+        public string PricePointsUrl
+        {
+            get
+            {
+                return this.pricePointsUrl;
+            }
+
+            set
+            {
+                this.shouldSerialize["price_points_url"] = true;
+                this.pricePointsUrl = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets DefaultPricePointName.
+        /// </summary>
+        [JsonProperty("default_price_point_name", NullValueHandling = NullValueHandling.Ignore)]
+        public string DefaultPricePointName { get; set; }
+
+        /// <summary>
+        /// Boolean flag describing whether a component is taxable or not.
+        /// </summary>
+        [JsonProperty("taxable", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? Taxable { get; set; }
+
+        /// <summary>
+        /// A string representing the tax code related to the component type. This is especially important when using AvaTax to tax based on locale. This attribute has a max length of 25 characters.
+        /// </summary>
+        [JsonProperty("tax_code")]
+        public string TaxCode
+        {
+            get
+            {
+                return this.taxCode;
+            }
+
+            set
+            {
+                this.shouldSerialize["tax_code"] = true;
+                this.taxCode = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets Recurring.
+        /// </summary>
+        [JsonProperty("recurring", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? Recurring { get; set; }
+
+        /// <summary>
+        /// The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.
+        /// </summary>
+        [JsonProperty("upgrade_charge")]
+        public Models.CreditType? UpgradeCharge
+        {
+            get
+            {
+                return this.upgradeCharge;
+            }
+
+            set
+            {
+                this.shouldSerialize["upgrade_charge"] = true;
+                this.upgradeCharge = value;
+            }
+        }
+
+        /// <summary>
+        /// The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.
+        /// </summary>
+        [JsonProperty("downgrade_credit")]
+        public Models.CreditType? DowngradeCredit
+        {
+            get
+            {
+                return this.downgradeCredit;
+            }
+
+            set
+            {
+                this.shouldSerialize["downgrade_credit"] = true;
+                this.downgradeCredit = value;
+            }
+        }
+
+        /// <summary>
+        /// Timestamp indicating when this component was created
+        /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
+        [JsonProperty("created_at", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset? CreatedAt { get; set; }
+
+        /// <summary>
+        /// Timestamp indicating when this component was updated
+        /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
+        [JsonProperty("updated_at", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset? UpdatedAt { get; set; }
+
+        /// <summary>
+        /// Timestamp indicating when this component was archived
+        /// </summary>
+        [JsonConverter(typeof(IsoDateTimeConverter))]
+        [JsonProperty("archived_at")]
+        public DateTimeOffset? ArchivedAt
+        {
+            get
+            {
+                return this.archivedAt;
+            }
+
+            set
+            {
+                this.shouldSerialize["archived_at"] = true;
+                this.archivedAt = value;
+            }
+        }
+
+        /// <summary>
+        /// (Only available on Relationship Invoicing sites) Boolean flag describing if the service date range should show for the component on generated invoices.
+        /// </summary>
+        [JsonProperty("hide_date_range_on_invoice", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? HideDateRangeOnInvoice { get; set; }
+
+        /// <summary>
+        /// Gets or sets AllowFractionalQuantities.
+        /// </summary>
+        [JsonProperty("allow_fractional_quantities", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? AllowFractionalQuantities { get; set; }
+
+        /// <summary>
+        /// One of the following: Business Software, Consumer Software, Digital Services, Physical Goods, Other
+        /// </summary>
+        [JsonProperty("item_category")]
+        public Models.ItemCategory? ItemCategory
+        {
+            get
+            {
+                return this.itemCategory;
+            }
+
+            set
+            {
+                this.shouldSerialize["item_category"] = true;
+                this.itemCategory = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets UseSiteExchangeRate.
+        /// </summary>
+        [JsonProperty("use_site_exchange_rate")]
+        public bool? UseSiteExchangeRate
+        {
+            get
+            {
+                return this.useSiteExchangeRate;
+            }
+
+            set
+            {
+                this.shouldSerialize["use_site_exchange_rate"] = true;
+                this.useSiteExchangeRate = value;
+            }
+        }
+
+        /// <summary>
+        /// E.g. Internal ID or SKU Number
+        /// </summary>
+        [JsonProperty("accounting_code")]
+        public string AccountingCode
+        {
+            get
+            {
+                return this.accountingCode;
+            }
+
+            set
+            {
+                this.shouldSerialize["accounting_code"] = true;
+                this.accountingCode = value;
+            }
+        }
+
+        /// <summary>
+        /// The ID of an attached metric from legacy Events Based Billing. Omitted if no metric is attached. If the metric is linked to a Maxio Metering meter, the response can include both event_based_billing_metric_id and metering_meter_id.
+        /// </summary>
+        [JsonProperty("event_based_billing_metric_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? EventBasedBillingMetricId { get; set; }
+
+        /// <summary>
+        /// The ID of an attached single Maxio Metering meter. Omitted if no single meter is attached, including when the component uses only an Advanced Formula. If a legacy Events Based Billing metric is linked to the meter, the response can include both metering_meter_id and event_based_billing_metric_id.
+        /// </summary>
+        [JsonProperty("metering_meter_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? MeteringMeterId { get; set; }
+
+        /// <summary>
+        /// The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean this component’s default price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Interval { get; set; }
+
+        /// <summary>
+        /// A string representing the interval unit for this component's default price point, either month or day. This property is only available for sites with Multifrequency enabled.
+        /// </summary>
+        [JsonProperty("interval_unit")]
+        public Models.IntervalUnit? IntervalUnit
+        {
+            get
+            {
+                return this.intervalUnit;
+            }
+
+            set
+            {
+                this.shouldSerialize["interval_unit"] = true;
+                this.intervalUnit = value;
+            }
+        }
+
+        /// <summary>
+        /// (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent as the commodity code on invoice line items for this component instead of the default derived from item_category.
+        /// </summary>
+        [JsonProperty("unspsc_code")]
+        public string UnspscCode
+        {
+            get
+            {
+                return this.unspscCode;
+            }
+
+            set
+            {
+                this.shouldSerialize["unspsc_code"] = true;
+                this.unspscCode = value;
+            }
+        }
+
+        /// <summary>
+        /// The active feature catalog items attached to this component. Present only when the request includes `include_features=true`.
+        /// </summary>
+        [JsonProperty("features")]
+        public List<Models.FeatureCatalogItem> Features
+        {
+            get
+            {
+                return this.features;
+            }
+
+            set
+            {
+                this.shouldSerialize["features"] = true;
+                this.features = value;
+            }
+        }
+
+        /// <summary>
+        /// A rollup of what's using this Wallet Product, for the catalog listing.
+        /// </summary>
+        [JsonProperty("used_by", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.WalletProductUsageCount UsedBy { get; set; }
+
+        /// <summary>
+        /// A summary of the Wallet Product's default price point, for rendering a catalog listing without a separate price points call.
+        /// </summary>
+        [JsonProperty("price_point_summary", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.WalletProductPricePointSummary PricePointSummary { get; set; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            var toStringOutput = new List<string>();
+            this.ToString(toStringOutput);
+            return $"WalletProductListItem : ({string.Join(", ", toStringOutput)})";
+        }
+
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetHandle()
+        {
+            this.shouldSerialize["handle"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetPricingScheme()
+        {
+            this.shouldSerialize["pricing_scheme"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetUnitPrice()
+        {
+            this.shouldSerialize["unit_price"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetProductFamilyId()
+        {
+            this.shouldSerialize["product_family_id"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetProductFamilyName()
+        {
+            this.shouldSerialize["product_family_name"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetProductFamilyHandle()
+        {
+            this.shouldSerialize["product_family_handle"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetPricePerUnitInCents()
+        {
+            this.shouldSerialize["price_per_unit_in_cents"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetDescription()
+        {
+            this.shouldSerialize["description"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetDefaultPricePointId()
+        {
+            this.shouldSerialize["default_price_point_id"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetOveragePrices()
+        {
+            this.shouldSerialize["overage_prices"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetPrices()
+        {
+            this.shouldSerialize["prices"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetPricePointsUrl()
+        {
+            this.shouldSerialize["price_points_url"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetTaxCode()
+        {
+            this.shouldSerialize["tax_code"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetUpgradeCharge()
+        {
+            this.shouldSerialize["upgrade_charge"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetDowngradeCredit()
+        {
+            this.shouldSerialize["downgrade_credit"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetArchivedAt()
+        {
+            this.shouldSerialize["archived_at"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetItemCategory()
+        {
+            this.shouldSerialize["item_category"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetUseSiteExchangeRate()
+        {
+            this.shouldSerialize["use_site_exchange_rate"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetAccountingCode()
+        {
+            this.shouldSerialize["accounting_code"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetIntervalUnit()
+        {
+            this.shouldSerialize["interval_unit"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetUnspscCode()
+        {
+            this.shouldSerialize["unspsc_code"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetFeatures()
+        {
+            this.shouldSerialize["features"] = false;
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeHandle()
+        {
+            return this.shouldSerialize["handle"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializePricingScheme()
+        {
+            return this.shouldSerialize["pricing_scheme"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeUnitPrice()
+        {
+            return this.shouldSerialize["unit_price"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeProductFamilyId()
+        {
+            return this.shouldSerialize["product_family_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeProductFamilyName()
+        {
+            return this.shouldSerialize["product_family_name"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeProductFamilyHandle()
+        {
+            return this.shouldSerialize["product_family_handle"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializePricePerUnitInCents()
+        {
+            return this.shouldSerialize["price_per_unit_in_cents"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeDescription()
+        {
+            return this.shouldSerialize["description"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeDefaultPricePointId()
+        {
+            return this.shouldSerialize["default_price_point_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeOveragePrices()
+        {
+            return this.shouldSerialize["overage_prices"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializePrices()
+        {
+            return this.shouldSerialize["prices"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializePricePointsUrl()
+        {
+            return this.shouldSerialize["price_points_url"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeTaxCode()
+        {
+            return this.shouldSerialize["tax_code"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeUpgradeCharge()
+        {
+            return this.shouldSerialize["upgrade_charge"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeDowngradeCredit()
+        {
+            return this.shouldSerialize["downgrade_credit"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeArchivedAt()
+        {
+            return this.shouldSerialize["archived_at"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeItemCategory()
+        {
+            return this.shouldSerialize["item_category"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeUseSiteExchangeRate()
+        {
+            return this.shouldSerialize["use_site_exchange_rate"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeAccountingCode()
+        {
+            return this.shouldSerialize["accounting_code"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeIntervalUnit()
+        {
+            return this.shouldSerialize["interval_unit"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeUnspscCode()
+        {
+            return this.shouldSerialize["unspsc_code"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeFeatures()
+        {
+            return this.shouldSerialize["features"];
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+
+            return obj is WalletProductListItem other &&
+                (this.Id == null && other.Id == null ||
+                 this.Id?.Equals(other.Id) == true) &&
+                (this.Name == null && other.Name == null ||
+                 this.Name?.Equals(other.Name) == true) &&
+                (this.Handle == null && other.Handle == null ||
+                 this.Handle?.Equals(other.Handle) == true) &&
+                (this.PricingScheme == null && other.PricingScheme == null ||
+                 this.PricingScheme?.Equals(other.PricingScheme) == true) &&
+                (this.UnitName == null && other.UnitName == null ||
+                 this.UnitName?.Equals(other.UnitName) == true) &&
+                (this.UnitPrice == null && other.UnitPrice == null ||
+                 this.UnitPrice?.Equals(other.UnitPrice) == true) &&
+                (this.ProductFamilyId == null && other.ProductFamilyId == null ||
+                 this.ProductFamilyId?.Equals(other.ProductFamilyId) == true) &&
+                (this.ProductFamilyName == null && other.ProductFamilyName == null ||
+                 this.ProductFamilyName?.Equals(other.ProductFamilyName) == true) &&
+                (this.ProductFamilyHandle == null && other.ProductFamilyHandle == null ||
+                 this.ProductFamilyHandle?.Equals(other.ProductFamilyHandle) == true) &&
+                (this.PricePerUnitInCents == null && other.PricePerUnitInCents == null ||
+                 this.PricePerUnitInCents?.Equals(other.PricePerUnitInCents) == true) &&
+                (this.Kind == null && other.Kind == null ||
+                 this.Kind?.Equals(other.Kind) == true) &&
+                (this.Archived == null && other.Archived == null ||
+                 this.Archived?.Equals(other.Archived) == true) &&
+                (this.Description == null && other.Description == null ||
+                 this.Description?.Equals(other.Description) == true) &&
+                (this.DefaultPricePointId == null && other.DefaultPricePointId == null ||
+                 this.DefaultPricePointId?.Equals(other.DefaultPricePointId) == true) &&
+                (this.OveragePrices == null && other.OveragePrices == null ||
+                 this.OveragePrices?.Equals(other.OveragePrices) == true) &&
+                (this.Prices == null && other.Prices == null ||
+                 this.Prices?.Equals(other.Prices) == true) &&
+                (this.PricePointCount == null && other.PricePointCount == null ||
+                 this.PricePointCount?.Equals(other.PricePointCount) == true) &&
+                (this.PricePointsUrl == null && other.PricePointsUrl == null ||
+                 this.PricePointsUrl?.Equals(other.PricePointsUrl) == true) &&
+                (this.DefaultPricePointName == null && other.DefaultPricePointName == null ||
+                 this.DefaultPricePointName?.Equals(other.DefaultPricePointName) == true) &&
+                (this.Taxable == null && other.Taxable == null ||
+                 this.Taxable?.Equals(other.Taxable) == true) &&
+                (this.TaxCode == null && other.TaxCode == null ||
+                 this.TaxCode?.Equals(other.TaxCode) == true) &&
+                (this.Recurring == null && other.Recurring == null ||
+                 this.Recurring?.Equals(other.Recurring) == true) &&
+                (this.UpgradeCharge == null && other.UpgradeCharge == null ||
+                 this.UpgradeCharge?.Equals(other.UpgradeCharge) == true) &&
+                (this.DowngradeCredit == null && other.DowngradeCredit == null ||
+                 this.DowngradeCredit?.Equals(other.DowngradeCredit) == true) &&
+                (this.CreatedAt == null && other.CreatedAt == null ||
+                 this.CreatedAt?.Equals(other.CreatedAt) == true) &&
+                (this.UpdatedAt == null && other.UpdatedAt == null ||
+                 this.UpdatedAt?.Equals(other.UpdatedAt) == true) &&
+                (this.ArchivedAt == null && other.ArchivedAt == null ||
+                 this.ArchivedAt?.Equals(other.ArchivedAt) == true) &&
+                (this.HideDateRangeOnInvoice == null && other.HideDateRangeOnInvoice == null ||
+                 this.HideDateRangeOnInvoice?.Equals(other.HideDateRangeOnInvoice) == true) &&
+                (this.AllowFractionalQuantities == null && other.AllowFractionalQuantities == null ||
+                 this.AllowFractionalQuantities?.Equals(other.AllowFractionalQuantities) == true) &&
+                (this.ItemCategory == null && other.ItemCategory == null ||
+                 this.ItemCategory?.Equals(other.ItemCategory) == true) &&
+                (this.UseSiteExchangeRate == null && other.UseSiteExchangeRate == null ||
+                 this.UseSiteExchangeRate?.Equals(other.UseSiteExchangeRate) == true) &&
+                (this.AccountingCode == null && other.AccountingCode == null ||
+                 this.AccountingCode?.Equals(other.AccountingCode) == true) &&
+                (this.EventBasedBillingMetricId == null && other.EventBasedBillingMetricId == null ||
+                 this.EventBasedBillingMetricId?.Equals(other.EventBasedBillingMetricId) == true) &&
+                (this.MeteringMeterId == null && other.MeteringMeterId == null ||
+                 this.MeteringMeterId?.Equals(other.MeteringMeterId) == true) &&
+                (this.Interval == null && other.Interval == null ||
+                 this.Interval?.Equals(other.Interval) == true) &&
+                (this.IntervalUnit == null && other.IntervalUnit == null ||
+                 this.IntervalUnit?.Equals(other.IntervalUnit) == true) &&
+                (this.UnspscCode == null && other.UnspscCode == null ||
+                 this.UnspscCode?.Equals(other.UnspscCode) == true) &&
+                (this.Features == null && other.Features == null ||
+                 this.Features?.Equals(other.Features) == true) &&
+                (this.UsedBy == null && other.UsedBy == null ||
+                 this.UsedBy?.Equals(other.UsedBy) == true) &&
+                (this.PricePointSummary == null && other.PricePointSummary == null ||
+                 this.PricePointSummary?.Equals(other.PricePointSummary) == true) &&
+                base.Equals(obj);
+        }
+
+        /// <summary>
+        /// ToString overload.
+        /// </summary>
+        /// <param name="toStringOutput">List of strings.</param>
+        protected new void ToString(List<string> toStringOutput)
+        {
+            toStringOutput.Add($"Id = {(this.Id == null ? "null" : this.Id.ToString())}");
+            toStringOutput.Add($"Name = {this.Name ?? "null"}");
+            toStringOutput.Add($"Handle = {this.Handle ?? "null"}");
+            toStringOutput.Add($"PricingScheme = {(this.PricingScheme == null ? "null" : this.PricingScheme.ToString())}");
+            toStringOutput.Add($"UnitName = {this.UnitName ?? "null"}");
+            toStringOutput.Add($"UnitPrice = {this.UnitPrice ?? "null"}");
+            toStringOutput.Add($"ProductFamilyId = {(this.ProductFamilyId == null ? "null" : this.ProductFamilyId.ToString())}");
+            toStringOutput.Add($"ProductFamilyName = {this.ProductFamilyName ?? "null"}");
+            toStringOutput.Add($"ProductFamilyHandle = {this.ProductFamilyHandle ?? "null"}");
+            toStringOutput.Add($"PricePerUnitInCents = {(this.PricePerUnitInCents == null ? "null" : this.PricePerUnitInCents.ToString())}");
+            toStringOutput.Add($"Kind = {(this.Kind == null ? "null" : this.Kind.ToString())}");
+            toStringOutput.Add($"Archived = {(this.Archived == null ? "null" : this.Archived.ToString())}");
+            toStringOutput.Add($"Description = {this.Description ?? "null"}");
+            toStringOutput.Add($"DefaultPricePointId = {(this.DefaultPricePointId == null ? "null" : this.DefaultPricePointId.ToString())}");
+            toStringOutput.Add($"OveragePrices = {(this.OveragePrices == null ? "null" : $"[{string.Join(", ", this.OveragePrices)} ]")}");
+            toStringOutput.Add($"Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
+            toStringOutput.Add($"PricePointCount = {(this.PricePointCount == null ? "null" : this.PricePointCount.ToString())}");
+            toStringOutput.Add($"PricePointsUrl = {this.PricePointsUrl ?? "null"}");
+            toStringOutput.Add($"DefaultPricePointName = {this.DefaultPricePointName ?? "null"}");
+            toStringOutput.Add($"Taxable = {(this.Taxable == null ? "null" : this.Taxable.ToString())}");
+            toStringOutput.Add($"TaxCode = {this.TaxCode ?? "null"}");
+            toStringOutput.Add($"Recurring = {(this.Recurring == null ? "null" : this.Recurring.ToString())}");
+            toStringOutput.Add($"UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
+            toStringOutput.Add($"DowngradeCredit = {(this.DowngradeCredit == null ? "null" : this.DowngradeCredit.ToString())}");
+            toStringOutput.Add($"CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
+            toStringOutput.Add($"UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
+            toStringOutput.Add($"ArchivedAt = {(this.ArchivedAt == null ? "null" : this.ArchivedAt.ToString())}");
+            toStringOutput.Add($"HideDateRangeOnInvoice = {(this.HideDateRangeOnInvoice == null ? "null" : this.HideDateRangeOnInvoice.ToString())}");
+            toStringOutput.Add($"AllowFractionalQuantities = {(this.AllowFractionalQuantities == null ? "null" : this.AllowFractionalQuantities.ToString())}");
+            toStringOutput.Add($"ItemCategory = {(this.ItemCategory == null ? "null" : this.ItemCategory.ToString())}");
+            toStringOutput.Add($"UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
+            toStringOutput.Add($"AccountingCode = {this.AccountingCode ?? "null"}");
+            toStringOutput.Add($"EventBasedBillingMetricId = {(this.EventBasedBillingMetricId == null ? "null" : this.EventBasedBillingMetricId.ToString())}");
+            toStringOutput.Add($"MeteringMeterId = {(this.MeteringMeterId == null ? "null" : this.MeteringMeterId.ToString())}");
+            toStringOutput.Add($"Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
+            toStringOutput.Add($"IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
+            toStringOutput.Add($"UnspscCode = {this.UnspscCode ?? "null"}");
+            toStringOutput.Add($"Features = {(this.Features == null ? "null" : $"[{string.Join(", ", this.Features)} ]")}");
+            toStringOutput.Add($"UsedBy = {(this.UsedBy == null ? "null" : this.UsedBy.ToString())}");
+            toStringOutput.Add($"PricePointSummary = {(this.PricePointSummary == null ? "null" : this.PricePointSummary.ToString())}");
+
+            base.ToString(toStringOutput);
+        }
+    }
+}

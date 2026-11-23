@@ -50,6 +50,12 @@ namespace AdvancedBilling.Standard.Models
         /// SubscriptionReference.
         /// </summary>
         [EnumMember(Value = "subscription_reference")]
-        SubscriptionReference
+        SubscriptionReference,
+
+        /// <summary>
+        /// LastFour.
+        /// </summary>
+        [EnumMember(Value = "last_four")]
+        LastFour
     }
 }

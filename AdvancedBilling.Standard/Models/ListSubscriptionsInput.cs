@@ -152,7 +152,7 @@ namespace AdvancedBilling.Standard.Models
         public string Q { get; set; }
 
         /// <summary>
-        /// Scope of fields used by the q search.
+        /// Scope of fields used by the q search. Use `last_four` to search by the last four digits of the subscription's active credit card.
         /// </summary>
         [JsonProperty("q_scope", NullValueHandling = NullValueHandling.Ignore)]
         public Models.QScope? QScope { get; set; }
@@ -188,7 +188,7 @@ namespace AdvancedBilling.Standard.Models
         public Models.CollectionMethod1? CollectionMethod { get; set; }
 
         /// <summary>
-        /// Filter subscriptions by the ID of an assigned Branding Theme. Branding Themes is a beta feature. See [Understand Branding Themes](https://docs.maxio.com/hc/en-us/articles/43796895662093-Understand-Branding-Themes#understand-branding-themes-0-0) for more information.
+        /// Filter subscriptions by the ID of an assigned Branding Theme. Branding Themes is a beta feature. See [Understand Branding Themes](https://docs.maxio.com/billing/invoicing/branding-themes/understand-branding-themes) for more information.
         /// </summary>
         [JsonProperty("branding_theme_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? BrandingThemeId { get; set; }

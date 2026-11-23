@@ -18,6 +18,9 @@ namespace AdvancedBilling.Standard.Models
         private string handle;
         private Models.PricingScheme? pricingScheme;
         private string unitPrice;
+        private int? productFamilyId;
+        private string productFamilyName;
+        private string productFamilyHandle;
         private long? pricePerUnitInCents;
         private string description;
         private int? defaultPricePointId;
@@ -33,11 +36,15 @@ namespace AdvancedBilling.Standard.Models
         private string accountingCode;
         private Models.IntervalUnit? intervalUnit;
         private string unspscCode;
+        private List<Models.FeatureCatalogItem> features;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "handle", false },
             { "pricing_scheme", false },
             { "unit_price", false },
+            { "product_family_id", false },
+            { "product_family_name", false },
+            { "product_family_handle", false },
             { "price_per_unit_in_cents", false },
             { "description", false },
             { "default_price_point_id", false },
@@ -53,6 +60,7 @@ namespace AdvancedBilling.Standard.Models
             { "accounting_code", false },
             { "interval_unit", false },
             { "unspsc_code", false },
+            { "features", false },
         };
 
         /// <summary>
@@ -98,9 +106,11 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="useSiteExchangeRate">use_site_exchange_rate.</param>
         /// <param name="accountingCode">accounting_code.</param>
         /// <param name="eventBasedBillingMetricId">event_based_billing_metric_id.</param>
+        /// <param name="meteringMeterId">metering_meter_id.</param>
         /// <param name="interval">interval.</param>
         /// <param name="intervalUnit">interval_unit.</param>
         /// <param name="unspscCode">unspsc_code.</param>
+        /// <param name="features">features.</param>
         public Component(
             int? id = null,
             string name = null,
@@ -135,9 +145,11 @@ namespace AdvancedBilling.Standard.Models
             bool? useSiteExchangeRate = null,
             string accountingCode = null,
             int? eventBasedBillingMetricId = null,
+            int? meteringMeterId = null,
             int? interval = null,
             Models.IntervalUnit? intervalUnit = null,
-            string unspscCode = null)
+            string unspscCode = null,
+            List<Models.FeatureCatalogItem> features = null)
         {
             this.Id = id;
             this.Name = name;
@@ -157,9 +169,21 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.UnitPrice = unitPrice;
             }
-            this.ProductFamilyId = productFamilyId;
-            this.ProductFamilyName = productFamilyName;
-            this.ProductFamilyHandle = productFamilyHandle;
+
+            if (productFamilyId != null)
+            {
+                this.ProductFamilyId = productFamilyId;
+            }
+
+            if (productFamilyName != null)
+            {
+                this.ProductFamilyName = productFamilyName;
+            }
+
+            if (productFamilyHandle != null)
+            {
+                this.ProductFamilyHandle = productFamilyHandle;
+            }
 
             if (pricePerUnitInCents != null)
             {
@@ -236,6 +260,7 @@ namespace AdvancedBilling.Standard.Models
                 this.AccountingCode = accountingCode;
             }
             this.EventBasedBillingMetricId = eventBasedBillingMetricId;
+            this.MeteringMeterId = meteringMeterId;
             this.Interval = interval;
 
             if (intervalUnit != null)
@@ -246,6 +271,11 @@ namespace AdvancedBilling.Standard.Models
             if (unspscCode != null)
             {
                 this.UnspscCode = unspscCode;
+            }
+
+            if (features != null)
+            {
+                this.Features = features;
             }
         }
 
@@ -322,22 +352,58 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// The id of the Product Family to which the Component belongs
+        /// The id of the Product Family to which the Component belongs. `null` for a Wallet Product, which has no Product Family.
         /// </summary>
-        [JsonProperty("product_family_id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? ProductFamilyId { get; set; }
+        [JsonProperty("product_family_id")]
+        public int? ProductFamilyId
+        {
+            get
+            {
+                return this.productFamilyId;
+            }
+
+            set
+            {
+                this.shouldSerialize["product_family_id"] = true;
+                this.productFamilyId = value;
+            }
+        }
 
         /// <summary>
-        /// The name of the Product Family to which the Component belongs
+        /// The name of the Product Family to which the Component belongs. `null` for a Wallet Product, which has no Product Family.
         /// </summary>
-        [JsonProperty("product_family_name", NullValueHandling = NullValueHandling.Ignore)]
-        public string ProductFamilyName { get; set; }
+        [JsonProperty("product_family_name")]
+        public string ProductFamilyName
+        {
+            get
+            {
+                return this.productFamilyName;
+            }
+
+            set
+            {
+                this.shouldSerialize["product_family_name"] = true;
+                this.productFamilyName = value;
+            }
+        }
 
         /// <summary>
-        /// The handle of the Product Family to which the Component belongs
+        /// The handle of the Product Family to which the Component belongs. `null` for a Wallet Product, which has no Product Family.
         /// </summary>
-        [JsonProperty("product_family_handle", NullValueHandling = NullValueHandling.Ignore)]
-        public string ProductFamilyHandle { get; set; }
+        [JsonProperty("product_family_handle")]
+        public string ProductFamilyHandle
+        {
+            get
+            {
+                return this.productFamilyHandle;
+            }
+
+            set
+            {
+                this.shouldSerialize["product_family_handle"] = true;
+                this.productFamilyHandle = value;
+            }
+        }
 
         /// <summary>
         /// deprecated - use unit_price instead.
@@ -637,10 +703,16 @@ namespace AdvancedBilling.Standard.Models
         }
 
         /// <summary>
-        /// (Only for Event Based Components) This is an ID of a metric attached to the component. This metric is used to bill upon collected events.
+        /// The ID of an attached metric from legacy Events Based Billing. Omitted if no metric is attached. If the metric is linked to a Maxio Metering meter, the response can include both event_based_billing_metric_id and metering_meter_id.
         /// </summary>
         [JsonProperty("event_based_billing_metric_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? EventBasedBillingMetricId { get; set; }
+
+        /// <summary>
+        /// The ID of an attached single Maxio Metering meter. Omitted if no single meter is attached, including when the component uses only an Advanced Formula. If a legacy Events Based Billing metric is linked to the meter, the response can include both metering_meter_id and event_based_billing_metric_id.
+        /// </summary>
+        [JsonProperty("metering_meter_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? MeteringMeterId { get; set; }
 
         /// <summary>
         /// The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean this component’s default price point would renew every 30 days. This property is only available for sites with Multifrequency enabled.
@@ -684,6 +756,24 @@ namespace AdvancedBilling.Standard.Models
             }
         }
 
+        /// <summary>
+        /// The active feature catalog items attached to this component. Present only when the request includes `include_features=true`.
+        /// </summary>
+        [JsonProperty("features")]
+        public List<Models.FeatureCatalogItem> Features
+        {
+            get
+            {
+                return this.features;
+            }
+
+            set
+            {
+                this.shouldSerialize["features"] = true;
+                this.features = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -712,6 +802,27 @@ namespace AdvancedBilling.Standard.Models
         public void UnsetUnitPrice()
         {
             this.shouldSerialize["unit_price"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetProductFamilyId()
+        {
+            this.shouldSerialize["product_family_id"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetProductFamilyName()
+        {
+            this.shouldSerialize["product_family_name"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetProductFamilyHandle()
+        {
+            this.shouldSerialize["product_family_handle"] = false;
         }
         /// <summary>
         /// Marks the field to not be serialized.
@@ -818,6 +929,13 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["unspsc_code"] = false;
         }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetFeatures()
+        {
+            this.shouldSerialize["features"] = false;
+        }
 
         /// <summary>
         /// Checks if the field should be serialized or not.
@@ -844,6 +962,33 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeUnitPrice()
         {
             return this.shouldSerialize["unit_price"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeProductFamilyId()
+        {
+            return this.shouldSerialize["product_family_id"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeProductFamilyName()
+        {
+            return this.shouldSerialize["product_family_name"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeProductFamilyHandle()
+        {
+            return this.shouldSerialize["product_family_handle"];
         }
 
         /// <summary>
@@ -981,6 +1126,15 @@ namespace AdvancedBilling.Standard.Models
             return this.shouldSerialize["unspsc_code"];
         }
 
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeFeatures()
+        {
+            return this.shouldSerialize["features"];
+        }
+
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
@@ -1054,12 +1208,16 @@ namespace AdvancedBilling.Standard.Models
                  this.AccountingCode?.Equals(other.AccountingCode) == true) &&
                 (this.EventBasedBillingMetricId == null && other.EventBasedBillingMetricId == null ||
                  this.EventBasedBillingMetricId?.Equals(other.EventBasedBillingMetricId) == true) &&
+                (this.MeteringMeterId == null && other.MeteringMeterId == null ||
+                 this.MeteringMeterId?.Equals(other.MeteringMeterId) == true) &&
                 (this.Interval == null && other.Interval == null ||
                  this.Interval?.Equals(other.Interval) == true) &&
                 (this.IntervalUnit == null && other.IntervalUnit == null ||
                  this.IntervalUnit?.Equals(other.IntervalUnit) == true) &&
                 (this.UnspscCode == null && other.UnspscCode == null ||
                  this.UnspscCode?.Equals(other.UnspscCode) == true) &&
+                (this.Features == null && other.Features == null ||
+                 this.Features?.Equals(other.Features) == true) &&
                 base.Equals(obj);
         }
 
@@ -1102,9 +1260,11 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"UseSiteExchangeRate = {(this.UseSiteExchangeRate == null ? "null" : this.UseSiteExchangeRate.ToString())}");
             toStringOutput.Add($"AccountingCode = {this.AccountingCode ?? "null"}");
             toStringOutput.Add($"EventBasedBillingMetricId = {(this.EventBasedBillingMetricId == null ? "null" : this.EventBasedBillingMetricId.ToString())}");
+            toStringOutput.Add($"MeteringMeterId = {(this.MeteringMeterId == null ? "null" : this.MeteringMeterId.ToString())}");
             toStringOutput.Add($"Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
             toStringOutput.Add($"UnspscCode = {this.UnspscCode ?? "null"}");
+            toStringOutput.Add($"Features = {(this.Features == null ? "null" : $"[{string.Join(", ", this.Features)} ]")}");
 
             base.ToString(toStringOutput);
         }

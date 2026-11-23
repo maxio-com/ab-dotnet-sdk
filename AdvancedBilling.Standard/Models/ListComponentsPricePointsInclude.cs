@@ -20,6 +20,18 @@ namespace AdvancedBilling.Standard.Models
         /// CurrencyPrices.
         /// </summary>
         [EnumMember(Value = "currency_prices")]
-        CurrencyPrices
+        CurrencyPrices,
+
+        /// <summary>
+        /// CurrencyOveragePrices.
+        /// </summary>
+        [EnumMember(Value = "currency_overage_prices")]
+        CurrencyOveragePrices,
+
+        /// <summary>
+        /// CurrencySecondaryPrices.
+        /// </summary>
+        [EnumMember(Value = "currency_secondary_prices")]
+        CurrencySecondaryPrices
     }
 }

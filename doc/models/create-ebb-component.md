@@ -25,7 +25,6 @@ CreateEBBComponent createEBBComponent = new CreateEBBComponent
         Name = "name8",
         UnitName = "unit_name0",
         PricingScheme = PricingScheme.Stairstep,
-        EventBasedBillingMetricId = 68,
         Description = "description8",
         Handle = "handle4",
         Taxable = false,

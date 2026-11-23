@@ -23,7 +23,7 @@ namespace AdvancedBilling.Standard.Controllers
         internal AdvanceInvoiceController(GlobalConfiguration globalConfiguration) : base(globalConfiguration) { }
 
         /// <summary>
-        /// Issues an invoice in advance for a subscription's next renewal date. For the most part, advance invoices function like any other invoice, except they are issued early and have special behavior upon being voided. For more information on advance invoices, including eligibility for generating one, see [Issue Invoice In Advance](https://maxio.zendesk.com/hc/en-us/articles/24252026404749-Issue-Invoice-In-Advance).
+        /// Issues an invoice in advance for a subscription's next renewal date. For the most part, advance invoices function like any other invoice, except they are issued early and have special behavior upon being voided. For more information on advance invoices, including eligibility for generating one, see [Issue Invoice In Advance](https://docs.maxio.com/billing/invoicing/advance-invoices/issue-advance-invoices-for-subscription-renewals).
         /// A subscription can only have one advance invoice per billing period. Attempting to issue an advance invoice when one already exists returns an error.
         /// Regeneration of the invoice can be forced with the params `force: true`, which voids an advance invoice if one exists and generates a new one. If no advance invoice exists, a new one is generated.
         /// Consider using either the create or preview endpoints for proforma invoices to preview this advance invoice before using this endpoint to generate it.
@@ -37,7 +37,7 @@ namespace AdvancedBilling.Standard.Controllers
             => CoreHelper.RunTask(IssueAdvanceInvoiceAsync(subscriptionId, body));
 
         /// <summary>
-        /// Issues an invoice in advance for a subscription's next renewal date. For the most part, advance invoices function like any other invoice, except they are issued early and have special behavior upon being voided. For more information on advance invoices, including eligibility for generating one, see [Issue Invoice In Advance](https://maxio.zendesk.com/hc/en-us/articles/24252026404749-Issue-Invoice-In-Advance).
+        /// Issues an invoice in advance for a subscription's next renewal date. For the most part, advance invoices function like any other invoice, except they are issued early and have special behavior upon being voided. For more information on advance invoices, including eligibility for generating one, see [Issue Invoice In Advance](https://docs.maxio.com/billing/invoicing/advance-invoices/issue-advance-invoices-for-subscription-renewals).
         /// A subscription can only have one advance invoice per billing period. Attempting to issue an advance invoice when one already exists returns an error.
         /// Regeneration of the invoice can be forced with the params `force: true`, which voids an advance invoice if one exists and generates a new one. If no advance invoice exists, a new one is generated.
         /// Consider using either the create or preview endpoints for proforma invoices to preview this advance invoice before using this endpoint to generate it.

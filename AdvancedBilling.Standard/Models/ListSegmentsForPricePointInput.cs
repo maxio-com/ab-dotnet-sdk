@@ -28,18 +28,21 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="page">page.</param>
         /// <param name="perPage">per_page.</param>
         /// <param name="filter">filter.</param>
+        /// <param name="currencyPrices">currency_prices.</param>
         public ListSegmentsForPricePointInput(
             string componentId,
             string pricePointId,
             int? page = 1,
             int? perPage = 30,
-            Models.ListSegmentsFilter filter = null)
+            Models.ListSegmentsFilter filter = null,
+            bool? currencyPrices = null)
         {
             this.ComponentId = componentId;
             this.PricePointId = pricePointId;
             this.Page = page;
             this.PerPage = perPage;
             this.Filter = filter;
+            this.CurrencyPrices = currencyPrices;
         }
 
         /// <summary>
@@ -74,6 +77,12 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("filter", NullValueHandling = NullValueHandling.Ignore)]
         public Models.ListSegmentsFilter Filter { get; set; }
 
+        /// <summary>
+        /// (Optional) If you have defined multiple currencies at the site level, pass `true` to include each segment's `currency_prices` in the response. Use in query: `currency_prices=true`.
+        /// </summary>
+        [JsonProperty("currency_prices", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? CurrencyPrices { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -99,6 +108,8 @@ namespace AdvancedBilling.Standard.Models
                  this.PerPage?.Equals(other.PerPage) == true) &&
                 (this.Filter == null && other.Filter == null ||
                  this.Filter?.Equals(other.Filter) == true) &&
+                (this.CurrencyPrices == null && other.CurrencyPrices == null ||
+                 this.CurrencyPrices?.Equals(other.CurrencyPrices) == true) &&
                 base.Equals(obj);
         }
 
@@ -113,6 +124,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Page = {(this.Page == null ? "null" : this.Page.ToString())}");
             toStringOutput.Add($"PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
             toStringOutput.Add($"Filter = {(this.Filter == null ? "null" : this.Filter.ToString())}");
+            toStringOutput.Add($"CurrencyPrices = {(this.CurrencyPrices == null ? "null" : this.CurrencyPrices.ToString())}");
 
             base.ToString(toStringOutput);
         }

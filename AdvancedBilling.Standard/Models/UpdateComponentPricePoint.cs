@@ -37,6 +37,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="interval">interval.</param>
         /// <param name="intervalUnit">interval_unit.</param>
         /// <param name="prices">prices.</param>
+        /// <param name="secondaryPricing">secondary_pricing.</param>
+        /// <param name="secondaryPricingScheme">secondary_pricing_scheme.</param>
         public UpdateComponentPricePoint(
             string name = null,
             string handle = null,
@@ -45,7 +47,9 @@ namespace AdvancedBilling.Standard.Models
             bool? taxIncluded = null,
             int? interval = null,
             Models.IntervalUnit? intervalUnit = null,
-            List<Models.UpdatePrice> prices = null)
+            List<Models.UpdatePrice> prices = null,
+            Models.UpdateSecondaryPricing secondaryPricing = null,
+            Models.PricingScheme? secondaryPricingScheme = null)
         {
             this.Name = name;
             this.Handle = handle;
@@ -59,6 +63,8 @@ namespace AdvancedBilling.Standard.Models
                 this.IntervalUnit = intervalUnit;
             }
             this.Prices = prices;
+            this.SecondaryPricing = secondaryPricing;
+            this.SecondaryPricingScheme = secondaryPricingScheme;
         }
 
         /// <summary>
@@ -121,6 +127,18 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("prices", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.UpdatePrice> Prices { get; set; }
 
+        /// <summary>
+        /// Hybrid Pricing only. Changes the secondary pricing model of an existing hybrid price point. Send `pricing_scheme` (or the top-level `secondary_pricing_scheme`) every time you send this block; a block without a scheme returns `422`. Brackets sent without an `id` are added to the existing ones rather than replacing them, so to change a bracket set, update existing brackets by `id` and remove the ones you no longer want with `_destroy: true`. See [Hybrid Pricing](page:introduction/basic-concepts/hybrid-pricing).
+        /// </summary>
+        [JsonProperty("secondary_pricing", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.UpdateSecondaryPricing SecondaryPricing { get; set; }
+
+        /// <summary>
+        /// Hybrid Pricing only. Alternative to `secondary_pricing.pricing_scheme`; when both are sent, `secondary_pricing.pricing_scheme` is used.
+        /// </summary>
+        [JsonProperty("secondary_pricing_scheme", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.PricingScheme? SecondaryPricingScheme { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -169,6 +187,10 @@ namespace AdvancedBilling.Standard.Models
                  this.IntervalUnit?.Equals(other.IntervalUnit) == true) &&
                 (this.Prices == null && other.Prices == null ||
                  this.Prices?.Equals(other.Prices) == true) &&
+                (this.SecondaryPricing == null && other.SecondaryPricing == null ||
+                 this.SecondaryPricing?.Equals(other.SecondaryPricing) == true) &&
+                (this.SecondaryPricingScheme == null && other.SecondaryPricingScheme == null ||
+                 this.SecondaryPricingScheme?.Equals(other.SecondaryPricingScheme) == true) &&
                 base.Equals(obj);
         }
 
@@ -186,6 +208,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
             toStringOutput.Add($"Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
+            toStringOutput.Add($"SecondaryPricing = {(this.SecondaryPricing == null ? "null" : this.SecondaryPricing.ToString())}");
+            toStringOutput.Add($"SecondaryPricingScheme = {(this.SecondaryPricingScheme == null ? "null" : this.SecondaryPricingScheme.ToString())}");
 
             base.ToString(toStringOutput);
         }

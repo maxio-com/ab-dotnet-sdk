@@ -16,10 +16,12 @@ namespace AdvancedBilling.Standard.Models
     {
         private Models.TrialType? trialType;
         private Models.ExpirationIntervalUnit? expirationIntervalUnit;
+        private int? listPricePointId;
         private Dictionary<string, bool> shouldSerialize = new Dictionary<string, bool>
         {
             { "trial_type", false },
             { "expiration_interval_unit", false },
+            { "list_price_point_id", false },
         };
 
         /// <summary>
@@ -46,6 +48,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="expirationInterval">expiration_interval.</param>
         /// <param name="expirationIntervalUnit">expiration_interval_unit.</param>
         /// <param name="taxIncluded">tax_included.</param>
+        /// <param name="listPricePointId">list_price_point_id.</param>
+        /// <param name="useDefaultListPrice">use_default_list_price.</param>
         public SubscriptionCustomPrice(
             SubscriptionCustomPricePriceInCents priceInCents,
             SubscriptionCustomPriceInterval interval,
@@ -60,7 +64,9 @@ namespace AdvancedBilling.Standard.Models
             bool? initialChargeAfterTrial = null,
             SubscriptionCustomPriceExpirationInterval expirationInterval = null,
             Models.ExpirationIntervalUnit? expirationIntervalUnit = null,
-            bool? taxIncluded = null)
+            bool? taxIncluded = null,
+            int? listPricePointId = null,
+            bool? useDefaultListPrice = null)
         {
             this.Name = name;
             this.Handle = handle;
@@ -84,6 +90,12 @@ namespace AdvancedBilling.Standard.Models
                 this.ExpirationIntervalUnit = expirationIntervalUnit;
             }
             this.TaxIncluded = taxIncluded;
+
+            if (listPricePointId != null)
+            {
+                this.ListPricePointId = listPricePointId;
+            }
+            this.UseDefaultListPrice = useDefaultListPrice;
         }
 
         /// <summary>
@@ -194,6 +206,30 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("tax_included", NullValueHandling = NullValueHandling.Ignore)]
         public bool? TaxIncluded { get; set; }
 
+        /// <summary>
+        /// (Optional) The ID of a catalog price point of the same product to use as the list price. Ignored unless list vs sales pricing is enabled for the site.
+        /// </summary>
+        [JsonProperty("list_price_point_id")]
+        public int? ListPricePointId
+        {
+            get
+            {
+                return this.listPricePointId;
+            }
+
+            set
+            {
+                this.shouldSerialize["list_price_point_id"] = true;
+                this.listPricePointId = value;
+            }
+        }
+
+        /// <summary>
+        /// (Optional) When list vs sales pricing is enabled and `list_price_point_id` is omitted, the product's default price point is used as the list price unless this is `false`. Defaults to `true`.
+        /// </summary>
+        [JsonProperty("use_default_list_price", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? UseDefaultListPrice { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -216,6 +252,13 @@ namespace AdvancedBilling.Standard.Models
         {
             this.shouldSerialize["expiration_interval_unit"] = false;
         }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetListPricePointId()
+        {
+            this.shouldSerialize["list_price_point_id"] = false;
+        }
 
         /// <summary>
         /// Checks if the field should be serialized or not.
@@ -233,6 +276,15 @@ namespace AdvancedBilling.Standard.Models
         public bool ShouldSerializeExpirationIntervalUnit()
         {
             return this.shouldSerialize["expiration_interval_unit"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeListPricePointId()
+        {
+            return this.shouldSerialize["list_price_point_id"];
         }
 
         /// <inheritdoc/>
@@ -270,6 +322,10 @@ namespace AdvancedBilling.Standard.Models
                  this.ExpirationIntervalUnit?.Equals(other.ExpirationIntervalUnit) == true) &&
                 (this.TaxIncluded == null && other.TaxIncluded == null ||
                  this.TaxIncluded?.Equals(other.TaxIncluded) == true) &&
+                (this.ListPricePointId == null && other.ListPricePointId == null ||
+                 this.ListPricePointId?.Equals(other.ListPricePointId) == true) &&
+                (this.UseDefaultListPrice == null && other.UseDefaultListPrice == null ||
+                 this.UseDefaultListPrice?.Equals(other.UseDefaultListPrice) == true) &&
                 base.Equals(obj);
         }
 
@@ -293,6 +349,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"ExpirationInterval = {(this.ExpirationInterval == null ? "null" : this.ExpirationInterval.ToString())}");
             toStringOutput.Add($"ExpirationIntervalUnit = {(this.ExpirationIntervalUnit == null ? "null" : this.ExpirationIntervalUnit.ToString())}");
             toStringOutput.Add($"TaxIncluded = {(this.TaxIncluded == null ? "null" : this.TaxIncluded.ToString())}");
+            toStringOutput.Add($"ListPricePointId = {(this.ListPricePointId == null ? "null" : this.ListPricePointId.ToString())}");
+            toStringOutput.Add($"UseDefaultListPrice = {(this.UseDefaultListPrice == null ? "null" : this.UseDefaultListPrice.ToString())}");
 
             base.ToString(toStringOutput);
         }

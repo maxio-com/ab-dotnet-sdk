@@ -44,6 +44,12 @@ namespace AdvancedBilling.Standard.Models
         /// EventBasedComponent.
         /// </summary>
         [EnumMember(Value = "event_based_component")]
-        EventBasedComponent
+        EventBasedComponent,
+
+        /// <summary>
+        /// WalletProduct.
+        /// </summary>
+        [EnumMember(Value = "wallet_product")]
+        WalletProduct
     }
 }

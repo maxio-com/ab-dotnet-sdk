@@ -29,6 +29,8 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="productPricePointHandle">product_price_point_handle.</param>
         /// <param name="offerId">offer_id.</param>
         /// <param name="reference">reference.</param>
+        /// <param name="customerId">customer_id.</param>
+        /// <param name="customerReference">customer_reference.</param>
         /// <param name="primary">primary.</param>
         /// <param name="currency">currency.</param>
         /// <param name="couponCodes">coupon_codes.</param>
@@ -43,6 +45,8 @@ namespace AdvancedBilling.Standard.Models
             string productPricePointHandle = null,
             int? offerId = null,
             string reference = null,
+            int? customerId = null,
+            string customerReference = null,
             bool? primary = null,
             string currency = null,
             List<string> couponCodes = null,
@@ -57,6 +61,8 @@ namespace AdvancedBilling.Standard.Models
             this.ProductPricePointHandle = productPricePointHandle;
             this.OfferId = offerId;
             this.Reference = reference;
+            this.CustomerId = customerId;
+            this.CustomerReference = customerReference;
             this.Primary = primary;
             this.Currency = currency;
             this.CouponCodes = couponCodes;
@@ -101,6 +107,18 @@ namespace AdvancedBilling.Standard.Models
         /// </summary>
         [JsonProperty("reference", NullValueHandling = NullValueHandling.Ignore)]
         public string Reference { get; set; }
+
+        /// <summary>
+        /// (Optional) The ID of the customer the subscription belongs to. The customer must be the payer or a customer below the payer in the customer hierarchy. If you omit both `customer_id` and `customer_reference`, the subscription belongs to the payer.
+        /// </summary>
+        [JsonProperty("customer_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? CustomerId { get; set; }
+
+        /// <summary>
+        /// (Optional) The reference of the customer the subscription belongs to, matched case-insensitively. Use in place of `customer_id`. If you pass both, `customer_id` is used.
+        /// </summary>
+        [JsonProperty("customer_reference", NullValueHandling = NullValueHandling.Ignore)]
+        public string CustomerReference { get; set; }
 
         /// <summary>
         /// One of the subscriptions must be marked as primary in the group.
@@ -171,6 +189,10 @@ namespace AdvancedBilling.Standard.Models
                  this.OfferId?.Equals(other.OfferId) == true) &&
                 (this.Reference == null && other.Reference == null ||
                  this.Reference?.Equals(other.Reference) == true) &&
+                (this.CustomerId == null && other.CustomerId == null ||
+                 this.CustomerId?.Equals(other.CustomerId) == true) &&
+                (this.CustomerReference == null && other.CustomerReference == null ||
+                 this.CustomerReference?.Equals(other.CustomerReference) == true) &&
                 (this.Primary == null && other.Primary == null ||
                  this.Primary?.Equals(other.Primary) == true) &&
                 (this.Currency == null && other.Currency == null ||
@@ -200,6 +222,8 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"ProductPricePointHandle = {this.ProductPricePointHandle ?? "null"}");
             toStringOutput.Add($"OfferId = {(this.OfferId == null ? "null" : this.OfferId.ToString())}");
             toStringOutput.Add($"Reference = {this.Reference ?? "null"}");
+            toStringOutput.Add($"CustomerId = {(this.CustomerId == null ? "null" : this.CustomerId.ToString())}");
+            toStringOutput.Add($"CustomerReference = {this.CustomerReference ?? "null"}");
             toStringOutput.Add($"Primary = {(this.Primary == null ? "null" : this.Primary.ToString())}");
             toStringOutput.Add($"Currency = {this.Currency ?? "null"}");
             toStringOutput.Add($"CouponCodes = {(this.CouponCodes == null ? "null" : $"[{string.Join(", ", this.CouponCodes)} ]")}");

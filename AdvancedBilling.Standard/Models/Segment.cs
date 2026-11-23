@@ -38,6 +38,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="createdAt">created_at.</param>
         /// <param name="updatedAt">updated_at.</param>
         /// <param name="prices">prices.</param>
+        /// <param name="currencyPrices">currency_prices.</param>
         public Segment(
             int? id = null,
             int? componentId = null,
@@ -50,7 +51,8 @@ namespace AdvancedBilling.Standard.Models
             SegmentSegmentProperty4Value segmentProperty4Value = null,
             DateTimeOffset? createdAt = null,
             DateTimeOffset? updatedAt = null,
-            List<Models.SegmentPrice> prices = null)
+            List<Models.SegmentPrice> prices = null,
+            List<Models.ComponentCurrencyPrice> currencyPrices = null)
         {
             this.Id = id;
             this.ComponentId = componentId;
@@ -64,6 +66,7 @@ namespace AdvancedBilling.Standard.Models
             this.CreatedAt = createdAt;
             this.UpdatedAt = updatedAt;
             this.Prices = prices;
+            this.CurrencyPrices = currencyPrices;
         }
 
         /// <summary>
@@ -140,6 +143,12 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("prices", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.SegmentPrice> Prices { get; set; }
 
+        /// <summary>
+        /// Prices of the segment in the site's non-primary currencies, one entry for each price and currency. This field is present only when the request includes `currency_prices=true`. If the price point uses the site exchange rate, the prices are calculated from the current rate and each `id` is `null`.
+        /// </summary>
+        [JsonProperty("currency_prices", NullValueHandling = NullValueHandling.Ignore)]
+        public List<Models.ComponentCurrencyPrice> CurrencyPrices { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -179,6 +188,8 @@ namespace AdvancedBilling.Standard.Models
                  this.UpdatedAt?.Equals(other.UpdatedAt) == true) &&
                 (this.Prices == null && other.Prices == null ||
                  this.Prices?.Equals(other.Prices) == true) &&
+                (this.CurrencyPrices == null && other.CurrencyPrices == null ||
+                 this.CurrencyPrices?.Equals(other.CurrencyPrices) == true) &&
                 base.Equals(obj);
         }
 
@@ -200,6 +211,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"CreatedAt = {(this.CreatedAt == null ? "null" : this.CreatedAt.ToString())}");
             toStringOutput.Add($"UpdatedAt = {(this.UpdatedAt == null ? "null" : this.UpdatedAt.ToString())}");
             toStringOutput.Add($"Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
+            toStringOutput.Add($"CurrencyPrices = {(this.CurrencyPrices == null ? "null" : $"[{string.Join(", ", this.CurrencyPrices)} ]")}");
 
             base.ToString(toStringOutput);
         }

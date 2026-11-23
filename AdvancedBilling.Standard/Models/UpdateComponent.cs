@@ -48,6 +48,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="itemCategory">item_category.</param>
         /// <param name="displayOnHostedPage">display_on_hosted_page.</param>
         /// <param name="upgradeCharge">upgrade_charge.</param>
+        /// <param name="eventBasedBillingMetricId">event_based_billing_metric_id.</param>
+        /// <param name="meteringMeterId">metering_meter_id.</param>
+        /// <param name="meteringFormula">metering_formula.</param>
         /// <param name="unspscCode">unspsc_code.</param>
         public UpdateComponent(
             string handle = null,
@@ -59,6 +62,9 @@ namespace AdvancedBilling.Standard.Models
             Models.ItemCategory? itemCategory = null,
             bool? displayOnHostedPage = null,
             Models.CreditType? upgradeCharge = null,
+            int? eventBasedBillingMetricId = null,
+            int? meteringMeterId = null,
+            string meteringFormula = null,
             string unspscCode = null)
         {
             this.Handle = handle;
@@ -90,6 +96,9 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.UpgradeCharge = upgradeCharge;
             }
+            this.EventBasedBillingMetricId = eventBasedBillingMetricId;
+            this.MeteringMeterId = meteringMeterId;
+            this.MeteringFormula = meteringFormula;
 
             if (unspscCode != null)
             {
@@ -210,6 +219,24 @@ namespace AdvancedBilling.Standard.Models
                 this.upgradeCharge = value;
             }
         }
+
+        /// <summary>
+        /// For components using legacy Events Based Billing, changes the attached site-owned metric. An unchanged metric ID does not change the source. Sites using Maxio Metering ignore this input. This ID does not identify a Maxio Metering meter.
+        /// </summary>
+        [JsonProperty("event_based_billing_metric_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? EventBasedBillingMetricId { get; set; }
+
+        /// <summary>
+        /// For components using Maxio Metering, changes the attached merchant-owned meter. Do not supply together with a non-blank metering_formula. Ignored for components using legacy Events Based Billing; not applicable to other component kinds.
+        /// </summary>
+        [JsonProperty("metering_meter_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? MeteringMeterId { get; set; }
+
+        /// <summary>
+        /// For components using Maxio Metering, sets an Advanced Formula using meters available to the site. Supply a non-blank formula; do not supply together with metering_meter_id. Ignored for components using legacy Events Based Billing; not applicable to other component kinds.
+        /// </summary>
+        [JsonProperty("metering_formula", NullValueHandling = NullValueHandling.Ignore)]
+        public string MeteringFormula { get; set; }
 
         /// <summary>
         /// (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent as the commodity code on invoice line items for this component instead of the default derived from item_category.
@@ -359,6 +386,12 @@ namespace AdvancedBilling.Standard.Models
                  this.DisplayOnHostedPage?.Equals(other.DisplayOnHostedPage) == true) &&
                 (this.UpgradeCharge == null && other.UpgradeCharge == null ||
                  this.UpgradeCharge?.Equals(other.UpgradeCharge) == true) &&
+                (this.EventBasedBillingMetricId == null && other.EventBasedBillingMetricId == null ||
+                 this.EventBasedBillingMetricId?.Equals(other.EventBasedBillingMetricId) == true) &&
+                (this.MeteringMeterId == null && other.MeteringMeterId == null ||
+                 this.MeteringMeterId?.Equals(other.MeteringMeterId) == true) &&
+                (this.MeteringFormula == null && other.MeteringFormula == null ||
+                 this.MeteringFormula?.Equals(other.MeteringFormula) == true) &&
                 (this.UnspscCode == null && other.UnspscCode == null ||
                  this.UnspscCode?.Equals(other.UnspscCode) == true) &&
                 base.Equals(obj);
@@ -379,6 +412,9 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"ItemCategory = {(this.ItemCategory == null ? "null" : this.ItemCategory.ToString())}");
             toStringOutput.Add($"DisplayOnHostedPage = {(this.DisplayOnHostedPage == null ? "null" : this.DisplayOnHostedPage.ToString())}");
             toStringOutput.Add($"UpgradeCharge = {(this.UpgradeCharge == null ? "null" : this.UpgradeCharge.ToString())}");
+            toStringOutput.Add($"EventBasedBillingMetricId = {(this.EventBasedBillingMetricId == null ? "null" : this.EventBasedBillingMetricId.ToString())}");
+            toStringOutput.Add($"MeteringMeterId = {(this.MeteringMeterId == null ? "null" : this.MeteringMeterId.ToString())}");
+            toStringOutput.Add($"MeteringFormula = {this.MeteringFormula ?? "null"}");
             toStringOutput.Add($"UnspscCode = {this.UnspscCode ?? "null"}");
 
             base.ToString(toStringOutput);

@@ -55,13 +55,13 @@ namespace AdvancedBilling.Standard.Models
         public string Amount { get; set; }
 
         /// <summary>
-        /// The status of the invoice before any changes occurred. See [Invoice Statuses](https://maxio.zendesk.com/hc/en-us/articles/24252287829645-Advanced-Billing-Invoices-Overview#invoice-statuses) for more.
+        /// The status of the invoice before any changes occurred. See [Invoice Statuses](https://docs.maxio.com/billing/invoicing/overview/understand-how-invoices-are-generated#invoice-statuses) for more.
         /// </summary>
         [JsonProperty("from_status")]
         public Models.InvoiceStatus FromStatus { get; set; }
 
         /// <summary>
-        /// The updated status of the invoice after changes have been made. See [Invoice Statuses](https://maxio.zendesk.com/hc/en-us/articles/24252287829645-Advanced-Billing-Invoices-Overview#invoice-statuses) for more.
+        /// The updated status of the invoice after changes have been made. See [Invoice Statuses](https://docs.maxio.com/billing/invoicing/overview/understand-how-invoices-are-generated#invoice-statuses) for more.
         /// </summary>
         [JsonProperty("to_status")]
         public Models.InvoiceStatus ToStatus { get; set; }

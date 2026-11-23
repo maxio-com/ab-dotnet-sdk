@@ -36,6 +36,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="perPage">per_page.</param>
         /// <param name="includeArchived">include_archived.</param>
         /// <param name="include">include.</param>
+        /// <param name="includeFeatures">include_features.</param>
         public ListProductsInput(
             Models.BasicDateField? dateField = null,
             Models.ListProductsFilter filter = null,
@@ -46,7 +47,8 @@ namespace AdvancedBilling.Standard.Models
             int? page = 1,
             int? perPage = 20,
             bool? includeArchived = null,
-            Models.ListProductsInclude? include = null)
+            Models.ListProductsInclude? include = null,
+            bool? includeFeatures = false)
         {
             this.DateField = dateField;
             this.Filter = filter;
@@ -58,6 +60,7 @@ namespace AdvancedBilling.Standard.Models
             this.PerPage = perPage;
             this.IncludeArchived = includeArchived;
             this.Include = include;
+            this.IncludeFeatures = includeFeatures;
         }
 
         /// <summary>
@@ -127,6 +130,12 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("include", NullValueHandling = NullValueHandling.Ignore)]
         public Models.ListProductsInclude? Include { get; set; }
 
+        /// <summary>
+        /// When `true`, embeds the active feature catalog items for each result in a `features` array. Default value is `false`. Ignored on sites without Entitlements enabled: no `features` key is returned and no error is raised.
+        /// </summary>
+        [JsonProperty("include_features", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? IncludeFeatures { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -162,6 +171,8 @@ namespace AdvancedBilling.Standard.Models
                  this.IncludeArchived?.Equals(other.IncludeArchived) == true) &&
                 (this.Include == null && other.Include == null ||
                  this.Include?.Equals(other.Include) == true) &&
+                (this.IncludeFeatures == null && other.IncludeFeatures == null ||
+                 this.IncludeFeatures?.Equals(other.IncludeFeatures) == true) &&
                 base.Equals(obj);
         }
 
@@ -181,6 +192,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"PerPage = {(this.PerPage == null ? "null" : this.PerPage.ToString())}");
             toStringOutput.Add($"IncludeArchived = {(this.IncludeArchived == null ? "null" : this.IncludeArchived.ToString())}");
             toStringOutput.Add($"Include = {(this.Include == null ? "null" : this.Include.ToString())}");
+            toStringOutput.Add($"IncludeFeatures = {(this.IncludeFeatures == null ? "null" : this.IncludeFeatures.ToString())}");
 
             base.ToString(toStringOutput);
         }

@@ -35,13 +35,15 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="interval">interval.</param>
         /// <param name="intervalUnit">interval_unit.</param>
         /// <param name="prices">prices.</param>
+        /// <param name="secondaryPricing">secondary_pricing.</param>
         public ComponentPricePointItem(
             string name = null,
             string handle = null,
             Models.PricingScheme? pricingScheme = null,
             int? interval = null,
             Models.IntervalUnit? intervalUnit = null,
-            List<Models.Price> prices = null)
+            List<Models.Price> prices = null,
+            Models.SecondaryPricing secondaryPricing = null)
         {
             this.Name = name;
             this.Handle = handle;
@@ -53,6 +55,7 @@ namespace AdvancedBilling.Standard.Models
                 this.IntervalUnit = intervalUnit;
             }
             this.Prices = prices;
+            this.SecondaryPricing = secondaryPricing;
         }
 
         /// <summary>
@@ -103,6 +106,12 @@ namespace AdvancedBilling.Standard.Models
         [JsonProperty("prices", NullValueHandling = NullValueHandling.Ignore)]
         public List<Models.Price> Prices { get; set; }
 
+        /// <summary>
+        /// Hybrid Pricing only. Applies only to price points of Quantity-Based and Metered Components on Sites with Hybrid Pricing enabled; ignored for other component types and on Sites without Hybrid Pricing. Omit it to create a normal, non-hybrid price point. See [Hybrid Pricing](page:introduction/basic-concepts/hybrid-pricing).
+        /// </summary>
+        [JsonProperty("secondary_pricing", NullValueHandling = NullValueHandling.Ignore)]
+        public Models.SecondaryPricing SecondaryPricing { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -147,6 +156,8 @@ namespace AdvancedBilling.Standard.Models
                  this.IntervalUnit?.Equals(other.IntervalUnit) == true) &&
                 (this.Prices == null && other.Prices == null ||
                  this.Prices?.Equals(other.Prices) == true) &&
+                (this.SecondaryPricing == null && other.SecondaryPricing == null ||
+                 this.SecondaryPricing?.Equals(other.SecondaryPricing) == true) &&
                 base.Equals(obj);
         }
 
@@ -162,6 +173,7 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"Interval = {(this.Interval == null ? "null" : this.Interval.ToString())}");
             toStringOutput.Add($"IntervalUnit = {(this.IntervalUnit == null ? "null" : this.IntervalUnit.ToString())}");
             toStringOutput.Add($"Prices = {(this.Prices == null ? "null" : $"[{string.Join(", ", this.Prices)} ]")}");
+            toStringOutput.Add($"SecondaryPricing = {(this.SecondaryPricing == null ? "null" : this.SecondaryPricing.ToString())}");
 
             base.ToString(toStringOutput);
         }

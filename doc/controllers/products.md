@@ -1,5 +1,9 @@
 # Products
 
+The Product object defines what you sell, including default pricing, billing interval, and trial configuration. With the new catalog experience, the UI labels products as Plans, while the API keeps the product name. See [Catalog terminology](https://docs.maxio.com/billing/catalog/overview/using-the-new-product-catalog#catalog-terminology).
+
+Products are grouped under a Product Family and are the base type a customer subscribes to. Products can also grant features to subscribers through [Create Product Feature Catalog Item](../../doc/controllers/product-features.md#create-product-feature). For more information, see [Understand Plans](https://docs.maxio.com/billing/catalog/plans/understand-plans).
+
 ```csharp
 ProductsController productsController = client.ProductsController;
 ```
@@ -26,8 +30,8 @@ If you have the new [Catalog experience](page:help/announcements/2026-announceme
 
 For more information, see:
 
-+ [Products Overview](https://maxio.zendesk.com/hc/en-us/articles/24261090117645-Products-Overview)
-+ [Changing a Subscription's Product](https://maxio.zendesk.com/hc/en-us/articles/24252069837581-Product-Changes-and-Migrations)
++ [Products Overview](https://docs.maxio.com/billing/catalog/plans/understand-plans)
++ [Changing a Subscription's Product](https://docs.maxio.com/billing/subscriptions/management/subscription-actions/understand-upgrade-and-downgrade-scenarios)
 
 ```csharp
 CreateProductAsync(
@@ -152,7 +156,8 @@ Reads the current details of a product.
 
 ```csharp
 ReadProductAsync(
-    int productId)
+    int productId,
+    bool? includeFeatures = false)
 ```
 
 ## Authentication
@@ -164,6 +169,7 @@ This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `productId` | `int` | Template, Required | The Advanced Billing id of the product |
+| `includeFeatures` | `bool?` | Query, Optional | When `true`, embeds the active feature catalog items for each result in a `features` array. Default value is `false`. Ignored on sites without Entitlements enabled: no `features` key is returned and no error is raised.<br><br>**Default**: `false` |
 
 ## Response Type
 
@@ -175,9 +181,13 @@ This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ```csharp
 int productId = 202;
+bool? includeFeatures = false;
 try
 {
-    ProductResponse result = await productsController.ReadProductAsync(productId);
+    ProductResponse result = await productsController.ReadProductAsync(
+        productId,
+        includeFeatures
+    );
 }
 catch (ApiException e)
 {
@@ -584,6 +594,7 @@ ListProductsInput listProductsInput = new ListProductsInput
     PerPage = 50,
     IncludeArchived = true,
     Include = ListProductsInclude.PrepaidProductPricePoint,
+    IncludeFeatures = false,
 };
 
 try

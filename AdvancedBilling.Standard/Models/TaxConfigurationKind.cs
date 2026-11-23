@@ -38,6 +38,36 @@ namespace AdvancedBilling.Standard.Models
         /// EnumDigitalRiver.
         /// </summary>
         [EnumMember(Value = "digital river")]
-        EnumDigitalRiver
+        EnumDigitalRiver,
+
+        /// <summary>
+        /// Anrok.
+        /// </summary>
+        [EnumMember(Value = "anrok")]
+        Anrok,
+
+        /// <summary>
+        /// Taxjar.
+        /// </summary>
+        [EnumMember(Value = "taxjar")]
+        Taxjar,
+
+        /// <summary>
+        /// Numeral.
+        /// </summary>
+        [EnumMember(Value = "numeral")]
+        Numeral,
+
+        /// <summary>
+        /// Sphere.
+        /// </summary>
+        [EnumMember(Value = "sphere")]
+        Sphere,
+
+        /// <summary>
+        /// Taxwire.
+        /// </summary>
+        [EnumMember(Value = "taxwire")]
+        Taxwire
     }
 }

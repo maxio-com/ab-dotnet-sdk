@@ -43,7 +43,25 @@ CreateQuantityBasedComponent createQuantityBasedComponent = new CreateQuantityBa
                 EndingQuantity = PriceEndingQuantity.FromNumber(40),
             },
         },
-        UpgradeCharge = CreditType.Prorated,
+        SecondaryPricing = new SecondaryPricing
+        {
+            PricingScheme = PricingScheme.Stairstep,
+            Prices = new List<Price>
+            {
+                new Price
+                {
+                    StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                    UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                    EndingQuantity = PriceEndingQuantity.FromNumber(40),
+                },
+                new Price
+                {
+                    StartingQuantity = PriceStartingQuantity.FromNumber(242),
+                    UnitPrice = PriceUnitPrice.FromPrecision(23.26),
+                    EndingQuantity = PriceEndingQuantity.FromNumber(40),
+                },
+            },
+        },
     },
 };
 ```

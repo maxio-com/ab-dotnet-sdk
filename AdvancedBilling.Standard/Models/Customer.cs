@@ -32,6 +32,9 @@ namespace AdvancedBilling.Standard.Models
         private DateTimeOffset? portalInviteLastSentAt;
         private DateTimeOffset? portalInviteLastAcceptedAt;
         private string vatNumber;
+        private string vatCountry;
+        private Models.EntityIdentifierKind? entityIdentifierKind;
+        private string entityIdentifierValue;
         private int? parentId;
         private string locale;
         private string defaultSubscriptionGroupUid;
@@ -59,6 +62,9 @@ namespace AdvancedBilling.Standard.Models
             { "portal_invite_last_sent_at", false },
             { "portal_invite_last_accepted_at", false },
             { "vat_number", false },
+            { "vat_country", false },
+            { "entity_identifier_kind", false },
+            { "entity_identifier_value", false },
             { "parent_id", false },
             { "locale", false },
             { "default_subscription_group_uid", false },
@@ -104,6 +110,9 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="taxExempt">tax_exempt.</param>
         /// <param name="surcharging">surcharging.</param>
         /// <param name="vatNumber">vat_number.</param>
+        /// <param name="vatCountry">vat_country.</param>
+        /// <param name="entityIdentifierKind">entity_identifier_kind.</param>
+        /// <param name="entityIdentifierValue">entity_identifier_value.</param>
         /// <param name="parentId">parent_id.</param>
         /// <param name="locale">locale.</param>
         /// <param name="defaultSubscriptionGroupUid">default_subscription_group_uid.</param>
@@ -138,6 +147,9 @@ namespace AdvancedBilling.Standard.Models
             bool? taxExempt = null,
             bool? surcharging = null,
             string vatNumber = null,
+            string vatCountry = null,
+            Models.EntityIdentifierKind? entityIdentifierKind = null,
+            string entityIdentifierValue = null,
             int? parentId = null,
             string locale = null,
             string defaultSubscriptionGroupUid = null,
@@ -239,6 +251,21 @@ namespace AdvancedBilling.Standard.Models
             if (vatNumber != null)
             {
                 this.VatNumber = vatNumber;
+            }
+
+            if (vatCountry != null)
+            {
+                this.VatCountry = vatCountry;
+            }
+
+            if (entityIdentifierKind != null)
+            {
+                this.EntityIdentifierKind = entityIdentifierKind;
+            }
+
+            if (entityIdentifierValue != null)
+            {
+                this.EntityIdentifierValue = entityIdentifierValue;
             }
 
             if (parentId != null)
@@ -624,7 +651,7 @@ namespace AdvancedBilling.Standard.Models
         public bool? Surcharging { get; set; }
 
         /// <summary>
-        /// The VAT business identification number for the customer. This number is used to determine VAT tax opt out rules. It is not validated when added or updated on a customer record. Instead, it is validated via VIES before calculating taxes. Only valid business identification numbers will allow for VAT opt out.
+        /// The VAT business identification number for the customer. This number is used to determine VAT tax opt out rules. It is not validated when added or updated on a customer record. Instead, it is validated via VIES before calculating taxes. Only valid business identification numbers will allow for VAT opt out. When the customer holds an entity identifier, this field returns that identifier's value, whatever its kind.
         /// </summary>
         [JsonProperty("vat_number")]
         public string VatNumber
@@ -638,6 +665,60 @@ namespace AdvancedBilling.Standard.Models
             {
                 this.shouldSerialize["vat_number"] = true;
                 this.vatNumber = value;
+            }
+        }
+
+        /// <summary>
+        /// The two-letter ISO 3166-1 country code that qualifies the customer's VAT number. Set to `null` when an identifier is stored through `entity_identifier_kind` for a kind that is not tied to a VAT country, meaning `company_reg`, `gln`, `duns`, or `lei`.
+        /// </summary>
+        [JsonProperty("vat_country")]
+        public string VatCountry
+        {
+            get
+            {
+                return this.vatCountry;
+            }
+
+            set
+            {
+                this.shouldSerialize["vat_country"] = true;
+                this.vatCountry = value;
+            }
+        }
+
+        /// <summary>
+        /// The kind of tax or business identifier held by the customer. Returned as `null` when the customer has no entity identifier, including a legacy customer whose `vat_number` predates entity identifiers.
+        /// </summary>
+        [JsonProperty("entity_identifier_kind")]
+        public Models.EntityIdentifierKind? EntityIdentifierKind
+        {
+            get
+            {
+                return this.entityIdentifierKind;
+            }
+
+            set
+            {
+                this.shouldSerialize["entity_identifier_kind"] = true;
+                this.entityIdentifierKind = value;
+            }
+        }
+
+        /// <summary>
+        /// The value of the customer's tax or business identifier. Returned as `null` when the customer has no entity identifier.
+        /// </summary>
+        [JsonProperty("entity_identifier_value")]
+        public string EntityIdentifierValue
+        {
+            get
+            {
+                return this.entityIdentifierValue;
+            }
+
+            set
+            {
+                this.shouldSerialize["entity_identifier_value"] = true;
+                this.entityIdentifierValue = value;
             }
         }
 
@@ -915,6 +996,27 @@ namespace AdvancedBilling.Standard.Models
         /// <summary>
         /// Marks the field to not be serialized.
         /// </summary>
+        public void UnsetVatCountry()
+        {
+            this.shouldSerialize["vat_country"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetEntityIdentifierKind()
+        {
+            this.shouldSerialize["entity_identifier_kind"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
+        public void UnsetEntityIdentifierValue()
+        {
+            this.shouldSerialize["entity_identifier_value"] = false;
+        }
+        /// <summary>
+        /// Marks the field to not be serialized.
+        /// </summary>
         public void UnsetParentId()
         {
             this.shouldSerialize["parent_id"] = false;
@@ -1126,6 +1228,33 @@ namespace AdvancedBilling.Standard.Models
         /// Checks if the field should be serialized or not.
         /// </summary>
         /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeVatCountry()
+        {
+            return this.shouldSerialize["vat_country"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeEntityIdentifierKind()
+        {
+            return this.shouldSerialize["entity_identifier_kind"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
+        public bool ShouldSerializeEntityIdentifierValue()
+        {
+            return this.shouldSerialize["entity_identifier_value"];
+        }
+
+        /// <summary>
+        /// Checks if the field should be serialized or not.
+        /// </summary>
+        /// <returns>A boolean weather the field should be serialized or not.</returns>
         public bool ShouldSerializeParentId()
         {
             return this.shouldSerialize["parent_id"];
@@ -1251,6 +1380,12 @@ namespace AdvancedBilling.Standard.Models
                  this.Surcharging?.Equals(other.Surcharging) == true) &&
                 (this.VatNumber == null && other.VatNumber == null ||
                  this.VatNumber?.Equals(other.VatNumber) == true) &&
+                (this.VatCountry == null && other.VatCountry == null ||
+                 this.VatCountry?.Equals(other.VatCountry) == true) &&
+                (this.EntityIdentifierKind == null && other.EntityIdentifierKind == null ||
+                 this.EntityIdentifierKind?.Equals(other.EntityIdentifierKind) == true) &&
+                (this.EntityIdentifierValue == null && other.EntityIdentifierValue == null ||
+                 this.EntityIdentifierValue?.Equals(other.EntityIdentifierValue) == true) &&
                 (this.ParentId == null && other.ParentId == null ||
                  this.ParentId?.Equals(other.ParentId) == true) &&
                 (this.Locale == null && other.Locale == null ||
@@ -1301,6 +1436,9 @@ namespace AdvancedBilling.Standard.Models
             toStringOutput.Add($"TaxExempt = {(this.TaxExempt == null ? "null" : this.TaxExempt.ToString())}");
             toStringOutput.Add($"Surcharging = {(this.Surcharging == null ? "null" : this.Surcharging.ToString())}");
             toStringOutput.Add($"VatNumber = {this.VatNumber ?? "null"}");
+            toStringOutput.Add($"VatCountry = {this.VatCountry ?? "null"}");
+            toStringOutput.Add($"EntityIdentifierKind = {(this.EntityIdentifierKind == null ? "null" : this.EntityIdentifierKind.ToString())}");
+            toStringOutput.Add($"EntityIdentifierValue = {this.EntityIdentifierValue ?? "null"}");
             toStringOutput.Add($"ParentId = {(this.ParentId == null ? "null" : this.ParentId.ToString())}");
             toStringOutput.Add($"Locale = {this.Locale ?? "null"}");
             toStringOutput.Add($"DefaultSubscriptionGroupUid = {this.DefaultSubscriptionGroupUid ?? "null"}");
