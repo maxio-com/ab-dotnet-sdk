@@ -1,4 +1,4 @@
-// <copyright file="SegmentPricePointErrorsErrorException.cs" company="APIMatic">
+// <copyright file="SegmentPricePointErrorsException.cs" company="APIMatic">
 // AdvancedBilling.Standard
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
@@ -10,32 +10,32 @@ using System.Collections.Generic;
 namespace AdvancedBilling.Standard.Exceptions
 {
     /// <summary>
-    /// SegmentPricePointErrorsErrorException.
+    /// SegmentPricePointErrorsException.
     /// </summary>
-    public class SegmentPricePointErrorsErrorException : ApiException
+    public class SegmentPricePointErrorsException : ApiException
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SegmentPricePointErrorsErrorException"/> class.
+        /// Initializes a new instance of the <see cref="SegmentPricePointErrorsException"/> class.
         /// </summary>
         /// <param name="reason"> The reason for throwing exception.</param>
         /// <param name="context"> The HTTP context that encapsulates request and response objects.</param>
-        public SegmentPricePointErrorsErrorException(string reason, HttpContext context)
+        public SegmentPricePointErrorsException(string reason, HttpContext context)
             : base(reason, context)
         {
         }
 
         /// <summary>
-        /// Gets or sets Errors.
+        /// Price-point validation error details for segment writes.
         /// </summary>
         [JsonProperty("errors")]
-        public Models.Errors Errors { get; set; }
+        public Models.SegmentPricePointErrorDetails Errors { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
         {
             var toStringOutput = new List<string>();
             this.ToString(toStringOutput);
-            return $"SegmentPricePointErrorsErrorException : ({string.Join(", ", toStringOutput)})";
+            return $"SegmentPricePointErrorsException : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <summary>

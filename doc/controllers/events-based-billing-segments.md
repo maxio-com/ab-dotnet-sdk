@@ -233,6 +233,10 @@ try
 catch (ApiException e)
 {
     Console.WriteLine(e.Message);
+    if (e is EventBasedBillingSegmentWriteErrorResponseException)
+    {
+       // TODO: Handle EventBasedBillingSegmentWriteErrorResponseException exception here
+    }
 }
 ```
 
@@ -241,7 +245,7 @@ catch (ApiException e)
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`EventBasedBillingSegmentWriteErrorResponseException`](../../doc/models/event-based-billing-segment-write-error-response-exception.md) |
 
 
 # Delete Segment
@@ -296,9 +300,9 @@ try
 catch (ApiException e)
 {
     Console.WriteLine(e.Message);
-    if (e is SegmentPricePointErrorsErrorException)
+    if (e is SegmentPricePointErrorsException)
     {
-       // TODO: Handle SegmentPricePointErrorsErrorException exception here
+       // TODO: Handle SegmentPricePointErrorsException exception here
     }
 }
 ```
@@ -308,7 +312,7 @@ catch (ApiException e)
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | [`SegmentPricePointErrorsErrorException`](../../doc/models/segment-price-point-errors-error-exception.md) |
+| 422 | Unprocessable Entity (WebDAV) | [`SegmentPricePointErrorsException`](../../doc/models/segment-price-point-errors-exception.md) |
 
 
 # Bulk Create Segments

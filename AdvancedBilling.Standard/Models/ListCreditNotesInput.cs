@@ -39,7 +39,7 @@ namespace AdvancedBilling.Standard.Models
         /// <param name="applications">applications.</param>
         public ListCreditNotesInput(
             int? subscriptionId = null,
-            Models.CreditNoteDateField? dateField = Models.CreditNoteDateField.IssueDate,
+            Models.CreditNoteDateField? dateField = null,
             string startDate = null,
             string endDate = null,
             string startDatetime = null,

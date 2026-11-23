@@ -2726,7 +2726,7 @@ This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Response Type
 
-**200**: OK
+**201**: Created
 
 [`Task<Models.InvoiceResponse>`](../../doc/models/invoice-response.md)
 

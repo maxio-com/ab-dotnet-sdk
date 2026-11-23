@@ -1,17 +1,17 @@
 
-# Segment Price Point Errors Error Exception
+# Segment Price Point Errors Exception
 
 Returned when a segment write targets a subscription's custom price point. Segments on a custom price point can only be set through `custom_price` on the subscription or component endpoints.
 
 ## Structure
 
-`SegmentPricePointErrorsErrorException`
+`SegmentPricePointErrorsException`
 
 ## Fields
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `Errors` | [`Errors`](../../doc/models/errors.md) | Required | - |
+| `Errors` | [`SegmentPricePointErrorDetails`](../../doc/models/segment-price-point-error-details.md) | Required | Price-point validation error details for segment writes. |
 
 ## Example
 
@@ -22,9 +22,9 @@ try
 }
 catch (ApiException e)
 {
-    if (e is SegmentPricePointErrorsErrorException)
+    if (e is SegmentPricePointErrorsException)
     {
-        // TODO: Handle SegmentPricePointErrorsErrorException
+        // TODO: Handle SegmentPricePointErrorsException
         Console.WriteLine(e.Message);
     }
 }

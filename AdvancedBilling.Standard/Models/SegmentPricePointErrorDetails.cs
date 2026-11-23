@@ -1,4 +1,4 @@
-// <copyright file="EventBasedBillingSegmentSingleError.cs" company="APIMatic">
+// <copyright file="SegmentPricePointErrorDetails.cs" company="APIMatic">
 // AdvancedBilling.Standard
 //
 // This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
@@ -9,22 +9,22 @@ using System.Collections.Generic;
 namespace AdvancedBilling.Standard.Models
 {
     /// <summary>
-    /// EventBasedBillingSegmentSingleError.
+    /// SegmentPricePointErrorDetails.
     /// </summary>
-    public class EventBasedBillingSegmentSingleError : BaseModel
+    public class SegmentPricePointErrorDetails : BaseModel
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventBasedBillingSegmentSingleError"/> class.
+        /// Initializes a new instance of the <see cref="SegmentPricePointErrorDetails"/> class.
         /// </summary>
-        public EventBasedBillingSegmentSingleError()
+        public SegmentPricePointErrorDetails()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventBasedBillingSegmentSingleError"/> class.
+        /// Initializes a new instance of the <see cref="SegmentPricePointErrorDetails"/> class.
         /// </summary>
         /// <param name="pricePoint">price_point.</param>
-        public EventBasedBillingSegmentSingleError(
+        public SegmentPricePointErrorDetails(
             List<string> pricePoint)
         {
             this.PricePoint = pricePoint;
@@ -41,7 +41,7 @@ namespace AdvancedBilling.Standard.Models
         {
             var toStringOutput = new List<string>();
             this.ToString(toStringOutput);
-            return $"EventBasedBillingSegmentSingleError : ({string.Join(", ", toStringOutput)})";
+            return $"SegmentPricePointErrorDetails : ({string.Join(", ", toStringOutput)})";
         }
 
         /// <inheritdoc/>
@@ -50,7 +50,7 @@ namespace AdvancedBilling.Standard.Models
             if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is EventBasedBillingSegmentSingleError other &&
+            return obj is SegmentPricePointErrorDetails other &&
                 (this.PricePoint == null && other.PricePoint == null ||
                  this.PricePoint?.Equals(other.PricePoint) == true) &&
                 base.Equals(obj);

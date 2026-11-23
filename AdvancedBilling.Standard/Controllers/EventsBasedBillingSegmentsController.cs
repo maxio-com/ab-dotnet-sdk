@@ -159,7 +159,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Header(header => header.Setup("Content-Type", "application/json"))))
               .ResponseHandler(responseHandler => responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new ApiException(errorReason, context), true)))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new EventBasedBillingSegmentWriteErrorResponseException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace AdvancedBilling.Standard.Controllers
                       .Template(template => template.Setup("id", id))))
               .ResponseHandler(responseHandler => responseHandler
                   .ErrorCase("404", CreateErrorCase("Not Found:'{$response.body}'", (errorReason, context) => new ApiException(errorReason, context), true))
-                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new SegmentPricePointErrorsErrorException(errorReason, context), true)))
+                  .ErrorCase("422", CreateErrorCase("HTTP Response Not OK. Status code: {$statusCode}. Response: '{$response.body}'.", (errorReason, context) => new SegmentPricePointErrorsException(errorReason, context), true)))
               .ExecuteAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>

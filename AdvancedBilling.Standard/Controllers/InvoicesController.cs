@@ -323,7 +323,7 @@ namespace AdvancedBilling.Standard.Controllers
                   .WithAuth("BasicAuth")
                   .Parameters(parameters => parameters
                       .Query(query => query.Setup("subscription_id", input.SubscriptionId))
-                      .Query(query => query.Setup("date_field", (input.DateField.HasValue) ? CoreHelper.JsonSerialize(input.DateField.Value).Trim('\"') : "issue_date"))
+                      .Query(query => query.Setup("date_field", (input.DateField.HasValue) ? CoreHelper.JsonSerialize(input.DateField.Value).Trim('\"') : null))
                       .Query(query => query.Setup("start_date", input.StartDate))
                       .Query(query => query.Setup("end_date", input.EndDate))
                       .Query(query => query.Setup("start_datetime", input.StartDatetime))

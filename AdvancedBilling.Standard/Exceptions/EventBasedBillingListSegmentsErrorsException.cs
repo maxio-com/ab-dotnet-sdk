@@ -25,10 +25,10 @@ namespace AdvancedBilling.Standard.Exceptions
         }
 
         /// <summary>
-        /// Gets or sets Errors.
+        /// Validation error details for listing segments.
         /// </summary>
         [JsonProperty("errors", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.Errors1 Errors { get; set; }
+        public Models.Errors Errors { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

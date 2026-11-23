@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `Errors` | [`Errors1`](../../doc/models/errors-1.md) | Optional | - |
+| `Errors` | [`Errors`](../../doc/models/errors.md) | Optional | Validation error details for listing segments. |
 
 ## Example
 

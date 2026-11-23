@@ -1,6 +1,8 @@
 
 # Errors
 
+Validation error details for listing segments.
+
 ## Structure
 
 `Errors`
@@ -9,7 +11,8 @@
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `PricePoint` | `List<string>` | Required | - |
+| `PerPage` | `List<string>` | Optional | - |
+| `PricePoint` | `List<string>` | Optional | - |
 
 ## Example
 
@@ -19,6 +22,12 @@ using System.Collections.Generic;
 
 Errors errors = new Errors
 {
+    PerPage = new List<string>
+    {
+        "per_page1",
+        "per_page2",
+        "per_page3",
+    },
     PricePoint = new List<string>
     {
         "price_point0",

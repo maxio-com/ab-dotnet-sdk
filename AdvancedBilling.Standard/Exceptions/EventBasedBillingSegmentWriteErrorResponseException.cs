@@ -25,10 +25,10 @@ namespace AdvancedBilling.Standard.Exceptions
         }
 
         /// <summary>
-        /// The key of the object would be a number (an index in the request array) where the error occurred. In the value object, the key represents the field and the value is an array with error messages. In most cases, this object would contain just one key.
+        /// Gets or sets Errors.
         /// </summary>
         [JsonProperty("errors", NullValueHandling = NullValueHandling.Ignore)]
-        public Models.EventBasedBillingSegmentSingleError Errors { get; set; }
+        public object Errors { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
